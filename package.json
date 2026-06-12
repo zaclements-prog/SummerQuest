@@ -8,7 +8,10 @@
     "build": "tsc -b && vite build",
     "build:single": "tsc -b && SINGLEFILE=1 vite build && node scripts/inline-favicon.mjs",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "tts": "node scripts/generate-tts.mjs"
   },
   "dependencies": {
     "@fontsource/fredoka": "^5.2.10",
@@ -29,10 +32,13 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.6.0",
+    "jsdom": "^29.1.1",
+    "msedge-tts": "^2.0.5",
     "tailwindcss": "^4.3.0",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.59.2",
     "vite": "^8.0.12",
-    "vite-plugin-singlefile": "^2.3.3"
+    "vite-plugin-singlefile": "^2.3.3",
+    "vitest": "^4.1.8"
   }
 }
