@@ -55,6 +55,20 @@ export default function WorldMap() {
             🌟 Daily{dailyDone ? ' ✓' : ''}
           </Link>
           <Link
+            to="/focus"
+            onClick={() => sfx.click()}
+            className="kid-text flex items-center gap-1 px-4 py-2 rounded-full bg-correct-500 text-white shadow hover:scale-105 transition"
+          >
+            🎯 This Week
+          </Link>
+          <Link
+            to="/tutor"
+            onClick={() => sfx.click()}
+            className="kid-text flex items-center gap-1 px-4 py-2 rounded-full bg-island-500 text-ocean-900 shadow hover:scale-105 transition"
+          >
+            📚 Tutor
+          </Link>
+          <Link
             to="/badges"
             onClick={() => sfx.click()}
             className="kid-text flex items-center gap-1 px-4 py-2 rounded-full bg-white/90 text-ocean-900 shadow hover:scale-105 transition"
