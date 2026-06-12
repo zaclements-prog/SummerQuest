@@ -44,10 +44,16 @@ export function useNarration(lessonId: string, stepId: string, text: string) {
     }
   }
 
-  // auto-play when the step changes (only if sound is on)
+  // auto-play when the step changes (only if sound is on). Deferred to a
+  // microtask so we don't call setState synchronously inside the effect body
+  // (browsers gate autoplay until a user gesture anyway).
   useEffect(() => {
-    if (soundEnabled) play()
-    return stop
+    if (!soundEnabled) return
+    const t = setTimeout(() => { play() }, 0)
+    return () => {
+      clearTimeout(t)
+      stop()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lessonId, stepId])
 

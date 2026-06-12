@@ -12,13 +12,14 @@ export default function TutorScreen() {
   const lesson = getLesson(lessonId)
   const [i, setI] = useState(0)
   const [picked, setPicked] = useState<string | number | null>(null)
+  const step = lesson?.steps[i]
+  // Hooks must run unconditionally, so call useNarration before any early return.
+  const { playing, play, stop } = useNarration(lesson?.id ?? '', step?.id ?? '', step?.narration ?? '')
 
-  if (!lesson) {
+  if (!lesson || !step) {
     return <div className="text-white p-6">Lesson not found. <Link to="/tutor" className="underline">Back</Link></div>
   }
-  const step = lesson.steps[i]
   const last = i === lesson.steps.length - 1
-  const { playing, play, stop } = useNarration(lesson.id, step.id, step.narration)
 
   const next = () => {
     stop(); setPicked(null)
@@ -60,7 +61,7 @@ export default function TutorScreen() {
                   const show = picked !== null
                   return (
                     <button key={String(opt)} disabled={show}
-                      onClick={() => { setPicked(opt); opt === step.check!.answer ? sfx.correct() : sfx.wrong() }}
+                      onClick={() => { setPicked(opt); if (opt === step.check!.answer) sfx.correct(); else sfx.wrong() }}
                       className={`kid-text text-2xl py-3 rounded-2xl border-4 ${
                         show && isAnswer ? 'bg-correct-500 border-correct-500'
                         : chosen ? 'bg-wrong-500 border-wrong-500'
