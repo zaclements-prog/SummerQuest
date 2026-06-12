@@ -1,0 +1,112 @@
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useProgress } from './store/progress'
+import { unlockAudio } from './lib/sound'
+import AppShell from './components/AppShell'
+import Welcome from './screens/Welcome'
+import AvatarCreate from './screens/AvatarCreate'
+import WorldMap from './screens/WorldMap'
+import ZoneDetail from './screens/ZoneDetail'
+import GameRunner from './screens/GameRunner'
+import ParentDashboard from './screens/ParentDashboard'
+import BadgesScreen from './screens/BadgesScreen'
+import ShopScreen from './screens/ShopScreen'
+import DailyChallenge from './screens/DailyChallenge'
+import ProgressScreen from './screens/ProgressScreen'
+
+function RequireAvatar({ children }: { children: React.ReactNode }) {
+  const player = useProgress((s) => s.player)
+  if (!player) return <Navigate to="/" replace />
+  return <>{children}</>
+}
+
+export default function App() {
+  const player = useProgress((s) => s.player)
+  const bumpStreak = useProgress((s) => s.bumpStreakIfNeeded)
+
+  useEffect(() => {
+    const onPointer = () => unlockAudio()
+    window.addEventListener('pointerdown', onPointer, { once: true })
+    window.addEventListener('keydown', onPointer, { once: true })
+    return () => {
+      window.removeEventListener('pointerdown', onPointer)
+      window.removeEventListener('keydown', onPointer)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (player) bumpStreak()
+  }, [player, bumpStreak])
+
+  return (
+    <BrowserRouter>
+      <AppShell>
+        <Routes>
+          <Route
+            path="/"
+            element={player ? <Navigate to="/map" replace /> : <Welcome />}
+          />
+          <Route path="/avatar" element={<AvatarCreate />} />
+          <Route
+            path="/map"
+            element={
+              <RequireAvatar>
+                <WorldMap />
+              </RequireAvatar>
+            }
+          />
+          <Route
+            path="/zone/:zoneId"
+            element={
+              <RequireAvatar>
+                <ZoneDetail />
+              </RequireAvatar>
+            }
+          />
+          <Route
+            path="/play/:zoneId/:stageId"
+            element={
+              <RequireAvatar>
+                <GameRunner />
+              </RequireAvatar>
+            }
+          />
+          <Route
+            path="/badges"
+            element={
+              <RequireAvatar>
+                <BadgesScreen />
+              </RequireAvatar>
+            }
+          />
+          <Route
+            path="/shop"
+            element={
+              <RequireAvatar>
+                <ShopScreen />
+              </RequireAvatar>
+            }
+          />
+          <Route
+            path="/daily"
+            element={
+              <RequireAvatar>
+                <DailyChallenge />
+              </RequireAvatar>
+            }
+          />
+          <Route
+            path="/progress"
+            element={
+              <RequireAvatar>
+                <ProgressScreen />
+              </RequireAvatar>
+            }
+          />
+          <Route path="/parent" element={<ParentDashboard />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </AppShell>
+    </BrowserRouter>
+  )
+}

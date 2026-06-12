@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+@theme {
+  --color-quest-50: #fef9e7;
+  --color-quest-100: #fdf0bc;
+  --color-quest-200: #fce58e;
+  --color-quest-300: #fad95f;
+  --color-quest-400: #f9cd31;
+  --color-quest-500: #f7c102;
+  --color-quest-600: #c69b02;
+  --color-quest-700: #957401;
+  --color-quest-800: #644d01;
+  --color-quest-900: #322700;
+
+  --color-island-500: #2dd4bf;
+  --color-island-600: #14b8a6;
+  --color-island-700: #0f766e;
+
+  --color-ocean-300: #93c5fd;
+  --color-ocean-500: #3b82f6;
+  --color-ocean-700: #1d4ed8;
+  --color-ocean-900: #1e3a8a;
+
+  --color-monster-500: #a855f7;
+  --color-monster-600: #9333ea;
+
+  --color-correct-500: #22c55e;
+  --color-correct-600: #16a34a;
+
+  --color-wrong-500: #ef4444;
+  --color-wrong-600: #dc2626;
+
+  --font-display: "Fredoka", "Comic Sans MS", system-ui, sans-serif;
+  --font-body: system-ui, -apple-system, sans-serif;
+
+  --animate-bounce-soft: bounce-soft 0.6s ease-out;
+  --animate-pop: pop 0.3s ease-out;
+  --animate-shake: shake 0.4s ease-in-out;
+  --animate-glow: glow 2s ease-in-out infinite;
+}
+
+@keyframes bounce-soft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes pop {
+  0% { transform: scale(0.8); opacity: 0; }
+  60% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-8px); }
+  40%, 80% { transform: translateX(8px); }
+}
+
+@keyframes glow {
+  0%, 100% { filter: drop-shadow(0 0 8px currentColor); }
+  50% { filter: drop-shadow(0 0 18px currentColor); }
+}
+
+html, body, #root {
+  margin: 0;
+  height: 100%;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  background: linear-gradient(180deg, #93c5fd 0%, #60a5fa 100%);
+}
+
+.kid-text {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+button {
+  transition: transform 0.08s ease-out, box-shadow 0.2s ease-out, background-color 0.15s ease-out;
+  cursor: pointer;
+}
+
+/* Big tappable hit targets for kids */
+.btn-quest {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.5rem;
+  padding: 0.75rem 1.75rem;
+  border-radius: 1.5rem;
+  border: 4px solid;
+  box-shadow: 0 6px 0 0 currentColor, 0 10px 16px -4px rgba(0,0,0,0.2);
+}
+.btn-quest:active {
+  box-shadow: 0 2px 0 0 currentColor, 0 4px 8px -2px rgba(0,0,0,0.2);
+  transform: translateY(4px);
+}
