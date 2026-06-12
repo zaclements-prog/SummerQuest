@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "tts": "node scripts/generate-tts.mjs"
+    "tts": "node --import tsx scripts/dump-narration.mjs && node scripts/generate-tts.mjs"
   },
   "dependencies": {
     "@fontsource/fredoka": "^5.2.10",
@@ -35,6 +35,7 @@
     "jsdom": "^29.1.1",
     "msedge-tts": "^2.0.5",
     "tailwindcss": "^4.3.0",
+    "tsx": "^4.22.4",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.59.2",
     "vite": "^8.0.12",

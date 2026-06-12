@@ -1,0 +1,130 @@
+{
+  "multiplication/intro": {
+    "file": "tts/multiplication/intro.mp3",
+    "hash": "8415088c00"
+  },
+  "multiplication/count": {
+    "file": "tts/multiplication/count.mp3",
+    "hash": "29143de9a7"
+  },
+  "multiplication/commutative": {
+    "file": "tts/multiplication/commutative.mp3",
+    "hash": "0662901e9a"
+  },
+  "multiplication/skip": {
+    "file": "tts/multiplication/skip.mp3",
+    "hash": "b87ac62b69"
+  },
+  "division/share": {
+    "file": "tts/division/share.mp3",
+    "hash": "b89355d689"
+  },
+  "division/answer": {
+    "file": "tts/division/answer.mp3",
+    "hash": "48cf85782f"
+  },
+  "division/inverse": {
+    "file": "tts/division/inverse.mp3",
+    "hash": "cb937522e6"
+  },
+  "fractions/parts": {
+    "file": "tts/fractions/parts.mp3",
+    "hash": "833f893604"
+  },
+  "fractions/equivalent": {
+    "file": "tts/fractions/equivalent.mp3",
+    "hash": "711513396f"
+  },
+  "fractions/samebottom": {
+    "file": "tts/fractions/samebottom.mp3",
+    "hash": "7012fbe89e"
+  },
+  "fractions/unlikebottom": {
+    "file": "tts/fractions/unlikebottom.mp3",
+    "hash": "8803842556"
+  },
+  "placeValue/places": {
+    "file": "tts/placeValue/places.mp3",
+    "hash": "e334ff3a39"
+  },
+  "placeValue/value": {
+    "file": "tts/placeValue/value.mp3",
+    "hash": "ad26214f53"
+  },
+  "placeValue/rounding": {
+    "file": "tts/placeValue/rounding.mp3",
+    "hash": "19d35679ca"
+  },
+  "measurement/area": {
+    "file": "tts/measurement/area.mp3",
+    "hash": "1a9506023b"
+  },
+  "measurement/perimeter": {
+    "file": "tts/measurement/perimeter.mp3",
+    "hash": "1fe3dddd8a"
+  },
+  "measurement/time": {
+    "file": "tts/measurement/time.mp3",
+    "hash": "8b0cc0d2aa"
+  },
+  "measurement/money": {
+    "file": "tts/measurement/money.mp3",
+    "hash": "ff0794b007"
+  },
+  "geometry/shapes": {
+    "file": "tts/geometry/shapes.mp3",
+    "hash": "52935846d3"
+  },
+  "geometry/angles": {
+    "file": "tts/geometry/angles.mp3",
+    "hash": "5ad396de8b"
+  },
+  "geometry/count": {
+    "file": "tts/geometry/count.mp3",
+    "hash": "22dabaf4b5"
+  },
+  "dataGraph/bars": {
+    "file": "tts/dataGraph/bars.mp3",
+    "hash": "2678b57289"
+  },
+  "dataGraph/read": {
+    "file": "tts/dataGraph/read.mp3",
+    "hash": "1f486e4a45"
+  },
+  "wordProblem/read": {
+    "file": "tts/wordProblem/read.mp3",
+    "hash": "4309ab9f26"
+  },
+  "wordProblem/plan": {
+    "file": "tts/wordProblem/plan.mp3",
+    "hash": "f939b34a7c"
+  },
+  "wordProblem/solve": {
+    "file": "tts/wordProblem/solve.mp3",
+    "hash": "2e515c15d2"
+  },
+  "reading/mainidea": {
+    "file": "tts/reading/mainidea.mp3",
+    "hash": "d3b9f5abbd"
+  },
+  "reading/detail": {
+    "file": "tts/reading/detail.mp3",
+    "hash": "544612a8cc"
+  },
+  "writing/parts": {
+    "file": "tts/writing/parts.mp3",
+    "hash": "2c55bf3425"
+  },
+  "writing/example": {
+    "file": "tts/writing/example.mp3",
+    "hash": "7afe4c1afa"
+  },
+  "science/states": {
+    "file": "tts/science/states.mp3",
+    "hash": "35f1a405ee"
+  },
+  "science/water": {
+    "file": "tts/science/water.mp3",
+    "hash": "96e0a772cb"
+  }
+}
