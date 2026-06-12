@@ -37,6 +37,7 @@ export function makePlaceValueRoundingProvider(cfg: Config): ProblemProvider {
         topic: 'place-value-rounding',
         subtopic: `nearest-${cfg.roundTo}`,
         difficulty: Math.log10(cfg.maxPlace),
+        skill: { id: 'pv-round', label: 'rounding numbers' },
         hint: `Look at the digit in the ones place${cfg.roundTo > 10 ? ' below' : ''} — if it's 5 or more, round up.`,
       }
     },

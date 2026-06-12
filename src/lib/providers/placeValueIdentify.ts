@@ -39,6 +39,7 @@ export function makePlaceValueIdentifyProvider(cfg: Config): ProblemProvider {
         topic: 'place-value-identify',
         subtopic: placeName,
         difficulty: placeIndex + 1,
+        skill: { id: 'pv-identify', label: 'place value of a digit' },
         hint: `The ${placeName} digit is ${digit}, so its value is ${digit} × ${10 ** placeIndex}.`,
       }
     },

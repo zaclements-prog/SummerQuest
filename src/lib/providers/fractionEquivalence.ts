@@ -40,6 +40,7 @@ export function makeFractionEquivalenceProvider(cfg: Config): ProblemProvider {
         topic: 'fraction-equivalence',
         subtopic: `×${mult}`,
         difficulty: mult,
+        skill: { id: 'frac-equiv', label: 'equivalent fractions' },
         hint: `Multiply top and bottom by ${mult}.`,
       }
     },

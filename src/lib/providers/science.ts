@@ -714,6 +714,7 @@ function makeStaticScienceProvider(cfg: Config): ProblemProvider {
         },
         topic: `science-${q.type}`,
         difficulty: cfg.level,
+        skill: { id: 'sci-explore', label: 'science' },
       }
     },
     reset() {

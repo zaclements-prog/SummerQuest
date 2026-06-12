@@ -43,6 +43,7 @@ function area(idx: number): Problem {
     hint: `Area = width × height = ${w} × ${h}`,
     visual: { kind: 'shape', type: 'rect', width: w, height: h, unit: 'units' },
     distractors: [w + h, 2 * (w + h), w * h + w, w * h - w],
+    skill: { id: 'meas-area', label: 'area' },
   })
 }
 
@@ -58,6 +59,7 @@ function perimeter(idx: number): Problem {
     hint: `Perimeter = 2 × (width + height) = 2 × (${w} + ${h})`,
     visual: { kind: 'shape', type: 'rect', width: w, height: h, unit: 'units' },
     distractors: [w + h, w * h, 4 * (w + h), 2 * w + h],
+    skill: { id: 'meas-perimeter', label: 'perimeter' },
   })
 }
 
@@ -88,6 +90,7 @@ function time(idx: number): Problem {
     topic: 'measurement-time',
     visual: { kind: 'clock', hour: startH, minute: startM },
     hint: `Add ${elapsedH} hours and ${elapsedM} minutes.`,
+    skill: { id: 'meas-time', label: 'telling time' },
   }
 }
 
@@ -110,6 +113,7 @@ function money(idx: number): Problem {
     topic: 'measurement-money',
     visual: { kind: 'money', cents: costCents },
     hint: `Subtract ${formatMoney(costCents)} from $${paidDollars}.00`,
+    skill: { id: 'meas-money', label: 'money' },
   }
 }
 
@@ -127,6 +131,7 @@ function mcProblem(args: {
   hint?: string
   visual?: Problem['visual']
   distractors: number[]
+  skill?: Problem['skill']
 }): Problem {
   const set = new Set<number>()
   for (const d of args.distractors) {
@@ -141,5 +146,6 @@ function mcProblem(args: {
     topic: args.topic,
     visual: args.visual,
     hint: args.hint,
+    skill: args.skill,
   }
 }

@@ -421,6 +421,7 @@ function makeStaticGeometryProvider(cfg: Config): ProblemProvider {
         topic: 'geometry',
         difficulty: cfg.level,
         hint: q.hint,
+        skill: { id: 'geo-shapes', label: 'shapes & angles' },
       }
     },
     reset() {

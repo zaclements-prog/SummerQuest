@@ -24,6 +24,7 @@ export interface GameProps {
   params?: Record<string, unknown>
   onComplete: (result: GameResult) => void
   onExit: () => void
+  meta?: { zoneId: string; stageId: string }
 }
 
 export default function GameRunner() {
@@ -118,6 +119,7 @@ export default function GameRunner() {
         params={stage.params}
         onComplete={setResult}
         onExit={() => navigate(`/zone/${zoneId}`)}
+        meta={{ zoneId, stageId }}
       />
     </div>
   )

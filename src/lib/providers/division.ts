@@ -26,6 +26,10 @@ export function makeDivisionProvider(cfg: Config): ProblemProvider {
         topic: 'division',
         subtopic: `÷${divisor}`,
         difficulty: divisor,
+        skill: {
+          id: divisor >= 6 ? 'div-larger' : 'div-basic',
+          label: divisor >= 6 ? 'larger division facts' : 'basic division facts',
+        },
         hint: `Think: ${divisor} × what = ${dividend}?`,
       }
     },

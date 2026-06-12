@@ -47,7 +47,19 @@ export interface SessionRecord {
   score: number
 }
 
+/** One per-question skill attempt — the unit of the coach's skill-trend log. */
+export interface SkillAttempt {
+  id: string
+  at: number
+  zoneId: string
+  topic: string
+  skillId: string
+  skillLabel: string
+  correct: boolean
+}
+
 const MAX_SESSIONS = 300
+const MAX_ATTEMPTS = 2000
 
 interface ProgressState {
   player: AvatarChoice | null
@@ -57,6 +69,7 @@ interface ProgressState {
   zones: Record<string, ZoneProgress>
   stats: SessionStats
   sessions: SessionRecord[]
+  attempts: SkillAttempt[]
   soundEnabled: boolean
   seenBadges: string[]
   dailyClaimedDate?: string
@@ -89,6 +102,7 @@ interface ProgressState {
   buyCosmetic: (id: string, price: number) => boolean
   equipCosmetic: (id: string | null) => void
   recordSession: (rec: Omit<SessionRecord, 'id' | 'at'> & { at?: number }) => void
+  recordAttempt: (a: Omit<SkillAttempt, 'id' | 'at'> & { at?: number }) => void
   tickPlay: (seconds: number) => void
   clearTimeCelebration: () => void
 }
@@ -109,6 +123,7 @@ export const useProgress = create<ProgressState>()(
         streakDays: 0,
       },
       sessions: [],
+      attempts: [],
       soundEnabled: true,
       seenBadges: [],
       ownedCosmetics: [],
@@ -136,6 +151,7 @@ export const useProgress = create<ProgressState>()(
           ownedCosmetics: [],
           equippedCosmetic: null,
           sessions: [],
+          attempts: [],
           playDate: undefined,
           playSecondsToday: 0,
           sessionsRewardedToday: 0,
@@ -234,6 +250,13 @@ export const useProgress = create<ProgressState>()(
         const id = `${at.toString(36)}-${Math.random().toString(36).slice(2, 7)}`
         const entry: SessionRecord = { ...rec, id, at }
         set({ sessions: [...get().sessions, entry].slice(-MAX_SESSIONS) })
+      },
+
+      recordAttempt: (a) => {
+        const at = a.at ?? Date.now()
+        const id = `${at.toString(36)}-${Math.random().toString(36).slice(2, 7)}`
+        const entry: SkillAttempt = { ...a, id, at }
+        set({ attempts: [...get().attempts, entry].slice(-MAX_ATTEMPTS) })
       },
 
       tickPlay: (seconds) => {

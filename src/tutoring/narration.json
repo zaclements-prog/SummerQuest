@@ -1,0 +1,152 @@
+{
+  "multiplication": [
+    {
+      "stepId": "intro",
+      "text": "Multiplication means adding equal groups. When we say three times four, we mean three groups with four in each group."
+    },
+    {
+      "stepId": "count",
+      "text": "Look at the rows. Count them all: four, eight, twelve. Three rows of four make twelve. So three times four equals twelve."
+    },
+    {
+      "stepId": "commutative",
+      "text": "Here is a trick. Three times four and four times three give the same answer. You can flip the numbers to make it easier."
+    },
+    {
+      "stepId": "skip",
+      "text": "For the harder facts, skip count. For seven times three, count by sevens: seven, fourteen, twenty-one."
+    }
+  ],
+  "division": [
+    {
+      "stepId": "share",
+      "text": "Division is sharing fairly. Twelve cookies shared with three friends. How many does each friend get?"
+    },
+    {
+      "stepId": "answer",
+      "text": "Each of the three friends gets four cookies. So twelve divided by three equals four."
+    },
+    {
+      "stepId": "inverse",
+      "text": "Division is the opposite of multiplication. Because three times four is twelve, twelve divided by three is four. Use your times tables backwards!"
+    }
+  ],
+  "fractions": [
+    {
+      "stepId": "parts",
+      "text": "A fraction shows part of a whole. The bottom number tells how many equal pieces the whole is cut into, and the top number tells how many of those pieces we have."
+    },
+    {
+      "stepId": "equivalent",
+      "text": "Watch this. Two fourths covers the same amount of space as one half. They look like different numbers, but they are the exact same amount. We call those equivalent fractions."
+    },
+    {
+      "stepId": "samebottom",
+      "text": "When the bottom numbers match, the fraction with more pieces on top is the bigger one. Three fifths is more than two fifths because three pieces is more than two pieces."
+    },
+    {
+      "stepId": "unlikebottom",
+      "text": "When the bottom numbers are different, think about the size of the pieces. The fewer pieces a whole is cut into, the bigger each piece is. So halves are bigger pieces than thirds."
+    }
+  ],
+  "placeValue": [
+    {
+      "stepId": "places",
+      "text": "Every digit sits in a special place. From the right, we have ones, then tens, then hundreds, then thousands. The place a digit sits in tells you its value."
+    },
+    {
+      "stepId": "value",
+      "text": "Look at the number one thousand two hundred thirty-four. The two is sitting in the hundreds place, so it is not just two. It really means two hundred."
+    },
+    {
+      "stepId": "rounding",
+      "text": "To round to the nearest ten, look at the ones digit. If it is five or more, round up to the next ten. If it is less than five, round down and keep the ten you already have."
+    }
+  ],
+  "measurement": [
+    {
+      "stepId": "area",
+      "text": "Area is the amount of space inside a shape. You can count all the little squares that fit inside, or you can take a shortcut and multiply the length times the width."
+    },
+    {
+      "stepId": "perimeter",
+      "text": "Perimeter is the distance all the way around the edge of a shape, like walking around the outside of a yard. To find it, add up the length of every single side."
+    },
+    {
+      "stepId": "time",
+      "text": "On a clock, the short hand points to the hour, and the long hand points to the minutes. When the long hand is on the three, it is fifteen minutes past the hour."
+    },
+    {
+      "stepId": "money",
+      "text": "When you count money, count the dollars first, and then count the cents. Putting them together tells you the total amount."
+    }
+  ],
+  "geometry": [
+    {
+      "stepId": "shapes",
+      "text": "Shapes get their names from their sides and their corners. A square is special because it has four sides that are all the same length, and it has four corners."
+    },
+    {
+      "stepId": "angles",
+      "text": "A corner, where two sides meet, is called an angle. The square corner that you see in a square is a special angle that we call a right angle."
+    },
+    {
+      "stepId": "count",
+      "text": "Let us check what you remember about a square. Think about its straight edges and count them carefully."
+    }
+  ],
+  "dataGraph": [
+    {
+      "stepId": "bars",
+      "text": "A bar graph shows amounts using bars. Each bar stands for one thing, and the taller a bar is, the bigger its number. A short bar means a small number."
+    },
+    {
+      "stepId": "read",
+      "text": "To read a bar, look at how high its top reaches, then slide across to the scale on the side. That number tells you the amount for that bar."
+    }
+  ],
+  "wordProblem": [
+    {
+      "stepId": "read",
+      "text": "For a word problem, the first thing to do is read it slowly and picture what is happening in the story. Imagine the box and the crayons in your mind."
+    },
+    {
+      "stepId": "plan",
+      "text": "Next, find the question the problem is asking, and then choose the right operation. When the story has equal groups, like rows that are all the same size, that is a clue to multiply."
+    },
+    {
+      "stepId": "solve",
+      "text": "Now solve it. There are six rows, and each row has four crayons, so we multiply six times four to find how many crayons there are in all."
+    }
+  ],
+  "reading": [
+    {
+      "stepId": "mainidea",
+      "text": "Good readers look for the main idea, which is what the whole passage is mostly about. As you read about the frog, ask yourself what the writer wants you to learn."
+    },
+    {
+      "stepId": "detail",
+      "text": "For a detail question, you go back into the text and find the exact words that answer it. Do not guess from memory. Look for the sentence that talks about what frogs eat."
+    }
+  ],
+  "writing": [
+    {
+      "stepId": "parts",
+      "text": "A complete sentence has two important parts. It has a naming part, which tells who or what the sentence is about, and an action part, which tells what they do. It also begins with a capital letter and ends with a punctuation mark."
+    },
+    {
+      "stepId": "example",
+      "text": "Here is an example. The dog ran fast. The naming part is the dog, because that is who the sentence is about, and the action part is ran fast, because that tells what the dog does."
+    }
+  ],
+  "science": [
+    {
+      "stepId": "states",
+      "text": "Matter comes in three states: solid, liquid, and gas. A solid keeps its own shape. A liquid flows and takes the shape of whatever cup you pour it into. A gas spreads out to fill all the space it can."
+    },
+    {
+      "stepId": "water",
+      "text": "Water is amazing because it can be all three states. When it is frozen, ice is a solid. When you pour it, water is a liquid. And when it boils away, steam is a gas."
+    }
+  ]
+}

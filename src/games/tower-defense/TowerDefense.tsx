@@ -17,7 +17,7 @@ import { sfx } from '../../lib/sound'
 const GAME_W = 720
 const GAME_H = 420
 
-export default function TowerDefense({ provider, onComplete }: GameProps) {
+export default function TowerDefense({ provider, onComplete, meta }: GameProps) {
   const stateRef = useRef<GameState>(createInitialState(GAME_W, GAME_H))
   const [, force] = useState(0)
   const [selectedTower, setSelectedTower] = useState<'cannon' | null>('cannon')
@@ -200,6 +200,7 @@ export default function TowerDefense({ provider, onComplete }: GameProps) {
         provider={provider}
         onCorrect={confirmPurchase}
         onCancel={() => setPending(null)}
+        meta={meta}
       />
     </div>
   )

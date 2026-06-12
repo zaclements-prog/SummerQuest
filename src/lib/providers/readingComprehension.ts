@@ -725,6 +725,7 @@ function makeStaticReadingProvider(cfg: Config): ProblemProvider {
         },
         topic: `reading-${q.type}`,
         difficulty: cfg.level,
+        skill: { id: 'read-comprehend', label: 'reading comprehension' },
       }
     },
     reset() {

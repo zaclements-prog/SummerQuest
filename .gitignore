@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# TTS generator cache sidecars (regenerable; not committed)
+public/tts/**/*.mp3.hash
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

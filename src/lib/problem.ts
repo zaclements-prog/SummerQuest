@@ -56,6 +56,8 @@ export interface Problem {
   topic: string
   subtopic?: string
   difficulty?: number
+  /** Coarse skill bucket for weak-area analytics + tutoring. */
+  skill?: { id: string; label: string }
   hint?: string
   explanation?: string
 }

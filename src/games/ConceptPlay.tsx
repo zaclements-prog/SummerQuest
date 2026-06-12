@@ -5,12 +5,13 @@ import { nextProblem, type Problem } from '../lib/problem'
 import { sfx } from '../lib/sound'
 import { useProgress } from '../store/progress'
 import VisualRenderer from '../components/VisualRenderer'
+import { skillOf } from '../tutoring/skills'
 
 /**
  * Generic concept stage. Shows a problem with its visual representation, presents
  * multiple-choice options, no timer. Works for any topic via the provider.
  */
-export default function ConceptPlay({ provider, params, onComplete }: GameProps) {
+export default function ConceptPlay({ provider, params, onComplete, meta }: GameProps) {
   const questionCount = (params?.questionCount as number) ?? 6
 
   const [idx, setIdx] = useState(0)
@@ -19,6 +20,7 @@ export default function ConceptPlay({ provider, params, onComplete }: GameProps)
   const [correctCount, setCorrectCount] = useState(0)
   const [loading, setLoading] = useState(true)
   const recordAnswer = useProgress((s) => s.recordAnswer)
+  const recordAttempt = useProgress((s) => s.recordAttempt)
 
   useEffect(() => {
     let cancel = false
@@ -40,6 +42,10 @@ export default function ConceptPlay({ provider, params, onComplete }: GameProps)
     setAnswered(opt)
     const isCorrect = opt === problem.answer
     recordAnswer(isCorrect)
+    if (meta) {
+      const sk = skillOf(problem)
+      recordAttempt({ zoneId: meta.zoneId, topic: provider.topic, skillId: sk.id, skillLabel: sk.label, correct: isCorrect })
+    }
     if (isCorrect) {
       sfx.correct()
       setCorrectCount((c) => c + 1)

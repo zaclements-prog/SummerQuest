@@ -4,8 +4,9 @@ import type { GameProps } from '../screens/GameRunner'
 import { nextProblem, type Problem } from '../lib/problem'
 import { sfx } from '../lib/sound'
 import { useProgress } from '../store/progress'
+import { skillOf } from '../tutoring/skills'
 
-export default function SpeedRun({ provider, params, onComplete }: GameProps) {
+export default function SpeedRun({ provider, params, onComplete, meta }: GameProps) {
   const timeLimitSec = (params?.timeLimitSec as number) ?? 60
   const starThresholds = (params?.starThresholds as [number, number, number]) ?? [10, 15, 20]
 
@@ -17,6 +18,7 @@ export default function SpeedRun({ provider, params, onComplete }: GameProps) {
   const [totalAnswered, setTotalAnswered] = useState(0)
   const startedAt = useRef(Date.now())
   const recordAnswer = useProgress((s) => s.recordAnswer)
+  const recordAttempt = useProgress((s) => s.recordAttempt)
 
   useEffect(() => {
     let cancel = false
@@ -56,6 +58,10 @@ export default function SpeedRun({ provider, params, onComplete }: GameProps) {
     if (!problem || feedback || timeLeft <= 0) return
     const isCorrect = opt === problem.answer
     recordAnswer(isCorrect)
+    if (meta) {
+      const sk = skillOf(problem)
+      recordAttempt({ zoneId: meta.zoneId, topic: provider.topic, skillId: sk.id, skillLabel: sk.label, correct: isCorrect })
+    }
     setTotalAnswered((n) => n + 1)
     if (isCorrect) {
       sfx.correct()
