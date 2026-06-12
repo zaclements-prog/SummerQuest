@@ -52,12 +52,45 @@ export function skillOf(problem: Problem): Skill {
   return { id, label: SKILLS[id]?.label ?? topicLabel(problem.topic) }
 }
 
+/** Maps a provider `topic` string → a representative registered skill id, so an
+ *  untagged problem (e.g. LLM-generated) still routes to the right zone/lesson. */
+const TOPIC_DEFAULT_SKILL: Record<string, string> = {
+  multiplication: 'mult-f2_5',
+  division: 'div-basic',
+  'fraction-equivalence': 'frac-equiv',
+  'fraction-compare': 'frac-cmp-unlikeden',
+  'place-value-identify': 'pv-identify',
+  'place-value-rounding': 'pv-round',
+  measurement: 'meas-area',
+  'measurement-area': 'meas-area',
+  'measurement-perimeter': 'meas-perimeter',
+  'measurement-time': 'meas-time',
+  'measurement-money': 'meas-money',
+  geometry: 'geo-shapes',
+  data: 'data-graphs',
+  'word-problem': 'wp-solve',
+  'reading-comprehension': 'read-comprehend',
+  writing: 'write-craft',
+  science: 'sci-explore',
+}
+
 function deriveSkillId(problem: Problem): string {
-  switch (problem.topic) {
-    case 'multiplication': return multBucket(problem.subtopic)
-    case 'division':       return 'div-basic'
-    default:               return `topic-${problem.topic}`
+  if (problem.topic === 'multiplication') return multBucket(problem.subtopic)
+  if (problem.topic === 'division') return divBucket(problem.subtopic)
+  const mapped = TOPIC_DEFAULT_SKILL[problem.topic]
+  if (mapped) return mapped
+  // prefix match catches variants like 'measurement-mixed' → 'measurement'
+  for (const key of Object.keys(TOPIC_DEFAULT_SKILL)) {
+    if (problem.topic.startsWith(key)) return TOPIC_DEFAULT_SKILL[key]
   }
+  return `topic-${problem.topic}`
+}
+
+function divBucket(subtopic?: string): string {
+  const nums = (subtopic ?? '').split(/[÷/x×]/).map((s) => parseInt(s, 10)).filter((n) => !isNaN(n))
+  // For "a ÷ b" the divisor is the second number; fall back to the largest seen.
+  const divisor = nums.length >= 2 ? nums[1] : nums.length ? Math.max(...nums) : 0
+  return divisor >= 6 ? 'div-larger' : 'div-basic'
 }
 
 function multBucket(subtopic?: string): string {
@@ -75,12 +108,17 @@ function topicLabel(topic: string): string {
 
 /** Metadata for a skill id, with a safe fallback for unknown ids. */
 export function skillMeta(id: string): SkillMeta {
-  return (
-    SKILLS[id] ?? {
-      label: id.replace(/^topic-/, ''),
-      zoneId: 'multiplication-mesa',
-      lessonId: 'multiplication',
-      practiceStageId: 'mult-practice',
-    }
-  )
+  if (SKILLS[id]) return SKILLS[id]
+  // A `topic-<x>` id (unregistered topic) still routes to the right zone when the
+  // topic is known, instead of always falling back to multiplication.
+  if (id.startsWith('topic-')) {
+    const mapped = TOPIC_DEFAULT_SKILL[id.slice('topic-'.length)]
+    if (mapped && SKILLS[mapped]) return SKILLS[mapped]
+  }
+  return {
+    label: id.replace(/^topic-/, ''),
+    zoneId: 'multiplication-mesa',
+    lessonId: 'multiplication',
+    practiceStageId: 'mult-practice',
+  }
 }

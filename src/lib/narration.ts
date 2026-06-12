@@ -8,17 +8,19 @@ async function loadManifest(): Promise<Manifest> {
   if (manifestCache) return manifestCache
   try {
     const r = await fetch(`${import.meta.env.BASE_URL}tts/manifest.json`)
-    manifestCache = r.ok ? await r.json() : {}
+    if (!r.ok) return {} // transient: don't cache, so a later call can retry
+    manifestCache = await r.json()
+    return manifestCache!
   } catch {
-    manifestCache = {}
+    return {} // network blip / offline: leave cache null so we retry next time
   }
-  return manifestCache!
 }
 
 /** Plays narration for a lesson step: MP3 if available, else browser speech synthesis. */
 export function useNarration(lessonId: string, stepId: string, text: string) {
   const soundEnabled = useProgress((s) => s.soundEnabled)
   const audioRef = useRef<HTMLAudioElement | null>(null)
+  const genRef = useRef(0)
   const [playing, setPlaying] = useState(false)
 
   const stop = () => {
@@ -30,7 +32,11 @@ export function useNarration(lessonId: string, stepId: string, text: string) {
 
   const play = async () => {
     stop()
+    // Guard against overlapping invocations (rapid taps / step changes): if a newer
+    // play() started during the await, abandon this one so we don't leak a second Audio.
+    const gen = ++genRef.current
     const man = await loadManifest()
+    if (gen !== genRef.current) return
     const clip = man[`${lessonId}/${stepId}`]
     if (clip) {
       const audio = new Audio(`${import.meta.env.BASE_URL}${clip.file}`)

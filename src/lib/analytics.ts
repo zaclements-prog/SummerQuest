@@ -135,9 +135,9 @@ export interface WeakSkill {
 
 export function weakSkills(
   attempts: SkillAttempt[],
-  opts: { days?: number; minAttempts?: number; max?: number; now?: number } = {},
+  opts: { days?: number; minAttempts?: number; max?: number; maxAccuracy?: number; now?: number } = {},
 ): WeakSkill[] {
-  const { days = 7, minAttempts = 4, max = 5, now = Date.now() } = opts
+  const { days = 7, minAttempts = 4, max = 5, maxAccuracy = 80, now = Date.now() } = opts
   const recent = withinDays(attempts, days, now)
   const map = new Map<string, WeakSkill>()
   for (const a of recent) {
@@ -148,7 +148,12 @@ export function weakSkills(
   }
   const arr = [...map.values()].filter((w) => w.attempts >= minAttempts)
   for (const w of arr) w.accuracy = Math.round((w.correct / w.attempts) * 100)
-  return arr.sort((x, y) => x.accuracy - y.accuracy || y.attempts - x.attempts).slice(0, max)
+  // Only surface skills the student is actually struggling with (accuracy below the
+  // mastery bar) — a student acing everything should see an empty focus list.
+  return arr
+    .filter((w) => w.accuracy < maxAccuracy)
+    .sort((x, y) => x.accuracy - y.accuracy || y.attempts - x.attempts)
+    .slice(0, max)
 }
 
 export interface FocusItem extends WeakSkill {
