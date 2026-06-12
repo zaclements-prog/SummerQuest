@@ -258,5 +258,6 @@ function makeMcProblem(
     visual: { kind: 'wordProblem', text: built.prompt },
     topic,
     hint: built.hint,
+    skill: { id: 'wp-solve', label: 'word problems' },
   }
 }

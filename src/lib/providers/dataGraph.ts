@@ -477,6 +477,7 @@ function makeStaticDataGraphProvider(cfg: Config): ProblemProvider {
         topic: 'data',
         difficulty: cfg.level,
         hint: c.hint,
+        skill: { id: 'data-graphs', label: 'reading graphs' },
       }
     },
     reset() {

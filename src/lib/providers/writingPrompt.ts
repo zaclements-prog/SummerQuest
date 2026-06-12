@@ -86,6 +86,7 @@ function makeStaticWritingPromptProvider(cfg: Config): ProblemProvider {
         answer: 'open',
         topic: `writing-${cfg.kind}`,
         difficulty: cfg.kind === 'sentence' ? 1 : cfg.kind === 'paragraph' ? 2 : 3,
+        skill: { id: 'write-craft', label: 'writing' },
       }
     },
   }

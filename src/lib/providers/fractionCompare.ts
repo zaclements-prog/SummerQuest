@@ -32,6 +32,10 @@ export function makeFractionCompareProvider(cfg: Config): ProblemProvider {
         },
         topic: 'fraction-compare',
         difficulty: Math.max(d1, d2),
+        skill:
+          d1 === d2
+            ? { id: 'frac-cmp-likeden', label: 'comparing (same bottom)' }
+            : { id: 'frac-cmp-unlikeden', label: 'comparing (different bottoms)' },
         hint:
           d1 === d2
             ? 'Same denominator — just compare the tops.'

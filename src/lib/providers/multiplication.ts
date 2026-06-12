@@ -24,6 +24,10 @@ export function makeMultiplicationProvider(cfg: Config): ProblemProvider {
         topic: 'multiplication',
         subtopic: `${a}×${b}`,
         difficulty: Math.max(a, b),
+        skill: {
+          id: Math.max(a, b) >= 10 ? 'mult-f10_12' : Math.max(a, b) >= 6 ? 'mult-f6_9' : 'mult-f2_5',
+          label: Math.max(a, b) >= 10 ? '10–12× facts' : Math.max(a, b) >= 6 ? '6–9× facts' : '2–5× facts',
+        },
         hint: a <= b
           ? `Try counting by ${a}s: ${Array.from({ length: b }, (_, i) => a * (i + 1)).join(', ')}`
           : `Try counting by ${b}s: ${Array.from({ length: a }, (_, i) => b * (i + 1)).join(', ')}`,
