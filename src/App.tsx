@@ -13,6 +13,8 @@ import BadgesScreen from './screens/BadgesScreen'
 import ShopScreen from './screens/ShopScreen'
 import DailyChallenge from './screens/DailyChallenge'
 import ProgressScreen from './screens/ProgressScreen'
+import TutorIndex from './screens/TutorIndex'
+import TutorScreen from './screens/TutorScreen'
 
 function RequireAvatar({ children }: { children: React.ReactNode }) {
   const player = useProgress((s) => s.player)
@@ -100,6 +102,22 @@ export default function App() {
             element={
               <RequireAvatar>
                 <ProgressScreen />
+              </RequireAvatar>
+            }
+          />
+          <Route
+            path="/tutor"
+            element={
+              <RequireAvatar>
+                <TutorIndex />
+              </RequireAvatar>
+            }
+          />
+          <Route
+            path="/tutor/:lessonId"
+            element={
+              <RequireAvatar>
+                <TutorScreen />
               </RequireAvatar>
             }
           />
