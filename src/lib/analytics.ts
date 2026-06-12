@@ -114,3 +114,56 @@ export function recentAccuracy(sessions: SessionRecord[], n = 8): RecentPoint[] 
     total: r.total,
   }))
 }
+
+import type { SkillAttempt } from '../store/progress'
+import { skillMeta } from '../tutoring/skills'
+
+const DAY_MS = 86_400_000
+
+export function withinDays<T extends { at: number }>(items: T[], days: number, now = Date.now()): T[] {
+  const cutoff = now - days * DAY_MS
+  return items.filter((i) => i.at >= cutoff)
+}
+
+export interface WeakSkill {
+  skillId: string
+  label: string
+  attempts: number
+  correct: number
+  accuracy: number
+}
+
+export function weakSkills(
+  attempts: SkillAttempt[],
+  opts: { days?: number; minAttempts?: number; max?: number; now?: number } = {},
+): WeakSkill[] {
+  const { days = 7, minAttempts = 4, max = 5, now = Date.now() } = opts
+  const recent = withinDays(attempts, days, now)
+  const map = new Map<string, WeakSkill>()
+  for (const a of recent) {
+    const w = map.get(a.skillId) ?? { skillId: a.skillId, label: a.skillLabel, attempts: 0, correct: 0, accuracy: 0 }
+    w.attempts += 1
+    w.correct += a.correct ? 1 : 0
+    map.set(a.skillId, w)
+  }
+  const arr = [...map.values()].filter((w) => w.attempts >= minAttempts)
+  for (const w of arr) w.accuracy = Math.round((w.correct / w.attempts) * 100)
+  return arr.sort((x, y) => x.accuracy - y.accuracy || y.attempts - x.attempts).slice(0, max)
+}
+
+export interface FocusItem extends WeakSkill {
+  zoneId: string
+  lessonId: string
+  practiceStageId: string
+}
+
+export function weeklyFocus(
+  attempts: SkillAttempt[],
+  _sessions: SessionRecord[],
+  now = Date.now(),
+): FocusItem[] {
+  return weakSkills(attempts, { now }).map((w) => {
+    const m = skillMeta(w.skillId)
+    return { ...w, label: w.label || m.label, zoneId: m.zoneId, lessonId: m.lessonId, practiceStageId: m.practiceStageId }
+  })
+}
