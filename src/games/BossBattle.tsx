@@ -4,8 +4,9 @@ import type { GameProps } from '../screens/GameRunner'
 import { nextProblem, type Problem } from '../lib/problem'
 import { sfx } from '../lib/sound'
 import { useProgress } from '../store/progress'
+import { skillOf } from '../tutoring/skills'
 
-export default function BossBattle({ provider, params, onComplete }: GameProps) {
+export default function BossBattle({ provider, params, onComplete, meta }: GameProps) {
   const questionCount = (params?.questionCount as number) ?? 6
   const bossEmoji = (params?.bossEmoji as string) ?? '🌵'
   const bossName = (params?.bossName as string) ?? 'Cactus Cyclops'
@@ -25,6 +26,7 @@ export default function BossBattle({ provider, params, onComplete }: GameProps) 
   const [state, setState] = useState<'idle' | 'attacking' | 'hurt'>('idle')
   const [bossShake, setBossShake] = useState(false)
   const recordAnswer = useProgress((s) => s.recordAnswer)
+  const recordAttempt = useProgress((s) => s.recordAttempt)
 
   useEffect(() => {
     let cancel = false
@@ -67,6 +69,10 @@ export default function BossBattle({ provider, params, onComplete }: GameProps) 
 
     const isCorrect = opt === problem.answer
     recordAnswer(isCorrect)
+    if (meta) {
+      const sk = skillOf(problem)
+      recordAttempt({ zoneId: meta.zoneId, topic: provider.topic, skillId: sk.id, skillLabel: sk.label, correct: isCorrect })
+    }
     const answeredNow = questionsAnswered + 1
     setQuestionsAnswered(answeredNow)
 

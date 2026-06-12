@@ -16,7 +16,7 @@ interface Feedback {
   summary: string
 }
 
-export default function WritingPad({ provider, params, onComplete }: GameProps) {
+export default function WritingPad({ provider, params, onComplete, meta }: GameProps) {
   const kind = (params?.kind as 'sentence' | 'paragraph' | 'story') ?? 'sentence'
   const questionCount = (params?.questionCount as number) ?? 1
   const minWords =
@@ -24,6 +24,7 @@ export default function WritingPad({ provider, params, onComplete }: GameProps) 
     (kind === 'sentence' ? 3 : kind === 'paragraph' ? 12 : 25)
 
   const player = useProgress((s) => s.player)
+  const recordAttempt = useProgress((s) => s.recordAttempt)
   const llmEnabled = useSettings((s) => s.llmEnabled)
   const [idx, setIdx] = useState(0)
   const [problem, setProblem] = useState<Problem | null>(null)
@@ -94,6 +95,7 @@ export default function WritingPad({ provider, params, onComplete }: GameProps) 
 
   function nextOrFinish() {
     if (!feedback) return
+    if (meta) recordAttempt({ zoneId: meta.zoneId, topic: provider.topic, skillId: 'write-craft', skillLabel: 'writing', correct: feedback.stars > 0 })
     const stars = [...totalStars, feedback.stars]
     if (idx + 1 >= questionCount) {
       const avgStars = Math.round(

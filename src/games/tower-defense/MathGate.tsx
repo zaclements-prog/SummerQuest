@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { nextProblem, type Problem, type ProblemProvider } from '../../lib/problem'
 import { sfx } from '../../lib/sound'
 import { useProgress } from '../../store/progress'
+import { skillOf } from '../../tutoring/skills'
 
 interface Props {
   open: boolean
@@ -10,13 +11,15 @@ interface Props {
   provider: ProblemProvider
   onCorrect: () => void
   onCancel: () => void
+  meta?: { zoneId: string; stageId: string }
 }
 
-export default function MathGate({ open, title, provider, onCorrect, onCancel }: Props) {
+export default function MathGate({ open, title, provider, onCorrect, onCancel, meta }: Props) {
   const [problem, setProblem] = useState<Problem | null>(null)
   const [shake, setShake] = useState(false)
   const [wrongCount, setWrongCount] = useState(0)
   const recordAnswer = useProgress((s) => s.recordAnswer)
+  const recordAttempt = useProgress((s) => s.recordAttempt)
 
   // refresh problem every time the modal opens
   useEffect(() => {
@@ -31,6 +34,10 @@ export default function MathGate({ open, title, provider, onCorrect, onCancel }:
     if (!problem) return
     const correct = opt === problem.answer
     recordAnswer(correct)
+    if (meta) {
+      const sk = skillOf(problem)
+      recordAttempt({ zoneId: meta.zoneId, topic: provider.topic, skillId: sk.id, skillLabel: sk.label, correct })
+    }
     if (correct) {
       sfx.correct()
       onCorrect()
