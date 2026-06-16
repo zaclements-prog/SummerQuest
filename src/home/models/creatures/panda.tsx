@@ -1,3 +1,5 @@
+import { Leg } from '../parts'
+
 export function Panda() {
   const white = '#f4f4f4', black = '#222222'
   return (
@@ -50,13 +52,9 @@ export function Panda() {
           <meshStandardMaterial color={black} />
         </mesh>
       ))}
-      {/* black legs */}
-      {[[-0.18, -0.22], [0.18, -0.22]].map(([x, z], i) => (
-        <mesh key={`leg${i}`} castShadow position={[x, 0.1, z]}>
-          <boxGeometry args={[0.16, 0.2, 0.18]} />
-          <meshStandardMaterial color={black} />
-        </mesh>
-      ))}
+      {/* black legs (animated) */}
+      <Leg x={-0.18} z={-0.22} color={black} w={0.16} h={0.2} depth={0.18} phase={0} />
+      <Leg x={0.18} z={-0.22} color={black} w={0.16} h={0.2} depth={0.18} phase={Math.PI} />
     </group>
   )
 }

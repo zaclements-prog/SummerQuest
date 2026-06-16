@@ -1,3 +1,5 @@
+import { Leg } from '../parts'
+
 export function Trex() {
   const green = '#6fae3e', belly = '#a8d878', white = '#ffffff', dark = '#1c2a12'
   return (
@@ -48,20 +50,9 @@ export function Trex() {
           <meshStandardMaterial color={green} />
         </mesh>
       ))}
-      {/* thick legs */}
-      {[-0.14, 0.14].map((x) => (
-        <mesh key={`leg${x}`} castShadow position={[x, 0.16, 0.02]}>
-          <boxGeometry args={[0.16, 0.32, 0.2]} />
-          <meshStandardMaterial color={green} />
-        </mesh>
-      ))}
-      {/* feet */}
-      {[-0.14, 0.14].map((x) => (
-        <mesh key={`foot${x}`} castShadow position={[x, 0.03, 0.1]}>
-          <boxGeometry args={[0.16, 0.06, 0.24]} />
-          <meshStandardMaterial color={green} />
-        </mesh>
-      ))}
+      {/* thick legs + feet (animated, swing together) */}
+      <Leg x={-0.14} z={0.02} color={green} w={0.16} h={0.32} depth={0.2} phase={0} swing={0.45} foot={{ w: 0.16, h: 0.06, d: 0.24, z: 0.08 }} />
+      <Leg x={0.14} z={0.02} color={green} w={0.16} h={0.32} depth={0.2} phase={Math.PI} swing={0.45} foot={{ w: 0.16, h: 0.06, d: 0.24, z: 0.08 }} />
     </group>
   )
 }
