@@ -10,8 +10,9 @@ import { creatureForEmoji } from '../lib/home/catalog'
 
 export default function HomeScreen() {
   const [params] = useSearchParams()
-  const studio = params.get('studio') // 'creatures' | 'furniture' (dev model gallery)
-  const isStudio = studio === 'creatures' || studio === 'furniture'
+  const studio = params.get('studio') // 'creatures' | 'furniture' | 'accessories' (dev gallery)
+  const isStudio = studio === 'creatures' || studio === 'furniture' || studio === 'accessories'
+  const studioCam: [number, number, number] = studio === 'accessories' ? [3, 3.4, 6] : [0, 10, 21]
 
   const player = useProgress((s) => s.player)
   const ownedCount = useProgress((s) => s.ownedCreatures.length)
@@ -31,11 +32,11 @@ export default function HomeScreen() {
     <div className="flex-1 relative">
       <Canvas
         shadows
-        camera={{ position: isStudio ? [0, 10, 21] : [16, 16, 16], fov: 42 }}
+        camera={{ position: isStudio ? studioCam : [16, 16, 16], fov: 42 }}
         style={{ position: 'absolute', inset: 0 }}
       >
         <color attach="background" args={['#bfe3f2']} />
-        {isStudio ? <ModelStudio kind={studio as 'creatures' | 'furniture'} /> : <HomeWorld />}
+        {isStudio ? <ModelStudio kind={studio as 'creatures' | 'furniture' | 'accessories'} /> : <HomeWorld />}
       </Canvas>
       {!isStudio && <HomeHud />}
     </div>
