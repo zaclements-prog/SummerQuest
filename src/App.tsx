@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, lazy, Suspense } from 'react'
 import { useProgress } from './store/progress'
 import { unlockAudio } from './lib/sound'
 import AppShell from './components/AppShell'
@@ -16,6 +16,7 @@ import ProgressScreen from './screens/ProgressScreen'
 import TutorIndex from './screens/TutorIndex'
 import TutorScreen from './screens/TutorScreen'
 import FocusScreen from './screens/FocusScreen'
+const HomeScreen = lazy(() => import('./screens/HomeScreen'))
 
 function RequireAvatar({ children }: { children: React.ReactNode }) {
   const player = useProgress((s) => s.player)
@@ -123,6 +124,16 @@ export default function App() {
             }
           />
           <Route path="/focus" element={<RequireAvatar><FocusScreen /></RequireAvatar>} />
+          <Route
+            path="/home"
+            element={
+              <RequireAvatar>
+                <Suspense fallback={<div className="flex-1 grid place-items-center text-white kid-text text-2xl">Loading your home…</div>}>
+                  <HomeScreen />
+                </Suspense>
+              </RequireAvatar>
+            }
+          />
           <Route path="/parent" element={<ParentDashboard />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
