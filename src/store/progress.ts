@@ -58,6 +58,8 @@ export interface SkillAttempt {
   correct: boolean
 }
 
+export interface PlacedItem { uid: string; itemId: string; gx: number; gz: number; rot: number }
+
 const MAX_SESSIONS = 300
 const MAX_ATTEMPTS = 2000
 
@@ -81,6 +83,10 @@ interface ProgressState {
   sessionsRewardedToday: number
   /** Transient: the session # (1 or 2) that just completed, for a one-time celebration. */
   timeSessionJustCompleted: number | null
+  ownedCreatures: string[]
+  activeCreature: string | null
+  ownedHomeItems: Record<string, number>
+  placedItems: PlacedItem[]
 
   // actions
   setAvatar: (avatar: AvatarChoice) => void
@@ -105,6 +111,12 @@ interface ProgressState {
   recordAttempt: (a: Omit<SkillAttempt, 'id' | 'at'> & { at?: number }) => void
   tickPlay: (seconds: number) => void
   clearTimeCelebration: () => void
+  buyHomeItem: (id: string, price: number) => boolean
+  placeItem: (itemId: string, gx: number, gz: number, rot: number) => string | null
+  moveItem: (uid: string, gx: number, gz: number, rot: number) => void
+  removeItem: (uid: string) => void
+  buyCreature: (id: string, price: number) => boolean
+  becomeCreature: (id: string) => void
 }
 
 const todayKey = () => new Date().toISOString().slice(0, 10)
@@ -131,6 +143,10 @@ export const useProgress = create<ProgressState>()(
       playSecondsToday: 0,
       sessionsRewardedToday: 0,
       timeSessionJustCompleted: null,
+      ownedCreatures: [],
+      activeCreature: null,
+      ownedHomeItems: {},
+      placedItems: [],
 
       setAvatar: (avatar) => set({ player: avatar }),
 
@@ -156,6 +172,10 @@ export const useProgress = create<ProgressState>()(
           playSecondsToday: 0,
           sessionsRewardedToday: 0,
           timeSessionJustCompleted: null,
+          ownedCreatures: [],
+          activeCreature: null,
+          ownedHomeItems: {},
+          placedItems: [],
         }),
 
       awardStage: (zoneId, stageId, stars, score) => {
@@ -244,6 +264,45 @@ export const useProgress = create<ProgressState>()(
       },
 
       equipCosmetic: (id) => set({ equippedCosmetic: id }),
+
+      buyHomeItem: (id, price) => {
+        const { coins, ownedHomeItems } = get()
+        if (coins < price) return false
+        set({ coins: coins - price, ownedHomeItems: { ...ownedHomeItems, [id]: (ownedHomeItems[id] ?? 0) + 1 } })
+        return true
+      },
+      placeItem: (itemId, gx, gz, rot) => {
+        const { ownedHomeItems, placedItems } = get()
+        if ((ownedHomeItems[itemId] ?? 0) <= 0) return null
+        const uid = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`
+        set({
+          ownedHomeItems: { ...ownedHomeItems, [itemId]: ownedHomeItems[itemId] - 1 },
+          placedItems: [...placedItems, { uid, itemId, gx, gz, rot }],
+        })
+        return uid
+      },
+      moveItem: (uid, gx, gz, rot) =>
+        set({ placedItems: get().placedItems.map((p) => (p.uid === uid ? { ...p, gx, gz, rot } : p)) }),
+      removeItem: (uid) => {
+        const { placedItems, ownedHomeItems } = get()
+        const item = placedItems.find((p) => p.uid === uid)
+        if (!item) return
+        set({
+          placedItems: placedItems.filter((p) => p.uid !== uid),
+          ownedHomeItems: { ...ownedHomeItems, [item.itemId]: (ownedHomeItems[item.itemId] ?? 0) + 1 },
+        })
+      },
+      buyCreature: (id, price) => {
+        const { coins, ownedCreatures } = get()
+        if (ownedCreatures.includes(id)) return true
+        if (coins < price) return false
+        set({ coins: coins - price, ownedCreatures: [...ownedCreatures, id] })
+        return true
+      },
+      becomeCreature: (id) => {
+        if (!get().ownedCreatures.includes(id)) return
+        set({ activeCreature: id })
+      },
 
       recordSession: (rec) => {
         const at = rec.at ?? Date.now()
