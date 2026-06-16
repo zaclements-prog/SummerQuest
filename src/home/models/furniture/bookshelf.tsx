@@ -1,31 +1,38 @@
 export function Bookshelf() {
   const frame = '#8a5a36'
+  const back = '#6f4527'
   const bookColors = ['#d94f4f', '#4f8fd9', '#e0b341', '#5fb35f', '#9b5fd9', '#e07f3c', '#41c0c0']
-  // two shelf rows at these y heights; books stand on each
-  const rows = [0.42, 1.06]
-  // book x positions across the 1.8-wide cabinet (interior ~1.6)
-  const bookXs = [-0.7, -0.5, -0.3, -0.1, 0.1, 0.3, 0.5, 0.7]
+  const bookXs = [-0.66, -0.48, -0.3, -0.12, 0.06, 0.24, 0.42, 0.6]
+  // top-of-board y for each open shelf where books stand
+  const shelves = [0.12, 0.6, 1.08]
   return (
     <group>
-      {/* cabinet body — w(x) 1.8 × h 1.6 × d(z) 0.4, back toward -z */}
-      <mesh castShadow position={[0, 0.8, 0]}>
-        <boxGeometry args={[1.8, 1.6, 0.4]} />
-        <meshStandardMaterial color={frame} />
+      {/* back panel — open front (+z) so the books show */}
+      <mesh castShadow position={[0, 0.82, -0.17]}>
+        <boxGeometry args={[1.8, 1.64, 0.06]} />
+        <meshStandardMaterial color={back} />
       </mesh>
-      {/* horizontal shelf dividers */}
-      {rows.map((y) => (
-        <mesh key={`shelf-${y}`} castShadow position={[0, y - 0.12, 0.02]}>
-          <boxGeometry args={[1.7, 0.05, 0.36]} />
-          <meshStandardMaterial color="#6f4527" />
+      {/* side panels */}
+      {[-0.87, 0.87].map((x) => (
+        <mesh key={`side${x}`} castShadow position={[x, 0.82, 0]}>
+          <boxGeometry args={[0.07, 1.64, 0.4]} />
+          <meshStandardMaterial color={frame} />
         </mesh>
       ))}
-      {/* rows of books standing on each shelf, slightly forward (+z) */}
-      {rows.map((y, r) =>
+      {/* bottom, two shelf dividers, top */}
+      {[0.06, 0.56, 1.04, 1.58].map((y) => (
+        <mesh key={`board${y}`} castShadow position={[0, y, 0]}>
+          <boxGeometry args={[1.74, 0.07, 0.4]} />
+          <meshStandardMaterial color={frame} />
+        </mesh>
+      ))}
+      {/* colorful books standing in the open compartments */}
+      {shelves.map((sy, r) =>
         bookXs.map((x, i) => {
           const h = 0.34 + ((i + r) % 3) * 0.06
           return (
-            <mesh key={`book-${r}-${x}`} castShadow position={[x, y + h / 2 - 0.1, 0.07]}>
-              <boxGeometry args={[0.16, h, 0.22]} />
+            <mesh key={`book-${r}-${i}`} castShadow position={[x, sy + h / 2, 0]}>
+              <boxGeometry args={[0.15, h, 0.24]} />
               <meshStandardMaterial color={bookColors[(i + r * 2) % bookColors.length]} />
             </mesh>
           )
