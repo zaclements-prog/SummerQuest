@@ -71,10 +71,10 @@ tile-based approach from that author's Three.js series.
 ```
 HomeScreen (route, lazy)
 ├─ <Canvas> frameloop="demand"            three world
-│  ├─ CameraRig        low-FOV (~30–35°) perspective, pitched ~35° down; 90° yaw snaps + clamped zoom
+│  ├─ CameraRig        low-FOV (~30–35°) perspective, pitched ~35° down; 90° yaw snaps + clamped zoom + gentle pan (to roam the 20×20 room)
 │  ├─ Lights           hemisphere/ambient + key directional; soft contact shadow under items
 │  ├─ RoomShell        procedural floor plane + 2 cutaway walls + baseboards (flat colors)
-│  ├─ TileGrid         hover highlight + raycast picking; placement ghost while in Decorate mode
+│  ├─ TileGrid         single floor plane raycast → tile index; one moving hover highlight; placement ghost in Decorate mode
 │  ├─ PlacedItems      maps placedItems[] → <ProceduralItem spec/>; instance repeats
 │  └─ AvatarCreature   active creature: idle bob, wander, greet-on-mount, emote on tap
 └─ HUD (DOM over canvas)
@@ -95,10 +95,10 @@ HomeScreen (route, lazy)
   slug `id` (e.g. `'fox'`, `'dragon'`) paired with its `emoji` (the same emoji `AvatarCreate`
   uses). The **starter** creature is whichever roster entry's `emoji` matches the player's chosen
   `player.emoji` (price effectively 0 — owned for free); all others have coin prices.
-- `grid.ts` — **pure** helpers: tile↔world coordinate conversion (fixed **`GRID_SIZE = 10`**,
-  i.e. a 10×10 floor), and `canPlace(occupied, footprint, gx, gz, rot)` → boolean (bounds +
-  overlap, accounting for rotation swapping the footprint's w/d). These are the unit-tested core
-  of placement.
+- `grid.ts` — **pure** helpers: tile↔world coordinate conversion (fixed **`GRID_SIZE = 20`**,
+  i.e. a 20×20 floor — roomy enough for distinct activity zones), and
+  `canPlace(occupied, footprint, gx, gz, rot)` → boolean (bounds + overlap, accounting for
+  rotation swapping the footprint's w/d). These are the unit-tested core of placement.
 - `registry.ts` — `modelId → builder` and `creatureId → creatureBuilder` lookup, with a visible
   fallback box for an unknown id (never crash).
 
@@ -145,7 +145,8 @@ all persisted to localStorage via the existing zustand persist
 - `frameloop="demand"` (R3F renders only on change) while the room is idle; switch to continuous
   only while the creature animates or in Play mode. Respects the app's existing care about paused
   rAF in background tabs.
-- Instance repeated items; modest shadow map; fixed 10×10 grid keeps geometry bounded.
+- Instance repeated items; modest shadow map. The 20×20 floor is one plane (tile picking is
+  math on the ray hit, not 400 meshes), so the larger room adds no per-tile cost.
 
 ## 3D model authoring workflow (vision-in-the-loop) — REQUIRED
 
