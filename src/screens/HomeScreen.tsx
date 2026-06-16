@@ -4,7 +4,7 @@ import HomeWorld from '../home/world/HomeWorld'
 export default function HomeScreen() {
   return (
     <div className="flex-1 relative">
-      <Canvas shadows camera={{ position: [16, 16, 16], fov: 30 }}>
+      <Canvas shadows camera={{ position: [16, 16, 16], fov: 30 }} style={{ position: 'absolute', inset: 0 }}>
         <color attach="background" args={['#bfe3f2']} />
         <HomeWorld />
       </Canvas>
