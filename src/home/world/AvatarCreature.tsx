@@ -6,10 +6,17 @@ import { useProgress } from '../../store/progress'
 import { useHomeUi } from '../useHomeUi'
 import { creatureBuilder } from '../models/registry'
 import { walkState } from '../models/walkState'
-import { tileToWorld, GRID_SIZE } from '../../lib/home/grid'
+import { tileToWorld, GRID_SIZE, TILE } from '../../lib/home/grid'
 import { sfx } from '../../lib/sound'
 
 const EMOTE_MS = 700
+const ROOM_LIMIT = (GRID_SIZE * TILE) / 2 - 0.6 // stay just inside the walls
+const WALK_SPEED = 3
+
+// reused each frame to avoid per-frame allocation (only one creature animates)
+const _f = new Vector3()
+const _r = new Vector3()
+const _m = new Vector3()
 
 function randomTarget(): Vector3 {
   const gx = Math.floor(Math.random() * GRID_SIZE)
@@ -49,12 +56,34 @@ export default function AvatarCreature() {
   const inner = useRef<Group>(null)
   const target = useRef<Vector3>(new Vector3(0, 0, 0))
   const emoteStart = useRef(0)
+  const keys = useRef({ w: false, a: false, s: false, d: false })
   const [emoting, setEmoting] = useState(false)
   const b = useMemo(() => ({ Builder: creatureBuilder(activeCreature) }), [activeCreature])
 
   useEffect(() => {
     if (activeCreature) sfx.victory()
   }, [activeCreature])
+
+  // WASD keyboard control of the creature.
+  useEffect(() => {
+    const setKey = (e: KeyboardEvent, down: boolean) => {
+      switch (e.key.toLowerCase()) {
+        case 'w': keys.current.w = down; break
+        case 'a': keys.current.a = down; break
+        case 's': keys.current.s = down; break
+        case 'd': keys.current.d = down; break
+        default: return
+      }
+    }
+    const onDown = (e: KeyboardEvent) => setKey(e, true)
+    const onUp = (e: KeyboardEvent) => setKey(e, false)
+    window.addEventListener('keydown', onDown)
+    window.addEventListener('keyup', onUp)
+    return () => {
+      window.removeEventListener('keydown', onDown)
+      window.removeEventListener('keyup', onUp)
+    }
+  }, [])
 
   const onPointerDown = (e: ThreeEvent<PointerEvent>) => {
     if (mode !== 'play') return
@@ -64,15 +93,40 @@ export default function AvatarCreature() {
     sfx.correct()
   }
 
-  useFrame((_, dt) => {
+  useFrame((state, dt) => {
     const g = group.current
     if (!g) return
     const now = performance.now()
     const emoteT = emoteStart.current ? (now - emoteStart.current) / EMOTE_MS : 1
     const isEmoting = emoteT < 1
     if (!isEmoting && emoting) setEmoting(false)
+
     let moving = false
-    if (!isEmoting) {
+    const k = keys.current
+    const controlled = !isEmoting && (k.w || k.a || k.s || k.d)
+
+    if (controlled) {
+      // move relative to the camera, projected onto the floor
+      state.camera.getWorldDirection(_f)
+      _f.y = 0
+      if (_f.lengthSq() < 1e-4) _f.set(0, 0, -1)
+      _f.normalize()
+      _r.set(-_f.z, 0, _f.x) // right = forward × up
+      _m.set(0, 0, 0)
+      if (k.w) _m.add(_f)
+      if (k.s) _m.sub(_f)
+      if (k.d) _m.add(_r)
+      if (k.a) _m.sub(_r)
+      if (_m.lengthSq() > 1e-4) {
+        _m.normalize()
+        g.position.addScaledVector(_m, WALK_SPEED * dt)
+        g.position.x = Math.max(-ROOM_LIMIT, Math.min(ROOM_LIMIT, g.position.x))
+        g.position.z = Math.max(-ROOM_LIMIT, Math.min(ROOM_LIMIT, g.position.z))
+        g.rotation.y = Math.atan2(_m.x, _m.z)
+        target.current.copy(g.position) // resume wandering from where you parked it
+        moving = true
+      }
+    } else if (!isEmoting) {
       const pos = g.position
       if (pos.distanceTo(target.current) < 0.2) target.current = randomTarget()
       const dir = target.current.clone().sub(pos)
@@ -83,7 +137,7 @@ export default function AvatarCreature() {
         moving = pos.distanceTo(target.current) > 0.05
       }
     }
-    // Drive the shared walk signal that the limb parts read each frame.
+
     walkState.t += dt
     walkState.moving = moving
     if (inner.current) {

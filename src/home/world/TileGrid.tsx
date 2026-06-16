@@ -4,6 +4,7 @@ import { GRID_SIZE, TILE, worldToTile, tileToWorld, footprintTiles, canPlace, ti
 import { useProgress } from '../../store/progress'
 import { useHomeUi } from '../useHomeUi'
 import { HOME_ITEMS } from '../../lib/home/catalog'
+import PlacementPreview from './PlacementPreview'
 
 const SIZE = GRID_SIZE * TILE
 
@@ -63,6 +64,9 @@ export default function TileGrid() {
             <meshBasicMaterial color={ok ? '#4ade80' : '#f87171'} transparent opacity={0.55} />
           </mesh>
         ))}
+      {placingItem && hover && (
+        <PlacementPreview item={placingItem} gx={hover.gx} gz={hover.gz} rot={rotation} />
+      )}
     </group>
   )
 }
