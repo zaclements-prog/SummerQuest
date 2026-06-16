@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useHomeUi } from '../useHomeUi'
 import ModeToggle from './ModeToggle'
 import CatalogDrawer from './CatalogDrawer'
+import ControlsHelp from './ControlsHelp'
 import { sfx } from '../../lib/sound'
 
 export default function HomeHud() {
@@ -13,7 +14,10 @@ export default function HomeHud() {
   return (
     <div className="absolute inset-0 pointer-events-none">
       <div className="absolute top-2 left-2 right-2 flex items-center justify-between">
-        <Link to="/map" onClick={() => sfx.click()} className="pointer-events-auto kid-text bg-ocean-900/70 text-white px-3 py-1 rounded-full text-sm">← Map</Link>
+        <div className="flex items-center gap-2">
+          <Link to="/map" onClick={() => sfx.click()} className="pointer-events-auto kid-text bg-ocean-900/70 text-white px-3 py-1 rounded-full text-sm">← Map</Link>
+          <ControlsHelp />
+        </div>
         <ModeToggle />
       </div>
       {placingItemId && (

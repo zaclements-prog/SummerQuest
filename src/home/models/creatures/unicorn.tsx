@@ -1,3 +1,5 @@
+import { Leg } from '../parts'
+
 export function Unicorn() {
   const white = '#f6f1ff', horn = '#f0d878', dark = '#2a2230'
   const maneCols = ['#f7a8d8', '#a8d8f7', '#c9a8f7']
@@ -49,13 +51,11 @@ export function Unicorn() {
           <meshStandardMaterial color={c} />
         </mesh>
       ))}
-      {/* legs */}
-      {[[-0.13, 0.24], [0.13, 0.24], [-0.13, -0.24], [0.13, -0.24]].map(([x, z], i) => (
-        <mesh key={`leg${i}`} castShadow position={[x, 0.12, z]}>
-          <boxGeometry args={[0.1, 0.24, 0.1]} />
-          <meshStandardMaterial color={white} />
-        </mesh>
-      ))}
+      {/* legs (animated: diagonal pairs swing together) */}
+      <Leg x={-0.13} z={0.24} color={white} w={0.1} phase={0} />
+      <Leg x={0.13} z={0.24} color={white} w={0.1} phase={Math.PI} />
+      <Leg x={-0.13} z={-0.24} color={white} w={0.1} phase={Math.PI} />
+      <Leg x={0.13} z={-0.24} color={white} w={0.1} phase={0} />
       {/* colorful tail */}
       {maneCols.map((c, i) => (
         <mesh key={`tail${i}`} castShadow position={[(i - 1) * 0.05, 0.4 - i * 0.04, -0.42]} rotation={[0.5, 0, 0]}>

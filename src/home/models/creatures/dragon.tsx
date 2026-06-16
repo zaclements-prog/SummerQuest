@@ -1,3 +1,5 @@
+import { Leg, Wing } from '../parts'
+
 export function Dragon() {
   const red = '#d0473a', belly = '#f3e0c8', horn = '#e8d2a0', dark = '#2a120e', white = '#ffffff'
   return (
@@ -48,13 +50,9 @@ export function Dragon() {
           <meshStandardMaterial color={horn} />
         </mesh>
       ))}
-      {/* big wings */}
-      {[-0.32, 0.32].map((x) => (
-        <mesh key={`wing${x}`} castShadow position={[x, 0.58, -0.1]} rotation={[0, x > 0 ? -0.6 : 0.6, x > 0 ? 0.5 : -0.5]}>
-          <boxGeometry args={[0.05, 0.46, 0.5]} />
-          <meshStandardMaterial color={belly} />
-        </mesh>
-      ))}
+      {/* big wings (animated: flap continuously) */}
+      <Wing x={-0.32} y={0.58} z={-0.1} side={-1} color={belly} w={0.46} thickness={0.05} d={0.5} />
+      <Wing x={0.32} y={0.58} z={-0.1} side={1} color={belly} w={0.46} thickness={0.05} d={0.5} />
       {/* back spikes along the spine */}
       {[0.18, 0.0, -0.18, -0.34].map((z, i) => (
         <mesh key={`spike${i}`} castShadow position={[0, 0.66, z]}>
@@ -62,13 +60,11 @@ export function Dragon() {
           <meshStandardMaterial color={horn} />
         </mesh>
       ))}
-      {/* legs */}
-      {[[-0.17, 0.24], [0.17, 0.24], [-0.17, -0.28], [0.17, -0.28]].map(([x, z], i) => (
-        <mesh key={`leg${i}`} castShadow position={[x, 0.12, z]}>
-          <boxGeometry args={[0.14, 0.24, 0.14]} />
-          <meshStandardMaterial color={red} />
-        </mesh>
-      ))}
+      {/* legs (animated: diagonal pairs swing together) */}
+      <Leg x={-0.17} z={0.24} color={red} w={0.14} phase={0} />
+      <Leg x={0.17} z={0.24} color={red} w={0.14} phase={Math.PI} />
+      <Leg x={-0.17} z={-0.28} color={red} w={0.14} phase={Math.PI} />
+      <Leg x={0.17} z={-0.28} color={red} w={0.14} phase={0} />
       {/* tail with tip */}
       <mesh castShadow position={[0, 0.34, -0.6]} rotation={[-0.55, 0, 0]}>
         <coneGeometry args={[0.12, 0.5, 4]} />

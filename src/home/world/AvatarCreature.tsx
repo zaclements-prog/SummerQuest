@@ -5,6 +5,7 @@ import { Group, Vector3 } from 'three'
 import { useProgress } from '../../store/progress'
 import { useHomeUi } from '../useHomeUi'
 import { creatureBuilder } from '../models/registry'
+import { walkState } from '../models/walkState'
 import { tileToWorld, GRID_SIZE } from '../../lib/home/grid'
 import { sfx } from '../../lib/sound'
 
@@ -70,6 +71,7 @@ export default function AvatarCreature() {
     const emoteT = emoteStart.current ? (now - emoteStart.current) / EMOTE_MS : 1
     const isEmoting = emoteT < 1
     if (!isEmoting && emoting) setEmoting(false)
+    let moving = false
     if (!isEmoting) {
       const pos = g.position
       if (pos.distanceTo(target.current) < 0.2) target.current = randomTarget()
@@ -78,12 +80,18 @@ export default function AvatarCreature() {
         dir.normalize()
         pos.addScaledVector(dir, Math.min(1.2 * dt, pos.distanceTo(target.current)))
         g.rotation.y = Math.atan2(dir.x, dir.z)
+        moving = pos.distanceTo(target.current) > 0.05
       }
     }
+    // Drive the shared walk signal that the limb parts read each frame.
+    walkState.t += dt
+    walkState.moving = moving
     if (inner.current) {
       const jump = isEmoting ? Math.sin(emoteT * Math.PI) * 0.5 : 0
-      inner.current.position.y = jump + Math.sin(now / 300) * 0.04
+      const stepBob = moving ? Math.abs(Math.sin(walkState.t * 9)) * 0.05 : 0
+      inner.current.position.y = jump + stepBob + Math.sin(now / 300) * 0.04
       inner.current.rotation.y = isEmoting ? emoteT * Math.PI * 2 : 0
+      inner.current.rotation.z = moving && !isEmoting ? Math.sin(walkState.t * 9) * 0.05 : 0
     }
   })
 

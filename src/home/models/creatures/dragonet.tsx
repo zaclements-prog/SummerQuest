@@ -1,3 +1,5 @@
+import { Leg, Wing } from '../parts'
+
 export function Dragonet() {
   const teal = '#3fb6a8', belly = '#bdeee7', horn = '#f3e0c8', dark = '#1c2a28'
   return (
@@ -43,20 +45,14 @@ export function Dragonet() {
           <meshStandardMaterial color={horn} />
         </mesh>
       ))}
-      {/* wings */}
-      {[-0.28, 0.28].map((x) => (
-        <mesh key={`wing${x}`} castShadow position={[x, 0.5, -0.06]} rotation={[0, x > 0 ? -0.5 : 0.5, x > 0 ? 0.4 : -0.4]}>
-          <boxGeometry args={[0.04, 0.3, 0.28]} />
-          <meshStandardMaterial color={belly} />
-        </mesh>
-      ))}
-      {/* legs */}
-      {[[-0.16, 0.18], [0.16, 0.18], [-0.16, -0.18], [0.16, -0.18]].map(([x, z], i) => (
-        <mesh key={`leg${i}`} castShadow position={[x, 0.1, z]}>
-          <boxGeometry args={[0.12, 0.2, 0.12]} />
-          <meshStandardMaterial color={teal} />
-        </mesh>
-      ))}
+      {/* wings (animated: flap continuously) */}
+      <Wing x={-0.28} y={0.5} z={-0.06} side={-1} color={belly} w={0.3} thickness={0.04} d={0.28} />
+      <Wing x={0.28} y={0.5} z={-0.06} side={1} color={belly} w={0.3} thickness={0.04} d={0.28} />
+      {/* legs (animated: diagonal pairs swing together) */}
+      <Leg x={-0.16} z={0.18} color={teal} h={0.2} phase={0} />
+      <Leg x={0.16} z={0.18} color={teal} h={0.2} phase={Math.PI} />
+      <Leg x={-0.16} z={-0.18} color={teal} h={0.2} phase={Math.PI} />
+      <Leg x={0.16} z={-0.18} color={teal} h={0.2} phase={0} />
       {/* tail */}
       <mesh castShadow position={[0, 0.36, -0.42]} rotation={[0.6, 0, 0]}>
         <coneGeometry args={[0.1, 0.36, 4]} />

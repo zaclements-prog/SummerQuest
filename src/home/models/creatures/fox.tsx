@@ -1,3 +1,5 @@
+import { Leg } from '../parts'
+
 export function Fox() {
   const orange = '#e8843c', cream = '#f5e6d0', dark = '#3a2a20'
   return (
@@ -47,13 +49,11 @@ export function Fox() {
           </mesh>
         </group>
       ))}
-      {/* legs */}
-      {[[-0.16, 0.26], [0.16, 0.26], [-0.16, -0.26], [0.16, -0.26]].map(([x, z], i) => (
-        <mesh key={i} castShadow position={[x, 0.12, z]}>
-          <boxGeometry args={[0.12, 0.24, 0.12]} />
-          <meshStandardMaterial color={dark} />
-        </mesh>
-      ))}
+      {/* legs (animated: diagonal pairs swing together) */}
+      <Leg x={-0.16} z={0.26} color={dark} phase={0} />
+      <Leg x={0.16} z={0.26} color={dark} phase={Math.PI} />
+      <Leg x={-0.16} z={-0.26} color={dark} phase={Math.PI} />
+      <Leg x={0.16} z={-0.26} color={dark} phase={0} />
       {/* tail */}
       <mesh castShadow position={[0, 0.5, -0.5]} rotation={[0.5, 0, 0]}>
         <boxGeometry args={[0.18, 0.18, 0.4]} />
