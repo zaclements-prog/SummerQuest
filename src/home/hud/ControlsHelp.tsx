@@ -32,6 +32,7 @@ export default function ControlsHelp() {
               <li>🖱️ <b>Drag</b> the room to spin it around and look from any side.</li>
               <li>✋ <b>Right-drag</b> (or two fingers) to slide the view across the room.</li>
               <li>🔍 <b>Scroll</b> or <b>pinch</b> to zoom in and out.</li>
+              <li>⌨️ Press <b>W A S D</b> to walk your creature around the room.</li>
               <li>🎮 <b>Play mode:</b> tap your creature to make it hop and cheer!</li>
               <li>🛠️ <b>Decorate mode:</b> buy furniture, then tap a green tile to place it. Tap <b>⟳ Rotate</b> to turn it before you drop it.</li>
               <li>📦 Tap a placed item to <b>pick it up</b> — put it somewhere new, or tap <b>✕ Cancel</b> to keep it in your bag.</li>
