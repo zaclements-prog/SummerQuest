@@ -8,3 +8,9 @@ describe('registry', () => {
     expect(typeof furnitureBuilder('nope')).toBe('function')
   })
 })
+
+import { CREATURES } from '../../../lib/home/catalog'
+import { _coverage } from '../registry'
+it('every creature id has a registered (non-fallback) builder', () => {
+  for (const c of CREATURES) expect(c.id in _coverage.CREATURE_BUILDERS).toBe(true)
+})

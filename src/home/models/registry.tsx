@@ -2,12 +2,34 @@
 import type { ReactNode } from 'react'
 import { CREATURES, HOME_ITEMS } from '../../lib/home/catalog'
 import { Fox } from './creatures/fox'
+import { Tiger } from './creatures/tiger'
+import { Lion } from './creatures/lion'
+import { Bear } from './creatures/bear'
+import { Panda } from './creatures/panda'
+import { Frog } from './creatures/frog'
+import { Owl } from './creatures/owl'
+import { Dragonet } from './creatures/dragonet'
+import { Unicorn } from './creatures/unicorn'
+import { Octopus } from './creatures/octopus'
+import { Trex } from './creatures/trex'
+import { Dragon } from './creatures/dragon'
 
 /** A builder is a component that renders the model centred on the floor, facing +z. */
 export type ModelBuilder = () => ReactNode
 
 const CREATURE_BUILDERS: Record<string, ModelBuilder> = {
   fox: Fox,
+  tiger: Tiger,
+  lion: Lion,
+  bear: Bear,
+  panda: Panda,
+  frog: Frog,
+  owl: Owl,
+  dragonet: Dragonet,
+  unicorn: Unicorn,
+  octopus: Octopus,
+  trex: Trex,
+  dragon: Dragon,
 }
 const FURNITURE_BUILDERS: Record<string, ModelBuilder> = {}
 
