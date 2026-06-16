@@ -5,6 +5,7 @@ import HomeWorld from '../home/world/HomeWorld'
 import ModelStudio from '../home/world/ModelStudio'
 import HomeHud from '../home/hud/HomeHud'
 import { useProgress } from '../store/progress'
+import { useHomeUi } from '../home/useHomeUi'
 import { creatureForEmoji } from '../lib/home/catalog'
 
 export default function HomeScreen() {
@@ -20,6 +21,11 @@ export default function HomeScreen() {
       if (c) useProgress.setState({ ownedCreatures: [c.id], activeCreature: c.id })
     }
   }, [player, ownedCount])
+
+  // Enter the Home fresh: never resume a stale "placing…" banner from a prior visit.
+  useEffect(() => {
+    useHomeUi.getState().cancelPlacing()
+  }, [])
 
   return (
     <div className="flex-1 relative">

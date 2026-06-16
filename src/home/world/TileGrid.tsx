@@ -55,7 +55,9 @@ export default function TileGrid() {
         </mesh>
       )}
       {placingItem && hover &&
-        footprintTiles(placingItem.footprint, hover.gx, hover.gz, rotation).map((t) => (
+        footprintTiles(placingItem.footprint, hover.gx, hover.gz, rotation)
+          .filter((t) => t.gx >= 0 && t.gz >= 0 && t.gx < GRID_SIZE && t.gz < GRID_SIZE)
+          .map((t) => (
           <mesh key={tileKey(t)} rotation={[-Math.PI / 2, 0, 0]} position={[tileToWorld(t.gx, t.gz).x, 0.03, tileToWorld(t.gx, t.gz).z]}>
             <planeGeometry args={[TILE * 0.92, TILE * 0.92]} />
             <meshBasicMaterial color={ok ? '#4ade80' : '#f87171'} transparent opacity={0.55} />
