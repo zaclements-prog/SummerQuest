@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber'
 import { useSearchParams } from 'react-router-dom'
 import HomeWorld from '../home/world/HomeWorld'
 import ModelStudio from '../home/world/ModelStudio'
+import HomeHud from '../home/hud/HomeHud'
 import { useProgress } from '../store/progress'
 import { creatureForEmoji } from '../lib/home/catalog'
 
@@ -30,6 +31,7 @@ export default function HomeScreen() {
         <color attach="background" args={['#bfe3f2']} />
         {isStudio ? <ModelStudio kind={studio as 'creatures' | 'furniture'} /> : <HomeWorld />}
       </Canvas>
+      {!isStudio && <HomeHud />}
     </div>
   )
 }
