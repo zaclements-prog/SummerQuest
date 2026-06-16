@@ -34,17 +34,30 @@ export function Tiger() {
         <boxGeometry args={[0.36, 0.34, 0.08]} />
         <meshStandardMaterial color={white} />
       </mesh>
-      {/* rounded ears */}
-      {[-0.15, 0.15].map((x) => (
-        <mesh key={`ear${x}`} castShadow position={[x, 0.86, 0.4]}>
-          <boxGeometry args={[0.13, 0.13, 0.07]} />
-          <meshStandardMaterial color={orange} />
+      {/* rounded ears (orange cup with a dark inner) */}
+      {[-0.16, 0.16].map((x) => (
+        <group key={`ear${x}`}>
+          <mesh castShadow position={[x, 0.88, 0.42]}>
+            <boxGeometry args={[0.15, 0.16, 0.08]} />
+            <meshStandardMaterial color={orange} />
+          </mesh>
+          <mesh position={[x, 0.88, 0.47]}>
+            <boxGeometry args={[0.08, 0.09, 0.04]} />
+            <meshStandardMaterial color={dark} />
+          </mesh>
+        </group>
+      ))}
+      {/* back stripes — draped over the body, behind the head */}
+      {[0.08, -0.08, -0.24].map((z, i) => (
+        <mesh key={`stripe${i}`} position={[0, 0.645, z]}>
+          <boxGeometry args={[0.5, 0.05, 0.05]} />
+          <meshStandardMaterial color={dark} />
         </mesh>
       ))}
-      {/* back/side stripes */}
-      {[0.18, 0.0, -0.18, -0.34].map((z, i) => (
-        <mesh key={`stripe${i}`} position={[0, 0.62, z]}>
-          <boxGeometry args={[0.56, 0.06, 0.05]} />
+      {/* cheek stripes on the head sides */}
+      {[-0.235, 0.235].map((x) => (
+        <mesh key={`cheek${x}`} position={[x, 0.66, 0.46]}>
+          <boxGeometry args={[0.04, 0.16, 0.16]} />
           <meshStandardMaterial color={dark} />
         </mesh>
       ))}
