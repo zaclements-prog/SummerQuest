@@ -1,10 +1,13 @@
 /* eslint-disable react-refresh/only-export-components */
 import type { ReactNode } from 'react'
 import { ACCESSORIES } from '../../lib/home/accessories'
+import { Cap } from './accessories/cap'
+import { Sunglasses } from './accessories/sunglasses'
+import { Angelwings } from './accessories/angelwings'
 
 export type AccessoryBuilder = () => ReactNode
 
-const ACCESSORY_BUILDERS: Record<string, AccessoryBuilder> = {}
+const ACCESSORY_BUILDERS: Record<string, AccessoryBuilder> = { cap: Cap, sunglasses: Sunglasses, angelwings: Angelwings }
 
 function Fallback() {
   return (
