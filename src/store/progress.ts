@@ -355,6 +355,17 @@ export const useProgress = create<ProgressState>()(
     }),
     {
       name: 'summerquest-progress-v1',
+      // Shallow-merge like the default, but deep-merge equippedAccessories so a save
+      // that predates (or partially has) those slots always keeps all four defined.
+      merge: (persisted, current) => {
+        const p = (persisted ?? {}) as Partial<ProgressState>
+        const c = current as ProgressState
+        return {
+          ...c,
+          ...p,
+          equippedAccessories: { ...c.equippedAccessories, ...(p.equippedAccessories ?? {}) },
+        }
+      },
     },
   ),
 )
