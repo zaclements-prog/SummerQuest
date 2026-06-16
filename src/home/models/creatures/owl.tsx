@@ -1,3 +1,5 @@
+import { Wing } from '../parts'
+
 export function Owl() {
   const body = '#9c7a52', white = '#f5efe2', orange = '#e8843c', dark = '#2a1f14'
   return (
@@ -37,13 +39,9 @@ export function Owl() {
           <meshStandardMaterial color={body} />
         </mesh>
       ))}
-      {/* wings */}
-      {[-0.27, 0.27].map((x) => (
-        <mesh key={`wing${x}`} castShadow position={[x, 0.44, 0]}>
-          <boxGeometry args={[0.06, 0.5, 0.34]} />
-          <meshStandardMaterial color={body} />
-        </mesh>
-      ))}
+      {/* wings (animated: flap continuously) */}
+      <Wing x={-0.27} y={0.44} z={0} side={-1} color={body} w={0.5} thickness={0.06} d={0.34} />
+      <Wing x={0.27} y={0.44} z={0} side={1} color={body} w={0.5} thickness={0.06} d={0.34} />
       {/* feet */}
       {[-0.12, 0.12].map((x) => (
         <mesh key={`foot${x}`} castShadow position={[x, 0.05, 0.16]}>

@@ -1,3 +1,5 @@
+import { Leg } from '../parts'
+
 export function Lion() {
   const tan = '#d6a44c', mane = '#9c5a2c', dark = '#3a2a20'
   return (
@@ -48,13 +50,11 @@ export function Lion() {
           <meshStandardMaterial color={tan} />
         </mesh>
       ))}
-      {/* legs */}
-      {[[-0.16, 0.26], [0.16, 0.26], [-0.16, -0.26], [0.16, -0.26]].map(([x, z], i) => (
-        <mesh key={`leg${i}`} castShadow position={[x, 0.12, z]}>
-          <boxGeometry args={[0.13, 0.24, 0.13]} />
-          <meshStandardMaterial color={tan} />
-        </mesh>
-      ))}
+      {/* legs (animated: diagonal pairs swing together) */}
+      <Leg x={-0.16} z={0.26} color={tan} w={0.13} phase={0} />
+      <Leg x={0.16} z={0.26} color={tan} w={0.13} phase={Math.PI} />
+      <Leg x={-0.16} z={-0.26} color={tan} w={0.13} phase={Math.PI} />
+      <Leg x={0.16} z={-0.26} color={tan} w={0.13} phase={0} />
       {/* tail with tuft */}
       <mesh castShadow position={[0, 0.46, -0.5]} rotation={[0.6, 0, 0]}>
         <boxGeometry args={[0.08, 0.08, 0.4]} />

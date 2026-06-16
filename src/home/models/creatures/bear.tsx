@@ -1,3 +1,5 @@
+import { Leg } from '../parts'
+
 export function Bear() {
   const brown = '#8a5a36', tan = '#c9a06a', dark = '#2a1c12'
   return (
@@ -36,13 +38,11 @@ export function Bear() {
           <meshStandardMaterial color={dark} />
         </mesh>
       ))}
-      {/* stubby legs */}
-      {[[-0.2, 0.24], [0.2, 0.24], [-0.2, -0.24], [0.2, -0.24]].map(([x, z], i) => (
-        <mesh key={`leg${i}`} castShadow position={[x, 0.1, z]}>
-          <boxGeometry args={[0.16, 0.2, 0.16]} />
-          <meshStandardMaterial color={brown} />
-        </mesh>
-      ))}
+      {/* stubby legs (animated: diagonal pairs swing together) */}
+      <Leg x={-0.2} z={0.24} color={brown} w={0.16} h={0.2} phase={0} />
+      <Leg x={0.2} z={0.24} color={brown} w={0.16} h={0.2} phase={Math.PI} />
+      <Leg x={-0.2} z={-0.24} color={brown} w={0.16} h={0.2} phase={Math.PI} />
+      <Leg x={0.2} z={-0.24} color={brown} w={0.16} h={0.2} phase={0} />
     </group>
   )
 }

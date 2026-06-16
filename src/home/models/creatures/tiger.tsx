@@ -1,3 +1,5 @@
+import { Leg } from '../parts'
+
 export function Tiger() {
   const orange = '#f59e2c', white = '#ffffff', dark = '#222222'
   return (
@@ -61,13 +63,11 @@ export function Tiger() {
           <meshStandardMaterial color={dark} />
         </mesh>
       ))}
-      {/* legs */}
-      {[[-0.17, 0.27], [0.17, 0.27], [-0.17, -0.27], [0.17, -0.27]].map(([x, z], i) => (
-        <mesh key={`leg${i}`} castShadow position={[x, 0.12, z]}>
-          <boxGeometry args={[0.13, 0.24, 0.13]} />
-          <meshStandardMaterial color={orange} />
-        </mesh>
-      ))}
+      {/* legs (animated: diagonal pairs swing together) */}
+      <Leg x={-0.17} z={0.27} color={orange} w={0.13} phase={0} />
+      <Leg x={0.17} z={0.27} color={orange} w={0.13} phase={Math.PI} />
+      <Leg x={-0.17} z={-0.27} color={orange} w={0.13} phase={Math.PI} />
+      <Leg x={0.17} z={-0.27} color={orange} w={0.13} phase={0} />
       {/* striped tail */}
       <mesh castShadow position={[0, 0.5, -0.52]} rotation={[0.5, 0, 0]}>
         <boxGeometry args={[0.14, 0.14, 0.42]} />
