@@ -23,6 +23,24 @@ import { Bookshelf } from './furniture/bookshelf'
 import { Toychest } from './furniture/toychest'
 import { Beanbag } from './furniture/beanbag'
 import { Rocket } from './furniture/rocket'
+import { Stool } from './furniture/stool'
+import { Nightstand } from './furniture/nightstand'
+import { Desk } from './furniture/desk'
+import { Sofa } from './furniture/sofa'
+import { Dresser } from './furniture/dresser'
+import { Tv } from './furniture/tv'
+import { Wardrobe } from './furniture/wardrobe'
+import { Rockinghorse } from './furniture/rockinghorse'
+import { Piano } from './furniture/piano'
+import { Ball } from './furniture/ball'
+import { Balloon } from './furniture/balloon'
+import { Giftbox } from './furniture/giftbox'
+import { Blocks } from './furniture/blocks'
+import { Drum } from './furniture/drum'
+import { Teddy } from './furniture/teddy'
+import { Globe } from './furniture/globe'
+import { Trophy } from './furniture/trophy'
+import { Fishtank } from './furniture/fishtank'
 
 /** A builder is a component that renders the model centred on the floor, facing +z. */
 export type ModelBuilder = () => ReactNode
@@ -52,6 +70,24 @@ const FURNITURE_BUILDERS: Record<string, ModelBuilder> = {
   toychest: Toychest,
   beanbag: Beanbag,
   rocket: Rocket,
+  stool: Stool,
+  nightstand: Nightstand,
+  desk: Desk,
+  sofa: Sofa,
+  dresser: Dresser,
+  tv: Tv,
+  wardrobe: Wardrobe,
+  rockinghorse: Rockinghorse,
+  piano: Piano,
+  ball: Ball,
+  balloon: Balloon,
+  giftbox: Giftbox,
+  blocks: Blocks,
+  drum: Drum,
+  teddy: Teddy,
+  globe: Globe,
+  trophy: Trophy,
+  fishtank: Fishtank,
 }
 
 function Fallback() {
