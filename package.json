@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "build:single": "tsc -b && SINGLEFILE=1 vite build && node scripts/inline-favicon.mjs",
+    "build:single": "tsc -b && cross-env SINGLEFILE=1 vite build && node scripts/inline-favicon.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run",
@@ -15,10 +15,13 @@
   },
   "dependencies": {
     "@fontsource/fredoka": "^5.2.10",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.1",
     "framer-motion": "^12.38.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-router-dom": "^7.15.0",
+    "three": "^0.184.0",
     "zustand": "^5.0.13"
   },
   "devDependencies": {
@@ -28,6 +31,7 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
+    "cross-env": "^10.1.0",
     "eslint": "^10.3.0",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",

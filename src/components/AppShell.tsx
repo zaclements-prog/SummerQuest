@@ -128,6 +128,13 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
               <div className="text-sm text-gray-500">
                 15 minutes of learning · +{SESSION_BONUS_COINS} 🪙
               </div>
+              <Link
+                to="/home"
+                onClick={() => clearTimeCelebration()}
+                className="mt-2 inline-block kid-text text-sm px-3 py-1 rounded-full bg-quest-500 text-quest-900"
+              >
+                🏠 Spend your coins at Home →
+              </Link>
             </div>
           </motion.div>
         )}
