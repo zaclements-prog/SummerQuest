@@ -22,3 +22,8 @@ describe('accessories catalog', () => {
     expect(accessoryById('nope')).toBeUndefined()
   })
 })
+
+import { _coverage } from '../../../home/models/accessoryRegistry'
+it('every accessory modelId has a registered builder', () => {
+  for (const a of ACCESSORIES) expect(a.modelId in _coverage.ACCESSORY_BUILDERS).toBe(true)
+})
