@@ -13,6 +13,16 @@ import { Unicorn } from './creatures/unicorn'
 import { Octopus } from './creatures/octopus'
 import { Trex } from './creatures/trex'
 import { Dragon } from './creatures/dragon'
+import { Rug } from './furniture/rug'
+import { Bed } from './furniture/bed'
+import { Lamp } from './furniture/lamp'
+import { Plant } from './furniture/plant'
+import { Table } from './furniture/table'
+import { Chair } from './furniture/chair'
+import { Bookshelf } from './furniture/bookshelf'
+import { Toychest } from './furniture/toychest'
+import { Beanbag } from './furniture/beanbag'
+import { Rocket } from './furniture/rocket'
 
 /** A builder is a component that renders the model centred on the floor, facing +z. */
 export type ModelBuilder = () => ReactNode
@@ -31,7 +41,18 @@ const CREATURE_BUILDERS: Record<string, ModelBuilder> = {
   trex: Trex,
   dragon: Dragon,
 }
-const FURNITURE_BUILDERS: Record<string, ModelBuilder> = {}
+const FURNITURE_BUILDERS: Record<string, ModelBuilder> = {
+  rug: Rug,
+  bed: Bed,
+  lamp: Lamp,
+  plant: Plant,
+  table: Table,
+  chair: Chair,
+  bookshelf: Bookshelf,
+  toychest: Toychest,
+  beanbag: Beanbag,
+  rocket: Rocket,
+}
 
 function Fallback() {
   return (

@@ -14,3 +14,8 @@ import { _coverage } from '../registry'
 it('every creature id has a registered (non-fallback) builder', () => {
   for (const c of CREATURES) expect(c.id in _coverage.CREATURE_BUILDERS).toBe(true)
 })
+
+import { HOME_ITEMS } from '../../../lib/home/catalog'
+it('every home item modelId has a registered (non-fallback) builder', () => {
+  for (const i of HOME_ITEMS) expect(i.modelId in _coverage.FURNITURE_BUILDERS).toBe(true)
+})
