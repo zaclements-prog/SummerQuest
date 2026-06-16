@@ -13,7 +13,7 @@ export default function ModelStudio({ kind }: { kind: 'creatures' | 'furniture' 
     kind === 'creatures'
       ? CREATURES.map((c) => ({ label: c.id, Builder: creatureBuilder(c.id) }))
       : HOME_ITEMS.map((i) => ({ label: i.modelId, Builder: furnitureBuilder(i.modelId) }))
-  const cols = 4
+  const cols = entries.length > 14 ? 6 : 4
   const spacing = 2.4
   const rows = Math.ceil(entries.length / cols)
 

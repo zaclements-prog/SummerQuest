@@ -31,7 +31,7 @@ export default function HomeScreen() {
     <div className="flex-1 relative">
       <Canvas
         shadows
-        camera={{ position: isStudio ? [0, 7, 15] : [16, 16, 16], fov: 42 }}
+        camera={{ position: isStudio ? [0, 10, 21] : [16, 16, 16], fov: 42 }}
         style={{ position: 'absolute', inset: 0 }}
       >
         <color attach="background" args={['#bfe3f2']} />
