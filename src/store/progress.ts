@@ -1,6 +1,8 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { SESSION_SECONDS, SESSIONS_PER_DAY, SESSION_BONUS_COINS } from '../lib/dailyGoal'
+import type { Slot } from '../home/models/anchors'
+import { accessoryById } from '../lib/home/accessories'
 
 export interface AvatarChoice {
   emoji: string
@@ -75,8 +77,8 @@ interface ProgressState {
   soundEnabled: boolean
   seenBadges: string[]
   dailyClaimedDate?: string
-  ownedCosmetics: string[]
-  equippedCosmetic: string | null
+  ownedAccessories: string[]
+  equippedAccessories: Record<Slot, string | null>
   /** Daily learning-time goal (2 × 15 min). Resets each calendar day. */
   playDate?: string
   playSecondsToday: number
@@ -105,8 +107,9 @@ interface ProgressState {
   toggleSound: () => void
   markBadgesSeen: (ids: string[]) => void
   claimDaily: () => void
-  buyCosmetic: (id: string, price: number) => boolean
-  equipCosmetic: (id: string | null) => void
+  buyAccessory: (id: string, price: number) => boolean
+  equipAccessory: (id: string) => void
+  unequipSlot: (slot: Slot) => void
   recordSession: (rec: Omit<SessionRecord, 'id' | 'at'> & { at?: number }) => void
   recordAttempt: (a: Omit<SkillAttempt, 'id' | 'at'> & { at?: number }) => void
   tickPlay: (seconds: number) => void
@@ -138,8 +141,8 @@ export const useProgress = create<ProgressState>()(
       attempts: [],
       soundEnabled: true,
       seenBadges: [],
-      ownedCosmetics: [],
-      equippedCosmetic: null,
+      ownedAccessories: [],
+      equippedAccessories: { head: null, face: null, back: null, body: null },
       playSecondsToday: 0,
       sessionsRewardedToday: 0,
       timeSessionJustCompleted: null,
@@ -164,8 +167,8 @@ export const useProgress = create<ProgressState>()(
           },
           seenBadges: [],
           dailyClaimedDate: undefined,
-          ownedCosmetics: [],
-          equippedCosmetic: null,
+          ownedAccessories: [],
+          equippedAccessories: { head: null, face: null, back: null, body: null },
           sessions: [],
           attempts: [],
           playDate: undefined,
@@ -255,15 +258,21 @@ export const useProgress = create<ProgressState>()(
 
       claimDaily: () => set({ dailyClaimedDate: todayKey() }),
 
-      buyCosmetic: (id, price) => {
-        const { coins, ownedCosmetics } = get()
-        if (ownedCosmetics.includes(id)) return true
+      buyAccessory: (id, price) => {
+        const { coins, ownedAccessories } = get()
+        if (ownedAccessories.includes(id)) return true
         if (coins < price) return false
-        set({ coins: coins - price, ownedCosmetics: [...ownedCosmetics, id] })
+        set({ coins: coins - price, ownedAccessories: [...ownedAccessories, id] })
         return true
       },
-
-      equipCosmetic: (id) => set({ equippedCosmetic: id }),
+      equipAccessory: (id) => {
+        const acc = accessoryById(id)
+        if (!acc || !get().ownedAccessories.includes(id)) return
+        const eq = get().equippedAccessories
+        set({ equippedAccessories: { ...eq, [acc.slot]: eq[acc.slot] === id ? null : id } })
+      },
+      unequipSlot: (slot) =>
+        set({ equippedAccessories: { ...get().equippedAccessories, [slot]: null } }),
 
       buyHomeItem: (id, price) => {
         const { coins, ownedHomeItems } = get()

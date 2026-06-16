@@ -10,7 +10,6 @@ import ZoneDetail from './screens/ZoneDetail'
 import GameRunner from './screens/GameRunner'
 import ParentDashboard from './screens/ParentDashboard'
 import BadgesScreen from './screens/BadgesScreen'
-import ShopScreen from './screens/ShopScreen'
 import DailyChallenge from './screens/DailyChallenge'
 import ProgressScreen from './screens/ProgressScreen'
 import TutorIndex from './screens/TutorIndex'
@@ -80,14 +79,6 @@ export default function App() {
             element={
               <RequireAvatar>
                 <BadgesScreen />
-              </RequireAvatar>
-            }
-          />
-          <Route
-            path="/shop"
-            element={
-              <RequireAvatar>
-                <ShopScreen />
               </RequireAvatar>
             }
           />

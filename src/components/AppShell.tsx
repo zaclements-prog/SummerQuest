@@ -3,7 +3,6 @@ import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useProgress } from '../store/progress'
 import { levelFromProgress } from '../lib/levels'
-import { cosmeticById } from '../lib/cosmetics'
 import { usePlayClock } from '../lib/usePlayClock'
 import { SESSIONS_PER_DAY, SESSION_BONUS_COINS } from '../lib/dailyGoal'
 
@@ -16,14 +15,12 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     toggleSound,
     stats,
     zones,
-    equippedCosmetic,
     timeSessionJustCompleted,
     clearTimeCelebration,
   } = useProgress()
   const { pathname } = useLocation()
   const isParent = pathname.startsWith('/parent')
   const level = levelFromProgress(stats.problemsCorrect, zones)
-  const cosmetic = cosmeticById(equippedCosmetic)
 
   useEffect(() => {
     if (timeSessionJustCompleted == null) return
@@ -77,11 +74,6 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             >
               <span className="relative text-xl leading-none">
                 {player.emoji}
-                {cosmetic && (
-                  <span className="absolute -top-2 -right-1.5 text-xs leading-none">
-                    {cosmetic.emoji}
-                  </span>
-                )}
               </span>
               <span className="hidden md:inline truncate">{player.name}</span>
             </span>
