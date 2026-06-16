@@ -77,7 +77,7 @@ Stars per stage: 0 (fail) → 1 → 2 → 3 (perfect). Persisted by best score.
 - [ ] Fraction Falls
 - [ ] Word Problem Woods
 - [ ] Reading Reef (passage + question games)
-- [ ] Shop for avatar cosmetics with coins
+- [x] 3D Home — decorate your room and dress your creature with accessories
 - [ ] Adaptive difficulty (track which facts a kid misses, weight those)
 - [ ] Daily quest with bonus rewards
 - [ ] Electron wrapper for "real" desktop app

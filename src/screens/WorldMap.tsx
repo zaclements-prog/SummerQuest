@@ -83,13 +83,6 @@ export default function WorldMap() {
             🏅 Badges {earned.length}/{badges.length}
           </Link>
           <Link
-            to="/shop"
-            onClick={() => sfx.click()}
-            className="kid-text flex items-center gap-1 px-4 py-2 rounded-full bg-monster-500 text-white shadow hover:scale-105 transition"
-          >
-            🛍️ Shop
-          </Link>
-          <Link
             to="/progress"
             onClick={() => sfx.click()}
             className="kid-text flex items-center gap-1 px-4 py-2 rounded-full bg-island-500 text-ocean-900 shadow hover:scale-105 transition"

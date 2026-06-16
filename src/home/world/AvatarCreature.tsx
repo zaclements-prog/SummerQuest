@@ -8,6 +8,7 @@ import { creatureBuilder } from '../models/registry'
 import { walkState } from '../models/walkState'
 import { tileToWorld, GRID_SIZE, TILE } from '../../lib/home/grid'
 import { sfx } from '../../lib/sound'
+import CreatureAccessories from './CreatureAccessories'
 
 const EMOTE_MS = 700
 const ROOM_LIMIT = (GRID_SIZE * TILE) / 2 - 0.6 // stay just inside the walls
@@ -154,6 +155,7 @@ export default function AvatarCreature() {
     <group ref={group} position={[0, 0, 0]}>
       <group ref={inner} onPointerDown={onPointerDown}>
         <b.Builder />
+        <CreatureAccessories />
       </group>
       {emoting && <Hearts />}
     </group>
