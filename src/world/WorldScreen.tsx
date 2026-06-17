@@ -6,6 +6,7 @@ import WorldGround from './WorldGround'
 import WorldCameraRig from './WorldCameraRig'
 import WorldAvatar from './WorldAvatar'
 import WorldHud from './WorldHud'
+import WordProblemWoods from './areas/WordProblemWoods'
 
 export default function WorldScreen() {
   const posRef = useRef(new Vector3(0, 0, 4))
@@ -15,6 +16,7 @@ export default function WorldScreen() {
         <color attach="background" args={['#bfe3f2']} />
         <Lights />
         <WorldGround />
+        <WordProblemWoods posRef={posRef} />
         <WorldCameraRig targetRef={posRef} />
         <WorldAvatar posRef={posRef} />
       </Canvas>
