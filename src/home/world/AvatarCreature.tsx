@@ -6,13 +6,15 @@ import { useProgress } from '../../store/progress'
 import { useHomeUi } from '../useHomeUi'
 import { creatureBuilder } from '../models/registry'
 import { walkState } from '../models/walkState'
-import { tileToWorld, GRID_SIZE, TILE } from '../../lib/home/grid'
+import { tileToWorld, worldToTile, tileKey, GRID_SIZE, TILE } from '../../lib/home/grid'
+import { useOccupiedTiles } from '../useOccupied'
 import { sfx } from '../../lib/sound'
 import CreatureAccessories from './CreatureAccessories'
 
 const EMOTE_MS = 700
 const ROOM_LIMIT = (GRID_SIZE * TILE) / 2 - 0.6 // stay just inside the walls
 const WALK_SPEED = 3
+const COLLIDE_RADIUS = 0.3 // stop when the creature's leading edge (not centre) reaches furniture
 
 // reused each frame to avoid per-frame allocation (only one creature animates)
 const _f = new Vector3()
@@ -61,6 +63,11 @@ export default function AvatarCreature() {
   const [emoting, setEmoting] = useState(false)
   const b = useMemo(() => ({ Builder: creatureBuilder(activeCreature) }), [activeCreature])
 
+  // Tiles covered by furniture — read through a ref so the frame loop sees the latest.
+  const occupied = useOccupiedTiles()
+  const occupiedRef = useRef(occupied)
+  occupiedRef.current = occupied
+
   useEffect(() => {
     if (activeCreature) sfx.victory()
   }, [activeCreature])
@@ -106,6 +113,14 @@ export default function AvatarCreature() {
     const k = keys.current
     const controlled = !isEmoting && (k.w || k.a || k.s || k.d)
 
+    // True if a furniture tile sits under this world point (walls handled by ROOM_LIMIT).
+    const blocked = (x: number, z: number) => {
+      const t = worldToTile(x, z)
+      if (t.gx < 0 || t.gz < 0 || t.gx >= GRID_SIZE || t.gz >= GRID_SIZE) return false
+      return occupiedRef.current.has(tileKey(t))
+    }
+    const clamp = (v: number) => Math.max(-ROOM_LIMIT, Math.min(ROOM_LIMIT, v))
+
     if (controlled) {
       // move relative to the camera, projected onto the floor
       state.camera.getWorldDirection(_f)
@@ -120,9 +135,13 @@ export default function AvatarCreature() {
       if (k.a) _m.sub(_r)
       if (_m.lengthSq() > 1e-4) {
         _m.normalize()
-        g.position.addScaledVector(_m, WALK_SPEED * dt)
-        g.position.x = Math.max(-ROOM_LIMIT, Math.min(ROOM_LIMIT, g.position.x))
-        g.position.z = Math.max(-ROOM_LIMIT, Math.min(ROOM_LIMIT, g.position.z))
+        const step = WALK_SPEED * dt
+        const nx = clamp(g.position.x + _m.x * step)
+        const nz = clamp(g.position.z + _m.z * step)
+        // Move each axis independently (so we slide along furniture instead of sticking),
+        // testing the leading edge so the body stops flush against the item.
+        if (!blocked(nx + Math.sign(_m.x) * COLLIDE_RADIUS, g.position.z)) g.position.x = nx
+        if (!blocked(g.position.x, nz + Math.sign(_m.z) * COLLIDE_RADIUS)) g.position.z = nz
         g.rotation.y = Math.atan2(_m.x, _m.z)
         target.current.copy(g.position) // resume wandering from where you parked it
         moving = true
@@ -133,7 +152,13 @@ export default function AvatarCreature() {
       const dir = target.current.clone().sub(pos)
       if (dir.length() > 0.01) {
         dir.normalize()
-        pos.addScaledVector(dir, Math.min(1.2 * dt, pos.distanceTo(target.current)))
+        const step = Math.min(1.2 * dt, pos.distanceTo(target.current))
+        const nx = clamp(pos.x + dir.x * step)
+        const nz = clamp(pos.z + dir.z * step)
+        let movedAny = false
+        if (!blocked(nx + Math.sign(dir.x) * COLLIDE_RADIUS, pos.z)) { pos.x = nx; movedAny = true }
+        if (!blocked(pos.x, nz + Math.sign(dir.z) * COLLIDE_RADIUS)) { pos.z = nz; movedAny = true }
+        if (!movedAny) target.current = randomTarget() // furniture in the way → wander elsewhere
         g.rotation.y = Math.atan2(dir.x, dir.z)
         moving = pos.distanceTo(target.current) > 0.05
       }
