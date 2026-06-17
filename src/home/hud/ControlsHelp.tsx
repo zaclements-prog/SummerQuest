@@ -34,8 +34,8 @@ export default function ControlsHelp() {
               <li>🔍 <b>Scroll</b> or <b>pinch</b> to zoom in and out.</li>
               <li>⌨️ Press <b>W A S D</b> to walk your creature around the room.</li>
               <li>🎮 <b>Play mode:</b> tap your creature to make it hop and cheer!</li>
-              <li>🛠️ <b>Decorate mode:</b> buy furniture, then tap a green tile to place it. Tap <b>⟳ Rotate</b> to turn it before you drop it.</li>
-              <li>📦 Tap a placed item to <b>pick it up</b> — put it somewhere new, or tap <b>✕ Cancel</b> to keep it in your bag.</li>
+              <li>🛠️ <b>Decorate mode:</b> buy furniture, then tap a green tile to place it. Tap <b>⟳ Rotate</b> (or press <b>R</b>) to turn it before you drop it.</li>
+              <li>📦 Tap any placed item to <b>move</b> it — drop it on a new green tile. Tap <b>📦 Put away</b> to send it back to your bag, or <b>✕ Cancel</b> (or press <b>Esc</b>) to leave it where it was.</li>
               <li>🦄 In the <b>Creatures</b> tab, buy a new animal and <b>Become</b> it!</li>
               <li>🪙 Earn coins by finishing activities — then spend them here.</li>
             </ul>

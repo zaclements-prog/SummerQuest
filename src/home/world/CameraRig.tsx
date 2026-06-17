@@ -8,8 +8,8 @@ export default function CameraRig() {
       screenSpacePanning={false}
       minPolarAngle={Math.PI / 4}
       maxPolarAngle={Math.PI / 3}
-      minDistance={10}
-      maxDistance={32}
+      minDistance={6}
+      maxDistance={22}
       target={[0, 0, 0]}
     />
   )
