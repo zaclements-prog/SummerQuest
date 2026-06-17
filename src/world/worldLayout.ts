@@ -14,20 +14,21 @@ export interface WorldArea {
   npc?: { offset: [number, number]; emoji: string }
   colliders: Collider[]
   door?: { pos: [number, number]; width: number } // buildings only
+  size?: number // building footprint size in world units (default 5)
 }
 
 // Phase-1 layout. Areas are spaced around a central spawn (the house at origin).
 export const WORLD_AREAS: WorldArea[] = [
   {
     id: 'house', zoneId: 'word-problem-woods', label: 'Your House',
-    worldPos: [0, 0], kind: 'building', theme: 'house',
-    door: { pos: [0, 2.5], width: 1.6 },
+    worldPos: [0, 0], kind: 'building', theme: 'house', size: 10,
+    door: { pos: [0, 5], width: 1.6 },
     colliders: [
-      { kind: 'box', cx: -2.5, cz: 0, w: 0.3, d: 5 },
-      { kind: 'box', cx: 2.5, cz: 0, w: 0.3, d: 5 },
-      { kind: 'box', cx: 0, cz: -2.5, w: 5, d: 0.3 },
-      { kind: 'box', cx: -1.65, cz: 2.5, w: 1.7, d: 0.3 },
-      { kind: 'box', cx: 1.65, cz: 2.5, w: 1.7, d: 0.3 },
+      { kind: 'box', cx: -5, cz: 0, w: 0.3, d: 10 },
+      { kind: 'box', cx: 5, cz: 0, w: 0.3, d: 10 },
+      { kind: 'box', cx: 0, cz: -5, w: 10, d: 0.3 },
+      { kind: 'box', cx: -2.9, cz: 5, w: 4.2, d: 0.3 },
+      { kind: 'box', cx: 2.9, cz: 5, w: 4.2, d: 0.3 },
     ],
   },
   {

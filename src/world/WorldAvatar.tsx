@@ -35,7 +35,7 @@ export default function WorldAvatar({ posRef }: { posRef: RefObject<Vector3> }) 
     let inside: string | null = null
     for (const a of WORLD_AREAS) {
       if (a.kind !== 'building') continue
-      if (insideFootprint({ cx: a.worldPos[0], cz: a.worldPos[1], w: 5, d: 5 }, g.position.x, g.position.z, 0.1)) {
+      if (insideFootprint({ cx: a.worldPos[0], cz: a.worldPos[1], w: a.size ?? 5, d: a.size ?? 5 }, g.position.x, g.position.z, 0.1)) {
         inside = a.id
         break
       }
@@ -54,7 +54,7 @@ export default function WorldAvatar({ posRef }: { posRef: RefObject<Vector3> }) 
 
   if (!activeCreature) return null
   return (
-    <group ref={group} position={[0, 0, 4]}>
+    <group ref={group} position={[0, 0, 7]}>
       <group ref={inner}>
         <b.Builder />
         <CreatureAccessories />
