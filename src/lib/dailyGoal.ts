@@ -1,7 +1,9 @@
 /**
  * Daily time goal: two 15-minute learning sessions per day (30 min total).
- * Time is accumulated by the play clock (src/lib/usePlayClock.ts) while the app
- * is open, visible, and the child is active. Resets each calendar day.
+ * Time is accumulated by the play clock (src/lib/usePlayClock.ts) only while the
+ * child is on an active learning screen (a quiz/game stage, the daily challenge,
+ * or a tutor lesson) and the tab is visible and they're interacting. Time in the
+ * Home, on the map, or in menus does not count. Resets each calendar day.
  */
 
 export const SESSION_SECONDS = 15 * 60
