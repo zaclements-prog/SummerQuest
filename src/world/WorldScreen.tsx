@@ -7,6 +7,7 @@ import WorldCameraRig from './WorldCameraRig'
 import WorldAvatar from './WorldAvatar'
 import WorldHud from './WorldHud'
 import WordProblemWoods from './areas/WordProblemWoods'
+import FractionFalls from './areas/FractionFalls'
 
 export default function WorldScreen() {
   const posRef = useRef(new Vector3(0, 0, 4))
@@ -17,6 +18,7 @@ export default function WorldScreen() {
         <Lights />
         <WorldGround />
         <WordProblemWoods posRef={posRef} />
+        <FractionFalls posRef={posRef} />
         <WorldCameraRig targetRef={posRef} />
         <WorldAvatar posRef={posRef} />
       </Canvas>

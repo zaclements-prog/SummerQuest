@@ -44,10 +44,10 @@ export const WORLD_AREAS: WorldArea[] = [
   {
     id: 'fraction-falls', zoneId: 'fraction-falls', label: 'Fraction Falls',
     worldPos: [12, -8], kind: 'open', theme: 'falls',
-    npc: { offset: [-2.5, 1.5], emoji: '💧' },
+    npc: { offset: [-2, 3], emoji: '💧' },
     colliders: [
       { kind: 'box', cx: 12, cz: -11, w: 6, d: 3 },
-      { kind: 'circle', cx: 9.5, cz: -6.5, r: 0.7 },
+      { kind: 'circle', cx: 13, cz: -5.5, r: 0.7 },
     ],
   },
   {
