@@ -1,5 +1,5 @@
-/** 20×20 floor. Tile (0,0) is a corner; world origin is the floor centre. */
-export const GRID_SIZE = 20
+/** 10×10 floor. Tile (0,0) is a corner; world origin is the floor centre. */
+export const GRID_SIZE = 10
 export const TILE = 1 // world units per tile
 
 export interface Footprint { w: number; d: number }
