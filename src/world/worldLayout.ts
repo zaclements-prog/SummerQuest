@@ -26,8 +26,8 @@ export const WORLD_AREAS: WorldArea[] = [
       { kind: 'box', cx: -2.5, cz: 0, w: 0.3, d: 5 },
       { kind: 'box', cx: 2.5, cz: 0, w: 0.3, d: 5 },
       { kind: 'box', cx: 0, cz: -2.5, w: 5, d: 0.3 },
-      { kind: 'box', cx: -1.85, cz: 2.5, w: 1.7, d: 0.3 },
-      { kind: 'box', cx: 1.85, cz: 2.5, w: 1.7, d: 0.3 },
+      { kind: 'box', cx: -1.65, cz: 2.5, w: 1.7, d: 0.3 },
+      { kind: 'box', cx: 1.65, cz: 2.5, w: 1.7, d: 0.3 },
     ],
   },
   {
@@ -58,8 +58,8 @@ export const WORLD_AREAS: WorldArea[] = [
       { kind: 'box', cx: -2.5, cz: -14, w: 0.3, d: 5 },
       { kind: 'box', cx: 2.5, cz: -14, w: 0.3, d: 5 },
       { kind: 'box', cx: 0, cz: -16.5, w: 5, d: 0.3 },
-      { kind: 'box', cx: -1.85, cz: -11.5, w: 1.7, d: 0.3 },
-      { kind: 'box', cx: 1.85, cz: -11.5, w: 1.7, d: 0.3 },
+      { kind: 'box', cx: -1.65, cz: -11.5, w: 1.7, d: 0.3 },
+      { kind: 'box', cx: 1.65, cz: -11.5, w: 1.7, d: 0.3 },
     ],
   },
 ]
