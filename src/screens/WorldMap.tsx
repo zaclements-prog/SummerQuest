@@ -68,6 +68,7 @@ export default function WorldMap() {
           >
             📚 Tutor
           </Link>
+          <Link to="/world" onClick={() => sfx.click()} className="kid-text flex items-center gap-1 px-4 py-2 rounded-full bg-monster-500 text-white shadow hover:scale-105 transition">🌍 World (beta)</Link>
           <Link
             to="/home"
             onClick={() => sfx.click()}

@@ -16,6 +16,7 @@ import TutorIndex from './screens/TutorIndex'
 import TutorScreen from './screens/TutorScreen'
 import FocusScreen from './screens/FocusScreen'
 const HomeScreen = lazy(() => import('./screens/HomeScreen'))
+const WorldScreen = lazy(() => import('./world/WorldScreen'))
 
 function RequireAvatar({ children }: { children: React.ReactNode }) {
   const player = useProgress((s) => s.player)
@@ -125,6 +126,7 @@ export default function App() {
               </RequireAvatar>
             }
           />
+          <Route path="/world" element={<RequireAvatar><Suspense fallback={<div className="flex-1 grid place-items-center text-white kid-text text-2xl">Loading the world…</div>}><WorldScreen /></Suspense></RequireAvatar>} />
           <Route path="/parent" element={<ParentDashboard />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
