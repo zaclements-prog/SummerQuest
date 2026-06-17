@@ -11,7 +11,7 @@ export interface WorldArea {
   worldPos: [number, number] // x,z center
   kind: AreaKind
   theme: 'house' | 'woods' | 'falls' | 'workshop'
-  npc?: { offset: [number, number]; emoji: string }
+  npc?: { offset: [number, number]; emoji: string } // emoji reserved for a future floating NPC label
   colliders: Collider[]
   door?: { pos: [number, number]; width: number } // buildings only
   size?: number // building footprint size in world units (default 5)
@@ -20,6 +20,8 @@ export interface WorldArea {
 // Phase-1 layout. Areas are spaced around a central spawn (the house at origin).
 export const WORLD_AREAS: WorldArea[] = [
   {
+    // The house has no NPC gateway — you enter by walking in — so zoneId is an
+    // unused placeholder here, kept non-null to satisfy the layout type + test.
     id: 'house', zoneId: 'word-problem-woods', label: 'Your House',
     worldPos: [0, 0], kind: 'building', theme: 'house', size: 10,
     door: { pos: [0, 5], width: 1.6 },

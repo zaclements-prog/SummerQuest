@@ -2,6 +2,20 @@ import type { ReactNode } from 'react'
 import { useWorldUi } from './useWorldUi'
 import { frontFacingWalls } from './collision'
 
+function Wall({ pos, args, color, opacity }: {
+  pos: [number, number, number]
+  args: [number, number, number]
+  color: string
+  opacity: number
+}) {
+  return (
+    <mesh castShadow position={pos}>
+      <boxGeometry args={args} />
+      <meshStandardMaterial color={color} transparent opacity={opacity} depthWrite={opacity > 0.5} />
+    </mesh>
+  )
+}
+
 /**
  * A 5x5 building centered at (cx,cz) with a doorway gap on its +z wall. The two
  * camera-facing walls (+x, +z) and the roof fade out when the avatar is inside,
@@ -29,23 +43,16 @@ export default function Building({
 
   const op = (faces: ('px' | 'pz')[]) => (inside && faces.some((f) => front.includes(f)) ? 0.14 : 1)
 
-  const Wall = ({ pos, args, faces }: { pos: [number, number, number]; args: [number, number, number]; faces: ('px' | 'pz')[] }) => (
-    <mesh castShadow position={pos}>
-      <boxGeometry args={args} />
-      <meshStandardMaterial color={wall} transparent opacity={op(faces)} depthWrite={op(faces) > 0.5} />
-    </mesh>
-  )
-
   return (
     <group position={[cx, 0, cz]}>
       {/* back walls (-x, -z) — never transparent */}
-      <Wall pos={[-half, H / 2, 0]} args={[0.3, H, size]} faces={[]} />
-      <Wall pos={[0, H / 2, -half]} args={[size, H, 0.3]} faces={[]} />
+      <Wall pos={[-half, H / 2, 0]} args={[0.3, H, size]} color={wall} opacity={op([])} />
+      <Wall pos={[0, H / 2, -half]} args={[size, H, 0.3]} color={wall} opacity={op([])} />
       {/* +x wall (camera-facing) */}
-      <Wall pos={[half, H / 2, 0]} args={[0.3, H, size]} faces={['px']} />
+      <Wall pos={[half, H / 2, 0]} args={[0.3, H, size]} color={wall} opacity={op(['px'])} />
       {/* +z wall (camera-facing), split around the doorway */}
-      <Wall pos={[-segC, H / 2, half]} args={[seg, H, 0.3]} faces={['pz']} />
-      <Wall pos={[segC, H / 2, half]} args={[seg, H, 0.3]} faces={['pz']} />
+      <Wall pos={[-segC, H / 2, half]} args={[seg, H, 0.3]} color={wall} opacity={op(['pz'])} />
+      <Wall pos={[segC, H / 2, half]} args={[seg, H, 0.3]} color={wall} opacity={op(['pz'])} />
       {/* roof */}
       <mesh castShadow position={[0, H + 0.15, 0]}>
         <boxGeometry args={[size + 0.3, 0.3, size + 0.3]} />

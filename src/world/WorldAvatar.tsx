@@ -20,9 +20,18 @@ export default function WorldAvatar({ posRef }: { posRef: RefObject<Vector3> }) 
   const setInsideBuilding = useWorldUi((s) => s.setInsideBuilding)
   const insideRef = useRef<string | null>(null)
 
+  const buildingFootprints = useMemo(
+    () => WORLD_AREAS.filter((a) => a.kind === 'building').map((a) => ({
+      id: a.id, cx: a.worldPos[0], cz: a.worldPos[1], w: a.size ?? 5, d: a.size ?? 5,
+    })),
+    [],
+  )
+
   useWanderWalk({
     group,
     bound: 22,
+    // radius 0 here is intentional: useWanderWalk applies the avatar's body radius
+    // as a leading-edge probe (COLLIDE_RADIUS), so passing a radius here too would double it.
     collide: (x, z) => collidesAt(colliders, x, z, 0),
   })
 
@@ -33,10 +42,9 @@ export default function WorldAvatar({ posRef }: { posRef: RefObject<Vector3> }) 
 
     // Which building (if any) is the avatar standing inside?
     let inside: string | null = null
-    for (const a of WORLD_AREAS) {
-      if (a.kind !== 'building') continue
-      if (insideFootprint({ cx: a.worldPos[0], cz: a.worldPos[1], w: a.size ?? 5, d: a.size ?? 5 }, g.position.x, g.position.z, 0.1)) {
-        inside = a.id
+    for (const f of buildingFootprints) {
+      if (insideFootprint({ cx: f.cx, cz: f.cz, w: f.w, d: f.d }, g.position.x, g.position.z, 0.1)) {
+        inside = f.id
         break
       }
     }

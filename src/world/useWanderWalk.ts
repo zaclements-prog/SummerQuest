@@ -12,6 +12,7 @@ const COLLIDE_RADIUS = 0.3
 const _f = new Vector3()
 const _r = new Vector3()
 const _m = new Vector3()
+const _dir = new Vector3()
 
 /**
  * WASD + idle-wander movement for the creature, shared by Home and World.
@@ -89,7 +90,7 @@ export function useWanderWalk(opts: {
       if (pos.distanceTo(target.current) < 0.2) {
         target.current.set((Math.random() * 2 - 1) * bound, 0, (Math.random() * 2 - 1) * bound)
       }
-      const dir = target.current.clone().sub(pos)
+      const dir = _dir.copy(target.current).sub(pos)
       dir.y = 0
       if (dir.length() > 0.01) {
         dir.normalize()

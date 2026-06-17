@@ -15,11 +15,15 @@ export default function WorldHud() {
 
   // Keyboard: E enters the active NPC's zone.
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if ((e.key === 'e' || e.key === 'E') && activeNpc) enter() }
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.key === 'e' || e.key === 'E') && activeNpc) {
+        sfx.click()
+        navigate(`/zone/${activeNpc.zoneId}`)
+      }
+    }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeNpc])
+  }, [activeNpc, navigate])
 
   return (
     <div className="absolute inset-0 pointer-events-none">
