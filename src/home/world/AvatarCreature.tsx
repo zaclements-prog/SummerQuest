@@ -1,32 +1,19 @@
 import { useRef, useEffect, useMemo, useState } from 'react'
 import { useFrame } from '@react-three/fiber'
 import type { ThreeEvent } from '@react-three/fiber'
-import { Group, Vector3 } from 'three'
+import { Group } from 'three'
 import { useProgress } from '../../store/progress'
 import { useHomeUi } from '../useHomeUi'
 import { creatureBuilder } from '../models/registry'
 import { walkState } from '../models/walkState'
-import { tileToWorld, worldToTile, tileKey, GRID_SIZE, TILE } from '../../lib/home/grid'
+import { worldToTile, tileKey, GRID_SIZE, TILE } from '../../lib/home/grid'
 import { useOccupiedTiles } from '../useOccupied'
+import { useWanderWalk } from '../../world/useWanderWalk'
 import { sfx } from '../../lib/sound'
 import CreatureAccessories from './CreatureAccessories'
 
 const EMOTE_MS = 700
 const ROOM_LIMIT = (GRID_SIZE * TILE) / 2 - 0.6 // stay just inside the walls
-const WALK_SPEED = 3
-const COLLIDE_RADIUS = 0.3 // stop when the creature's leading edge (not centre) reaches furniture
-
-// reused each frame to avoid per-frame allocation (only one creature animates)
-const _f = new Vector3()
-const _r = new Vector3()
-const _m = new Vector3()
-
-function randomTarget(): Vector3 {
-  const gx = Math.floor(Math.random() * GRID_SIZE)
-  const gz = Math.floor(Math.random() * GRID_SIZE)
-  const w = tileToWorld(gx, gz)
-  return new Vector3(w.x, 0, w.z)
-}
 
 function Hearts() {
   const refs = useRef<(Group | null)[]>([])
@@ -57,9 +44,7 @@ export default function AvatarCreature() {
   const mode = useHomeUi((s) => s.mode)
   const group = useRef<Group>(null)
   const inner = useRef<Group>(null)
-  const target = useRef<Vector3>(new Vector3(0, 0, 0))
   const emoteStart = useRef(0)
-  const keys = useRef({ w: false, a: false, s: false, d: false })
   const [emoting, setEmoting] = useState(false)
   const b = useMemo(() => ({ Builder: creatureBuilder(activeCreature) }), [activeCreature])
 
@@ -72,26 +57,21 @@ export default function AvatarCreature() {
     if (activeCreature) sfx.victory()
   }, [activeCreature])
 
-  // WASD keyboard control of the creature.
-  useEffect(() => {
-    const setKey = (e: KeyboardEvent, down: boolean) => {
-      switch (e.key.toLowerCase()) {
-        case 'w': keys.current.w = down; break
-        case 'a': keys.current.a = down; break
-        case 's': keys.current.s = down; break
-        case 'd': keys.current.d = down; break
-        default: return
-      }
-    }
-    const onDown = (e: KeyboardEvent) => setKey(e, true)
-    const onUp = (e: KeyboardEvent) => setKey(e, false)
-    window.addEventListener('keydown', onDown)
-    window.addEventListener('keyup', onUp)
-    return () => {
-      window.removeEventListener('keydown', onDown)
-      window.removeEventListener('keyup', onUp)
-    }
-  }, [])
+  // Shared WASD + idle-wander movement, blocked by furniture tiles (walls via ROOM_LIMIT).
+  // Movement pauses while the creature is mid-emote.
+  useWanderWalk({
+    group,
+    bound: ROOM_LIMIT,
+    paused: () => {
+      const e = emoteStart.current
+      return e !== 0 && (performance.now() - e) / EMOTE_MS < 1
+    },
+    collide: (x, z) => {
+      const t = worldToTile(x, z)
+      if (t.gx < 0 || t.gz < 0 || t.gx >= GRID_SIZE || t.gz >= GRID_SIZE) return false
+      return occupiedRef.current.has(tileKey(t))
+    },
+  })
 
   const onPointerDown = (e: ThreeEvent<PointerEvent>) => {
     if (mode !== 'play') return
@@ -101,77 +81,18 @@ export default function AvatarCreature() {
     sfx.correct()
   }
 
-  useFrame((state, dt) => {
-    const g = group.current
-    if (!g) return
+  // Emote lifecycle + bob/jump animation (movement + walkState handled by useWanderWalk).
+  useFrame(() => {
     const now = performance.now()
     const emoteT = emoteStart.current ? (now - emoteStart.current) / EMOTE_MS : 1
-    const isEmoting = emoteT < 1
-    if (!isEmoting && emoting) setEmoting(false)
-
-    let moving = false
-    const k = keys.current
-    const controlled = !isEmoting && (k.w || k.a || k.s || k.d)
-
-    // True if a furniture tile sits under this world point (walls handled by ROOM_LIMIT).
-    const blocked = (x: number, z: number) => {
-      const t = worldToTile(x, z)
-      if (t.gx < 0 || t.gz < 0 || t.gx >= GRID_SIZE || t.gz >= GRID_SIZE) return false
-      return occupiedRef.current.has(tileKey(t))
-    }
-    const clamp = (v: number) => Math.max(-ROOM_LIMIT, Math.min(ROOM_LIMIT, v))
-
-    if (controlled) {
-      // move relative to the camera, projected onto the floor
-      state.camera.getWorldDirection(_f)
-      _f.y = 0
-      if (_f.lengthSq() < 1e-4) _f.set(0, 0, -1)
-      _f.normalize()
-      _r.set(-_f.z, 0, _f.x) // right = forward × up
-      _m.set(0, 0, 0)
-      if (k.w) _m.add(_f)
-      if (k.s) _m.sub(_f)
-      if (k.d) _m.add(_r)
-      if (k.a) _m.sub(_r)
-      if (_m.lengthSq() > 1e-4) {
-        _m.normalize()
-        const step = WALK_SPEED * dt
-        const nx = clamp(g.position.x + _m.x * step)
-        const nz = clamp(g.position.z + _m.z * step)
-        // Move each axis independently (so we slide along furniture instead of sticking),
-        // testing the leading edge so the body stops flush against the item.
-        if (!blocked(nx + Math.sign(_m.x) * COLLIDE_RADIUS, g.position.z)) g.position.x = nx
-        if (!blocked(g.position.x, nz + Math.sign(_m.z) * COLLIDE_RADIUS)) g.position.z = nz
-        g.rotation.y = Math.atan2(_m.x, _m.z)
-        target.current.copy(g.position) // resume wandering from where you parked it
-        moving = true
-      }
-    } else if (!isEmoting) {
-      const pos = g.position
-      if (pos.distanceTo(target.current) < 0.2) target.current = randomTarget()
-      const dir = target.current.clone().sub(pos)
-      if (dir.length() > 0.01) {
-        dir.normalize()
-        const step = Math.min(1.2 * dt, pos.distanceTo(target.current))
-        const nx = clamp(pos.x + dir.x * step)
-        const nz = clamp(pos.z + dir.z * step)
-        let movedAny = false
-        if (!blocked(nx + Math.sign(dir.x) * COLLIDE_RADIUS, pos.z)) { pos.x = nx; movedAny = true }
-        if (!blocked(pos.x, nz + Math.sign(dir.z) * COLLIDE_RADIUS)) { pos.z = nz; movedAny = true }
-        if (!movedAny) target.current = randomTarget() // furniture in the way → wander elsewhere
-        g.rotation.y = Math.atan2(dir.x, dir.z)
-        moving = pos.distanceTo(target.current) > 0.05
-      }
-    }
-
-    walkState.t += dt
-    walkState.moving = moving
+    const emotingNow = emoteT < 1
+    if (!emotingNow && emoting) setEmoting(false)
     if (inner.current) {
-      const jump = isEmoting ? Math.sin(emoteT * Math.PI) * 0.5 : 0
-      const stepBob = moving ? Math.abs(Math.sin(walkState.t * 9)) * 0.05 : 0
+      const jump = emotingNow ? Math.sin(emoteT * Math.PI) * 0.5 : 0
+      const stepBob = walkState.moving ? Math.abs(Math.sin(walkState.t * 9)) * 0.05 : 0
       inner.current.position.y = jump + stepBob + Math.sin(now / 300) * 0.04
-      inner.current.rotation.y = isEmoting ? emoteT * Math.PI * 2 : 0
-      inner.current.rotation.z = moving && !isEmoting ? Math.sin(walkState.t * 9) * 0.05 : 0
+      inner.current.rotation.y = emotingNow ? emoteT * Math.PI * 2 : 0
+      inner.current.rotation.z = walkState.moving && !emotingNow ? Math.sin(walkState.t * 9) * 0.05 : 0
     }
   })
 
