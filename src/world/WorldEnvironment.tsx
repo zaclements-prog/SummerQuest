@@ -21,15 +21,15 @@ const SKY = {
 // Fog — matched to the horizon color so the island edge melts into the sky.
 const FOG = {
   color: '#cfe6ee',
-  near: 34,
-  far: 78,
+  near: 46,
+  far: 165,
 }
 
 // Key (golden-hour) directional light.
 const KEY_LIGHT = {
   position: [10, 16, 8] as [number, number, number],
-  color: '#ffe7c2',
-  intensity: 1.1,
+  color: '#ffe2b0',
+  intensity: 1.25,
   shadowMapSize: 2048,
   shadowExtent: 24, // ± world units the shadow camera covers
   shadowBias: -0.0004,
@@ -52,7 +52,7 @@ const SHADOW_BLUR_SAMPLES = 24
 const AO = {
   aoRadius: 1.1, // voxel-scale; small so only crevices darken
   distanceFalloff: 1.0,
-  intensity: 1.6,
+  intensity: 1.95,
   quality: 'medium' as const,
   color: '#2a2438',
 }
@@ -73,10 +73,11 @@ const VIGNETTE = {
 
 // Floating clouds drifting over the isle.
 const CLOUDS: { position: [number, number, number]; scale: number; seed: number }[] = [
-  { position: [-14, 14, -16], scale: 1.4, seed: 11 },
-  { position: [16, 16, -10], scale: 1.1, seed: 23 },
-  { position: [4, 18, 18], scale: 1.6, seed: 37 },
-  { position: [-18, 13, 10], scale: 1.0, seed: 51 },
+  { position: [-18, 28, -22], scale: 0.85, seed: 11 },
+  { position: [22, 32, -14], scale: 0.7, seed: 23 },
+  { position: [8, 34, 24], scale: 0.95, seed: 37 },
+  { position: [-24, 26, 16], scale: 0.65, seed: 51 },
+  { position: [14, 30, 18], scale: 0.6, seed: 67 },
 ]
 
 /**

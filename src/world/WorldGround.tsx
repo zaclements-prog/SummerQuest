@@ -43,21 +43,30 @@ type Cell = { cx: number; cz: number; r: number; floor: number }
  * rock floor stepping deeper toward the island center so the underside reads as
  * a real chunky silhouette from the iso camera.
  */
+/** Radius of the lobed coastline at the angle of (cx,cz). Connected + chunky. */
+function islandEdge(cx: number, cz: number): number {
+  const ang = Math.atan2(cz, cx)
+  return (
+    ISLAND.baseRadius +
+    Math.sin(ang * 3) * 1.3 +
+    Math.sin(ang * 5 + 1.7) * 0.7 +
+    Math.cos(ang * 2 - 0.6) * 0.8
+  )
+}
+
+/** Keep scattered items strictly on the island (no floaters past the coast). */
+const onIsland = (it: { position: [number, number, number] }) =>
+  Math.hypot(it.position[0], it.position[2]) < islandEdge(it.position[0], it.position[2]) - 1.4
+
 function buildIsland(): Cell[] {
   const cells: Cell[] = []
-  const { cell, reach, baseRadius } = ISLAND
+  const { cell, reach } = ISLAND
   for (let gx = -reach; gx <= reach; gx += cell) {
     for (let gz = -reach; gz <= reach; gz += cell) {
       const cx = gx
       const cz = gz
       const dist = Math.hypot(cx, cz)
-      // Smooth low-frequency lobed coastline so the rim stays connected + chunky.
-      const ang = Math.atan2(cz, cx)
-      const wob =
-        Math.sin(ang * 3) * 1.3 +
-        Math.sin(ang * 5 + 1.7) * 0.7 +
-        Math.cos(ang * 2 - 0.6) * 0.8
-      const edge = baseRadius + wob
+      const edge = islandEdge(cx, cz)
       if (dist > edge) continue
       // Deeper toward the middle (stepped underside), shallower at the rim.
       const t = Math.min(1, dist / edge) // 0 center → 1 rim
@@ -111,8 +120,8 @@ export default function WorldGround() {
   )
 
   // Instanced grass-tone tufts scattered on the flat top for living variation.
-  const tufts = useMemo(() => field([0, 0], 21, 21, 540, 9001, { y: 0.13, minScale: 0.6, maxScale: 1.25 }), [])
-  const tuftsDark = useMemo(() => field([0, 0], 21, 21, 320, 9002, { y: 0.11, minScale: 0.5, maxScale: 1.05 }), [])
+  const tufts = useMemo(() => field([0, 0], 23, 23, 700, 9001, { y: 0.13, minScale: 0.6, maxScale: 1.25 }).filter(onIsland), [])
+  const tuftsDark = useMemo(() => field([0, 0], 23, 23, 420, 9002, { y: 0.11, minScale: 0.5, maxScale: 1.05 }).filter(onIsland), [])
 
   // Inset voxel paths from the house (0,0) to each area. Built as thin merged strips.
   const pathGeo = useMemo(() => buildPaths(), [])
