@@ -172,18 +172,14 @@ export default function DailyChallenge() {
             </div>
           </Card>
 
-          {/* Static slot indicator — ConceptPlay owns the live "Question X of N" counter. */}
+          {/* ConceptPlay owns the live "Question X of N" progress bar below, so we
+              keep just a short caption here to avoid a duplicate progress affordance. */}
           <div
-            className="flex items-center justify-center gap-2 mb-1"
+            className="flex items-center justify-center mb-1"
             aria-label={`${DAILY_QUESTION_COUNT} questions in today's challenge`}
           >
             <span className="text-sky kid-text text-sm">
               {DAILY_QUESTION_COUNT} quick questions
-            </span>
-            <span className="flex gap-1" aria-hidden="true">
-              {Array.from({ length: DAILY_QUESTION_COUNT }, (_, i) => (
-                <span key={i} className="w-2.5 h-2.5 rounded-full bg-quest-400 ring-2 ring-quest-600/40" />
-              ))}
             </span>
           </div>
         </div>
