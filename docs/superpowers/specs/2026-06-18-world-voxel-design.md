@@ -30,11 +30,15 @@ Handcrafted, warm, cozy **voxel diorama** — Townscaper × Animal Crossing × a
 - `Vox` — a lightly **beveled** cube primitive (+ an **instanced** scatter helper for grass/flowers/pebbles; instancing keeps perf sane).
 - `props` — reusable voxel props: tree variants (round/pine/fruit), bush, shrub, fern, flower clusters, grass tufts, mushrooms, rocks/boulders, logs, fences, lantern/lamp-post, signpost, crates/barrels, lily pad, cattail, cloud.
 
-## Per-area richness
-1. **Word Problem Woods (NW):** dense, varied voxel trees; undergrowth (bushes, ferns, mushrooms, logs, flowers); dirt clearing; firefly sparkles; boulders. Cozy forest.
-2. **Fraction Falls (E):** rocky voxel cliff with a **multi-tier waterfall + foam**, a pool with lily pads/cattails/ripples, wet mossy rocks, mist sparkles, a little wooden footbridge.
-3. **Writing Workshop (S):** a cozy voxel **cottage** — pitched/gabled roof (NOT a flat slab), chimney with drifting smoke, warm-glowing windows, door, hanging sign, small garden, lanterns, path. Keep enterable + front-wall fade.
-4. **Your House (center):** a proper voxel **home** — pitched roof, windows, door, chimney, flower boxes, fence, mailbox, path. Keep enterable, the `PlacedItems` interior, and front-wall fade.
+## Per-area richness — locations are game GATEWAYS, not decoration
+Each location is where the player walks up to an NPC to **launch a game/lesson**. So every one must be a **distinct, inviting destination** that (a) reads at a glance as its subject, (b) draws the eye and the feet toward the gateway NPC, and (c) feels like a designed *place* with a sense of arrival — a clearing, a plaza, a dock, a cottage threshold. Give each a **named signpost/banner**, a clear approach (path widening into the spot), warm focal lighting (a lantern/glow near the NPC), and a little "stage" the NPC stands on. The themed props serve this — they frame the gateway, they aren't just scattered.
+
+1. **Word Problem Woods (NW):** a cozy forest **clearing** ringed by dense varied voxel trees; undergrowth (bushes, ferns, mushrooms, logs, flowers), boulders, firefly sparkles; a carved wooden **"Word Problem Woods" signpost** and a lantern by the woodland NPC at the clearing's heart, with the path opening into it.
+2. **Fraction Falls (E):** a rocky voxel cliff with a **multi-tier waterfall + foam**, a pool with lily pads/cattails/ripples, wet mossy rocks, mist sparkles, and a little **wooden footbridge/dock** where the water-themed NPC waits — the bridge + a sign make it the obvious approach.
+3. **Writing Workshop (S):** a cozy voxel **cottage** — pitched/gabled roof (NOT a flat slab), chimney with drifting smoke, warm-glowing windows, door, **hanging shop sign**, small garden, lanterns, a welcoming front path/threshold where the NPC greets you. Keep enterable + front-wall fade.
+4. **Your House (center):** a proper voxel **home** — pitched roof, windows, door, chimney, flower boxes, fence, mailbox, a front path. Keep enterable, the `PlacedItems` interior, and front-wall fade.
+
+Each gateway NPC should be a charming, **subject-themed** little voxel character (a woodland friend at the Woods, a water sprite at the Falls, a bookish/inky character at the Workshop) standing on a small base, with a restyled glowing marker/banner that clearly invites interaction.
 
 ## Characters
 Restyle the cylinder NPCs into **charming little voxel characters** (themed per area); keep the bob animation + proximity trigger; restyle the floating marker into a glowing voxel sign/banner. Avatar stays as-is.

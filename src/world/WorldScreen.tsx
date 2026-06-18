@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { useSearchParams } from 'react-router-dom'
-import { Vector3 } from 'three'
-import Lights from '../home/world/Lights'
+import { ACESFilmicToneMapping, Vector3 } from 'three'
+import WorldEnvironment from './WorldEnvironment'
 import WorldGround from './WorldGround'
 import WorldCameraRig from './WorldCameraRig'
 import WorldAvatar from './WorldAvatar'
@@ -22,13 +22,20 @@ export default function WorldScreen() {
   useEffect(() => { useHomeUi.getState().setMode('play') }, [])
   return (
     <div className="flex-1 relative">
-      <Canvas shadows camera={{ position: [11, 13, 15], fov: 42 }} style={{ position: 'absolute', inset: 0 }}>
-        <color attach="background" args={['#bfe3f2']} />
+      <Canvas
+        shadows
+        dpr={[1, 2]}
+        gl={{ antialias: false, toneMapping: ACESFilmicToneMapping, toneMappingExposure: 1.05 }}
+        camera={{ position: [11, 13, 15], fov: 38 }}
+        style={{ position: 'absolute', inset: 0 }}
+      >
+        {/* WorldEnvironment owns sky/fog/lighting/post-fx (replaces the bare
+            background <color> + old <Lights/> mood). */}
+        <WorldEnvironment />
         {studio ? (
           <WorldStudio />
         ) : (
           <>
-            <Lights />
             <WorldGround />
             <WordProblemWoods posRef={posRef} />
             <FractionFalls posRef={posRef} />
