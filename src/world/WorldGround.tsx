@@ -13,9 +13,8 @@ import { PALETTE } from './voxel/palette'
 
 const ISLAND = {
   cell: 2, // coarse voxel cell size (world units) — bigger = fewer blocks = faster
-  reach: 24, // half-extent of the grid scanned for the island footprint
-  baseRadius: 21, // nominal coastline radius (play area ≈ ±22)
-  edgeNoise: 2.6, // amplitude of the irregular/rounded coastline wobble
+  reach: 28, // half-extent of the grid scanned for the island footprint
+  baseRadius: 25, // nominal coastline radius (covers play area ±22 + a visible rim)
   topThickness: 0.9, // grass band depth (top sits at y=0)
   dirtBottom: -2.5, // dirt layer descends to here
   rockBottom: -6.0, // rock layer descends to here (then steps in for silhouette)
@@ -38,14 +37,6 @@ const BASIN = {
 
 type Cell = { cx: number; cz: number; r: number; floor: number }
 
-/** Deterministic [0,1) hash for the coastline wobble. */
-function noise2(ix: number, iz: number): number {
-  let h = Math.imul(ix | 0, 0x27d4eb2d) ^ Math.imul(iz | 0, 0x165667b1)
-  h = Math.imul(h ^ (h >>> 15), 0x2c1b3c6d)
-  h ^= h >>> 13
-  return (h >>> 0) / 4294967296
-}
-
 /**
  * Scan a coarse grid and keep cells inside an irregular radial coastline. Each
  * kept cell becomes a stack of merged boxes (grass → dirt → rock), with the
@@ -54,17 +45,18 @@ function noise2(ix: number, iz: number): number {
  */
 function buildIsland(): Cell[] {
   const cells: Cell[] = []
-  const { cell, reach, baseRadius, edgeNoise } = ISLAND
+  const { cell, reach, baseRadius } = ISLAND
   for (let gx = -reach; gx <= reach; gx += cell) {
     for (let gz = -reach; gz <= reach; gz += cell) {
       const cx = gx
       const cz = gz
       const dist = Math.hypot(cx, cz)
-      // Irregular coastline: wobble the effective radius per cell, deterministically.
+      // Smooth low-frequency lobed coastline so the rim stays connected + chunky.
+      const ang = Math.atan2(cz, cx)
       const wob =
-        (noise2(Math.round(cx / cell), Math.round(cz / cell)) - 0.5) * 2 * edgeNoise +
-        Math.sin(cx * 0.35) * 0.8 +
-        Math.cos(cz * 0.4) * 0.8
+        Math.sin(ang * 3) * 1.3 +
+        Math.sin(ang * 5 + 1.7) * 0.7 +
+        Math.cos(ang * 2 - 0.6) * 0.8
       const edge = baseRadius + wob
       if (dist > edge) continue
       // Deeper toward the middle (stepped underside), shallower at the rim.
