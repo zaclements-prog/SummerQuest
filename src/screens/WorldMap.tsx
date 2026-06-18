@@ -7,12 +7,7 @@ import { sfx } from '../lib/sound'
 import { computeBadges, type BadgeStatus } from '../lib/badges'
 import { todayStr } from '../lib/daily'
 import DailyGoalCard from '../components/DailyGoalCard'
-import {
-  Button,
-  Pill,
-  StarRating,
-  Celebration,
-} from '../components/ui'
+import { Button, Pill, Celebration } from '../components/ui'
 import { subjectTheme } from '../lib/theme'
 import { useEntrance, hoverPop, tap } from '../lib/motion'
 
@@ -81,7 +76,7 @@ export default function WorldMap() {
 
         {/* ── Title ─────────────────────────────────────────────────────── */}
         <div className="text-center">
-          <h1 className="text-display text-sky drop-shadow-lg">
+          <h1 className="kid-text text-4xl sm:text-5xl text-sky drop-shadow-lg">
             {curriculum.title}
           </h1>
           <p className="kid-text text-lg text-sky mt-1">
@@ -254,22 +249,18 @@ export default function WorldMap() {
                           {zone.title}
                         </div>
 
-                        {/* star chip */}
+                        {/* compact star-count badge (a full 9-glyph row is too busy on the map) */}
                         {maxStars > 0 && (
                           <div
                             className={[
-                              'absolute -top-2 -right-2',
-                              'rounded-full px-1.5 py-0.5 shadow',
-                              'flex items-center kid-text text-xs',
-                              theme.bg,
-                              theme.text,
+                              'absolute -top-1 -right-1',
+                              'rounded-full px-2 py-0.5 shadow-md ring-2 ring-white',
+                              'flex items-center gap-0.5 kid-text text-xs',
+                              stars >= maxStars ? 'bg-quest-400 text-quest-900' : 'bg-paper text-ink-900',
                             ].join(' ')}
                           >
-                            <StarRating
-                              earned={stars}
-                              total={maxStars}
-                              size="sm"
-                            />
+                            <span className="text-quest-500" aria-hidden="true">★</span>
+                            <span>{stars}/{maxStars}</span>
                           </div>
                         )}
                       </motion.div>
