@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import type { GameProps } from '../../screens/GameRunner'
 import type { GameState, PendingPurchase, Vec2 } from './types'
 import { ENEMY_STATS, TOWER_STATS, pointAtT } from './config'
@@ -13,6 +13,7 @@ import {
 } from './engine'
 import MathGate from './MathGate'
 import { sfx } from '../../lib/sound'
+import { Button, Pill, Card } from '../../components/ui'
 
 const GAME_W = 720
 const GAME_H = 420
@@ -26,6 +27,7 @@ export default function TowerDefense({ provider, onComplete, meta }: GameProps) 
   const pendingRef = useRef<PendingPurchase | null>(null)
   pendingRef.current = pending
   const completedRef = useRef(false)
+  const reduced = useReducedMotion()
 
   // RAF tick — runs once for component lifetime, reads pending via ref
   useEffect(() => {
@@ -155,32 +157,17 @@ export default function TowerDefense({ provider, onComplete, meta }: GameProps) 
         </svg>
 
         {showStart && !s.isGameOver && (
-          <button
-            onClick={startWaveClick}
-            className="absolute left-1/2 -translate-x-1/2 top-1/3 btn-quest bg-correct-500 text-white"
-            style={{ borderColor: '#16a34a' }}
-          >
-            {s.wave === 0 ? '▶︎ Start Wave 1' : `▶︎ Start Wave ${s.wave + 1}`}
-          </button>
+          <div className="absolute left-1/2 -translate-x-1/2 top-1/3">
+            <Button variant="success" size="lg" onClick={startWaveClick}>
+              <span aria-hidden="true">▶︎</span>
+              {s.wave === 0 ? 'Start Wave 1' : `Start Wave ${s.wave + 1}`}
+            </Button>
+          </div>
         )}
 
         {s.isGameOver && (
-          <div className="absolute inset-0 flex items-center justify-center bg-ocean-900/60 rounded-2xl">
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              className="bg-white text-ocean-900 rounded-3xl p-6 text-center max-w-xs"
-            >
-              <div className="text-5xl mb-2">{s.hasWon ? '🏆' : '💔'}</div>
-              <div className="kid-text text-3xl">
-                {s.hasWon ? 'Victory!' : 'Base destroyed'}
-              </div>
-              <div className="text-gray-600 mt-1">
-                Wave reached: {s.wave}
-                <br />
-                Enemies defeated: {s.kills}
-              </div>
-            </motion.div>
+          <div className="absolute inset-0 flex items-center justify-center bg-ink-900/60 rounded-2xl p-4">
+            <GameOverCard reduced={reduced} state={s} />
           </div>
         )}
       </div>
@@ -208,20 +195,44 @@ export default function TowerDefense({ provider, onComplete, meta }: GameProps) 
 
 function StatsBar({ state: s }: { state: GameState }) {
   return (
-    <div className="flex gap-2 flex-wrap justify-center text-white kid-text">
-      <Pill bg="bg-quest-500 text-quest-900">🪙 {s.gold}</Pill>
-      <Pill bg="bg-wrong-500">❤️ {s.lives}</Pill>
-      <Pill bg="bg-ocean-500">
+    <div className="flex gap-2 flex-wrap justify-center">
+      <Pill tone="quest" icon="🪙" className="text-base px-4 py-1">
+        {s.gold}
+      </Pill>
+      <Pill tone="wrong" icon="❤️" className="text-base px-4 py-1">
+        {s.lives}
+      </Pill>
+      <Pill tone="ocean" icon="🌊" className="text-base px-4 py-1">
         Wave {Math.max(s.wave, 1)}/10
       </Pill>
-      <Pill bg="bg-monster-500">⚔️ {s.kills}</Pill>
+      <Pill tone="monster" icon="⚔️" className="text-base px-4 py-1">
+        {s.kills}
+      </Pill>
     </div>
   )
 }
 
-function Pill({ children, bg }: { children: React.ReactNode; bg: string }) {
+function GameOverCard({ reduced, state: s }: { reduced: boolean | null; state: GameState }) {
   return (
-    <div className={`px-3 py-1 rounded-full kid-text ${bg}`}>{children}</div>
+    <motion.div
+      initial={reduced ? { opacity: 0 } : { scale: 0 }}
+      animate={reduced ? { opacity: 1 } : { scale: 1 }}
+      className="w-full max-w-xs"
+    >
+      <Card tone={s.hasWon ? 'correct' : 'wrong'} accent className="p-6 text-center">
+        <div className="text-5xl mb-2" aria-hidden="true">
+          {s.hasWon ? '🏆' : '💔'}
+        </div>
+        <div className="kid-text text-3xl text-ink-900">
+          {s.hasWon ? 'Victory!' : 'Base destroyed'}
+        </div>
+        <div className="text-ink-700 kid-text text-base mt-2">
+          Wave reached: {s.wave}
+          <br />
+          Enemies defeated: {s.kills}
+        </div>
+      </Card>
+    </motion.div>
   )
 }
 
@@ -240,22 +251,29 @@ function TowerPicker({
         const stats = TOWER_STATS[k]
         const afford = s.gold >= stats.cost
         const active = selected === k
+        const stateClass = active
+          ? 'bg-quest-400 text-quest-900 border-quest-600'
+          : afford
+            ? 'bg-paper text-ink-900 border-ocean-300 hover:border-ocean-500 hover:-translate-y-0.5'
+            : 'bg-ink-500/15 text-ink-700/50 border-ink-500/20 cursor-not-allowed'
         return (
           <button
             key={k}
             onClick={() => onSelect(active ? null : k)}
             disabled={!afford}
-            className={`px-4 py-2 rounded-2xl kid-text shadow-lg border-4 ${
-              active
-                ? 'bg-quest-300 text-ocean-900 border-quest-500'
-                : afford
-                  ? 'bg-white text-ocean-900 border-white hover:bg-quest-100'
-                  : 'bg-gray-200 text-gray-400 border-gray-200 cursor-not-allowed'
-            }`}
+            aria-pressed={active}
+            className={[
+              'kid-text rounded-2xl border-4 px-5 py-2.5 min-h-[44px] text-center transition',
+              'shadow-[0_4px_0_0_rgba(0,0,0,0.12)]',
+              'focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ocean-400 focus-visible:ring-offset-2',
+              stateClass,
+            ].join(' ')}
           >
-            <div className="text-3xl">{stats.emoji}</div>
+            <div className="text-3xl" aria-hidden="true">{stats.emoji}</div>
             <div className="text-sm">{stats.label}</div>
-            <div className="text-xs">🪙 {stats.cost}</div>
+            <div className="text-xs inline-flex items-center gap-1 justify-center">
+              <span aria-hidden="true">🪙</span> {stats.cost}
+            </div>
           </button>
         )
       })}

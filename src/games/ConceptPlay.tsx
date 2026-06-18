@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import type { GameProps } from '../screens/GameRunner'
 import { nextProblem, type Problem } from '../lib/problem'
 import { sfx } from '../lib/sound'
 import { useProgress } from '../store/progress'
 import VisualRenderer from '../components/VisualRenderer'
 import { skillOf } from '../tutoring/skills'
+import { Loading } from '../components/ui'
+import { QuizProgress, QuestionPrompt, AnswerGrid } from './_shared/QuizUI'
 
 /**
  * Generic concept stage. Shows a problem with its visual representation, presents
@@ -77,69 +79,52 @@ export default function ConceptPlay({ provider, params, onComplete, meta }: Game
 
   if (loading || !problem) {
     return (
-      <div className="flex-1 flex items-center justify-center text-white kid-text text-2xl">
-        Loading…
+      <div className="flex-1 flex items-center justify-center p-6">
+        <Loading label="Loading your question…" />
       </div>
     )
   }
 
+  // The 'wordProblem' visual merely re-prints the prompt the game already shows,
+  // so we skip the visual entirely for it. Genuine visuals (arrays, fraction
+  // bars, clocks, etc.) still render below.
+  const hasGenuineVisual =
+    !!problem.visual &&
+    problem.visual.kind !== 'none' &&
+    problem.visual.kind !== 'wordProblem'
+
   return (
-    <div className="flex-1 flex flex-col items-center p-4 text-white overflow-y-auto">
-      <div className="kid-text text-lg mb-2 text-white/80">
-        Question {idx + 1} of {questionCount}
+    <div className="flex-1 flex flex-col items-center p-4 overflow-y-auto">
+      <QuizProgress current={idx + 1} total={questionCount} />
+
+      <div key={problem.id} className="w-full flex flex-col items-center">
+        <QuestionPrompt>{problem.prompt}</QuestionPrompt>
+
+        {hasGenuineVisual && (
+          <div className="my-4 flex justify-center">
+            <VisualRenderer visual={problem.visual} size="md" />
+          </div>
+        )}
+
+        <div className={hasGenuineVisual ? '' : 'mt-4'}>
+          <AnswerGrid
+            options={problem.options}
+            answer={problem.answer}
+            picked={answered}
+            onPick={pick}
+            disabled={answered !== null}
+          />
+        </div>
       </div>
-
-      <motion.div
-        key={problem.id}
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        className="kid-text text-2xl md:text-3xl mb-3 bg-white/20 px-5 py-3 rounded-3xl max-w-2xl text-center"
-      >
-        {problem.prompt}
-      </motion.div>
-
-      <div className="mb-4">
-        <VisualRenderer visual={problem.visual} size="md" />
-      </div>
-
-      <AnimatePresence>
-        <motion.div
-          key={problem.id + '-opts'}
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          className="grid grid-cols-2 gap-3 w-full max-w-md"
-        >
-          {problem.options.map((opt) => {
-            const isPicked = answered === opt
-            const isAnswer = opt === problem.answer
-            const showState = answered !== null
-            return (
-              <button
-                key={String(opt)}
-                onClick={() => pick(opt)}
-                disabled={answered !== null}
-                className={`kid-text text-3xl py-4 rounded-3xl shadow-lg transition border-4 ${
-                  showState && isAnswer
-                    ? 'bg-correct-500 border-correct-600 text-white'
-                    : showState && isPicked
-                      ? 'bg-wrong-500 border-wrong-600 text-white'
-                      : 'bg-white text-ocean-900 border-white hover:bg-quest-100'
-                }`}
-              >
-                {opt}
-              </button>
-            )
-          })}
-        </motion.div>
-      </AnimatePresence>
 
       {answered !== null && answered !== problem.answer && problem.hint && (
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mt-4 bg-quest-200 text-quest-900 px-4 py-2 rounded-2xl kid-text max-w-md text-center"
+          className="mt-4 bg-quest-400/20 text-ink-900 px-4 py-3 rounded-2xl kid-text text-base max-w-md text-center"
         >
-          💡 {problem.hint}
+          <span className="mr-1" aria-hidden="true">💡</span>
+          {problem.hint}
         </motion.div>
       )}
     </div>

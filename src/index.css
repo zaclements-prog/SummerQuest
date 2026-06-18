@@ -12,23 +12,43 @@
   --color-quest-800: #644d01;
   --color-quest-900: #322700;
 
+  --color-island-400: #5eead4;
   --color-island-500: #2dd4bf;
   --color-island-600: #14b8a6;
   --color-island-700: #0f766e;
+  --color-island-800: #115e59;
 
   --color-ocean-300: #93c5fd;
+  --color-ocean-400: #60a5fa;
   --color-ocean-500: #3b82f6;
+  --color-ocean-600: #2563eb;
   --color-ocean-700: #1d4ed8;
+  --color-ocean-800: #1e40af;
   --color-ocean-900: #1e3a8a;
 
+  --color-monster-400: #c084fc;
   --color-monster-500: #a855f7;
   --color-monster-600: #9333ea;
+  --color-monster-700: #7e22ce;
+  --color-monster-800: #6b21a8;
 
+  --color-correct-400: #4ade80;
   --color-correct-500: #22c55e;
   --color-correct-600: #16a34a;
+  --color-correct-700: #15803d;
 
+  --color-wrong-400: #f87171;
   --color-wrong-500: #ef4444;
   --color-wrong-600: #dc2626;
+  --color-wrong-700: #b91c1c;
+
+  /* Neutral ink scale for body text */
+  --color-ink-500: #64748b;
+  --color-ink-700: #334155;
+  --color-ink-900: #0f172a;
+
+  /* Near-white surface */
+  --color-paper: #fbfdff;
 
   --font-display: "Fredoka", "Comic Sans MS", system-ui, sans-serif;
   --font-body: system-ui, -apple-system, sans-serif;
@@ -97,4 +117,38 @@ button {
 .btn-quest:active {
   box-shadow: 0 2px 0 0 currentColor, 0 4px 8px -2px rgba(0,0,0,0.2);
   transform: translateY(4px);
+}
+
+/* AA-safe body text over the sky-blue gradient */
+.text-sky {
+  color: #f4f9ff;
+  text-shadow: 0 1px 2px rgba(15, 40, 80, 0.45);
+}
+
+/* Responsive display/hero heading */
+.text-display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  line-height: 1;
+}
+
+/* Base style for quiz answer/choice buttons */
+.choice {
+  font-family: var(--font-display);
+  font-weight: 700;
+  border-width: 4px;
+  border-style: solid;
+  border-radius: 1rem;
+  min-height: 56px;
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: transform 0.08s ease-out, box-shadow 0.15s ease-out;
+}
+.choice:active {
+  transform: scale(0.97);
 }
