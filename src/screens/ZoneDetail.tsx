@@ -9,7 +9,6 @@ import {
   BackButton,
   Card,
   Pill,
-  ProgressBar,
   StarRating,
   Loading,
   ErrorState,
@@ -122,13 +121,6 @@ export default function ZoneDetail() {
                   ~{zone.estimatedMinutes} min
                 </Pill>
               </div>
-              <ProgressBar
-                value={earnedStars}
-                max={totalStars}
-                tone={zone.themeColor}
-                label="Zone progress"
-                className="mt-1"
-              />
             </div>
           </div>
         </Card>

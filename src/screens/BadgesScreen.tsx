@@ -215,7 +215,7 @@ function BadgeCard({
       <div
         className={[
           'kid-text text-sm leading-tight',
-          earned ? 'text-ink-900' : 'text-sky',
+          earned ? 'text-ink-900' : 'text-ink-700',
         ].join(' ')}
       >
         {badge.title}
