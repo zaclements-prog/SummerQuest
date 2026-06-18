@@ -1,5 +1,5 @@
 import { Suspense } from 'react'
-import { GradientTexture, SoftShadows, Float } from '@react-three/drei'
+import { GradientTexture, Float } from '@react-three/drei'
 import { EffectComposer, N8AO, Bloom, SMAA, Vignette } from '@react-three/postprocessing'
 import { BlendFunction, KernelSize } from 'postprocessing'
 import { BackSide } from 'three'
@@ -44,12 +44,9 @@ const FILL = {
   ambientIntensity: 0.18,
 }
 
-// Soft (PCSS-ish) contact shadows.
-const SOFT_SHADOWS = {
-  size: 26,
-  samples: 16,
-  focus: 0.9,
-}
+// Soft shadows via VSM blur (PCSS/SoftShadows isn't compatible with three 0.184).
+const SHADOW_RADIUS = 7
+const SHADOW_BLUR_SAMPLES = 24
 
 // Ambient occlusion — the single most important voxel-depth lever.
 const AO = {
@@ -103,8 +100,7 @@ export default function WorldEnvironment() {
         </meshBasicMaterial>
       </mesh>
 
-      {/* Lighting */}
-      <SoftShadows size={SOFT_SHADOWS.size} samples={SOFT_SHADOWS.samples} focus={SOFT_SHADOWS.focus} />
+      {/* Lighting (soft shadows come from VSM + shadow-radius on the key light) */}
       <hemisphereLight args={[FILL.skyColor, FILL.groundColor, FILL.hemiIntensity]} />
       <ambientLight color={FILL.ambientColor} intensity={FILL.ambientIntensity} />
       <directionalLight
@@ -120,6 +116,8 @@ export default function WorldEnvironment() {
         shadow-camera-bottom={-KEY_LIGHT.shadowExtent}
         shadow-camera-near={1}
         shadow-camera-far={60}
+        shadow-radius={SHADOW_RADIUS}
+        shadow-blurSamples={SHADOW_BLUR_SAMPLES}
       />
 
       {/* Drifting voxel clouds */}

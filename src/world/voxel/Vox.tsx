@@ -114,7 +114,6 @@ export function Scatter({
   color,
   jitterAmount = 0.08,
   size = 0.3,
-  radius = 0.05,
   roughness = 0.85,
   castShadow = true,
   receiveShadow = true,
@@ -123,7 +122,6 @@ export function Scatter({
     () => (Array.isArray(size) ? size : [size, size, size]),
     [size],
   )
-  const r = useMemo(() => Math.min(radius, Math.min(...args) * 0.45), [radius, args])
   const colors = useMemo(
     () =>
       items.map((it, i) =>
@@ -133,7 +131,7 @@ export function Scatter({
   )
   return (
     <Instances limit={items.length} castShadow={castShadow} receiveShadow={receiveShadow}>
-      <RoundedBox args={args} radius={r} smoothness={1} />
+      <boxGeometry args={args} />
       <meshStandardMaterial roughness={roughness} />
       {items.map((it, i) => {
         const s = it.scale ?? 1

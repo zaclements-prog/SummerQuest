@@ -119,8 +119,8 @@ export default function WorldGround() {
   )
 
   // Instanced grass-tone tufts scattered on the flat top for living variation.
-  const tufts = useMemo(() => field([0, 0], 20, 20, 420, 9001, { y: 0.04, minScale: 0.5, maxScale: 1.1 }), [])
-  const tuftsDark = useMemo(() => field([0, 0], 20, 20, 240, 9002, { y: 0.03, minScale: 0.4, maxScale: 0.9 }), [])
+  const tufts = useMemo(() => field([0, 0], 21, 21, 540, 9001, { y: 0.13, minScale: 0.6, maxScale: 1.25 }), [])
+  const tuftsDark = useMemo(() => field([0, 0], 21, 21, 320, 9002, { y: 0.11, minScale: 0.5, maxScale: 1.05 }), [])
 
   // Inset voxel paths from the house (0,0) to each area. Built as thin merged strips.
   const pathGeo = useMemo(() => buildPaths(), [])
@@ -142,8 +142,8 @@ export default function WorldGround() {
       </mesh>
 
       {/* Scattered grass tone variation on the flat top */}
-      <Scatter items={tufts} color={PALETTE.grassLight} jitterAmount={0.07} size={[0.55, 0.16, 0.55]} radius={0.05} castShadow={false} />
-      <Scatter items={tuftsDark} color={PALETTE.grassDark} jitterAmount={0.08} size={[0.5, 0.14, 0.5]} radius={0.05} castShadow={false} />
+      <Scatter items={tufts} color={PALETTE.grass} jitterAmount={0.09} size={[0.17, 0.26, 0.17]} castShadow={false} />
+      <Scatter items={tuftsDark} color={PALETTE.grassDark} jitterAmount={0.1} size={[0.15, 0.2, 0.15]} castShadow={false} />
 
       {/* Inset paths */}
       <mesh geometry={pathGeo} position={[0, PATH.y, 0]} receiveShadow>

@@ -23,7 +23,7 @@ export default function WorldScreen() {
   return (
     <div className="flex-1 relative">
       <Canvas
-        shadows
+        shadows="variance"
         dpr={[1, 2]}
         gl={{ antialias: false, toneMapping: ACESFilmicToneMapping, toneMappingExposure: 1.05 }}
         camera={{ position: [11, 13, 15], fov: 38 }}
