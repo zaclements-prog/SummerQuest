@@ -4,6 +4,7 @@ import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js
 import { Scatter } from './voxel/Vox'
 import { field } from './voxel/fields'
 import { PALETTE } from './voxel/palette'
+import Decor from './Decor'
 
 /* ─────────────────────────────── TUNABLES ───────────────────────────────────
  * The floating voxel island. The WALKABLE TOP STAYS FLAT AT y=0 — all voxel
@@ -150,6 +151,9 @@ export default function WorldGround() {
       <mesh geometry={pathGeo} position={[0, PATH.y, 0]} receiveShadow>
         <meshStandardMaterial color={PATH.color} roughness={1} />
       </mesh>
+
+      {/* Open-field richness decor layer (purely decorative, no colliders) */}
+      <Decor />
 
       {/* Sandy shore basin near Fraction Falls (water is owned by the area file) */}
       <group position={[BASIN.center[0], 0, BASIN.center[1]]}>
