@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import type { GameProps } from '../screens/GameRunner'
-import { nextProblem, type Problem } from '../lib/problem'
+import { nextProblem, type Problem, type ProblemAnswer } from '../lib/problem'
 import { sfx } from '../lib/sound'
 import { useProgress } from '../store/progress'
 import { skillOf } from '../tutoring/skills'
+import { ProgressBar, Pill, Loading } from '../components/ui'
+import { QuestionPrompt, AnswerGrid } from './_shared/QuizUI'
 
 export default function SpeedRun({ provider, params, onComplete, meta }: GameProps) {
   const timeLimitSec = (params?.timeLimitSec as number) ?? 60
@@ -15,10 +17,12 @@ export default function SpeedRun({ provider, params, onComplete, meta }: GamePro
   const [correct, setCorrect] = useState(0)
   const [streak, setStreak] = useState(0)
   const [feedback, setFeedback] = useState<'correct' | 'wrong' | null>(null)
+  const [picked, setPicked] = useState<ProblemAnswer | null>(null)
   const [totalAnswered, setTotalAnswered] = useState(0)
   const startedAt = useRef(Date.now())
   const recordAnswer = useProgress((s) => s.recordAnswer)
   const recordAttempt = useProgress((s) => s.recordAttempt)
+  const reduced = useReducedMotion()
 
   useEffect(() => {
     let cancel = false
@@ -63,6 +67,7 @@ export default function SpeedRun({ provider, params, onComplete, meta }: GamePro
       recordAttempt({ zoneId: meta.zoneId, topic: provider.topic, skillId: sk.id, skillLabel: sk.label, correct: isCorrect })
     }
     setTotalAnswered((n) => n + 1)
+    setPicked(opt)
     if (isCorrect) {
       sfx.correct()
       setCorrect((c) => c + 1)
@@ -75,72 +80,82 @@ export default function SpeedRun({ provider, params, onComplete, meta }: GamePro
     }
     setTimeout(() => {
       setFeedback(null)
+      setPicked(null)
       nextProblem(provider).then((p) => setProblem(p))
     }, 350)
   }
 
-  const pct = (timeLeft / timeLimitSec) * 100
+  const secondsLeft = Math.ceil(timeLeft)
+  // Urgency window: last quarter of the clock (and always the final 10s).
+  const low = timeLeft <= Math.min(10, timeLimitSec * 0.25)
+  const timerTone = low ? 'wrong' : timeLeft <= timeLimitSec * 0.5 ? 'quest' : 'correct'
 
   if (!problem) {
     return (
-      <div className="flex-1 flex items-center justify-center text-white kid-text text-2xl">
-        Loading…
+      <div className="flex-1 flex items-center justify-center p-6">
+        <Loading label="Get ready…" />
       </div>
     )
   }
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-center p-4 text-white">
-      <div className="w-full max-w-md mb-4">
-        <div className="flex justify-between kid-text mb-1">
-          <span>⏱ {Math.ceil(timeLeft)}s</span>
-          <span>✓ {correct}</span>
-          {streak >= 3 && <span className="text-quest-300">🔥 {streak} streak!</span>}
-        </div>
-        <div className="h-3 bg-ocean-900/40 rounded-full overflow-hidden">
+    <div className="flex-1 flex flex-col items-center justify-center p-4">
+      {/* ── Status bar: prominent timer + live score/streak ──────────────── */}
+      <div className="w-full max-w-md mb-5">
+        <div className="flex items-center justify-between gap-2 mb-2">
           <motion.div
-            className={`h-full ${
-              pct < 25 ? 'bg-wrong-500' : pct < 50 ? 'bg-quest-400' : 'bg-correct-500'
-            }`}
-            animate={{ width: `${pct}%` }}
-            transition={{ duration: 0.1 }}
-          />
+            // Pulse the seconds when time is running low (reduced-motion: static).
+            animate={!reduced && low ? { scale: [1, 1.12, 1] } : { scale: 1 }}
+            transition={
+              !reduced && low
+                ? { duration: 0.7, repeat: Infinity, ease: 'easeInOut' }
+                : { duration: 0.2 }
+            }
+          >
+            <Pill tone={timerTone} icon="⏱" className="text-base px-4 py-1 tabular-nums">
+              {secondsLeft}s
+            </Pill>
+          </motion.div>
+
+          <div className="flex items-center gap-2">
+            <Pill tone="ocean" icon="✓">
+              {correct}
+            </Pill>
+            {streak >= 3 && (
+              <motion.div
+                key={streak}
+                initial={reduced ? false : { scale: 0.7, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ type: 'spring', stiffness: 320, damping: 18 }}
+              >
+                <Pill tone="quest" icon="🔥">
+                  {streak}
+                </Pill>
+              </motion.div>
+            )}
+          </div>
         </div>
+
+        <ProgressBar
+          value={Math.max(0, timeLeft)}
+          max={timeLimitSec}
+          tone={timerTone}
+          className={!reduced && low ? 'animate-pulse' : ''}
+        />
       </div>
 
-      {/* Plain keyed motion.div (not AnimatePresence mode="wait") so the new
+      {/* Plain keyed wrapper (not AnimatePresence mode="wait") so the new
           question always mounts immediately — see BossBattle for the rationale. */}
-      <motion.div
-        key={problem.id}
-        initial={{ x: 30, opacity: 0 }}
-        animate={{
-          x: 0,
-          opacity: 1,
-          scale: feedback === 'wrong' ? [1, 0.95, 1.02, 1] : 1,
-        }}
-        transition={{ duration: 0.25 }}
-        className={`kid-text text-4xl md:text-6xl mb-6 px-6 py-3 rounded-3xl text-center ${
-          feedback === 'correct'
-            ? 'bg-correct-500'
-            : feedback === 'wrong'
-              ? 'bg-wrong-500'
-              : 'bg-white/20'
-        }`}
-      >
-        {problem.prompt}
-      </motion.div>
+      <div key={problem.id} className="w-full flex flex-col items-center gap-5">
+        <QuestionPrompt>{problem.prompt}</QuestionPrompt>
 
-      <div className="grid grid-cols-2 gap-3 w-full max-w-md">
-        {problem.options.map((opt) => (
-          <button
-            key={String(opt)}
-            onClick={() => pick(opt)}
-            disabled={feedback !== null}
-            className="kid-text text-3xl py-4 rounded-3xl bg-white text-ocean-900 hover:bg-quest-100 shadow-lg border-4 border-white disabled:opacity-50"
-          >
-            {opt}
-          </button>
-        ))}
+        <AnswerGrid
+          options={problem.options}
+          answer={problem.answer}
+          picked={picked}
+          onPick={pick}
+          disabled={feedback !== null}
+        />
       </div>
     </div>
   )

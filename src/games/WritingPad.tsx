@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import type { GameProps } from '../screens/GameRunner'
 import { nextProblem, type Problem } from '../lib/problem'
 import { generateText, isLLMAvailable } from '../lib/llm'
@@ -7,6 +7,8 @@ import { buildWritingEvalPrompt } from '../lib/prompts'
 import { useProgress } from '../store/progress'
 import { useSettings } from '../store/settings'
 import { sfx } from '../lib/sound'
+import { Card, Button, ProgressBar, Pill, StarRating, Loading } from '../components/ui'
+import { useEntrance } from '../lib/motion'
 
 interface Feedback {
   score: number
@@ -116,118 +118,239 @@ export default function WritingPad({ provider, params, onComplete, meta }: GameP
 
   if (!problem) {
     return (
-      <div className="flex-1 flex items-center justify-center text-white kid-text text-2xl">
-        Loading…
+      <div className="flex-1 flex items-center justify-center p-6">
+        <Loading label="Loading your prompt…" />
       </div>
     )
   }
 
   return (
-    <div className="flex-1 flex flex-col items-center p-4 text-white overflow-y-auto">
-      <div className="kid-text text-lg mb-2 text-white/80">
-        Prompt {idx + 1} of {questionCount}
-      </div>
+    <WritingPadView
+      problem={problem}
+      idx={idx}
+      questionCount={questionCount}
+      kind={kind}
+      minWords={minWords}
+      wordCount={wordCount}
+      text={text}
+      setText={setText}
+      submit={submit}
+      canSubmit={canSubmit}
+      submitting={submitting}
+      feedback={feedback}
+      nextOrFinish={nextOrFinish}
+      llmEnabled={llmEnabled}
+      llmAvailable={llmAvailable}
+    />
+  )
+}
 
-      <div className="bg-white text-ocean-900 rounded-3xl p-5 max-w-2xl mb-3 shadow-lg">
-        <div className="kid-text text-sm uppercase tracking-wide text-gray-500 mb-2">
-          ✍️ Writing prompt
+// ── Presentational layer ──────────────────────────────────────────────────────
+// All game logic lives in the parent; this component only renders props and
+// forwards the existing callbacks. Built on the shared design system.
+
+interface WritingPadViewProps {
+  problem: Problem
+  idx: number
+  questionCount: number
+  kind: 'sentence' | 'paragraph' | 'story'
+  minWords: number
+  wordCount: number
+  text: string
+  setText: (v: string) => void
+  submit: () => void
+  canSubmit: boolean
+  submitting: boolean
+  feedback: Feedback | null
+  nextOrFinish: () => void
+  llmEnabled: boolean
+  llmAvailable: boolean | null
+}
+
+const KIND_LABEL: Record<WritingPadViewProps['kind'], string> = {
+  sentence: 'Sentence',
+  paragraph: 'Paragraph',
+  story: 'Story',
+}
+
+function WritingPadView({
+  problem,
+  idx,
+  questionCount,
+  kind,
+  minWords,
+  wordCount,
+  text,
+  setText,
+  submit,
+  canSubmit,
+  submitting,
+  feedback,
+  nextOrFinish,
+  llmEnabled,
+  llmAvailable,
+}: WritingPadViewProps) {
+  const reduced = useReducedMotion()
+  const { container, item } = useEntrance()
+  const rows = kind === 'sentence' ? 3 : kind === 'paragraph' ? 6 : 10
+  const enoughWords = wordCount >= minWords
+
+  return (
+    <div className="flex-1 flex flex-col items-center p-4 overflow-y-auto">
+      {/* Progress */}
+      <div className="w-full max-w-2xl mb-3">
+        <div className="kid-text text-sm text-sky text-center mb-1">
+          Prompt {idx + 1} of {questionCount}
         </div>
-        <p className="text-lg leading-relaxed">{problem.prompt}</p>
+        <ProgressBar value={idx + 1} max={questionCount} tone="quest" />
       </div>
 
-      {!feedback && (
-        <>
-          <textarea
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            placeholder={`Write your ${kind} here…`}
-            className="w-full max-w-2xl bg-white text-ocean-900 rounded-2xl p-4 outline-none focus:ring-4 focus:ring-quest-400 resize-none kid-text text-lg"
-            rows={kind === 'sentence' ? 3 : kind === 'paragraph' ? 6 : 10}
-            disabled={submitting}
-          />
-          <div className="flex items-center gap-3 mt-3 kid-text">
-            <span className="text-sm">
-              {wordCount} word{wordCount === 1 ? '' : 's'}
-              {wordCount < minWords && (
-                <span className="opacity-70"> (aim for ~{minWords})</span>
-              )}
-            </span>
-            <button
-              onClick={submit}
-              disabled={!canSubmit}
-              className="btn-quest bg-correct-500 text-white disabled:opacity-40 disabled:cursor-not-allowed"
-              style={{ borderColor: '#16a34a' }}
-            >
-              {submitting ? 'Reading…' : 'Submit ✨'}
-            </button>
-          </div>
-          {!llmEnabled && (
-            <p className="mt-3 text-sm text-white/70 kid-text max-w-md text-center">
-              AI feedback is off in settings — you'll still get a score, but for richer feedback turn it on in the Parent dashboard.
+      <motion.div
+        key={problem.id}
+        variants={container}
+        initial="hidden"
+        animate="show"
+        className="w-full max-w-2xl flex flex-col items-center gap-3"
+      >
+        {/* Prompt surface — bright paper, dark ink, high contrast */}
+        <motion.div variants={item} className="w-full">
+          <Card tone="quest" accent className="p-5">
+            <div className="flex items-center gap-2 mb-2">
+              <Pill tone="quest" icon="✍️">
+                {KIND_LABEL[kind]} prompt
+              </Pill>
+            </div>
+            <p className="kid-text text-ink-900 text-xl md:text-2xl leading-snug">
+              {problem.prompt}
             </p>
-          )}
-          {llmAvailable === false && llmEnabled && (
-            <p className="mt-3 text-sm text-white/70 kid-text max-w-md text-center">
-              AI server isn't responding. Your work will get a basic score.
-            </p>
-          )}
-        </>
-      )}
+          </Card>
+        </motion.div>
+
+        {!feedback && (
+          <>
+            {/* Writing surface */}
+            <motion.div variants={item} className="w-full">
+              <Card className="p-4">
+                <label htmlFor="writing-input" className="sr-only">
+                  Write your {kind} here
+                </label>
+                <textarea
+                  id="writing-input"
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                  placeholder={`Write your ${kind} here…`}
+                  className={[
+                    'w-full bg-paper text-ink-900 rounded-2xl p-4 resize-none',
+                    'kid-text text-lg leading-relaxed',
+                    'border-2 border-ocean-300',
+                    'outline-none focus:border-ocean-500 focus:ring-4 focus:ring-ocean-400/40',
+                    'placeholder:text-ink-700/40',
+                    'disabled:opacity-60',
+                  ].join(' ')}
+                  rows={rows}
+                  disabled={submitting}
+                />
+                <div className="flex items-center justify-between gap-3 mt-3">
+                  <Pill tone={enoughWords ? 'correct' : 'ink'} icon={enoughWords ? '✓' : '✎'}>
+                    {wordCount} word{wordCount === 1 ? '' : 's'}
+                    {!enoughWords && ` · aim for ~${minWords}`}
+                  </Pill>
+                  <Button
+                    variant="success"
+                    onClick={submit}
+                    disabled={!canSubmit}
+                  >
+                    {submitting ? 'Reading…' : 'Submit ✨'}
+                  </Button>
+                </div>
+              </Card>
+            </motion.div>
+
+            {!llmEnabled && (
+              <motion.p
+                variants={item}
+                className="text-sm text-sky kid-text max-w-md text-center"
+              >
+                AI feedback is off in settings — you'll still get a score, but for richer feedback turn it on in the Parent dashboard.
+              </motion.p>
+            )}
+            {llmAvailable === false && llmEnabled && (
+              <motion.p
+                variants={item}
+                className="text-sm text-sky kid-text max-w-md text-center"
+              >
+                AI server isn't responding. Your work will get a basic score.
+              </motion.p>
+            )}
+          </>
+        )}
+      </motion.div>
 
       <AnimatePresence>
         {feedback && (
           <motion.div
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            className="bg-white text-ocean-900 rounded-3xl p-6 max-w-2xl w-full mt-3 shadow-2xl"
+            initial={reduced ? { opacity: 0 } : { y: 24, opacity: 0 }}
+            animate={reduced ? { opacity: 1 } : { y: 0, opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ type: 'spring', stiffness: 260, damping: 24 }}
+            className="w-full max-w-2xl mt-3"
           >
-            <div className="flex items-center gap-4 mb-3">
-              <div className="text-5xl">
-                {feedback.stars >= 3 ? '🏆' : feedback.stars >= 2 ? '🎉' : feedback.stars >= 1 ? '💪' : '📝'}
-              </div>
-              <div className="flex-1">
-                <div className="flex gap-1 text-3xl">
-                  {[0, 1, 2].map((i) => (
-                    <span key={i} style={{ opacity: feedback.stars > i ? 1 : 0.25 }}>
-                      ⭐
-                    </span>
-                  ))}
-                </div>
-                <div className="kid-text text-sm text-gray-500">Score: {feedback.score}/100</div>
-              </div>
-            </div>
-
-            <p className="kid-text text-lg mb-3">{feedback.summary}</p>
-
-            {feedback.celebrations.length > 0 && (
-              <div className="bg-correct-50 border-l-4 border-correct-500 p-3 rounded-r-2xl mb-2">
-                <div className="kid-text text-correct-600 text-sm mb-1">✨ You nailed</div>
-                <ul className="list-disc list-inside text-sm">
-                  {feedback.celebrations.map((c, i) => (
-                    <li key={i}>{c}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {feedback.improvements.length > 0 && (
-              <div className="bg-quest-50 border-l-4 border-quest-500 p-3 rounded-r-2xl mb-3">
-                <div className="kid-text text-quest-700 text-sm mb-1">💡 Try next time</div>
-                <ul className="list-disc list-inside text-sm">
-                  {feedback.improvements.map((c, i) => (
-                    <li key={i}>{c}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            <button
-              onClick={nextOrFinish}
-              className="btn-quest bg-ocean-500 text-white w-full"
-              style={{ borderColor: '#1d4ed8' }}
+            <Card
+              tone={feedback.stars >= 2 ? 'correct' : feedback.stars >= 1 ? 'quest' : 'ocean'}
+              accent
+              className="p-6"
             >
-              {idx + 1 >= questionCount ? 'Finish ✓' : 'Next prompt →'}
-            </button>
+              {/* Score header */}
+              <div className="flex items-center gap-4 mb-3">
+                <div className="text-5xl" aria-hidden="true">
+                  {feedback.stars >= 3 ? '🏆' : feedback.stars >= 2 ? '🎉' : feedback.stars >= 1 ? '💪' : '📝'}
+                </div>
+                <div className="flex-1">
+                  <StarRating earned={feedback.stars} total={3} size="lg" />
+                  <div className="kid-text text-sm text-ink-700 mt-0.5">
+                    Score: {feedback.score}/100
+                  </div>
+                </div>
+              </div>
+
+              <p className="kid-text text-lg text-ink-900 mb-3 leading-snug">
+                {feedback.summary}
+              </p>
+
+              {feedback.celebrations.length > 0 && (
+                <div className="bg-correct-600/10 border-l-4 border-correct-600 p-3 rounded-r-2xl mb-2">
+                  <div className="kid-text text-correct-700 text-sm mb-1">
+                    <span aria-hidden="true">✨</span> You nailed
+                  </div>
+                  <ul className="list-disc list-inside text-sm text-ink-900 space-y-0.5">
+                    {feedback.celebrations.map((c, i) => (
+                      <li key={i}>{c}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {feedback.improvements.length > 0 && (
+                <div className="bg-quest-400/20 border-l-4 border-quest-500 p-3 rounded-r-2xl mb-3">
+                  <div className="kid-text text-quest-700 text-sm mb-1">
+                    <span aria-hidden="true">💡</span> Try next time
+                  </div>
+                  <ul className="list-disc list-inside text-sm text-ink-900 space-y-0.5">
+                    {feedback.improvements.map((c, i) => (
+                      <li key={i}>{c}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              <Button
+                variant="primary"
+                onClick={nextOrFinish}
+                className="w-full"
+              >
+                {idx + 1 >= questionCount ? 'Finish ✓' : 'Next prompt →'}
+              </Button>
+            </Card>
           </motion.div>
         )}
       </AnimatePresence>
