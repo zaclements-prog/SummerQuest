@@ -1,8 +1,6 @@
 import { useMemo } from 'react'
 import { BoxGeometry, Matrix4, type BufferGeometry } from 'three'
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
-import { Scatter } from './voxel/Vox'
-import { field } from './voxel/fields'
 import { PALETTE } from './voxel/palette'
 import Decor from './Decor'
 
@@ -54,10 +52,6 @@ function islandEdge(cx: number, cz: number): number {
     Math.cos(ang * 2 - 0.6) * 0.8
   )
 }
-
-/** Keep scattered items strictly on the island (no floaters past the coast). */
-const onIsland = (it: { position: [number, number, number] }) =>
-  Math.hypot(it.position[0], it.position[2]) < islandEdge(it.position[0], it.position[2]) - 1.4
 
 function buildIsland(): Cell[] {
   const cells: Cell[] = []
@@ -120,10 +114,6 @@ export default function WorldGround() {
     [cells],
   )
 
-  // Instanced grass-tone tufts scattered on the flat top for living variation.
-  const tufts = useMemo(() => field([0, 0], 23, 23, 700, 9001, { y: 0.13, minScale: 0.6, maxScale: 1.25 }).filter(onIsland), [])
-  const tuftsDark = useMemo(() => field([0, 0], 23, 23, 420, 9002, { y: 0.11, minScale: 0.5, maxScale: 1.05 }).filter(onIsland), [])
-
   // Inset voxel paths from the house (0,0) to each area. Built as thin merged strips.
   const pathGeo = useMemo(() => buildPaths(), [])
 
@@ -142,10 +132,6 @@ export default function WorldGround() {
       <mesh geometry={rockGeo} receiveShadow castShadow>
         <meshStandardMaterial color={PALETTE.rock} roughness={0.95} />
       </mesh>
-
-      {/* Scattered grass tone variation on the flat top */}
-      <Scatter items={tufts} color={PALETTE.grass} jitterAmount={0.09} size={[0.17, 0.26, 0.17]} castShadow={false} />
-      <Scatter items={tuftsDark} color={PALETTE.grassDark} jitterAmount={0.1} size={[0.15, 0.2, 0.15]} castShadow={false} />
 
       {/* Inset paths */}
       <mesh geometry={pathGeo} position={[0, PATH.y, 0]} receiveShadow>

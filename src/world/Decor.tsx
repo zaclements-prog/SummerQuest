@@ -17,14 +17,12 @@
 
 import { useMemo } from 'react'
 import { Sparkles, Float } from '@react-three/drei'
-import { Scatter } from './voxel/Vox'
 import { Vox } from './voxel/Vox'
 import {
   VoxTree,
   Bush,
   Fern,
   FlowerPatch,
-  GrassTuft,
   Mushroom,
   Rock,
   Boulder,
@@ -33,7 +31,7 @@ import {
   LilyPad,
   Cattail,
 } from './voxel/props'
-import { rng, field } from './voxel/fields'
+import { rng } from './voxel/fields'
 import { PALETTE } from './voxel/palette'
 
 // ─── Re-export helpers from WorldGround (duplicated here to stay module-scope) ─
@@ -105,22 +103,6 @@ function clear(x: number, z: number): boolean {
   return onIsland(x, z) && !inKeepOut(x, z) && !onPath(x, z)
 }
 
-// ─── Scatter helpers ─────────────────────────────────────────────────────────
-
-/** Scatter positions filtered by the clear() test. */
-function clearField(
-  center: [number, number],
-  halfW: number,
-  halfD: number,
-  count: number,
-  seed: number,
-  opts?: { y?: number; minScale?: number; maxScale?: number },
-) {
-  return field(center, halfW, halfD, count, seed, opts).filter((it) =>
-    clear(it.position[0], it.position[2]),
-  )
-}
-
 // ─── Prop position list builders (deterministic, seed-based) ─────────────────
 
 /** Generate candidate positions for individual props across the whole island. */
@@ -163,26 +145,6 @@ function clearNoLandmark(x: number, z: number): boolean {
 // ─── Main component ───────────────────────────────────────────────────────────
 
 export default function Decor() {
-  // ── Dense instanced scatter (one draw-call each) ──────────────────────────
-
-  // Tall grass tufts — large count, instanced via Scatter
-  const tallGrass = useMemo(
-    () => clearField([0, 0], 22, 22, 340, 11001, { y: 0.17, minScale: 0.7, maxScale: 1.4 }),
-    [],
-  )
-
-  // Short flowering ground-cover
-  const groundFlowers = useMemo(
-    () => clearField([0, 0], 22, 22, 260, 11002, { y: 0.09, minScale: 0.6, maxScale: 1.1 }),
-    [],
-  )
-
-  // Pebble scatter (small dark rocks)
-  const pebbles = useMemo(
-    () => clearField([0, 0], 22, 22, 180, 11003, { y: 0.05, minScale: 0.4, maxScale: 0.9 }),
-    [],
-  )
-
   // ── Individual props — positions computed once, memo'd ────────────────────
 
   // Trees: round
@@ -197,51 +159,15 @@ export default function Decor() {
   const fernPos = useMemo(() => scatterPositions(22, 12020, clearNoLandmark), [])
   // Boulders
   const boulderPos = useMemo(() => scatterPositions(9, 12030, clearNoLandmark), [])
-  // Rocks
-  const rockPos = useMemo(() => scatterPositions(18, 12040, clearNoLandmark), [])
   // Flower patches
   const flowerPos = useMemo(() => scatterPositions(20, 12050, clearNoLandmark), [])
   // Mushrooms
   const mushroomPos = useMemo(() => scatterPositions(16, 12060, clearNoLandmark), [])
   // Logs
   const logPos = useMemo(() => scatterPositions(8, 12070, clearNoLandmark), [])
-  // Grass tufts (individual, slightly bigger than Scatter tufts)
-  const grassTuftPos = useMemo(() => scatterPositions(30, 12080, clearNoLandmark), [])
 
   return (
     <group>
-      {/* ── Instanced scatter layers ───────────────────────────────────────── */}
-
-      {/* Tall grass tufts */}
-      <Scatter
-        items={tallGrass}
-        color={PALETTE.foliage}
-        jitterAmount={0.12}
-        size={[0.09, 0.32, 0.09]}
-        castShadow={false}
-        receiveShadow={false}
-      />
-
-      {/* Ground flower dots */}
-      <Scatter
-        items={groundFlowers}
-        color={PALETTE.flowerYellow}
-        jitterAmount={0.18}
-        size={[0.12, 0.12, 0.12]}
-        castShadow={false}
-        receiveShadow={false}
-      />
-
-      {/* Pebbles */}
-      <Scatter
-        items={pebbles}
-        color={PALETTE.pebble}
-        jitterAmount={0.1}
-        size={[0.14, 0.1, 0.14]}
-        castShadow={false}
-        receiveShadow={false}
-      />
-
       {/* ── Individual props — trees ──────────────────────────────────────── */}
       {roundTreePos.map((pos, i) => (
         <VoxTree key={`rt${i}`} position={pos} variant="round" seed={13001 + i * 7} />
@@ -260,16 +186,10 @@ export default function Decor() {
       {fernPos.map((pos, i) => (
         <Fern key={`fern${i}`} position={pos} seed={14100 + i * 9} />
       ))}
-      {grassTuftPos.map((pos, i) => (
-        <GrassTuft key={`gt${i}`} position={pos} seed={14200 + i * 5} />
-      ))}
 
-      {/* ── Rocks / boulders ─────────────────────────────────────────────── */}
+      {/* ── Boulders ─────────────────────────────────────────────────────── */}
       {boulderPos.map((pos, i) => (
         <Boulder key={`bld${i}`} position={pos} seed={15001 + i * 11} />
-      ))}
-      {rockPos.map((pos, i) => (
-        <Rock key={`rock${i}`} position={pos} seed={15100 + i * 7} />
       ))}
 
       {/* ── Flowers / mushrooms ──────────────────────────────────────────── */}
@@ -303,24 +223,15 @@ export default function Decor() {
       {/* ── Landmark 3: SE Flower Meadow (6, 0, -4) ─────────────────────── */}
       <FlowerMeadow />
 
-      {/* ── Ambient life: Sparkles (butterflies / pollen) ────────────────── */}
+      {/* ── Ambient life: a few drifting Sparkles (butterflies / pollen) ──── */}
       <Sparkles
-        count={35}
+        count={18}
         scale={[28, 3, 28]}
         position={[0, 1.2, 0]}
         size={0.5}
         speed={0.15}
         color={PALETTE.flowerYellow}
         opacity={0.55}
-      />
-      <Sparkles
-        count={20}
-        scale={[20, 2, 20]}
-        position={[0, 0.9, 0]}
-        size={0.35}
-        speed={0.1}
-        color={PALETTE.flowerPink}
-        opacity={0.4}
       />
 
       {/* ── Two ambient birds (simple Vox, drifting via Float) ───────────── */}
@@ -376,7 +287,7 @@ function PondLandmark() {
 
       {/* Mist sparkles over the water */}
       <Sparkles
-        count={18}
+        count={10}
         scale={[4.5, 0.8, 4.5]}
         position={[0, 0.3, 0]}
         size={0.28}

@@ -25,6 +25,9 @@ export interface VoxProps {
   rotation?: Vec3
   transparent?: boolean
   opacity?: number
+  /** Override depth writing. Defaults to false when faded (transparent + opacity < 0.5)
+   *  so fading walls/roofs stop occluding the interior. */
+  depthWrite?: boolean
   children?: ReactNode
 }
 
@@ -42,12 +45,13 @@ export function Vox({
   emissive,
   emissiveIntensity = 1,
   radius = 0.08,
-  smoothness = 2,
+  smoothness = 1,
   castShadow = true,
   receiveShadow = true,
   rotation,
   transparent,
   opacity,
+  depthWrite,
   children,
 }: VoxProps) {
   const args = useMemo<[number, number, number]>(
@@ -74,6 +78,7 @@ export function Vox({
         emissiveIntensity={emissiveIntensity}
         transparent={transparent}
         opacity={opacity}
+        depthWrite={depthWrite ?? !(transparent && (opacity ?? 1) < 0.5)}
       />
       {children}
     </RoundedBox>

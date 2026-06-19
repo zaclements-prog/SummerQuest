@@ -91,7 +91,8 @@ export default function Building({
   // Opacity for a wall given which camera-facing faces it belongs to.
   const op = (faces: ('px' | 'pz')[]) => (inside && faces.some((f) => front.includes(f)) ? 0.14 : 1)
   // The whole roof shares one fade value (it sits on the +x/+z side of the camera).
-  const roofOp = inside ? 0.14 : 1
+  // Fades further than the walls so the top-down interior view stays clear.
+  const roofOp = inside ? 0.06 : 1
 
   // A warm wood trim/frame for door + windows (kept consistent across callers).
   const trim = PALETTE.woodDark

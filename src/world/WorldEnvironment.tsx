@@ -30,7 +30,7 @@ const KEY_LIGHT = {
   position: [10, 16, 8] as [number, number, number],
   color: '#ffe2b0',
   intensity: 1.25,
-  shadowMapSize: 2048,
+  shadowMapSize: 1024,
   shadowExtent: 24, // ± world units the shadow camera covers
   shadowBias: -0.0004,
 }
@@ -45,15 +45,16 @@ const FILL = {
 }
 
 // Soft shadows via VSM blur (PCSS/SoftShadows isn't compatible with three 0.184).
-const SHADOW_RADIUS = 7
-const SHADOW_BLUR_SAMPLES = 24
+const SHADOW_RADIUS = 4
+const SHADOW_BLUR_SAMPLES = 8
 
 // Ambient occlusion — the single most important voxel-depth lever.
 const AO = {
   aoRadius: 1.1, // voxel-scale; small so only crevices darken
   distanceFalloff: 1.0,
   intensity: 1.95,
-  quality: 'medium' as const,
+  quality: 'low' as const,
+  halfRes: true, // render AO at half resolution — big perf win, minor quality loss
   color: '#2a2438',
 }
 
@@ -136,6 +137,7 @@ export default function WorldEnvironment() {
             distanceFalloff={AO.distanceFalloff}
             intensity={AO.intensity}
             quality={AO.quality}
+            halfRes={AO.halfRes}
             color={AO.color}
           />
           <Bloom
