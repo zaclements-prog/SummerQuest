@@ -133,19 +133,6 @@ export default function Building({
   const { out: layers, baseW, baseD, steps, layerH } = roofLayers
   const ridgeY = H + 0.12 + steps * layerH
 
-  // Gable-end triangular infill (stair-stepped voxels) for the ±x walls, so the
-  // peak above the rectangular walls is closed. Mirrored on +x and -x.
-  const gableSteps = useMemo(() => {
-    const out: { y: number; d: number }[] = []
-    for (let i = 0; i < steps; i++) {
-      const t = i / steps
-      const d = baseD * (1 - t * 0.82)
-      const y = H + 0.12 + i * layerH + layerH / 2
-      out.push({ y, d })
-    }
-    return out
-  }, [steps, baseD, layerH])
-
   return (
     <group position={[cx, 0, cz]}>
       {/* ── Foundation lip (grounds the shell; never fades) ── */}
@@ -219,30 +206,6 @@ export default function Building({
         transparent
         opacity={roofOp}
       />
-
-      {/* gable-end infill on ±x (closes the triangle below the slopes) */}
-      {gableSteps.map((g, i) => (
-        <group key={`gable-${i}`}>
-          <Vox
-            position={[half - 0.02, g.y, 0]}
-            size={[0.26, layerH + 0.02, g.d - 0.6]}
-            color={wall}
-            radius={0.05}
-            roughness={0.9}
-            transparent
-            opacity={roofOp}
-          />
-          <Vox
-            position={[-half + 0.02, g.y, 0]}
-            size={[0.26, layerH + 0.02, g.d - 0.6]}
-            color={wall}
-            radius={0.05}
-            roughness={0.9}
-            transparent
-            opacity={roofOp}
-          />
-        </group>
-      ))}
 
       {/* ── Chimney (corner of the back side; fades with the roof) ── */}
       <group position={[-half + 0.6, 0, -half + 0.6]}>
