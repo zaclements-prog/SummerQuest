@@ -1,18 +1,33 @@
 /**
  * Decor.tsx — open-field richness layer for the Cozy Voxel Isle.
  *
- * Fills the grass between the four area locations with clustered trees, shrubs,
- * boulders, flowers, mushrooms, logs, and grass tufts, plus three small charming
- * landmarks and ambient Sparkles.  Purely decorative — zero colliders, zero
- * behavior changes.
+ * Landscape character design:
+ *   WILD GROVES  — 7 dense clusters of trees/undergrowth at the island's outer
+ *                  edge (radius 22–32), placed in the gaps between area destinations.
+ *                  Each grove has a centre, inner-dense radius, and falloff radius.
+ *   DEVELOPED    — central zone (r≈12) is kept OPEN and TIDY with:
+ *                    · Orchard:  neat 4×2 grid of VoxTree 'fruit' near (-9,6)
+ *                    · Hedgerow: straight line of Bush + Fence bordering the N path
+ *                    · Garden:   tidy rows of FlowerPatch inside a small fenced plot
+ *   TRANSITION   — a handful of sparse lone trees/bushes in the mid-zone (r 12–20)
  *
- * Keep-out zones (nothing placed inside):
- *   House        (0,  0)  r≈7
- *   Workshop     (0,-14)  r≈4.5
- *   Woods      (-12, -8)  r≈5
- *   Falls       (12, -8)  r≈6
- * Paths also excluded via distToSeg helper.
- * All items clipped with onIsland (stays ≥2.5u inside coastline).
+ * All items pass through clear() which enforces:
+ *   onIsland (≥2.5u inside coast) && !inKeepOut (area gateways) && !onPath (dirt paths)
+ *
+ * Keep-out zones:
+ *   House            (0,   0)  r≈7.5
+ *   Workshop         (0, -14)  r≈5.2
+ *   Words Woods    (-12,  -8)  r≈5.5
+ *   Fraction Falls  (12,  -8)  r≈6.5
+ *   Mult Mesa      (-14,  12)  r≈5.5
+ *   Division Dunes  (14,  12)  r≈5.5
+ *   Reading Reef     (0,  18)  r≈5.5
+ *   Data Delta      (24,  -2)  r≈5.5
+ *   Science Summit  (20, -18)  r≈5.5
+ *   Measure Marsh  (-24,  -2)  r≈5.5
+ *   Geometry Grove (-20, -18)  r≈5.5
+ *   Place Value     (-8, -26)  r≈5.5
+ *   Tower BF        (10, -26)  r≈5.5
  */
 
 import { useMemo } from 'react'
@@ -25,11 +40,11 @@ import {
   FlowerPatch,
   Mushroom,
   Rock,
-  Boulder,
   Log,
   Lantern,
   LilyPad,
   Cattail,
+  Fence,
 } from './voxel/props'
 import { rng } from './voxel/fields'
 import { PALETTE } from './voxel/palette'
@@ -113,29 +128,6 @@ function clear(x: number, z: number): boolean {
   return onIsland(x, z) && !inKeepOut(x, z) && !onPath(x, z)
 }
 
-// ─── Prop position list builders (deterministic, seed-based) ─────────────────
-
-/** Generate candidate positions for individual props across the whole island. */
-function scatterPositions(
-  count: number,
-  seed: number,
-  extraClearFn?: (x: number, z: number) => boolean,
-): Array<[number, number, number]> {
-  const r = rng(seed)
-  const out: Array<[number, number, number]> = []
-  const BOUNDS = 33
-  let attempts = 0
-  while (out.length < count && attempts < count * 15) {
-    attempts++
-    const x = (r() - 0.5) * 2 * BOUNDS
-    const z = (r() - 0.5) * 2 * BOUNDS
-    if (clear(x, z) && (!extraClearFn || extraClearFn(x, z))) {
-      out.push([x, 0, z])
-    }
-  }
-  return out
-}
-
 // ─── Landmark keep-out (so normal decor doesn't crowd landmarks) ─────────────
 
 const LANDMARK_ZONES: Zone[] = [
@@ -152,73 +144,233 @@ function clearNoLandmark(x: number, z: number): boolean {
   return clear(x, z) && !nearLandmark(x, z)
 }
 
+// ─── Grove definitions ────────────────────────────────────────────────────────
+//
+//  7 grove centres placed in the gaps between area keep-out zones, at radii
+//  22–30 from origin.  Each has an inner dense radius (r_inner) and an outer
+//  falloff radius (r_outer) beyond which props thin rapidly.
+//
+//  Layout (clockwise from N):
+//   A  (-4, 26)   — N outer gap, between Reading Reef (0,18) and Mult Mesa (-14,12)
+//   B  (18, 20)   — NE gap, between Reading Reef and Division Dunes (14,12)
+//   C  (28, 7)    — E outer gap, between Division Dunes and Data Delta (24,-2)
+//   D  (22, -26)  — SE gap, between Data Delta and Science Summit (20,-18)
+//   E  (-4, -32)  — S outer gap, between Place Value (-8,-26) and Tower (10,-26)
+//   F  (-26, -12) — SW gap, between Geometry Grove (-20,-18) and Measurement Marsh (-24,-2)
+//   G  (-28, 8)   — W outer gap, between Measurement Marsh and Mult Mesa (-14,12)
+
+type Grove = { cx: number; cz: number; rInner: number; rOuter: number }
+
+const GROVES: Grove[] = [
+  { cx: -4,  cz:  26, rInner: 3.5, rOuter: 6.5 }, // A — N outer
+  { cx:  18, cz:  20, rInner: 3.5, rOuter: 6.0 }, // B — NE
+  { cx:  28, cz:   7, rInner: 3.0, rOuter: 6.0 }, // C — E outer
+  { cx:  22, cz: -26, rInner: 3.0, rOuter: 5.5 }, // D — SE outer
+  { cx:  -4, cz: -32, rInner: 3.0, rOuter: 5.5 }, // E — S outer (deep)
+  { cx: -26, cz: -12, rInner: 3.5, rOuter: 6.0 }, // F — SW
+  { cx: -28, cz:   8, rInner: 3.0, rOuter: 5.5 }, // G — W outer
+]
+
+// ─── Grove population builder (deterministic, seed-based) ────────────────────
+
+interface TreeEntry { x: number; z: number; variant: 'round' | 'pine'; seed: number }
+interface UndergrowthEntry { x: number; z: number; kind: 'bush' | 'fern' | 'mushroom' | 'log'; seed: number }
+
+function buildGrove(
+  grove: Grove,
+  baseSeed: number,
+): { trees: TreeEntry[]; undergrowth: UndergrowthEntry[] } {
+  const r = rng(baseSeed)
+  const trees: TreeEntry[] = []
+  const undergrowth: UndergrowthEntry[] = []
+
+  // Dense inner core — attempt many tree slots
+  const treeAttempts = 40
+  let tSeed = baseSeed + 1000
+  for (let i = 0; i < treeAttempts; i++) {
+    // Gaussian-ish: use two r() calls averaged → central bias
+    const rr = (r() + r()) / 2 * grove.rOuter
+    const angle = r() * Math.PI * 2
+    const x = grove.cx + Math.cos(angle) * rr
+    const z = grove.cz + Math.sin(angle) * rr
+    if (!clearNoLandmark(x, z)) continue
+    // Density falloff: items in the inner ring almost always placed;
+    // items in the outer annulus thin to ~40%
+    const distFromCentre = Math.hypot(x - grove.cx, z - grove.cz)
+    const keepProb = distFromCentre < grove.rInner ? 0.88 : 0.45
+    if (r() > keepProb) continue
+    const variant: 'round' | 'pine' = r() < 0.55 ? 'round' : 'pine'
+    trees.push({ x, z, variant, seed: tSeed++ })
+  }
+
+  // Undergrowth: bush / fern / mushroom / occasional log
+  const ugAttempts = 50
+  let uSeed = baseSeed + 3000
+  for (let i = 0; i < ugAttempts; i++) {
+    const rr = r() * grove.rOuter
+    const angle = r() * Math.PI * 2
+    const x = grove.cx + Math.cos(angle) * rr
+    const z = grove.cz + Math.sin(angle) * rr
+    if (!clearNoLandmark(x, z)) continue
+    const distFromCentre = Math.hypot(x - grove.cx, z - grove.cz)
+    const keepProb = distFromCentre < grove.rInner ? 0.78 : 0.38
+    if (r() > keepProb) continue
+    const roll = r()
+    const kind: 'bush' | 'fern' | 'mushroom' | 'log' =
+      roll < 0.38 ? 'bush' : roll < 0.68 ? 'fern' : roll < 0.88 ? 'mushroom' : 'log'
+    undergrowth.push({ x, z, kind, seed: uSeed++ })
+  }
+
+  return { trees, undergrowth }
+}
+
+// ─── Transition scatter (mid-zone, sparse) ───────────────────────────────────
+
+/** Scatter a few lone trees/bushes in the mid-zone ring (r 12–21). */
+function buildTransitionProps(baseSeed: number): {
+  trees: TreeEntry[]
+  bushes: Array<{ x: number; z: number; seed: number }>
+} {
+  const r = rng(baseSeed)
+  const trees: TreeEntry[] = []
+  const bushes: Array<{ x: number; z: number; seed: number }> = []
+  let tSeed = baseSeed + 500
+  let bSeed = baseSeed + 800
+
+  for (let i = 0; i < 120; i++) {
+    const angle = r() * Math.PI * 2
+    const dist = 12 + r() * 9      // ring 12–21
+    const x = Math.cos(angle) * dist
+    const z = Math.sin(angle) * dist
+    if (!clearNoLandmark(x, z)) continue
+    // Very sparse — only ~15% of candidates placed
+    if (r() > 0.15) continue
+    if (r() < 0.6) {
+      const variant: 'round' | 'pine' = r() < 0.5 ? 'round' : 'pine'
+      trees.push({ x, z, variant, seed: tSeed++ })
+    } else {
+      bushes.push({ x, z, seed: bSeed++ })
+    }
+  }
+  return { trees, bushes }
+}
+
+// ─── Orchard (developed zone, organized) ─────────────────────────────────────
+//
+//  4×2 grid of fruit trees near (-9, 6), spacing 2.2u.
+//  Stays outside the house keep-out (r>7.5) — closest corner is
+//  ~(-9 – 1.5*2.2, 6 – 0.5*2.2) = (-12.3, 4.9) at distance ≈13.2u ✓
+//  and away from landmark zones and paths.
+
+const ORCHARD_ORIGIN: [number, number] = [-9, 6]
+const ORCHARD_COLS = 4
+const ORCHARD_ROWS = 2
+const ORCHARD_SPACING = 2.2
+
+function buildOrchardPositions(): Array<[number, number, number]> {
+  const out: Array<[number, number, number]> = []
+  for (let col = 0; col < ORCHARD_COLS; col++) {
+    for (let row = 0; row < ORCHARD_ROWS; row++) {
+      const x = ORCHARD_ORIGIN[0] + (col - (ORCHARD_COLS - 1) / 2) * ORCHARD_SPACING
+      const z = ORCHARD_ORIGIN[1] + (row - (ORCHARD_ROWS - 1) / 2) * ORCHARD_SPACING
+      if (clear(x, z)) out.push([x, 0, z])
+    }
+  }
+  return out
+}
+
 // ─── Main component ───────────────────────────────────────────────────────────
 
 export default function Decor() {
-  // ── Individual props — positions computed once, memo'd ────────────────────
+  // ── Grove data — computed once ────────────────────────────────────────────
+  const groveData = useMemo(
+    () => GROVES.map((g, i) => buildGrove(g, 30000 + i * 2000)),
+    [],
+  )
 
-  // Trees: round
-  const roundTreePos = useMemo(() => scatterPositions(22, 12001, clearNoLandmark), [])
-  // Trees: pine
-  const pineTreePos = useMemo(() => scatterPositions(14, 12002, clearNoLandmark), [])
-  // Trees: fruit
-  const fruitTreePos = useMemo(() => scatterPositions(8, 12003, clearNoLandmark), [])
-  // Bushes
-  const bushPos = useMemo(() => scatterPositions(28, 12010, clearNoLandmark), [])
-  // Ferns
-  const fernPos = useMemo(() => scatterPositions(22, 12020, clearNoLandmark), [])
-  // Boulders
-  const boulderPos = useMemo(() => scatterPositions(9, 12030, clearNoLandmark), [])
-  // Flower patches
-  const flowerPos = useMemo(() => scatterPositions(20, 12050, clearNoLandmark), [])
-  // Mushrooms
-  const mushroomPos = useMemo(() => scatterPositions(16, 12060, clearNoLandmark), [])
-  // Logs
-  const logPos = useMemo(() => scatterPositions(8, 12070, clearNoLandmark), [])
+  // ── Transition (mid-zone sparse scatter) ────────────────────────────────
+  const transData = useMemo(() => buildTransitionProps(50000), [])
+
+  // ── Orchard positions ────────────────────────────────────────────────────
+  const orchardPos = useMemo(() => buildOrchardPositions(), [])
 
   return (
     <group>
-      {/* ── Individual props — trees ──────────────────────────────────────── */}
-      {roundTreePos.map((pos, i) => (
-        <VoxTree key={`rt${i}`} position={pos} variant="round" seed={13001 + i * 7} />
-      ))}
-      {pineTreePos.map((pos, i) => (
-        <VoxTree key={`pt${i}`} position={pos} variant="pine" seed={13100 + i * 11} />
-      ))}
-      {fruitTreePos.map((pos, i) => (
-        <VoxTree key={`ft${i}`} position={pos} variant="fruit" seed={13200 + i * 13} />
-      ))}
+      {/* ═══════════════════════════════════════════════════════════════════
+          WILD GROVES — dense natural clusters at the island's outer edge
+          ═══════════════════════════════════════════════════════════════════ */}
+      {groveData.map((grove, gi) =>
+        grove.trees.map((t, ti) => (
+          <VoxTree
+            key={`g${gi}t${ti}`}
+            position={[t.x, 0, t.z]}
+            variant={t.variant}
+            seed={t.seed}
+          />
+        )),
+      )}
+      {groveData.map((grove, gi) =>
+        grove.undergrowth.map((u, ui) => {
+          const key = `g${gi}u${ui}`
+          const pos: [number, number, number] = [u.x, 0, u.z]
+          if (u.kind === 'bush')     return <Bush key={key} position={pos} seed={u.seed} />
+          if (u.kind === 'fern')     return <Fern key={key} position={pos} seed={u.seed} />
+          if (u.kind === 'mushroom') return <Mushroom key={key} position={pos} seed={u.seed} />
+          // log
+          return <Log key={key} position={pos} seed={u.seed} length={1.3 + (u.seed % 3) * 0.25} />
+        }),
+      )}
 
-      {/* ── Shrubs / undergrowth ─────────────────────────────────────────── */}
-      {bushPos.map((pos, i) => (
-        <Bush key={`bush${i}`} position={pos} seed={14001 + i * 7} />
-      ))}
-      {fernPos.map((pos, i) => (
-        <Fern key={`fern${i}`} position={pos} seed={14100 + i * 9} />
-      ))}
-
-      {/* ── Boulders ─────────────────────────────────────────────────────── */}
-      {boulderPos.map((pos, i) => (
-        <Boulder key={`bld${i}`} position={pos} seed={15001 + i * 11} />
-      ))}
-
-      {/* ── Flowers / mushrooms ──────────────────────────────────────────── */}
-      {flowerPos.map((pos, i) => (
-        <FlowerPatch
-          key={`fp${i}`}
-          position={pos}
-          seed={16001 + i * 13}
-          count={4 + (i % 3)}
+      {/* ═══════════════════════════════════════════════════════════════════
+          TRANSITION — sparse lone trees / bushes in the mid-zone ring
+          ═══════════════════════════════════════════════════════════════════ */}
+      {transData.trees.map((t, i) => (
+        <VoxTree
+          key={`tr${i}`}
+          position={[t.x, 0, t.z]}
+          variant={t.variant}
+          seed={t.seed}
         />
       ))}
-      {mushroomPos.map((pos, i) => (
-        <Mushroom key={`mush${i}`} position={pos} seed={16100 + i * 7} />
+      {transData.bushes.map((b, i) => (
+        <Bush key={`tb${i}`} position={[b.x, 0, b.z]} seed={b.seed} />
       ))}
 
-      {/* ── Logs ─────────────────────────────────────────────────────────── */}
-      {logPos.map((pos, i) => (
-        <Log key={`log${i}`} position={pos} seed={17001 + i * 11} length={1.4 + (i % 3) * 0.3} />
+      {/* ═══════════════════════════════════════════════════════════════════
+          DEVELOPED ZONE — organised features signalling human settlement
+          ═══════════════════════════════════════════════════════════════════ */}
+
+      {/* ── Orchard: 4×2 grid of fruit trees near (-9, 6) ────────────────── */}
+      {orchardPos.map((pos, i) => (
+        <VoxTree key={`orch${i}`} position={pos} variant="fruit" seed={40000 + i * 17} />
       ))}
+
+      {/* ── Hedgerow: straight line of Bush + Fence run along x=-3 .. x=3 at z=8
+              (north side of the developed central area, keeps clear of the house) */}
+      {/* Fence run behind the hedgerow bushes */}
+      <Fence position={[0, 0, 8.6]} length={7.5} posts={5} />
+      {/* Evenly-spaced bushes in front of the fence */}
+      <Bush position={[-3.0, 0, 8.0]} seed={41001} />
+      <Bush position={[-1.5, 0, 8.0]} seed={41002} />
+      <Bush position={[ 0.0, 0, 8.0]} seed={41003} />
+      <Bush position={[ 1.5, 0, 8.0]} seed={41004} />
+      <Bush position={[ 3.0, 0, 8.0]} seed={41005} />
+
+      {/* ── Garden plot: tidy rows of FlowerPatch, fenced on two sides ─────── */}
+      {/*    Centred near (4, 8) — NE of house, clear of pond landmark (8,10) */}
+      {/* Garden fence surround (two sides for an open-plot feel) */}
+      <Fence position={[4.0, 0,  6.5]} length={3.5} posts={3} />
+      <Fence position={[4.0, 0,  9.4]} length={3.5} posts={3} />
+      {/* Two tidy rows of flowers inside the fenced garden */}
+      <FlowerPatch position={[2.8, 0, 7.4]} seed={42001} count={5} />
+      <FlowerPatch position={[4.2, 0, 7.4]} seed={42002} count={5} />
+      <FlowerPatch position={[5.5, 0, 7.4]} seed={42003} count={5} />
+      <FlowerPatch position={[2.8, 0, 8.6]} seed={42004} count={5} />
+      <FlowerPatch position={[4.2, 0, 8.6]} seed={42005} count={5} />
+      <FlowerPatch position={[5.5, 0, 8.6]} seed={42006} count={5} />
+      {/* A couple of neatly-placed ferns at the garden corners */}
+      <Fern position={[2.3, 0, 7.0]} seed={42100} />
+      <Fern position={[5.9, 0, 9.0]} seed={42101} />
 
       {/* ═══════════════════════════════════════════════════════════════════
           LANDMARKS — three charming pockets to reward exploration
