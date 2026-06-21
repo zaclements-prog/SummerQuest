@@ -10,6 +10,15 @@ import WorldHud from './WorldHud'
 import WordProblemWoods from './areas/WordProblemWoods'
 import FractionFalls from './areas/FractionFalls'
 import WritingWorkshop from './areas/WritingWorkshop'
+import MultiplicationMesa from './areas/MultiplicationMesa'
+import DivisionDunes from './areas/DivisionDunes'
+import PlaceValuePlateau from './areas/PlaceValuePlateau'
+import MeasurementMarsh from './areas/MeasurementMarsh'
+import GeometryGrove from './areas/GeometryGrove'
+import DataDelta from './areas/DataDelta'
+import ReadingReef from './areas/ReadingReef'
+import ScienceSummit from './areas/ScienceSummit'
+import TowerBattlefront from './areas/TowerBattlefront'
 import { useHomeUi } from '../home/useHomeUi'
 import House from './areas/House'
 import WorldStudio from './WorldStudio'
@@ -40,6 +49,15 @@ export default function WorldScreen() {
             <WordProblemWoods posRef={posRef} />
             <FractionFalls posRef={posRef} />
             <WritingWorkshop posRef={posRef} />
+            <MultiplicationMesa posRef={posRef} />
+            <DivisionDunes posRef={posRef} />
+            <PlaceValuePlateau posRef={posRef} />
+            <MeasurementMarsh posRef={posRef} />
+            <GeometryGrove posRef={posRef} />
+            <DataDelta posRef={posRef} />
+            <ReadingReef posRef={posRef} />
+            <ScienceSummit posRef={posRef} />
+            <TowerBattlefront posRef={posRef} />
             <WorldCameraRig targetRef={posRef} />
             <House />
             <WorldAvatar posRef={posRef} />
