@@ -38,19 +38,19 @@ const STARFISH = '#f2a33d'
 const LAMP = '#fff2b0'
 
 // Beach sand ring under the whole area (instanced, flat at y≈0).
-const SAND_ITEMS = field([0, 18], 6, 6, 90, 9201, {
+const SAND_ITEMS = field([0, 0], 6, 6, 90, 9201, {
   y: 0.01,
   minScale: 0.8,
   maxScale: 1.6,
 })
 // A few wet/darker sand flecks near the tide pool for variation.
-const WET_SAND_ITEMS = field([2.4, 19.4], 2.2, 1.8, 26, 9311, {
+const WET_SAND_ITEMS = field([2.4, 1.4], 2.2, 1.8, 26, 9311, {
   y: 0.02,
   minScale: 0.7,
   maxScale: 1.3,
 })
 // Scattered pebbles/shell bits across the beach.
-const PEBBLE_ITEMS = field([0, 18], 5.5, 5.5, 34, 9419, {
+const PEBBLE_ITEMS = field([0, 0], 5.5, 5.5, 34, 9419, {
   y: 0.03,
   minScale: 0.5,
   maxScale: 1.0,

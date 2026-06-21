@@ -36,7 +36,7 @@ const GOLD = '#f2c64b' // finial / shield trim (== flowerYellow)
 const IRON = '#4a4f59' // dark iron door / shield field
 
 // Rubble/pebble scatter on the trampled battlefront ground (instanced, 1 draw).
-const RUBBLE = field([10, -26], 6.5, 6.5, 46, 9241, {
+const RUBBLE = field([0, 0], 6.5, 6.5, 46, 9241, {
   y: 0.05,
   minScale: 0.4,
   maxScale: 1.0,

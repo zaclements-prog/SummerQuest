@@ -38,14 +38,14 @@ const FROG_BELLY = '#e8efbf'  // frog belly
 
 // Marsh-grass scatter across the wet ground (denser, instanced in one draw).
 // Centered slightly west/north so the east approach to the NPC stays open.
-const MARSH_GRASS = field([-25.5, -3], 4.2, 4.0, 64, 4021, {
+const MARSH_GRASS = field([-1.5, -1], 4.2, 4.0, 64, 4021, {
   y: 0,
   minScale: 0.6,
   maxScale: 1.2,
 })
 
 // A damp darker-green underlayer (mossy ground dabs) for that wetland feel.
-const DAMP_DABS = field([-24, -2.5], 5.0, 4.4, 40, 4047, {
+const DAMP_DABS = field([0, -0.5], 5.0, 4.4, 40, 4047, {
   y: 0,
   minScale: 0.7,
   maxScale: 1.4,

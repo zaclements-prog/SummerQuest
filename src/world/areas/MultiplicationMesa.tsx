@@ -223,22 +223,22 @@ export default function MultiplicationMesa({ posRef }: { posRef: RefObject<Vecto
   // ── Warm sandy ground patches (instanced, flat — read as sun-baked dirt) ──
   // Broad warm sand wash under the whole area.
   const SAND = useMemo(
-    () => field([-14, 12.2], 6, 5, 70, 4401, { y: 0.03, minScale: 0.8, maxScale: 1.9 }),
+    () => field([0, 0.2], 6, 5, 70, 4401, { y: 0.03, minScale: 0.8, maxScale: 1.9 }),
     [],
   )
   // A second, lighter sand layer for tonal life.
   const SAND_LIGHT = useMemo(
-    () => field([-14, 12.5], 5.4, 4.4, 40, 4471, { y: 0.04, minScale: 0.6, maxScale: 1.4 }),
+    () => field([0, 0.5], 5.4, 4.4, 40, 4471, { y: 0.04, minScale: 0.6, maxScale: 1.4 }),
     [],
   )
   // Sparse dry tufts dotted across the flats (kept short — non-blocking).
   const TUFTS = useMemo(
-    () => field([-14, 12.2], 5.6, 4.6, 34, 4533, { y: 0, minScale: 0.6, maxScale: 1.2 }),
+    () => field([0, 0.2], 5.6, 4.6, 34, 4533, { y: 0, minScale: 0.6, maxScale: 1.2 }),
     [],
   )
   // Scattered small pebbles/grit.
   const GRIT = useMemo(
-    () => field([-14, 12], 5.8, 4.8, 30, 4599, { y: 0.02, minScale: 0.5, maxScale: 1.0 }),
+    () => field([0, 0], 5.8, 4.8, 30, 4599, { y: 0.02, minScale: 0.5, maxScale: 1.0 }),
     [],
   )
 

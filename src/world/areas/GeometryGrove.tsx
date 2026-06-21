@@ -36,7 +36,7 @@ const CRYSTAL_GLOW = '#bff6ef' // pale glow highlight
 const HEDGE = PALETTE.foliage // tidy hedge green
 
 // Neat tile floor for the grove (instanced flat plates, a manicured look).
-const TILE_ITEMS = field([-20, -18], 4.2, 4.2, 44, 9201, {
+const TILE_ITEMS = field([0, 0], 4.2, 4.2, 44, 9201, {
   y: 0.02,
   minScale: 0.9,
   maxScale: 1.0,
