@@ -1,6 +1,7 @@
 import Building from '../Building'
 import PlacedItems from '../../home/world/PlacedItems'
 import { areaById } from '../worldLayout'
+import { useWorldUi } from '../useWorldUi'
 import { Vox, Scatter } from '../voxel/Vox'
 import { PALETTE } from '../voxel/palette'
 import {
@@ -132,6 +133,16 @@ function PathStones({ startZ = 5.5, count = 4 }) {
 export default function House() {
   const a = areaById('house')!
 
+  // The House adds its own roof + chimney detail on top of the Building shell.
+  // Fade them together with the shell when the avatar is inside, so the whole
+  // roof (including these diagonal slabs) goes transparent and stops occluding
+  // the interior. Vox drops depthWrite when faded; 0.06 matches the Building roof.
+  const insideHouse = useWorldUi((s) => s.insideBuildingId) === a.id
+  // Keep `transparent` constant (flipping it at runtime needs a material
+  // recompile that R3F won't do) and animate only opacity — Vox keys depthWrite
+  // off opacity, so the roof still stops occluding the interior when faded.
+  const fade = { transparent: true, opacity: insideHouse ? 0.06 : 1 }
+
   // Small scatter of grass tufts around the side gardens (not in the door path)
   const leftGrassTufts = field([-6.5, 0], 1.0, 4.0, 8, 101, { y: 0, minScale: 0.7, maxScale: 1.1 })
   const rightGrassTufts = field([6.5, 0], 1.0, 4.0, 8, 202, { y: 0, minScale: 0.7, maxScale: 1.1 })
@@ -254,13 +265,13 @@ export default function House() {
         {/* The building roof is at y=2.4+0.15=2.55; chimney rises from there */}
         <group position={[-1.8, 2.7, -4.2]}>
           {/* chimney shaft */}
-          <Vox position={[0, 0.5, 0]} size={[0.55, 1.0, 0.55]} color={PALETTE.rockDark} radius={0.08} />
+          <Vox position={[0, 0.5, 0]} size={[0.55, 1.0, 0.55]} color={PALETTE.rockDark} radius={0.08} {...fade} />
           {/* chimney cap */}
-          <Vox position={[0, 1.08, 0]} size={[0.68, 0.18, 0.68]} color={PALETTE.rock} radius={0.07} />
+          <Vox position={[0, 1.08, 0]} size={[0.68, 0.18, 0.68]} color={PALETTE.rock} radius={0.07} {...fade} />
           {/* smoke puffs (small white voxels drifting up, purely decorative) */}
-          <Vox position={[0.05, 1.45, 0.05]} size={0.22} color={PALETTE.cloud} radius={0.1} roughness={1} castShadow={false} receiveShadow={false} />
-          <Vox position={[-0.08, 1.78, 0.08]} size={0.17} color={PALETTE.cloud} radius={0.08} roughness={1} castShadow={false} receiveShadow={false} />
-          <Vox position={[0.1, 2.05, -0.05]} size={0.13} color={PALETTE.cloud} radius={0.06} roughness={1} castShadow={false} receiveShadow={false} />
+          <Vox position={[0.05, 1.45, 0.05]} size={0.22} color={PALETTE.cloud} radius={0.1} roughness={1} castShadow={false} receiveShadow={false} {...fade} />
+          <Vox position={[-0.08, 1.78, 0.08]} size={0.17} color={PALETTE.cloud} radius={0.08} roughness={1} castShadow={false} receiveShadow={false} {...fade} />
+          <Vox position={[0.1, 2.05, -0.05]} size={0.13} color={PALETTE.cloud} radius={0.06} roughness={1} castShadow={false} receiveShadow={false} {...fade} />
         </group>
 
         {/* Pitched roof ridge detail — two sloping voxel slabs to give a proper pitched roof shape */}
@@ -273,6 +284,7 @@ export default function House() {
             color={PALETTE.roofDark}
             rotation={[0, 0, 0.42]}
             radius={0.08}
+            {...fade}
           />
           {/* Right slope */}
           <Vox
@@ -281,13 +293,14 @@ export default function House() {
             color={PALETTE.roofDark}
             rotation={[0, 0, -0.42]}
             radius={0.08}
+            {...fade}
           />
           {/* Ridge beam at the top */}
-          <Vox position={[0, 1.48, 0]} size={[0.32, 0.24, 10.5]} color={PALETTE.barkDark} radius={0.08} />
+          <Vox position={[0, 1.48, 0]} size={[0.32, 0.24, 10.5]} color={PALETTE.barkDark} radius={0.08} {...fade} />
           {/* Ridge end gables (triangular fill voxels) — front gable */}
-          <Vox position={[0, 0.75, 5.1]} size={[5.2, 0.9, 0.3]} color={PALETTE.cottageWall} radius={0.1} />
+          <Vox position={[0, 0.75, 5.1]} size={[5.2, 0.9, 0.3]} color={PALETTE.cottageWall} radius={0.1} {...fade} />
           {/* back gable */}
-          <Vox position={[0, 0.75, -5.1]} size={[5.2, 0.9, 0.3]} color={PALETTE.cottageWall} radius={0.1} />
+          <Vox position={[0, 0.75, -5.1]} size={[5.2, 0.9, 0.3]} color={PALETTE.cottageWall} radius={0.1} {...fade} />
         </group>
 
       </group>
