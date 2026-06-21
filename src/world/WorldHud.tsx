@@ -10,6 +10,7 @@ export default function WorldHud() {
   const enter = () => {
     if (!activeNpc) return
     sfx.click()
+    useWorldUi.getState().setEnteredFromWorld(true)
     navigate(`/zone/${activeNpc.zoneId}`)
   }
 
@@ -18,6 +19,7 @@ export default function WorldHud() {
     const onKey = (e: KeyboardEvent) => {
       if ((e.key === 'e' || e.key === 'E') && activeNpc) {
         sfx.click()
+        useWorldUi.getState().setEnteredFromWorld(true)
         navigate(`/zone/${activeNpc.zoneId}`)
       }
     }

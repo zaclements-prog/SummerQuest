@@ -10,6 +10,7 @@ import DailyGoalCard from '../components/DailyGoalCard'
 import { Button, Pill, Celebration } from '../components/ui'
 import { subjectTheme } from '../lib/theme'
 import { useEntrance, hoverPop, tap } from '../lib/motion'
+import { useWorldUi } from '../world/useWorldUi'
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -58,6 +59,8 @@ export default function WorldMap() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+  // Clear the "entered from world" flag so zones entered from the 2D map never bounce to /world.
+  useEffect(() => { useWorldUi.getState().setEnteredFromWorld(false) }, [])
 
   // Next-stage deep-link (computed after hooks)
   const nextTarget = useMemo(() => findNextTarget(), [zones])

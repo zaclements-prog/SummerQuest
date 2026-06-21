@@ -20,6 +20,7 @@ import ReadingReef from './areas/ReadingReef'
 import ScienceSummit from './areas/ScienceSummit'
 import TowerBattlefront from './areas/TowerBattlefront'
 import { useHomeUi } from '../home/useHomeUi'
+import { useWorldUi } from './useWorldUi'
 import House from './areas/House'
 import WorldStudio from './WorldStudio'
 
@@ -29,6 +30,8 @@ export default function WorldScreen() {
   const studio = params.get('studio') === '1'
   // Furniture shown in the house must not be interactive here (decorate UI is Home-only).
   useEffect(() => { useHomeUi.getState().setMode('play') }, [])
+  // Clear the "entered from world" flag now that we're back in the World.
+  useEffect(() => { useWorldUi.getState().setEnteredFromWorld(false) }, [])
   return (
     <div className="flex-1 relative">
       <Canvas
