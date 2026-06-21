@@ -5,11 +5,11 @@ import { creatureBuilder, furnitureBuilder } from '../models/registry'
 import { useProgress } from '../../store/progress'
 import { anchorsFor } from '../models/anchors'
 import type { Slot } from '../models/anchors'
-import { accessoryById } from '../../lib/home/accessories'
+import { ACCESSORIES, accessoryById } from '../../lib/home/accessories'
 import { accessoryBuilder } from '../models/accessoryRegistry'
 import CreatureAccessories from './CreatureAccessories'
 
-export type StudioKind = 'creatures' | 'furniture' | 'accessories' | 'anchors'
+export type StudioKind = 'creatures' | 'furniture' | 'accessories' | 'anchors' | 'accgrid'
 
 const SLOTS: Slot[] = ['head', 'face', 'back', 'body']
 // One accessory per slot — the standard set used to verify every creature's anchors.
@@ -40,6 +40,20 @@ function AccessoriesAt({ creatureId }: { creatureId: string }) {
   )
 }
 
+/** Renders a single accessory at a specific creature's slot anchor (store-independent). */
+function AccessoryOn({ creatureId, accessoryId }: { creatureId: string; accessoryId: string }) {
+  const anchors = anchorsFor(creatureId)
+  const acc = accessoryById(accessoryId)
+  if (!acc) return null
+  const build = accessoryBuilder(acc.modelId)
+  const p = anchors[acc.slot]
+  return (
+    <group scale={anchors.scale}>
+      <group position={[p[0] / anchors.scale, p[1] / anchors.scale, p[2] / anchors.scale]}>{build()}</group>
+    </group>
+  )
+}
+
 /**
  * Dev-only model gallery for visual iteration on a clean stage (no World clutter).
  * Reach it at:
@@ -51,6 +65,7 @@ function AccessoriesAt({ creatureId }: { creatureId: string }) {
  */
 export default function ModelStudio({ kind }: { kind: StudioKind }) {
   if (kind === 'accessories') return <AccessoryStand />
+  if (kind === 'accgrid') return <AccessoryGrid />
 
   const showAccessories = kind === 'anchors'
   const entries =
@@ -103,6 +118,38 @@ function AccessoryStand() {
         <b.Builder />
         <CreatureAccessories />
       </group>
+    </>
+  )
+}
+
+/** All 16 accessories shown on a consistent reference creature (bear) at the correct anchors. */
+function AccessoryGrid() {
+  const ref = 'bear'
+  const Builder = creatureBuilder(ref)
+  const cols = 4
+  const spacing = 2.6
+  const rows = Math.ceil(ACCESSORIES.length / cols)
+  return (
+    <>
+      <OrbitControls makeDefault target={[0, 0.6, 0]} />
+      <hemisphereLight args={['#fff6e6', '#5a6b8c', 0.95]} />
+      <directionalLight position={[6, 12, 6]} intensity={1.1} castShadow />
+      <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+        <planeGeometry args={[40, 40]} />
+        <meshStandardMaterial color="#d4d2cc" />
+      </mesh>
+      {ACCESSORIES.map((a, i) => {
+        const col = i % cols
+        const row = Math.floor(i / cols)
+        const x = (col - (cols - 1) / 2) * spacing
+        const z = (row - (rows - 1) / 2) * spacing
+        return (
+          <group key={a.id} position={[x, 0, z]}>
+            <Builder />
+            <AccessoryOn creatureId={ref} accessoryId={a.id} />
+          </group>
+        )
+      })}
     </>
   )
 }

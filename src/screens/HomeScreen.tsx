@@ -11,13 +11,16 @@ import { creatureForEmoji } from '../lib/home/catalog'
 export default function HomeScreen() {
   const [params] = useSearchParams()
   const studio = params.get('studio') // 'creatures' | 'anchors' | 'furniture' | 'accessories' (dev gallery)
-  const isStudio = studio === 'creatures' || studio === 'anchors' || studio === 'furniture' || studio === 'accessories'
+  const isStudio =
+    studio === 'creatures' || studio === 'anchors' || studio === 'accgrid' || studio === 'furniture' || studio === 'accessories'
   const studioCam: [number, number, number] =
     studio === 'accessories'
       ? [3, 3.4, 6]
       : studio === 'creatures' || studio === 'anchors'
         ? [0, 6.5, 12]
-        : [0, 10, 21]
+        : studio === 'accgrid'
+          ? [0, 7.5, 13]
+          : [0, 10, 21]
 
   const player = useProgress((s) => s.player)
   const ownedCount = useProgress((s) => s.ownedCreatures.length)
@@ -41,7 +44,7 @@ export default function HomeScreen() {
         style={{ position: 'absolute', inset: 0 }}
       >
         <color attach="background" args={['#bfe3f2']} />
-        {isStudio ? <ModelStudio kind={studio as 'creatures' | 'anchors' | 'furniture' | 'accessories'} /> : <HomeWorld />}
+        {isStudio ? <ModelStudio kind={studio as 'creatures' | 'anchors' | 'accgrid' | 'furniture' | 'accessories'} /> : <HomeWorld />}
       </Canvas>
       {!isStudio && <HomeHud />}
     </div>
