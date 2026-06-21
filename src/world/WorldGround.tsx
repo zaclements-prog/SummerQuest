@@ -12,8 +12,8 @@ import Decor from './Decor'
 
 const ISLAND = {
   cell: 2, // coarse voxel cell size (world units) — bigger = fewer blocks = faster
-  reach: 28, // half-extent of the grid scanned for the island footprint
-  baseRadius: 25, // nominal coastline radius (covers play area ±22 + a visible rim)
+  reach: 40, // half-extent of the grid scanned for the island footprint
+  baseRadius: 36, // nominal coastline radius (covers the expanded play area + a rim)
   topThickness: 0.9, // grass band depth (top sits at y=0)
   dirtBottom: -2.5, // dirt layer descends to here
   rockBottom: -6.0, // rock layer descends to here (then steps in for silhouette)

@@ -30,8 +30,8 @@ const KEY_LIGHT = {
   position: [10, 16, 8] as [number, number, number],
   color: '#ffe2b0',
   intensity: 1.25,
-  shadowMapSize: 1024,
-  shadowExtent: 24, // ± world units the shadow camera covers
+  shadowMapSize: 2048, // covers the bigger island at a decent texel density
+  shadowExtent: 34, // ± world units the shadow camera covers
   shadowBias: -0.0004,
 }
 
@@ -117,7 +117,7 @@ export default function WorldEnvironment() {
         shadow-camera-top={KEY_LIGHT.shadowExtent}
         shadow-camera-bottom={-KEY_LIGHT.shadowExtent}
         shadow-camera-near={1}
-        shadow-camera-far={60}
+        shadow-camera-far={95}
         shadow-radius={SHADOW_RADIUS}
         shadow-blurSamples={SHADOW_BLUR_SAMPLES}
       />

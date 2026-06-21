@@ -10,7 +10,7 @@ export interface WorldArea {
   label: string
   worldPos: [number, number] // x,z center
   kind: AreaKind
-  theme: 'house' | 'woods' | 'falls' | 'workshop'
+  theme: string // visual theme key (the area component decides the look)
   npc?: { offset: [number, number]; emoji: string } // emoji reserved for a future floating NPC label
   colliders: Collider[]
   door?: { pos: [number, number]; width: number } // buildings only
@@ -65,9 +65,68 @@ export const WORLD_AREAS: WorldArea[] = [
       { kind: 'box', cx: 1.65, cz: -11.5, w: 1.7, d: 0.3 },
     ],
   },
+
+  // ── Subject zones added to World mode. Open destinations whose gateway NPC
+  //    opens /zone/:zoneId — the same tracked ZoneDetail → GameRunner flow as the
+  //    2D map. NPC sits on the house-facing side; one central collider for the
+  //    area's main landmark (the avatar walks around it to reach the NPC). ──
+  {
+    id: 'multiplication-mesa', zoneId: 'multiplication-mesa', label: 'Multiplication Mesa',
+    worldPos: [-14, 12], kind: 'open', theme: 'mesa',
+    npc: { offset: [3, -2.6], emoji: '🏜️' },
+    colliders: [{ kind: 'circle', cx: -14, cz: 12, r: 2.5 }],
+  },
+  {
+    id: 'division-dunes', zoneId: 'division-dunes', label: 'Division Dunes',
+    worldPos: [14, 12], kind: 'open', theme: 'dunes',
+    npc: { offset: [-3, -2.6], emoji: '🐪' },
+    colliders: [{ kind: 'circle', cx: 14, cz: 12, r: 2.5 }],
+  },
+  {
+    id: 'reading-reef', zoneId: 'reading-reef', label: 'Reading Reef',
+    worldPos: [0, 18], kind: 'open', theme: 'reef',
+    npc: { offset: [0, -4], emoji: '🐠' },
+    colliders: [{ kind: 'circle', cx: 0, cz: 18, r: 2.5 }],
+  },
+  {
+    id: 'data-delta', zoneId: 'data-delta', label: 'Data Delta',
+    worldPos: [24, -2], kind: 'open', theme: 'delta',
+    npc: { offset: [-4, 0.3], emoji: '📊' },
+    colliders: [{ kind: 'circle', cx: 24, cz: -2, r: 2.5 }],
+  },
+  {
+    id: 'science-summit', zoneId: 'science-summit', label: 'Science Summit',
+    worldPos: [20, -18], kind: 'open', theme: 'summit',
+    npc: { offset: [-3, 2.7], emoji: '🔬' },
+    colliders: [{ kind: 'circle', cx: 20, cz: -18, r: 2.5 }],
+  },
+  {
+    id: 'measurement-marsh', zoneId: 'measurement-marsh', label: 'Measurement Marsh',
+    worldPos: [-24, -2], kind: 'open', theme: 'marsh',
+    npc: { offset: [4, 0.3], emoji: '📐' },
+    colliders: [{ kind: 'circle', cx: -24, cz: -2, r: 2.5 }],
+  },
+  {
+    id: 'geometry-grove', zoneId: 'geometry-grove', label: 'Geometry Grove',
+    worldPos: [-20, -18], kind: 'open', theme: 'grove',
+    npc: { offset: [3, 2.7], emoji: '🔷' },
+    colliders: [{ kind: 'circle', cx: -20, cz: -18, r: 2.5 }],
+  },
+  {
+    id: 'place-value-plateau', zoneId: 'place-value-plateau', label: 'Place Value Plateau',
+    worldPos: [-8, -26], kind: 'open', theme: 'plateau',
+    npc: { offset: [1.2, 3.8], emoji: '🏔️' },
+    colliders: [{ kind: 'circle', cx: -8, cz: -26, r: 2.5 }],
+  },
+  {
+    id: 'tower-battlefront', zoneId: 'tower-battlefront', label: 'Tower Battlefront',
+    worldPos: [10, -26], kind: 'open', theme: 'battlefront',
+    npc: { offset: [-1.4, 3.7], emoji: '🏰' },
+    colliders: [{ kind: 'circle', cx: 10, cz: -26, r: 2.5 }],
+  },
 ]
 
-const BOUND = 23
+const BOUND = 34
 const PERIMETER: Collider[] = [
   { kind: 'box', cx: 0, cz: -BOUND, w: BOUND * 2, d: 1 },
   { kind: 'box', cx: 0, cz: BOUND, w: BOUND * 2, d: 1 },

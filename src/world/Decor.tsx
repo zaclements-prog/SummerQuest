@@ -40,7 +40,7 @@ import { PALETTE } from './voxel/palette'
 function islandEdge(cx: number, cz: number): number {
   const ang = Math.atan2(cz, cx)
   return (
-    25 +
+    36 + // keep in sync with WorldGround.ISLAND.baseRadius
     Math.sin(ang * 3) * 1.3 +
     Math.sin(ang * 5 + 1.7) * 0.7 +
     Math.cos(ang * 2 - 0.6) * 0.8
@@ -61,6 +61,16 @@ const KEEP_OUT: Zone[] = [
   { cx: 0, cz: -14, r: 5.2 },    // Writing Workshop
   { cx: -12, cz: -8, r: 5.5 },   // Word Problem Woods
   { cx: 12, cz: -8, r: 6.5 },    // Fraction Falls
+  // Expanded World zones
+  { cx: -14, cz: 12, r: 5.5 },   // Multiplication Mesa
+  { cx: 14, cz: 12, r: 5.5 },    // Division Dunes
+  { cx: 0, cz: 18, r: 5.5 },     // Reading Reef
+  { cx: 24, cz: -2, r: 5.5 },    // Data Delta
+  { cx: 20, cz: -18, r: 5.5 },   // Science Summit
+  { cx: -24, cz: -2, r: 5.5 },   // Measurement Marsh
+  { cx: -20, cz: -18, r: 5.5 },  // Geometry Grove
+  { cx: -8, cz: -26, r: 5.5 },   // Place Value Plateau
+  { cx: 10, cz: -26, r: 5.5 },   // Tower Battlefront
 ]
 
 /** True if (x,z) is inside any keep-out zone. */
@@ -113,7 +123,7 @@ function scatterPositions(
 ): Array<[number, number, number]> {
   const r = rng(seed)
   const out: Array<[number, number, number]> = []
-  const BOUNDS = 22
+  const BOUNDS = 33
   let attempts = 0
   while (out.length < count && attempts < count * 15) {
     attempts++
