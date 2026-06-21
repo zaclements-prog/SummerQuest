@@ -22,10 +22,10 @@ import { Vector3 } from 'three'
 import { Float, Sparkles } from '@react-three/drei'
 import Npc from '../Npc'
 import { areaById } from '../worldLayout'
-import { Vox, Scatter } from '../voxel/Vox'
+import { Vox } from '../voxel/Vox'
 import { PALETTE } from '../voxel/palette'
 import { Bush, Lantern, Signpost } from '../voxel/props'
-import { field } from '../voxel/fields'
+import { GroundPatch } from '../voxel/GroundPatch'
 
 type Vec3 = [number, number, number]
 
@@ -34,13 +34,6 @@ const CRYSTAL = '#7fe3d8' // icy teal crystal body
 const CRYSTAL_DEEP = '#3fb8c9' // deeper teal facet
 const CRYSTAL_GLOW = '#bff6ef' // pale glow highlight
 const HEDGE = PALETTE.foliage // tidy hedge green
-
-// Neat tile floor for the grove (instanced flat plates, a manicured look).
-const TILE_ITEMS = field([0, 0], 4.2, 4.2, 44, 9201, {
-  y: 0.02,
-  minScale: 0.9,
-  maxScale: 1.0,
-})
 
 /**
  * Faceted floating crystal — a stack of beveled cubes rotated 45° so it reads
@@ -228,15 +221,15 @@ export default function GeometryGrove({ posRef }: { posRef: RefObject<Vector3> }
   return (
     <group>
       <group position={[a.worldPos[0], 0, a.worldPos[1]]}>
-        {/* ── Manicured tile floor (instanced, one draw call) ───────────── */}
-        <Scatter
-          items={TILE_ITEMS}
-          color={PALETTE.grassDark}
-          jitterAmount={0.05}
-          size={[0.55, 0.04, 0.55]}
-          radius={0.02}
-          roughness={0.8}
-          castShadow={false}
+        {/* ── Paved stone court — one cohesive soft-edged patch, with a
+            subtly cooler inner stone zone for a manicured two-tone look ─── */}
+        <GroundPatch
+          position={[0, 0, 0]}
+          radius={4.6}
+          color={PALETTE.pebble}
+          color2={PALETTE.rock}
+          seed={9201}
+          roughness={0.85}
         />
 
         {/* ── CENTRAL LANDMARK: stepped plinth + floating crystal ───────── */}

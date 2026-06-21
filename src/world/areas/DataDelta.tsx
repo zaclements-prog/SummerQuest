@@ -22,6 +22,7 @@ import { areaById } from '../worldLayout'
 import { Vox, Scatter } from '../voxel/Vox'
 import { PALETTE } from '../voxel/palette'
 import { Cattail, Signpost, Lantern, Rock, LilyPad } from '../voxel/props'
+import { GroundPatch } from '../voxel/GroundPatch'
 import { field, rng } from '../voxel/fields'
 
 type Vec3 = [number, number, number]
@@ -66,11 +67,6 @@ export default function DataDelta({ posRef }: { posRef: RefObject<Vector3> }) {
 
   const barsRef = useRef<Group>(null)
 
-  // Pebble bed lining the sandy banks (instanced, one draw call).
-  const pebbles = useMemo(
-    () => field([0, 1.6], 4.6, 3.0, 46, 5102, { y: 0.04, minScale: 0.5, maxScale: 1.1 }),
-    [],
-  )
   // Sparse reed/grass dots along the channels (instanced).
   const reedDots = useMemo(
     () => field([0, 2.4], 4.4, 1.8, 30, 5137, { y: 0, minScale: 0.6, maxScale: 1.2 }),
@@ -235,15 +231,20 @@ export default function DataDelta({ posRef }: { posRef: RefObject<Vector3> }) {
         <LilyPad position={[1.0, 0.04, 3.5]} seed={62} />
         <LilyPad position={[3.6, 0.04, 1.2]} seed={63} />
 
-        {/* ── PEBBLE & REED beds (instanced) ──────────────────────────────── */}
-        <Scatter
-          items={pebbles}
-          color={PALETTE.pebble}
-          jitterAmount={0.12}
-          size={[0.22, 0.12, 0.22]}
-          radius={0.05}
-          roughness={0.9}
+        {/* ── DELTA SILT FLOOR — one cohesive soft-edged patch ───────────── */}
+        {/* Replaces the scattered flat pebble tiles. A sandy silt blob spread
+            across the banks, with a darker damp-silt zone toward the front
+            channel mouth where the water meets the bank. */}
+        <GroundPatch position={[0, 0, 1.6]} radius={2.4} color={PALETTE.sand} seed={5102} />
+        <GroundPatch
+          position={[0.2, 0, 3.0]}
+          radius={1.7}
+          color={PALETTE.sandWet}
+          seed={5119}
+          y={0.025}
         />
+
+        {/* ── REED bed (upright instanced tufts) ──────────────────────────── */}
         <Scatter
           items={reedDots}
           color={PALETTE.foliage}

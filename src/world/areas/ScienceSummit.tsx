@@ -23,10 +23,10 @@ import { Group, Vector3 } from 'three'
 import { Sparkles, Float } from '@react-three/drei'
 import Npc from '../Npc'
 import { areaById } from '../worldLayout'
-import { Vox, Scatter } from '../voxel/Vox'
+import { Vox } from '../voxel/Vox'
 import { PALETTE } from '../voxel/palette'
 import { Rock, Signpost, Lantern, Bush } from '../voxel/props'
-import { field } from '../voxel/fields'
+import { GroundPatch } from '../voxel/GroundPatch'
 
 type Vec3 = [number, number, number]
 
@@ -39,13 +39,6 @@ const GLASS_GREEN = '#7fe0a6'
 const GLASS_BLUE = '#7fc4ec'
 const GLASS_PINK = '#e8a0d0'
 const BRASS = '#caa75a'
-
-// Faint pebble/gravel ring on the lab "plaza" floor (instanced, flat, walkable).
-const GRAVEL = field([0, 0], 4.6, 4.6, 44, 9012, {
-  y: 0.02,
-  minScale: 0.5,
-  maxScale: 1.1,
-})
 
 export default function ScienceSummit({ posRef }: { posRef: RefObject<Vector3> }) {
   const a = areaById('science-summit')!
@@ -89,14 +82,15 @@ export default function ScienceSummit({ posRef }: { posRef: RefObject<Vector3> }
         {/* teal seam crosses to read as lab floor tiling */}
         <Vox position={[0, 0.07, 0]} size={[8.4, 0.04, 0.16]} color={TEAL} radius={0.02} castShadow={false} />
         <Vox position={[0, 0.07, 0]} size={[0.16, 0.04, 8.4]} color={TEAL} radius={0.02} castShadow={false} />
-        {/* scattered gravel flecks */}
-        <Scatter
-          items={GRAVEL}
+        {/* GRAVEL — one cohesive soft-edged pebble patch over the plaza floor,
+            with a subtly darker inner zone for depth (replaces scattered flecks) */}
+        <GroundPatch
+          position={[0, 0, 0]}
+          radius={4.6}
           color={PALETTE.pebble}
-          jitterAmount={0.12}
-          size={[0.16, 0.06, 0.16]}
-          roughness={0.9}
-          castShadow={false}
+          color2={PALETTE.rock}
+          seed={9012}
+          y={0.075}
         />
 
         {/* ── CENTRAL OBSERVATORY (on the r=2.5 collider) ───────────────── */}

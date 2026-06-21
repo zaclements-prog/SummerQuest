@@ -23,6 +23,7 @@ import { Vox, Scatter } from '../voxel/Vox'
 import { PALETTE } from '../voxel/palette'
 import { Rock, Boulder, Signpost, Lantern } from '../voxel/props'
 import { field, rng } from '../voxel/fields'
+import { GroundPatch } from '../voxel/GroundPatch'
 
 type Vec3 = [number, number, number]
 
@@ -220,49 +221,26 @@ export default function MultiplicationMesa({ posRef }: { posRef: RefObject<Vecto
   const npcX = a.worldPos[0] + npc.offset[0] // -11
   const npcZ = a.worldPos[1] + npc.offset[1] // 9.4
 
-  // ── Warm sandy ground patches (instanced, flat — read as sun-baked dirt) ──
-  // Broad warm sand wash under the whole area.
-  const SAND = useMemo(
-    () => field([0, 0.2], 6, 5, 70, 4401, { y: 0.03, minScale: 0.8, maxScale: 1.9 }),
-    [],
-  )
-  // A second, lighter sand layer for tonal life.
-  const SAND_LIGHT = useMemo(
-    () => field([0, 0.5], 5.4, 4.4, 40, 4471, { y: 0.04, minScale: 0.6, maxScale: 1.4 }),
-    [],
-  )
   // Sparse dry tufts dotted across the flats (kept short — non-blocking).
   const TUFTS = useMemo(
     () => field([0, 0.2], 5.6, 4.6, 34, 4533, { y: 0, minScale: 0.6, maxScale: 1.2 }),
-    [],
-  )
-  // Scattered small pebbles/grit.
-  const GRIT = useMemo(
-    () => field([0, 0], 5.8, 4.8, 30, 4599, { y: 0.02, minScale: 0.5, maxScale: 1.0 }),
     [],
   )
 
   return (
     <group>
       <group position={[a.worldPos[0], 0, a.worldPos[1]]}>
-        {/* ── GROUND: warm sand wash (flat, instanced) ─────────────────────── */}
-        <Scatter
-          items={SAND}
+        {/* ── GROUND: one cohesive warm sand patch (soft-edged blob) ───────── */}
+        {/* Broad sun-baked sand wash under the whole area + a lighter inner
+             tone for tonal life. Replaces the old scattered sand/grit tiles. */}
+        <GroundPatch
+          position={[0, 0, 0]}
+          radius={6}
           color={MESA.sand}
-          jitterAmount={0.06}
-          size={[1.3, 0.06, 1.3]}
-          radius={0.05}
+          color2={MESA.sandWarm}
+          seed={4401}
+          y={0.03}
           roughness={1}
-          castShadow={false}
-        />
-        <Scatter
-          items={SAND_LIGHT}
-          color={MESA.sandWarm}
-          jitterAmount={0.07}
-          size={[1.0, 0.07, 1.0]}
-          radius={0.05}
-          roughness={1}
-          castShadow={false}
         />
         {/* dry grass tufts (muted khaki-green) */}
         <Scatter
@@ -270,15 +248,6 @@ export default function MultiplicationMesa({ posRef }: { posRef: RefObject<Vecto
           color="#b6a24e"
           jitterAmount={0.16}
           size={[0.07, 0.26, 0.07]}
-          roughness={0.95}
-          castShadow={false}
-        />
-        {/* grit / small stones */}
-        <Scatter
-          items={GRIT}
-          color={PALETTE.pebble}
-          jitterAmount={0.12}
-          size={0.12}
           roughness={0.95}
           castShadow={false}
         />

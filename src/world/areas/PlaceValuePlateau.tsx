@@ -19,10 +19,11 @@ import { Group, Vector3 } from 'three'
 import { Sparkles } from '@react-three/drei'
 import Npc from '../Npc'
 import { areaById } from '../worldLayout'
-import { Vox, Scatter } from '../voxel/Vox'
+import { Vox } from '../voxel/Vox'
 import { PALETTE } from '../voxel/palette'
 import { VoxTree, Rock, Boulder, Lantern, Signpost } from '../voxel/props'
-import { field, rng } from '../voxel/fields'
+import { GroundPatch } from '../voxel/GroundPatch'
+import { rng } from '../voxel/fields'
 
 type Vec3 = [number, number, number]
 
@@ -34,20 +35,6 @@ const TIERS = [
   { y: 1.5, w: 3.0, d: 2.7, h: 1.4, label: 'tens' },
   { y: 2.9, w: 1.8, d: 1.7, h: 1.3, label: 'hundreds' },
 ] as const
-
-// Snow scatter on the summit cap (instanced, deterministic).
-const SNOW = field([0, -0.1], 0.7, 0.65, 22, 5512, {
-  y: 0,
-  minScale: 0.5,
-  maxScale: 1.1,
-})
-
-// Loose scree / pebble scatter ringing the mountain foot.
-const SCREE = field([0, 0.2], 3.4, 3.0, 40, 7711, {
-  y: 0,
-  minScale: 0.4,
-  maxScale: 1.0,
-})
 
 export default function PlaceValuePlateau({ posRef }: { posRef: RefObject<Vector3> }) {
   const a = areaById('place-value-plateau')!
@@ -180,16 +167,8 @@ export default function PlaceValuePlateau({ posRef }: { posRef: RefObject<Vector
             roughness={1}
             castShadow={false}
           />
-          {/* sparkly twinkle of fresh snow */}
-          <Scatter
-            items={SNOW}
-            color={PALETTE.foam}
-            jitterAmount={0.04}
-            size={[0.16, 0.12, 0.16]}
-            radius={0.05}
-            roughness={1}
-            castShadow={false}
-          />
+          {/* fresh-snow blanket dressing the cap — one cohesive patch */}
+          <GroundPatch position={[0, 0, -0.1]} radius={0.75} color={PALETTE.foam} seed={5512} y={0.46} />
         </group>
 
         {/* ── FLAG on top ─────────────────────────────────────────────────── */}
@@ -238,14 +217,15 @@ export default function PlaceValuePlateau({ posRef }: { posRef: RefObject<Vector
           color={PALETTE.foam}
         />
 
-        {/* loose scree pebbles around the foot (instanced, one draw call) */}
-        <Scatter
-          items={SCREE}
-          color={PALETTE.pebble}
-          jitterAmount={0.12}
-          size={[0.22, 0.16, 0.22]}
-          radius={0.06}
-          roughness={0.95}
+        {/* scree apron ringing the mountain foot — one cohesive snow-dusted
+            patch with a greyer scree inner zone for subtle depth */}
+        <GroundPatch
+          position={[0, 0, 0.2]}
+          radius={3.6}
+          color={PALETTE.foam}
+          color2={PALETTE.pebble}
+          seed={7711}
+          y={0.02}
         />
 
         {/* ── PINES + BOULDERS ringing the base ────────────────────────────

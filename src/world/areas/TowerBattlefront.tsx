@@ -19,10 +19,10 @@ import { Group, Vector3 } from 'three'
 import { Sparkles, Float } from '@react-three/drei'
 import Npc from '../Npc'
 import { areaById } from '../worldLayout'
-import { Vox, Scatter } from '../voxel/Vox'
+import { Vox } from '../voxel/Vox'
 import { PALETTE } from '../voxel/palette'
 import { Lantern, Rock, Boulder, Crate } from '../voxel/props'
-import { field } from '../voxel/fields'
+import { GroundPatch } from '../voxel/GroundPatch'
 
 type Vec3 = [number, number, number]
 
@@ -34,13 +34,6 @@ const PURPLE_DARK = '#5b349e'
 const PURPLE_LIGHT = '#9d72e0'
 const GOLD = '#f2c64b' // finial / shield trim (== flowerYellow)
 const IRON = '#4a4f59' // dark iron door / shield field
-
-// Rubble/pebble scatter on the trampled battlefront ground (instanced, 1 draw).
-const RUBBLE = field([0, 0], 6.5, 6.5, 46, 9241, {
-  y: 0.05,
-  minScale: 0.4,
-  maxScale: 1.0,
-})
 
 /** A crenellated stone tower: stacked block shaft + battlement merlons + flag. */
 function Tower({
@@ -217,15 +210,10 @@ export default function TowerBattlefront({ posRef }: { posRef: RefObject<Vector3
   return (
     <group>
       <group position={[a.worldPos[0], 0, a.worldPos[1]]}>
-        {/* ── Trampled battlefront ground: rubble + pebble scatter ─────── */}
-        <Scatter
-          items={RUBBLE}
-          color={PALETTE.pebble}
-          jitterAmount={0.12}
-          size={[0.3, 0.2, 0.3]}
-          radius={0.06}
-          roughness={0.95}
-        />
+        {/* ── Trampled battlefront ground — one cohesive earth patch ───── */}
+        <GroundPatch position={[0, 0, 0]} radius={6.5} color={PALETTE.dirt} seed={9241} />
+        {/* darker churned-mud core where the siege traffic concentrates */}
+        <GroundPatch position={[0, 0, 1.0]} radius={3.4} color={PALETTE.dirtDark} seed={9242} y={0.026} />
 
         {/* ── CENTRAL KEEP (on the r=2.5 collider — avatar walks around) ─ */}
         {/* Raised stone plinth / motte so the keep reads as elevated. */}

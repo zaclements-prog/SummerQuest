@@ -21,6 +21,7 @@ import { Vox, Scatter } from '../voxel/Vox'
 import { PALETTE } from '../voxel/palette'
 import { Rock, LilyPad, Cattail, Signpost, Lantern } from '../voxel/props'
 import { field, rng } from '../voxel/fields'
+import { GroundPatch } from '../voxel/GroundPatch'
 
 type Vec3 = [number, number, number]
 
@@ -42,13 +43,6 @@ const DUNE_GRASS = field([14, 12.5], 5.4, 4.6, 46, 9201, {
   y: 0,
   minScale: 0.5,
   maxScale: 1.0,
-})
-
-// Scattered pebbles across the dunes (instanced).
-const PEBBLES = field([14, 12.5], 6.0, 5.0, 40, 9337, {
-  y: 0.04,
-  minScale: 0.5,
-  maxScale: 1.3,
 })
 
 /** A little stepped voxel palm tree built from Vox blocks. */
@@ -166,6 +160,12 @@ export default function DivisionDunes({ posRef }: { posRef: RefObject<Vector3> }
   return (
     <group>
       <group position={[a.worldPos[0], 0, a.worldPos[1]]}>
+        {/* ── SANDY FLOOR — one cohesive soft-edged patch under the oasis ───
+            Replaces the old scattered pebble litter with a clean sand blob,
+            flush with the grass. A smaller damp blob hugs the oasis pool. */}
+        <GroundPatch position={[0, 0, 0]} radius={6.2} color={PALETTE.sand} seed={9337} />
+        <GroundPatch position={[3.0, 0, 2.4]} radius={2.8} color={PALETTE.sandWet} seed={9338} y={0.025} />
+
         {/* ── CENTRAL DUNE MOUND (the landmark, on the r=2.5 collider) ──────
             A stack of broad, beveled sand slabs stepping up to a soft crest.
             Wide footprint so it reads as a rolling dune; kept inside the
@@ -241,21 +241,12 @@ export default function DivisionDunes({ posRef }: { posRef: RefObject<Vector3> }
         <Sparkles count={20} scale={[7, 3, 6]} position={[0, 1.6, 0]} size={5} speed={0.15} opacity={0.3} color="#fff0c0" />
       </group>
 
-      {/* ── Instanced dune-grass + pebbles (authored in WORLD space) ──────── */}
+      {/* ── Instanced upright dune-grass tufts (authored in WORLD space) ──── */}
       <Scatter
         items={DUNE_GRASS}
         color={PALETTE.grassDark}
         jitterAmount={0.12}
         size={[0.06, 0.2, 0.06]}
-        roughness={0.9}
-        castShadow={false}
-      />
-      <Scatter
-        items={PEBBLES}
-        color={PALETTE.pebble}
-        jitterAmount={0.14}
-        size={0.16}
-        radius={0.05}
         roughness={0.9}
         castShadow={false}
       />

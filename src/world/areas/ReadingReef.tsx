@@ -22,10 +22,11 @@ import { Group, Vector3 } from 'three'
 import { Sparkles, Float } from '@react-three/drei'
 import Npc from '../Npc'
 import { areaById } from '../worldLayout'
-import { Vox, Scatter } from '../voxel/Vox'
+import { Vox } from '../voxel/Vox'
 import { PALETTE } from '../voxel/palette'
 import { Log, Lantern, Signpost, Rock } from '../voxel/props'
-import { field, rng } from '../voxel/fields'
+import { GroundPatch } from '../voxel/GroundPatch'
+import { rng } from '../voxel/fields'
 
 type Vec3 = [number, number, number]
 
@@ -36,25 +37,6 @@ const CORAL_PURPLE = '#c78fe0'
 const SHELL = '#f7e4d0'
 const STARFISH = '#f2a33d'
 const LAMP = '#fff2b0'
-
-// Beach sand ring under the whole area (instanced, flat at y≈0).
-const SAND_ITEMS = field([0, 0], 6, 6, 90, 9201, {
-  y: 0.01,
-  minScale: 0.8,
-  maxScale: 1.6,
-})
-// A few wet/darker sand flecks near the tide pool for variation.
-const WET_SAND_ITEMS = field([2.4, 1.4], 2.2, 1.8, 26, 9311, {
-  y: 0.02,
-  minScale: 0.7,
-  maxScale: 1.3,
-})
-// Scattered pebbles/shell bits across the beach.
-const PEBBLE_ITEMS = field([0, 0], 5.5, 5.5, 34, 9419, {
-  y: 0.03,
-  minScale: 0.5,
-  maxScale: 1.0,
-})
 
 /** Branchy coral cluster — a few colored stalks fanning up from a rocky base. */
 function Coral({
@@ -193,31 +175,10 @@ export default function ReadingReef({ posRef }: { posRef: RefObject<Vector3> }) 
   return (
     <group>
       <group position={[a.worldPos[0], 0, a.worldPos[1]]}>
-        {/* ── BEACH SAND floor (instanced, flat) ───────────────────────── */}
-        <Scatter
-          items={SAND_ITEMS}
-          color={PALETTE.sand}
-          jitterAmount={0.08}
-          size={[0.7, 0.08, 0.7]}
-          roughness={0.95}
-          castShadow={false}
-        />
-        <Scatter
-          items={WET_SAND_ITEMS}
-          color={PALETTE.sandWet}
-          jitterAmount={0.1}
-          size={[0.6, 0.08, 0.6]}
-          roughness={0.95}
-          castShadow={false}
-        />
-        <Scatter
-          items={PEBBLE_ITEMS}
-          color={PALETTE.pebble}
-          jitterAmount={0.18}
-          size={0.16}
-          roughness={0.8}
-          castShadow={false}
-        />
+        {/* ── BEACH SAND floor — one cohesive soft-edged patch ──────────── */}
+        <GroundPatch position={[0, 0, 0]} radius={6} color={PALETTE.sand} seed={91} />
+        {/* darker wet-sand patch hugging the tide pool */}
+        <GroundPatch position={[2.6, 0, 1.7]} radius={2.6} color={PALETTE.sandWet} seed={92} y={0.025} />
 
         {/* ── CENTRAL LIGHTHOUSE (on the r=2.5 collider, local 0,0) ─────── */}
         {/* Rocky islet base so the tower rises out of the beach. */}

@@ -24,6 +24,7 @@ import { areaById } from '../worldLayout'
 import { Vox, Scatter } from '../voxel/Vox'
 import { PALETTE } from '../voxel/palette'
 import { Cattail, LilyPad, Rock, Lantern, Signpost } from '../voxel/props'
+import { GroundPatch } from '../voxel/GroundPatch'
 import { field, rng } from '../voxel/fields'
 
 type Vec3 = [number, number, number]
@@ -42,13 +43,6 @@ const MARSH_GRASS = field([-1.5, -1], 4.2, 4.0, 64, 4021, {
   y: 0,
   minScale: 0.6,
   maxScale: 1.2,
-})
-
-// A damp darker-green underlayer (mossy ground dabs) for that wetland feel.
-const DAMP_DABS = field([0, -0.5], 5.0, 4.4, 40, 4047, {
-  y: 0,
-  minScale: 0.7,
-  maxScale: 1.4,
 })
 
 /** A chunky voxel frog — squat body, eyes, little legs. Cheerful marsh local. */
@@ -247,16 +241,13 @@ export default function MeasurementMarsh({ posRef }: { posRef: RefObject<Vector3
         <Rock position={[2.8, 0, -3.4]} seed={403} />
         <Rock position={[-4.6, 0, -0.2]} seed={404} />
 
-        {/* ── Ground cover: damp moss dabs + marsh grass (instanced) ─────── */}
-        <Scatter
-          items={DAMP_DABS}
-          color={MARSH_GREEN}
-          jitterAmount={0.12}
-          size={[0.5, 0.05, 0.5]}
-          radius={0.12}
-          roughness={0.85}
-          castShadow={false}
-        />
+        {/* ── DAMP MUD / MOSS floor — one cohesive soft-edged patch ──────── */}
+        {/* Replaces the scattered moss-dab tiles: a wet mossy ground blob, with
+            a darker, damper inner zone hugging the central pool for depth. */}
+        <GroundPatch position={[0, 0, -0.5]} radius={2.5} color={PALETTE.dirt} color2={MARSH_GREEN} seed={4047} y={0.015} />
+        <GroundPatch position={[-0.4, 0, -0.2]} radius={1.6} color={PALETTE.dirtDark} seed={4051} y={0.022} roughness={0.85} />
+
+        {/* ── Ground cover: upright marsh grass (instanced) ──────────────── */}
         <Scatter
           items={MARSH_GRASS}
           color={PALETTE.grassDark}
