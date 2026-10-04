@@ -36,7 +36,9 @@ export function usePlayClock() {
   // Read through a ref so the interval always sees the current screen without
   // tearing down/recreating itself (and losing its wall-clock baseline) on nav.
   const learningRef = useRef(false)
-  learningRef.current = isLearningPath(pathname)
+  useEffect(() => {
+    learningRef.current = isLearningPath(pathname)
+  }, [pathname])
 
   useEffect(() => {
     if (!player) return

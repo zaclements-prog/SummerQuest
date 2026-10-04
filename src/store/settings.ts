@@ -9,7 +9,8 @@ interface SettingsState {
   llmLastCheck: number | null
   toggleLlm: () => void
   setLlmModel: (m: string) => void
-  refreshLlmStatus: () => Promise<boolean>
+  /** `force` skips the 30-second health cache (the parent's "Recheck" button). */
+  refreshLlmStatus: (force?: boolean) => Promise<boolean>
 }
 
 export const useSettings = create<SettingsState>()(
@@ -25,8 +26,8 @@ export const useSettings = create<SettingsState>()(
         if (b instanceof OmlxBackend) b.setModel(m)
         set({ llmModel: m })
       },
-      refreshLlmStatus: async () => {
-        const ok = await isLLMAvailable()
+      refreshLlmStatus: async (force = false) => {
+        const ok = await isLLMAvailable(force)
         set({ llmAvailable: ok, llmLastCheck: Date.now() })
         return ok
       },

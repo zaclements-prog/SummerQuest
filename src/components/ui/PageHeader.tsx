@@ -33,7 +33,15 @@ export function BackButton({ to, label = 'Back', onClick }: BackButtonProps) {
 
   if (to) {
     return (
-      <motion.div whileHover={hoverPop} whileTap={tap} className="inline-flex" onClick={sfx.click}>
+      <motion.div
+        whileHover={hoverPop}
+        whileTap={tap}
+        className="inline-flex"
+        onClick={() => {
+          sfx.click()
+          onClick?.()
+        }}
+      >
         <Link to={to} className={classes}>
           <span aria-hidden="true">←</span>
           <span>{label}</span>

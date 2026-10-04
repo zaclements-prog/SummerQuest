@@ -14,10 +14,12 @@ import { useEntrance, hoverPop, tap } from '../lib/motion'
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 /** Returns the next stage that hasn't been fully starred yet (the "continue" target). */
-function findNextTarget(): { zoneId: string; stageId?: string } | null {
+function findNextTarget(
+  zonesProgress: ReturnType<typeof useProgress.getState>['zones'],
+): { zoneId: string; stageId?: string } | null {
   for (const zone of curriculum.zones) {
     if (!zone.available) continue
-    const progress = useProgress.getState().zones[zone.id]
+    const progress = zonesProgress[zone.id]
     for (const stage of zone.stages) {
       const earned = progress?.stages[stage.id]?.stars ?? 0
       if (earned < stage.starsToEarn) {
@@ -60,7 +62,7 @@ export default function WorldMap() {
   }, [])
 
   // Next-stage deep-link (computed after hooks)
-  const nextTarget = useMemo(() => findNextTarget(), [zones])
+  const nextTarget = useMemo(() => findNextTarget(zones), [zones])
   const continueHref = nextTarget
     ? nextTarget.stageId
       ? `/zone/${nextTarget.zoneId}`

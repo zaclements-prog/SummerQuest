@@ -204,13 +204,10 @@ export default function ProgressScreen() {
 
 function useCountUp(target: number, durationMs = 700): number {
   const reduced = useReducedMotion()
-  const [value, setValue] = useState(reduced ? target : 0)
+  const [value, setValue] = useState(0)
 
   useEffect(() => {
-    if (reduced) {
-      setValue(target)
-      return
-    }
+    if (reduced) return // no animation: the target is returned directly below
     let raf = 0
     const start = performance.now()
     const tick = (now: number) => {
@@ -224,7 +221,7 @@ function useCountUp(target: number, durationMs = 700): number {
     return () => cancelAnimationFrame(raf)
   }, [target, durationMs, reduced])
 
-  return value
+  return reduced ? target : value
 }
 
 // ── Summary tile ──────────────────────────────────────────────────────────────

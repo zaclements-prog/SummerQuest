@@ -13,7 +13,8 @@ import { buildPrompt } from './prompts'
 
 export interface LLMBackend {
   readonly id: string
-  isAvailable(): Promise<boolean>
+  /** `force` bypasses the short-lived health cache. */
+  isAvailable(force?: boolean): Promise<boolean>
   generateProblems(args: GenerateArgs): Promise<Problem[]>
   generateText(args: TextGenArgs): Promise<string>
 }
@@ -48,10 +49,10 @@ const BASE = '/api/llm'
 let healthCache: { ok: boolean; at: number } | null = null
 const HEALTH_TTL_MS = 30_000
 
-async function pingHealth(): Promise<boolean> {
+async function pingHealth(force = false): Promise<boolean> {
   // Fully-offline single-file build: never reach for a server (writing falls back to its heuristic grader).
   if (import.meta.env.VITE_OFFLINE === 'true') return false
-  if (healthCache && Date.now() - healthCache.at < HEALTH_TTL_MS) {
+  if (!force && healthCache && Date.now() - healthCache.at < HEALTH_TTL_MS) {
     return healthCache.ok
   }
   try {
@@ -81,8 +82,8 @@ export class OmlxBackend implements LLMBackend {
     this.model = model
   }
 
-  async isAvailable(): Promise<boolean> {
-    return pingHealth()
+  async isAvailable(force = false): Promise<boolean> {
+    return pingHealth(force)
   }
 
   async generateText(args: TextGenArgs): Promise<string> {
@@ -207,8 +208,8 @@ export function setBackend(backend: LLMBackend) {
   activeBackend = backend
 }
 
-export async function isLLMAvailable(): Promise<boolean> {
-  return activeBackend.isAvailable()
+export async function isLLMAvailable(force = false): Promise<boolean> {
+  return activeBackend.isAvailable(force)
 }
 
 export async function generateProblemBatch(args: GenerateArgs): Promise<Problem[]> {

@@ -30,6 +30,14 @@ interface LessonView {
   started: boolean
 }
 
+/** Section a lesson is listed under on the Tutor index. */
+const NON_MATH_AREAS: Record<string, string> = {
+  'reading-reef': 'Reading & Writing',
+  'writing-workshop': 'Reading & Writing',
+  'science-summit': 'Science',
+}
+const areaOf = (zoneId: string) => NON_MATH_AREAS[zoneId] ?? 'Math'
+
 /** A lesson is "done" when it has earned its full star allotment. */
 function isComplete(v: LessonView): boolean {
   return v.maxStars > 0 && v.stars >= v.maxStars
@@ -74,25 +82,29 @@ export default function TutorIndex() {
       }
     })
 
-    // Group by subject theme, preserving first-seen order of subjects.
-    const order: Subject[] = []
-    const bySubject = new Map<Subject, LessonView[]>()
+    // Group by subject area (Math / Reading & Writing / Science), preserving
+    // first-seen order. (Grouping by island theme colour mixed subjects under the
+    // wrong zone title, e.g. Division under "Multiplication Mesa".)
+    const order: string[] = []
+    const byArea = new Map<string, LessonView[]>()
     for (const v of views) {
-      if (!bySubject.has(v.subject)) {
-        bySubject.set(v.subject, [])
-        order.push(v.subject)
+      const area = areaOf(v.zoneId)
+      if (!byArea.has(area)) {
+        byArea.set(area, [])
+        order.push(area)
       }
-      bySubject.get(v.subject)!.push(v)
+      byArea.get(area)!.push(v)
     }
 
     // Within each group, sort Recommended lessons to the top (stable otherwise).
-    for (const list of bySubject.values()) {
+    for (const list of byArea.values()) {
       list.sort((a, b) => Number(b.recommended) - Number(a.recommended))
     }
 
-    return order.map((subject) => ({
-      subject,
-      lessons: bySubject.get(subject)!,
+    return order.map((area) => ({
+      area,
+      subject: byArea.get(area)![0].subject,
+      lessons: byArea.get(area)!,
     }))
   }, [zonesProgress, recommended])
 
@@ -132,10 +144,10 @@ export default function TutorIndex() {
           >
             {groups.map((group) => {
               const theme = subjectTheme(group.subject)
-              const title = group.lessons[0]?.zoneTitle ?? 'Lessons'
+              const title = group.area
               return (
                 <motion.section
-                  key={group.subject}
+                  key={group.area}
                   variants={item}
                   aria-label={title}
                   className="flex flex-col gap-3"
