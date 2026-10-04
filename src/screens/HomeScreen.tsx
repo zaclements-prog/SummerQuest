@@ -16,8 +16,10 @@ export default function HomeScreen() {
   useStarterCreature()
 
   // Enter the Home fresh: never resume a stale "placing…" banner from a prior visit.
+  // On leaving, drop any hover cursor a furniture item set so it can't leak to other screens.
   useEffect(() => {
     useHomeUi.getState().cancelPlacing()
+    return () => { document.body.style.cursor = '' }
   }, [])
 
   return (
