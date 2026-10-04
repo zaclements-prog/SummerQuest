@@ -1,85 +1,148 @@
 # SummerQuest
 
-A kid-friendly summer learning game that combines the strongest patterns from
-Prodigy (meta-game + avatar), DragonBox (concept-first visual learning),
-Khan Academy (mastery progression), and SplashLearn (quick-hit practice games).
+A kid-friendly summer learning game for a student going from 3rd to 4th grade.
+It combines the strongest patterns from Prodigy (meta-game + avatar), DragonBox
+(concept-first visuals), Khan Academy (mastery progression) and SplashLearn
+(quick-hit practice games).
 
-**Current scope**: a single zone — Multiplication Mesa — fully built out for a
-student going from 3rd to 4th grade. Other zones (Division, Fractions, Word
-Problems, Reading) are mapped on the world but not yet implemented.
+Everything runs locally in the browser; progress is saved in `localStorage`.
+
+## What's in it
+
+- **12 subject zones** on an island map, each a 3-step mastery path
+  (Learn → Practice → Boss): Multiplication Mesa, Division Dunes, Fraction Falls,
+  Place Value Plateau, Measurement Marsh, Geometry Grove, Data Delta,
+  Word Problem Woods, Reading Reef, Writing Workshop, Science Summit and
+  Tower Battlefront (tower defense where buying a tower costs a math answer).
+- **Daily Challenge** — 5 questions from the day's subject, once per (local) day.
+- **Tutor** — 11 narrated mini-lessons (pre-generated MP3s, browser speech as fallback).
+- **This Week's Focus** — finds the skills the child is missing and recommends a
+  lesson + practice stage.
+- **Daily learning goal** — 2 × 15 minutes of active learning per day earns bonus coins.
+- **3D Home** — buy furniture and decorate a room; become (and dress up) a creature.
+- **3D World (beta)** — walk the island and enter zones through NPC gateways.
+- **Badges, levels, streaks**, a **Progress** screen, and a **Parent Dashboard**
+  (stats, optional local-AI settings, reset behind a grown-up check).
 
 ## Running it
 
-Easiest: double-click `launch-summerquest.command` in Finder. On first run it
-installs dependencies (~1 minute), then opens your browser to the game. Close
-the Terminal window to stop.
+Easiest: double-click `launch-summerquest.command` (macOS) or
+`launch-summerquest.bat` (Windows). On first run it installs dependencies
+(~1 minute), then builds the game and opens your browser at
+<http://localhost:5173>. Close the terminal window to stop.
 
 Manually:
 
 ```bash
 npm install
-npm run dev
+npm run play   # build + serve the game on :5173 (what the launchers run)
+npm run dev    # development server with hot reload (also :5173)
 ```
+
+Both use port 5173 on purpose: the browser keys saved progress by origin, so
+switching between them keeps the child's progress.
+
+### Fully offline single file
+
+```bash
+npm run build:single   # → dist/SummerQuest.html
+```
+
+One self-contained HTML file (JS, CSS and fonts inlined) that opens by
+double-click — no server or internet needed. It routes with a URL hash so it
+works from `file://`; the writing grader uses its built-in (non-AI) scoring and
+lesson narration uses the browser's speech voice.
+
+### Optional: local AI (oMLX)
+
+Writing feedback (and, if a stage is switched to `source: 'llm'`, generated
+problems) can use a local OpenAI-compatible server. The dev/preview server
+proxies `/api/llm/*` to it and injects the key, so the key never ships in the
+bundle. Defaults are `http://127.0.0.1:8000`; override in `.env.local`:
+
+```bash
+VITE_OMLX_URL=http://127.0.0.1:8000
+VITE_OMLX_KEY=your-key
+```
+
+Without the server everything still works: writing is graded offline.
+
+### Developer helpers
+
+- `?studio=creatures|furniture|accessories` on `/home`, `?studio=1` on `/world` —
+  model galleries for tuning.
+- `VITE_DEV_TOOLS=true` in `.env.local` shows "Seed sample week" on
+  This Week's Focus (fills in fake attempts — never enable it for the child).
+- `npm run tts` regenerates lesson narration MP3s after editing lesson text.
+
+## Checks
+
+```bash
+npm run lint      # ESLint (incl. React Compiler hook rules)
+npx tsc -b        # typecheck
+npm test          # vitest
+npm run build     # typecheck + production build
+```
+
+CI (`.github/workflows/ci.yml`) runs all of these plus the single-file build on
+every push and pull request. The test suite includes a content fuzz test that
+samples every curriculum stage and checks each problem has exactly one correct
+option, no duplicate or NaN options, and correct arithmetic.
 
 ## Architecture
 
 ```
 src/
-  App.tsx                  router + audio unlock
-  main.tsx                 entry
-  index.css                Tailwind v4 theme + animations
-  components/
-    AppShell.tsx           header (coins, streak, avatar, sound, parent link)
-  screens/
-    Welcome.tsx            landing
-    AvatarCreate.tsx       pick emoji + color + name
-    WorldMap.tsx           island archipelago, zones positioned by data
-    ZoneDetail.tsx         lists stages, shows progress, launches games
-    GameRunner.tsx         dispatches gameId → component, shows results
-    ParentDashboard.tsx    stats + reset
-  games/multiplication/
-    ArrayBuilder.tsx       concept: animated arrays + 4-choice answer
-    SpeedRun.tsx           practice: 60-second timed drill
-    BossBattle.tsx         mastery: HP-based fight, stars by HP remaining
-  curriculum/
-    types.ts               Zone / Stage / Curriculum types
-    multiplication.ts      Multiplication Mesa zone data
-    index.ts               curriculum aggregator + locked placeholders
-  store/
-    progress.ts            Zustand store, persisted to localStorage
+  App.tsx              routes (HashRouter in the offline build, BrowserRouter otherwise)
+  curriculum/          zone + stage definitions (one file per zone) and types
   lib/
-    sound.ts               Web Audio API SFX (no asset bundle)
-    random.ts              problem generator with plausible distractors
+    providers/         problem generators per topic (+ static question banks)
+    problem.ts         Problem / ProblemProvider types
+    llm.ts, llm-cache.ts, prompts/   optional local-AI backend
+    analytics.ts, badges.ts, levels.ts, dailyGoal.ts, daily.ts, dates.ts
+    stageLocks.ts      the one rule for which stages are playable
+    writingGrader.ts   offline writing feedback
+    narration.ts, sound.ts, usePlayClock.ts
+    home/              3D home catalog, grid and occupancy rules
+  games/               ConceptPlay, SpeedRun, BossBattle, WritingPad, tower-defense/
+  screens/             map, zone, game runner, daily, tutor, focus, progress, badges, parent…
+  tutoring/            lessons, skill taxonomy (skill → zone/lesson/practice stage)
+  home/                3D Home (react-three-fiber): models, world, HUD
+  world/               3D World (beta): layout, areas, NPC gateways, movement
+  store/               Zustand stores persisted to localStorage (+ save migrations)
+  components/          VisualRenderer, charts, shared UI kit (components/ui)
 ```
 
-### Adding a new zone
+### Adding a zone
 
-1. Create `src/curriculum/<topic>.ts` exporting a `Zone`.
-2. Build any new game components in `src/games/<topic>/`.
-3. Register the game in `GameRunner.tsx`'s switch and add its id to
-   `GameId` in `curriculum/types.ts`.
-4. Replace the placeholder in `curriculum/index.ts` with the real zone.
+1. Create `src/curriculum/<topic>.ts` exporting a `Zone` whose stages point at a
+   `providerConfig` and a `gameId`.
+2. If needed, add a provider in `src/lib/providers/` and register it in
+   `providers/index.ts`; tag problems with a `skill` registered in
+   `src/tutoring/skills.ts`.
+3. Add the zone to `src/curriculum/index.ts`.
+4. Run `npm test` — the content fuzz test picks up the new stages automatically.
 
 ## Pedagogical model
 
 Each zone follows a **3-stage mastery loop**:
 
-1. **Concept** (slow, visual) — represent the math physically before
-   abstracting. For multiplication, see arrays build row by row.
+1. **Concept** (slow, visual) — represent the idea before abstracting it
+   (arrays, fraction bars, place-value blocks, passages, graphs).
 2. **Practice** (fast, fluent) — timed drill builds automaticity.
-3. **Mastery** (themed) — a boss battle ties effort to narrative reward.
+3. **Mastery** (themed) — a boss battle ties effort to a narrative reward.
 
-Stars per stage: 0 (fail) → 1 → 2 → 3 (perfect). Persisted by best score.
+Stars per stage: 0 (not passed) → 1 → 2 → 3 (perfect), kept as the best result.
+A stage unlocks when the one before it has at least one star.
 
 ## Roadmap
 
-- [ ] Division Dunes
-- [ ] Fraction Falls
-- [ ] Word Problem Woods
-- [ ] Reading Reef (passage + question games)
-- [x] 3D Home — decorate your room and dress your creature with accessories
-- [ ] Adaptive difficulty (track which facts a kid misses, weight those)
-- [ ] Daily quest with bonus rewards
-- [ ] Electron wrapper for "real" desktop app
+- [x] All 12 subject zones
+- [x] 3D Home — decorate your room and dress your creature
+- [x] Daily Challenge with bonus rewards
+- [x] Weekly focus: track missed skills and recommend lessons/practice
+- [ ] 3D World — full voxel island (in progress on `world-voxel`)
+- [ ] Adaptive difficulty inside a stage (weight the facts a kid misses)
+- [ ] Electron wrapper for a "real" desktop app
 - [ ] Multi-profile (more than one kid per install)
 - [ ] Print/share weekly progress report
