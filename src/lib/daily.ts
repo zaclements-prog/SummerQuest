@@ -1,4 +1,5 @@
 import { curriculum } from '../curriculum'
+import { localDayKey } from './dates'
 
 /** Daily Challenge constants + helpers (kept out of the component file so Fast Refresh stays happy). */
 
@@ -6,7 +7,7 @@ export const DAILY_BONUS = 30
 export const DAILY_QUESTION_COUNT = 5
 
 export function todayStr(): string {
-  return new Date().toISOString().slice(0, 10)
+  return localDayKey()
 }
 
 /** Deterministic per-day pick so the whole app shows the same subject each day. */

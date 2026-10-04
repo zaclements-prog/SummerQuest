@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { useProgress } from '../store/progress'
 import type { SessionRecord } from '../store/progress'
 import { overall, byDay, bySubject, recentAccuracy } from '../lib/analytics'
+import { totalStars } from '../lib/levels'
 import BarChart from '../components/BarChart'
 import { Card, Pill, BackButton, EmptyState } from '../components/ui'
 import { accuracyColorClass, accuracyTone } from '../lib/theme'
@@ -11,6 +12,9 @@ import { useEntrance } from '../lib/motion'
 
 export default function ProgressScreen() {
   const sessions = useProgress((s) => s.sessions)
+  // Best stars per stage (what the map and badges count), not the sum over every replay.
+  const zones = useProgress((s) => s.zones)
+  const starsEarned = totalStars(zones)
 
   const o = overall(sessions)
   const recent = recentAccuracy(sessions, 8)
@@ -109,7 +113,7 @@ export default function ProgressScreen() {
                 tone="quest"
                 emoji="⭐"
                 label="Stars"
-                value={o.stars}
+                value={starsEarned}
               />
             </motion.div>
 

@@ -1,4 +1,5 @@
 import type { SessionRecord } from '../store/progress'
+import { localDayKey } from './dates'
 
 /**
  * Pure aggregations over the recorded session history. Drives the per-session
@@ -9,9 +10,7 @@ function acc(correct: number, total: number): number {
   return total > 0 ? Math.round((correct / total) * 100) : 0
 }
 
-function dayKey(at: number): string {
-  return new Date(at).toISOString().slice(0, 10)
-}
+const dayKey = (at: number) => localDayKey(at)
 
 function dayLabel(key: string): string {
   const [, m, d] = key.split('-')
