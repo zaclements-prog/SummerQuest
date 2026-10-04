@@ -15,7 +15,7 @@ export type ProblemAnswer = string | number
 
 export type ProblemVisual =
   | { kind: 'none' }
-  | { kind: 'array'; rows: number; cols: number; itemEmoji?: string }
+  | { kind: 'array'; rows: number; cols: number; itemEmoji?: string; label?: string }
   | { kind: 'fraction'; numerator: number; denominator: number; shape?: 'circle' | 'rect' | 'bar' }
   | {
       kind: 'fractionCompare'
