@@ -33,6 +33,8 @@ export default function WorldAvatar({ posRef }: { posRef: RefObject<Vector3> }) 
     // radius 0 here is intentional: useWanderWalk applies the avatar's body radius
     // as a leading-edge probe (COLLIDE_RADIUS), so passing a radius here too would double it.
     collide: (x, z) => collidesAt(colliders, x, z, 0),
+    // player-controlled: stay put when no key is held (e.g. next to an NPC's prompt)
+    wander: false,
   })
 
   useFrame(({ clock }) => {
