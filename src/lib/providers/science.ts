@@ -31,7 +31,8 @@ interface Passage {
   }>
 }
 
-const PASSAGES: Passage[] = [
+/** Exported for content-quality tests (see __tests__/answerBias.test.ts). */
+export const PASSAGES: Passage[] = [
   {
     title: 'The Parts of a Plant',
     level: 3,

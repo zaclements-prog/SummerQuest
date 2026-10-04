@@ -25,7 +25,8 @@ interface GeoQuestion {
   hint?: string
 }
 
-const QUESTIONS: GeoQuestion[] = [
+/** Exported for content-quality tests (see __tests__/answerBias.test.ts). */
+export const QUESTIONS: GeoQuestion[] = [
   // ---- Level 3: 2D shapes, sides, vertices, solids ----
   {
     level: 3,
