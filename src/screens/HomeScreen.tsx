@@ -4,9 +4,8 @@ import { useSearchParams } from 'react-router-dom'
 import HomeWorld from '../home/world/HomeWorld'
 import ModelStudio from '../home/world/ModelStudio'
 import HomeHud from '../home/hud/HomeHud'
-import { useProgress } from '../store/progress'
 import { useHomeUi } from '../home/useHomeUi'
-import { creatureForEmoji } from '../lib/home/catalog'
+import { useStarterCreature } from '../home/starterCreature'
 
 export default function HomeScreen() {
   const [params] = useSearchParams()
@@ -14,14 +13,7 @@ export default function HomeScreen() {
   const isStudio = studio === 'creatures' || studio === 'furniture' || studio === 'accessories'
   const studioCam: [number, number, number] = studio === 'accessories' ? [3, 3.4, 6] : [0, 10, 21]
 
-  const player = useProgress((s) => s.player)
-  const ownedCount = useProgress((s) => s.ownedCreatures.length)
-  useEffect(() => {
-    if (player && ownedCount === 0) {
-      const c = creatureForEmoji(player.emoji)
-      if (c) useProgress.setState({ ownedCreatures: [c.id], activeCreature: c.id })
-    }
-  }, [player, ownedCount])
+  useStarterCreature()
 
   // Enter the Home fresh: never resume a stale "placing…" banner from a prior visit.
   useEffect(() => {
