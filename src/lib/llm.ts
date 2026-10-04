@@ -157,6 +157,10 @@ function parseProblemsFromJson(raw: string, topic: string): Problem[] {
     const answer = p.answer
     const options = Array.isArray(p.options) ? p.options : null
     if (!prompt || answer == null || !options || options.length < 2) continue
+    // An answer that isn't one of the buttons (or duplicate buttons) makes the
+    // question unanswerable — drop it and let the static provider fill in.
+    if (!options.includes(answer as string | number)) continue
+    if (new Set(options.map(String)).size !== options.length) continue
     const visualRaw = p.visual as Record<string, unknown> | undefined
     out.push({
       id: `llm-${topic}-${Date.now()}-${i}`,

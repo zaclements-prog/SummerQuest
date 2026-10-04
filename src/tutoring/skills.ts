@@ -19,10 +19,12 @@ export const SKILLS: Record<string, SkillMeta> = {
   'div-larger': { label: 'larger division facts', zoneId: 'division-dunes', lessonId: 'division', practiceStageId: 'div-practice' },
   // fraction-falls
   'frac-equiv':        { label: 'equivalent fractions',   zoneId: 'fraction-falls', lessonId: 'fractions', practiceStageId: 'frac-practice' },
-  'frac-cmp-likeden':  { label: 'comparing (same bottom)',zoneId: 'fraction-falls', lessonId: 'fractions', practiceStageId: 'frac-practice' },
-  'frac-cmp-unlikeden':{ label: 'comparing (different bottoms)', zoneId: 'fraction-falls', lessonId: 'fractions', practiceStageId: 'frac-practice' },
+  // comparing fractions is only drilled in the boss stage (frac-practice is equivalence)
+  'frac-cmp-likeden':  { label: 'comparing (same bottom)',zoneId: 'fraction-falls', lessonId: 'fractions', practiceStageId: 'frac-mastery' },
+  'frac-cmp-unlikeden':{ label: 'comparing (different bottoms)', zoneId: 'fraction-falls', lessonId: 'fractions', practiceStageId: 'frac-mastery' },
   // place-value-plateau
-  'pv-identify': { label: 'place value of a digit', zoneId: 'place-value-plateau', lessonId: 'placeValue', practiceStageId: 'pv-practice' },
+  // digit value is drilled in pv-concept (pv-practice is rounding)
+  'pv-identify': { label: 'place value of a digit', zoneId: 'place-value-plateau', lessonId: 'placeValue', practiceStageId: 'pv-concept' },
   'pv-round':    { label: 'rounding numbers',       zoneId: 'place-value-plateau', lessonId: 'placeValue', practiceStageId: 'pv-practice' },
   // measurement-marsh
   'meas-area':      { label: 'area', zoneId: 'measurement-marsh', lessonId: 'measurement', practiceStageId: 'meas-practice' },
