@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { WORLD_AREAS, areaById, worldColliders } from '../worldLayout'
+import { collidesAt } from '../collision'
 import { getZone } from '../../curriculum'
 
 describe('world layout', () => {
@@ -22,6 +23,13 @@ describe('world layout', () => {
   it('areaById finds areas and returns undefined otherwise', () => {
     expect(areaById('fraction-falls')?.label).toBe('Fraction Falls')
     expect(areaById('nope')).toBeUndefined()
+  })
+
+  it('gives every tree drawn in Word Problem Woods a collider', () => {
+    // mirrors TREES in areas/WordProblemWoods.tsx
+    const trees: [number, number][] = [[-14, -10], [-10, -11], [-15, -6], [-9, -6], [-12, -9], [-13, -7]]
+    const colliders = worldColliders()
+    for (const [x, z] of trees) expect(collidesAt(colliders, x, z, 0), `tree at ${x},${z}`).toBe(true)
   })
 
   it('worldColliders() flattens every area collider plus the world bounds', () => {

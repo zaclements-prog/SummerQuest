@@ -1,22 +1,19 @@
 import { useMemo } from 'react'
 import { useProgress } from '../store/progress'
-import { HOME_ITEMS } from '../lib/home/catalog'
-import { footprintTiles, tileKey } from '../lib/home/grid'
+import { occupiedTiles, avatarBlockers } from '../lib/home/occupancy'
 
 /**
- * Set of "gx,gz" tile keys covered by placed furniture. Used both to validate
- * placement and to stop the avatar from walking through items. Pass the uid of an
- * item being moved to exclude its own footprint (so it can be nudged onto itself).
+ * Set of "gx,gz" tile keys covered by placed furniture, used to validate
+ * placement (walkable rugs included). Pass the uid of an item being moved to
+ * exclude its own footprint (so it can be nudged onto itself).
  */
 export function useOccupiedTiles(ignoreUid?: string | null): Set<string> {
   const placed = useProgress((s) => s.placedItems)
-  return useMemo(() => {
-    const s = new Set<string>()
-    for (const p of placed) {
-      if (ignoreUid && p.uid === ignoreUid) continue
-      const item = HOME_ITEMS.find((i) => i.id === p.itemId)
-      if (item) for (const t of footprintTiles(item.footprint, p.gx, p.gz, p.rot)) s.add(tileKey(t))
-    }
-    return s
-  }, [placed, ignoreUid])
+  return useMemo(() => occupiedTiles(placed, ignoreUid), [placed, ignoreUid])
+}
+
+/** Tiles that stop the avatar (walkable rugs excluded), mapped to the covering item's uid. */
+export function useAvatarBlockers(): Map<string, string> {
+  const placed = useProgress((s) => s.placedItems)
+  return useMemo(() => avatarBlockers(placed), [placed])
 }

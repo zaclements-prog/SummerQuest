@@ -7,6 +7,8 @@ export interface HomeItem {
   price: number
   footprint: Footprint
   modelId: string // → registry
+  /** Flat items (rugs) the creature can walk over. They still occupy their tiles for placement. */
+  walkable?: boolean
 }
 
 export interface Creature {
@@ -42,7 +44,7 @@ export function creatureById(id: string | null | undefined): Creature | undefine
 export const HOME_ITEMS: HomeItem[] = [
   { id: 'chair',     name: 'Chair',        category: 'furniture', price: 100, footprint: { w: 1, d: 1 }, modelId: 'chair' },
   { id: 'plant',     name: 'Potted Plant', category: 'decor',     price: 120, footprint: { w: 1, d: 1 }, modelId: 'plant' },
-  { id: 'rug',       name: 'Cozy Rug',     category: 'decor',     price: 120, footprint: { w: 2, d: 3 }, modelId: 'rug' },
+  { id: 'rug',       name: 'Cozy Rug',     category: 'decor',     price: 120, footprint: { w: 2, d: 3 }, modelId: 'rug', walkable: true },
   { id: 'lamp',      name: 'Floor Lamp',   category: 'furniture', price: 140, footprint: { w: 1, d: 1 }, modelId: 'lamp' },
   { id: 'beanbag',   name: 'Bean Bag',     category: 'furniture', price: 150, footprint: { w: 1, d: 1 }, modelId: 'beanbag' },
   { id: 'toychest',  name: 'Toy Chest',    category: 'decor',     price: 160, footprint: { w: 1, d: 1 }, modelId: 'toychest' },
