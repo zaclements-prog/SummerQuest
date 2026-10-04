@@ -5,7 +5,7 @@ import { useProgress } from '../store/progress'
 import ConceptPlay from '../games/ConceptPlay'
 import type { GameResult } from './GameRunner'
 import { sfx } from '../lib/sound'
-import { DAILY_BONUS, DAILY_QUESTION_COUNT, todayStr, pickTodaysZone } from '../lib/daily'
+import { DAILY_BONUS, DAILY_QUESTION_COUNT, todayStr, pickTodaysChallenge } from '../lib/daily'
 import {
   Card,
   Button,
@@ -26,8 +26,7 @@ export default function DailyChallenge() {
   const claimedDate = useProgress((s) => s.dailyClaimedDate)
   const recordSession = useProgress((s) => s.recordSession)
 
-  const zone = useMemo(() => pickTodaysZone(), [])
-  const stage = zone.stages[0]
+  const { zone, stage } = useMemo(() => pickTodaysChallenge(), [])
 
   // Provider creation can throw on a malformed config — capture it so we can show
   // a friendly retry path instead of crashing the screen.
@@ -190,6 +189,8 @@ export default function DailyChallenge() {
         key={`daily-${attempt}`}
         provider={provider}
         params={{ questionCount: DAILY_QUESTION_COUNT }}
+        // meta lets each answer feed the weekly-focus coach, like a regular stage.
+        meta={{ zoneId: zone.id, stageId: stage.id }}
         onComplete={(res) => {
           const reward = DAILY_BONUS + res.correct * 2
           addCoins(reward)

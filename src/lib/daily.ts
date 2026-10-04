@@ -10,10 +10,17 @@ export function todayStr(): string {
   return localDayKey()
 }
 
-/** Deterministic per-day pick so the whole app shows the same subject each day. */
-export function pickTodaysZone() {
-  const key = todayStr()
+/**
+ * Today's challenge: a deterministic per-day pick (the whole app agrees on it) of a
+ * zone and the stage whose problems feed the 5-question quiz. Only multiple-choice
+ * stages qualify — writing prompts have no answer options to quiz on.
+ */
+export function pickTodaysChallenge(day: string = todayStr()) {
+  const eligible = curriculum.zones.flatMap((zone) => {
+    const stage = zone.stages.find((s) => s.gameId !== 'writingPad')
+    return stage ? [{ zone, stage }] : []
+  })
   let h = 0
-  for (let i = 0; i < key.length; i++) h = (h * 31 + key.charCodeAt(i)) >>> 0
-  return curriculum.zones[h % curriculum.zones.length]
+  for (let i = 0; i < day.length; i++) h = (h * 31 + day.charCodeAt(i)) >>> 0
+  return eligible[h % eligible.length]
 }

@@ -9,6 +9,7 @@ import { useSettings } from '../store/settings'
 import { sfx } from '../lib/sound'
 import { Card, Button, ProgressBar, Pill, StarRating, Loading } from '../components/ui'
 import { useEntrance } from '../lib/motion'
+import { heuristicFeedback } from '../lib/writingGrader'
 
 interface Feedback {
   score: number
@@ -35,6 +36,7 @@ export default function WritingPad({ provider, params, onComplete, meta }: GameP
   const [feedback, setFeedback] = useState<Feedback | null>(null)
   const [llmAvailable, setLlmAvailable] = useState<boolean | null>(null)
   const [totalStars, setTotalStars] = useState<number[]>([])
+  const [scores, setScores] = useState<number[]>([])
 
   useEffect(() => {
     isLLMAvailable().then(setLlmAvailable)
@@ -82,9 +84,9 @@ export default function WritingPad({ provider, params, onComplete, meta }: GameP
         temperature: 0.5,
         json: true,
       })
-      fb = parseFeedback(raw, wordCount, minWords) ?? heuristicFeedback(wordCount, minWords)
+      fb = parseFeedback(raw, wordCount, minWords) ?? heuristicFeedback(text, minWords)
     } else {
-      fb = heuristicFeedback(wordCount, minWords)
+      fb = heuristicFeedback(text, minWords)
     }
 
     if (fb.stars >= 2) sfx.victory()
@@ -99,6 +101,7 @@ export default function WritingPad({ provider, params, onComplete, meta }: GameP
     if (!feedback) return
     if (meta) recordAttempt({ zoneId: meta.zoneId, topic: provider.topic, skillId: 'write-craft', skillLabel: 'writing', correct: feedback.stars > 0 })
     const stars = [...totalStars, feedback.stars]
+    const allScores = [...scores, feedback.score]
     if (idx + 1 >= questionCount) {
       const avgStars = Math.round(
         stars.reduce((a, b) => a + b, 0) / stars.length,
@@ -106,12 +109,14 @@ export default function WritingPad({ provider, params, onComplete, meta }: GameP
       const correct = stars.filter((s) => s > 0).length
       onComplete({
         stars: avgStars,
-        score: stars.reduce((a, b) => a + b, 0) * 10,
+        // Same 0–100 score the pad showed ("Score: 85/100"), averaged over prompts.
+        score: Math.round(allScores.reduce((a, b) => a + b, 0) / allScores.length),
         correct,
         total: questionCount,
       })
     } else {
       setTotalStars(stars)
+      setScores(allScores)
       setIdx((i) => i + 1)
     }
   }
@@ -373,8 +378,13 @@ function parseFeedback(raw: string | null, wordCount: number, minWords: number):
       return null
     }
   }
-  const score = clamp(Number(data.score ?? 0), 0, 100)
-  let stars = clamp(Number(data.stars ?? 0), 0, 3)
+  // Anything that isn't a plain number (e.g. "3 stars") → fall back to the
+  // offline grader rather than letting NaN reach stars/coins.
+  const rawScore = Number(data.score)
+  const rawStars = Number(data.stars)
+  if (!Number.isFinite(rawScore) || !Number.isFinite(rawStars)) return null
+  const score = Math.round(clamp(rawScore, 0, 100))
+  let stars = Math.round(clamp(rawStars, 0, 3))
   if (wordCount < minWords * 0.4) stars = Math.min(stars, 1)
   return {
     score,
@@ -382,19 +392,6 @@ function parseFeedback(raw: string | null, wordCount: number, minWords: number):
     celebrations: arr(data.celebrations).slice(0, 3),
     improvements: arr(data.improvements).slice(0, 2),
     summary: String(data.summary ?? 'Nice work!').slice(0, 400),
-  }
-}
-
-function heuristicFeedback(wordCount: number, minWords: number): Feedback {
-  const ratio = Math.min(1.5, wordCount / minWords)
-  const score = Math.round(35 + Math.min(60, ratio * 50))
-  const stars = score >= 80 ? 2 : score >= 60 ? 1 : 0
-  return {
-    score,
-    stars,
-    celebrations: wordCount >= minWords ? ['You wrote enough words!'] : [],
-    improvements: wordCount < minWords ? [`Try to write at least ${minWords} words.`] : [],
-    summary: stars > 0 ? 'Good effort! Keep practicing.' : 'Try writing a little more next time.',
   }
 }
 

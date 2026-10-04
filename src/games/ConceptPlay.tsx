@@ -20,18 +20,19 @@ export default function ConceptPlay({ provider, params, onComplete, meta }: Game
   const [problem, setProblem] = useState<Problem | null>(null)
   const [answered, setAnswered] = useState<string | number | null>(null)
   const [correctCount, setCorrectCount] = useState(0)
-  const [loading, setLoading] = useState(true)
+  // Index of the question whose problem has arrived; anything else is still loading.
+  const [loadedIdx, setLoadedIdx] = useState(-1)
+  const loading = loadedIdx !== idx
   const recordAnswer = useProgress((s) => s.recordAnswer)
   const recordAttempt = useProgress((s) => s.recordAttempt)
 
   useEffect(() => {
     let cancel = false
-    setLoading(true)
     nextProblem(provider).then((p) => {
       if (!cancel) {
         setProblem(p)
         setAnswered(null)
-        setLoading(false)
+        setLoadedIdx(idx)
       }
     })
     return () => {

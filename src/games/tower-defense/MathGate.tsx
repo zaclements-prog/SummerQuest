@@ -7,16 +7,18 @@ import { skillOf } from '../../tutoring/skills'
 import { Card, Button } from '../../components/ui'
 import { QuestionPrompt, AnswerGrid } from '../_shared/QuizUI'
 
+/** Mount it when a purchase needs confirming (unmount to close) — it starts fresh each time. */
 interface Props {
-  open: boolean
   title: string
   provider: ProblemProvider
+  /** Called for every answer (right or wrong). */
+  onAnswer?: (correct: boolean) => void
   onCorrect: () => void
   onCancel: () => void
   meta?: { zoneId: string; stageId: string }
 }
 
-export default function MathGate({ open, title, provider, onCorrect, onCancel, meta }: Props) {
+export default function MathGate({ title, provider, onAnswer, onCorrect, onCancel, meta }: Props) {
   const [problem, setProblem] = useState<Problem | null>(null)
   const [picked, setPicked] = useState<ProblemAnswer | null>(null)
   const [wrongCount, setWrongCount] = useState(0)
@@ -24,20 +26,23 @@ export default function MathGate({ open, title, provider, onCorrect, onCancel, m
   const recordAttempt = useProgress((s) => s.recordAttempt)
   const reduced = useReducedMotion()
 
-  // refresh problem every time the modal opens
+  // first problem for this purchase
   useEffect(() => {
-    if (open) {
-      nextProblem(provider).then(setProblem)
-      setWrongCount(0)
-      setPicked(null)
+    let cancel = false
+    nextProblem(provider).then((p) => {
+      if (!cancel) setProblem(p)
+    })
+    return () => {
+      cancel = true
     }
-  }, [open, provider])
+  }, [provider])
 
   function pick(opt: ProblemAnswer) {
     if (!problem || picked !== null) return
     setPicked(opt)
     const correct = opt === problem.answer
     recordAnswer(correct)
+    onAnswer?.(correct)
     if (meta) {
       const sk = skillOf(problem)
       recordAttempt({ zoneId: meta.zoneId, topic: provider.topic, skillId: sk.id, skillLabel: sk.label, correct })
@@ -59,7 +64,7 @@ export default function MathGate({ open, title, provider, onCorrect, onCancel, m
     }
   }
 
-  if (!open || !problem) return null
+  if (!problem) return null
 
   return (
     <div

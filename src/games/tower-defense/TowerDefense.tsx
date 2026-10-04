@@ -18,15 +18,23 @@ import { Button, Pill, Card } from '../../components/ui'
 const GAME_W = 720
 const GAME_H = 420
 
-export default function TowerDefense({ provider, onComplete, meta }: GameProps) {
-  const stateRef = useRef<GameState>(createInitialState(GAME_W, GAME_H))
+export default function TowerDefense({ provider, onComplete, meta, paused = false }: GameProps) {
+  // The engine mutates this one object in place every frame; `force` re-renders.
+  // (Held in state, not a ref, so render can read it.)
+  const [game] = useState<GameState>(() => createInitialState(GAME_W, GAME_H))
   const [, force] = useState(0)
   const [selectedTower, setSelectedTower] = useState<'cannon' | null>('cannon')
   const [hoverPos, setHoverPos] = useState<Vec2 | null>(null)
   const [pending, setPending] = useState<PendingPurchase | null>(null)
-  const pendingRef = useRef<PendingPurchase | null>(null)
-  pendingRef.current = pending
+  // The RAF loop runs for the component's lifetime and reads these through refs.
+  const frozenRef = useRef(false)
+  useEffect(() => {
+    frozenRef.current = !!pending || paused
+  }, [pending, paused])
   const completedRef = useRef(false)
+  // Math-gate answers are the quiz part of this game: they (not enemy kills) are
+  // what's reported as correct/total, so accuracy, stats and coins stay honest.
+  const answersRef = useRef({ correct: 0, total: 0 })
   const reduced = useReducedMotion()
 
   // RAF tick — runs once for component lifetime, reads pending via ref
@@ -38,8 +46,8 @@ export default function TowerDefense({ provider, onComplete, meta }: GameProps) 
     const loop = (t: number) => {
       const dt = t - last
       last = t
-      if (!pendingRef.current) {
-        tick(stateRef.current, Math.min(dt, 50))
+      if (!frozenRef.current) {
+        tick(game, Math.min(dt, 50))
       }
       acc += dt
       if (acc >= renderEvery) {
@@ -50,22 +58,21 @@ export default function TowerDefense({ provider, onComplete, meta }: GameProps) 
     }
     raf = requestAnimationFrame(loop)
     return () => cancelAnimationFrame(raf)
-  }, [])
+  }, [game])
 
   // detect end-of-game and report result
   useEffect(() => {
-    const s = stateRef.current
-    if (!s.isGameOver || completedRef.current) return
+    if (!game.isGameOver || completedRef.current) return
     completedRef.current = true
     setTimeout(() => {
-      const wavesCleared = s.hasWon ? 10 : Math.max(0, s.wave - 1)
+      const wavesCleared = game.hasWon ? 10 : Math.max(0, game.wave - 1)
       const stars =
         wavesCleared >= 10 ? 3 : wavesCleared >= 6 ? 2 : wavesCleared >= 3 ? 1 : 0
       onComplete({
         stars,
-        score: s.kills * 5 + wavesCleared * 20,
-        correct: s.kills,
-        total: s.kills + (s.enemies.filter((e) => e.reachedEnd).length || 0),
+        score: game.kills * 5 + wavesCleared * 20,
+        correct: answersRef.current.correct,
+        total: answersRef.current.total,
       })
     }, 1400)
   })
@@ -80,7 +87,7 @@ export default function TowerDefense({ provider, onComplete, meta }: GameProps) 
     if (!ctm) return
     const local = pt.matrixTransform(ctm.inverse())
     const pos: Vec2 = { x: local.x, y: local.y }
-    const s = stateRef.current
+    const s = game
     if (!canAffordTower(s, selectedTower)) {
       return
     }
@@ -98,7 +105,7 @@ export default function TowerDefense({ provider, onComplete, meta }: GameProps) 
 
   function confirmPurchase() {
     if (!pending) return
-    const s = stateRef.current
+    const s = game
     if (pending.kind === 'placeTower') {
       placeTower(s, pending.towerKind, pending.pos)
     }
@@ -108,11 +115,11 @@ export default function TowerDefense({ provider, onComplete, meta }: GameProps) 
 
   function startWaveClick() {
     sfx.enter()
-    startNextWave(stateRef.current)
+    startNextWave(game)
     force((n) => n + 1)
   }
 
-  const s = stateRef.current
+  const s = game
   const showStart =
     !s.isGameOver &&
     (s.waveProgress === 'idle' || s.waveProgress === 'between-waves')
@@ -181,14 +188,19 @@ export default function TowerDefense({ provider, onComplete, meta }: GameProps) 
         }}
       />
 
-      <MathGate
-        open={!!pending}
-        title={pending ? `Buy ${TOWER_STATS[pending.towerKind].label} for ${pending.cost} 🪙` : ''}
-        provider={provider}
-        onCorrect={confirmPurchase}
-        onCancel={() => setPending(null)}
-        meta={meta}
-      />
+      {pending && (
+        <MathGate
+          title={`Buy ${TOWER_STATS[pending.towerKind].label} for ${pending.cost} 🪙`}
+          provider={provider}
+          onAnswer={(correct) => {
+            answersRef.current.total += 1
+            if (correct) answersRef.current.correct += 1
+          }}
+          onCorrect={confirmPurchase}
+          onCancel={() => setPending(null)}
+          meta={meta}
+        />
+      )}
     </div>
   )
 }

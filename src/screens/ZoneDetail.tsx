@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { getZone } from '../curriculum'
@@ -16,6 +16,7 @@ import {
 } from '../components/ui'
 import { subjectTheme } from '../lib/theme'
 import { useEntrance } from '../lib/motion'
+import { isStageUnlocked } from '../lib/stageLocks'
 
 // ── Stage-kind presentation ───────────────────────────────────────────────────
 // `tone` drives the Card accent border + shadow; the icon chip uses an AA-safe
@@ -34,6 +35,7 @@ export default function ZoneDetail() {
   const navigate = useNavigate()
   const zone = getZone(zoneId)
   const zoneProgress = useProgress((s) => s.zones[zoneId])
+  const markZoneMastered = useProgress((s) => s.markZoneMastered)
 
   const { container, item } = useEntrance()
 
@@ -49,16 +51,13 @@ export default function ZoneDetail() {
     return { earnedStars: earned, totalStars: total, complete: total > 0 && earned >= total }
   }, [zone, zoneProgress])
 
-  // ── Zone-complete celebration (fires once when the zone reaches 100%) ────────
-  const [celebrated, setCelebrated] = useState(false)
-  const [celebrateOpen, setCelebrateOpen] = useState(false)
+  // ── Zone-complete celebration (once per zone, ever) ──────────────────────────
+  // Shown until dismissed; dismissing records ZoneProgress.masteredAt so it never
+  // pops up again on later visits.
+  const celebrateOpen = complete && !zoneProgress?.masteredAt
   useEffect(() => {
-    if (complete && !celebrated) {
-      setCelebrated(true)
-      setCelebrateOpen(true)
-      sfx.victory()
-    }
-  }, [complete, celebrated])
+    if (celebrateOpen) sfx.victory()
+  }, [celebrateOpen])
 
   // Defensive loading guard while params resolve (curriculum is synchronous).
   if (!zoneId) {
@@ -135,10 +134,7 @@ export default function ZoneDetail() {
           {zone.stages.map((stage, idx) => {
             const meta = KIND_META[stage.kind]
             const record = zoneProgress?.stages[stage.id]
-            const prevStage = idx > 0 ? zone.stages[idx - 1] : null
-            const prevDone =
-              !prevStage || (zoneProgress?.stages[prevStage.id]?.stars ?? 0) > 0
-            const locked = !prevDone
+            const locked = !isStageUnlocked(zone, stage.id, zoneProgress)
             const earned = record?.stars ?? 0
             const cleared = earned > 0
             const isBoss = stage.kind === 'mastery'
@@ -246,7 +242,7 @@ export default function ZoneDetail() {
       {/* ── Zone-complete celebration ─────────────────────────────────────── */}
       <Celebration
         open={celebrateOpen}
-        onClose={() => setCelebrateOpen(false)}
+        onClose={() => markZoneMastered(zoneId)}
         title={`${zone.title} Complete!`}
         stars={Math.min(3, zone.stages.length)}
       >

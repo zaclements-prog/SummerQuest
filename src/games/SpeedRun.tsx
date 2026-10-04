@@ -8,9 +8,11 @@ import { skillOf } from '../tutoring/skills'
 import { ProgressBar, Pill, Loading } from '../components/ui'
 import { QuestionPrompt, AnswerGrid } from './_shared/QuizUI'
 
-export default function SpeedRun({ provider, params, onComplete, meta }: GameProps) {
+const DEFAULT_STAR_THRESHOLDS: [number, number, number] = [10, 15, 20]
+
+export default function SpeedRun({ provider, params, onComplete, meta, paused = false }: GameProps) {
   const timeLimitSec = (params?.timeLimitSec as number) ?? 60
-  const starThresholds = (params?.starThresholds as [number, number, number]) ?? [10, 15, 20]
+  const starThresholds = (params?.starThresholds as [number, number, number] | undefined) ?? DEFAULT_STAR_THRESHOLDS
 
   const [problem, setProblem] = useState<Problem | null>(null)
   const [timeLeft, setTimeLeft] = useState(timeLimitSec)
@@ -19,7 +21,9 @@ export default function SpeedRun({ provider, params, onComplete, meta }: GamePro
   const [feedback, setFeedback] = useState<'correct' | 'wrong' | null>(null)
   const [picked, setPicked] = useState<ProblemAnswer | null>(null)
   const [totalAnswered, setTotalAnswered] = useState(0)
-  const startedAt = useRef(Date.now())
+  // Seconds of play banked before the current running stretch (the clock stops
+  // while the host's "Quit?" dialog is open).
+  const elapsedBefore = useRef(0)
   const recordAnswer = useProgress((s) => s.recordAnswer)
   const recordAttempt = useProgress((s) => s.recordAttempt)
   const reduced = useReducedMotion()
@@ -35,14 +39,19 @@ export default function SpeedRun({ provider, params, onComplete, meta }: GamePro
   }, [provider])
 
   useEffect(() => {
+    if (paused) return
+    const start = Date.now()
     const tick = setInterval(() => {
-      const elapsed = (Date.now() - startedAt.current) / 1000
+      const elapsed = elapsedBefore.current + (Date.now() - start) / 1000
       const remaining = Math.max(0, timeLimitSec - elapsed)
       setTimeLeft(remaining)
       if (remaining <= 0) clearInterval(tick)
     }, 100)
-    return () => clearInterval(tick)
-  }, [timeLimitSec])
+    return () => {
+      clearInterval(tick)
+      elapsedBefore.current += (Date.now() - start) / 1000
+    }
+  }, [paused, timeLimitSec])
 
   useEffect(() => {
     if (timeLeft <= 0) {
@@ -59,7 +68,7 @@ export default function SpeedRun({ provider, params, onComplete, meta }: GamePro
   }, [timeLeft, correct, totalAnswered, onComplete, starThresholds])
 
   function pick(opt: string | number) {
-    if (!problem || feedback || timeLeft <= 0) return
+    if (!problem || feedback || timeLeft <= 0 || paused) return
     const isCorrect = opt === problem.answer
     recordAnswer(isCorrect)
     if (meta) {

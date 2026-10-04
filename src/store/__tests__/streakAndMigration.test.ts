@@ -3,16 +3,20 @@ import { useProgress } from '../progress'
 import { migrateV0toV1 } from '../migrations'
 import { computeBadges } from '../../lib/badges'
 
-const ORIGINAL_TZ = process.env.TZ
+// Node's process.env (Node re-reads TZ on assignment); typed locally since the app tsconfig has no node types.
+const env = (globalThis as unknown as { process: { env: Record<string, string | undefined> } }).process.env
+
+const ORIGINAL_TZ = env.TZ
 
 beforeEach(() => {
-  process.env.TZ = 'America/Los_Angeles'
+  env.TZ = 'America/Los_Angeles'
   vi.useFakeTimers()
   useProgress.getState().resetPlayer()
 })
 afterEach(() => {
   vi.useRealTimers()
-  process.env.TZ = ORIGINAL_TZ
+  if (ORIGINAL_TZ === undefined) delete env.TZ
+  else env.TZ = ORIGINAL_TZ
 })
 
 /** Local wall-clock time in America/Los_Angeles (PDT, UTC-7, in October). */

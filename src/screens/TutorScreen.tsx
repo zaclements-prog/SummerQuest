@@ -6,6 +6,9 @@ import { getLesson } from '../tutoring/lessons'
 import VisualRenderer from '../components/VisualRenderer'
 import { useNarration } from '../lib/narration'
 import { seededShuffle } from '../lib/random'
+import { playableStageId } from '../lib/stageLocks'
+import { getZone } from '../curriculum'
+import { useProgress } from '../store/progress'
 import { sfx } from '../lib/sound'
 import { Button, Card, BackButton, ProgressBar, Pill, ErrorState, Loading } from '../components/ui'
 
@@ -122,6 +125,7 @@ export default function TutorScreen() {
   const [i, setI] = useState(0)
   const [picked, setPicked] = useState<ProblemAnswer | null>(null)
   const step = lesson?.steps[i]
+  const zoneProgress = useProgress((s) => (lesson ? s.zones[lesson.zoneId] : undefined))
   // Hooks must run unconditionally, so call useNarration before any early return.
   const { playing, play, stop } = useNarration(lesson?.id ?? '', step?.id ?? '', step?.narration ?? '')
 
@@ -161,7 +165,12 @@ export default function TutorScreen() {
   const next = () => {
     stop()
     setPicked(null)
-    if (last) navigate(`/play/${lesson.zoneId}/${lesson.practiceStageId}`)
+    if (last) {
+      // Practice stage if unlocked; otherwise the first step the kid hasn't cleared.
+      const zone = getZone(lesson.zoneId)
+      const stageId = zone ? playableStageId(zone, lesson.practiceStageId, zoneProgress) : lesson.practiceStageId
+      navigate(`/play/${lesson.zoneId}/${stageId}`)
+    }
     else setI(i + 1)
   }
 

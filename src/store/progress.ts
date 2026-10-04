@@ -210,11 +210,14 @@ export const useProgress = create<ProgressState>()(
         set({ zones })
       },
 
-      addCoins: (n) =>
+      addCoins: (n) => {
+        // Never let a bad value (NaN/Infinity) poison the saved balance.
+        if (!Number.isFinite(n)) return
         set({
           coins: get().coins + n,
           totalCoinsEarned: get().totalCoinsEarned + Math.max(0, n),
-        }),
+        })
+      },
 
       spendCoins: (n) => {
         const { coins } = get()
