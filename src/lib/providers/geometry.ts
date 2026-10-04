@@ -25,7 +25,8 @@ interface GeoQuestion {
   hint?: string
 }
 
-const QUESTIONS: GeoQuestion[] = [
+/** Exported for content-quality tests (see __tests__/answerBias.test.ts). */
+export const QUESTIONS: GeoQuestion[] = [
   // ---- Level 3: 2D shapes, sides, vertices, solids ----
   {
     level: 3,
@@ -38,7 +39,7 @@ const QUESTIONS: GeoQuestion[] = [
     level: 3,
     question: 'A shape with 4 equal sides and 4 right angles is a ___.',
     answer: 'square',
-    options: ['square', 'rectangle', 'triangle', 'circle'],
+    options: ['square', 'pentagon', 'triangle', 'circle'],
     hint: 'All four sides are the same length.',
   },
   {
@@ -80,7 +81,7 @@ const QUESTIONS: GeoQuestion[] = [
     level: 3,
     question: 'Any shape with exactly 4 sides is called a ___.',
     answer: 'quadrilateral',
-    options: ['quadrilateral', 'triangle', 'pentagon', 'polygon'],
+    options: ['quadrilateral', 'triangle', 'pentagon', 'hexagon'],
     hint: '"Quad" means four.',
   },
   {
@@ -113,16 +114,16 @@ const QUESTIONS: GeoQuestion[] = [
   },
   {
     level: 3,
-    question: 'A shape with 4 sides where opposite sides are equal but not all 4 are equal is a ___.',
+    question: 'A 4-sided shape with 4 right angles (square corners) is always a ___.',
     answer: 'rectangle',
-    options: ['rectangle', 'square', 'triangle', 'circle'],
-    hint: 'A door is shaped like this.',
+    options: ['rectangle', 'rhombus', 'triangle', 'pentagon'],
+    hint: 'A door is shaped like this. A square counts as one, too!',
   },
   {
     level: 3,
     question: 'A 4-sided shape with all 4 sides equal but no right angles (a "pushed-over" square) is a ___.',
     answer: 'rhombus',
-    options: ['rhombus', 'rectangle', 'trapezoid', 'pentagon'],
+    options: ['rhombus', 'rectangle', 'square', 'pentagon'],
     hint: 'It looks like a diamond on a playing card.',
   },
   {
@@ -148,10 +149,10 @@ const QUESTIONS: GeoQuestion[] = [
   },
   {
     level: 3,
-    question: 'An ice cream ___ is a 3D solid with a circle on the bottom and a point on top.',
+    question: 'A party hat is shaped like a ___: a 3D solid with a circle on the bottom and a point on top.',
     answer: 'cone',
-    options: ['cone', 'cube', 'sphere', 'square'],
-    hint: 'A party hat is this shape.',
+    options: ['cone', 'cube', 'sphere', 'cylinder'],
+    hint: 'An ice cream cone is this shape too, just flipped upside down!',
   },
   {
     level: 3,
