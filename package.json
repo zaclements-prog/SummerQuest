@@ -9,6 +9,7 @@
     "build:single": "tsc -b && cross-env SINGLEFILE=1 vite build && node scripts/inline-favicon.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
+    "play": "vite build && vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
     "tts": "node --import tsx scripts/dump-narration.mjs && node scripts/generate-tts.mjs"

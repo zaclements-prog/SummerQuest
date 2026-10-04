@@ -20,6 +20,13 @@ export default defineConfig(({ mode }) => {
     define: {
       'import.meta.env.VITE_OFFLINE': JSON.stringify(single ? 'true' : 'false'),
     },
+    // `npm run play` (what the launchers use) serves the production build on the
+    // SAME port as the dev server, so the browser origin — and the saved progress
+    // in localStorage — stays the same. Proxy settings are inherited from `server`.
+    preview: {
+      port: 5173,
+      strictPort: true,
+    },
     server: {
       port: 5173,
       open: true,
