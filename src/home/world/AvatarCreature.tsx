@@ -6,8 +6,9 @@ import { useProgress } from '../../store/progress'
 import { useHomeUi } from '../useHomeUi'
 import { creatureBuilder } from '../models/registry'
 import { walkState } from '../models/walkState'
-import { worldToTile, tileKey, GRID_SIZE, TILE } from '../../lib/home/grid'
-import { useOccupiedTiles } from '../useOccupied'
+import { GRID_SIZE, TILE } from '../../lib/home/grid'
+import { avatarBlockedAt, avatarSpawnPoint } from '../../lib/home/occupancy'
+import { useAvatarBlockers } from '../useOccupied'
 import { useWanderWalk } from '../../world/useWanderWalk'
 import { sfx } from '../../lib/sound'
 import CreatureAccessories from './CreatureAccessories'
@@ -48,17 +49,21 @@ export default function AvatarCreature() {
   const [emoting, setEmoting] = useState(false)
   const b = useMemo(() => ({ Builder: creatureBuilder(activeCreature) }), [activeCreature])
 
-  // Tiles covered by furniture — read through a ref so the frame loop sees the latest.
-  const occupied = useOccupiedTiles()
-  const occupiedRef = useRef(occupied)
-  occupiedRef.current = occupied
+  // Tiles covered by furniture (rugs excluded). useFrame always runs the latest
+  // render's callback, so the frame loop sees the current set without a ref.
+  const blockers = useAvatarBlockers()
+  // Appear at the room centre, or beside whatever furniture stands there.
+  const [spawn] = useState(() => {
+    const p = avatarSpawnPoint(blockers)
+    return [p.x, 0, p.z] as [number, number, number]
+  })
 
   useEffect(() => {
     if (activeCreature) sfx.victory()
   }, [activeCreature])
 
-  // Shared WASD + idle-wander movement, blocked by furniture tiles (walls via ROOM_LIMIT).
-  // Movement pauses while the creature is mid-emote.
+  // Shared WASD + idle-wander movement, blocked by furniture tiles (walls via ROOM_LIMIT);
+  // furniture the creature is standing in doesn't trap it. Pauses mid-emote.
   useWanderWalk({
     group,
     bound: ROOM_LIMIT,
@@ -66,11 +71,7 @@ export default function AvatarCreature() {
       const e = emoteStart.current
       return e !== 0 && (performance.now() - e) / EMOTE_MS < 1
     },
-    collide: (x, z) => {
-      const t = worldToTile(x, z)
-      if (t.gx < 0 || t.gz < 0 || t.gx >= GRID_SIZE || t.gz >= GRID_SIZE) return false
-      return occupiedRef.current.has(tileKey(t))
-    },
+    collide: (x, z, fromX, fromZ) => avatarBlockedAt(blockers, x, z, fromX, fromZ),
   })
 
   const onPointerDown = (e: ThreeEvent<PointerEvent>) => {
@@ -98,7 +99,7 @@ export default function AvatarCreature() {
 
   if (!activeCreature) return null
   return (
-    <group ref={group} position={[0, 0, 0]}>
+    <group ref={group} position={spawn}>
       <group ref={inner} onPointerDown={onPointerDown}>
         <b.Builder />
         <CreatureAccessories />
