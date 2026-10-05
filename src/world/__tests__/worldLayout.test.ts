@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { WORLD_AREAS, areaById, worldColliders } from '../worldLayout'
+import { WOODS_TREES } from '../areas/woodsTrees'
 import { collidesAt } from '../collision'
 import { getZone } from '../../curriculum'
 
@@ -26,10 +27,17 @@ describe('world layout', () => {
   })
 
   it('gives every tree drawn in Word Problem Woods a collider', () => {
-    // mirrors TREES in areas/WordProblemWoods.tsx
-    const trees: [number, number][] = [[-14, -10], [-10, -11], [-15, -6], [-9, -6], [-12, -9], [-13, -7]]
     const colliders = worldColliders()
-    for (const [x, z] of trees) expect(collidesAt(colliders, x, z, 0), `tree at ${x},${z}`).toBe(true)
+    expect(WOODS_TREES.length).toBeGreaterThan(4)
+    for (const { pos: [x, z] } of WOODS_TREES) expect(collidesAt(colliders, x, z, 0), `tree at ${x},${z}`).toBe(true)
+  })
+
+  it('leaves the path into the woods clearing open up to the NPC', () => {
+    const colliders = worldColliders()
+    const woods = areaById('word-problem-woods')!
+    const [nx, nz] = [woods.worldPos[0] + woods.npc!.offset[0], woods.worldPos[1] + woods.npc!.offset[1]]
+    // approaching from the house side (south, +z), the avatar (r 0.3) must reach the NPC
+    for (let z = 0; z >= nz + 0.8; z -= 0.25) expect(collidesAt(colliders, nx, z, 0.3), `path at z=${z}`).toBe(false)
   })
 
   it('worldColliders() flattens every area collider plus the world bounds', () => {

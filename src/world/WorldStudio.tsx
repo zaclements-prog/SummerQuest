@@ -1,7 +1,6 @@
 import { useRef } from 'react'
 import { OrbitControls } from '@react-three/drei'
 import { Vector3 } from 'three'
-import Lights from '../home/world/Lights'
 import WorldGround from './WorldGround'
 import WordProblemWoods from './areas/WordProblemWoods'
 import FractionFalls from './areas/FractionFalls'
@@ -14,7 +13,6 @@ export default function WorldStudio() {
   return (
     <>
       <OrbitControls makeDefault target={[0, 1, -6]} />
-      <Lights />
       <WorldGround />
       <WordProblemWoods posRef={dummy} />
       <FractionFalls posRef={dummy} />

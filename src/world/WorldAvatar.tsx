@@ -29,7 +29,7 @@ export default function WorldAvatar({ posRef }: { posRef: RefObject<Vector3> }) 
 
   useWanderWalk({
     group,
-    bound: 22,
+    bound: 33,
     // radius 0 here is intentional: useWanderWalk applies the avatar's body radius
     // as a leading-edge probe (COLLIDE_RADIUS), so passing a radius here too would double it.
     collide: (x, z) => collidesAt(colliders, x, z, 0),
