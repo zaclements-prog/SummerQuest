@@ -20,7 +20,11 @@ Everything runs locally in the browser; progress is saved in `localStorage`.
   lesson + practice stage.
 - **Daily learning goal** — 2 × 15 minutes of active learning per day earns bonus coins.
 - **3D Home** — buy furniture and decorate a room; become (and dress up) a creature.
-- **3D World (beta)** — walk the island and enter zones through NPC gateways.
+- **3D World (beta)** — a voxel island with an area for every subject. Walk up
+  to an NPC and press E to pick a stage and play it without leaving the World;
+  you come back where you stood. The **Schoolhouse** (owl teacher) has the
+  Daily Challenge, This Week's Focus and all Tutor lessons; the **Library**
+  (bookworm) has Reading Reef and the reading/writing lessons.
 - **Badges, levels, streaks**, a **Progress** screen, and a **Parent Dashboard**
   (stats, optional local-AI settings, reset behind a grown-up check).
 
@@ -73,7 +77,9 @@ Without the server everything still works: writing is graded offline.
   model galleries for tuning.
 - `VITE_DEV_TOOLS=true` in `.env.local` shows "Seed sample week" on
   This Week's Focus (fills in fake attempts — never enable it for the child).
-- `npm run tts` regenerates lesson narration MP3s after editing lesson text.
+- `npm run tts` regenerates lesson narration MP3s after editing lesson text
+  (needs internet). Steps without a current MP3 fall back to the browser's
+  speech voice; a test fails if an MP3 no longer matches its step's text.
 
 ## Checks
 
@@ -149,7 +155,10 @@ in a row retire a fact from the boost.
 - [x] 3D Home — decorate your room and dress your creature
 - [x] Daily Challenge with bonus rewards
 - [x] Weekly focus: track missed skills and recommend lessons/practice
-- [ ] 3D World — full voxel island (in progress on `world-voxel`)
+- [x] 3D World — voxel island with all 12 areas, in-world stage launching,
+      Schoolhouse and Library hubs
+- [ ] Make the World the main hub (replace the 2D map; fold the Home room into
+      the World's house)
 - [x] Adaptive difficulty inside a stage (weight the facts a kid misses)
 - [ ] Electron wrapper for a "real" desktop app
 - [ ] Multi-profile (more than one kid per install)
