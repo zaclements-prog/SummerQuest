@@ -5,7 +5,7 @@ import type { Group } from 'three'
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
 import { TOON } from '../../toon/palette'
 import { toonMaterial } from '../../toon/materials'
-import { TBox, TCyl, TSphere, TTorus } from '../../toon/shapes'
+import { TBlob, TBox, TCapsule, TCyl, TSphere, TTorus } from '../../toon/shapes'
 import { Lamp, Bench, FlowerPatch } from '../../toon/props'
 import { BRIDGES, FOUNTAIN, PATH_WIDTH, PLAZA, RIVER, WORLD_PATHS, coastRadius, OCEAN_Y } from '../worldLayout'
 
@@ -34,6 +34,23 @@ function ribbon(points: [number, number][], width: number, y: number): BufferGeo
   const merged = mergeGeometries(parts.map((p) => p.toNonIndexed()), false)
   parts.forEach((p) => p.dispose())
   return merged ?? new BufferGeometry()
+}
+
+/** Pull any vertex past the coastline back onto it (so ribbons end flush at the cliff edge). */
+function clipToCoast(g: BufferGeometry, inset = 0.03): BufferGeometry {
+  const pos = g.getAttribute('position')
+  for (let i = 0; i < pos.count; i++) {
+    const x = pos.getX(i)
+    const z = pos.getZ(i)
+    const r = Math.hypot(x, z)
+    const edge = coastRadius(Math.atan2(z, x)) - inset
+    if (r > edge) {
+      pos.setX(i, (x / r) * edge)
+      pos.setZ(i, (z / r) * edge)
+    }
+  }
+  pos.needsUpdate = true
+  return g
 }
 
 /** Soft lighter-green meadow patches so the grass isn't one flat color. */
@@ -95,17 +112,24 @@ function Bridge({ cx, cz, length, width }: { cx: number; cz: number; length: num
   )
 }
 
-/** River mouth pouring over the east cliff into the sea. */
+/** River mouth pouring over the east cliff into the sea: a rounded lip, a falling
+ * sheet with foam streaks, and a churn of foam where it meets the ocean. */
 function RiverFall() {
   const [x, z] = RIVER.points[RIVER.points.length - 1]
-  const theta = Math.atan2(z, x)
-  const edge = coastRadius(theta)
-  const ex = Math.cos(theta) * edge
-  const ez = Math.sin(theta) * edge
+  const edge = coastRadius(Math.atan2(z, x))
+  const [ex, ez] = [Math.sqrt(edge * edge - z * z), z] // where the river (flowing +x) meets the coast
+  const drop = -OCEAN_Y
+  const w = RIVER.width
   return (
-    <group position={[ex + 0.4, 0, ez]}>
-      <TBox size={[0.4, -OCEAN_Y + 0.3, RIVER.width]} radius={0.1} position={[0, OCEAN_Y / 2, 0]} color={TOON.waterShallow} castShadow={false} opacity={0.9} />
-      <TSphere position={[0.4, OCEAN_Y + 0.1, 0]} scale={[0.8, 0.3, 1.6]} color={TOON.foam} castShadow={false} />
+    <group position={[ex, 0, ez]}>
+      <TCapsule radius={0.16} length={w - 0.3} rotation={[Math.PI / 2, 0, 0]} position={[0.05, 0.02, 0]} color={TOON.waterShallow} castShadow={false} />
+      <TBox size={[0.3, drop, w - 0.2]} radius={0.12} position={[0.35, -drop / 2 + 0.02, 0]} color={TOON.water} castShadow={false} />
+      {[-0.32, 0.04, 0.36].map((t) => (
+        <TBox key={t} size={[0.08, drop * 0.75, 0.16]} radius={0.04} position={[0.52, -drop * 0.45, t * w]} color={TOON.foam} castShadow={false} />
+      ))}
+      <TBlob position={[0.9, OCEAN_Y + 0.05, -0.6]} scale={[0.7, 0.28, 0.8]} color={TOON.foam} castShadow={false} />
+      <TBlob position={[1.0, OCEAN_Y + 0.05, 0.55]} scale={[0.6, 0.24, 0.7]} color={TOON.foam} castShadow={false} />
+      <TBlob position={[1.6, OCEAN_Y + 0.02, 0]} scale={[0.5, 0.18, 0.6]} color={TOON.foam} castShadow={false} />
     </group>
   )
 }
@@ -119,9 +143,9 @@ export default function Ground() {
   const geos = useMemo(() => {
     const paths = mergeGeometries(WORLD_PATHS.map((p) => ribbon(p.points, PATH_WIDTH, 0.012)), false)
     const pathEdges = mergeGeometries(WORLD_PATHS.map((p) => ribbon(p.points, PATH_WIDTH + 0.35, 0.008)), false)
-    const banks = ribbon(RIVER.points, RIVER.width + 1.8, 0.01)
-    const water = ribbon(RIVER.points, RIVER.width, 0.03)
-    const shimmer = ribbon(RIVER.points, RIVER.width * 0.35, 0.035)
+    const banks = clipToCoast(ribbon(RIVER.points, RIVER.width + 1.8, 0.01))
+    const water = clipToCoast(ribbon(RIVER.points, RIVER.width, 0.03), 0.08)
+    const shimmer = clipToCoast(ribbon(RIVER.points, RIVER.width * 0.35, 0.035), 0.12)
     const meadows = mergeGeometries(
       MEADOWS.map((m) => {
         const c = new CircleGeometry(m.r, 20)

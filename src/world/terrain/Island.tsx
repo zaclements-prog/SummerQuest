@@ -1,6 +1,6 @@
 import { useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { BufferAttribute, BufferGeometry, ExtrudeGeometry, Shape } from 'three'
+import { BufferAttribute, BufferGeometry, ExtrudeGeometry, Shape, ShapeGeometry } from 'three'
 import type { Mesh } from 'three'
 import { TOON } from '../../toon/palette'
 import { toonMaterial } from '../../toon/materials'
@@ -20,6 +20,25 @@ function coastShape(k = 1): Shape {
     else s.lineTo(x, -z)
   }
   return s
+}
+
+/** Where the grass gives way to the beach: a wobbly line ~1–3 units inside the coast. */
+function grassRadius(t: number): number {
+  return coastRadius(t) - (2.0 + 0.8 * Math.sin(t * 4 + 1.1) + 0.45 * Math.sin(t * 7 + 2.3))
+}
+
+/** The grass top: a flat disc inside the beach line at y = 0 (the sand slab is 0.02 lower). */
+function grassCap(): BufferGeometry {
+  const s = new Shape()
+  for (let i = 0; i <= SEGMENTS; i++) {
+    const t = (i / SEGMENTS) * Math.PI * 2
+    const r = grassRadius(t)
+    if (i === 0) s.moveTo(Math.cos(t) * r, -Math.sin(t) * r)
+    else s.lineTo(Math.cos(t) * r, -Math.sin(t) * r)
+  }
+  const g = new ShapeGeometry(s)
+  g.rotateX(-Math.PI / 2)
+  return g
 }
 
 /**
@@ -63,26 +82,31 @@ function coastRing(inner: number, outer: number): BufferGeometry {
 }
 
 /**
- * The floating-in-the-sea island: a rounded grass top (soft beveled rim), a sandy
- * cliff band and two stepped rock bands under it, standing in a pastel ocean with
+ * The floating-in-the-sea island: a grassy top ringed by a sandy beach with a soft
+ * beveled rim, a sandy cliff band and two stepped rock bands under it, standing in a pastel ocean with
  * a gently breathing foam line.
  */
 export default function Island() {
   const geos = useMemo(
     () => ({
-      grass: layer(1, 0.45, 0.35),
+      top: (() => {
+        const g = layer(1, 0.45, 0.35)
+        g.translate(0, -0.02, 0) // beach sits a hair under the grass (no z-fighting from afar)
+        return g
+      })(),
+      grass: grassCap(),
       cliff: (() => {
-        const g = layer(0.985, 2.2, 0)
+        const g = layer(1.012, 2.2, 0)
         g.translate(0, -0.8, 0)
         return g
       })(),
       rock: (() => {
-        const g = layer(0.95, 1.8, 0)
+        const g = layer(0.985, 1.8, 0)
         g.translate(0, -3.0, 0)
         return g
       })(),
       base: (() => {
-        const g = layer(0.88, 1.6, 0.3)
+        const g = layer(0.93, 1.6, 0.3)
         g.translate(0, -4.6, 0)
         return g
       })(),
@@ -101,7 +125,8 @@ export default function Island() {
 
   return (
     <group>
-      {/* grass top (the walkable plane is y = 0) */}
+      {/* sandy top slab with a soft beveled rim, and the grass on it (walkable plane y = 0) */}
+      <mesh geometry={geos.top} material={toonMaterial(TOON.sand)} receiveShadow />
       <mesh geometry={geos.grass} material={toonMaterial(TOON.grass)} receiveShadow />
       {/* sandy cliff band, then stepped rock under it */}
       <mesh geometry={geos.cliff} material={[toonMaterial(TOON.cliffDark), toonMaterial(TOON.cliff)]} />

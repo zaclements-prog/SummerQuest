@@ -41,7 +41,7 @@ export default function WorldScreen() {
         flat
         dpr={[1, 1.5]}
         gl={{ antialias: true, powerPreference: 'high-performance' }}
-        camera={{ position: [spawn[0] + 10.5, 12.5, spawn[1] + 11], fov: 38, far: 900 }}
+        camera={{ position: [spawn[0] + 10.5, 12.5, spawn[1] + 11], fov: 38, near: 0.3, far: 900 }}
         style={{ position: 'absolute', inset: 0 }}
       >
         {/* sky dome, fog, sun + soft fill, drifting clouds */}

@@ -4,8 +4,8 @@ import { BackSide, Color, ShaderMaterial } from 'three'
 import type { Group } from 'three'
 import { Cloud } from '../../toon/props'
 
-/** Sky colors: warm sunny horizon fading to a soft blue zenith. */
-const SKY = { zenith: '#6fbcf0', horizon: '#fdeccd', fog: '#cfeaf6' }
+/** Sky colors: a pale, hazy horizon (matching the fog) up to a soft blue zenith. */
+const SKY = { zenith: '#74c0ef', horizon: '#e4f4fa', fog: '#d4edf7' }
 
 /** Big inverted sphere with a vertical gradient (unaffected by fog/lights). */
 function SkyDome() {
