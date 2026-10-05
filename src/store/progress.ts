@@ -5,6 +5,8 @@ import type { Slot } from '../home/models/anchors'
 import { accessoryById } from '../lib/home/accessories'
 import { addDays, localDayKey } from '../lib/dates'
 import { migrateV0toV1, type PersistedProgressV0 } from './migrations'
+import { recordFactAnswer, type FactStats } from '../lib/adaptive'
+import type { Problem } from '../lib/problem'
 
 export interface AvatarChoice {
   emoji: string
@@ -78,6 +80,8 @@ interface ProgressState {
   stats: SessionStats
   sessions: SessionRecord[]
   attempts: SkillAttempt[]
+  /** Per-fact record ("mult:6x8" → attempts/misses/streak) behind adaptive practice. Capped. */
+  factStats: FactStats
   soundEnabled: boolean
   seenBadges: string[]
   dailyClaimedDate?: string
@@ -105,7 +109,8 @@ interface ProgressState {
   ) => void
   addCoins: (n: number) => void
   spendCoins: (n: number) => boolean
-  recordAnswer: (correct: boolean) => void
+  /** Count an answer; pass the problem so a fact problem (with `factId`) updates `factStats`. */
+  recordAnswer: (correct: boolean, problem?: Pick<Problem, 'factId'> | null) => void
   addPlayTime: (seconds: number) => void
   bumpStreakIfNeeded: () => void
   markZoneMastered: (zoneId: string) => void
@@ -144,6 +149,7 @@ export const useProgress = create<ProgressState>()(
       },
       sessions: [],
       attempts: [],
+      factStats: {},
       soundEnabled: true,
       seenBadges: [],
       ownedAccessories: [],
@@ -176,6 +182,7 @@ export const useProgress = create<ProgressState>()(
           equippedAccessories: { head: null, face: null, back: null, body: null },
           sessions: [],
           attempts: [],
+          factStats: {},
           playDate: undefined,
           playSecondsToday: 0,
           sessionsRewardedToday: 0,
@@ -226,16 +233,21 @@ export const useProgress = create<ProgressState>()(
         return true
       },
 
-      recordAnswer: (correct) =>
+      recordAnswer: (correct, problem) => {
+        const now = Date.now()
+        const { stats, factStats } = get()
         set({
           stats: {
-            ...get().stats,
-            problemsAnswered: get().stats.problemsAnswered + 1,
-            problemsCorrect:
-              get().stats.problemsCorrect + (correct ? 1 : 0),
-            lastPlayedAt: Date.now(),
+            ...stats,
+            problemsAnswered: stats.problemsAnswered + 1,
+            problemsCorrect: stats.problemsCorrect + (correct ? 1 : 0),
+            lastPlayedAt: now,
           },
-        }),
+          ...(problem?.factId
+            ? { factStats: recordFactAnswer(factStats, problem.factId, correct, now) }
+            : {}),
+        })
+      },
 
       addPlayTime: (seconds) =>
         set({
@@ -390,6 +402,11 @@ export const useProgress = create<ProgressState>()(
           ...c,
           ...p,
           equippedAccessories: { ...c.equippedAccessories, ...(p.equippedAccessories ?? {}) },
+          // Saves from before adaptive practice have no factStats (→ the empty default).
+          factStats:
+            p.factStats && typeof p.factStats === 'object' && !Array.isArray(p.factStats)
+              ? p.factStats
+              : c.factStats,
         }
       },
     },
@@ -407,4 +424,9 @@ export function zoneMastered(zoneId: string, expectedStages: number): boolean {
   if (!zone) return false
   const cleared = Object.values(zone.stages).filter((s) => s.stars > 0).length
   return cleared >= expectedStages
+}
+
+/** The child's per-fact record right now — fact providers read it at draw time. */
+export function currentFactStats(): FactStats {
+  return useProgress.getState().factStats ?? {}
 }

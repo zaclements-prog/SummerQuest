@@ -58,6 +58,12 @@ export interface Problem {
   difficulty?: number
   /** Coarse skill bucket for weak-area analytics + tutoring. */
   skill?: { id: string; label: string }
+  /**
+   * Stable identity of the underlying fact for adaptive practice, e.g. "mult:6x8"
+   * (commutative order normalized) or "div:56/8". Set by procedural fact providers;
+   * answers to problems with a factId update the child's per-fact record.
+   */
+  factId?: string
   hint?: string
   explanation?: string
 }

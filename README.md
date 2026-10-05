@@ -135,6 +135,14 @@ Each zone follows a **3-stage mastery loop**:
 Stars per stage: 0 (not passed) → 1 → 2 → 3 (perfect), kept as the best result.
 A stage unlocks when the one before it has at least one star.
 
+**Adaptive practice** (`src/lib/adaptive.ts`): fact problems (multiplication,
+division, equivalent and compared fractions) carry a `factId` such as `mult:6x8`,
+and every answer updates a per-fact record in the save. A fact missed this session
+comes back 2–3 questions later (never back-to-back, at most twice). Across sessions,
+up to ~35% of draws come from the child's recently missed facts that fit the stage's
+range (weighted by recency and miss rate); the rest stay random. Two right answers
+in a row retire a fact from the boost.
+
 ## Roadmap
 
 - [x] All 12 subject zones
@@ -142,7 +150,7 @@ A stage unlocks when the one before it has at least one star.
 - [x] Daily Challenge with bonus rewards
 - [x] Weekly focus: track missed skills and recommend lessons/practice
 - [ ] 3D World — full voxel island (in progress on `world-voxel`)
-- [ ] Adaptive difficulty inside a stage (weight the facts a kid misses)
+- [x] Adaptive difficulty inside a stage (weight the facts a kid misses)
 - [ ] Electron wrapper for a "real" desktop app
 - [ ] Multi-profile (more than one kid per install)
 - [ ] Print/share weekly progress report

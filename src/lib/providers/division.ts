@@ -1,5 +1,7 @@
 import type { Problem, ProblemProvider } from '../problem'
 import { randInt, shuffle } from '../random'
+import { createFactSampler, inRange } from '../adaptive'
+import { currentFactStats } from '../../store/progress'
 
 interface Config {
   divisorMin: number
@@ -8,13 +10,43 @@ interface Config {
   quotientMax: number
 }
 
+interface Fact {
+  divisor: number
+  quotient: number
+}
+
+/** "div:56/8" — dividend / divisor. */
+export function divFactId(divisor: number, quotient: number): string {
+  return `div:${divisor * quotient}/${divisor}`
+}
+
+/** The fact behind `id`, or null if it isn't a whole-number division fact in range. */
+export function parseDivFactId(id: string, cfg: Config): Fact | null {
+  const m = /^div:(\d+)\/(\d+)$/.exec(id)
+  if (!m) return null
+  const dividend = Number(m[1])
+  const divisor = Number(m[2])
+  const quotient = dividend / divisor
+  if (!inRange(divisor, cfg.divisorMin, cfg.divisorMax) || !inRange(quotient, cfg.quotientMin, cfg.quotientMax)) return null
+  return { divisor, quotient }
+}
+
 export function makeDivisionProvider(cfg: Config): ProblemProvider {
   let serial = 0
+  const sampler = createFactSampler<Fact>({
+    key: ({ divisor, quotient }) => divFactId(divisor, quotient),
+    parse: (id) => parseDivFactId(id, cfg),
+    uniform: () => ({
+      divisor: randInt(cfg.divisorMin, cfg.divisorMax),
+      quotient: randInt(cfg.quotientMin, cfg.quotientMax),
+    }),
+    stats: currentFactStats,
+  })
   return {
     topic: 'division',
+    reset: () => sampler.reset(),
     next(): Problem {
-      const divisor = randInt(cfg.divisorMin, cfg.divisorMax)
-      const quotient = randInt(cfg.quotientMin, cfg.quotientMax)
+      const { fact: { divisor, quotient }, factId } = sampler.next()
       const dividend = divisor * quotient
       const distractors = makeDistractors(quotient)
       return {
@@ -26,6 +58,7 @@ export function makeDivisionProvider(cfg: Config): ProblemProvider {
         visual: { kind: 'array', rows: divisor, cols: quotient, label: `${dividend} shared into ${divisor} equal rows` },
         topic: 'division',
         subtopic: `÷${divisor}`,
+        factId,
         difficulty: divisor,
         skill: {
           id: divisor >= 6 ? 'div-larger' : 'div-basic',
