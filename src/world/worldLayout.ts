@@ -261,9 +261,17 @@ export function distToPolyline(x: number, z: number, pts: [number, number][]): n
   return Math.sqrt(best)
 }
 
-/** True if decor may be scattered at (x,z): on land, off paths/river/bridges/areas/town. */
+/** Coastal sectors kept as open beach (angle range from +x toward +z, and the radius they start at). */
+const BEACHES = [
+  { from: 0.07, to: 0.5, r: 28 }, // Reading Reef
+]
+
+/** True if decor may be scattered at (x,z): on land, off paths/river/bridges/areas/town/beaches. */
 export function scatterClear(x: number, z: number, margin = 0): boolean {
-  if (Math.hypot(x, z) > ISLAND_RADIUS - 2.5) return false
+  const dist = Math.hypot(x, z)
+  if (dist > ISLAND_RADIUS - 2.5) return false
+  const angle = Math.atan2(z, x)
+  if (BEACHES.some((b) => angle > b.from && angle < b.to && dist > b.r - margin)) return false
   if (KEEP_OUTS.some((k) => Math.hypot(x - k.cx, z - k.cz) < k.r + margin)) return false
   if (distToPolyline(x, z, RIVER.points) < RIVER.width / 2 + 1.6 + margin) return false
   if (WORLD_PATHS.some((p) => distToPolyline(x, z, p.points) < PATH_WIDTH / 2 + 1.0 + margin)) return false
