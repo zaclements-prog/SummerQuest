@@ -1,46 +1,28 @@
 import { useEffect, useRef, useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { useSearchParams } from 'react-router-dom'
-import { ACESFilmicToneMapping, Vector3 } from 'three'
-import WorldEnvironment from './WorldEnvironment'
-import WorldGround from './WorldGround'
+import { Vector3 } from 'three'
+import WorldEnvironment from './terrain/WorldEnvironment'
+import WorldScene from './WorldScene'
 import WorldCameraRig from './WorldCameraRig'
 import WorldAvatar from './WorldAvatar'
 import WorldHud from './WorldHud'
-import WordProblemWoods from './areas/WordProblemWoods'
-import FractionFalls from './areas/FractionFalls'
-import WritingWorkshop from './areas/WritingWorkshop'
-import MultiplicationMesa from './areas/MultiplicationMesa'
-import DivisionDunes from './areas/DivisionDunes'
-import PlaceValuePlateau from './areas/PlaceValuePlateau'
-import MeasurementMarsh from './areas/MeasurementMarsh'
-import GeometryGrove from './areas/GeometryGrove'
-import DataDelta from './areas/DataDelta'
-import ReadingReef from './areas/ReadingReef'
-import ScienceSummit from './areas/ScienceSummit'
-import TowerBattlefront from './areas/TowerBattlefront'
-import Schoolhouse from './areas/Schoolhouse'
-import Library from './areas/Library'
+import WorldStudio from './WorldStudio'
 import { useHomeUi } from '../home/useHomeUi'
 import { useWorldUi } from './useWorldUi'
-import House from './areas/House'
-import WorldStudio from './WorldStudio'
 import { useStarterCreature } from '../home/starterCreature'
-
-/** Where a fresh visit starts: just outside the House door. */
-const HOME_SPAWN: [number, number] = [0, 7]
+import { SPAWN } from './worldLayout'
 
 export default function WorldScreen() {
   // Coming back from a stage or lesson launched in the World? Reappear where you stood.
-  const [spawn] = useState<[number, number]>(() => useWorldUi.getState().returnSpot ?? HOME_SPAWN)
+  const [spawn] = useState<[number, number]>(() => useWorldUi.getState().returnSpot ?? SPAWN)
   const posRef = useRef(new Vector3(spawn[0], 0, spawn[1]))
   const [params] = useSearchParams()
-  const studio = params.get('studio') === '1'
+  const studio = params.get('studio') // 'all' | <areaId> (dev gallery)
   // A new player may come here before ever visiting Home: give them their creature.
   useStarterCreature()
   // Furniture shown in the house must not be interactive here (decorate UI is Home-only).
   useEffect(() => { useHomeUi.getState().setMode('play') }, [])
-  // Clear the "entered from world" flag now that we're back in the World.
   // Clear the "entered from world" flag now that we're back in the World, and
   // start each visit with no panel open (the return spot has been used).
   useEffect(() => {
@@ -52,36 +34,21 @@ export default function WorldScreen() {
   return (
     <div className="flex-1 relative">
       <Canvas
-        shadows="variance"
+        shadows
+        flat
         dpr={[1, 1.5]}
-        gl={{ antialias: false, toneMapping: ACESFilmicToneMapping, toneMappingExposure: 1.05, powerPreference: 'high-performance' }}
-        camera={{ position: [11, 13, 15], fov: 38 }}
+        gl={{ antialias: true, powerPreference: 'high-performance' }}
+        camera={{ position: [spawn[0] + 10.5, 12.5, spawn[1] + 11], fov: 38, far: 900 }}
         style={{ position: 'absolute', inset: 0 }}
       >
-        {/* WorldEnvironment owns sky/fog/lighting/post-fx (replaces the bare
-            background <color> + old <Lights/> mood). */}
+        {/* sky dome, fog, sun + soft fill, drifting clouds */}
         <WorldEnvironment />
         {studio ? (
-          <WorldStudio />
+          <WorldStudio focus={studio} />
         ) : (
           <>
-            <WorldGround />
-            <WordProblemWoods posRef={posRef} />
-            <FractionFalls posRef={posRef} />
-            <WritingWorkshop posRef={posRef} />
-            <MultiplicationMesa posRef={posRef} />
-            <DivisionDunes posRef={posRef} />
-            <PlaceValuePlateau posRef={posRef} />
-            <MeasurementMarsh posRef={posRef} />
-            <GeometryGrove posRef={posRef} />
-            <DataDelta posRef={posRef} />
-            <ReadingReef posRef={posRef} />
-            <ScienceSummit posRef={posRef} />
-            <TowerBattlefront posRef={posRef} />
-            <Schoolhouse posRef={posRef} />
-            <Library posRef={posRef} />
+            <WorldScene posRef={posRef} />
             <WorldCameraRig targetRef={posRef} />
-            <House />
             <WorldAvatar posRef={posRef} spawn={spawn} />
           </>
         )}

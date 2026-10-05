@@ -3,7 +3,7 @@ import { useThree, useFrame } from '@react-three/fiber'
 import type { RefObject } from 'react'
 import { Vector3 } from 'three'
 
-const OFFSET = new Vector3(15, 18, 15) // fixed iso angle, looking toward (-x,-z)
+const OFFSET = new Vector3(10.5, 12.5, 11) // fixed iso angle, looking toward (-x,-z)
 const _want = new Vector3()
 const _look = new Vector3()
 

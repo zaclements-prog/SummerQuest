@@ -1,75 +1,50 @@
 import type { ReactNode } from 'react'
-import { useMemo } from 'react'
-import { Color } from 'three'
+import { Shape } from 'three'
 import { useWorldUi } from './useWorldUi'
+import { toonMaterial } from '../toon/materials'
 import { frontFacingWalls } from './collision'
-import { Vox } from './voxel/Vox'
-import { PALETTE } from './voxel/palette'
+import { TOON } from '../toon/palette'
+import { TBox, TCyl } from '../toon/shapes'
 
 type Vec3 = [number, number, number]
 
-/**
- * A lightly beveled voxel wall slab. Same fade contract as before: it goes
- * translucent (and stops writing depth) once `opacity` drops below ~0.5, so the
- * interior shows through cleanly.
- */
-function Wall({ pos, args, wall, opacity }: {
-  pos: Vec3
-  args: Vec3
-  wall: string
-  opacity: number
-}) {
-  return (
-    <Vox
-      position={pos}
-      size={args}
-      color={wall}
-      radius={0.06}
-      roughness={0.9}
-      transparent
-      opacity={opacity}
-    />
-  )
-}
+/** Opacity of camera-facing walls / roof while the avatar is inside. */
+const FADED_WALL = 0.14
+const FADED_ROOF = 0.06
 
-/**
- * A warm-glowing window set into a wall plane. `axis` says which wall it sits on
- * ('x' → on the ±x walls, faces along x; 'z' → on the ±z walls, faces along z).
- * Rendered only on the never-fading back walls so the glow always reads.
- */
-function Window({ pos, axis, frame }: { pos: Vec3; axis: 'x' | 'z'; frame: string }) {
-  // Window opening dimensions; thin along the wall normal so it nestles into it.
-  const w = 0.62
-  const h = 0.7
-  const t = 0.18
-  const frameSize: Vec3 = axis === 'x' ? [t, h + 0.22, w + 0.22] : [w + 0.22, h + 0.22, t]
-  const paneSize: Vec3 = axis === 'x' ? [t * 0.6, h, w] : [w, h, t * 0.6]
+/** A warm glowing window (frame + pane) on a wall; `axis` = the wall's normal axis. */
+function Window({ pos, axis, frame, opacity }: { pos: Vec3; axis: 'x' | 'z'; frame: string; opacity: number }) {
+  const w = 0.7
+  const h = 0.8
+  const frameSize: Vec3 = axis === 'x' ? [0.12, h + 0.2, w + 0.2] : [w + 0.2, h + 0.2, 0.12]
+  const paneSize: Vec3 = axis === 'x' ? [0.08, h, w] : [w, h, 0.08]
+  const nudge: Vec3 = axis === 'x' ? [Math.sign(pos[0]) * 0.03, 0, 0] : [0, 0, Math.sign(pos[2]) * 0.03]
   return (
     <group position={pos}>
-      {/* frame */}
-      <Vox size={frameSize} color={frame} radius={0.05} roughness={0.8} castShadow={false} />
-      {/* warm glowing pane */}
-      <Vox
-        size={paneSize}
-        color={PALETTE.windowGlow}
-        emissive={PALETTE.windowGlow}
-        emissiveIntensity={1.1}
-        roughness={0.3}
-        radius={0.03}
-        castShadow={false}
-      />
+      <TBox size={frameSize} radius={0.04} color={frame} opacity={opacity} castShadow={false} />
+      <TBox size={paneSize} radius={0.03} position={nudge} color={TOON.windowGlow} emissive={TOON.windowGlow} emissiveIntensity={0.55} opacity={opacity} castShadow={false} />
     </group>
   )
 }
 
 /**
- * A 5x5 (by default) building centered at (cx,cz) with a doorway gap on its +z
- * wall. The two camera-facing walls (+x, +z) and the whole gabled roof fade out
- * when the avatar is inside, so you can see the interior. No scene swap — pure
- * opacity toggle. Used by both the House and the Writing Workshop.
+ * A toon cottage shell centered at (cx,cz) with a doorway in its +z wall: soft
+ * rounded walls on a stone foundation, glowing windows, a door frame, a smooth
+ * pitched roof with overhanging eaves and a chimney. The two camera-facing walls
+ * (+x, +z) and the whole roof fade out while the avatar is inside, so the
+ * interior (`children`, in local coordinates) shows. Walls stay solid via the
+ * colliders from `buildingWalls()` in worldLayout.ts.
  */
 export default function Building({
-  id, cx, cz, size = 5, doorWidth = 1.6, wall = '#cdbb98', roof = '#9a5a3c', children,
+  id,
+  cx,
+  cz,
+  size = 5,
+  doorWidth = 1.6,
+  wall = TOON.wallCream,
+  roof = TOON.roofRed,
+  trim = TOON.woodDark,
+  children,
 }: {
   id: string
   cx: number
@@ -78,173 +53,113 @@ export default function Building({
   doorWidth?: number
   wall?: string
   roof?: string
+  trim?: string
   children?: ReactNode
 }) {
   const inside = useWorldUi((s) => s.insideBuildingId) === id
   const front = frontFacingWalls() // ['px','pz']
-  const H = 2.4
+  const H = 2.5
+  const T = 0.3 // wall thickness
   const half = size / 2
   const door = doorWidth / 2
-  const seg = half - door // segment width (1.7 for a 1.6 door)
-  const segC = (half + door) / 2 // segment center (1.65 for a 1.6 door)
+  const seg = half - door
+  const segC = (half + door) / 2
+  const op = (faces: ('px' | 'pz')[]) => (inside && faces.some((f) => front.includes(f)) ? FADED_WALL : 1)
+  const roofOp = inside ? FADED_ROOF : 1
+  const solid = !inside
 
-  // Opacity for a wall given which camera-facing faces it belongs to.
-  const op = (faces: ('px' | 'pz')[]) => (inside && faces.some((f) => front.includes(f)) ? 0.14 : 1)
-  // The whole roof shares one fade value (it sits on the +x/+z side of the camera).
-  // Fades further than the walls so the top-down interior view stays clear.
-  const roofOp = inside ? 0.06 : 1
-
-  // A warm wood trim/frame for door + windows (kept consistent across callers).
-  const trim = PALETTE.woodDark
-
-  // Slightly darken the roof course for shingled banding, derived from the
-  // passed-in roof color so callers keep full control of the hue.
-  const roofDark = useMemo(() => {
-    const base = new Color(roof)
-    const hsl = { h: 0, s: 0, l: 0 }
-    base.getHSL(hsl)
-    base.setHSL(hsl.h, hsl.s, Math.max(0.04, hsl.l - 0.1))
-    return `#${base.getHexString()}`
-  }, [roof])
-
-  // ── Stepped voxel gable roof ────────────────────────────────────────────────
-  // Ridge runs along the x-axis; the long slopes face ±z (the +z slope is the
-  // camera-facing front). Each rising layer shrinks in z to read as a pitch.
-  // Triangular gable infill closes the ±x ends below the slopes.
-  const roofLayers = useMemo(() => {
-    const overhang = 0.4
-    const baseW = size + overhang * 2 // x extent (constant — runs along ridge)
-    const baseD = size + overhang * 2 // z extent at the eaves
-    const steps = 4
-    const layerH = 0.34
-    const out: { pos: Vec3; size: Vec3 }[] = []
-    for (let i = 0; i < steps; i++) {
-      const t = i / steps
-      const d = baseD * (1 - t * 0.82) // taper z toward the ridge
-      const y = H + 0.12 + i * layerH + layerH / 2
-      out.push({
-        pos: [0, y, 0],
-        size: [baseW, layerH + 0.02, d],
-      })
-    }
-    return { out, baseW, baseD, steps, layerH }
-  }, [size])
-
-  const { out: layers, baseW, baseD, steps, layerH } = roofLayers
-  const ridgeY = H + 0.12 + steps * layerH
+  // Pitched roof: two slabs meeting at a ridge along x; eaves overhang all sides.
+  const overhang = 0.45
+  const pitch = 0.62 // radians
+  const run = half + overhang
+  const slabLen = run / Math.cos(pitch)
+  const rise = Math.tan(pitch) * run
+  const roofW = size + overhang * 2
 
   return (
     <group position={[cx, 0, cz]}>
-      {/* ── Foundation lip (grounds the shell; never fades) ── */}
-      <Vox
-        position={[0, 0.12, 0]}
-        size={[size + 0.5, 0.24, size + 0.5]}
-        color={trim}
-        radius={0.06}
-        roughness={0.95}
-        receiveShadow
-      />
+      {/* foundation */}
+      <TBox size={[size + 0.5, 0.25, size + 0.5]} radius={0.1} position={[0, 0.125, 0]} color={TOON.stoneDark} receiveShadow />
 
-      {/* ── Walls ── */}
-      {/* back walls (-x, -z) — never transparent */}
-      <Wall pos={[-half, H / 2, 0]} args={[0.3, H, size]} wall={wall} opacity={op([])} />
-      <Wall pos={[0, H / 2, -half]} args={[size, H, 0.3]} wall={wall} opacity={op([])} />
-      {/* +x wall (camera-facing) */}
-      <Wall pos={[half, H / 2, 0]} args={[0.3, H, size]} wall={wall} opacity={op(['px'])} />
-      {/* +z wall (camera-facing), split around the doorway */}
-      <Wall pos={[-segC, H / 2, half]} args={[seg, H, 0.3]} wall={wall} opacity={op(['pz'])} />
-      <Wall pos={[segC, H / 2, half]} args={[seg, H, 0.3]} wall={wall} opacity={op(['pz'])} />
-      {/* lintel above the doorway (bridges the gap; fades with the +z wall) */}
-      <Wall pos={[0, H - 0.28, half]} args={[doorWidth + 0.1, 0.56, 0.3]} wall={wall} opacity={op(['pz'])} />
+      {/* walls: back (−x, −z) never fade; +x and +z (camera-facing) do */}
+      <TBox size={[T, H, size]} position={[-half, H / 2, 0]} color={wall} outline={solid} receiveShadow />
+      <TBox size={[size, H, T]} position={[0, H / 2, -half]} color={wall} outline={solid} receiveShadow />
+      <TBox size={[T, H, size]} position={[half, H / 2, 0]} color={wall} opacity={op(['px'])} outline={solid} receiveShadow />
+      <TBox size={[seg, H, T]} position={[-segC, H / 2, half]} color={wall} opacity={op(['pz'])} outline={solid} receiveShadow />
+      <TBox size={[seg, H, T]} position={[segC, H / 2, half]} color={wall} opacity={op(['pz'])} outline={solid} receiveShadow />
+      <TBox size={[doorWidth + 0.05, 0.6, T]} position={[0, H - 0.3, half]} color={wall} opacity={op(['pz'])} />
 
-      {/* ── Windows (back walls only → glow always visible) ── */}
-      <Window pos={[-half - 0.02, H * 0.56, size * 0.22]} axis="x" frame={trim} />
-      <Window pos={[-half - 0.02, H * 0.56, -size * 0.22]} axis="x" frame={trim} />
-      <Window pos={[size * 0.24, H * 0.56, -half - 0.02]} axis="z" frame={trim} />
-      <Window pos={[-size * 0.24, H * 0.56, -half - 0.02]} axis="z" frame={trim} />
-
-      {/* ── Framed doorway (on the +z wall; fades with the front) ── */}
-      {/* jambs */}
-      <Vox position={[-door - 0.07, H / 2 - 0.28, half]} size={[0.16, H - 0.56, 0.34]} color={trim} radius={0.04} roughness={0.85} transparent opacity={op(['pz'])} />
-      <Vox position={[door + 0.07, H / 2 - 0.28, half]} size={[0.16, H - 0.56, 0.34]} color={trim} radius={0.04} roughness={0.85} transparent opacity={op(['pz'])} />
-      {/* head trim */}
-      <Vox position={[0, H - 0.56, half]} size={[doorWidth + 0.4, 0.16, 0.36]} color={trim} radius={0.04} roughness={0.85} transparent opacity={op(['pz'])} castShadow={false} />
-      {/* warm threshold glow spilling from the doorway */}
-      <Vox
-        position={[0, 0.18, half - 0.02]}
-        size={[doorWidth - 0.1, 0.3, 0.06]}
-        color={PALETTE.windowGlow}
-        emissive={PALETTE.windowGlow}
-        emissiveIntensity={0.7}
-        roughness={0.4}
-        radius={0.03}
-        castShadow={false}
-        transparent
-        opacity={op(['pz'])}
-      />
-
-      {/* ── Gabled voxel roof (every piece shares roofOp) ── */}
-      {layers.map((l, i) => (
-        <Vox
-          key={`roof-${i}`}
-          position={l.pos}
-          size={l.size}
-          color={i % 2 === 0 ? roof : roofDark}
-          radius={0.08}
-          roughness={0.85}
-          transparent
-          opacity={roofOp}
-        />
+      {/* corner trims */}
+      {[[-half, -half], [half, -half], [-half, half], [half, half]].map(([x, z]) => (
+        <TBox key={`${x},${z}`} size={[0.34, H, 0.34]} radius={0.08} position={[x, H / 2, z]} color={trim} opacity={x > 0 || z > 0 ? op(x > 0 ? ['px'] : ['pz']) : 1} />
       ))}
-      {/* ridge cap along the peak */}
-      <Vox
-        position={[0, ridgeY + 0.02, 0]}
-        size={[baseW + 0.05, 0.2, baseD * 0.2]}
-        color={roofDark}
-        radius={0.08}
-        roughness={0.85}
-        transparent
-        opacity={roofOp}
-      />
 
-      {/* ── Chimney (corner of the back side; fades with the roof) ── */}
-      <group position={[-half + 0.6, 0, -half + 0.6]}>
-        <Vox
-          position={[0, ridgeY + 0.05, 0]}
-          size={[0.5, ridgeY + 0.4, 0.5]}
-          color={PALETTE.rockDark}
-          radius={0.06}
-          roughness={0.95}
-          transparent
-          opacity={roofOp}
-        />
-        {/* brick cap */}
-        <Vox
-          position={[0, ridgeY * 2 + 0.45, 0]}
-          size={[0.62, 0.18, 0.62]}
-          color={PALETTE.rock}
-          radius={0.05}
-          roughness={0.95}
-          transparent
-          opacity={roofOp}
-          castShadow={false}
-        />
-        {/* a warm ember glow at the flue */}
-        <Vox
-          position={[0, ridgeY * 2 + 0.5, 0]}
-          size={[0.34, 0.12, 0.34]}
-          color={PALETTE.lantern}
-          emissive={PALETTE.lantern}
-          emissiveIntensity={0.6}
-          radius={0.04}
-          roughness={0.5}
-          castShadow={false}
-          transparent
-          opacity={roofOp}
-        />
+      {/* door frame */}
+      <TBox size={[0.16, H - 0.6, 0.38]} radius={0.05} position={[-door - 0.08, (H - 0.6) / 2, half]} color={trim} opacity={op(['pz'])} />
+      <TBox size={[0.16, H - 0.6, 0.38]} radius={0.05} position={[door + 0.08, (H - 0.6) / 2, half]} color={trim} opacity={op(['pz'])} />
+      <TBox size={[doorWidth + 0.4, 0.16, 0.4]} radius={0.05} position={[0, H - 0.6, half]} color={trim} opacity={op(['pz'])} castShadow={false} />
+      {/* doorstep */}
+      <TBox size={[doorWidth + 0.3, 0.14, 0.6]} radius={0.05} position={[0, 0.07, half + 0.35]} color={TOON.stone} receiveShadow castShadow={false} />
+
+      {/* windows: two per back wall (always lit), one per side on the front walls */}
+      <Window pos={[-half - 0.12, H * 0.55, -size * 0.22]} axis="x" frame={trim} opacity={1} />
+      <Window pos={[-half - 0.12, H * 0.55, size * 0.22]} axis="x" frame={trim} opacity={1} />
+      <Window pos={[-size * 0.24, H * 0.55, -half - 0.12]} axis="z" frame={trim} opacity={1} />
+      <Window pos={[size * 0.24, H * 0.55, -half - 0.12]} axis="z" frame={trim} opacity={1} />
+      <Window pos={[half + 0.12, H * 0.55, 0]} axis="x" frame={trim} opacity={op(['px'])} />
+      {size >= 6 && <Window pos={[-segC, H * 0.55, half + 0.12]} axis="z" frame={trim} opacity={op(['pz'])} />}
+      {size >= 6 && <Window pos={[segC, H * 0.55, half + 0.12]} axis="z" frame={trim} opacity={op(['pz'])} />}
+
+      {/* roof: two pitched slabs + ridge cap + gable ends */}
+      <group position={[0, H + 0.05, 0]}>
+        {[-1, 1].map((side) => (
+          <TBox
+            key={side}
+            size={[roofW, 0.22, slabLen]}
+            radius={0.08}
+            position={[0, rise / 2, (side * run) / 2]}
+            rotation={[side * pitch, 0, 0]}
+            color={roof}
+            opacity={roofOp}
+            outline={solid}
+          />
+        ))}
+        <TCyl radiusTop={0.16} height={roofW + 0.05} rotation={[0, 0, Math.PI / 2]} position={[0, rise + 0.05, 0]} color={roof} opacity={roofOp} outline={solid} segments={8} />
+        {/* triangular gable ends (thin wedges) */}
+        {[-1, 1].map((side) => (
+          <mesh
+            key={side}
+            position={[side * (half - 0.05), 0, 0]}
+            rotation={[0, (side * Math.PI) / 2, 0]}
+            material={toonMaterial(wall, { opacity: side > 0 ? roofOp : 1, doubleSide: true })}
+          >
+            <shapeGeometry args={[gable(size - 0.1, rise - 0.1)]} />
+          </mesh>
+        ))}
+        {/* chimney on the back slope */}
+        <group position={[-half * 0.45, 0, -run * 0.45]}>
+          <TBox size={[0.55, rise + 0.7, 0.55]} radius={0.06} position={[0, (rise + 0.7) / 2, 0]} color={TOON.brick} opacity={roofOp} outline={solid} />
+          <TBox size={[0.7, 0.16, 0.7]} radius={0.05} position={[0, rise + 0.75, 0]} color={TOON.stoneDark} opacity={roofOp} />
+        </group>
       </group>
 
       {children}
     </group>
   )
+}
+
+const gableCache = new Map<string, Shape>()
+/** Triangle (base `w`, height `h`) for the gable end under the roof. */
+function gable(w: number, h: number): Shape {
+  const key = `${w}|${h}`
+  let s = gableCache.get(key)
+  if (!s) {
+    s = new Shape()
+    s.moveTo(-w / 2, 0)
+    s.lineTo(w / 2, 0)
+    s.lineTo(0, h)
+    s.closePath()
+    gableCache.set(key, s)
+  }
+  return s
 }

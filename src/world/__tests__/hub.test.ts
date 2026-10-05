@@ -1,15 +1,8 @@
 import { describe, it, expect } from 'vitest'
-import { WORLD_AREAS, areaById, worldColliders } from '../worldLayout'
+import { SPAWN, WORLD_AREAS, areaById, npcPosition, worldColliders } from '../worldLayout'
 import { collidesAt } from '../collision'
 import { zoneStageRows, lessonRows, focusRows } from '../hubContent'
 import { allLessons } from '../../tutoring/lessons'
-
-/** World position where an area's NPC stands (buildings: on the doorstep). */
-function npcSpot(id: string): [number, number] {
-  const a = areaById(id)!
-  if (a.kind === 'building' && a.door) return [a.door.pos[0], a.door.pos[1] + 1.2]
-  return [a.worldPos[0] + a.npc!.offset[0], a.worldPos[1] + a.npc!.offset[1]]
-}
 
 describe('world hub layout', () => {
   it('has a Schoolhouse and a Library building with doors', () => {
@@ -25,10 +18,10 @@ describe('world hub layout', () => {
     const colliders = worldColliders()
     const STEP = 0.25
     const R = 0.3 // avatar body radius
-    const LIMIT = 33
+    const LIMIT = 34
     const key = (x: number, z: number) => `${Math.round(x / STEP)},${Math.round(z / STEP)}`
-    const seen = new Set<string>([key(0, 7)])
-    const queue: [number, number][] = [[0, 7]]
+    const seen = new Set<string>([key(SPAWN[0], SPAWN[1])])
+    const queue: [number, number][] = [[SPAWN[0], SPAWN[1]]]
     while (queue.length) {
       const [x, z] = queue.shift()!
       for (const [dx, dz] of [[STEP, 0], [-STEP, 0], [0, STEP], [0, -STEP]]) {
@@ -41,7 +34,7 @@ describe('world hub layout', () => {
       }
     }
     for (const a of WORLD_AREAS.filter((a) => a.npc)) {
-      const [nx, nz] = npcSpot(a.id)
+      const [nx, nz] = npcPosition(a)!
       let reachable = false
       for (let dx = -1.5; dx <= 1.5 && !reachable; dx += STEP)
         for (let dz = -1.5; dz <= 1.5 && !reachable; dz += STEP)
