@@ -6,9 +6,13 @@ export type Collider =
 
 export type AreaKind = 'open' | 'building'
 
+/** Hub buildings: their NPC opens a hub panel instead of (or as well as) a zone's stages. */
+export type HubKind = 'schoolhouse' | 'library'
+
 export interface WorldArea {
   id: string
-  zoneId: string // must resolve via getZone()
+  zoneId?: string // the zone its NPC opens (must resolve via getZone()); hubs may omit it
+  hub?: HubKind
   label: string
   worldPos: [number, number] // x,z center
   kind: AreaKind
@@ -62,6 +66,24 @@ export const WORLD_AREAS: WorldArea[] = [
       { kind: 'box', cx: -1.65, cz: -11.5, w: 1.7, d: 0.3 },
       { kind: 'box', cx: 1.65, cz: -11.5, w: 1.7, d: 0.3 },
     ],
+  },
+
+  // ── Hub buildings: the Schoolhouse (Tutor lessons, This Week's Focus, Daily
+  //    Challenge) next to the House, and the Library beside Reading Reef (reading
+  //    stages + reading/writing lessons). Their NPCs open an in-world panel. ──
+  {
+    id: 'schoolhouse', hub: 'schoolhouse', label: 'Schoolhouse',
+    worldPos: [12, 1], kind: 'building', theme: 'schoolhouse',
+    npc: { offset: [0, 3.7], emoji: '🦉' },
+    door: { pos: [12, 3.5], width: 1.6 },
+    colliders: buildingWalls(12, 1),
+  },
+  {
+    id: 'library', hub: 'library', zoneId: 'reading-reef', label: 'Library',
+    worldPos: [8, 21], kind: 'building', theme: 'library',
+    npc: { offset: [0, 3.7], emoji: '📚' },
+    door: { pos: [8, 23.5], width: 1.6 },
+    colliders: buildingWalls(8, 21),
   },
 
   // ── Subject zones added to World mode. Open destinations whose gateway NPC
@@ -131,6 +153,23 @@ const PERIMETER: Collider[] = [
   { kind: 'box', cx: -BOUND, cz: 0, w: 1, d: BOUND * 2 },
   { kind: 'box', cx: BOUND, cz: 0, w: 1, d: BOUND * 2 },
 ]
+
+/**
+ * Wall colliders for a square Building shell (Building.tsx): three solid walls and
+ * the +z (door) wall split around a doorway gap that has no collider.
+ */
+function buildingWalls(cx: number, cz: number, size = 5, doorWidth = 1.6): Collider[] {
+  const half = size / 2
+  const seg = half - doorWidth / 2
+  const segC = (half + doorWidth / 2) / 2
+  return [
+    { kind: 'box', cx: cx - half, cz, w: 0.3, d: size },
+    { kind: 'box', cx: cx + half, cz, w: 0.3, d: size },
+    { kind: 'box', cx, cz: cz - half, w: size, d: 0.3 },
+    { kind: 'box', cx: cx - segC, cz: cz + half, w: seg, d: 0.3 },
+    { kind: 'box', cx: cx + segC, cz: cz + half, w: seg, d: 0.3 },
+  ]
+}
 
 export function areaById(id: string): WorldArea | undefined {
   return WORLD_AREAS.find((a) => a.id === id)

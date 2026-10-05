@@ -169,6 +169,8 @@ function buildPaths(): BufferGeometry {
     { from: [0, 4.5], to: [-12, -8] }, // Word Problem Woods (NW)
     { from: [0, 4.5], to: [12, -8] }, // Fraction Falls (E)
     { from: [0, 4.5], to: [0, -10.5] }, // Writing Workshop (S)
+    // Schoolhouse: from just outside the house door, passing south of the garden fence (z 6.5)
+    { from: [0.8, 5.8], to: [11.2, 4.8] }, // Schoolhouse door (E)
   ]
   const geos: BufferGeometry[] = []
   const m = new Matrix4()

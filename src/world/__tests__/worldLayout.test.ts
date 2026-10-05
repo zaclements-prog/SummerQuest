@@ -10,8 +10,11 @@ describe('world layout', () => {
     expect(new Set(ids).size).toBe(ids.length)
   })
 
-  it('maps every area to a real curriculum zone', () => {
-    for (const a of WORLD_AREAS) expect(getZone(a.zoneId), a.id).toBeTruthy()
+  it('maps every gateway to a real curriculum zone (or a hub)', () => {
+    for (const a of WORLD_AREAS) {
+      if (a.zoneId) expect(getZone(a.zoneId), a.id).toBeTruthy()
+      else expect(a.hub, `${a.id} needs a zoneId or a hub`).toBeTruthy()
+    }
   })
 
   it('gives every building a door and at least one collider', () => {

@@ -6,6 +6,7 @@ import { Group, Vector3 } from 'three'
 import { Vox } from './voxel/Vox'
 import { PALETTE } from './voxel/palette'
 import { useWorldUi } from './useWorldUi'
+import type { HubKind } from './worldLayout'
 
 const INTERACT_R = 2.4
 
@@ -602,6 +603,85 @@ function DefaultNpc() {
   )
 }
 
+// ── Teacher owl (Schoolhouse) — a round owl in a mortarboard with a pointer ──
+//   Warm browns + cream face disc, big friendly eyes, a tiny chalk pointer.
+
+function TeacherOwl() {
+  const FEATHER   = PALETTE.bark          // warm brown body
+  const FEATHER_L = PALETTE.wood          // lighter wing tips
+  const FACE      = PALETTE.cottageWall   // cream face disc
+  const EYE       = '#2a1a0e'
+  const BEAK      = PALETTE.flowerYellow
+  const CAP       = '#2d3550'             // slate mortarboard
+  const TASSEL    = PALETTE.flowerRed
+
+  return (
+    <group>
+      {/* feet */}
+      <Vox position={[-0.08, 0.04, 0.06]} size={[0.1, 0.06, 0.12]} color={BEAK} radius={0.03} castShadow={false} />
+      <Vox position={[ 0.08, 0.04, 0.06]} size={[0.1, 0.06, 0.12]} color={BEAK} radius={0.03} castShadow={false} />
+      {/* round body */}
+      <Vox position={[0, 0.36, 0]} size={[0.46, 0.56, 0.4]} color={FEATHER} radius={0.18} />
+      {/* belly */}
+      <Vox position={[0, 0.32, 0.17]} size={[0.3, 0.38, 0.08]} color={FACE} radius={0.1} castShadow={false} />
+      {/* wings */}
+      <Vox position={[-0.26, 0.38, 0]} size={[0.08, 0.36, 0.3]} color={FEATHER_L} radius={0.04} />
+      <Vox position={[ 0.26, 0.38, 0]} size={[0.08, 0.36, 0.3]} color={FEATHER_L} radius={0.04} />
+      {/* head */}
+      <Vox position={[0, 0.8, 0]} size={[0.44, 0.36, 0.38]} color={FEATHER} radius={0.14} />
+      {/* face disc + big eyes */}
+      <Vox position={[0, 0.8, 0.18]} size={[0.36, 0.26, 0.06]} color={FACE} radius={0.1} castShadow={false} />
+      <Vox position={[-0.09, 0.83, 0.22]} size={0.09} color={EYE} radius={0.04} castShadow={false} />
+      <Vox position={[ 0.09, 0.83, 0.22]} size={0.09} color={EYE} radius={0.04} castShadow={false} />
+      <Vox position={[0, 0.74, 0.23]} size={[0.06, 0.06, 0.06]} color={BEAK} radius={0.02} castShadow={false} />
+      {/* ear tufts */}
+      <Vox position={[-0.15, 1.0, 0]} size={[0.08, 0.1, 0.08]} color={FEATHER} radius={0.03} />
+      <Vox position={[ 0.15, 1.0, 0]} size={[0.08, 0.1, 0.08]} color={FEATHER} radius={0.03} />
+      {/* mortarboard */}
+      <Vox position={[0, 1.02, 0]} size={[0.24, 0.1, 0.22]} color={CAP} radius={0.03} />
+      <Vox position={[0, 1.09, 0]} size={[0.46, 0.04, 0.46]} color={CAP} radius={0.02} />
+      <Vox position={[0.2, 1.0, 0.2]} size={[0.03, 0.16, 0.03]} color={TASSEL} radius={0.01} castShadow={false} />
+      {/* chalk pointer in the right wing */}
+      <Vox position={[0.36, 0.5, 0.12]} size={[0.03, 0.42, 0.03]} color={PALETTE.flowerWhite} radius={0.01} rotation={[0.5, 0, -0.4]} castShadow={false} />
+    </group>
+  )
+}
+
+// ── Librarian bookworm (Library) — a green worm in glasses with a book stack ──
+
+function LibrarianWorm() {
+  const BODY  = PALETTE.foliageLight
+  const BODY_D = PALETTE.foliage
+  const GLASS = '#c4dff5'
+  const RIM   = PALETTE.barkDark
+  const EYE   = '#2a1a0e'
+  const BOOKS = [PALETTE.flowerRed, PALETTE.water, PALETTE.flowerYellow]
+
+  return (
+    <group>
+      {/* segmented body curling up out of a book stack */}
+      {BOOKS.map((c, i) => (
+        <Vox key={c} position={[0, 0.06 + i * 0.12, 0]} size={[0.5 - i * 0.05, 0.1, 0.36 - i * 0.03]} color={c} radius={0.03} />
+      ))}
+      <Vox position={[0, 0.48, 0]} size={[0.3, 0.2, 0.28]} color={BODY_D} radius={0.1} />
+      <Vox position={[0, 0.66, 0.02]} size={[0.28, 0.2, 0.26]} color={BODY} radius={0.1} />
+      {/* head */}
+      <Vox position={[0, 0.9, 0.04]} size={[0.36, 0.32, 0.32]} color={BODY} radius={0.14} />
+      {/* round glasses */}
+      <Vox position={[-0.09, 0.93, 0.21]} size={[0.13, 0.13, 0.03]} color={RIM} radius={0.05} castShadow={false} />
+      <Vox position={[ 0.09, 0.93, 0.21]} size={[0.13, 0.13, 0.03]} color={RIM} radius={0.05} castShadow={false} />
+      <Vox position={[-0.09, 0.93, 0.23]} size={[0.09, 0.09, 0.02]} color={GLASS} radius={0.03} transparent opacity={0.65} castShadow={false} />
+      <Vox position={[ 0.09, 0.93, 0.23]} size={[0.09, 0.09, 0.02]} color={GLASS} radius={0.03} transparent opacity={0.65} castShadow={false} />
+      <Vox position={[-0.09, 0.93, 0.24]} size={0.04} color={EYE} radius={0.02} castShadow={false} />
+      <Vox position={[ 0.09, 0.93, 0.24]} size={0.04} color={EYE} radius={0.02} castShadow={false} />
+      {/* smile */}
+      <Vox position={[0, 0.82, 0.2]} size={[0.1, 0.03, 0.03]} color={EYE} radius={0.01} castShadow={false} />
+      {/* open book held up */}
+      <Vox position={[0.24, 0.72, 0.16]} size={[0.2, 0.14, 0.03]} color={PALETTE.flowerWhite} radius={0.02} rotation={[0, -0.4, 0]} castShadow={false} />
+    </group>
+  )
+}
+
 // ── Character picker ─────────────────────────────────────────────────────────
 
 function NpcCharacter({ areaId }: { areaId: string }) {
@@ -630,6 +710,10 @@ function NpcCharacter({ areaId }: { areaId: string }) {
       return <LittleScientist />
     case 'tower-battlefront':
       return <TinyKnight />
+    case 'schoolhouse':
+      return <TeacherOwl />
+    case 'library':
+      return <LibrarianWorm />
     default:
       return <DefaultNpc />
   }
@@ -682,6 +766,14 @@ function NpcSparkles({ areaId }: { areaId: string }) {
     // bright specks — teal
     return <Sparkles count={12} scale={1.6} size={2.5} speed={0.5} color="#7fe6e0" opacity={0.6} />
   }
+  if (areaId === 'schoolhouse') {
+    // chalk dust — soft white
+    return <Sparkles count={10} scale={1.5} size={2} speed={0.3} color={PALETTE.flowerWhite} opacity={0.55} />
+  }
+  if (areaId === 'library') {
+    // page-glow motes — warm lantern
+    return <Sparkles count={10} scale={1.5} size={2.5} speed={0.3} color={PALETTE.lantern} opacity={0.6} />
+  }
   if (areaId === 'tower-battlefront') {
     // arcane embers — purple
     return <Sparkles count={10} scale={1.6} size={2.5} speed={0.4} color={PALETTE.flowerPurple} opacity={0.6} />
@@ -695,12 +787,14 @@ function NpcSparkles({ areaId }: { areaId: string }) {
 export default function Npc({
   areaId,
   zoneId,
+  hub,
   label,
   position,
   posRef,
 }: {
   areaId: string
-  zoneId: string
+  zoneId?: string
+  hub?: HubKind
   label: string
   position: [number, number, number]
   posRef: RefObject<Vector3>
@@ -722,7 +816,7 @@ export default function Npc({
     const dz = p.z - position[2]
     const near = dx * dx + dz * dz < INTERACT_R * INTERACT_R
     const cur = useWorldUi.getState().activeNpc
-    if (near && cur?.areaId !== areaId)   setActiveNpc({ areaId, zoneId, label })
+    if (near && cur?.areaId !== areaId)   setActiveNpc({ areaId, zoneId, hub, label })
     else if (!near && cur?.areaId === areaId) setActiveNpc(null)
   })
 

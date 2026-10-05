@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { useSearchParams } from 'react-router-dom'
 import { ACESFilmicToneMapping, Vector3 } from 'three'
@@ -19,14 +19,21 @@ import DataDelta from './areas/DataDelta'
 import ReadingReef from './areas/ReadingReef'
 import ScienceSummit from './areas/ScienceSummit'
 import TowerBattlefront from './areas/TowerBattlefront'
+import Schoolhouse from './areas/Schoolhouse'
+import Library from './areas/Library'
 import { useHomeUi } from '../home/useHomeUi'
 import { useWorldUi } from './useWorldUi'
 import House from './areas/House'
 import WorldStudio from './WorldStudio'
 import { useStarterCreature } from '../home/starterCreature'
 
+/** Where a fresh visit starts: just outside the House door. */
+const HOME_SPAWN: [number, number] = [0, 7]
+
 export default function WorldScreen() {
-  const posRef = useRef(new Vector3(0, 0, 7))
+  // Coming back from a stage or lesson launched in the World? Reappear where you stood.
+  const [spawn] = useState<[number, number]>(() => useWorldUi.getState().returnSpot ?? HOME_SPAWN)
+  const posRef = useRef(new Vector3(spawn[0], 0, spawn[1]))
   const [params] = useSearchParams()
   const studio = params.get('studio') === '1'
   // A new player may come here before ever visiting Home: give them their creature.
@@ -34,7 +41,14 @@ export default function WorldScreen() {
   // Furniture shown in the house must not be interactive here (decorate UI is Home-only).
   useEffect(() => { useHomeUi.getState().setMode('play') }, [])
   // Clear the "entered from world" flag now that we're back in the World.
-  useEffect(() => { useWorldUi.getState().setEnteredFromWorld(false) }, [])
+  // Clear the "entered from world" flag now that we're back in the World, and
+  // start each visit with no panel open (the return spot has been used).
+  useEffect(() => {
+    const ui = useWorldUi.getState()
+    ui.setEnteredFromWorld(false)
+    ui.setReturnSpot(null)
+    ui.closePanel()
+  }, [])
   return (
     <div className="flex-1 relative">
       <Canvas
@@ -64,13 +78,15 @@ export default function WorldScreen() {
             <ReadingReef posRef={posRef} />
             <ScienceSummit posRef={posRef} />
             <TowerBattlefront posRef={posRef} />
+            <Schoolhouse posRef={posRef} />
+            <Library posRef={posRef} />
             <WorldCameraRig targetRef={posRef} />
             <House />
-            <WorldAvatar posRef={posRef} />
+            <WorldAvatar posRef={posRef} spawn={spawn} />
           </>
         )}
       </Canvas>
-      {!studio && <WorldHud />}
+      {!studio && <WorldHud posRef={posRef} />}
     </div>
   )
 }

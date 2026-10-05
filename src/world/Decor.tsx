@@ -86,6 +86,8 @@ const KEEP_OUT: Zone[] = [
   { cx: -20, cz: -18, r: 5.5 },  // Geometry Grove
   { cx: -8, cz: -26, r: 5.5 },   // Place Value Plateau
   { cx: 10, cz: -26, r: 5.5 },   // Tower Battlefront
+  { cx: 12, cz: 1.5, r: 5.0 },   // Schoolhouse (hub)
+  { cx: 8, cz: 21.5, r: 5.0 },   // Library (hub)
 ]
 
 /** True if (x,z) is inside any keep-out zone. */
@@ -103,6 +105,7 @@ const PATHS: Seg[] = [
   { ax: 0, az: 4.5, bx: -12, bz: -8 },   // house → Woods (NW)
   { ax: 0, az: 4.5, bx: 12, bz: -8 },    // house → Falls (E)
   { ax: 0, az: 4.5, bx: 0, bz: -10.5 },  // house → Workshop (S)
+  { ax: 0.8, az: 5.8, bx: 11.2, bz: 4.8 }, // house door → Schoolhouse door (E)
 ]
 
 /** Squared distance from point (px,pz) to segment (ax,az)–(bx,bz). */

@@ -17,6 +17,7 @@ import {
 } from '../components/ui'
 import { subjectTheme, type Subject } from '../lib/theme'
 import { useEntrance } from '../lib/motion'
+import { useWorldUi } from '../world/useWorldUi'
 import { motion } from 'framer-motion'
 
 export default function DailyChallenge() {
@@ -25,6 +26,8 @@ export default function DailyChallenge() {
   const claimDaily = useProgress((s) => s.claimDaily)
   const claimedDate = useProgress((s) => s.dailyClaimedDate)
   const recordSession = useProgress((s) => s.recordSession)
+  // Started from the Schoolhouse in the 3D World? Then leaving goes back there.
+  const exitPath = useWorldUi((s) => s.enteredFromWorld) ? '/world' : '/map'
 
   const { zone, stage } = useMemo(() => pickTodaysChallenge(), [])
 
@@ -52,7 +55,7 @@ export default function DailyChallenge() {
   if (alreadyClaimed && !result) {
     return (
       <Screen>
-        <Header />
+        <Header exitPath={exitPath} />
         <div className="flex-1 flex items-center justify-center p-4">
           <Card tone="quest" accent className="p-8 max-w-md w-full text-center">
             <div className="text-6xl mb-3" aria-hidden="true">🌟</div>
@@ -60,7 +63,7 @@ export default function DailyChallenge() {
             <p className="text-ink-700 mb-6">
               You already finished today's challenge. Come back tomorrow for a brand-new one!
             </p>
-            <Button variant="primary" size="lg" to="/map" className="w-full justify-center">
+            <Button variant="primary" size="lg" to={exitPath} className="w-full justify-center">
               ← Back to map
             </Button>
           </Card>
@@ -76,7 +79,7 @@ export default function DailyChallenge() {
 
     return (
       <Screen>
-        <Header />
+        <Header exitPath={exitPath} />
         <div className="flex-1 flex items-center justify-center p-4">
           <motion.div
             variants={container}
@@ -106,7 +109,7 @@ export default function DailyChallenge() {
               </motion.div>
 
               <motion.div variants={item}>
-                <Button variant="success" size="lg" to="/map" className="w-full justify-center">
+                <Button variant="success" size="lg" to={exitPath} className="w-full justify-center">
                   Back to map →
                 </Button>
               </motion.div>
@@ -132,7 +135,7 @@ export default function DailyChallenge() {
   if (providerResult.error || !providerResult.provider) {
     return (
       <Screen>
-        <Header />
+        <Header exitPath={exitPath} />
         <div className="flex-1 flex flex-col items-center justify-center p-4 gap-4">
           <ErrorState
             emoji="😵"
@@ -156,7 +159,7 @@ export default function DailyChallenge() {
   // ── Active challenge ───────────────────────────────────────────────────────
   return (
     <Screen>
-      <Header />
+      <Header exitPath={exitPath} />
 
       {/* Topic banner + progress affordance */}
       <div className="px-4">
@@ -213,7 +216,7 @@ export default function DailyChallenge() {
           }
           setResult({ res, reward })
         }}
-        onExit={() => navigate('/map')}
+        onExit={() => navigate(exitPath)}
       />
     </Screen>
   )
@@ -225,10 +228,10 @@ function Screen({ children }: { children: React.ReactNode }) {
   return <div className="flex-1 flex flex-col">{children}</div>
 }
 
-function Header() {
+function Header({ exitPath }: { exitPath: string }) {
   return (
     <div className="px-4 py-3 flex items-center gap-3">
-      <BackButton to="/map" label="Quit" />
+      <BackButton to={exitPath} label="Quit" />
       <h1 className="kid-text text-2xl sm:text-3xl text-sky drop-shadow-md flex-1 text-center">
         <span aria-hidden="true">🌟</span> Daily Challenge
       </h1>

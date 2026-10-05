@@ -11,7 +11,7 @@ import { worldColliders, WORLD_AREAS } from './worldLayout'
 import { collidesAt, insideFootprint } from './collision'
 import { useWorldUi } from './useWorldUi'
 
-export default function WorldAvatar({ posRef }: { posRef: RefObject<Vector3> }) {
+export default function WorldAvatar({ posRef, spawn }: { posRef: RefObject<Vector3>; spawn: [number, number] }) {
   const activeCreature = useProgress((s) => s.activeCreature)
   const group = useRef<Group>(null)
   const inner = useRef<Group>(null)
@@ -35,6 +35,8 @@ export default function WorldAvatar({ posRef }: { posRef: RefObject<Vector3> }) 
     collide: (x, z) => collidesAt(colliders, x, z, 0),
     // player-controlled: stay put when no key is held (e.g. next to an NPC's prompt)
     wander: false,
+    // hold still while an NPC's panel is open (WASD is for the panel's owner, not walking)
+    paused: () => useWorldUi.getState().panel !== null,
   })
 
   useFrame(({ clock }) => {
@@ -64,7 +66,7 @@ export default function WorldAvatar({ posRef }: { posRef: RefObject<Vector3> }) 
 
   if (!activeCreature) return null
   return (
-    <group ref={group} position={[0, 0, 7]}>
+    <group ref={group} position={[spawn[0], 0, spawn[1]]}>
       <group ref={inner}>
         <b.Builder />
         <CreatureAccessories />
