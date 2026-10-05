@@ -43,6 +43,8 @@ export default function WorldScreen() {
         gl={{ antialias: true, powerPreference: 'high-performance' }}
         camera={{ position: [spawn[0] + 10.5, 12.5, spawn[1] + 11], fov: 38, near: 0.3, far: 900 }}
         style={{ position: 'absolute', inset: 0 }}
+        // dev-only: lets headless checks read draw calls / triangles (renderer.info)
+        onCreated={({ gl }) => { if (import.meta.env.DEV) Object.assign(window, { __sqGl: gl }) }}
       >
         {/* sky dome, fog, sun + soft fill, drifting clouds */}
         <WorldEnvironment />
