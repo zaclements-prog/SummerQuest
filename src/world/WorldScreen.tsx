@@ -13,11 +13,14 @@ import WritingWorkshop from './areas/WritingWorkshop'
 import { useHomeUi } from '../home/useHomeUi'
 import House from './areas/House'
 import WorldStudio from './WorldStudio'
+import { useStarterCreature } from '../home/starterCreature'
 
 export default function WorldScreen() {
   const posRef = useRef(new Vector3(0, 0, 7))
   const [params] = useSearchParams()
   const studio = params.get('studio') === '1'
+  // A new player may come here before ever visiting Home: give them their creature.
+  useStarterCreature()
   // Furniture shown in the house must not be interactive here (decorate UI is Home-only).
   useEffect(() => { useHomeUi.getState().setMode('play') }, [])
   return (

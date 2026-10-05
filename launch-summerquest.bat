@@ -1,7 +1,7 @@
 @echo off
 rem Double-click this file (or the desktop shortcut) to launch SummerQuest.
 rem It will: 1) cd to the app folder  2) install deps if missing
-rem          3) start the Vite dev server  4) open your browser to the game.
+rem          3) build the game and serve it  4) open your browser to the game.
 
 cd /d "%~dp0"
 
@@ -30,4 +30,6 @@ echo   Starting SummerQuest at http://localhost:5173
 echo   Close this window to stop the game.
 echo.
 
-call npm run dev
+rem Builds, then serves on the same port as before (saved progress carries over).
+rem Developers: use "npm run dev" for hot reload.
+call npm run play

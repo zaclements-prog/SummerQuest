@@ -35,7 +35,7 @@ const TEMPLATES_MULT: Array<{
   },
   {
     build: (a, b) => ({
-      prompt: `A spider has 8 legs. How many legs do ${a} spiders have? (Then we'll do another step.)\n\nSimpler: there are ${a} packs of stickers with ${b} stickers in each. How many stickers in all?`,
+      prompt: `There are ${a} packs of stickers with ${b} stickers in each pack. How many stickers are there in all?`,
       answer: a * b,
       hint: `${a} × ${b}`,
     }),

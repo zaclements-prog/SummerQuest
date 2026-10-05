@@ -5,6 +5,10 @@ import type { ProblemAnswer } from '../lib/problem'
 import { getLesson } from '../tutoring/lessons'
 import VisualRenderer from '../components/VisualRenderer'
 import { useNarration } from '../lib/narration'
+import { seededShuffle } from '../lib/random'
+import { playableStageId } from '../lib/stageLocks'
+import { getZone } from '../curriculum'
+import { useProgress } from '../store/progress'
 import { sfx } from '../lib/sound'
 import { Button, Card, BackButton, ProgressBar, Pill, ErrorState, Loading } from '../components/ui'
 
@@ -121,6 +125,7 @@ export default function TutorScreen() {
   const [i, setI] = useState(0)
   const [picked, setPicked] = useState<ProblemAnswer | null>(null)
   const step = lesson?.steps[i]
+  const zoneProgress = useProgress((s) => (lesson ? s.zones[lesson.zoneId] : undefined))
   // Hooks must run unconditionally, so call useNarration before any early return.
   const { playing, play, stop } = useNarration(lesson?.id ?? '', step?.id ?? '', step?.narration ?? '')
 
@@ -153,11 +158,19 @@ export default function TutorScreen() {
   const longLabels =
     !!step.check &&
     step.check.options.some((o) => String(o).length > 8)
+  // Lessons list the correct answer first; show the options in a stable shuffled
+  // order (seeded by lesson + step) so the answer isn't always in the same spot.
+  const checkOptions = step.check ? seededShuffle(step.check.options, `${lesson.id}/${step.id}`) : []
 
   const next = () => {
     stop()
     setPicked(null)
-    if (last) navigate(`/play/${lesson.zoneId}/${lesson.practiceStageId}`)
+    if (last) {
+      // Practice stage if unlocked; otherwise the first step the kid hasn't cleared.
+      const zone = getZone(lesson.zoneId)
+      const stageId = zone ? playableStageId(zone, lesson.practiceStageId, zoneProgress) : lesson.practiceStageId
+      navigate(`/play/${lesson.zoneId}/${stageId}`)
+    }
     else setI(i + 1)
   }
 
@@ -204,7 +217,7 @@ export default function TutorScreen() {
             exit={reduced ? { opacity: 0 } : { opacity: 0, y: -12 }}
             transition={{ type: 'spring', stiffness: 260, damping: 24 }}
           >
-            <Card tone="ocean" className="p-5 sm:p-6">
+            <Card tone="ocean" className="p-5 sm:p-6 [text-shadow:none]">
               {/* narration row */}
               <div className="flex items-start gap-3">
                 <ListenButton
@@ -217,8 +230,10 @@ export default function TutorScreen() {
                 </p>
               </div>
 
+              {/* VisualRenderer draws light-on-dark (white labels, translucent
+                  pieces), so give it the same deep-blue stage the games use. */}
               {step.visual && (
-                <div className="flex justify-center my-4">
+                <div className="flex justify-center my-4 rounded-3xl bg-ocean-700 p-4 text-sky">
                   <VisualRenderer visual={step.visual} size="lg" />
                 </div>
               )}
@@ -234,7 +249,7 @@ export default function TutorScreen() {
                     {step.check.question}
                   </div>
                   <div className={longLabels ? 'grid grid-cols-1 gap-2.5' : 'grid grid-cols-2 gap-2.5'}>
-                    {step.check.options.map((opt) => (
+                    {checkOptions.map((opt) => (
                       <ChoiceButton
                         key={String(opt)}
                         opt={opt}

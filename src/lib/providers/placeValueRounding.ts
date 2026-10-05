@@ -6,6 +6,9 @@ interface Config {
   roundTo: 10 | 100 | 1000
 }
 
+/** The digit that decides the rounding sits one place to the right of the target place. */
+const DECIDING_PLACE: Record<Config['roundTo'], string> = { 10: 'ones', 100: 'tens', 1000: 'hundreds' }
+
 export function makePlaceValueRoundingProvider(cfg: Config): ProblemProvider {
   let serial = 0
   return {
@@ -38,7 +41,7 @@ export function makePlaceValueRoundingProvider(cfg: Config): ProblemProvider {
         subtopic: `nearest-${cfg.roundTo}`,
         difficulty: Math.log10(cfg.maxPlace),
         skill: { id: 'pv-round', label: 'rounding numbers' },
-        hint: `Look at the digit in the ones place${cfg.roundTo > 10 ? ' below' : ''} — if it's 5 or more, round up.`,
+        hint: `Look at the ${DECIDING_PLACE[cfg.roundTo]} digit (the place just to the right) — if it's 5 or more, round up.`,
       }
     },
   }

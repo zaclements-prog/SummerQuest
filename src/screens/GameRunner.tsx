@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { getStage, getZone } from '../curriculum'
 import { useProgress } from '../store/progress'
@@ -11,7 +11,8 @@ import BossBattle from '../games/BossBattle'
 import TowerDefense from '../games/tower-defense/TowerDefense'
 import WritingPad from '../games/WritingPad'
 import { sfx } from '../lib/sound'
-import { Card, Button, BackButton, Pill, Celebration, ErrorState } from '../components/ui'
+import { Card, Button, BackButton, Pill, Celebration, ConfirmDialog, ErrorState } from '../components/ui'
+import { isStageUnlocked } from '../lib/stageLocks'
 import { accuracyColorClass } from '../lib/theme'
 
 export interface GameResult {
@@ -27,6 +28,8 @@ export interface GameProps {
   onComplete: (result: GameResult) => void
   onExit: () => void
   meta?: { zoneId: string; stageId: string }
+  /** True while a host dialog (e.g. "Quit?") is open — timed games must freeze. */
+  paused?: boolean
 }
 
 export default function GameRunner() {
@@ -37,9 +40,11 @@ export default function GameRunner() {
   const awardStage = useProgress((s) => s.awardStage)
   const addCoins = useProgress((s) => s.addCoins)
   const recordSession = useProgress((s) => s.recordSession)
+  const zoneProgress = useProgress((s) => s.zones[zoneId])
   const [result, setResult] = useState<GameResult | null>(null)
   const [confirmQuit, setConfirmQuit] = useState(false)
   const processedResultRef = useRef<GameResult | null>(null)
+  const closeQuit = useCallback(() => setConfirmQuit(false), [])
 
   const provider = useMemo(
     () => (stage ? createProvider(stage.providerConfig) : null),
@@ -81,6 +86,21 @@ export default function GameRunner() {
     )
   }
 
+  // ── Locked stage (deep link / old bookmark) ────────────────────────────────
+  // Checked before any result exists: finishing a stage can't re-lock it.
+  if (!result && !isStageUnlocked(zone, stageId, zoneProgress)) {
+    return (
+      <div className="flex-1 flex items-center justify-center p-4">
+        <ErrorState
+          emoji="🔒"
+          title="This stage is still locked"
+          message="Earn a star on the step before it to open this one."
+          back={{ label: 'Back to zone', to: `/zone/${zoneId}` }}
+        />
+      </div>
+    )
+  }
+
   // ── Result screen ───────────────────────────────────────────────────────────
   if (result) {
     const coinReward = result.correct * 2 + result.stars * 5
@@ -92,6 +112,7 @@ export default function GameRunner() {
         onPlayAgain={() => {
           sfx.click()
           processedResultRef.current = null
+          setConfirmQuit(false)
           setResult(null)
         }}
       />
@@ -145,41 +166,27 @@ export default function GameRunner() {
       <Game
         provider={provider}
         params={stage.params}
-        onComplete={setResult}
+        onComplete={(r) => {
+          setConfirmQuit(false)
+          setResult(r)
+        }}
         onExit={() => navigate(`/zone/${zoneId}`)}
         meta={{ zoneId, stageId }}
+        paused={confirmQuit}
       />
 
-      {/* ── Quit confirmation ─────────────────────────────────────────────── */}
-      <Celebration
+      {/* ── Quit confirmation (the game is paused while this is open) ─────── */}
+      <ConfirmDialog
         open={confirmQuit}
-        onClose={() => setConfirmQuit(false)}
+        emoji="🚪"
         title="Quit this game?"
+        confirmLabel="Quit to zone"
+        cancelLabel="Keep playing"
+        onConfirm={() => navigate(`/zone/${zoneId}`)}
+        onCancel={closeQuit}
       >
-        <div className="flex flex-col items-center gap-4">
-          <p className="text-ink-700">
-            Your stars are saved — you can pick up right where you left off. 🌟
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 w-full justify-center">
-            <Button
-              variant="ghost"
-              size="md"
-              className="justify-center"
-              onClick={() => setConfirmQuit(false)}
-            >
-              Keep playing
-            </Button>
-            <Button
-              variant="danger"
-              size="md"
-              className="justify-center"
-              onClick={() => navigate(`/zone/${zoneId}`)}
-            >
-              Quit to zone
-            </Button>
-          </div>
-        </div>
-      </Celebration>
+        This round won't count, but the stars you already earned are safe. 🌟
+      </ConfirmDialog>
     </div>
   )
 }

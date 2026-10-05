@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
 import { motion } from 'framer-motion'
 import { useProgress } from '../store/progress'
@@ -13,7 +13,7 @@ import {
   StarRating,
   Pill,
   EmptyState,
-  Celebration,
+  ConfirmDialog,
 } from '../components/ui'
 import { accuracyColorClass, accuracyTone } from '../lib/theme'
 import { useEntrance, hoverPop, tap } from '../lib/motion'
@@ -30,6 +30,18 @@ export default function ParentDashboard() {
   } = useSettings()
 
   const [confirmReset, setConfirmReset] = useState(false)
+  // Grown-up check for the destructive reset: a 2-digit × 2-digit product is
+  // easy for a parent and out of reach for a 3rd–4th grader.
+  const [gate, setGate] = useState<{ a: number; b: number } | null>(null)
+  const [gateAnswer, setGateAnswer] = useState('')
+  const gatePassed = !!gate && Number(gateAnswer.trim()) === gate.a * gate.b
+
+  function openReset() {
+    setGate({ a: 12 + Math.floor(Math.random() * 13), b: 13 + Math.floor(Math.random() * 12) })
+    setGateAnswer('')
+    setConfirmReset(true)
+  }
+  const closeReset = useCallback(() => setConfirmReset(false), [])
 
   useEffect(() => {
     void refreshLlmStatus()
@@ -43,6 +55,7 @@ export default function ParentDashboard() {
     : 0
 
   function handleReset() {
+    if (!gatePassed) return
     resetPlayer()
     setConfirmReset(false)
   }
@@ -253,7 +266,7 @@ export default function ParentDashboard() {
               <Button
                 variant="ghost"
                 size="md"
-                onClick={() => void refreshLlmStatus()}
+                onClick={() => void refreshLlmStatus(true)}
                 className="sm:ml-auto"
               >
                 🔄 Recheck
@@ -288,7 +301,7 @@ export default function ParentDashboard() {
             <Button
               variant="danger"
               size="md"
-              onClick={() => setConfirmReset(true)}
+              onClick={openReset}
               className="w-full sm:w-auto justify-center"
             >
               🗑️ Reset all progress
@@ -297,37 +310,41 @@ export default function ParentDashboard() {
         </motion.div>
       </motion.div>
 
-      {/* ── Reset confirmation modal ────────────────────────────────────── */}
-      <Celebration
+      {/* ── Reset confirmation (grown-ups only) ───────────────────────── */}
+      <ConfirmDialog
         open={confirmReset}
-        onClose={() => setConfirmReset(false)}
+        emoji="⚠️"
         title="Reset all progress?"
+        confirmLabel="🗑️ Yes, reset"
+        cancelLabel="Keep my progress"
+        confirmDisabled={!gatePassed}
+        onConfirm={handleReset}
+        onCancel={closeReset}
       >
-        <div className="flex flex-col gap-4">
-          <p className="text-ink-700">
-            This deletes <strong>{player.name}</strong>'s profile, coins, and stage
-            records. This cannot be undone.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-2">
-            <Button
-              variant="ghost"
-              size="md"
-              onClick={() => setConfirmReset(false)}
-              className="flex-1 justify-center"
-            >
-              Keep my progress
-            </Button>
-            <Button
-              variant="danger"
-              size="md"
-              onClick={handleReset}
-              className="flex-1 justify-center"
-            >
-              🗑️ Yes, reset
-            </Button>
-          </div>
-        </div>
-      </Celebration>
+        <p className="mb-4">
+          This deletes <strong>{player.name}</strong>'s profile, coins, and stage
+          records. This cannot be undone.
+        </p>
+        {gate && (
+          <label className="block text-left">
+            <span className="kid-text text-ink-900">
+              Grown-ups: what is {gate.a} × {gate.b}?
+            </span>
+            <input
+              type="text"
+              inputMode="numeric"
+              autoComplete="off"
+              value={gateAnswer}
+              onChange={(e) => setGateAnswer(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') handleReset()
+              }}
+              className="mt-2 w-full rounded-xl border-2 border-ink-500/30 px-3 py-2 text-lg text-ink-900 focus:outline-none focus:border-ocean-500"
+              aria-label={`Grown-up check: ${gate.a} times ${gate.b}`}
+            />
+          </label>
+        )}
+      </ConfirmDialog>
     </div>
   )
 }

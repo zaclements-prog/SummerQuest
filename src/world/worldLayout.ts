@@ -42,6 +42,8 @@ export const WORLD_AREAS: WorldArea[] = [
       { kind: 'circle', cx: -10, cz: -11, r: 0.6 },
       { kind: 'circle', cx: -15, cz: -6, r: 0.6 },
       { kind: 'circle', cx: -9, cz: -6, r: 0.6 },
+      { kind: 'circle', cx: -12, cz: -9, r: 0.6 },
+      { kind: 'circle', cx: -13, cz: -7, r: 0.6 },
     ],
   },
   {

@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, HashRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useEffect, lazy, Suspense } from 'react'
 import { useProgress } from './store/progress'
 import { unlockAudio } from './lib/sound'
@@ -16,6 +16,9 @@ import TutorIndex from './screens/TutorIndex'
 import TutorScreen from './screens/TutorScreen'
 import FocusScreen from './screens/FocusScreen'
 const HomeScreen = lazy(() => import('./screens/HomeScreen'))
+// The single-file offline build is opened straight from disk (file://), where the
+// History API can't change the path — so it routes on the URL hash instead.
+const Router = import.meta.env.VITE_OFFLINE === 'true' ? HashRouter : BrowserRouter
 const WorldScreen = lazy(() => import('./world/WorldScreen'))
 
 function RequireAvatar({ children }: { children: React.ReactNode }) {
@@ -39,11 +42,18 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    if (player) bumpStreak()
+    if (!player) return
+    bumpStreak()
+    // A tab left open overnight should still count today when the kid comes back.
+    const onVisible = () => {
+      if (document.visibilityState === 'visible') bumpStreak()
+    }
+    document.addEventListener('visibilitychange', onVisible)
+    return () => document.removeEventListener('visibilitychange', onVisible)
   }, [player, bumpStreak])
 
   return (
-    <BrowserRouter>
+    <Router>
       <AppShell>
         <Routes>
           <Route
@@ -131,6 +141,6 @@ export default function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AppShell>
-    </BrowserRouter>
+    </Router>
   )
 }

@@ -22,7 +22,8 @@ export function makeDivisionProvider(cfg: Config): ProblemProvider {
         prompt: `${dividend} ÷ ${divisor} = ?`,
         options: shuffle([quotient, ...distractors]),
         answer: quotient,
-        visual: { kind: 'array', rows: divisor, cols: quotient },
+        // Caption names the total and the rows — not "rows × cols", which would print the answer.
+        visual: { kind: 'array', rows: divisor, cols: quotient, label: `${dividend} shared into ${divisor} equal rows` },
         topic: 'division',
         subtopic: `÷${divisor}`,
         difficulty: divisor,

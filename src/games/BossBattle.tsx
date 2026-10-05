@@ -7,6 +7,12 @@ import { useProgress } from '../store/progress'
 import { skillOf } from '../tutoring/skills'
 import { Loading, ProgressBar, Pill } from '../components/ui'
 import { QuizProgress, QuestionPrompt, AnswerGrid } from './_shared/QuizUI'
+import VisualRenderer from '../components/VisualRenderer'
+
+// Visuals the question can't be answered without (a reading passage, a bar graph).
+// Teaching aids like multiplication arrays or fraction bars stay hidden in the boss
+// fight so mastery isn't just counting the picture.
+const REQUIRED_VISUALS = new Set(['passage', 'barGraph'])
 
 /**
  * Boss Battle — a multiple-choice duel against a monster boss.
@@ -121,7 +127,10 @@ export default function BossBattle({ provider, params, onComplete, meta }: GameP
     }, 900)
   }
 
-  const isOver = bossHp <= 0 || playerHp <= 0 || questionsAnswered >= questionCount
+  // On the final question, keep the answer feedback on screen until the hit/hurt
+  // animation settles, so the banner reflects the real outcome (not "Out of moves!").
+  const outOfQuestions = questionsAnswered >= questionCount && state === 'idle'
+  const isOver = bossHp <= 0 || playerHp <= 0 || outOfQuestions
 
   if (!problem) {
     return (
@@ -188,9 +197,15 @@ export default function BossBattle({ provider, params, onComplete, meta }: GameP
              happens when rAF is paused (backgrounded tab), freezing the
              question. This matches ConceptPlay's robust prompt pattern. */
           <div key={problem.id} className="mt-4 w-full flex flex-col items-center">
-            <QuizProgress current={questionsAnswered + 1} total={questionCount} />
+            <QuizProgress current={Math.min(questionsAnswered + 1, questionCount)} total={questionCount} />
 
             <QuestionPrompt>{problem.prompt}</QuestionPrompt>
+
+            {problem.visual && REQUIRED_VISUALS.has(problem.visual.kind) && (
+              <div className="mt-4 w-full flex justify-center">
+                <VisualRenderer visual={problem.visual} size="md" />
+              </div>
+            )}
 
             <div className="mt-4">
               <AnswerGrid

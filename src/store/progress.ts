@@ -3,6 +3,8 @@ import { persist } from 'zustand/middleware'
 import { SESSION_SECONDS, SESSIONS_PER_DAY, SESSION_BONUS_COINS } from '../lib/dailyGoal'
 import type { Slot } from '../home/models/anchors'
 import { accessoryById } from '../lib/home/accessories'
+import { addDays, localDayKey } from '../lib/dates'
+import { migrateV0toV1, type PersistedProgressV0 } from './migrations'
 
 export interface AvatarChoice {
   emoji: string
@@ -30,6 +32,8 @@ export interface SessionStats {
   secondsPlayed: number
   lastPlayedAt?: number
   streakDays: number
+  /** Longest streak ever reached (never decreases) — so streak badges stay earned. */
+  bestStreak?: number
   lastStreakDate?: string
 }
 
@@ -104,6 +108,7 @@ interface ProgressState {
   recordAnswer: (correct: boolean) => void
   addPlayTime: (seconds: number) => void
   bumpStreakIfNeeded: () => void
+  markZoneMastered: (zoneId: string) => void
   toggleSound: () => void
   markBadgesSeen: (ids: string[]) => void
   claimDaily: () => void
@@ -122,7 +127,7 @@ interface ProgressState {
   becomeCreature: (id: string) => void
 }
 
-const todayKey = () => new Date().toISOString().slice(0, 10)
+const todayKey = () => localDayKey()
 
 export const useProgress = create<ProgressState>()(
   persist(
@@ -183,29 +188,36 @@ export const useProgress = create<ProgressState>()(
 
       awardStage: (zoneId, stageId, stars, score) => {
         const zones = { ...get().zones }
-        const zone = zones[zoneId] ?? { zoneId, stages: {} }
-        const prev = zone.stages[stageId]
+        const prevZone = zones[zoneId] ?? { zoneId, stages: {} }
+        const prev = prevZone.stages[stageId]
         const nextStars = Math.max(prev?.stars ?? 0, stars)
         const nextScore = Math.max(prev?.bestScore ?? 0, score)
-        zone.stages = {
-          ...zone.stages,
-          [stageId]: {
-            stageId,
-            stars: nextStars,
-            bestScore: nextScore,
-            attempts: (prev?.attempts ?? 0) + 1,
-            completedAt: Date.now(),
+        // New zone object (don't mutate the previous state) so `s.zones[zoneId]`
+        // selectors see the change.
+        zones[zoneId] = {
+          ...prevZone,
+          stages: {
+            ...prevZone.stages,
+            [stageId]: {
+              stageId,
+              stars: nextStars,
+              bestScore: nextScore,
+              attempts: (prev?.attempts ?? 0) + 1,
+              completedAt: Date.now(),
+            },
           },
         }
-        zones[zoneId] = zone
         set({ zones })
       },
 
-      addCoins: (n) =>
+      addCoins: (n) => {
+        // Never let a bad value (NaN/Infinity) poison the saved balance.
+        if (!Number.isFinite(n)) return
         set({
           coins: get().coins + n,
           totalCoinsEarned: get().totalCoinsEarned + Math.max(0, n),
-        }),
+        })
+      },
 
       spendCoins: (n) => {
         const { coins } = get()
@@ -236,19 +248,23 @@ export const useProgress = create<ProgressState>()(
       bumpStreakIfNeeded: () => {
         const today = todayKey()
         const { stats } = get()
-        if (stats.lastStreakDate === today) return
-        const yesterday = new Date(Date.now() - 86400000)
-          .toISOString()
-          .slice(0, 10)
+        if (stats.lastStreakDate && stats.lastStreakDate >= today) return
         const newStreak =
-          stats.lastStreakDate === yesterday ? stats.streakDays + 1 : 1
+          stats.lastStreakDate === addDays(today, -1) ? stats.streakDays + 1 : 1
         set({
           stats: {
             ...stats,
             streakDays: newStreak,
+            bestStreak: Math.max(stats.bestStreak ?? 0, stats.streakDays, newStreak),
             lastStreakDate: today,
           },
         })
+      },
+
+      markZoneMastered: (zoneId) => {
+        const zone = get().zones[zoneId]
+        if (!zone || zone.masteredAt) return
+        set({ zones: { ...get().zones, [zoneId]: { ...zone, masteredAt: Date.now() } } })
       },
 
       toggleSound: () => set({ soundEnabled: !get().soundEnabled }),
@@ -330,6 +346,9 @@ export const useProgress = create<ProgressState>()(
       tickPlay: (seconds) => {
         const add = Math.max(0, seconds)
         if (add <= 0) return
+        // Learning right now counts toward today's streak, even if the tab has
+        // been open since yesterday.
+        get().bumpStreakIfNeeded()
         const today = todayKey()
         const st = get()
         const sameDay = st.playDate === today
@@ -355,6 +374,13 @@ export const useProgress = create<ProgressState>()(
     }),
     {
       name: 'summerquest-progress-v1',
+      // v1: local-time day keys + furniture re-fit to the 10×10 room (see migrations.ts).
+      version: 1,
+      migrate: (persisted, version) => {
+        let p = (persisted ?? {}) as PersistedProgressV0
+        if (version < 1) p = migrateV0toV1(p)
+        return p as unknown as ProgressState
+      },
       // Shallow-merge like the default, but deep-merge equippedAccessories so a save
       // that predates (or partially has) those slots always keeps all four defined.
       merge: (persisted, current) => {

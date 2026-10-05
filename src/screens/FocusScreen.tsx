@@ -8,12 +8,17 @@ import { seedSampleWeek } from '../tutoring/devSeed'
 import { Card, Button, PageHeader, EmptyState, ProgressBar, Pill } from '../components/ui'
 import { accuracyTone } from '../lib/theme'
 import { useEntrance } from '../lib/motion'
+import { playableStageId } from '../lib/stageLocks'
 
 // ── Row sub-component ──────────────────────────────────────────────────────────
 
 /** One weakness, with a tone-coded accuracy meter and Practice/Learn CTAs. */
 function FocusRow({ f }: { f: FocusItem }) {
   const zone = getZone(skillMeta(f.skillId).zoneId)
+  const zoneProgress = useProgress((s) => s.zones[f.zoneId])
+  const practiceZone = getZone(f.zoneId)
+  // Practice the recommended stage if it's unlocked, else the first open step.
+  const practiceStage = practiceZone ? playableStageId(practiceZone, f.practiceStageId, zoneProgress) : f.practiceStageId
   const tone = accuracyTone(f.accuracy)
 
   // The trickiest spots (red) get a "Trickiest" badge; the ones approaching
@@ -54,7 +59,7 @@ function FocusRow({ f }: { f: FocusItem }) {
           <Button
             variant="primary"
             size="md"
-            to={`/play/${f.zoneId}/${f.practiceStageId}`}
+            to={`/play/${f.zoneId}/${practiceStage}`}
             className="flex-1 justify-center"
           >
             🎮 Practice
@@ -100,7 +105,9 @@ export default function FocusScreen() {
               message="Play some quizzes this week and your personalized focus plan will sprout right here."
               cta={{ label: 'Go play a quiz →', to: '/map' }}
             />
-            {import.meta.env.DEV && (
+            {/* Developer helper — opt-in only (VITE_DEV_TOOLS=true in .env.local), since the
+                launchers run the dev server and a child must never see this button. */}
+            {import.meta.env.VITE_DEV_TOOLS === 'true' && (
               <div className="flex justify-center mt-2">
                 <Button
                   variant="ghost"

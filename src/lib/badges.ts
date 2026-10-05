@@ -26,7 +26,7 @@ export interface BadgeStatus extends Badge {
 /** Minimal shape this module needs from the progress store (kept local to avoid coupling). */
 export interface BadgeCtx {
   zones: Record<string, { stages: Record<string, { stars: number }> }>
-  stats: { problemsAnswered: number; streakDays: number }
+  stats: { problemsAnswered: number; streakDays: number; bestStreak?: number }
   /** Cumulative coins ever earned (monotonic) so a "collector" badge can't be un-earned by spending. */
   totalCoinsEarned: number
 }
@@ -38,6 +38,7 @@ const ZONE_BADGES: { zoneId: string; emoji: string; title: string }[] = [
   { zoneId: 'place-value-plateau', emoji: '🔢', title: 'Place Value Pro' },
   { zoneId: 'measurement-marsh', emoji: '📏', title: 'Measurement Master' },
   { zoneId: 'geometry-grove', emoji: '🔷', title: 'Geometry Genius' },
+  { zoneId: 'data-delta', emoji: '📊', title: 'Data Detective' },
   { zoneId: 'word-problem-woods', emoji: '🧩', title: 'Word Problem Whiz' },
   { zoneId: 'reading-reef', emoji: '📖', title: 'Reading Ranger' },
   { zoneId: 'writing-workshop', emoji: '✍️', title: 'Writing Warrior' },
@@ -129,7 +130,8 @@ export function computeBadges(ctx: BadgeCtx): BadgeStatus[] {
       emoji: '🔥',
       title: 'Week Warrior',
       description: 'Play 7 days in a row.',
-      earned: ctx.stats.streakDays >= 7,
+      // Best-ever streak, so the badge isn't taken away when a streak later breaks.
+      earned: Math.max(ctx.stats.streakDays, ctx.stats.bestStreak ?? 0) >= 7,
     },
     {
       id: 'century-club',

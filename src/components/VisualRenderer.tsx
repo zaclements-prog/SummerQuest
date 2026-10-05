@@ -66,11 +66,12 @@ function ArrayVisual({
 }) {
   const itemSize = size === 'sm' ? 18 : size === 'md' ? 28 : 36
   const fruit = visual.itemEmoji ?? '🍎'
+  // Default caption names the array ("3 × 4"); providers can override it (e.g. division,
+  // where "rows × cols" would print the quotient) or pass '' to hide it.
+  const caption = visual.label ?? `${visual.rows} × ${visual.cols}`
   return (
     <div className="bg-white/15 rounded-3xl p-4 inline-block">
-      <div className="text-center kid-text text-sm mb-2 opacity-80">
-        {visual.rows} × {visual.cols}
-      </div>
+      {caption && <div className="text-center kid-text text-sm mb-2 opacity-80">{caption}</div>}
       <div className="flex flex-col gap-1 items-center">
         {Array.from({ length: visual.rows }).map((_, r) => (
           <div key={r} className="flex gap-1">
@@ -192,18 +193,20 @@ function FractionShape({
       </svg>
     )
   }
-  // rect: horizontal stacked bars
+  // rect: the whole is always the same size (size × size), cut into `denominator`
+  // equal horizontal strips — so 1/2 and 2/4 shade exactly the same area.
   const w = size
-  const h = Math.max(20, size / Math.max(denominator, 4))
+  const total = size
+  const h = total / denominator
   return (
-    <svg width={w} height={h * denominator}>
+    <svg width={w} height={total}>
       {Array.from({ length: denominator }).map((_, i) => (
         <rect
           key={i}
-          x="0"
-          y={i * h}
-          width={w}
-          height={h - 2}
+          x="1"
+          y={i * h + 1}
+          width={w - 2}
+          height={Math.max(1, h - 2)}
           fill={i < numerator ? '#fbbf24' : 'rgba(255,255,255,0.25)'}
           stroke="white"
           strokeWidth="2"
