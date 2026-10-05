@@ -46,7 +46,11 @@
     },
     {
       "stepId": "unlikebottom",
-      "text": "When the bottom numbers are different, think about the size of the pieces. The fewer pieces a whole is cut into, the bigger each piece is. So halves are bigger pieces than thirds."
+      "text": "When the top numbers are the same, look at the size of the pieces. The fewer pieces a whole is cut into, the bigger each piece is. So one half is more than one third. This trick only works when the tops match!"
+    },
+    {
+      "stepId": "matchbottoms",
+      "text": "When the tops and the bottoms are both different, the fewer pieces trick can fool you. Make the bottoms match first. Two fifths is the same as four tenths, and four tenths is less than seven tenths. So seven tenths is bigger."
     }
   ],
   "placeValue": [
