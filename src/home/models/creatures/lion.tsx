@@ -1,113 +1,95 @@
-import { Leg, Part, Eye } from '../parts'
+import { TCapsule, TSphere } from '../../../toon/shapes'
+import { Arm, Blush, Eye, Ink, Leg, Smile, Wag, faceYaw, onFace } from '../parts'
+
+const HC = [0, 0.69, 0.04] as const
+const HR = [0.25, 0.23, 0.23] as const
+
+// Mane puffs ringing the face (angle from straight up, radius from the head centre, size).
+const MANE: [number, number, number][] = Array.from({ length: 10 }, (_, i) => {
+  const a = (i / 10) * Math.PI * 2
+  const low = Math.max(0, -Math.cos(a)) // smaller puffs under the chin
+  return [a, 0.245 - low * 0.03, 0.11 - low * 0.03]
+})
 
 /**
- * Lion — anchor-safe rebuild. Body stays at (0,0.42,0) and head at (0,0.64,0.44)
- * exactly as the original, so the head/face/back/body anchors keep lining up.
- * Only the geometry quality is upgraded: rounded Parts, glossy Eyes, a full
- * fluffy two-tone mane ring around the head, rounded muzzle and a tufted tail.
+ * Lion — a chibi lion cub: a golden face framed by a big fluffy rust-orange
+ * mane (a back puff plus a scalloped ring of tufts), little round ears poking
+ * out on top, a cream muzzle, and a tail with a dark tuft.
  */
 export function Lion() {
-  const tan = '#d6a44c'
-  const cream = '#f3dba6'
-  const mane = '#9c5a2c'
-  const maneDark = '#7c451f'
-  const dark = '#3a2a20'
-
-  // Mane ring centered on the head/neck join, behind the face so the head
-  // (and the hat/face anchors) stay clear at the front.
-  const maneCx = 0
-  const maneCy = 0.7
-  const maneCz = 0.3
-
+  const gold = '#ffc45e'
+  const mane = '#df7638'
+  const cream = '#fff1d2'
+  const brown = '#8a4a2c'
   return (
     <group>
-      {/* body + lighter belly */}
-      <Part position={[0, 0.42, 0]} args={[0.5, 0.42, 0.72]} color={tan} />
-      <Part position={[0, 0.32, 0.18]} args={[0.34, 0.28, 0.34]} color={cream} castShadow={false} />
-      {/* chest rising toward the mane */}
-      <Part position={[0, 0.5, 0.34]} args={[0.36, 0.34, 0.2]} color={tan} />
+      <Leg x={-0.1} y={0.17} color={gold} footColor={cream} phase={0} />
+      <Leg x={0.1} y={0.17} color={gold} footColor={cream} phase={Math.PI} />
 
-      {/* ---- MANE: outer dark ring + inner warm ring of fluffy lobes ---- */}
-      {Array.from({ length: 12 }, (_, i) => {
-        const a = (i / 12) * Math.PI * 2
-        const r = 0.34
-        const x = maneCx + Math.cos(a) * r
-        const y = maneCy + Math.sin(a) * r
-        const s = 0.2 + 0.04 * Math.sin(i * 1.7)
-        return (
-          <mesh key={`maneOut${i}`} castShadow position={[x, y, maneCz - 0.04]}>
-            <sphereGeometry args={[s, 12, 12]} />
-            <meshStandardMaterial color={maneDark} roughness={0.78} />
-          </mesh>
-        )
-      })}
-      {Array.from({ length: 10 }, (_, i) => {
-        const a = (i / 10) * Math.PI * 2 + 0.28
-        const r = 0.27
-        const x = maneCx + Math.cos(a) * r
-        const y = maneCy + Math.sin(a) * r
-        const s = 0.17 + 0.03 * Math.cos(i * 2.1)
-        return (
-          <mesh key={`maneIn${i}`} castShadow position={[x, y, maneCz + 0.08]}>
-            <sphereGeometry args={[s, 12, 12]} />
-            <meshStandardMaterial color={mane} roughness={0.74} />
-          </mesh>
-        )
-      })}
-      {/* a couple of fuller lobes under the chin for a beard-y look */}
-      <mesh castShadow position={[0, 0.4, 0.42]}>
-        <sphereGeometry args={[0.16, 12, 12]} />
-        <meshStandardMaterial color={mane} roughness={0.76} />
-      </mesh>
+      <TSphere position={[0, 0.33, 0]} scale={[0.22, 0.21, 0.2]} color={gold} segments={20}>
+        <Ink />
+      </TSphere>
+      <TSphere position={[0, 0.3, 0.1]} scale={[0.15, 0.15, 0.115]} color={cream} emissive={cream} emissiveIntensity={0.22} segments={16} castShadow={false} />
 
-      {/* head (kept at original position, sitting inside the mane ring) */}
-      <Part position={[0, 0.64, 0.44]} args={[0.4, 0.38, 0.34]} color={tan} />
-      {/* soft cheeks */}
-      {[-1, 1].map((s) => (
-        <mesh key={`cheek${s}`} position={[s * 0.16, 0.58, 0.58]}>
-          <sphereGeometry args={[0.1, 12, 12]} />
-          <meshStandardMaterial color={cream} roughness={0.6} />
-        </mesh>
+      <Arm x={-0.18} y={0.44} z={0.02} color={gold} pawColor={cream} phase={Math.PI} />
+      <Arm x={0.18} y={0.44} z={0.02} color={gold} pawColor={cream} phase={0} />
+
+      {/* tail with a dark tuft */}
+      <Wag position={[0, 0.2, -0.17]} amp={0.3}>
+        <group rotation={[2.25, 0, 0]}>
+          <TCapsule radius={0.038} length={0.22} position={[0, -0.13, 0]} color={gold} segments={10}>
+            <Ink />
+          </TCapsule>
+          <TSphere position={[0, -0.27, 0]} scale={[0.07, 0.08, 0.07]} color={brown} segments={12}>
+            <Ink />
+          </TSphere>
+        </group>
+      </Wag>
+
+      {/* mane: a big back puff and a ring of tufts around the face */}
+      <TSphere position={[0, 0.7, -0.05]} scale={[0.31, 0.3, 0.24]} color={mane} segments={20}>
+        <Ink />
+      </TSphere>
+      {MANE.map(([a, r, s]) => (
+        <TSphere
+          key={a}
+          position={[Math.sin(a) * r, HC[1] + Math.cos(a) * r, -0.01]}
+          scale={[s, s, s * 0.85]}
+          color={mane}
+          segments={14}
+        >
+          <Ink />
+        </TSphere>
       ))}
 
-      {/* rounded muzzle + nose */}
-      <Part position={[0, 0.57, 0.63]} args={[0.22, 0.18, 0.16]} color={cream} castShadow={false} />
-      <mesh position={[0, 0.6, 0.72]}>
-        <sphereGeometry args={[0.05, 14, 14]} />
-        <meshStandardMaterial color={dark} roughness={0.32} />
-      </mesh>
-
-      {/* glossy amber eyes */}
-      <Eye position={[-0.11, 0.71, 0.6]} size={0.062} color="#5a3414" />
-      <Eye position={[0.11, 0.71, 0.6]} size={0.062} color="#5a3414" />
-
-      {/* rounded ears with inner tone, peeking from the mane */}
-      {[-0.15, 0.15].map((x) => (
-        <group key={`ear${x}`} position={[x, 0.84, 0.42]}>
-          <mesh castShadow>
-            <sphereGeometry args={[0.075, 14, 14]} />
-            <meshStandardMaterial color={tan} roughness={0.62} />
-          </mesh>
-          <mesh position={[0, 0, 0.05]}>
-            <sphereGeometry args={[0.042, 12, 12]} />
-            <meshStandardMaterial color={dark} roughness={0.6} />
-          </mesh>
+      {/* round ears on top of the mane */}
+      {[-1, 1].map((s) => (
+        <group key={`ear${s}`} position={[s * 0.17, 0.93, 0.02]} rotation={[0, 0, -s * 0.3]}>
+          <TSphere scale={[0.07, 0.065, 0.045]} color={gold} segments={12}>
+            <Ink />
+          </TSphere>
+          <TSphere position={[0, -0.004, 0.026]} scale={[0.04, 0.038, 0.022]} color={cream} segments={10} castShadow={false} />
         </group>
       ))}
 
-      {/* legs (animated: diagonal pairs swing together) with rounded paws */}
-      <Leg x={-0.16} z={0.26} color={tan} w={0.14} foot={{ w: 0.16, h: 0.08, d: 0.18, z: 0.02 }} phase={0} />
-      <Leg x={0.16} z={0.26} color={tan} w={0.14} foot={{ w: 0.16, h: 0.08, d: 0.18, z: 0.02 }} phase={Math.PI} />
-      <Leg x={-0.16} z={-0.26} color={tan} w={0.14} foot={{ w: 0.16, h: 0.08, d: 0.18, z: 0.02 }} phase={Math.PI} />
-      <Leg x={0.16} z={-0.26} color={tan} w={0.14} foot={{ w: 0.16, h: 0.08, d: 0.18, z: 0.02 }} phase={0} />
+      {/* face */}
+      <TSphere position={[...HC]} scale={[...HR]} color={gold} segments={24}>
+        <Ink />
+      </TSphere>
+      {[-1, 1].map((s) => (
+        <TSphere key={`m${s}`} position={[s * 0.055, 0.615, 0.205]} scale={[0.078, 0.065, 0.068]} color={cream} emissive={cream} emissiveIntensity={0.15} segments={14}>
+          <Ink />
+        </TSphere>
+      ))}
+      <TSphere position={[0, 0.655, 0.27]} scale={[0.04, 0.03, 0.028]} color={brown} segments={10} castShadow={false} />
+      <Smile position={[0, 0.6, 0.27]} width={0.028} cat pitch={-0.2} />
 
-      {/* tail with a dark tufted tip */}
-      <Part position={[0, 0.46, -0.46]} args={[0.08, 0.08, 0.32]} color={tan} rotation={[0.6, 0, 0]} />
-      <Part position={[0, 0.58, -0.58]} args={[0.07, 0.16, 0.07]} color={tan} rotation={[0.3, 0, 0]} />
-      <mesh castShadow position={[0, 0.66, -0.6]}>
-        <sphereGeometry args={[0.09, 12, 12]} />
-        <meshStandardMaterial color={maneDark} roughness={0.78} />
-      </mesh>
+      {[-1, 1].map((s) => (
+        <group key={s}>
+          <Eye position={onFace(HC, HR, s * 0.095, 0.03, -0.013)} size={0.058} yaw={faceYaw(HC, HR, s * 0.095, 0.03)} />
+          <Blush position={onFace(HC, HR, s * 0.16, -0.045, -0.004)} yaw={faceYaw(HC, HR, s * 0.16, -0.045)} color="#ff8a96" />
+        </group>
+      ))}
     </group>
   )
 }

@@ -1,98 +1,60 @@
-import { Leg, Part, Eye } from '../parts'
+import { TSphere } from '../../../toon/shapes'
+import { TOON } from '../../../toon/palette'
+import { Arm, Blush, Eye, Ink, Leg, Smile, faceYaw, onFace } from '../parts'
+
+const HC = [0, 0.625, 0.03] as const
+const HR = [0.31, 0.225, 0.26] as const
 
 /**
- * Frog — anchor-safe rebuild. The wide squat body stays centered at (0,0.24,0)
- * with the same 0.72-wide footprint, the bulging eyes stay high on top at
- * y~0.46-0.49 (front z~0.16), the belly stays forward and the mouth line stays
- * at (0,0.16,~0.29) — so the frog's head/face/back/body anchors keep lining up.
- * Only the geometry quality is upgraded: rounded Parts instead of hard boxes,
- * glossy Eyes with green eyelid domes, a pale rounded belly, a friendly curved
- * mouth, rounded cheeks, nostrils, and wide webbed feet.
+ * Frog — a chibi frog: a wide, round lime head with two big eye bulges on top
+ * (glossy eyes peeking out of them), a wide happy smile, rosy cheeks, darker
+ * spots on the back of the head, a chubby pale tummy and wide light-green feet.
  */
 export function Frog() {
-  const green = '#5bbf5b'
-  const greenDark = '#46a047'
-  const belly = '#cdeeac'
-  const dark = '#1c2a1c'
-  const cheek = '#7fd07f'
-
+  const green = '#7fd46a'
+  const greenDark = '#5cb85a'
+  const light = '#b6ea95'
+  const belly = '#f0fbd6'
   return (
     <group>
-      {/* wide squat rounded body (kept at original center + footprint) */}
-      <Part position={[0, 0.24, 0]} args={[0.72, 0.36, 0.56]} color={green} />
-      {/* rounded back hump for a fuller, smoother silhouette */}
-      <Part position={[0, 0.36, -0.06]} args={[0.6, 0.26, 0.46]} color={green} castShadow={false} />
+      <Leg x={-0.11} y={0.16} color={green} footColor={light} foot={[0.1, 0.045, 0.12]} phase={0} />
+      <Leg x={0.11} y={0.16} color={green} footColor={light} foot={[0.1, 0.045, 0.12]} phase={Math.PI} />
 
-      {/* pale rounded belly, forward and low */}
-      <Part position={[0, 0.17, 0.27]} args={[0.52, 0.26, 0.12]} color={belly} castShadow={false} />
-      {/* soft chin/throat patch */}
-      <Part position={[0, 0.13, 0.2]} args={[0.34, 0.12, 0.18]} color={belly} castShadow={false} />
+      <TSphere position={[0, 0.3, 0]} scale={[0.225, 0.2, 0.205]} color={green} segments={20}>
+        <Ink />
+      </TSphere>
+      <TSphere position={[0, 0.28, 0.1]} scale={[0.16, 0.145, 0.12]} color={belly} emissive={belly} emissiveIntensity={0.22} segments={16} castShadow={false} />
 
-      {/* soft cheeks flanking the mouth */}
-      {[-1, 1].map((s) => (
-        <mesh key={`cheek${s}`} position={[s * 0.27, 0.2, 0.21]} castShadow>
-          <sphereGeometry args={[0.09, 14, 14]} />
-          <meshStandardMaterial color={cheek} roughness={0.6} />
-        </mesh>
+      <Arm x={-0.18} y={0.4} z={0.03} color={green} pawColor={light} length={0.085} phase={Math.PI} />
+      <Arm x={0.18} y={0.4} z={0.03} color={green} pawColor={light} length={0.085} phase={0} />
+
+      {/* wide round head */}
+      <TSphere position={[...HC]} scale={[...HR]} color={green} segments={24}>
+        <Ink />
+      </TSphere>
+      {/* spots on the back of the head */}
+      {[
+        [-0.1, 0.76, -0.12, 0.05],
+        [0.12, 0.74, -0.15, 0.04],
+        [0.0, 0.7, -0.22, 0.035],
+      ].map(([x, y, z, r]) => (
+        <TSphere key={x} position={[x, y, z]} scale={[r, r * 0.6, r]} color={greenDark} segments={10} castShadow={false} />
       ))}
 
-      {/* big bulging eyes on top of the head — green eyelid dome + glossy Eye */}
-      {[-0.2, 0.2].map((x) => (
-        <group key={`eye${x}`}>
-          {/* green eyelid dome under/around the eyeball */}
-          <mesh position={[x, 0.45, 0.14]} castShadow>
-            <sphereGeometry args={[0.135, 16, 16]} />
-            <meshStandardMaterial color={green} roughness={0.6} />
-          </mesh>
-          {/* lower eyelid lid ridge */}
-          <mesh position={[x, 0.4, 0.2]}>
-            <sphereGeometry args={[0.1, 14, 14]} />
-            <meshStandardMaterial color={greenDark} roughness={0.6} />
-          </mesh>
-          {/* glossy bulging eyeball sitting high and forward */}
-          <Eye position={[x, 0.49, 0.24]} size={0.092} />
+      {/* eye bulges with big glossy eyes */}
+      {[-1, 1].map((s) => (
+        <group key={s}>
+          <TSphere position={[s * 0.12, 0.8, 0.1]} scale={[0.1, 0.097, 0.092]} color={green} segments={18}>
+            <Ink />
+          </TSphere>
+          <Eye position={[s * 0.123, 0.805, 0.174]} size={0.064} yaw={s * 0.22} pitch={-0.12} />
+          <Blush position={onFace(HC, HR, s * 0.205, -0.045, -0.004)} yaw={faceYaw(HC, HR, s * 0.205, -0.045)} size={0.06} />
+          <TSphere position={onFace(HC, HR, s * 0.035, 0.0, -0.002)} scale={0.011} color={TOON.eye} segments={6} castShadow={false} />
         </group>
       ))}
 
-      {/* wide friendly mouth — a gently curved dark line with up-turned corners */}
-      <Part position={[0, 0.155, 0.285]} args={[0.42, 0.025, 0.04]} color={dark} castShadow={false} />
-      {[-1, 1].map((s) => (
-        <Part
-          key={`smile${s}`}
-          position={[s * 0.24, 0.175, 0.27]}
-          args={[0.1, 0.025, 0.04]}
-          color={dark}
-          castShadow={false}
-          rotation={[0, s * 0.5, s * 0.6]}
-        />
-      ))}
-      {/* nostrils */}
-      {[-0.06, 0.06].map((x) => (
-        <mesh key={`nostril${x}`} position={[x, 0.27, 0.285]}>
-          <sphereGeometry args={[0.018, 8, 8]} />
-          <meshStandardMaterial color={greenDark} roughness={0.5} />
-        </mesh>
-      ))}
-
-      {/* front splayed legs with wide flat webbed feet */}
-      <Leg x={-0.3} z={0.24} color={green} w={0.11} h={0.14} depth={0.18}
-        foot={{ w: 0.22, h: 0.05, d: 0.24, z: 0.06 }} phase={0} swing={0.4} />
-      <Leg x={0.3} z={0.24} color={green} w={0.11} h={0.14} depth={0.18}
-        foot={{ w: 0.22, h: 0.05, d: 0.24, z: 0.06 }} phase={Math.PI} swing={0.4} />
-
-      {/* back legs — bigger, splayed wide with broad webbed feet */}
-      <Leg x={-0.34} z={-0.16} color={green} w={0.13} h={0.14} depth={0.2}
-        foot={{ w: 0.26, h: 0.05, d: 0.28, z: 0.04 }} phase={Math.PI} swing={0.4} />
-      <Leg x={0.34} z={-0.16} color={green} w={0.13} h={0.14} depth={0.2}
-        foot={{ w: 0.26, h: 0.05, d: 0.28, z: 0.04 }} phase={0} swing={0.4} />
-
-      {/* darker green dappled spots on the back */}
-      {[[-0.18, 0.42, -0.02], [0.16, 0.45, -0.1], [0, 0.4, 0.04]].map((p, i) => (
-        <mesh key={`spot${i}`} position={p as [number, number, number]}>
-          <sphereGeometry args={[0.05, 10, 10]} />
-          <meshStandardMaterial color={greenDark} roughness={0.62} />
-        </mesh>
-      ))}
+      {/* wide smile */}
+      <Smile position={onFace(HC, HR, 0, -0.06, 0.004)} width={0.085} pitch={-0.25} />
     </group>
   )
 }
