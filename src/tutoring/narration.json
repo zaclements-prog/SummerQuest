@@ -106,7 +106,7 @@
     },
     {
       "stepId": "read",
-      "text": "To read a bar, look at how high its top reaches, then slide across to the scale on the side. That number tells you the amount for that bar."
+      "text": "To read a bar, look at the number right on top of it. That number tells you the amount for that bar. To compare, look at the heights. The tallest bar has the biggest number."
     }
   ],
   "wordProblem": [

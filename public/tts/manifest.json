@@ -83,10 +83,6 @@
     "file": "tts/dataGraph/bars.mp3",
     "hash": "2678b57289"
   },
-  "dataGraph/read": {
-    "file": "tts/dataGraph/read.mp3",
-    "hash": "1f486e4a45"
-  },
   "wordProblem/read": {
     "file": "tts/wordProblem/read.mp3",
     "hash": "4309ab9f26"
