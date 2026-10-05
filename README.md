@@ -20,7 +20,8 @@ Everything runs locally in the browser; progress is saved in `localStorage`.
   lesson + practice stage.
 - **Daily learning goal** — 2 × 15 minutes of active learning per day earns bonus coins.
 - **3D Home** — buy furniture and decorate a room; become (and dress up) a creature.
-- **3D World (beta)** — a voxel island with an area for every subject. Walk up
+- **3D World (beta)** — a storybook toon island with a town, a river and an area
+  for every subject. Walk up
   to an NPC and press E to pick a stage and play it without leaving the World;
   you come back where you stood. The **Schoolhouse** (owl teacher) has the
   Daily Challenge, This Week's Focus and all Tutor lessons; the **Library**
@@ -73,8 +74,9 @@ Without the server everything still works: writing is graded offline.
 
 ### Developer helpers
 
-- `?studio=creatures|furniture|accessories` on `/home`, `?studio=1` on `/world` —
-  model galleries for tuning.
+- `?studio=creatures|anchors|furniture|accessories` on `/home` — model galleries.
+- `?studio=all` or `?studio=<areaId>` on `/world` — orbit the island or one area
+  (`&cam=dx,dy,dz` sets the camera offset; `?studio=at&x=..&z=..` looks at any point).
 - `VITE_DEV_TOOLS=true` in `.env.local` shows "Seed sample week" on
   This Week's Focus (fills in fake attempts — never enable it for the child).
 - `npm run tts` regenerates lesson narration MP3s after editing lesson text
@@ -114,10 +116,29 @@ src/
   screens/             map, zone, game runner, daily, tutor, focus, progress, badges, parent…
   tutoring/            lessons, skill taxonomy (skill → zone/lesson/practice stage)
   home/                3D Home (react-three-fiber): models, world, HUD
-  world/               3D World (beta): layout, areas, NPC gateways, movement
+  world/               3D World (beta): layout, terrain, areas, NPC gateways, movement
+  toon/                toon art kit: palette, toon materials + outlines, shapes, props
   store/               Zustand stores persisted to localStorage (+ save migrations)
   components/          VisualRenderer, charts, shared UI kit (components/ui)
 ```
+
+### Art style (toon kit)
+
+Everything 3D is built in code (no model, texture or font downloads, so the
+offline single file keeps working) from `src/toon`:
+
+- `TOON` palette — soft sunny pastels shared by the World, Home and creatures.
+- `toonMaterial()` — cached `MeshToonMaterial` with a 4-band ramp; the Canvas uses
+  `flat` (no tone mapping) so colors land as authored.
+- Primitives (`TBox`, `TBlob`, `TCyl`, `TCone`, `TCapsule`, `TSphere`, `TTorus`)
+  with optional thin outlines (`outline`) and faceted shading (`flat`).
+- Props (`Tree`, `Bush`, `Rock`, `Lamp`, `Fence`, `Bench`…) seeded for
+  determinism, and `ToonInstances` for anything repeated.
+
+The World's layout (areas, NPC spots, paths, river, bridges, colliders) lives in
+`src/world/worldLayout.ts`; ground, scatter, colliders and tests all read it.
+Each area draws itself in `src/world/areas/<Area>.tsx` with its solid parts in
+`src/world/areas/colliders/<id>.ts`.
 
 ### Adding a zone
 
@@ -155,7 +176,7 @@ in a row retire a fact from the boost.
 - [x] 3D Home — decorate your room and dress your creature
 - [x] Daily Challenge with bonus rewards
 - [x] Weekly focus: track missed skills and recommend lessons/practice
-- [x] 3D World — voxel island with all 12 areas, in-world stage launching,
+- [x] 3D World — toon island with all 12 areas, in-world stage launching,
       Schoolhouse and Library hubs
 - [ ] Make the World the main hub (replace the 2D map; fold the Home room into
       the World's house)
