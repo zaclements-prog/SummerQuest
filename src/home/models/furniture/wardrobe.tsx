@@ -1,37 +1,32 @@
+import { TBox, TSphere } from '../../../toon/shapes'
+import { F } from './_palette'
+import { Feet, Heart, Knob, Ol } from './_kit'
+
+const DOOR_Z = 0.36
+
+/** Wardrobe (2×1): a tall sky-blue wardrobe with paneled cream doors, a crown and a heart medallion. */
 export function Wardrobe() {
-  const wood = '#8a5a36'
-  const dark = '#5f3d22'
-  const knob = '#2e1f12'
   return (
     <group>
-      {/* tall closet body — w(x) 1.6 × h 1.8 × d(z) 0.5 */}
-      <mesh castShadow position={[0, 0.92, 0]}>
-        <boxGeometry args={[1.6, 1.78, 0.5]} />
-        <meshStandardMaterial color={wood} />
-      </mesh>
-      {/* vertical seam between the two doors */}
-      <mesh position={[0, 0.92, 0.26]}>
-        <boxGeometry args={[0.03, 1.6, 0.02]} />
-        <meshStandardMaterial color={dark} />
-      </mesh>
-      {/* two door knobs flanking the seam */}
-      {[-0.12, 0.12].map((x) => (
-        <mesh key={`knob${x}`} castShadow position={[x, 0.92, 0.28]}>
-          <sphereGeometry args={[0.045, 10, 10]} />
-          <meshStandardMaterial color={knob} />
-        </mesh>
-      ))}
-      {/* short legs */}
-      {([
-        [-0.68, -0.18],
-        [0.68, -0.18],
-        [-0.68, 0.18],
-        [0.68, 0.18],
-      ] as [number, number][]).map(([x, z]) => (
-        <mesh key={`leg-${x}-${z}`} castShadow position={[x, 0.015, z]}>
-          <boxGeometry args={[0.1, 0.06, 0.1]} />
-          <meshStandardMaterial color={dark} />
-        </mesh>
+      <Feet x={0.78} z={0.28} h={0.1} r={0.07} />
+      <TBox size={[1.8, 0.12, 0.8]} radius={0.04} position={[0, 0.15, -0.04]} color={F.wood} castShadow={false} />
+      <TBox size={[1.76, 1.76, 0.78]} radius={0.07} position={[0, 1.08, -0.04]} color={F.sky}>
+        <Ol />
+      </TBox>
+      {/* crown with a heart medallion */}
+      <TBox size={[1.88, 0.14, 0.82]} radius={0.05} position={[0, 2.0, -0.04]} color={F.woodLight}>
+        <Ol />
+      </TBox>
+      <TSphere position={[0, 2.16, 0.3]} scale={[0.16, 0.14, 0.05]} color={F.white} segments={14} castShadow={false} />
+      <Heart position={[0, 2.17, 0.355]} size={0.16} color={F.pink} />
+      {/* doors with raised panels */}
+      {[-0.42, 0.42].map((x) => (
+        <group key={x}>
+          <TBox size={[0.8, 1.58, 0.05]} radius={0.03} position={[x, 1.08, DOOR_Z]} color={F.cream} castShadow={false} />
+          <TBox size={[0.6, 0.62, 0.03]} radius={0.025} position={[x, 1.42, DOOR_Z + 0.03]} color={F.blush} castShadow={false} />
+          <TBox size={[0.6, 0.62, 0.03]} radius={0.025} position={[x, 0.72, DOOR_Z + 0.03]} color={F.blush} castShadow={false} />
+          <Knob position={[x - Math.sign(x) * 0.32, 1.08, DOOR_Z + 0.03]} r={0.05} />
+        </group>
       ))}
     </group>
   )

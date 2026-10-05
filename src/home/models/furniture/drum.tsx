@@ -1,40 +1,35 @@
+import { TBox, TCyl, TSphere, TTorus } from '../../../toon/shapes'
+import { F } from './_palette'
+import { Ol } from './_kit'
+
+const R = 0.3
+const MID = 0.215 // shell center height
+const CORDS = Array.from({ length: 10 }, (_, i) => ({ a: (i / 10) * Math.PI * 2, tilt: i % 2 ? 0.55 : -0.55 }))
+
+/** Toy drum (1×1): a red snare with sky rims, a zig-zag cord and two drumsticks resting on top. */
 export function Drum() {
-  const body = '#d0473a'
-  const skin = '#f0e6d0'
-  const accent = '#f4d23a'
-  const stick = '#c2a36c'
   return (
     <group>
-      {/* drum body */}
-      <mesh castShadow position={[0, 0.22, 0]}>
-        <cylinderGeometry args={[0.32, 0.32, 0.4, 22]} />
-        <meshStandardMaterial color={body} />
-      </mesh>
-      {/* top skin */}
-      <mesh castShadow position={[0, 0.43, 0]}>
-        <cylinderGeometry args={[0.33, 0.33, 0.04, 22]} />
-        <meshStandardMaterial color={skin} />
-      </mesh>
-      {/* zig-zag accent marks around the side */}
-      {[0, 1, 2, 3, 4, 5].map((i) => {
-        const a = (i / 6) * Math.PI * 2
-        return (
-          <mesh
-            key={`accent-${i}`}
-            position={[Math.sin(a) * 0.32, 0.22, Math.cos(a) * 0.32]}
-            rotation={[0, a, i % 2 === 0 ? 0.5 : -0.5]}
-          >
-            <boxGeometry args={[0.04, 0.18, 0.02]} />
-            <meshStandardMaterial color={accent} />
-          </mesh>
-        )
-      })}
-      {/* two drumsticks leaning against the drum */}
-      {[-0.34, 0.34].map((x) => (
-        <mesh key={`stick${x}`} castShadow position={[x, 0.34, 0.26]} rotation={[0.6, 0, x < 0 ? 0.3 : -0.3]}>
-          <cylinderGeometry args={[0.022, 0.022, 0.66, 8]} />
-          <meshStandardMaterial color={stick} />
-        </mesh>
+      <TCyl radiusTop={R} height={0.34} position={[0, MID, 0]} color={F.red} segments={20}>
+        <Ol />
+      </TCyl>
+      <TCyl radiusTop={R - 0.012} height={0.02} position={[0, MID + 0.175, 0]} color={F.cream} segments={20} castShadow={false} />
+      <TTorus radius={R} tube={0.042} rotation={[Math.PI / 2, 0, 0]} position={[0, MID + 0.17, 0]} color={F.sky} castShadow={false}>
+        <Ol />
+      </TTorus>
+      <TTorus radius={R} tube={0.042} rotation={[Math.PI / 2, 0, 0]} position={[0, 0.045, 0]} color={F.sky} castShadow={false} />
+      {/* zig-zag cord */}
+      {CORDS.map(({ a, tilt }) => (
+        <group key={a} rotation={[0, a, 0]}>
+          <TBox size={[0.032, 0.3, 0.02]} radius={0.008} position={[0, MID, R + 0.004]} rotation={[0, 0, tilt]} color={F.white} castShadow={false} />
+        </group>
+      ))}
+      {/* drumsticks */}
+      {[0.55, -0.35].map((yaw, i) => (
+        <group key={yaw} position={[0.02 * i, MID + 0.215, 0.03 - 0.06 * i]} rotation={[0, yaw, 0]}>
+          <TCyl radiusTop={0.026} height={0.44} rotation={[0, 0, Math.PI / 2 + 0.06]} color={F.woodLight} segments={8} />
+          <TSphere position={[0.22, 0.012, 0]} scale={0.045} color={F.pink} segments={8} castShadow={false} />
+        </group>
       ))}
     </group>
   )

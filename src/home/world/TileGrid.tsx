@@ -7,8 +7,13 @@ import { useOccupiedTiles } from '../useOccupied'
 import { HOME_ITEMS } from '../../lib/home/catalog'
 import PlacementPreview from './PlacementPreview'
 import { isDragClick } from '../pointer'
+import { fgeo } from '../models/furniture/_geo'
 
 const SIZE = GRID_SIZE * TILE
+// Highlight tiles: soft rounded squares, floating just above the rug (top y≈0.038).
+const HOVER_Y = 0.045
+const FOOT_Y = 0.05
+const COLORS = { hover: '#ffe08a', ok: '#7fe3a6', bad: '#ff8f86' }
 
 export default function TileGrid() {
   const [hover, setHover] = useState<{ gx: number; gz: number } | null>(null)
@@ -59,18 +64,16 @@ export default function TileGrid() {
         <planeGeometry args={[SIZE, SIZE]} />
       </mesh>
       {hover && !activeItem && (
-        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[tileToWorld(hover.gx, hover.gz).x, 0.02, tileToWorld(hover.gx, hover.gz).z]}>
-          <planeGeometry args={[TILE * 0.96, TILE * 0.96]} />
-          <meshBasicMaterial color="#fbbf24" transparent opacity={0.45} />
+        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[tileToWorld(hover.gx, hover.gz).x, HOVER_Y, tileToWorld(hover.gx, hover.gz).z]} geometry={fgeo.roundRect(TILE * 0.92, TILE * 0.92, 0.14)}>
+          <meshBasicMaterial color={COLORS.hover} transparent opacity={0.6} depthWrite={false} />
         </mesh>
       )}
       {activeItem && hover &&
         footprintTiles(activeItem.footprint, hover.gx, hover.gz, rotation)
           .filter((t) => t.gx >= 0 && t.gz >= 0 && t.gx < GRID_SIZE && t.gz < GRID_SIZE)
           .map((t) => (
-          <mesh key={tileKey(t)} rotation={[-Math.PI / 2, 0, 0]} position={[tileToWorld(t.gx, t.gz).x, 0.03, tileToWorld(t.gx, t.gz).z]}>
-            <planeGeometry args={[TILE * 0.92, TILE * 0.92]} />
-            <meshBasicMaterial color={ok ? '#4ade80' : '#f87171'} transparent opacity={0.55} />
+          <mesh key={tileKey(t)} rotation={[-Math.PI / 2, 0, 0]} position={[tileToWorld(t.gx, t.gz).x, FOOT_Y, tileToWorld(t.gx, t.gz).z]} geometry={fgeo.roundRect(TILE * 0.9, TILE * 0.9, 0.14)}>
+            <meshBasicMaterial color={ok ? COLORS.ok : COLORS.bad} transparent opacity={0.62} depthWrite={false} />
           </mesh>
         ))}
       {activeItem && hover && (
