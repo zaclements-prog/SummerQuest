@@ -7,6 +7,8 @@ import HomeHud from '../home/hud/HomeHud'
 import { useHomeUi } from '../home/useHomeUi'
 import { useStarterCreature } from '../home/starterCreature'
 
+const HOME_SKY = 'radial-gradient(120% 90% at 50% 105%, #fff3dc 0%, #fde9d6 30%, #d9effa 68%, #b8e1f7 100%)'
+
 export default function HomeScreen() {
   const [params] = useSearchParams()
   const studio = params.get('studio') // 'creatures' | 'anchors' | 'furniture' | 'accessories' (dev gallery)
@@ -19,7 +21,7 @@ export default function HomeScreen() {
         ? [0, 6.5, 12]
         : studio === 'accgrid'
           ? [0, 7.5, 13]
-          : [0, 10, 21]
+          : [0, 13, 18.5]
 
   useStarterCreature()
 
@@ -31,13 +33,15 @@ export default function HomeScreen() {
   }, [])
 
   return (
-    <div className="flex-1 relative">
+    // A soft sky behind the (transparent) canvas: pale blue up top, warm haze below.
+    <div className="flex-1 relative" style={{ background: HOME_SKY }}>
       <Canvas
-        shadows
+        shadows="percentage"
+        flat
+        dpr={[1, 1.5]}
         camera={{ position: isStudio ? studioCam : [11, 11, 11], fov: 42 }}
         style={{ position: 'absolute', inset: 0 }}
       >
-        <color attach="background" args={['#bfe3f2']} />
         {isStudio ? <ModelStudio kind={studio as 'creatures' | 'anchors' | 'accgrid' | 'furniture' | 'accessories'} /> : <HomeWorld />}
       </Canvas>
       {!isStudio && <HomeHud />}

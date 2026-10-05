@@ -8,6 +8,7 @@ import type { Slot } from '../models/anchors'
 import { ACCESSORIES, accessoryById } from '../../lib/home/accessories'
 import { accessoryBuilder } from '../models/accessoryRegistry'
 import CreatureAccessories from './CreatureAccessories'
+import { StudioStage } from './Lights'
 
 export type StudioKind = 'creatures' | 'furniture' | 'accessories' | 'anchors' | 'accgrid'
 
@@ -73,18 +74,13 @@ export default function ModelStudio({ kind }: { kind: StudioKind }) {
       ? HOME_ITEMS.map((i) => ({ id: i.modelId, Builder: furnitureBuilder(i.modelId), creatureId: null as string | null }))
       : CREATURES.map((c) => ({ id: c.id, Builder: creatureBuilder(c.id), creatureId: c.id as string | null }))
   const cols = entries.length > 14 ? 6 : 4
-  const spacing = 2.4
+  const spacing = kind === 'furniture' ? 3.3 : 2.4 // furniture: room for the 3-wide sofa and 3-deep bed
   const rows = Math.ceil(entries.length / cols)
 
   return (
     <>
       <OrbitControls makeDefault target={[0, 0.6, 0]} />
-      <hemisphereLight args={['#fff6e6', '#5a6b8c', 0.95]} />
-      <directionalLight position={[6, 12, 6]} intensity={1.1} castShadow />
-      <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-        <planeGeometry args={[40, 40]} />
-        <meshStandardMaterial color="#d4d2cc" />
-      </mesh>
+      <StudioStage size={40} />
       {entries.map((e, i) => {
         const col = i % cols
         const row = Math.floor(i / cols)
@@ -108,12 +104,7 @@ function AccessoryStand() {
   return (
     <>
       <OrbitControls makeDefault target={[0, 1.4, 0]} />
-      <hemisphereLight args={['#fff6e6', '#5a6b8c', 0.95]} />
-      <directionalLight position={[6, 12, 6]} intensity={1.1} castShadow />
-      <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-        <planeGeometry args={[20, 20]} />
-        <meshStandardMaterial color="#d4d2cc" />
-      </mesh>
+      <StudioStage size={20} />
       <group scale={2.4}>
         <b.Builder />
         <CreatureAccessories />
@@ -132,12 +123,7 @@ function AccessoryGrid() {
   return (
     <>
       <OrbitControls makeDefault target={[0, 0.6, 0]} />
-      <hemisphereLight args={['#fff6e6', '#5a6b8c', 0.95]} />
-      <directionalLight position={[6, 12, 6]} intensity={1.1} castShadow />
-      <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-        <planeGeometry args={[40, 40]} />
-        <meshStandardMaterial color="#d4d2cc" />
-      </mesh>
+      <StudioStage size={40} />
       {ACCESSORIES.map((a, i) => {
         const col = i % cols
         const row = Math.floor(i / cols)
