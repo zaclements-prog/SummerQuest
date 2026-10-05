@@ -67,6 +67,6 @@ export function toonMaterial(color: ColorRepresentation, opts: ToonMaterialOpts 
 /** Line work: a thin warm-dark inverted-hull outline (drei <Outlines>). */
 export const OUTLINE = {
   color: TOON.outline,
-  /** World units; ~2–3 px at the default camera distance. */
-  thickness: 0.035,
+  /** Screen pixels (drei's default, non-"screenspace" mode measures thickness in pixels). */
+  thickness: 2.4,
 } as const
