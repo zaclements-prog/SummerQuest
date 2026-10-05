@@ -11,7 +11,7 @@ import WorldStudio from './WorldStudio'
 import { useHomeUi } from '../home/useHomeUi'
 import { useWorldUi } from './useWorldUi'
 import { useStarterCreature } from '../home/starterCreature'
-import { SPAWN } from './worldLayout'
+import { PLAY_CAMERA_OFFSET, SPAWN } from './worldLayout'
 
 export default function WorldScreen() {
   // Coming back from a stage or lesson launched in the World? Reappear where you stood.
@@ -41,7 +41,7 @@ export default function WorldScreen() {
         flat
         dpr={[1, 1.5]}
         gl={{ antialias: true, powerPreference: 'high-performance' }}
-        camera={{ position: [spawn[0] + 10.5, 12.5, spawn[1] + 11], fov: 38, near: 0.3, far: 900 }}
+        camera={{ position: [spawn[0] + PLAY_CAMERA_OFFSET[0], PLAY_CAMERA_OFFSET[1], spawn[1] + PLAY_CAMERA_OFFSET[2]], fov: 38, near: 0.3, far: 900 }}
         style={{ position: 'absolute', inset: 0 }}
         // dev-only: lets headless checks read draw calls / triangles (renderer.info)
         onCreated={({ gl }) => { if (import.meta.env.DEV) Object.assign(window, { __sqGl: gl }) }}

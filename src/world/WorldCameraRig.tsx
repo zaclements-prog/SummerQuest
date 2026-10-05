@@ -2,8 +2,9 @@ import { useRef } from 'react'
 import { useThree, useFrame } from '@react-three/fiber'
 import type { RefObject } from 'react'
 import { Vector3 } from 'three'
+import { PLAY_CAMERA_OFFSET } from './worldLayout'
 
-const OFFSET = new Vector3(10.5, 12.5, 11) // fixed iso angle, looking toward (-x,-z)
+const OFFSET = new Vector3(...PLAY_CAMERA_OFFSET) // fixed iso angle, looking toward (-x,-z)
 const _want = new Vector3()
 const _look = new Vector3()
 

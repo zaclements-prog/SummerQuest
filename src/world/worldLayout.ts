@@ -60,6 +60,8 @@ export function coastRadius(theta: number): number {
 }
 
 export const SPAWN: [number, number] = [0, -3.5]
+/** The play camera's fixed offset from the avatar (iso view from +x,+z; see WorldCameraRig). */
+export const PLAY_CAMERA_OFFSET: [number, number, number] = [10.5, 12.5, 11]
 export const PLAZA = { cx: 0, cz: 2, r: 6 }
 export const FOUNTAIN = { cx: 0, cz: 2.5, r: 1.6 }
 

@@ -2,6 +2,7 @@ import { Color, Vector3 } from 'three'
 import type { Camera } from 'three'
 import { create } from 'zustand'
 import { useWorldUi } from '../useWorldUi'
+import { PLAY_CAMERA_OFFSET } from '../worldLayout'
 
 /** Wall height of every toon building (Building.tsx). */
 export const WALL_H = 2.5
@@ -63,8 +64,8 @@ export const useHidingBuildings = create<{ hiding: Record<string, boolean>; setH
   setHiding: (id, v) => set((s) => (!!s.hiding[id] === v ? s : { hiding: { ...s.hiding, [id]: v } })),
 }))
 
-/** The play camera's fixed look direction (WorldCameraRig: offset (10.5, 12.5, 11), looking at the avatar). */
-const PLAY_DIR = new Vector3(-10.5, -12.5, -11).normalize()
+/** The play camera's fixed look direction (WorldCameraRig looks at the avatar from PLAY_CAMERA_OFFSET). */
+const PLAY_DIR = new Vector3(...PLAY_CAMERA_OFFSET).negate().normalize()
 const _dir = new Vector3()
 
 /**
