@@ -92,7 +92,7 @@ export default function BossBattle({ provider, params, onComplete, meta }: GameP
 
     const isCorrect = opt === problem.answer
     setPicked(opt)
-    recordAnswer(isCorrect)
+    recordAnswer(isCorrect, problem)
     if (meta) {
       const sk = skillOf(problem)
       recordAttempt({ zoneId: meta.zoneId, topic: provider.topic, skillId: sk.id, skillLabel: sk.label, correct: isCorrect })
