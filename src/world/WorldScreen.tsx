@@ -18,7 +18,10 @@ export default function WorldScreen() {
   const [spawn] = useState<[number, number]>(() => useWorldUi.getState().returnSpot ?? SPAWN)
   const posRef = useRef(new Vector3(spawn[0], 0, spawn[1]))
   const [params] = useSearchParams()
-  const studio = params.get('studio') // 'all' | <areaId> (dev gallery)
+  const studio = params.get('studio') // 'all' | <areaId> | 'at' (dev gallery; see WorldStudio)
+  const nums = (k: string) => params.get(k)?.split(',').map(Number)
+  const studioAt = params.get('x') !== null ? ([Number(params.get('x')), Number(params.get('z'))] as [number, number]) : undefined
+  const studioCam = nums('cam') as [number, number, number] | undefined
   // A new player may come here before ever visiting Home: give them their creature.
   useStarterCreature()
   // Furniture shown in the house must not be interactive here (decorate UI is Home-only).
@@ -44,7 +47,7 @@ export default function WorldScreen() {
         {/* sky dome, fog, sun + soft fill, drifting clouds */}
         <WorldEnvironment />
         {studio ? (
-          <WorldStudio focus={studio} />
+          <WorldStudio focus={studio} at={studioAt} cam={studioCam} />
         ) : (
           <>
             <WorldScene posRef={posRef} />

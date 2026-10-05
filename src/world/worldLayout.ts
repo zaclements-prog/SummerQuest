@@ -10,6 +10,7 @@ import dataDelta from './areas/colliders/data-delta'
 import geometryGrove from './areas/colliders/geometry-grove'
 import scienceSummit from './areas/colliders/science-summit'
 import placeValuePlateau from './areas/colliders/place-value-plateau'
+import town from './areas/colliders/town'
 
 /**
  * The toon island's layout (see docs/superpowers/specs/2026-10-05-toon-world-rebuild-design.md).
@@ -218,6 +219,7 @@ const TOWN: Collider[] = [
   ),
   { kind: 'box', cx: PLAZA.cx - 3.6, cz: PLAZA.cz + 1.4, w: 0.4, d: 1.2 },
   { kind: 'box', cx: PLAZA.cx + 3.6, cz: PLAZA.cz + 1.4, w: 0.4, d: 1.2 },
+  ...town,
 ]
 const BOUNDS: Collider[] = [{ kind: 'bounds', cx: 0, cz: 0, r: WALK_RADIUS }]
 
