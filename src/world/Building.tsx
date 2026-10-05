@@ -44,6 +44,7 @@ export default function Building({
   wall = TOON.wallCream,
   roof = TOON.roofRed,
   trim = TOON.woodDark,
+  floor = TOON.woodLight,
   children,
 }: {
   id: string
@@ -54,6 +55,8 @@ export default function Building({
   wall?: string
   roof?: string
   trim?: string
+  /** Interior floor color. */
+  floor?: string
   children?: ReactNode
 }) {
   const inside = useWorldUi((s) => s.insideBuildingId) === id
@@ -78,8 +81,17 @@ export default function Building({
 
   return (
     <group position={[cx, 0, cz]}>
-      {/* foundation */}
-      <TBox size={[size + 0.5, 0.25, size + 0.5]} radius={0.1} position={[0, 0.125, 0]} color={TOON.stoneDark} receiveShadow />
+      {/* stone plinth under the walls (the interior floor stays at ground level,
+          where the avatar and the House's furniture stand) */}
+      <TBox size={[0.55, 0.28, size + 0.55]} radius={0.08} position={[-half, 0.14, 0]} color={TOON.stoneDark} receiveShadow castShadow={false} />
+      <TBox size={[0.55, 0.28, size + 0.55]} radius={0.08} position={[half, 0.14, 0]} color={TOON.stoneDark} receiveShadow castShadow={false} />
+      <TBox size={[size + 0.55, 0.28, 0.55]} radius={0.08} position={[0, 0.14, -half]} color={TOON.stoneDark} receiveShadow castShadow={false} />
+      <TBox size={[seg + 0.28, 0.28, 0.55]} radius={0.08} position={[-segC - 0.14, 0.14, half]} color={TOON.stoneDark} receiveShadow castShadow={false} />
+      <TBox size={[seg + 0.28, 0.28, 0.55]} radius={0.08} position={[segC + 0.14, 0.14, half]} color={TOON.stoneDark} receiveShadow castShadow={false} />
+      {/* interior floor */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.006, 0]} material={toonMaterial(floor)} receiveShadow>
+        <planeGeometry args={[size - 0.2, size - 0.2]} />
+      </mesh>
 
       {/* walls: back (−x, −z) never fade; +x and +z (camera-facing) do */}
       <TBox size={[T, H, size]} position={[-half, H / 2, 0]} color={wall} outline={solid} receiveShadow />
@@ -98,8 +110,8 @@ export default function Building({
       <TBox size={[0.16, H - 0.6, 0.38]} radius={0.05} position={[-door - 0.08, (H - 0.6) / 2, half]} color={trim} opacity={op(['pz'])} />
       <TBox size={[0.16, H - 0.6, 0.38]} radius={0.05} position={[door + 0.08, (H - 0.6) / 2, half]} color={trim} opacity={op(['pz'])} />
       <TBox size={[doorWidth + 0.4, 0.16, 0.4]} radius={0.05} position={[0, H - 0.6, half]} color={trim} opacity={op(['pz'])} castShadow={false} />
-      {/* doorstep */}
-      <TBox size={[doorWidth + 0.3, 0.14, 0.6]} radius={0.05} position={[0, 0.07, half + 0.35]} color={TOON.stone} receiveShadow castShadow={false} />
+      {/* doorstep (low, so walking in stays at ground level) */}
+      <TBox size={[doorWidth + 0.3, 0.06, 0.6]} radius={0.02} position={[0, 0.03, half + 0.35]} color={TOON.stone} receiveShadow castShadow={false} />
 
       {/* windows: two per back wall (always lit), one per side on the front walls */}
       <Window pos={[-half - 0.12, H * 0.55, -size * 0.22]} axis="x" frame={trim} opacity={1} />

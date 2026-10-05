@@ -79,7 +79,7 @@ export const BRIDGES = [
 /** Footpaths (polylines, width ~2.2): plaza → every NPC / door. */
 export const PATH_WIDTH = 2.2
 export const WORLD_PATHS: { to: string; points: [number, number][] }[] = [
-  { to: 'house', points: [[0, -3.6], [0, -5.2]] },
+  { to: 'house', points: [[0, -3.4], [0, -3.9]] },
   { to: 'schoolhouse', points: [[-5.6, 0.2], [-10.8, -1.4]] },
   { to: 'library+measurement-marsh', points: [[5.6, 0.2], [14, -1], [20.3, -2.8]] },
   { to: 'data-delta', points: [[14, -1], [17.5, -2.5], [18.5, -7.3]] },
