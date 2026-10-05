@@ -1,21 +1,29 @@
+import { TSphere } from '../../../toon/shapes'
+import { TOON } from '../../../toon/palette'
+
+const COLORS = [TOON.flowerPink, TOON.flowerYellow, TOON.flowerWhite, TOON.flowerPurple, '#ff8a7a']
+const N = 12
+const R = 0.18
+
+/**
+ * Flower lei (body slot). Authored at the `body` anchor (the front of the neck,
+ * ~0.15 in front of the neck's centre line at scale 1): a ring of twelve puffy
+ * blossoms in pink, yellow, white, lilac and coral resting on the shoulders,
+ * dipping lower at the front, with sunny centres on the front flowers.
+ */
 export function Lei() {
-  const colors = ['#ff5d8f', '#f4d03f', '#ffffff', '#9b59d0', '#5fb35f', '#ff8c42']
-  const n = 9
-  // A garland that drapes across the front of the chest: high at the shoulders,
-  // dipping down-and-forward at the centre — reads as a lei from any front angle.
   return (
-    <group>
-      {Array.from({ length: n }).map((_, i) => {
-        const t = (i / (n - 1)) * 2 - 1 // -1 (left shoulder) .. 1 (right shoulder)
-        const dip = 1 - t * t // 1 at centre, 0 at the shoulders
-        const x = t * 0.23
-        const y = 0.08 - dip * 0.15
-        const z = 0.01 + dip * 0.12
+    <group position={[0, -0.01, -0.15]} rotation={[0.34, 0, 0]}>
+      {Array.from({ length: N }, (_, i) => {
+        const a = (i / N) * Math.PI * 2
+        const x = Math.sin(a) * R
+        const z = Math.cos(a) * R
+        const front = Math.cos(a) > 0.2
         return (
-          <mesh key={i} castShadow position={[x, y, z]}>
-            <sphereGeometry args={[0.055, 8, 6]} />
-            <meshStandardMaterial color={colors[i % colors.length]} />
-          </mesh>
+          <group key={i} position={[x, 0, z]} rotation={[0, a, 0]}>
+            <TSphere scale={[0.055, 0.038, 0.05]} color={COLORS[i % COLORS.length]} segments={12} castShadow={false} />
+            {front && <TSphere position={[0, 0.032, 0.01]} scale={0.017} color={TOON.gold} segments={6} castShadow={false} />}
+          </group>
         )
       })}
     </group>

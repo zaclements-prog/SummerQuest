@@ -39,10 +39,6 @@
     "file": "tts/fractions/samebottom.mp3",
     "hash": "7012fbe89e"
   },
-  "fractions/unlikebottom": {
-    "file": "tts/fractions/unlikebottom.mp3",
-    "hash": "8803842556"
-  },
   "placeValue/places": {
     "file": "tts/placeValue/places.mp3",
     "hash": "e334ff3a39"
@@ -86,10 +82,6 @@
   "dataGraph/bars": {
     "file": "tts/dataGraph/bars.mp3",
     "hash": "2678b57289"
-  },
-  "dataGraph/read": {
-    "file": "tts/dataGraph/read.mp3",
-    "hash": "1f486e4a45"
   },
   "wordProblem/read": {
     "file": "tts/wordProblem/read.mp3",

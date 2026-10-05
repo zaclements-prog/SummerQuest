@@ -1,9 +1,29 @@
 import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { Group, Mesh, MeshStandardMaterial } from 'three'
+import { Group, Material, Mesh } from 'three'
 import type { HomeItem } from '../../lib/home/catalog'
 import { furnitureBuilder } from '../models/registry'
 import { footprintTiles, tileToWorld } from '../../lib/home/grid'
+
+const GHOST_OPACITY = 0.6
+
+// Toon materials are cached and shared by every placed copy of a color, so the
+// ghost must never touch them: each source material gets one translucent clone,
+// reused by every preview.
+const ghosts = new WeakMap<Material, Material>()
+const isGhost = new WeakSet<Material>()
+function ghostOf(src: Material): Material {
+  let g = ghosts.get(src)
+  if (!g) {
+    g = src.clone()
+    g.transparent = true
+    g.opacity = src.opacity * GHOST_OPACITY
+    g.depthWrite = false
+    ghosts.set(src, g)
+    isGhost.add(g)
+  }
+  return g
+}
 
 /**
  * A translucent, gently-floating preview of the actual item being placed, shown at
@@ -33,14 +53,16 @@ export default function PlacementPreview({
     g.position.y = 0.1 + Math.sin(clock.elapsedTime * 4) * 0.05 // gentle hover = "preview"
     g.traverse((o) => {
       const m = o as Mesh
-      if (m.isMesh) {
-        const mat = m.material as MeshStandardMaterial
-        if (mat && !Array.isArray(mat) && mat.opacity !== 0.6) {
-          mat.transparent = true
-          mat.opacity = 0.6
-          mat.depthWrite = false
-        }
+      if (!m.isMesh) return
+      const mat = m.material
+      if (!mat || Array.isArray(mat) || isGhost.has(mat)) return
+      if ((mat as Material & { isShaderMaterial?: boolean }).isShaderMaterial) {
+        m.visible = false // outline hulls: a ghost reads cleaner without line work
+        m.castShadow = false
+        return
       }
+      m.material = ghostOf(mat)
+      m.castShadow = false
     })
   })
 

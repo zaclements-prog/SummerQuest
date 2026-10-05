@@ -20,7 +20,12 @@ Everything runs locally in the browser; progress is saved in `localStorage`.
   lesson + practice stage.
 - **Daily learning goal** — 2 × 15 minutes of active learning per day earns bonus coins.
 - **3D Home** — buy furniture and decorate a room; become (and dress up) a creature.
-- **3D World (beta)** — walk the island and enter zones through NPC gateways.
+- **3D World (beta)** — a storybook toon island with a town, a river and an area
+  for every subject. Walk up
+  to an NPC and press E to pick a stage and play it without leaving the World;
+  you come back where you stood. The **Schoolhouse** (owl teacher) has the
+  Daily Challenge, This Week's Focus and all Tutor lessons; the **Library**
+  (bookworm) has Reading Reef and the reading/writing lessons.
 - **Badges, levels, streaks**, a **Progress** screen, and a **Parent Dashboard**
   (stats, optional local-AI settings, reset behind a grown-up check).
 
@@ -69,11 +74,14 @@ Without the server everything still works: writing is graded offline.
 
 ### Developer helpers
 
-- `?studio=creatures|furniture|accessories` on `/home`, `?studio=1` on `/world` —
-  model galleries for tuning.
+- `?studio=creatures|anchors|furniture|accessories` on `/home` — model galleries.
+- `?studio=all` or `?studio=<areaId>` on `/world` — orbit the island or one area
+  (`&cam=dx,dy,dz` sets the camera offset; `?studio=at&x=..&z=..` looks at any point).
 - `VITE_DEV_TOOLS=true` in `.env.local` shows "Seed sample week" on
   This Week's Focus (fills in fake attempts — never enable it for the child).
-- `npm run tts` regenerates lesson narration MP3s after editing lesson text.
+- `npm run tts` regenerates lesson narration MP3s after editing lesson text
+  (needs internet). Steps without a current MP3 fall back to the browser's
+  speech voice; a test fails if an MP3 no longer matches its step's text.
 
 ## Checks
 
@@ -108,10 +116,29 @@ src/
   screens/             map, zone, game runner, daily, tutor, focus, progress, badges, parent…
   tutoring/            lessons, skill taxonomy (skill → zone/lesson/practice stage)
   home/                3D Home (react-three-fiber): models, world, HUD
-  world/               3D World (beta): layout, areas, NPC gateways, movement
+  world/               3D World (beta): layout, terrain, areas, NPC gateways, movement
+  toon/                toon art kit: palette, toon materials + outlines, shapes, props
   store/               Zustand stores persisted to localStorage (+ save migrations)
   components/          VisualRenderer, charts, shared UI kit (components/ui)
 ```
+
+### Art style (toon kit)
+
+Everything 3D is built in code (no model, texture or font downloads, so the
+offline single file keeps working) from `src/toon`:
+
+- `TOON` palette — soft sunny pastels shared by the World, Home and creatures.
+- `toonMaterial()` — cached `MeshToonMaterial` with a 4-band ramp; the Canvas uses
+  `flat` (no tone mapping) so colors land as authored.
+- Primitives (`TBox`, `TBlob`, `TCyl`, `TCone`, `TCapsule`, `TSphere`, `TTorus`)
+  with optional thin outlines (`outline`) and faceted shading (`flat`).
+- Props (`Tree`, `Bush`, `Rock`, `Lamp`, `Fence`, `Bench`…) seeded for
+  determinism, and `ToonInstances` for anything repeated.
+
+The World's layout (areas, NPC spots, paths, river, bridges, colliders) lives in
+`src/world/worldLayout.ts`; ground, scatter, colliders and tests all read it.
+Each area draws itself in `src/world/areas/<Area>.tsx` with its solid parts in
+`src/world/areas/colliders/<id>.ts`.
 
 ### Adding a zone
 
@@ -135,14 +162,25 @@ Each zone follows a **3-stage mastery loop**:
 Stars per stage: 0 (not passed) → 1 → 2 → 3 (perfect), kept as the best result.
 A stage unlocks when the one before it has at least one star.
 
+**Adaptive practice** (`src/lib/adaptive.ts`): fact problems (multiplication,
+division, equivalent and compared fractions) carry a `factId` such as `mult:6x8`,
+and every answer updates a per-fact record in the save. A fact missed this session
+comes back 2–3 questions later (never back-to-back, at most twice). Across sessions,
+up to ~35% of draws come from the child's recently missed facts that fit the stage's
+range (weighted by recency and miss rate); the rest stay random. Two right answers
+in a row retire a fact from the boost.
+
 ## Roadmap
 
 - [x] All 12 subject zones
 - [x] 3D Home — decorate your room and dress your creature
 - [x] Daily Challenge with bonus rewards
 - [x] Weekly focus: track missed skills and recommend lessons/practice
-- [ ] 3D World — full voxel island (in progress on `world-voxel`)
-- [ ] Adaptive difficulty inside a stage (weight the facts a kid misses)
+- [x] 3D World — toon island with all 12 areas, in-world stage launching,
+      Schoolhouse and Library hubs
+- [ ] Make the World the main hub (replace the 2D map; fold the Home room into
+      the World's house)
+- [x] Adaptive difficulty inside a stage (weight the facts a kid misses)
 - [ ] Electron wrapper for a "real" desktop app
 - [ ] Multi-profile (more than one kid per install)
 - [ ] Print/share weekly progress report

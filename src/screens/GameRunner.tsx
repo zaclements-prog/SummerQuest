@@ -13,6 +13,7 @@ import WritingPad from '../games/WritingPad'
 import { sfx } from '../lib/sound'
 import { Card, Button, BackButton, Pill, Celebration, ConfirmDialog, ErrorState } from '../components/ui'
 import { isStageUnlocked } from '../lib/stageLocks'
+import { useWorldUi } from '../world/useWorldUi'
 import { accuracyColorClass } from '../lib/theme'
 
 export interface GameResult {
@@ -41,6 +42,9 @@ export default function GameRunner() {
   const addCoins = useProgress((s) => s.addCoins)
   const recordSession = useProgress((s) => s.recordSession)
   const zoneProgress = useProgress((s) => s.zones[zoneId])
+  // Launched from the 3D World? Then leaving the game goes back there.
+  const fromWorld = useWorldUi((s) => s.enteredFromWorld)
+  const exitPath = fromWorld ? '/world' : `/zone/${zoneId}`
   const [result, setResult] = useState<GameResult | null>(null)
   const [confirmQuit, setConfirmQuit] = useState(false)
   const processedResultRef = useRef<GameResult | null>(null)
@@ -108,7 +112,7 @@ export default function GameRunner() {
       <ResultScreen
         result={result}
         coins={coinReward}
-        onContinue={() => navigate(`/zone/${zoneId}`)}
+        onContinue={() => navigate(exitPath)}
         onPlayAgain={() => {
           sfx.click()
           processedResultRef.current = null
@@ -170,7 +174,7 @@ export default function GameRunner() {
           setConfirmQuit(false)
           setResult(r)
         }}
-        onExit={() => navigate(`/zone/${zoneId}`)}
+        onExit={() => navigate(exitPath)}
         meta={{ zoneId, stageId }}
         paused={confirmQuit}
       />
@@ -180,9 +184,9 @@ export default function GameRunner() {
         open={confirmQuit}
         emoji="🚪"
         title="Quit this game?"
-        confirmLabel="Quit to zone"
+        confirmLabel={fromWorld ? 'Back to the World' : 'Quit to zone'}
         cancelLabel="Keep playing"
-        onConfirm={() => navigate(`/zone/${zoneId}`)}
+        onConfirm={() => navigate(exitPath)}
         onCancel={closeQuit}
       >
         This round won't count, but the stars you already earned are safe. 🌟

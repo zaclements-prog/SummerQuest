@@ -9,6 +9,7 @@ import { seededShuffle } from '../lib/random'
 import { playableStageId } from '../lib/stageLocks'
 import { getZone } from '../curriculum'
 import { useProgress } from '../store/progress'
+import { useWorldUi } from '../world/useWorldUi'
 import { sfx } from '../lib/sound'
 import { Button, Card, BackButton, ProgressBar, Pill, ErrorState, Loading } from '../components/ui'
 
@@ -126,6 +127,8 @@ export default function TutorScreen() {
   const [picked, setPicked] = useState<ProblemAnswer | null>(null)
   const step = lesson?.steps[i]
   const zoneProgress = useProgress((s) => (lesson ? s.zones[lesson.zoneId] : undefined))
+  // Opened from the Schoolhouse / Library in the 3D World? "Back" returns there.
+  const fromWorld = useWorldUi((s) => s.enteredFromWorld)
   // Hooks must run unconditionally, so call useNarration before any early return.
   const { playing, play, stop } = useNarration(lesson?.id ?? '', step?.id ?? '', step?.narration ?? '')
 
@@ -186,7 +189,7 @@ export default function TutorScreen() {
 
         {/* ── Nav ──────────────────────────────────────────────────────── */}
         <div className="flex items-center justify-between gap-2">
-          <BackButton to="/tutor" label="Lessons" onClick={stop} />
+          <BackButton to={fromWorld ? '/world' : '/tutor'} label={fromWorld ? 'World' : 'Lessons'} onClick={stop} />
           <Pill tone="ocean" icon="📚">
             Step {i + 1} of {lesson.steps.length}
           </Pill>

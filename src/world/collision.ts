@@ -7,11 +7,14 @@ export function collidesAt(colliders: Collider[], x: number, z: number, radius: 
       const hx = c.w / 2 + radius
       const hz = c.d / 2 + radius
       if (Math.abs(x - c.cx) <= hx && Math.abs(z - c.cz) <= hz) return true
-    } else {
+    } else if (c.kind === 'circle') {
       const dx = x - c.cx
       const dz = z - c.cz
       const rr = c.r + radius
       if (dx * dx + dz * dz <= rr * rr) return true
+    } else {
+      // bounds: the disc must stay inside the circle
+      if (Math.hypot(x - c.cx, z - c.cz) + radius > c.r) return true
     }
   }
   return false

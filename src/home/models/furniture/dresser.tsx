@@ -1,42 +1,51 @@
+import { TBox, TCapsule, TCyl, TSphere } from '../../../toon/shapes'
+import { F } from './_palette'
+import { Feet, Knob, Ol } from './_kit'
+
+const FRONT = 0.33 // drawer-front z
+
+/** Dresser (2×1): a cream chest of rainbow drawers with a framed picture and a little cactus on top. */
 export function Dresser() {
-  const wood = '#8a5a36'
-  const dark = '#5f3d22'
-  const knob = '#2e1f12'
   return (
     <group>
-      {/* wide cabinet — w(x) 1.8 × h 0.9 × d(z) 0.5 */}
-      <mesh castShadow position={[0, 0.46, 0]}>
-        <boxGeometry args={[1.8, 0.84, 0.5]} />
-        <meshStandardMaterial color={wood} />
-      </mesh>
-      {/* three drawer lines on the +z face */}
-      {[0.72, 0.46, 0.2].map((y) => (
-        <mesh key={`drawer${y}`} position={[0, y, 0.26]}>
-          <boxGeometry args={[1.6, 0.2, 0.02]} />
-          <meshStandardMaterial color={dark} />
-        </mesh>
+      <Feet x={0.78} z={0.26} h={0.1} r={0.065} />
+      <TBox size={[1.76, 0.86, 0.72]} radius={0.06} position={[0, 0.53, -0.04]} color={F.cream}>
+        <Ol />
+      </TBox>
+      <TBox size={[1.86, 0.08, 0.8]} radius={0.035} position={[0, 0.99, -0.03]} color={F.woodLight}>
+        <Ol />
+      </TBox>
+      {/* drawers: two small on top, two wide below */}
+      {[-0.41, 0.41].map((x, i) => (
+        <group key={x}>
+          <TBox size={[0.78, 0.22, 0.05]} radius={0.025} position={[x, 0.8, FRONT]} color={i ? F.butter : F.pink} castShadow={false} />
+          <Knob position={[x, 0.8, FRONT + 0.035]} color={F.white} />
+        </group>
       ))}
-      {/* two knobs per drawer */}
-      {[0.72, 0.46, 0.2].map((y) =>
-        [-0.4, 0.4].map((x) => (
-          <mesh key={`knob-${y}-${x}`} castShadow position={[x, y, 0.28]}>
-            <sphereGeometry args={[0.04, 8, 8]} />
-            <meshStandardMaterial color={knob} />
-          </mesh>
-        )),
-      )}
-      {/* short legs */}
-      {([
-        [-0.78, -0.18],
-        [0.78, -0.18],
-        [-0.78, 0.18],
-        [0.78, 0.18],
-      ] as [number, number][]).map(([x, z]) => (
-        <mesh key={`leg-${x}-${z}`} castShadow position={[x, 0.03, z]}>
-          <boxGeometry args={[0.1, 0.06, 0.1]} />
-          <meshStandardMaterial color={dark} />
-        </mesh>
+      {[
+        [0.54, F.mint],
+        [0.28, F.sky],
+      ].map(([y, c]) => (
+        <group key={y as number}>
+          <TBox size={[1.6, 0.22, 0.05]} radius={0.025} position={[0, y as number, FRONT]} color={c as string} castShadow={false} />
+          <Knob position={[-0.4, y as number, FRONT + 0.035]} color={F.white} />
+          <Knob position={[0.4, y as number, FRONT + 0.035]} color={F.white} />
+        </group>
       ))}
+
+      {/* framed picture (a little heart) */}
+      <group position={[-0.5, 1.03, -0.15]} rotation={[-0.15, 0.15, 0]}>
+        <TBox size={[0.34, 0.4, 0.05]} radius={0.025} position={[0, 0.2, 0]} color={F.wood} />
+        <TBox size={[0.25, 0.31, 0.02]} radius={0.008} position={[0, 0.2, 0.025]} color={F.sky} castShadow={false} />
+        <TSphere position={[0, 0.2, 0.04]} scale={[0.06, 0.06, 0.012]} color={F.red} segments={8} castShadow={false} />
+      </group>
+      {/* little cactus */}
+      <group position={[0.52, 1.03, -0.08]}>
+        <TCyl radiusTop={0.1} radiusBottom={0.08} height={0.14} position={[0, 0.07, 0]} color={F.coral} segments={10} castShadow={false} />
+        <TCapsule radius={0.07} length={0.16} position={[0, 0.24, 0]} color={F.leaf} segments={8} />
+        <TCapsule radius={0.04} length={0.06} position={[0.09, 0.27, 0]} rotation={[0, 0, -0.5]} color={F.leaf} segments={6} castShadow={false} />
+        <TSphere position={[0, 0.38, 0]} scale={0.04} color={F.pink} segments={8} castShadow={false} />
+      </group>
     </group>
   )
 }

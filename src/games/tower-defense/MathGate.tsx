@@ -41,7 +41,7 @@ export default function MathGate({ title, provider, onAnswer, onCorrect, onCance
     if (!problem || picked !== null) return
     setPicked(opt)
     const correct = opt === problem.answer
-    recordAnswer(correct)
+    recordAnswer(correct, problem)
     onAnswer?.(correct)
     if (meta) {
       const sk = skillOf(problem)

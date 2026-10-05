@@ -70,7 +70,7 @@ export default function SpeedRun({ provider, params, onComplete, meta, paused = 
   function pick(opt: string | number) {
     if (!problem || feedback || timeLeft <= 0 || paused) return
     const isCorrect = opt === problem.answer
-    recordAnswer(isCorrect)
+    recordAnswer(isCorrect, problem)
     if (meta) {
       const sk = skillOf(problem)
       recordAttempt({ zoneId: meta.zoneId, topic: provider.topic, skillId: sk.id, skillLabel: sk.label, correct: isCorrect })

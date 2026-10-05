@@ -44,7 +44,7 @@ export default function ConceptPlay({ provider, params, onComplete, meta }: Game
     if (!problem || answered !== null) return
     setAnswered(opt)
     const isCorrect = opt === problem.answer
-    recordAnswer(isCorrect)
+    recordAnswer(isCorrect, problem)
     if (meta) {
       const sk = skillOf(problem)
       recordAttempt({ zoneId: meta.zoneId, topic: provider.topic, skillId: sk.id, skillLabel: sk.label, correct: isCorrect })

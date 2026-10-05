@@ -28,10 +28,23 @@ export const fractionsLesson: Lesson = {
       visual: { kind: 'fractionCompare', a: { numerator: 2, denominator: 5 }, b: { numerator: 3, denominator: 5 } },
     },
     {
+      // Only valid when the numerators match (1/2 > 1/3, 2/3 > 2/5) — say so, so
+      // kids don't apply "fewer pieces wins" to pairs like 2/3 vs 5/6.
       id: 'unlikebottom',
-      narration: 'When the bottom numbers are different, think about the size of the pieces. The fewer pieces a whole is cut into, the bigger each piece is. So halves are bigger pieces than thirds.',
-      body: 'Fewer pieces = bigger pieces.  1/2 > 1/3',
-      check: { question: 'Which is bigger, 1/2 or 1/3?', options: ['1/2', '1/3', 'equal', 'cannot tell'], answer: '1/2', explain: 'Halves are bigger pieces than thirds, so one half is more.' },
+      narration: 'When the top numbers are the same, look at the size of the pieces. The fewer pieces a whole is cut into, the bigger each piece is. So one half is more than one third. This trick only works when the tops match!',
+      body: 'Same top? Fewer pieces = bigger pieces.  1/2 > 1/3',
+      visual: { kind: 'fractionCompare', a: { numerator: 1, denominator: 2 }, b: { numerator: 1, denominator: 3 } },
+      check: { question: 'Which is bigger, 2/3 or 2/5?', options: ['2/3', '2/5', 'equal', 'cannot tell'], answer: '2/3', explain: 'Both have 2 pieces on top. Thirds are bigger pieces than fifths, so two thirds is more.' },
+    },
+    {
+      // CCSS 4.NF.A.2: different numerators AND denominators — make a common
+      // denominator (or compare to the benchmark 1/2). The check is chosen so the
+      // "fewer pieces" shortcut gives the WRONG answer (it would pick 2/3).
+      id: 'matchbottoms',
+      narration: 'When the tops and the bottoms are both different, the fewer pieces trick can fool you. Make the bottoms match first. Two fifths is the same as four tenths, and four tenths is less than seven tenths. So seven tenths is bigger.',
+      body: 'Make the bottoms match:  2/5 = 4/10,  so 2/5 < 7/10.  Or compare to 1/2: 2/5 is less than half, 7/10 is more.',
+      visual: { kind: 'fractionCompare', a: { numerator: 2, denominator: 5 }, b: { numerator: 7, denominator: 10 } },
+      check: { question: 'Which is bigger, 2/3 or 5/6?', options: ['5/6', '2/3', 'equal', 'cannot tell'], answer: '5/6', explain: 'Two thirds is the same as four sixths, and five sixths is more than four sixths. So 5/6 is bigger, even though sixths are smaller pieces.' },
     },
   ],
 }

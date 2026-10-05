@@ -17,6 +17,7 @@ import {
 import { subjectTheme } from '../lib/theme'
 import { useEntrance } from '../lib/motion'
 import { isStageUnlocked } from '../lib/stageLocks'
+import { useWorldUi } from '../world/useWorldUi'
 
 // ── Stage-kind presentation ───────────────────────────────────────────────────
 // `tone` drives the Card accent border + shadow; the icon chip uses an AA-safe
@@ -36,6 +37,7 @@ export default function ZoneDetail() {
   const zone = getZone(zoneId)
   const zoneProgress = useProgress((s) => s.zones[zoneId])
   const markZoneMastered = useProgress((s) => s.markZoneMastered)
+  const fromWorld = useWorldUi((s) => s.enteredFromWorld)
 
   const { container, item } = useEntrance()
 
@@ -75,7 +77,7 @@ export default function ZoneDetail() {
           emoji="🗺️"
           title="Zone not found"
           message="We couldn't find that island. It may have drifted off the map!"
-          back={{ label: 'Back to map', to: '/map' }}
+          back={{ label: fromWorld ? 'Back to World' : 'Back to map', to: fromWorld ? '/world' : '/map' }}
         />
       </div>
     )
@@ -88,7 +90,7 @@ export default function ZoneDetail() {
       <div className="max-w-3xl w-full flex flex-col gap-4">
         {/* ── Back ──────────────────────────────────────────────────────────── */}
         <div>
-          <BackButton to="/map" label="Back to map" />
+          <BackButton to={fromWorld ? '/world' : '/map'} label={fromWorld ? 'Back to World' : 'Back to map'} />
         </div>
 
         {/* ── Zone header card (themed to the island just tapped) ────────────── */}

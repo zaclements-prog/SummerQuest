@@ -1,32 +1,32 @@
 import type { RefObject } from 'react'
-import { Vector3 } from 'three'
+import type { Vector3 } from 'three'
 import Building from '../Building'
 import Npc from '../Npc'
-import { areaById } from '../worldLayout'
+import { areaById, npcPosition } from '../worldLayout'
+import { TOON } from '../../toon/palette'
+import Interior from './writing-workshop/Interior'
+import Garden from './writing-workshop/Garden'
+import CatAuthor from './writing-workshop/CatAuthor'
 
+/**
+ * Writing Workshop — a warm plum-roofed cottage whose cosy writing room (desks,
+ * typewriter, ink and quill, bookshelf, rug, string lights) shows when you step
+ * inside; outside, a giant pencil writes loops across the lawn among flower
+ * planters and paper airplanes, beside a story mailbox and an ink-bottle sign.
+ * The cat author waits on the doorstep with her quill.
+ */
 export default function WritingWorkshop({ posRef }: { posRef: RefObject<Vector3> }) {
   const a = areaById('writing-workshop')!
+  const npc = npcPosition(a)!
   return (
     <group>
-      <Building id={a.id} cx={a.worldPos[0]} cz={a.worldPos[1]} wall="#d9c8a0" roof="#7a4b8a">
-        {/* interior: a writing desk + quill (revealed when the front walls fade) */}
-        <mesh castShadow position={[0, 0.5, -1.2]}>
-          <boxGeometry args={[1.6, 0.2, 0.9]} />
-          <meshStandardMaterial color="#8a5a2b" />
-        </mesh>
-        <mesh castShadow position={[0, 0.9, -1.2]} rotation={[0, 0, 0.4]}>
-          <cylinderGeometry args={[0.02, 0.04, 0.7, 6]} />
-          <meshStandardMaterial color="#efe6d2" />
-        </mesh>
+      <Building id={a.id} cx={a.worldPos[0]} cz={a.worldPos[1]} size={a.size} wall={TOON.wallWarm} roof={TOON.roofPlum}>
+        <Interior />
       </Building>
-      {/* gateway NPC just outside the door */}
-      <Npc
-        areaId={a.id}
-        zoneId={a.zoneId}
-        label={a.label}
-        position={[a.worldPos[0], 0, a.door!.pos[1] + 1.2]}
-        posRef={posRef}
-      />
+      <Garden />
+      <Npc areaId={a.id} zoneId={a.zoneId} hub={a.hub} label={a.label} position={[npc[0], 0, npc[1]]} posRef={posRef}>
+        <CatAuthor />
+      </Npc>
     </group>
   )
 }
