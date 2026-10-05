@@ -80,3 +80,11 @@ Room shell (soft walls with baseboard + window, wood floor planks, rug-friendly)
 - Unit: layout integrity (zone ids, doors, unique ids), every NPC reachable on foot from spawn (grid search vs all colliders), river blocks except at bridges, nothing placed outside the walk bounds, anchors complete.
 - Visual: `/world?studio=<areaId>` renders one area (orbit camera) and `/world?studio=all` a top-down overview; `/home?studio=creatures|furniture|accessories` galleries. Screenshot-driven iteration (headless Chromium with `--use-gl=angle --use-angle=swiftshader`).
 - Perf: no post-processing; instancing for scatter; cached materials; shadows from the key light only.
+
+## As built (notes)
+- **Outlines** are drei `<Outlines>` in its default mode, where `thickness` is in **screen pixels** (kit default `OUTLINE.thickness = 2.4`). Creatures use their own `Ink` helper (~2 px, `INK_PX` in `home/models/parts.tsx`) and furniture its `Ol` helper (`furniture/_kit.tsx`).
+- **Layout data next to each area**: each area keeps its numbers in a dependency-free `areas/<id>/layout.ts` (or its colliders file), read by both the renderer and `areas/colliders/<id>.ts`, so what you see is what blocks you. Town props live in `world/town/townData.ts` → `colliders/town.ts`.
+- **Buildings** gained optional `band`, `shutters`, `windowBoxes`, `doorHood`, `frontWindows`, `fadeWhenHiding` (the House and the hubs fade while they hide the avatar from the play camera; the camera angle is the shared `PLAY_CAMERA_OFFSET`). Faded pieces stop casting shadows so interiors stay bright.
+- **Beaches**: a sand rim rings the island (the grass sits on a sand slab 0.02 lower); the Reading Reef sector is kept free of scatter (`BEACHES` in `worldLayout.ts`).
+- **Perf (headless, gameplay camera, incl. shadow pass)**: ~500–700 draw calls and 200–320k triangles; the whole-island studio view ~2.4k calls.
+- **Verification run**: typecheck, lint, 298 tests, `build` and `build:single` (offline file opens `#/world` and `#/home` from `file://`), and every one of the 14 NPCs shows its prompt and opens its panel when walked up to.
