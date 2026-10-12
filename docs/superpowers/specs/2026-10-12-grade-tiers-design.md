@@ -57,7 +57,7 @@ Small per-zone label maps for practice/boss titles where "3rd grade" wording wou
 ## Verification
 - Unit: migration fills grade 4; `effectiveConfig` per grade × kind; every bank has ≥ N items per level for every zone that filters by it (anti-starvation); existing content-invariants + answer-bias fuzz run all 3 grades.
 - Manual: fresh profile flow forces the grade choice; grown-up edit; `/parent` shows current grade; G2 profile never sees 7×8, G4 never sees "how many sides does a triangle have".
-- Full gate: `npx tsc -b`, lint, vitest (Node 26 needs `NODE_OPTIONS="--localstorage-file=/tmp/sq-ls.json"`), `npm run build`, `build:single`.
+- Full gate: `npx tsc -b`, lint, vitest, `npm run build`, `build:single`. (Node ≥26 ships an experimental `localStorage` that breaks jsdom — vitest setup shim `src/test/setupLocalStorage.ts` makes `npm test` hermetic on any Node.)
 
 ## Phases
 1. **Engine** (this PR series): store + migration + picker + parent edit + `gradeTiers.ts` + `effectiveConfig` wiring + provider level filters (G3/G4 banks as-is so behavior is unchanged until content lands) + tests. ✅ DONE
