@@ -1,24 +1,27 @@
 import type { Problem, ProblemProvider } from '../problem'
 import { shuffle } from '../random'
 import { makeLlmCachedProvider } from '../llm-cache'
+import { pickLevel } from '../gradeTiers'
 import { useProgress } from '../../store/progress'
 
 interface Config {
-  level: 3 | 4
+  level: 2 | 3 | 4
   source?: 'static' | 'llm'
 }
 
 /**
- * Geometry provider — text multiple-choice (no passage). Level 3 covers 2D
- * shapes, sides, and vertices; level 4 covers lines and angles. Common-Core
- * aligned to the 3rd/4th "Geometry" and "geometric measurement (angles)" strands.
+ * Geometry provider — text multiple-choice (no passage). Grade 2 covers shape
+ * recognition; level 3 covers 2D shapes, sides, and vertices; level 4 covers
+ * lines and angles. Common-Core aligned per band. When the bank has no items at
+ * the requested level (content still being authored), the nearest easier level
+ * serves instead (see lib/gradeTiers.pickLevel).
  *
  * static: hand-written question pool. llm: generates fresh questions and falls
  * back to static when the LLM is disabled or unreachable.
  */
 
 interface GeoQuestion {
-  level: 3 | 4
+  level: number
   question: string
   answer: string
   options: string[]
@@ -399,7 +402,8 @@ export function makeGeometryProvider(cfg: Config): ProblemProvider {
 
 function makeStaticGeometryProvider(cfg: Config): ProblemProvider {
   let serial = 0
-  const pool = QUESTIONS.filter((q) => q.level === cfg.level)
+  const level = pickLevel(cfg.level, QUESTIONS.map((q) => q.level))
+  const pool = QUESTIONS.filter((q) => q.level === level)
   function reshuffle() {
     const order = [...pool]
     for (let i = order.length - 1; i > 0; i--) {

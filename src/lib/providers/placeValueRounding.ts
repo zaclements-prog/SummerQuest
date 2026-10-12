@@ -2,7 +2,7 @@ import type { Problem, ProblemProvider } from '../problem'
 import { randInt, shuffle } from '../random'
 
 interface Config {
-  maxPlace: 100 | 1000 | 10000
+  maxPlace: 100 | 1000 | 10000 | 100000
   roundTo: 10 | 100 | 1000
 }
 

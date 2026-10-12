@@ -1,6 +1,7 @@
 # SummerQuest
 
-A kid-friendly summer learning game for a student going from 3rd to 4th grade.
+A kid-friendly summer learning game for elementary students (grades 2-4;
+the difficulty tier is set on the student profile).
 It combines the strongest patterns from Prodigy (meta-game + avatar), DragonBox
 (concept-first visuals), Khan Academy (mastery progression) and SplashLearn
 (quick-hit practice games).

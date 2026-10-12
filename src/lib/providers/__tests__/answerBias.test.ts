@@ -24,12 +24,12 @@ interface McItem {
   options: ProblemAnswer[]
 }
 
-type Level = 3 | 4
+type Level = 2 | 3 | 4
 
 function passageBank(
   passages: Array<{
     title: string
-    level: Level
+    level: number
     questions: Array<{ question: string; answer: string; options: string[] }>
   }>,
   level: Level,

@@ -1,10 +1,11 @@
 import type { Problem, ProblemProvider } from '../problem'
 import { shuffle } from '../random'
 import { makeLlmCachedProvider } from '../llm-cache'
+import { pickLevel } from '../gradeTiers'
 import { useProgress } from '../../store/progress'
 
 interface Config {
-  level: 3 | 4
+  level: 2 | 3 | 4
   source?: 'static' | 'llm'
 }
 
@@ -13,16 +14,17 @@ interface Config {
  * passage plus a multiple-choice question, rendered with the same `passage`
  * visual so it reuses ConceptPlay / BossBattle with no new game UI.
  *
- * static: hand-written, Common-Core-aligned 3rd-4th science passages (plants,
- *         life cycles, photosynthesis, the water cycle).
+ * static: hand-written, Common-Core-aligned science passages (level 2: plants
+ *         and animals; level 3/4: life cycles, photosynthesis, water cycle).
  * llm:    generates fresh passages on demand and falls back to static when the
  *         LLM is disabled or unreachable.
+ * Unauthored levels fall back to the nearest easier shelf (lib/gradeTiers).
  */
 
 interface Passage {
   title: string
   text: string
-  level: 3 | 4
+  level: number
   questions: Array<{
     question: string
     answer: string
@@ -684,7 +686,8 @@ export function makeScienceProvider(cfg: Config): ProblemProvider {
 
 function makeStaticScienceProvider(cfg: Config): ProblemProvider {
   let serial = 0
-  const pool = PASSAGES.filter((p) => p.level === cfg.level)
+  const level = pickLevel(cfg.level, PASSAGES.map((p) => p.level))
+  const pool = PASSAGES.filter((p) => p.level === level)
   // shuffled queue of (passage, question) pairs
   function reshuffle() {
     const order: Array<{ p: Passage; qi: number }> = []

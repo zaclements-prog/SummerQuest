@@ -4,7 +4,7 @@ import { makeLlmCachedProvider } from '../llm-cache'
 import { useProgress } from '../../store/progress'
 
 interface Config {
-  topic: 'multiplication' | 'division' | 'mixed'
+  topic: 'addSubtract' | 'multiplication' | 'division' | 'mixed'
   source?: 'static' | 'llm'
 }
 
@@ -15,6 +15,128 @@ interface Config {
  * llm: pre-generates batches via the configured backend, personalized to the player.
  *      Falls back to static if backend is unavailable or disabled in settings.
  */
+
+const TEMPLATES_ADD: Array<{
+  build: (a: number, b: number) => { prompt: string; answer: number; hint: string }
+}> = [
+  {
+    build: (a, b) => ({
+      prompt: `Maya picked ${a} seashells and then found ${b} more on the beach. How many seashells does she have now?`,
+      answer: a + b,
+      hint: `Add ${a} and ${b}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `There were ${a} birds on a wire. Then ${b} more flew over and landed. How many birds are on the wire now?`,
+      answer: a + b,
+      hint: `Add ${a} and ${b}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `A shelf has ${a} red books and ${b} blue books. How many books are on the shelf in all?`,
+      answer: a + b,
+      hint: `Add ${a} and ${b}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Diego had ${a} stickers. His grandma gave him ${b} more. How many stickers does Diego have now?`,
+      answer: a + b,
+      hint: `Add ${a} and ${b}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `The class read ${a} books in June and ${b} books in July. How many books did they read in all?`,
+      answer: a + b,
+      hint: `Add ${a} and ${b}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `A frog jumped ${a} inches and then hopped ${b} more inches. How far did the frog go in all?`,
+      answer: a + b,
+      hint: `Add ${a} and ${b}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `${a} kids were playing on the playground. Then ${b} more kids came outside. How many kids are playing now?`,
+      answer: a + b,
+      hint: `Add ${a} and ${b}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `A baker made ${a} muffins in the morning and ${b} muffins in the afternoon. How many muffins did the baker make in all?`,
+      answer: a + b,
+      hint: `Add ${a} and ${b}.`,
+    }),
+  },
+]
+
+const TEMPLATES_SUB: Array<{
+  build: (a: number, b: number) => { prompt: string; answer: number; hint: string }
+}> = [
+  {
+    build: (a, b) => ({
+      prompt: `There were ${a} apples in a basket. Sam took ${b} of them. How many apples are left?`,
+      answer: a - b,
+      hint: `Take ${b} away from ${a}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `A book had ${a} stickers on it. Lily peeled off ${b} of them. How many stickers are left?`,
+      answer: a - b,
+      hint: `Take ${b} away from ${a}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `The bus had ${a} people on it. At the stop, ${b} people got off. How many people are on the bus now?`,
+      answer: a - b,
+      hint: `Take ${b} away from ${a}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `A tank had ${a} goldfish. ${b} of them were orange and the rest were white. How many were white?`,
+      answer: a - b,
+      hint: `Take the ${b} orange away from ${a}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Owen collected ${a} bottle caps. He gave ${b} to his friend. How many does Owen keep?`,
+      answer: a - b,
+      hint: `Take ${b} away from ${a}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `A nest had ${a} eggs. ${b} of them hatched. How many eggs have not hatched yet?`,
+      answer: a - b,
+      hint: `Take the ${b} that hatched away from ${a}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `There were ${a} snowmen built in the park. The sun melted ${b} of them. How many snowmen are left?`,
+      answer: a - b,
+      hint: `Take ${b} away from ${a}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Maya had ${a} coins and spent ${b} at the snack shop. How many coins does she have left?`,
+      answer: a - b,
+      hint: `Take ${b} away from ${a}.`,
+    }),
+  },
+]
 
 const TEMPLATES_MULT: Array<{
   build: (a: number, b: number) => { prompt: string; answer: number; hint: string }
@@ -218,6 +340,20 @@ function makeStaticWordProblemProvider(cfg: Config): ProblemProvider {
   return {
     topic: 'word-problem',
     next(): Problem {
+      if (cfg.topic === 'addSubtract') {
+        // Grade-2 band: single-step add / take-away within ~60.
+        if (Math.random() < 0.5) {
+          const a = randInt(12, 45)
+          const b = randInt(6, 15)
+          const tmpl = TEMPLATES_ADD[randInt(0, TEMPLATES_ADD.length - 1)]
+          return makeMcProblem(`wp-add-${serial++}`, 'word-problem-addition', tmpl.build(a, b))
+        }
+        const a = randInt(20, 55)
+        const b = randInt(6, 15)
+        const tmpl = TEMPLATES_SUB[randInt(0, TEMPLATES_SUB.length - 1)]
+        return makeMcProblem(`wp-sub-${serial++}`, 'word-problem-subtraction', tmpl.build(a, b))
+      }
+
       const useMult =
         cfg.topic === 'multiplication' ||
         (cfg.topic === 'mixed' && Math.random() < 0.5)

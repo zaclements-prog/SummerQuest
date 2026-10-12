@@ -7,7 +7,7 @@ export const scienceZone: Zone = {
   emoji: '🔬',
   themeColor: 'island',
   description:
-    'Climb the Science Summit! Read short passages about plants, animals, weather, and how the world works, then answer questions about what you learned. Aligned to 3rd-4th grade science standards.',
+    'Climb the Science Summit! Read short passages about plants, animals, weather, and how the world works, then answer questions about what you learned. Aligned to grade-level science standards.',
   estimatedMinutes: 20,
   available: true,
   position: { x: 61, y: 81 },

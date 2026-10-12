@@ -7,7 +7,7 @@ export const dataGraphZone: Zone = {
   emoji: '📊',
   themeColor: 'ocean',
   description:
-    'Explore the Data Delta! Read bar graphs to answer questions — find the most and fewest, then add and compare the bars. Aligned to the 3rd-4th grade "represent and interpret data" standard.',
+    'Explore the Data Delta! Read bar graphs to answer questions — find the most and fewest, then add and compare the bars. Aligned to the grade-level "represent and interpret data" standard.',
   estimatedMinutes: 18,
   available: true,
   position: { x: 37, y: 48 },
