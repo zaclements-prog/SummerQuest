@@ -100,15 +100,25 @@ describe('within-session retry', () => {
   })
 
   it('a fact answered right is not retried', () => {
+    // The sampler never schedules a retry after a correct answer, but the
+    // uniform draw may still land on the same fact by chance (2 of 81 ordered
+    // pairs per draw, and only the immediately-prior fact is excluded). A per-
+    // trial `less than 2` bound therefore flakes (~2% per trial). Aggregate
+    // instead: chance gives ~1.5 repeats per 20 trials; a scheduled-retry bug
+    // would add one-per-trial (~20+). Anything over 6 is a regression.
+    let repeats = 0
     for (let trial = 0; trial < 20; trial++) {
       useProgress.getState().resetPlayer()
       const provider = makeMultiplicationProvider(MULT)
       const first = provider.next() as Problem
       useProgress.getState().recordAnswer(true, first)
       const next = draw(() => provider.next() as Problem, 4)
-      // only an occasional uniform repeat (≈1/40 per draw), never a scheduled retry
-      expect(next.filter((p) => p.factId === first.factId).length).toBeLessThan(2)
+      repeats += next.filter((p) => p.factId === first.factId).length
+      // the fact may never come back on draw 1: the sampler blocks a clash
+      // with the immediately-prior fact even when nothing is scheduled
+      expect(next[0].factId, `trial ${trial}`).not.toBe(first.factId)
     }
+    expect(repeats).toBeLessThanOrEqual(6)
   })
 
   it('works for division too', () => {
