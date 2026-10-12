@@ -15,7 +15,7 @@ export const scienceZone: Zone = {
     {
       id: 'science-3rd',
       kind: 'concept',
-      title: 'Base Camp (3rd grade)',
+      title: 'Base Camp',
       description: 'Read about plants and life cycles, then answer questions.',
       gameId: 'conceptPlay',
       providerConfig: { kind: 'science', level: 3, source: 'static' },
@@ -25,7 +25,7 @@ export const scienceZone: Zone = {
     {
       id: 'science-4th',
       kind: 'practice',
-      title: 'High Ridge (4th grade)',
+      title: 'High Ridge',
       description: 'Tougher passages on photosynthesis and the water cycle.',
       gameId: 'conceptPlay',
       providerConfig: { kind: 'science', level: 4, source: 'static' },

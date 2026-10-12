@@ -15,7 +15,7 @@ export const readingZone: Zone = {
     {
       id: 'read-3rd',
       kind: 'concept',
-      title: 'Shallow Reef (3rd grade)',
+      title: 'Shallow Reef',
       description: 'Read short passages and answer questions.',
       gameId: 'conceptPlay',
       providerConfig: { kind: 'readingComprehension', level: 3, source: 'static' },
@@ -25,7 +25,7 @@ export const readingZone: Zone = {
     {
       id: 'read-4th',
       kind: 'practice',
-      title: 'Deep Reef (4th grade)',
+      title: 'Deep Reef',
       description: 'Trickier passages with more inference.',
       gameId: 'conceptPlay',
       providerConfig: { kind: 'readingComprehension', level: 4, source: 'static' },

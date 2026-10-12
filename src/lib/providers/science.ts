@@ -2,6 +2,7 @@ import type { Problem, ProblemProvider } from '../problem'
 import { shuffle } from '../random'
 import { makeLlmCachedProvider } from '../llm-cache'
 import { pickLevel } from '../gradeTiers'
+import { G2_SCIENCE } from './content/grade2'
 import { useProgress } from '../../store/progress'
 
 interface Config {
@@ -35,6 +36,7 @@ interface Passage {
 
 /** Exported for content-quality tests (see __tests__/answerBias.test.ts). */
 export const PASSAGES: Passage[] = [
+  ...G2_SCIENCE,
   {
     title: 'The Parts of a Plant',
     level: 3,

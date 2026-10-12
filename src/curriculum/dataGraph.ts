@@ -15,7 +15,7 @@ export const dataGraphZone: Zone = {
     {
       id: 'data-read',
       kind: 'concept',
-      title: 'Graph Basics (3rd grade)',
+      title: 'Graph Basics',
       description: 'Read a bar graph to find the most, the fewest, and how many.',
       gameId: 'conceptPlay',
       providerConfig: { kind: 'dataGraph', level: 3, source: 'static' },
@@ -25,7 +25,7 @@ export const dataGraphZone: Zone = {
     {
       id: 'data-compare',
       kind: 'practice',
-      title: 'Graph Detective (4th grade)',
+      title: 'Graph Detective',
       description: 'Add and compare bars: how many more, how many fewer, how many in all.',
       gameId: 'conceptPlay',
       providerConfig: { kind: 'dataGraph', level: 4, source: 'static' },

@@ -2,6 +2,8 @@ import type { Problem, ProblemProvider } from '../problem'
 import { shuffle } from '../random'
 import { makeLlmCachedProvider } from '../llm-cache'
 import { pickLevel } from '../gradeTiers'
+import { G2_CHARTS } from './content/grade2'
+import { L4_ENRICH_DATAGRAPH } from './content/l4Enrich'
 import { useProgress } from '../../store/progress'
 
 interface Config {
@@ -30,6 +32,8 @@ interface DataChart {
 
 /** Exported for content tests (grade-tier coverage; see lib/__tests__/gradeTiers.test.ts). */
 export const CHARTS: DataChart[] = [
+  ...G2_CHARTS,
+  ...L4_ENRICH_DATAGRAPH,
   // ---- Level 3: direct reads (small values 2–10) ----
   {
     level: 3,

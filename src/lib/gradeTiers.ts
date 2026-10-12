@@ -64,7 +64,7 @@ export const GRADE_TIERS: Record<GradeLevel, Tier> = {
     pvIdentifyMaxPlace: 1000,
     pvRoundMaxPlace: 1000,
     pvRoundTo: 10,
-    measureConcept: 'perimeter',
+    measureConcept: 'area', // 2.G.A.2: area as tiling/counting unit squares
     bankLevels: [2, 2, 3],
     wpTopic: 'addSubtract',
   },

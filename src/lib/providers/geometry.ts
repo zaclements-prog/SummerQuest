@@ -2,6 +2,8 @@ import type { Problem, ProblemProvider } from '../problem'
 import { shuffle } from '../random'
 import { makeLlmCachedProvider } from '../llm-cache'
 import { pickLevel } from '../gradeTiers'
+import { G2_GEOMETRY } from './content/grade2'
+import { L4_ENRICH_GEOMETRY } from './content/l4Enrich'
 import { useProgress } from '../../store/progress'
 
 interface Config {
@@ -30,6 +32,8 @@ interface GeoQuestion {
 
 /** Exported for content-quality tests (see __tests__/answerBias.test.ts). */
 export const QUESTIONS: GeoQuestion[] = [
+  ...G2_GEOMETRY,
+  ...L4_ENRICH_GEOMETRY,
   // ---- Level 3: 2D shapes, sides, vertices, solids ----
   {
     level: 3,

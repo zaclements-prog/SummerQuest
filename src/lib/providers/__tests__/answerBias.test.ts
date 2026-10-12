@@ -124,12 +124,16 @@ function checkBank(name: string, getItems: () => McItem[] | Promise<McItem[]>) {
 }
 
 describe('multiple-choice banks have no answer-length bias', () => {
+  checkBank('reading level 2', () => passageBank(READING_PASSAGES, 2))
   checkBank('reading level 3', () => passageBank(READING_PASSAGES, 3))
   checkBank('reading level 4', () => passageBank(READING_PASSAGES, 4))
+  checkBank('science level 2', () => passageBank(SCIENCE_PASSAGES, 2))
   checkBank('science level 3', () => passageBank(SCIENCE_PASSAGES, 3))
   checkBank('science level 4', () => passageBank(SCIENCE_PASSAGES, 4))
+  checkBank('geometry level 2', () => geometryBank(2))
   checkBank('geometry level 3', () => geometryBank(3))
   checkBank('geometry level 4', () => geometryBank(4))
+  checkBank('dataGraph level 2', () => dataGraphBank(2))
   checkBank('dataGraph level 3', () => dataGraphBank(3))
   checkBank('dataGraph level 4', () => dataGraphBank(4))
 })
