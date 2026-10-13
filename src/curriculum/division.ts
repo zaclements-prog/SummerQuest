@@ -29,6 +29,22 @@ export const divisionZone: Zone = {
       starsToEarn: 3,
     },
     {
+      id: 'div-arena',
+      kind: 'practice',
+      title: 'Crystal Golems',
+      description: 'Shatter the golems — grab the divisor crystal that splits them into the pen!',
+      gameId: 'divisionArena',
+      providerConfig: {
+        kind: 'division',
+        divisorMin: 2,
+        divisorMax: 10,
+        quotientMin: 2,
+        quotientMax: 10,
+      },
+      params: { rounds: 5 },
+      starsToEarn: 3,
+    },
+    {
       id: 'div-practice',
       kind: 'practice',
       title: 'Speed Run',

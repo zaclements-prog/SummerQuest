@@ -11,6 +11,7 @@ import SpeedRun from '../games/SpeedRun'
 import BossBattle from '../games/BossBattle'
 import TowerDefense from '../games/tower-defense/TowerDefense'
 import WritingPad from '../games/WritingPad'
+import DivisionArena from '../games/DivisionArena'
 import { sfx } from '../lib/sound'
 import { Card, Button, BackButton, Pill, Celebration, ConfirmDialog, ErrorState } from '../components/ui'
 import { isStageUnlocked } from '../lib/stageLocks'
@@ -141,6 +142,8 @@ export default function GameRunner() {
         return BossBattle
       case 'towerDefense':
         return TowerDefense
+      case 'divisionArena':
+        return DivisionArena
       case 'writingPad':
         return WritingPad
       default:

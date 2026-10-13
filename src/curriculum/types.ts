@@ -8,6 +8,7 @@ export type GameId =
   | 'bossBattle'
   | 'towerDefense'
   | 'writingPad'
+  | 'divisionArena'
 
 export interface Stage {
   id: string
