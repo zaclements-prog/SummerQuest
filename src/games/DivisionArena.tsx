@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Canvas } from '@react-three/fiber'
+import { Canvas, useFrame } from '@react-three/fiber'
 import { Group, Vector3 } from 'three'
 import type { RefObject } from 'react'
 import type { GameProps } from '../screens/GameRunner'
@@ -244,7 +244,7 @@ export default function DivisionArena({ provider, params, onComplete, meta, paus
         shadows
         flat
         dpr={[1, 1.5]}
-        gl={{ antialias: true, powerPreference: 'high-performance' }}
+        gl={{ antialias: true, powerPreference: 'high-performance', preserveDrawingBuffer: import.meta.env.DEV }}
         camera={{ position: [SPAWN[0] + 7.5, 11.5, SPAWN[1] + 9], fov: 40, near: 0.3, far: 220 }}
         style={{ position: 'absolute', inset: 0 }}
         onCreated={({ scene }) => {
@@ -338,6 +338,13 @@ function ArenaScene({
     collide: (x, z) => collidesAt(colliders, x, z, 0),
     wander: false,
     paused: () => paused,
+  })
+
+  // the camera rig targets posRef, but WASD only moves the avatar group —
+  // mirror it each frame so the camera actually follows live play
+  useFrame(() => {
+    const p = avatarRef.current?.position
+    if (p) posRef.current.set(p.x, p.y, p.z)
   })
 
   // proximity poll (a tick, not render): grab / start-throw only.
