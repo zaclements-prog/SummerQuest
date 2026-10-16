@@ -34,6 +34,9 @@ import {
 import { makeDivisionProvider } from '../lib/providers/division'
 import { DEFAULT_GRADE, GRADE_TIERS } from '../lib/gradeTiers'
 import { Crystal, FlyingCrystal, Golem, HeldCrystal, MiniCamel } from './DivisionArena.parts'
+import { ChalkEasel } from './_shared/ChalkEasel'
+import { GroundRing } from './_shared/GroundRing'
+import { fitChalk } from './_shared/chalkBoard'
 
 /**
  * Crystal Golems — the intrinsic-integration division arena (vertical slice).
@@ -61,15 +64,6 @@ const CRYSTAL = [TOON.sky, TOON.lilac, TOON.mint]
 // closer + flatter than the open world's rig so the small arena fills the frame
 // and the (tall) chalkboard still fits above the play area
 const ARENA_CAM: [number, number, number] = [10.5, 8.6, 10.5]
-/** Usable width inside the board's green panel, for fitting the equation. */
-const BOARD_W = 2.96
-
-/** Chalk pitch that fits `text` inside `panel` (w sized, gap kept proportional). */
-function fitChalk(text: string, panel = BOARD_W) {
-  const n = Math.max(1, text.length)
-  const w = Math.min(0.24, panel / (n + 0.45 * (n - 1)))
-  return { w, gap: w * 0.45 }
-}
 
 export type Phase = 'loading' | 'explore' | 'throw' | 'shatter' | 'fail' | 'bounce' | 'won'
 
@@ -334,16 +328,6 @@ export default function DivisionArena({ params, onComplete, meta, paused = false
 
 // ── scene: presentational + proximity detection only ─────────────────────────
 
-/** A flat chalk circle on the sand marking a verb's range (grab / throw). */
-function GroundRing({ x, z, r, opacity }: { x: number; z: number; r: number; opacity: number }) {
-  return (
-    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[x, 0.02, z]}>
-      <ringGeometry args={[r - 0.07, r, 64]} />
-      <meshBasicMaterial color={'#fff6cf'} transparent opacity={opacity} />
-    </mesh>
-  )
-}
-
 function ArenaScene({
   view,
   avatarRef,
@@ -440,21 +424,8 @@ function ArenaScene({
       <Decal geometry={blobDisc(2.5, 0.1, 9, 32)} color={TOON.sandWet} position={[GOLEM[0], 0.008, GOLEM[1]]} />
       <Decal geometry={blobDisc(2.25, 0.1, 10, 28)} color={TOON.grassLight} position={[PEN[0], 0.006, PEN[1]]} />
 
-      {/* chalkboard easel — west side, turned toward the arena/camera; chalk sticks
-          face +z locally, so no yaw flip, and it's clear of the pen's grass */}
-      <group position={[-4.4, 0, -2.1]} rotation={[0, 0.55, 0]}>
-        <TCyl radiusTop={0.07} height={2.15} position={[-1.2, 1.07, -0.06]} rotation={[-0.16, 0, 0.09]} color={TOON.woodDark} />
-        <TCyl radiusTop={0.07} height={2.15} position={[1.2, 1.07, -0.06]} rotation={[-0.16, 0, -0.09]} color={TOON.woodDark} />
-        <TCyl radiusTop={0.07} height={2.0} position={[0, 1.0, -0.45]} rotation={[0.3, 0, 0]} color={TOON.woodDark} />
-        <group position={[0, 1.8, 0]} rotation={[-0.1, 0, 0]}>
-          <TBox size={[3.5, 1.55, 0.1]} radius={0.05} color={TOON.wood} outline />
-          <TBox size={[3.24, 1.28, 0.06]} radius={0.02} position={[0, 0, 0.04]} color={'#3f6b5a'} castShadow={false} />
-          <group position={[0, 0, 0.08]}>
-            <Instances geometry={geo.box(1, 1, 1, 0.2)} color={TOON.white} items={chalk} />
-          </group>
-          <TBox size={[3.4, 0.09, 0.16]} radius={0.03} position={[0, -0.76, 0.08]} color={TOON.flowerYellow} castShadow={false} />
-        </group>
-      </group>
+      {/* chalkboard easel — west side, turned toward the arena/camera */}
+      <ChalkEasel items={chalk} position={[-4.4, 0, -2.1]} />
 
       {/* the pen: fence + its quotient sign (the spots the camels must fill) */}
       <group position={[PEN[0], 0, PEN[1]]}>

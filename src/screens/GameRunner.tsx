@@ -12,6 +12,7 @@ import BossBattle from '../games/BossBattle'
 import TowerDefense from '../games/tower-defense/TowerDefense'
 import WritingPad from '../games/WritingPad'
 import DivisionArena from '../games/DivisionArena'
+import FractionForge from '../games/FractionForge'
 import { sfx } from '../lib/sound'
 import { Card, Button, BackButton, Pill, Celebration, ConfirmDialog, ErrorState } from '../components/ui'
 import { isStageUnlocked } from '../lib/stageLocks'
@@ -144,6 +145,8 @@ export default function GameRunner() {
         return TowerDefense
       case 'divisionArena':
         return DivisionArena
+      case 'fractionForge':
+        return FractionForge
       case 'writingPad':
         return WritingPad
       default:
