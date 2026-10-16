@@ -1,5 +1,5 @@
 import type { Problem } from '../problem'
-import { randInt, shuffle } from '../random'
+import { shuffle } from '../random'
 
 /**
  * Pure logic for the Division Arena (docs/superpowers/specs/
@@ -96,5 +96,24 @@ export function arenaStars(correctFirstTry: number): number {
   return correctFirstTry >= STAR_THRESHOLDS[2] ? 3 : correctFirstTry >= STAR_THRESHOLDS[1] ? 2 : correctFirstTry >= STAR_THRESHOLDS[0] ? 1 : 0
 }
 
-/** Round a big dividend down to a kid-friendly crystal value (visual label). */
-export const _randInt = randInt // re-export small helpers the scene may need
+/**
+ * The arena is a *model* of grouping, so its facts are bounded for legibility
+ * regardless of how wide the grade tier makes division: the chalk board must
+ * fit its panel and the pen must show exactly `quotient` camels without
+ * crowding (the pen caps at `PEN_MARKS`). Grade tiers widen division to ÷12
+ * (dividends to 144), which would break both.
+ */
+export const ARENA_LIMITS = { divisorMax: 9, quotientMax: 10 } as const
+/** Camels the pen can show; a quotient above this can't be modelled truthfully. */
+export const PEN_MARKS = 12
+
+/** Grade's division ceiling → arena-bounded provider config (never harder than the grade). */
+export function arenaFactConfig(tierDivMax: number) {
+  const cap = (arenaMax: number, floor: number) => Math.min(arenaMax, Math.max(floor, tierDivMax))
+  return {
+    divisorMin: 2,
+    divisorMax: cap(ARENA_LIMITS.divisorMax, 2),
+    quotientMin: 2,
+    quotientMax: cap(ARENA_LIMITS.quotientMax, 2),
+  }
+}

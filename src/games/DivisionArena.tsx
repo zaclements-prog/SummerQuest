@@ -22,6 +22,7 @@ import CreatureAccessories from '../home/world/CreatureAccessories'
 import { collidesAt } from '../world/collision'
 import {
   ROUNDS,
+  arenaFactConfig,
   arenaStars,
   isRightCrystal,
   makePedestalOptions,
@@ -30,6 +31,8 @@ import {
   splitPositions,
   type DivRound,
 } from '../lib/arena/divisionCore'
+import { makeDivisionProvider } from '../lib/providers/division'
+import { DEFAULT_GRADE, GRADE_TIERS } from '../lib/gradeTiers'
 import { Crystal, FlyingCrystal, Golem, HeldCrystal, MiniCamel } from './DivisionArena.parts'
 
 /**
@@ -55,6 +58,18 @@ const PEN: [number, number] = [0, -5.7]
 const GRAB_R = 1.05
 const THROW_R = 3.6
 const CRYSTAL = [TOON.sky, TOON.lilac, TOON.mint]
+// closer + flatter than the open world's rig so the small arena fills the frame
+// and the (tall) chalkboard still fits above the play area
+const ARENA_CAM: [number, number, number] = [10.5, 8.6, 10.5]
+/** Usable width inside the board's green panel, for fitting the equation. */
+const BOARD_W = 2.96
+
+/** Chalk pitch that fits `text` inside `panel` (w sized, gap kept proportional). */
+function fitChalk(text: string, panel = BOARD_W) {
+  const n = Math.max(1, text.length)
+  const w = Math.min(0.24, panel / (n + 0.45 * (n - 1)))
+  return { w, gap: w * 0.45 }
+}
 
 export type Phase = 'loading' | 'explore' | 'throw' | 'shatter' | 'fail' | 'bounce' | 'won'
 
@@ -73,8 +88,16 @@ export interface View {
   token: number
 }
 
-export default function DivisionArena({ provider, params, onComplete, meta, paused = false }: GameProps) {
+export default function DivisionArena({ params, onComplete, meta, paused = false }: GameProps) {
   const totalRounds = (params?.rounds as number | undefined) ?? ROUNDS
+  const grade = useProgress((s) => s.player?.grade)
+  // The arena draws its OWN bounded facts: the grade tier widens division to
+  // ÷12 (dividends to 144), which the pen (12 marks) and the chalk board can't
+  // model legibly. Never harder than the grade, never wider than the model.
+  const facts = useMemo(
+    () => makeDivisionProvider(arenaFactConfig(GRADE_TIERS[grade ?? DEFAULT_GRADE].divMax)),
+    [grade],
+  )
   const posRef = useRef(new Vector3(...SPAWN, 0))
   const avatarRef = useRef<Group>(null)
   const [view, setView] = useState<View | null>(null)
@@ -130,13 +153,13 @@ export default function DivisionArena({ provider, params, onComplete, meta, paus
   // first round (ConceptPlay's pattern: setState only in the .then)
   useEffect(() => {
     let cancel = false
-    nextProblem(provider).then((p) => {
+    nextProblem(facts).then((p) => {
       if (!cancel) applyRound(p, 0)
     })
     return () => {
       cancel = true
     }
-  }, [provider, applyRound])
+  }, [facts, applyRound])
 
   const tally = useRef({ cleared: 0, firstTry: 0 })
 
@@ -147,11 +170,12 @@ export default function DivisionArena({ provider, params, onComplete, meta, paus
       if (finishedRef.current) return
       finishedRef.current = true
       setView((v) => (v ? { ...v, phase: 'won', targets: null } : v))
+      say(t.firstTry === totalRounds ? 'Arena cleared — every one first try! 🏆' : `Arena cleared! ${t.firstTry} of ${totalRounds} first try.`)
       onComplete({ stars: arenaStars(t.firstTry), score: t.firstTry * 20, correct: t.firstTry, total: totalRounds })
       return
     }
-    nextProblem(provider).then((p) => applyRound(p, index))
-  }, [applyRound, onComplete, provider, totalRounds])
+    nextProblem(facts).then((p) => applyRound(p, index))
+  }, [applyRound, onComplete, facts, totalRounds, say])
 
   const grab = useCallback((n: number) => {
     sfx.click()
@@ -175,7 +199,7 @@ export default function DivisionArena({ provider, params, onComplete, meta, paus
       triedRef.current = true
       recordAnswer(right, problem)
       const sk = problem.skill
-      if (meta && sk) recordAttempt({ zoneId: meta.zoneId, topic: provider.topic, skillId: sk.id, skillLabel: sk.label, correct: right })
+      if (meta && sk) recordAttempt({ zoneId: meta.zoneId, topic: facts.topic, skillId: sk.id, skillLabel: sk.label, correct: right })
 
       if (right) {
         tally.current.cleared += 1
@@ -206,7 +230,7 @@ export default function DivisionArena({ provider, params, onComplete, meta, paus
         timersRef.current.push(window.setTimeout(() => setView((w) => (w && w.phase === 'bounce' ? { ...w, phase: 'explore' } : w)), 1100))
       }
     },
-    [clearTimers, loadNext, meta, provider.topic, recordAnswer, recordAttempt, say],
+    [clearTimers, loadNext, meta, facts.topic, recordAnswer, recordAttempt, say],
   )
 
   // dev/QA hook: honest live machine state; `walk` teleports the avatar and the
@@ -245,7 +269,7 @@ export default function DivisionArena({ provider, params, onComplete, meta, paus
         flat
         dpr={[1, 1.5]}
         gl={{ antialias: true, powerPreference: 'high-performance', preserveDrawingBuffer: import.meta.env.DEV }}
-        camera={{ position: [SPAWN[0] + 7.5, 11.5, SPAWN[1] + 9], fov: 40, near: 0.3, far: 220 }}
+        camera={{ position: [SPAWN[0] + ARENA_CAM[0], ARENA_CAM[1], SPAWN[1] + ARENA_CAM[2]], fov: 46, near: 0.3, far: 220 }}
         style={{ position: 'absolute', inset: 0 }}
         onCreated={({ scene }) => {
           if (import.meta.env.DEV) Object.assign(window, { __sqScene: scene })
@@ -278,11 +302,17 @@ export default function DivisionArena({ provider, params, onComplete, meta, paus
         )}
       </Canvas>
 
-      {/* round dots */}
+      {/* round dots — completed rounds light up, and all light on a clear */}
       <div className="absolute top-2 left-1/2 -translate-x-1/2 flex items-center gap-2 pointer-events-none">
-        {Array.from({ length: totalRounds }, (_, i) => (
-          <span key={i} className={`w-3 h-3 rounded-full border-2 border-white/70 ${i < (hud?.dot ?? -1) ? 'bg-yellow-300' : 'bg-white/25'}`} />
-        ))}
+        {Array.from({ length: totalRounds }, (_, i) => {
+          const done = view?.phase === 'won' || i < (hud?.dot ?? 0)
+          return (
+            <span
+              key={i}
+              className={`w-3.5 h-3.5 rounded-full border-2 border-white/80 shadow ${done ? 'bg-yellow-300' : 'bg-sky-900/25'}`}
+            />
+          )
+        })}
       </div>
       {hud && (
         <div
@@ -303,6 +333,16 @@ export default function DivisionArena({ provider, params, onComplete, meta, paus
 }
 
 // ── scene: presentational + proximity detection only ─────────────────────────
+
+/** A flat chalk circle on the sand marking a verb's range (grab / throw). */
+function GroundRing({ x, z, r, opacity }: { x: number; z: number; r: number; opacity: number }) {
+  return (
+    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[x, 0.02, z]}>
+      <ringGeometry args={[r - 0.07, r, 64]} />
+      <meshBasicMaterial color={'#fff6cf'} transparent opacity={opacity} />
+    </mesh>
+  )
+}
 
 function ArenaScene({
   view,
@@ -380,9 +420,13 @@ function ArenaScene({
   }, [avatarRef])
 
   const { round, options, phase, held } = view
-  // the board fills in the crystal you're carrying: 24 ÷ [3] = 8
-  const board = phase === 'explore' && held !== null ? `${round.dividend} ÷ ${held} = ${round.quotient}` : `${round.dividend} ÷ O = ${round.quotient}`
-  const chalk = useMemo(() => chalkText(board, { y: 0, z: 0.06, w: 0.21, h: 0.32, t: 0.048, gap: 0.1, color: TOON.white }), [board])
+  // the board fills in the crystal you're carrying: 24 ÷ [3] = 8; `_` is the
+  // classic fill-in-the-blank for the unknown factor
+  const board = phase === 'explore' && held !== null ? `${round.dividend} ÷ ${held} = ${round.quotient}` : `${round.dividend} ÷ _ = ${round.quotient}`
+  const chalk = useMemo(() => {
+    const { w, gap } = fitChalk(board)
+    return chalkText(board, { y: 0, z: 0.06, w, h: 0.32, t: 0.048, gap, color: TOON.white })
+  }, [board])
   const penChalk = useMemo(
     () => chalkText(`pen: ${round.quotient}`, { y: 0, z: 0.05, w: 0.14, h: 0.2, t: 0.035, gap: 0.06, color: TOON.flowerYellow }),
     [round.quotient],
@@ -398,11 +442,11 @@ function ArenaScene({
 
       {/* chalkboard easel — west side, turned toward the arena/camera; chalk sticks
           face +z locally, so no yaw flip, and it's clear of the pen's grass */}
-      <group position={[-4.6, 0, -3.2]} rotation={[0, 0.55, 0]}>
-        <TCyl radiusTop={0.07} height={2.7} position={[-1.2, 1.35, 0.28]} rotation={[-0.16, 0, 0.09]} color={TOON.woodDark} />
-        <TCyl radiusTop={0.07} height={2.7} position={[1.2, 1.35, 0.28]} rotation={[-0.16, 0, -0.09]} color={TOON.woodDark} />
-        <TCyl radiusTop={0.07} height={2.5} position={[0, 1.25, -0.45]} rotation={[0.3, 0, 0]} color={TOON.woodDark} />
-        <group position={[0, 2.3, 0]} rotation={[-0.1, 0, 0]}>
+      <group position={[-4.4, 0, -2.1]} rotation={[0, 0.55, 0]}>
+        <TCyl radiusTop={0.07} height={2.15} position={[-1.2, 1.07, -0.06]} rotation={[-0.16, 0, 0.09]} color={TOON.woodDark} />
+        <TCyl radiusTop={0.07} height={2.15} position={[1.2, 1.07, -0.06]} rotation={[-0.16, 0, -0.09]} color={TOON.woodDark} />
+        <TCyl radiusTop={0.07} height={2.0} position={[0, 1.0, -0.45]} rotation={[0.3, 0, 0]} color={TOON.woodDark} />
+        <group position={[0, 1.8, 0]} rotation={[-0.1, 0, 0]}>
           <TBox size={[3.5, 1.55, 0.1]} radius={0.05} color={TOON.wood} outline />
           <TBox size={[3.24, 1.28, 0.06]} radius={0.02} position={[0, 0, 0.04]} color={'#3f6b5a'} castShadow={false} />
           <group position={[0, 0, 0.08]}>
@@ -427,14 +471,31 @@ function ArenaScene({
         </group>
       </group>
 
-      {/* pedestals + crystals (carried/thrown crystal leaves its pedestal) */}
+      {/* where you may grab / throw — chalk rings on the sand make the verb discoverable */}
+      {phase === 'explore' &&
+        options.map((_, i) => <GroundRing key={`pr${i}`} x={PEDESTALS[i][0]} z={PEDESTALS[i][1]} r={GRAB_R} opacity={held === null ? 0.55 : 0.18} />)}
+      {phase === 'explore' && held !== null && <GroundRing x={GOLEM[0]} z={GOLEM[1]} r={THROW_R} opacity={0.55} />}
+
+      {/* pedestals + crystals (carried/thrown crystal leaves its pedestal, but
+          its number card stays so the kid can still tell the pedestals apart) */}
       {options.map((n, i) => {
         const [x, z] = PEDESTALS[i]
         const away = held === n || phase === 'throw'
+        const label = String(n)
+        const cardW = label.length > 1 ? 0.74 : 0.56
+        const cardChalk = chalkText(label, { y: 0, z: 0, w: 0.2, h: 0.3, t: 0.05, gap: 0.07, color: '#fff3c4' })
         return (
           <group key={`${round.dividend}:${i}`} position={[x, 0, z]}>
             <TCyl radiusTop={0.48} radiusBottom={0.6} height={0.5} position={[0, 0.25, 0]} color={TOON.rockLight} outline segments={8} />
             <TCyl radiusTop={0.4} radiusBottom={0.4} height={0.05} position={[0, 0.53, 0]} color={TOON.rockDark} castShadow={false} segments={8} />
+            {/* slate number card leaning on the pedestal front — white chalk on
+                dark slate reads at play distance; white-on-pastel gem did not */}
+            <group position={[0, 0.5, 0.6]} rotation={[-0.42, 0, 0]}>
+              <TBox size={[cardW, 0.5, 0.07]} radius={0.08} color={'#3c4657'} castShadow={false} />
+              <group position={[0, 0, 0.05]}>
+                <Instances geometry={geo.box(1, 1, 1, 0.2)} color={'#fff3c4'} items={cardChalk} />
+              </group>
+            </group>
             {away ? null : <Crystal n={n} color={CRYSTAL[i]} />}
           </group>
         )
@@ -463,7 +524,7 @@ function ArenaScene({
           <CreatureAccessories />
         </group>
       </group>
-      <WorldCameraRig targetRef={posRef} />
+      <WorldCameraRig targetRef={posRef} offset={ARENA_CAM} />
     </group>
   )
 }

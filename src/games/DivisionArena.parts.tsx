@@ -15,20 +15,20 @@ import { ChibiFace } from '../world/areas/fraction-falls/kit'
  * a `key` on the parent to replay).
  */
 
-/** A pedestal crystal: chunky double-terminated gem with its number in chalk. */
+/**
+ * A pedestal crystal: chunky double-terminated gem. Its NUMBER lives on the
+ * slate card in front of the pedestal (DivisionArena) — white chalk on a pastel
+ * gem was unreadable at play distance.
+ */
 export function Crystal({ n, color }: { n: number; color: string }) {
   const g = useRef<Group>(null)
   useFrame(({ clock }) => {
     if (g.current) g.current.position.y = 1.02 + Math.sin(clock.elapsedTime * 1.8 + n) * 0.06
   })
-  const chalk = chalkText(String(n), { y: 0, z: 0.09, w: 0.16, h: 0.24, t: 0.04, gap: 0.05, color: '#ffffff' })
   return (
     <group ref={g} position={[0, 1.02, 0]}>
       <TCone radius={0.24} height={0.62} segments={6} color={color} outline />
       <TCone radius={0.24} height={0.34} segments={6} position={[0, -0.44, 0]} rotation={[Math.PI, 0, 0]} color={color} outline />
-      <group position={[0, 0.03, 0.19]}>
-        <Instances geometry={geo.box(1, 1, 1, 0.2)} color={TOON.white} items={chalk} />
-      </group>
     </group>
   )
 }
@@ -92,7 +92,7 @@ export function Golem({ dividend, mode }: { dividend: number; mode: 'idle' | 'wo
   const g = useRef<Group>(null)
   const t = useRef(0)
   const [vx, vy, vz] = useMemo(() => [0.95, 1.05, 0.85], [])
-  const chalk = useMemo(() => chalkText(String(dividend), { y: 0, z: 0.09, w: 0.26, h: 0.38, t: 0.055, gap: 0.07, color: '#fff2b8' }), [dividend])
+  const chalk = useMemo(() => chalkText(String(dividend), { y: 0, z: 0.09, w: 0.3, h: 0.44, t: 0.062, gap: 0.08, color: '#fff2b8' }), [dividend])
   useFrame((_, dt) => {
     const m = g.current
     if (!m) return

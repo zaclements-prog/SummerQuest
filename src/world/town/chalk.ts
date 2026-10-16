@@ -5,7 +5,6 @@ const GLYPHS: Record<string, string> = {
   '0': 'abcdef', '1': 'bc', '2': 'abged', '3': 'abgcd', '4': 'fgbc', '5': 'afgcd',
   '6': 'afgedc', '7': 'abc', '8': 'abcdefg', '9': 'abcdfg',
   A: 'abcefg', b: 'cdefg', C: 'adef', d: 'bcdeg', E: 'adefg',
-  O: 'adef', // empty box: the unknown-factor placeholder (24 ÷ O = 8)
 }
 
 /**
@@ -34,6 +33,12 @@ export function chalkText(
     }
     if (ch === '÷') {
       out.push(hz(cx, y), { x: cx, y: y + h / 3, z, s: [t * 1.6, t * 1.6, t], color }, { x: cx, y: y - h / 3, z, s: [t * 1.6, t * 1.6, t], color })
+      return
+    }
+    // A fill-in-the-blank: a low underline, the classic "unknown" on a board
+    // (a box glyph reads as a C/zero at chalk size).
+    if (ch === '_') {
+      out.push(hz(cx, y - h / 2))
       return
     }
     for (const seg of GLYPHS[ch] ?? '') {

@@ -1,7 +1,9 @@
 import { describe, expect, it } from 'vitest'
 import {
+  ARENA_LIMITS,
   ROUNDS,
   STAR_THRESHOLDS,
+  arenaFactConfig,
   arenaStars,
   isRightCrystal,
   makePedestalOptions,
@@ -84,5 +86,27 @@ describe('arenaStars', () => {
     expect(ROUNDS).toBe(5)
     expect(STAR_THRESHOLDS).toEqual([1, 3, 5])
     expect([0, 1, 2, 3, 4, 5].map(arenaStars)).toEqual([0, 1, 1, 2, 2, 3])
+  })
+})
+
+describe('arenaFactConfig', () => {
+  it('never exceeds the model limits, whatever the grade widens division to', () => {
+    // grade tiers: G2 divMax 5, G3 10, G4 12 — the arena must stay ≤ 9 / ≤ 10
+    for (const tierDivMax of [2, 5, 10, 12, 144]) {
+      const c = arenaFactConfig(tierDivMax)
+      expect(c.divisorMin).toBe(2)
+      expect(c.quotientMin).toBe(2)
+      expect(c.divisorMax).toBeLessThanOrEqual(ARENA_LIMITS.divisorMax)
+      expect(c.quotientMax).toBeLessThanOrEqual(ARENA_LIMITS.quotientMax)
+      // and never harder than the grade itself
+      expect(c.divisorMax).toBeLessThanOrEqual(Math.max(2, tierDivMax))
+      expect(c.quotientMax).toBeLessThanOrEqual(Math.max(2, tierDivMax))
+    }
+  })
+  it('keeps every servable quotient inside what the pen can show', () => {
+    const c = arenaFactConfig(12)
+    // worst case for the pen: the largest dividend the config can produce
+    const maxQuotient = c.quotientMax
+    expect(splitPositions(maxQuotient, 0, 0)).toHaveLength(maxQuotient)
   })
 })
