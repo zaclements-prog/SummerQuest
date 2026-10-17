@@ -1,22 +1,26 @@
 import type { Problem, ProblemProvider } from '../problem'
 import { shuffle } from '../random'
 import { makeLlmCachedProvider } from '../llm-cache'
+import { pickLevel } from '../gradeTiers'
+import { G2_CHARTS } from './content/grade2'
+import { L4_ENRICH_DATAGRAPH } from './content/l4Enrich'
 import { useProgress } from '../../store/progress'
 
 interface Config {
-  level: 3 | 4
+  level: 2 | 3 | 4
   source?: 'static' | 'llm'
 }
 
 /**
  * Data & Graphing provider. Each problem embeds a bar graph (the `barGraph`
- * visual) that the child reads to answer the question. Aligned to the 3rd/4th
- * "Represent and interpret data" standard. Level 3 = direct reads (most/fewest,
- * how many); level 4 = multi-step (sums, differences across bars).
+ * visual) that the child reads to answer the question. "Represent and interpret
+ * data" standard. Level 2 = picture-bar reads; level 3 = direct reads (most/
+ * fewest, how many); level 4 = multi-step (sums, differences across bars).
+ * Unauthored levels fall back to the nearest easier shelf (lib/gradeTiers).
  */
 
 interface DataChart {
-  level: 3 | 4
+  level: number
   title: string
   unit?: string
   bars: { label: string; value: number; emoji?: string }[]
@@ -26,7 +30,10 @@ interface DataChart {
   hint?: string
 }
 
-const CHARTS: DataChart[] = [
+/** Exported for content tests (grade-tier coverage; see lib/__tests__/gradeTiers.test.ts). */
+export const CHARTS: DataChart[] = [
+  ...G2_CHARTS,
+  ...L4_ENRICH_DATAGRAPH,
   // ---- Level 3: direct reads (small values 2–10) ----
   {
     level: 3,
@@ -453,7 +460,8 @@ export function makeDataGraphProvider(cfg: Config): ProblemProvider {
 
 function makeStaticDataGraphProvider(cfg: Config): ProblemProvider {
   let serial = 0
-  const pool = CHARTS.filter((c) => c.level === cfg.level)
+  const level = pickLevel(cfg.level, CHARTS.map((c) => c.level))
+  const pool = CHARTS.filter((c) => c.level === level)
   function reshuffle() {
     const order = [...pool]
     for (let i = order.length - 1; i > 0; i--) {

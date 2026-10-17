@@ -1,6 +1,7 @@
 # SummerQuest
 
-A kid-friendly summer learning game for a student going from 3rd to 4th grade.
+A kid-friendly summer learning game for elementary students (grades 2-4;
+the difficulty tier is set on the student profile).
 It combines the strongest patterns from Prodigy (meta-game + avatar), DragonBox
 (concept-first visuals), Khan Academy (mastery progression) and SplashLearn
 (quick-hit practice games).
@@ -10,7 +11,10 @@ Everything runs locally in the browser; progress is saved in `localStorage`.
 ## What's in it
 
 - **12 subject zones** on an island map, each a 3-step mastery path
-  (Learn → Practice → Boss): Multiplication Mesa, Division Dunes, Fraction Falls,
+  (Learn → Practice → Boss). Difficulty is a **grade tier on the profile**
+  (2nd / 3rd / 4th) — set when the player creates their avatar, changeable
+  only by a grown-up. Same zones and ladder at every grade; the tier scales
+  the numbers, fraction sizes, and reading passages. Multiplication Mesa, Division Dunes, Fraction Falls,
   Place Value Plateau, Measurement Marsh, Geometry Grove, Data Delta,
   Word Problem Woods, Reading Reef, Writing Workshop, Science Summit and
   Tower Battlefront (tower defense where buying a tower costs a math answer).

@@ -1,25 +1,28 @@
 import type { Problem, ProblemProvider } from '../problem'
 import { shuffle } from '../random'
 import { makeLlmCachedProvider } from '../llm-cache'
+import { pickLevel } from '../gradeTiers'
+import { G2_READING } from './content/grade2'
 import { useProgress } from '../../store/progress'
 
 interface Config {
-  level: 3 | 4
+  level: 2 | 3 | 4
   source?: 'static' | 'llm'
 }
 
 /**
  * Reading comprehension provider.
  *
- * static: small hand-written passage library (~4 passages, ~10 questions).
+ * static: hand-written passage library (short, decodable at level 2).
  * llm: generates fresh passage + question on demand, optionally personalized.
  *      Caches generated problems; falls back to static if LLM unavailable.
+ * Unauthored levels fall back to the nearest easier shelf (lib/gradeTiers).
  */
 
 interface Passage {
   title: string
   text: string
-  level: 3 | 4
+  level: number
   questions: Array<{
     question: string
     answer: string
@@ -30,6 +33,7 @@ interface Passage {
 
 /** Exported for content-quality tests (see __tests__/answerBias.test.ts). */
 export const PASSAGES: Passage[] = [
+  ...G2_READING,
   {
     title: 'The Lost Compass',
     level: 3,
@@ -690,7 +694,8 @@ export function makeReadingComprehensionProvider(cfg: Config): ProblemProvider {
 
 function makeStaticReadingProvider(cfg: Config): ProblemProvider {
   let serial = 0
-  const pool = PASSAGES.filter((p) => p.level === cfg.level)
+  const level = pickLevel(cfg.level, PASSAGES.map((p) => p.level))
+  const pool = PASSAGES.filter((p) => p.level === level)
   const passageIdx = 0
   const questionIdx = 0
   // shuffled queue of (passage, question) pairs

@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, useReducedMotion } from 'framer-motion'
 import { useProgress } from '../store/progress'
+import type { GradeLevel } from '../lib/gradeTiers'
 import { sfx } from '../lib/sound'
 import { Card, Button, BackButton } from '../components/ui'
 import { useEntrance, hoverPop, tap } from '../lib/motion'
@@ -16,12 +17,19 @@ const COLORS = [
   { name: 'Coral', value: '#f43f5e' },
 ]
 
+const GRADES: Array<{ grade: GradeLevel; label: string; blurb: string }> = [
+  { grade: 2, label: '2nd', blurb: 'Add & subtract, arrays, easy fractions' },
+  { grade: 3, label: '3rd', blurb: 'Times tables, fractions, bigger numbers' },
+  { grade: 4, label: '4th', blurb: 'Big multiplication, harder fractions' },
+]
+
 export default function AvatarCreate() {
   const navigate = useNavigate()
   const setAvatar = useProgress((s) => s.setAvatar)
   const [emoji, setEmoji] = useState(EMOJIS[0])
   const [color, setColor] = useState(COLORS[0].value)
   const [name, setName] = useState('')
+  const [grade, setGrade] = useState<GradeLevel | null>(null)
   // Nudges the disabled CTA / name field when the user taps "Begin" too early.
   const [nudge, setNudge] = useState(false)
 
@@ -29,7 +37,7 @@ export default function AvatarCreate() {
   const { container, item } = useEntrance()
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const canStart = name.trim().length > 0
+  const canStart = name.trim().length > 0 && grade !== null
   const colorName = COLORS.find((c) => c.value === color)?.name ?? ''
 
   function start() {
@@ -42,7 +50,7 @@ export default function AvatarCreate() {
       return
     }
     sfx.victory()
-    setAvatar({ emoji, color, name: name.trim() })
+    setAvatar({ emoji, color, name: name.trim(), grade: grade! })
     navigate('/map')
   }
 
@@ -210,9 +218,54 @@ export default function AvatarCreate() {
                 />
                 {nudge && (
                   <p className="kid-text text-wrong-600 text-base mt-1" role="alert">
-                    Type your name first to begin! ✏️
+                    {grade === null
+                      ? 'Pick your grade to begin! 🎒'
+                      : 'Type your name first to begin! ✏️'}
                   </p>
                 )}
+              </div>
+
+              {/* Grade picker (sets the difficulty of every adventure) */}
+              <div>
+                <label id="grade-label" className="kid-text text-xl text-ink-900 block mb-2">
+                  What grade are you finishing?{' '}
+                  <span className="text-ink-700 text-base font-normal">— this picks your quests</span>
+                </label>
+                <div
+                  role="radiogroup"
+                  aria-labelledby="grade-label"
+                  className="grid grid-cols-3 gap-2"
+                >
+                  {GRADES.map((g) => {
+                    const selected = grade === g.grade
+                    return (
+                      <motion.button
+                        key={g.grade}
+                        type="button"
+                        role="radio"
+                        aria-checked={selected}
+                        aria-label={`${g.label} grade`}
+                        onClick={() => {
+                          sfx.click()
+                          setGrade(g.grade)
+                        }}
+                        whileHover={hoverPop}
+                        whileTap={tap}
+                        className={[
+                          'min-h-[64px] px-2 py-2 rounded-2xl flex flex-col items-center gap-1',
+                          'transition-colors text-center',
+                          'focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-quest-500',
+                          selected
+                            ? 'bg-quest-200 ring-4 ring-quest-500'
+                            : 'bg-ink-900/5 hover:bg-ink-900/10',
+                        ].join(' ')}
+                      >
+                        <span className="kid-text text-2xl text-ink-900">{g.label}</span>
+                        <span className="text-xs text-ink-700 leading-tight">{g.blurb}</span>
+                      </motion.button>
+                    )
+                  })}
+                </div>
               </div>
             </Card>
           </motion.div>

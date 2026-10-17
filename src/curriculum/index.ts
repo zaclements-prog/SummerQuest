@@ -13,9 +13,9 @@ import { scienceZone } from './science'
 import { towerDefenseZone } from './towerDefense'
 
 export const curriculum: Curriculum = {
-  id: 'grade-3-to-4-summer',
-  title: 'Summer Quest: 3rd → 4th',
-  gradeRange: '3rd-to-4th grade',
+  id: 'summer-quest',
+  title: 'Summer Quest',
+  gradeRange: '2nd-to-4th grade',
   zones: [
     multiplicationZone,
     divisionZone,

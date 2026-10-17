@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { getStage, getZone } from '../curriculum'
 import { useProgress } from '../store/progress'
+import { effectiveConfigForStage } from '../lib/gradeTiers'
 import { createProvider } from '../lib/providers'
 import type { ProblemProvider } from '../lib/problem'
 import ConceptPlay from '../games/ConceptPlay'
@@ -50,10 +51,16 @@ export default function GameRunner() {
   const processedResultRef = useRef<GameResult | null>(null)
   const closeQuit = useCallback(() => setConfirmQuit(false), [])
 
-  const provider = useMemo(
-    () => (stage ? createProvider(stage.providerConfig) : null),
-    [stage],
-  )
+  const provider = useMemo(() => {
+    if (!stage) return null
+    // Grade tiers: the profile grade scales the stage's difficulty knobs;
+    // the stage index picks the bank level for static-bank zones.
+    const stages = getZone(zoneId)?.stages ?? []
+    const idx = Math.max(stages.findIndex((s) => s.id === stageId), 0)
+    return createProvider(
+      effectiveConfigForStage(stage, Math.max(idx, 0), useProgress.getState().player?.grade),
+    )
+  }, [stage, zoneId, stageId])
 
   useEffect(() => {
     if (result && zone && stage && processedResultRef.current !== result) {

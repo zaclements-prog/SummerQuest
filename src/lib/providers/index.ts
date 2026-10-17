@@ -28,15 +28,15 @@ export type ProviderConfig =
   | { kind: 'division'; divisorMin: number; divisorMax: number; quotientMin: number; quotientMax: number }
   | { kind: 'fractionEquivalence'; maxDenominator: number }
   | { kind: 'fractionCompare'; maxDenominator: number }
-  | { kind: 'placeValueRounding'; maxPlace: 100 | 1000 | 10000; roundTo: 10 | 100 | 1000 }
+  | { kind: 'placeValueRounding'; maxPlace: 100 | 1000 | 10000 | 100000; roundTo: 10 | 100 | 1000 }
   | { kind: 'placeValueIdentify'; maxPlace: 1000 | 10000 | 100000 }
-  | { kind: 'wordProblem'; topic: 'multiplication' | 'division' | 'mixed'; source?: 'static' | 'llm' }
+  | { kind: 'wordProblem'; topic: 'addSubtract' | 'multiplication' | 'division' | 'mixed'; source?: 'static' | 'llm' }
   | { kind: 'measurement'; type: 'area' | 'perimeter' | 'time' | 'money' | 'mixed' }
-  | { kind: 'readingComprehension'; level: 3 | 4; source?: 'static' | 'llm' }
+  | { kind: 'readingComprehension'; level: 2 | 3 | 4; source?: 'static' | 'llm' }
   | { kind: 'writingPrompt'; writingKind: 'sentence' | 'paragraph' | 'story'; source?: 'static' | 'llm' }
-  | { kind: 'science'; level: 3 | 4; source?: 'static' | 'llm' }
-  | { kind: 'geometry'; level: 3 | 4; source?: 'static' | 'llm' }
-  | { kind: 'dataGraph'; level: 3 | 4; source?: 'static' | 'llm' }
+  | { kind: 'science'; level: 2 | 3 | 4; source?: 'static' | 'llm' }
+  | { kind: 'geometry'; level: 2 | 3 | 4; source?: 'static' | 'llm' }
+  | { kind: 'dataGraph'; level: 2 | 3 | 4; source?: 'static' | 'llm' }
 
 export function createProvider(config: ProviderConfig): ProblemProvider {
   switch (config.kind) {

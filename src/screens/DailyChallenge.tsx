@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { createProvider } from '../lib/providers'
+import { effectiveConfigForStage } from '../lib/gradeTiers'
 import { useProgress } from '../store/progress'
 import ConceptPlay from '../games/ConceptPlay'
 import type { GameResult } from './GameRunner'
@@ -36,7 +37,10 @@ export default function DailyChallenge() {
   const [attempt, setAttempt] = useState(0)
   const providerResult = useMemo(() => {
     try {
-      return { provider: createProvider(stage.providerConfig), error: false as const }
+      // Grade tiers: the profile grade scales today's stage difficulty.
+      const idx = Math.max(zone.stages.findIndex((s) => s.id === stage.id), 0)
+      const cfg = effectiveConfigForStage(stage, idx, useProgress.getState().player?.grade)
+      return { provider: createProvider(cfg), error: false as const }
     } catch {
       return { provider: null, error: true as const }
     }

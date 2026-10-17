@@ -7,11 +7,14 @@ import { addDays, localDayKey } from '../lib/dates'
 import { migrateV0toV1, type PersistedProgressV0 } from './migrations'
 import { recordFactAnswer, type FactStats } from '../lib/adaptive'
 import type { Problem } from '../lib/problem'
+import { isGradeLevel, type GradeLevel } from '../lib/gradeTiers'
 
 export interface AvatarChoice {
   emoji: string
   color: string
   name: string
+  /** Static difficulty tier (see lib/gradeTiers + the grade-tiers spec). */
+  grade: GradeLevel
 }
 
 export interface StageRecord {
@@ -100,6 +103,8 @@ interface ProgressState {
 
   // actions
   setAvatar: (avatar: AvatarChoice) => void
+  /** Change the difficulty grade (Parent Dashboard only, behind the grown-up check). */
+  setGrade: (grade: GradeLevel) => void
   resetPlayer: () => void
   awardStage: (
     zoneId: string,
@@ -163,6 +168,11 @@ export const useProgress = create<ProgressState>()(
       placedItems: [],
 
       setAvatar: (avatar) => set({ player: avatar }),
+
+      setGrade: (grade) => {
+        const p = get().player
+        if (p) set({ player: { ...p, grade } })
+      },
 
       resetPlayer: () =>
         set({
@@ -387,7 +397,9 @@ export const useProgress = create<ProgressState>()(
     {
       name: 'summerquest-progress-v1',
       // v1: local-time day keys + furniture re-fit to the 10×10 room (see migrations.ts).
-      version: 1,
+      // v2: grade tiers — an existing player without a grade becomes grade 4
+      //     (matches the pre-grade "3rd → 4th" content). Enforced in `merge` below.
+      version: 2,
       migrate: (persisted, version) => {
         let p = (persisted ?? {}) as PersistedProgressV0
         if (version < 1) p = migrateV0toV1(p)
@@ -398,9 +410,18 @@ export const useProgress = create<ProgressState>()(
       merge: (persisted, current) => {
         const p = (persisted ?? {}) as Partial<ProgressState>
         const c = current as ProgressState
+        // Grade tiers: any player saved before the grade field (or with a corrupt
+        // value) falls back to grade 4 — exactly the content they had before.
+        const player: AvatarChoice | null =
+          p.player == null
+            ? null
+            : !isGradeLevel(p.player.grade)
+              ? { ...p.player, grade: 4 as GradeLevel }
+              : p.player
         return {
           ...c,
           ...p,
+          player,
           equippedAccessories: { ...c.equippedAccessories, ...(p.equippedAccessories ?? {}) },
           // Saves from before adaptive practice have no factStats (→ the empty default).
           factStats:

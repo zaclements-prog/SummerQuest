@@ -17,9 +17,10 @@ import {
 } from '../components/ui'
 import { accuracyColorClass, accuracyTone } from '../lib/theme'
 import { useEntrance, hoverPop, tap } from '../lib/motion'
+import { GRADE_LABEL, GRADE_LEVELS, type GradeLevel } from '../lib/gradeTiers'
 
 export default function ParentDashboard() {
-  const { player, coins, zones, stats, resetPlayer } = useProgress()
+  const { player, coins, zones, stats, resetPlayer, setGrade } = useProgress()
   const {
     llmEnabled,
     llmAvailable,
@@ -36,8 +37,32 @@ export default function ParentDashboard() {
   const [gateAnswer, setGateAnswer] = useState('')
   const gatePassed = !!gate && Number(gateAnswer.trim()) === gate.a * gate.b
 
+  // Grade change: same grown-up gate pattern, then pick a new grade in the dialog.
+  const [gradeDialog, setGradeDialog] = useState(false)
+  const [gradeGate, setGradeGate] = useState<{ a: number; b: number } | null>(null)
+  const [gradeGateAnswer, setGradeGateAnswer] = useState('')
+  const [gradePick, setGradePick] = useState<GradeLevel | null>(null)
+  const gradeGatePassed = !!gradeGate && Number(gradeGateAnswer.trim()) === gradeGate.a * gradeGate.b
+
+  function newGate() {
+    return { a: 12 + Math.floor(Math.random() * 13), b: 13 + Math.floor(Math.random() * 12) }
+  }
+
+  function openGrade() {
+    setGradeGate(newGate())
+    setGradeGateAnswer('')
+    setGradePick(null)
+    setGradeDialog(true)
+  }
+
+  function applyGrade() {
+    if (!gradeGatePassed || gradePick === null) return
+    setGrade(gradePick)
+    setGradeDialog(false)
+  }
+
   function openReset() {
-    setGate({ a: 12 + Math.floor(Math.random() * 13), b: 13 + Math.floor(Math.random() * 12) })
+    setGate(newGate())
     setGateAnswer('')
     setConfirmReset(true)
   }
@@ -113,6 +138,18 @@ export default function ParentDashboard() {
                     <Pill tone="quest" icon="🪙">
                       {coins} coins
                     </Pill>
+                    <button
+                      type="button"
+                      onClick={openGrade}
+                      className={[
+                        'inline-flex items-center gap-1 rounded-full px-3 py-1 text-sm font-bold',
+                        'bg-paper/25 text-sky hover:bg-paper/40 transition-colors',
+                        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky',
+                      ].join(' ')}
+                      aria-label={`Grade: ${GRADE_LABEL[player.grade]}. Change grade (grown-ups)`}
+                    >
+                      🎒 {GRADE_LABEL[player.grade]} · change
+                    </button>
                   </div>
                 </div>
               </div>
@@ -344,6 +381,63 @@ export default function ParentDashboard() {
             />
           </label>
         )}
+      </ConfirmDialog>
+
+      {/* ── Grade change (grown-ups only) ─────────────────────────────── */}
+      <ConfirmDialog
+        open={gradeDialog}
+        emoji="🎒"
+        title="Change grade level?"
+        confirmLabel="✅ Save grade"
+        cancelLabel="Cancel"
+        confirmDisabled={!gradeGatePassed || gradePick === null}
+        onConfirm={applyGrade}
+        onCancel={() => setGradeDialog(false)}
+      >
+        <p className="mb-3">
+          This changes how hard {player.name}&apos;s quests are — numbers,
+          fractions, and reading passages. Star progress is kept.
+        </p>
+        {gradeGate && (
+          <label className="block text-left mb-3">
+            <span className="kid-text text-ink-900">
+              Grown-ups: what is {gradeGate.a} × {gradeGate.b}?
+            </span>
+            <input
+              type="text"
+              inputMode="numeric"
+              autoComplete="off"
+              value={gradeGateAnswer}
+              onChange={(e) => setGradeGateAnswer(e.target.value)}
+              className="mt-2 w-full rounded-xl border-2 border-ink-500/30 px-3 py-2 text-lg text-ink-900 focus:outline-none focus:border-ocean-500"
+              aria-label={`Grown-up check: ${gradeGate.a} times ${gradeGate.b}`}
+            />
+          </label>
+        )}
+        <div role="radiogroup" aria-label="New grade" className="grid grid-cols-3 gap-2 text-left">
+          {GRADE_LEVELS.map((g) => {
+            const selected = gradePick === g
+            return (
+              <button
+                key={g}
+                type="button"
+                role="radio"
+                aria-checked={selected}
+                onClick={() => setGradePick(g)}
+                className={[
+                  'min-h-[44px] rounded-xl font-bold transition-colors',
+                  selected
+                    ? 'bg-ocean-500 text-white ring-2 ring-ocean-700'
+                    : 'bg-ink-500/10 text-ink-900 hover:bg-ink-500/20',
+                  g === player.grade ? 'opacity-60' : '',
+                ].join(' ')}
+              >
+                {GRADE_LABEL[g]}
+                {g === player.grade ? ' (now)' : ''}
+              </button>
+            )
+          })}
+        </div>
       </ConfirmDialog>
     </div>
   )
