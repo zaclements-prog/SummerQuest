@@ -1,10 +1,10 @@
 import type { ReactNode } from 'react'
-import { Outlines } from '@react-three/drei'
 import type { BufferGeometry, ColorRepresentation } from 'three'
 import { toonMaterial } from '../../../toon/materials'
 import { TOON } from '../../../toon/palette'
 import { TCone, TCyl, TSphere, type Vec3 } from '../../../toon/shapes'
 import { F, OUTLINE_PX } from './_palette'
+import { Outline } from '../../../toon/outline'
 
 /**
  * Shared bits for the toon furniture. Every piece uses the toon kit's cached
@@ -14,7 +14,7 @@ import { F, OUTLINE_PX } from './_palette'
 
 /** Thin dark line work for a main silhouette piece: drop inside a toon shape. */
 export function Ol({ thickness = OUTLINE_PX }: { thickness?: number }) {
-  return <Outlines thickness={thickness} color={TOON.outline} />
+  return <Outline thickness={thickness} color={TOON.outline} />
 }
 
 /** A mesh from any (cached) geometry with a cached toon material. */

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { sfx } from '../../lib/sound'
 import { ConfettiOverlay } from '../_juice/JuiceHud'
-import { UI } from './uiTokens'
+import { SAFE, UI } from './uiTokens'
 
 /**
  * DOM HUD pieces shared by Fraction Forge and Cloud Keeper: the score counter,
@@ -240,7 +240,7 @@ export function RunResults({
     go.current()
   }
   return (
-    <div className="absolute inset-0 z-40 flex items-center justify-center p-4" style={{ background: 'rgba(58,44,56,.28)' }}>
+    <div className={`absolute inset-0 z-40 flex items-center justify-center ${SAFE.pad}`} style={{ background: 'rgba(58,44,56,.28)' }}>
       <ConfettiOverlay show={counted && (newBest || perfect)} pieces={60} />
       <motion.div
         initial={{ scale: 0.5, opacity: 0, rotate: -4 }}

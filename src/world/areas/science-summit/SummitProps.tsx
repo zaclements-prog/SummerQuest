@@ -1,14 +1,16 @@
 import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { Outlines } from '@react-three/drei'
 import { BufferGeometry, Float32BufferAttribute, TorusGeometry, Vector3 } from 'three'
 import type { Group } from 'three'
 import { TOON } from '../../../toon/palette'
-import { OUTLINE, toonMaterial } from '../../../toon/materials'
+import { toonMaterial } from '../../../toon/materials'
 import { TBox, TCapsule, TCone, TCyl, TSphere, TTorus, type Vec3 } from '../../../toon/shapes'
+import { Outline } from '../../../toon/outline'
+import { registerSharedGpuCache } from '../../../platform/gl/release'
 
 const SIDES = 7
 const capCache = new Map<string, BufferGeometry>()
+registerSharedGpuCache(() => capCache.values())
 
 /**
  * A snow cap that hugs a 7-sided cone (same apex, same faces, a hair proud of
@@ -68,7 +70,7 @@ export function Peak({ position, radius, height, rot = 0, color = TOON.rockLight
     <group position={position} rotation={[0, rot, 0]}>
       <TCone radius={radius} height={height} segments={7} color={color} flat outline outlineThickness={3.2} receiveShadow />
       <mesh geometry={snowCap(radius, height, snow, jagged)} material={toonMaterial(TOON.snow)}>
-        <Outlines thickness={2.8} color={OUTLINE.color} />
+        <Outline thickness={2.8} />
       </mesh>
     </group>
   )

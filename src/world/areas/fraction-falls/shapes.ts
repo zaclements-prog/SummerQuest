@@ -2,6 +2,7 @@ import { BufferGeometry, CylinderGeometry, ExtrudeGeometry, RingGeometry, Shape,
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
 import { seededRng } from '../../../lib/random'
 import { geo } from '../../../toon/geometry'
+import { registerSharedGpuCache } from '../../../platform/gl/release'
 
 /**
  * Cached custom geometries for the Math West + South areas (Fraction Falls,
@@ -10,6 +11,7 @@ import { geo } from '../../../toon/geometry'
  */
 
 const cache = new Map<string, BufferGeometry>()
+registerSharedGpuCache(() => cache.values())
 function cached(key: string, make: () => BufferGeometry): BufferGeometry {
   let g = cache.get(key)
   if (!g) {

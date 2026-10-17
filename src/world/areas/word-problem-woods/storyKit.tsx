@@ -1,11 +1,11 @@
 import { useLayoutEffect, useRef } from 'react'
-import { Outlines } from '@react-three/drei'
 import type { BufferGeometry, ColorRepresentation, InstancedMesh } from 'three'
 import { faceted } from '../../../toon/geometry'
-import { OUTLINE, toonMaterial } from '../../../toon/materials'
+import { toonMaterial } from '../../../toon/materials'
 import { TOON } from '../../../toon/palette'
 import { TSphere } from '../../../toon/shapes'
 import { writeParts, type Part, type V3 } from './instancing'
+import { Outline } from '../../../toon/outline'
 
 /**
  * Many copies of one toon shape in one draw call, each with its own position,
@@ -49,7 +49,7 @@ export function Parts({
       castShadow={castShadow}
       receiveShadow={receiveShadow}
     >
-      {outline && <Outlines thickness={OUTLINE.thickness} color={OUTLINE.color} />}
+      {outline && <Outline />}
     </instancedMesh>
   )
 }

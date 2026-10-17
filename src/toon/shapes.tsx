@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
-import { Outlines } from '@react-three/drei'
 import type { BufferGeometry, ColorRepresentation } from 'three'
 import { toonMaterial, OUTLINE } from './materials'
+import { Outline } from './outline'
 import { faceted, geo } from './geometry'
 import { useLowGraphics } from '../world/graphicsQuality'
 
@@ -25,16 +25,6 @@ export interface ToonMeshProps {
   /** Faceted low-poly shading instead of smooth. */
   flat?: boolean
   children?: ReactNode
-}
-
-/**
- * The outline of one outlined primitive. Only outlined meshes mount this, so only
- * they subscribe to the (tiny, rarely changing) graphics-quality flag; on "Fast"
- * graphics the outline is skipped (it costs a draw call per mesh).
- */
-function ToonOutline({ thickness }: { thickness: number }) {
-  const low = useLowGraphics()
-  return low ? null : <Outlines thickness={thickness} color={OUTLINE.color} />
 }
 
 function ToonMesh({
@@ -64,7 +54,7 @@ function ToonMesh({
       receiveShadow={receiveShadow}
     >
       {outline && (opacity ?? 1) >= 0.5 && (
-        <ToonOutline thickness={outlineThickness ?? OUTLINE.thickness} />
+        <Outline thickness={outlineThickness ?? OUTLINE.thickness} />
       )}
       {children}
     </mesh>
@@ -75,7 +65,9 @@ function ToonMesh({
 export function TBox({ size, radius, ...p }: ToonMeshProps & { size: Vec3; radius?: number }) {
   const [w, h, d] = size
   const r = radius ?? Math.min(w, h, d) * 0.22
-  return <ToonMesh geometry={geo.box(w, h, d, r)} {...p} />
+  // Fast graphics: one bevel step per edge (108 triangles instead of 300 per box)
+  const segments = useLowGraphics() ? 1 : 2
+  return <ToonMesh geometry={geo.box(w, h, d, r, segments)} {...p} />
 }
 
 /**

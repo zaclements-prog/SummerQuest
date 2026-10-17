@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react'
+import { useLayoutEffect, useMemo, useRef } from 'react'
 import type { RefObject } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { Group, Vector3 } from 'three'
@@ -63,6 +63,13 @@ export default function WorldAvatar({ posRef, spawn }: { posRef: RefObject<Vecto
       inner.current.rotation.z = walkState.moving ? Math.sin(walkState.t * 9) * 0.05 : 0
     }
   })
+
+  // Mounting again in the same visit (the canvas restarts after the device dropped
+  // its WebGL context): stand where the avatar last was, not back at the spawn.
+  useLayoutEffect(() => {
+    const p = posRef.current
+    if (p && group.current) group.current.position.set(p.x, 0, p.z)
+  }, [posRef])
 
   if (!activeCreature) return null
   return (
