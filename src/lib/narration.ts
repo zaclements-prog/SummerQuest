@@ -18,6 +18,8 @@ let manifestCache: Manifest | null = null
 
 async function loadManifest(): Promise<Manifest> {
   if (manifestCache) return manifestCache
+  // The offline single file (opened from file://) ships no clips and can't fetch: use speech.
+  if (typeof location !== 'undefined' && location.protocol === 'file:') return {}
   try {
     const r = await fetch(`${import.meta.env.BASE_URL}tts/manifest.json`)
     if (!r.ok) return {} // transient: don't cache, so a later call can retry
