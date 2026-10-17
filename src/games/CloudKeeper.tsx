@@ -1,5 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { useFrame } from '@react-three/fiber'
+import GLCanvas from '../platform/gl/GLCanvas'
+import { usePageHidden } from '../platform/gl/usePageHidden'
+import StaticBatch from '../toon/StaticBatch'
 import { Group, Vector3 } from 'three'
 import type { RefObject } from 'react'
 import type { GameProps } from '../screens/GameRunner'
@@ -71,6 +74,7 @@ import { recordRunBest } from './_runkit/bestScore'
 import { useArrowKeys } from './_runkit/useArrowKeys'
 import { JuiceStage, richConfetti } from './_runkit/juiceExtras'
 import { canvasQuality, useLowGraphics } from '../world/graphicsQuality'
+import { SAFE } from './_runkit/uiTokens'
 
 /**
  * Cloud Keeper — the water cycle you GUIDE (3-ESS2-ish: evaporation →
@@ -128,7 +132,10 @@ const HEAD: DripMotion = { kind: 'head' }
 let flightSerial = 0
 const fly = (to: [number, number, number], dur: number, arc = 0.6): DripMotion => ({ kind: 'fly', to, dur, arc, token: ++flightSerial })
 
-export default function CloudKeeper({ params, onComplete, meta, paused = false }: GameProps) {
+export default function CloudKeeper({ params, onComplete, meta, paused: hostPaused = false }: GameProps) {
+  // A hidden page (app in the background, screen locked) pauses the run like the Quit dialog does.
+  const hidden = usePageHidden()
+  const paused = hostPaused || hidden
   // Graphics setting (Auto / Pretty / Fast): shadows + resolution follow it here too.
   const gfx = canvasQuality(useLowGraphics())
   useStarterCreature()
@@ -578,16 +585,13 @@ export default function CloudKeeper({ params, onComplete, meta, paused = false }
 
   return (
     <div className="flex-1 relative select-none overflow-hidden">
-      <Canvas
+      <GLCanvas
         shadows={gfx.shadows}
         flat
         dpr={gfx.dpr}
         gl={{ antialias: true, powerPreference: 'high-performance', preserveDrawingBuffer: import.meta.env.DEV }}
         camera={{ position: [0.5, 7, 8], fov: 42, near: 0.3, far: 400 }}
         style={{ position: 'absolute', inset: 0 }}
-        onCreated={({ scene }) => {
-          if (import.meta.env.DEV) Object.assign(window, { __sqScene: scene })
-        }}
       >
         <Backdrop ground={TOON.grass} storm={view.storm ? 1 : 0} />
         <CycleScene
@@ -605,12 +609,12 @@ export default function CloudKeeper({ params, onComplete, meta, paused = false }
         />
         <StageCamera targetRef={posRef} center={[0, 0, -0.7]} offset={[0.3, 6.3, 8.0]} follow={0.2} />
         <JuiceStage />
-      </Canvas>
+      </GLCanvas>
 
       {/* lightning */}
       {flash > 0 && <div key={flash} className="absolute inset-0 pointer-events-none ck-flash" />}
 
-      <div className="absolute top-2 left-2 right-2 flex items-start justify-between gap-2 pointer-events-none">
+      <div className={`absolute ${SAFE.top2} ${SAFE.left2} ${SAFE.right2} flex items-start justify-between gap-2 pointer-events-none`}>
         <div className="flex flex-col items-start gap-1.5">
           <SpeechBubble face="🐧" text={speech?.text ?? null} tone={speech?.tone} />
           {view.storm && <SoftClock frac={stormClock} icon="🌈" />}
@@ -627,7 +631,7 @@ export default function CloudKeeper({ params, onComplete, meta, paused = false }
       <Banner text={banner} />
 
       {view.phase !== 'results' && (
-        <div className="absolute bottom-3 inset-x-0 flex justify-center pointer-events-none">
+        <div className={`absolute ${SAFE.bottom3} inset-x-0 flex justify-center pointer-events-none`}>
           <PromptPill text={prompt} tone={promptTone} />
         </div>
       )}
@@ -788,7 +792,7 @@ function CycleScene({
 
   return (
     <group>
-      <SummitYard />
+      <StaticBatch><SummitYard /></StaticBatch>
       <SunPool level={view.cycle.pond} mode={mode('evaporation')} tag={tag('evaporation')} />
       <ColdCloud level={view.cycle.cloud} mode={mode('condensation')} twist={twist} spotRef={cloudSpotRef} tag={tag('condensation')} storm={view.storm} />
       <RainPeak mode={mode('precipitation')} snowy={twist === 'wind'} tag={tag('precipitation')} />

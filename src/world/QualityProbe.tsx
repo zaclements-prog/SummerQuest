@@ -1,13 +1,16 @@
 import { useEffect, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { useProgress } from '../store/progress'
-import { PROBE, decideAutoQuality, setAutoResult, useGraphics } from './graphicsQuality'
+import { PROBE, decideAutoQuality, decideStepUp, setAutoResult, startPrettyTrial, useGraphics } from './graphicsQuality'
 
 /**
  * Graphics 'auto': once per session, the first time the World is played, time
- * ~4 seconds of frames (after a short warm-up for shader compiles) and drop to
- * "Fast" for the session if the machine can't keep up. Never changes the saved
- * choice. Mounted inside the World's Canvas.
+ * ~4 seconds of frames (after a short warm-up for shader compiles) and act on
+ * it. Never changes the saved choice. Mounted inside the World's Canvas.
+ *
+ * - `verify` (computers, and touch devices trying Pretty): too slow → Fast.
+ * - `step-up` (touch devices, which start on Fast): smooth with headroom →
+ *   switch to Pretty and verify that; otherwise stay Fast.
  *
  * Automated browsers (navigator.webdriver: headless screenshot runs on a
  * software GPU) skip the probe so screenshots keep the full look; add
@@ -16,12 +19,14 @@ import { PROBE, decideAutoQuality, setAutoResult, useGraphics } from './graphics
 export default function QualityProbe({ force = false }: { force?: boolean }) {
   const choice = useProgress((s) => s.graphicsQuality)
   const probed = useGraphics((s) => s.probed)
+  const mode = useGraphics((s) => s.probe)
   const automated = typeof navigator !== 'undefined' && navigator.webdriver === true
-  if (choice !== 'auto' || probed || (automated && !force)) return null
-  return <ProbeRunner />
+  if (choice !== 'auto' || probed || mode === 'none' || (automated && !force)) return null
+  // a fresh runner (and measurement) for each phase
+  return <ProbeRunner key={mode} mode={mode} />
 }
 
-function ProbeRunner() {
+function ProbeRunner({ mode }: { mode: 'verify' | 'step-up' }) {
   const st = useRef({ elapsed: 0, frames: 0, measuring: false, measured: 0, samples: [] as number[], skipNext: false, done: false })
 
   // A hidden tab pauses frames; the first frame back spans the whole gap — skip it.
@@ -45,11 +50,18 @@ function ProbeRunner() {
     s.measured += dt
     if (s.measured < PROBE.windowSeconds) return
     s.done = true
-    const result = decideAutoQuality(s.samples)
     if (import.meta.env.DEV) {
       const avg = s.samples.reduce((a, b) => a + b, 0) / s.samples.length
-      console.info(`[graphics] auto: ${s.samples.length} frames, avg ${avg.toFixed(1)} ms → ${result}`)
+      console.info(`[graphics] auto ${mode}: ${s.samples.length} frames, avg ${avg.toFixed(1)} ms`)
     }
+    if (mode === 'step-up') {
+      const up = decideStepUp(s.samples)
+      if (up === null) return
+      if (up) startPrettyTrial()
+      else setAutoResult('low')
+      return
+    }
+    const result = decideAutoQuality(s.samples)
     if (result) setAutoResult(result)
   })
   return null

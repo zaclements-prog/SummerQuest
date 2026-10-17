@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Canvas } from '@react-three/fiber'
+import GLCanvas from '../platform/gl/GLCanvas'
 import { useSearchParams } from 'react-router-dom'
 import HomeWorld from '../home/world/HomeWorld'
 import ModelStudio from '../home/world/ModelStudio'
@@ -43,7 +43,7 @@ export default function HomeScreen() {
   return (
     // A soft sky behind the (transparent) canvas: pale blue up top, warm haze below.
     <div className="flex-1 relative" style={{ background: HOME_SKY }}>
-      <Canvas
+      <GLCanvas
         shadows={gfx.shadows ? 'percentage' : false}
         flat
         dpr={gfx.dpr}
@@ -51,7 +51,7 @@ export default function HomeScreen() {
         style={{ position: 'absolute', inset: 0 }}
       >
         {isStudio ? <ModelStudio kind={studio as 'creatures' | 'anchors' | 'accgrid' | 'furniture' | 'accessories'} /> : <HomeWorld />}
-      </Canvas>
+      </GLCanvas>
       {!isStudio && <HomeHud />}
     </div>
   )

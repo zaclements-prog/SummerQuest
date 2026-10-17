@@ -1,6 +1,7 @@
 import { Color, DataTexture, DoubleSide, FrontSide, MeshToonMaterial, NearestFilter, RedFormat } from 'three'
 import type { ColorRepresentation, Side } from 'three'
 import { TOON } from './palette'
+import { registerSharedGpuCache } from '../platform/gl/release'
 
 /**
  * Soft cel shading: a 4-band light ramp (shadow → mid → lit → highlight). The
@@ -28,6 +29,8 @@ export interface ToonMaterialOpts {
 }
 
 const cache = new Map<string, MeshToonMaterial>()
+// Released from the renderer whenever a canvas goes away (see platform/gl/release).
+registerSharedGpuCache(() => (gradient ? [...cache.values(), gradient] : cache.values()))
 
 /**
  * A shared MeshToonMaterial for this color + options. Materials are cached and

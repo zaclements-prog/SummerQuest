@@ -4,6 +4,7 @@ import { Html } from '@react-three/drei'
 import { Color, InstancedMesh, Matrix4, Object3D, Quaternion, Euler, Mesh, MeshBasicMaterial, RingGeometry } from 'three'
 import { geo } from '../../toon/geometry'
 import { toonMaterial } from '../../toon/materials'
+import { useGraphics } from '../../world/graphicsQuality'
 import { burstBus, ringBus, shakeBus, textBus, type FloatTextEvent } from './juice'
 
 const MAX = 320
@@ -42,7 +43,8 @@ function Bursts() {
     return burstBus.on((e) => {
       const m2 = mesh.current
       if (!m2) return
-      const n = e.count ?? 18
+      // Fast graphics: half the sparks (the pool itself is capped at MAX)
+      const n = Math.max(1, Math.round((e.count ?? 18) * (useGraphics.getState().low ? 0.5 : 1)))
       const palette = Array.isArray(e.color) ? e.color : [e.color ?? '#ffcf4d']
       for (let k = 0; k < n; k++) {
         const i = sim.next

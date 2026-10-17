@@ -7,19 +7,39 @@ import Welcome from './screens/Welcome'
 import AvatarCreate from './screens/AvatarCreate'
 import WorldMap from './screens/WorldMap'
 import ZoneDetail from './screens/ZoneDetail'
-import GameRunner from './screens/GameRunner'
 import ParentDashboard from './screens/ParentDashboard'
 import BadgesScreen from './screens/BadgesScreen'
 import DailyChallenge from './screens/DailyChallenge'
 import ProgressScreen from './screens/ProgressScreen'
-import TutorIndex from './screens/TutorIndex'
-import TutorScreen from './screens/TutorScreen'
 import FocusScreen from './screens/FocusScreen'
-const HomeScreen = lazy(() => import('./screens/HomeScreen'))
+import { Loading } from './components/ui'
 // The single-file offline build is opened straight from disk (file://), where the
 // History API can't change the path — so it routes on the URL hash instead.
 const Router = import.meta.env.VITE_OFFLINE === 'true' ? HashRouter : BrowserRouter
+
+// Heavy routes load on demand, so the first screen appears fast on a tablet:
+// the 3D World and Home (three.js), the stage runner (the 3D mini-games) and
+// the Tutor (its motion-graphic scenes). The single-file build inlines them all.
 const WorldScreen = lazy(() => import('./world/WorldScreen'))
+const HomeScreen = lazy(() => import('./screens/HomeScreen'))
+const GameRunner = lazy(() => import('./screens/GameRunner'))
+const TutorIndex = lazy(() => import('./screens/TutorIndex'))
+const TutorScreen = lazy(() => import('./screens/TutorScreen'))
+
+/** A lazily loaded route with its friendly loading state. */
+function Lazy({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex-1 grid place-items-center">
+          <Loading label={label} />
+        </div>
+      }
+    >
+      {children}
+    </Suspense>
+  )
+}
 
 function RequireAvatar({ children }: { children: React.ReactNode }) {
   const player = useProgress((s) => s.player)
@@ -105,7 +125,9 @@ export default function App() {
             path="/play/:zoneId/:stageId"
             element={
               <RequireAvatar>
-                <GameRunner />
+                <Lazy label="Getting your game ready…">
+                  <GameRunner />
+                </Lazy>
               </RequireAvatar>
             }
           />
@@ -137,7 +159,9 @@ export default function App() {
             path="/tutor"
             element={
               <RequireAvatar>
-                <TutorIndex />
+                <Lazy label="Opening the lessons…">
+                  <TutorIndex />
+                </Lazy>
               </RequireAvatar>
             }
           />
@@ -145,7 +169,9 @@ export default function App() {
             path="/tutor/:lessonId"
             element={
               <RequireAvatar>
-                <TutorScreen />
+                <Lazy label="Opening your lesson…">
+                  <TutorScreen />
+                </Lazy>
               </RequireAvatar>
             }
           />
@@ -154,13 +180,13 @@ export default function App() {
             path="/home"
             element={
               <RequireAvatar>
-                <Suspense fallback={<div className="flex-1 grid place-items-center text-white kid-text text-2xl">Loading your home…</div>}>
+                <Lazy label="Loading your home…">
                   <HomeScreen />
-                </Suspense>
+                </Lazy>
               </RequireAvatar>
             }
           />
-          <Route path="/world" element={<RequireAvatar><Suspense fallback={<div className="flex-1 grid place-items-center text-white kid-text text-2xl">Loading the world…</div>}><WorldScreen /></Suspense></RequireAvatar>} />
+          <Route path="/world" element={<RequireAvatar><Lazy label="Loading the world…"><WorldScreen /></Lazy></RequireAvatar>} />
           <Route path="/parent" element={<ParentDashboard />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

@@ -5,9 +5,9 @@ import { useGraphics } from './graphicsQuality'
 import { sfx } from '../lib/sound'
 
 const OPTIONS: { id: GraphicsQuality; icon: string; label: string; hint: string }[] = [
-  { id: 'auto', icon: '✨', label: 'Auto', hint: 'Picks for this computer' },
+  { id: 'auto', icon: '✨', label: 'Auto', hint: 'Picks for this device' },
   { id: 'high', icon: '🌈', label: 'Pretty', hint: 'Shadows and outlines' },
-  { id: 'low', icon: '⚡', label: 'Fast', hint: 'Smoother on slow computers' },
+  { id: 'low', icon: '⚡', label: 'Fast', hint: 'Smoother on slow devices' },
 ]
 
 /** The ⚙️ graphics chooser in the World HUD: Auto / Pretty / Fast (saved). */
@@ -75,7 +75,7 @@ export default function GraphicsToggle() {
           </div>
           {choice === 'auto' && probed && (
             <p className="text-[11px] text-ink-500 px-2 pt-2">
-              {autoLow ? 'Auto chose Fast for this computer.' : 'Auto chose Pretty for this computer.'}
+              {autoLow ? 'Auto chose Fast for this device.' : 'Auto chose Pretty for this device.'}
             </p>
           )}
         </div>

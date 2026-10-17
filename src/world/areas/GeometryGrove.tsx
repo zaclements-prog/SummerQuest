@@ -1,17 +1,17 @@
 import { useRef } from 'react'
 import type { RefObject } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { Outlines } from '@react-three/drei'
 import { OctahedronGeometry } from 'three'
 import type { Group, Vector3 } from 'three'
 import Npc from '../Npc'
 import { areaById, npcPosition } from '../worldLayout'
 import { TOON } from '../../toon/palette'
-import { OUTLINE, toonMaterial } from '../../toon/materials'
+import { toonMaterial } from '../../toon/materials'
 import { TBlob, TBox, TCone, TCyl, TSphere, TTorus, type Vec3 } from '../../toon/shapes'
 import { Lamp, Signpost } from '../../toon/props'
 import Hedgehog from './geometry-grove/Hedgehog'
 import { GROVE, type GroveShape } from './colliders/geometry-grove'
+import { Outline } from '../../toon/outline'
 
 /** Octahedron (built once; non-indexed, so it's already faceted). */
 const octaGeo = new OctahedronGeometry(1, 0)
@@ -19,7 +19,7 @@ const octaGeo = new OctahedronGeometry(1, 0)
 function Octa({ position, scale, color, emissive, emissiveIntensity }: { position?: Vec3; scale?: number | Vec3; color: string; emissive?: string; emissiveIntensity?: number }) {
   return (
     <mesh geometry={octaGeo} material={toonMaterial(color, { emissive, emissiveIntensity })} position={position} scale={scale} castShadow>
-      <Outlines thickness={OUTLINE.thickness} color={OUTLINE.color} />
+      <Outline />
     </mesh>
   )
 }

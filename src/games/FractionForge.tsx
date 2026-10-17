@@ -1,5 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { useFrame } from '@react-three/fiber'
+import GLCanvas from '../platform/gl/GLCanvas'
+import { usePageHidden } from '../platform/gl/usePageHidden'
+import StaticBatch from '../toon/StaticBatch'
 import { Group, Vector3 } from 'three'
 import type { RefObject } from 'react'
 import type { GameProps } from '../screens/GameRunner'
@@ -72,7 +75,7 @@ import { StageCamera } from './_runkit/StageCamera'
 import { HostReact, type HostCue, type HostMood } from './_runkit/HostReact'
 import { PromptPill, RoundPips, RunResults, ScorePill, SoftClock, SpeechBubble } from './_runkit/RunHud'
 import { recordRunBest } from './_runkit/bestScore'
-import { UI } from './_runkit/uiTokens'
+import { SAFE, UI } from './_runkit/uiTokens'
 import { useArrowKeys } from './_runkit/useArrowKeys'
 import { JuiceStage, richConfetti } from './_runkit/juiceExtras'
 import { canvasQuality, useLowGraphics } from '../world/graphicsQuality'
@@ -140,7 +143,10 @@ interface Tally {
   pours: number
 }
 
-export default function FractionForge({ params, onComplete, meta, paused = false }: GameProps) {
+export default function FractionForge({ params, onComplete, meta, paused: hostPaused = false }: GameProps) {
+  // A hidden page (app in the background, screen locked) pauses the run like the Quit dialog does.
+  const hidden = usePageHidden()
+  const paused = hostPaused || hidden
   // Graphics setting (Auto / Pretty / Fast): shadows + resolution follow it here too.
   const gfx = canvasQuality(useLowGraphics())
   useStarterCreature()
@@ -569,16 +575,13 @@ export default function FractionForge({ params, onComplete, meta, paused = false
 
   return (
     <div className="flex-1 relative select-none overflow-hidden">
-      <Canvas
+      <GLCanvas
         shadows={gfx.shadows}
         flat
         dpr={gfx.dpr}
         gl={{ antialias: true, powerPreference: 'high-performance', preserveDrawingBuffer: import.meta.env.DEV }}
         camera={{ position: [1.5, 8, 9], fov: 42, near: 0.3, far: 400 }}
         style={{ position: 'absolute', inset: 0 }}
-        onCreated={({ scene }) => {
-          if (import.meta.env.DEV) Object.assign(window, { __sqScene: scene })
-        }}
       >
         <Backdrop ground={TOON.grass} />
         <ForgeScene
@@ -602,10 +605,10 @@ export default function FractionForge({ params, onComplete, meta, paused = false
         />
         <StageCamera targetRef={posRef} center={[-0.45, 0, -1.0]} offset={[0.35, 6.2, 7.8]} follow={0.2} />
         <JuiceStage />
-      </Canvas>
+      </GLCanvas>
 
       {/* top bar: the order ticket + patience · round pips · score + streak */}
-      <div className="absolute top-2 left-2 right-2 flex items-start justify-between gap-2 pointer-events-none">
+      <div className={`absolute ${SAFE.top2} ${SAFE.left2} ${SAFE.right2} flex items-start justify-between gap-2 pointer-events-none`}>
         <div className="flex flex-col items-start gap-1.5">
           {order && view.phase !== 'results' && (
             <div className="flex items-center gap-2 rounded-2xl px-3 py-1" style={{ background: UI.paper, border: `3px solid ${UI.line}`, boxShadow: UI.ledge }}>
@@ -635,7 +638,7 @@ export default function FractionForge({ params, onComplete, meta, paused = false
       <Banner text={banner} />
 
       {view.phase !== 'results' && (
-        <div className="absolute bottom-3 inset-x-0 flex justify-center pointer-events-none">
+        <div className={`absolute ${SAFE.bottom3} inset-x-0 flex justify-center pointer-events-none`}>
           <PromptPill text={prompt} tone={promptTone} />
         </div>
       )}
@@ -788,7 +791,7 @@ function ForgeScene({
 
   return (
     <group>
-      <ForgeYard />
+      <StaticBatch><ForgeYard /></StaticBatch>
 
       {/* the three spots: press pad, snack mat, pour ring */}
       <SpotRing x={PAD.x} z={PAD.z} r={PAD.r} color={'#ffd75e'} glow={build && view.stack === 0} opacity={0.75} />

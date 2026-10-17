@@ -9,6 +9,7 @@ import {
   TorusGeometry,
 } from 'three'
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
+import { registerSharedGpuCache } from '../../../platform/gl/release'
 
 /**
  * Cached custom shapes shared by the three Story areas (Word Problem Woods,
@@ -16,6 +17,7 @@ import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js
  */
 
 const cache = new Map<string, BufferGeometry>()
+registerSharedGpuCache(() => cache.values())
 function cached(key: string, make: () => BufferGeometry): BufferGeometry {
   let g = cache.get(key)
   if (!g) {

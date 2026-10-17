@@ -1,14 +1,13 @@
 import { useLayoutEffect, useMemo, useRef } from 'react'
 import type { RefObject } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { Outlines } from '@react-three/drei'
 import type { InstancedMesh, Vector3 } from 'three'
 import Npc from '../Npc'
 import { areaById, npcPosition } from '../worldLayout'
 import { seededRng } from '../../lib/random'
 import { TOON } from '../../toon/palette'
 import { geo } from '../../toon/geometry'
-import { OUTLINE, toonMaterial } from '../../toon/materials'
+import { toonMaterial } from '../../toon/materials'
 import { TBox, TCyl } from '../../toon/shapes'
 import { Log } from '../../toon/props'
 import { Parts } from './word-problem-woods/storyKit'
@@ -16,6 +15,7 @@ import { setInstance, writeParts, type Part } from './word-problem-woods/instanc
 import { flatPolygon, questionMarkGeometry } from './word-problem-woods/storyGeometry'
 import StorybookTree from './word-problem-woods/StorybookTree'
 import RaccoonDetective from './word-problem-woods/RaccoonDetective'
+import { Outline } from '../../toon/outline'
 import {
   LANTERN_POSTS, LOGS, MUSHROOM_RING_R, RING_TREES, SIGNPOSTS, STUMP, TOADSTOOLS, type WoodsTreeKind,
 } from './word-problem-woods/layout'
@@ -224,7 +224,7 @@ function FloatingQuestions() {
       args={[questionMarkGeometry(), toonMaterial(TOON.white, { emissive: '#fff3c4', emissiveIntensity: 0.55 }), GLYPHS.length]}
       frustumCulled={false}
     >
-      <Outlines thickness={OUTLINE.thickness} color={OUTLINE.color} />
+      <Outline />
     </instancedMesh>
   )
 }

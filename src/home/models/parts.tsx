@@ -2,7 +2,6 @@
 import { useRef } from 'react'
 import type { ReactNode } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
-import { Outlines } from '@react-three/drei'
 import { TorusGeometry } from 'three'
 import type { ColorRepresentation, Group } from 'three'
 import { TBox, TCapsule, TSphere } from '../../toon/shapes'
@@ -10,6 +9,7 @@ import type { Vec3 } from '../../toon/shapes'
 import { toonMaterial } from '../../toon/materials'
 import { TOON } from '../../toon/palette'
 import { walkState } from './walkState'
+import { Outline } from '../../toon/outline'
 
 export type { Vec3 }
 
@@ -38,7 +38,7 @@ export const INK_PX = 2
  */
 export function Ink({ px = INK_PX, crease = false }: { px?: number; crease?: boolean }) {
   const dpr = useThree((s) => s.viewport.dpr)
-  return <Outlines thickness={px * dpr} color={TOON.outline} angle={crease ? Math.PI : 0} />
+  return <Outline thickness={px * dpr} color={TOON.outline} crease={crease} />
 }
 
 // ── Surface helpers (pure math, used while authoring) ────────────────────────

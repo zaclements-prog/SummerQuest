@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { sfx } from '../../lib/sound'
 import { ConfettiOverlay } from './JuiceHud'
+import { SAFE } from '../_runkit/uiTokens'
 
 /**
  * End-of-run celebration for the 3D mini-games: the score counts up with
@@ -100,7 +101,7 @@ export function RunResults({
   }, [autoMs])
 
   return (
-    <div className="absolute inset-0 z-30 flex items-center justify-center p-2 bg-sky-950/35 backdrop-blur-[2px]">
+    <div className={`absolute inset-0 z-30 flex items-center justify-center ${SAFE.pad} bg-sky-950/35 backdrop-blur-[2px]`}>
       <ConfettiOverlay show={settled && (newBest || !!perfect)} pieces={60} />
       <motion.div
         initial={reduced ? { opacity: 0 } : { scale: 0.6, y: 40, opacity: 0 }}

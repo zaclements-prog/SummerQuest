@@ -1,5 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { useFrame } from '@react-three/fiber'
+import GLCanvas from '../platform/gl/GLCanvas'
+import { usePageHidden } from '../platform/gl/usePageHidden'
+import StaticBatch from '../toon/StaticBatch'
 import { Group, Vector3 } from 'three'
 import type { RefObject } from 'react'
 import type { GameProps } from '../screens/GameRunner'
@@ -69,6 +72,7 @@ import { loadBest, recordRun } from './_juice/bests'
 import { multLabel } from './_juice/score'
 import { voice } from './_juice/voice'
 import { canvasQuality, useLowGraphics } from '../world/graphicsQuality'
+import { SAFE } from './_runkit/uiTokens'
 
 /**
  * Crystal Golems — the division arena, fun pass (docs/superpowers/specs/
@@ -165,7 +169,10 @@ interface Results {
 
 const freshStats = (): Stats => ({ firstTry: 0, cleared: 0, streak: 0, bestStreak: 0, score: 0, camels: 0, speedy: 0, misses: 0, stomps: 0 })
 
-export default function DivisionArena({ params, onComplete, meta, paused = false }: GameProps) {
+export default function DivisionArena({ params, onComplete, meta, paused: hostPaused = false }: GameProps) {
+  // A hidden page (app in the background, screen locked) pauses the run like the Quit dialog does.
+  const hidden = usePageHidden()
+  const paused = hostPaused || hidden
   // Graphics setting (Auto / Pretty / Fast): shadows + resolution follow it here too.
   const gfx = canvasQuality(useLowGraphics())
   useStarterCreature()
@@ -642,16 +649,13 @@ export default function DivisionArena({ params, onComplete, meta, paused = false
 
   return (
     <div className="flex-1 relative select-none overflow-hidden">
-      <Canvas
+      <GLCanvas
         shadows={gfx.shadows}
         flat
         dpr={gfx.dpr}
         gl={{ antialias: true, powerPreference: 'high-performance', preserveDrawingBuffer: import.meta.env.DEV }}
         camera={{ position: [spawnWorld[0] + CAM_OFFSET[0], CAM_OFFSET[1], spawnWorld[1] + CAM_OFFSET[2]], fov: CAM_FOV, near: 0.3, far: 260 }}
         style={{ position: 'absolute', inset: 0 }}
-        onCreated={({ scene, gl }) => {
-          if (import.meta.env.DEV) Object.assign(window, { __sqScene: scene, __sqGl: gl })
-        }}
       >
         <GameSky ground={'#f2d79c'} horizon={'#fbeed2'} fog={'#f6e6c6'} fogNear={30} fogFar={95} shadowBox={11} />
         {view && (
@@ -674,11 +678,11 @@ export default function DivisionArena({ params, onComplete, meta, paused = false
             onReturned={returned}
           />
         )}
-      </Canvas>
+      </GLCanvas>
 
       {/* ── HUD ── */}
       {/* left column (the top centre stays clear: that's where the golems come out) */}
-      <div className="absolute top-2 left-2 z-10 flex flex-col items-start gap-1.5 pointer-events-none">
+      <div className={`absolute ${SAFE.top2} ${SAFE.left2} z-10 flex flex-col items-start gap-1.5 pointer-events-none`}>
         <ScoreChip score={hud.score} best={best} />
         <div className="rounded-full bg-[#3a2c38]/45 px-2 py-1">
           <RoundPips total={totalRounds} current={view?.index ?? 0} finaleIcon="🗿" done={!!results} />
@@ -688,7 +692,7 @@ export default function DivisionArena({ params, onComplete, meta, paused = false
       <Banner text={hud.banner} color={hud.bannerColor} />
 
       {view && !results && (
-        <div className="absolute top-2 right-2 z-10 flex flex-col items-end gap-1.5 pointer-events-none">
+        <div className={`absolute ${SAFE.top2} ${SAFE.right2} z-10 flex flex-col items-end gap-1.5 pointer-events-none`}>
           <div
             key={`${view.index}:${view.step}:${hud.eq}`}
             className={`kid-text flex items-center gap-1.5 rounded-2xl px-3 py-1 text-3xl sm:text-4xl text-white shadow-lg eq-pop ${
@@ -715,7 +719,7 @@ export default function DivisionArena({ params, onComplete, meta, paused = false
       )}
       {/* first golem only: how to move, and the verb in two icons */}
       {view && !results && hud.hint && view.index === 0 && (
-        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 pointer-events-none">
+        <div className={`absolute ${SAFE.bottom3} left-1/2 -translate-x-1/2 z-10 pointer-events-none`}>
           <div className="kid-text flex items-center gap-2 whitespace-nowrap rounded-2xl bg-[#fffaf0]/95 px-3 py-1 text-lg text-[#3a2c38] shadow-lg" style={{ border: '3px solid #3a2c38' }}>
             <span>WASD / tap to walk</span>
             <span className="opacity-40">·</span>
@@ -899,7 +903,7 @@ function ArenaScene({
   return (
     <group>
       <group rotation={[0, ARENA_YAW, 0]}>
-        <ArenaSet />
+        <StaticBatch><ArenaSet /></StaticBatch>
         <Pen quotient={view.chain ? view.chain.steps[1].quotient : view.round.quotient} glow={phase === 'shatter'} />
         <HostCamel position={[HOST.x, HOST.z]} mood={hud.mood} token={hud.moodToken} say={hud.say} />
 

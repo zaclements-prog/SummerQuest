@@ -64,7 +64,9 @@ export default function WorldHud({ posRef }: { posRef: RefObject<Vector3> }) {
   }, [open, decorate])
 
   return (
-    <div className="absolute inset-0 pointer-events-none">
+    // The HUD layer is inset by the safe area (notch, rounded corners, home bar):
+    // the World canvas runs edge to edge, every chip and panel here stays clear of it.
+    <div className="absolute pointer-events-none top-[var(--safe-top,env(safe-area-inset-top,0px))] right-[var(--safe-right,env(safe-area-inset-right,0px))] bottom-[var(--safe-bottom,env(safe-area-inset-bottom,0px))] left-[var(--safe-left,env(safe-area-inset-left,0px))]">
       <div className="absolute top-2 left-2 right-2 flex items-start gap-2">
         <div className="flex flex-wrap items-center gap-2 min-w-0">
           <Link

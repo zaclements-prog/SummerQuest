@@ -21,3 +21,17 @@ export const UI = {
   ledgeSm: '0 2px 0 0 #3a2c38',
   pop: '0 6px 0 0 rgb(58 44 56 / 0.12), 0 24px 48px -12px rgb(58 44 56 / 0.45)',
 } as const
+
+/**
+ * Safe-area offsets (notch, rounded corners, home bar) for HUD pieces over the
+ * full-bleed game canvas: the app shell's `--safe-*` vars when present, else
+ * `env(safe-area-inset-*)` directly. Full class strings so Tailwind emits them.
+ */
+export const SAFE = {
+  top2: 'top-[calc(0.5rem+var(--safe-top,env(safe-area-inset-top,0px)))]',
+  left2: 'left-[calc(0.5rem+var(--safe-left,env(safe-area-inset-left,0px)))]',
+  right2: 'right-[calc(0.5rem+var(--safe-right,env(safe-area-inset-right,0px)))]',
+  bottom3: 'bottom-[calc(0.75rem+var(--safe-bottom,env(safe-area-inset-bottom,0px)))]',
+  /** Padding for a full-cover overlay card (results, finale). */
+  pad: 'pt-[calc(0.5rem+var(--safe-top,env(safe-area-inset-top,0px)))] pb-[calc(0.5rem+var(--safe-bottom,env(safe-area-inset-bottom,0px)))] pl-[calc(0.5rem+var(--safe-left,env(safe-area-inset-left,0px)))] pr-[calc(0.5rem+var(--safe-right,env(safe-area-inset-right,0px)))]',
+} as const
