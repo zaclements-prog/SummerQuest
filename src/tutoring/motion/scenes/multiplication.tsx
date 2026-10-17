@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components -- scene modules export a Record<stepId, Scene> registry of components; not an HMR boundary */
 import { arc, clamp, ease, lerp, progress, pulse, spring, wobble } from '../anim'
-import { Badge, Brace, Burst, Chip, Equation, Fade, Hop, NumberLine, Paper, Pop, Ring, T, Title, Twinkle, VBrace, Words } from '../kit'
+import { Badge, Brace, Burst, Camera, Chip, Equation, Fade, Hop, NumberLine, Paper, Pop, Ring, T, Title, Twinkle, VBrace, Words } from '../kit'
 import { lineX, tokenXs } from '../layout'
 import { DEEP, M } from '../palette'
 import { Apple, Frog } from '../shapes'
@@ -164,79 +164,81 @@ const count: Scene = ({ t, cue }: SceneProps) => {
   return (
     <>
       <Paper />
-      {/* the rings dissolve as the apples leave */}
-      {RING_X.map((x, g) => {
-        const k = progress(t, 0.1, 0.6)
-        return k < 1 && <circle key={g} cx={x} cy={RING_Y} r={RING_R * (1 - 0.3 * k)} fill={GROUP[g].ring} stroke={GROUP[g].edge} strokeWidth={6} strokeDasharray="16 10" opacity={1 - k} />
-      })}
-      {/* rows light up as they're counted */}
-      {[0, 1, 2].map((r) => {
-        const w = ease.outCubic(progress(t, 0.9 + r * 0.12, 0.5))
-        const flash = Math.sin(Math.PI * progress(t, counts[r], 0.45))
-        return (
-          w > 0 && (
-            <rect key={r} x={cellX(0) - 52} y={cellY(r) - 42} width={(SX * 3 + 104) * w} height={84} rx={42} fill={GROUP[r].ring} stroke={GROUP[r].edge} strokeWidth={3 + 4 * flash} />
-          )
-        )
-      })}
-      {/* apples: from their group rings into rows */}
-      {[0, 1, 2].map((r) =>
-        [0, 1, 2, 3].map((c) => {
-          const from: [number, number] = [RING_X[r] + IN_RING[c][0], RING_Y + IN_RING[c][1]]
-          const to: [number, number] = [cellX(c), cellY(r)]
-          const k = ease.inOutCubic(progress(t, 0.15 + r * 0.12 + c * 0.05, 0.75))
-          const [x, y] = arc(from, to, 30, k)
-          const bump = 1 + 0.16 * Math.sin(Math.PI * progress(t, counts[r] + c * 0.04, 0.35))
+      <Camera t={t} keys={[{ at: 0, x: 480, y: 270, zoom: 1 }, { at: four, x: 470, y: 252, zoom: 1.07 }, { at: so, x: 480, y: 270, zoom: 1 }]}>
+        {/* the rings dissolve as the apples leave */}
+        {RING_X.map((x, g) => {
+          const k = progress(t, 0.1, 0.6)
+          return k < 1 && <circle key={g} cx={x} cy={RING_Y} r={RING_R * (1 - 0.3 * k)} fill={GROUP[g].ring} stroke={GROUP[g].edge} strokeWidth={6} strokeDasharray="16 10" opacity={1 - k} />
+        })}
+        {/* rows light up as they're counted */}
+        {[0, 1, 2].map((r) => {
+          const w = ease.outCubic(progress(t, 0.9 + r * 0.12, 0.5))
+          const flash = Math.sin(Math.PI * progress(t, counts[r], 0.45))
           return (
-            <T key={`${r}-${c}`} x={x} y={y} s={bump}>
-              <Apple x={0} y={0} r={30} color={GROUP[r].apple} />
-            </T>
+            w > 0 && (
+              <rect key={r} x={cellX(0) - 52} y={cellY(r) - 42} width={(SX * 3 + 104) * w} height={84} rx={42} fill={GROUP[r].ring} stroke={GROUP[r].edge} strokeWidth={3 + 4 * flash} />
+            )
           )
-        }),
-      )}
-      {/* skip count: 4, 8, 12 */}
-      {[0, 1, 2].map((r) => {
-        const x = r === 2 ? lerp(720, eqXs[4], k12) : 720
-        const y = r === 2 ? arc([720, cellY(2)], [eqXs[4], 470], 60, k12)[1] : cellY(r)
-        const s = r === 2 ? lerp(56 / 68, 1, k12) : 1
-        return (
-          <Pop key={r} t={t} at={counts[r]} x={720} y={cellY(r)} bounce={10}>
-            <T x={x} y={y} s={s}>
-              <Title x={0} y={0} size={68} color={r === 2 && k12 > 0.5 ? M.ink : GROUP[r].ink} stroke={M.white}>
-                {(r + 1) * 4}
-              </Title>
-            </T>
+        })}
+        {/* apples: from their group rings into rows */}
+        {[0, 1, 2].map((r) =>
+          [0, 1, 2, 3].map((c) => {
+            const from: [number, number] = [RING_X[r] + IN_RING[c][0], RING_Y + IN_RING[c][1]]
+            const to: [number, number] = [cellX(c), cellY(r)]
+            const k = ease.inOutCubic(progress(t, 0.15 + r * 0.12 + c * 0.05, 0.75))
+            const [x, y] = arc(from, to, 30, k)
+            const bump = 1 + 0.16 * Math.sin(Math.PI * progress(t, counts[r] + c * 0.04, 0.35))
+            return (
+              <T key={`${r}-${c}`} x={x} y={y} s={bump}>
+                <Apple x={0} y={0} r={30} color={GROUP[r].apple} />
+              </T>
+            )
+          }),
+        )}
+        {/* skip count: 4, 8, 12 */}
+        {[0, 1, 2].map((r) => {
+          const x = r === 2 ? lerp(720, eqXs[4], k12) : 720
+          const y = r === 2 ? arc([720, cellY(2)], [eqXs[4], 470], 60, k12)[1] : cellY(r)
+          const s = r === 2 ? lerp(56 / 68, 1, k12) : 1
+          return (
+            <Pop key={r} t={t} at={counts[r]} x={720} y={cellY(r)} bounce={10}>
+              <T x={x} y={y} s={s}>
+                <Title x={0} y={0} size={68} color={r === 2 && k12 > 0.5 ? M.ink : GROUP[r].ink} stroke={M.white}>
+                  {(r + 1) * 4}
+                </Title>
+              </T>
+            </Pop>
+          )
+        })}
+        {[0, 1].map((r) => (
+          <Pop key={r} t={t} at={counts[r + 1] - 0.05} x={790} y={(cellY(r) + cellY(r + 1)) / 2}>
+            <Title x={790} y={(cellY(r) + cellY(r + 1)) / 2} size={30} color={NEACH} stroke={M.white}>
+              +4
+            </Title>
           </Pop>
-        )
-      })}
-      {[0, 1].map((r) => (
-        <Pop key={r} t={t} at={counts[r + 1] - 0.05} x={790} y={(cellY(r) + cellY(r + 1)) / 2}>
-          <Title x={790} y={(cellY(r) + cellY(r + 1)) / 2} size={30} color={NEACH} stroke={M.white}>
-            +4
-          </Title>
-        </Pop>
-      ))}
-      {/* 3 rows, 4 in each row */}
-      <VBrace t={t} at={rows3} x={cellX(0) - 66} y0={cellY(0) - 36} y1={cellY(2) + 36} dir="left" label="3 rows" labelColor={NGROUPS} color={NGROUPS} labelSize={34} />
-      <Brace t={t} at={ofFour} x0={cellX(0) - 30} x1={cellX(3) + 30} y={cellY(0) - 54} dir="up" label="4 in each row" labelColor={NEACH} color={NEACH} labelSize={34} />
-      {/* 3 × 4 = 12 */}
-      <Equation
-        t={t}
-        x={480}
-        y={470}
-        size={68}
-        gap={0.26}
-        tokens={[
-          { text: '3', color: NGROUPS, at: so },
-          { text: '×', at: times },
-          { text: '4', color: NEACH, at: four3 },
-          { text: '=', at: eq },
-          { text: '12', at: eq, o: 0 },
-        ]}
-      />
-      <Ring t={t} at={fly12 + 0.7} x={eqXs[4]} y={470} r={50} color={M.gold} />
-      <Burst t={t} at={fly12 + 0.65} x={eqXs[4]} y={470} color={M.gold} r={80} />
-      <Twinkle t={t} at={fly12 + 1.2} x={eqXs[4]} y={470} r={70} n={4} />
+        ))}
+        {/* 3 rows, 4 in each row */}
+        <VBrace t={t} at={rows3} x={cellX(0) - 66} y0={cellY(0) - 36} y1={cellY(2) + 36} dir="left" label="3 rows" labelColor={NGROUPS} color={NGROUPS} labelSize={34} />
+        <Brace t={t} at={ofFour} x0={cellX(0) - 30} x1={cellX(3) + 30} y={cellY(0) - 54} dir="up" label="4 in each row" labelColor={NEACH} color={NEACH} labelSize={34} />
+        {/* 3 × 4 = 12 */}
+        <Equation
+          t={t}
+          x={480}
+          y={470}
+          size={68}
+          gap={0.26}
+          tokens={[
+            { text: '3', color: NGROUPS, at: so },
+            { text: '×', at: times },
+            { text: '4', color: NEACH, at: four3 },
+            { text: '=', at: eq },
+            { text: '12', at: eq, o: 0 },
+          ]}
+        />
+        <Ring t={t} at={fly12 + 0.7} x={eqXs[4]} y={470} r={50} color={M.gold} />
+        <Burst t={t} at={fly12 + 0.65} x={eqXs[4]} y={470} color={M.gold} r={80} />
+        <Twinkle t={t} at={fly12 + 1.2} x={eqXs[4]} y={470} r={70} n={4} />
+      </Camera>
     </>
   )
 }
@@ -254,8 +256,8 @@ const commutative: Scene = ({ t, cue }: SceneProps) => {
   const same = cue('same answer')
   const flip = cue('flip the numbers')
   const cx = 300
-  const cy = 296
-  const s = 86
+  const cy = 284
+  const s = 80
   // quarter turn on "four times three"; on "flip" it turns back, then forward again
   const rot = 90 * (spring(t, b, { stiffness: 120, damping: 13 }) - spring(t, flip, { stiffness: 120, damping: 13 }) + spring(t, flip + 1.3, { stiffness: 120, damping: 13 }))
   const line1 = 214
@@ -287,17 +289,17 @@ const commutative: Scene = ({ t, cue }: SceneProps) => {
       </Pop>
       {/* row labels while it turns */}
       <Fade t={t} at={a + 0.3} out={b}>
-        <Title x={cx} y={cy + 2.25 * s} size={30} color={NGROUPS} stroke={M.white}>
+        <Title x={cx} y={cy + 2.5 * s + 26} size={30} color={NGROUPS} stroke={M.white}>
           3 rows of 4
         </Title>
       </Fade>
       <Fade t={t} at={b + 0.9} out={flip}>
-        <Title x={cx} y={cy + 2.25 * s + 4} size={30} color={NEACH} stroke={M.white}>
+        <Title x={cx} y={cy + 2.5 * s + 26} size={30} color={NEACH} stroke={M.white}>
           4 rows of 3
         </Title>
       </Fade>
       <Fade t={t} at={flip + 2.3}>
-        <Title x={cx} y={cy + 2.25 * s + 4} size={30} color={M.inkSoft} stroke={M.white}>
+        <Title x={cx} y={cy + 2.5 * s + 26} size={30} color={M.inkSoft} stroke={M.white}>
           still 12 apples
         </Title>
       </Fade>

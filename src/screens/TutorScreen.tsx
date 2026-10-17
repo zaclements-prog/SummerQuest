@@ -10,6 +10,7 @@ import { sceneFor } from '../tutoring/motion/scenes'
 import { M } from '../tutoring/motion/palette'
 import Caption, { TimeBar } from '../tutoring/ui/Caption'
 import CheckPanel from '../tutoring/ui/CheckPanel'
+import { useNarrationDone } from '../tutoring/ui/useNarrationDone'
 import LessonComplete from '../tutoring/ui/LessonComplete'
 import { ArrowLeftIcon, ArrowRightIcon, PauseIcon, PlayIcon, ReplayIcon, SpeakerIcon } from '../tutoring/ui/icons'
 import { seededShuffle } from '../lib/random'
@@ -118,10 +119,13 @@ export default function TutorScreen() {
   const { playing, paused, play, pause, resume, stop, replay, clock } = useNarration(lesson?.id ?? '', step?.id ?? '', step?.narration ?? '')
   const scene = lesson && step ? sceneFor(lesson.id, step.id) : undefined
   const topRef = useRef<HTMLDivElement>(null)
+  const played = useNarrationDone(clock, `${lesson?.id}/${step?.id}`)
 
   // New step → bring the stage back into view (the check may have scrolled it away).
+  const shownStep = useRef(i)
   useEffect(() => {
-    if (i === 0) return
+    if (shownStep.current === i) return
+    shownStep.current = i
     topRef.current?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' })
   }, [i, reduced])
 
@@ -176,6 +180,8 @@ export default function TutorScreen() {
   }
 
   const goBack = () => goTo(Math.max(0, i - 1))
+
+  const invite = played && !reduced && (!step.check || picked !== null)
 
   const toggle = () => {
     if (playing) pause()
@@ -266,16 +272,19 @@ export default function TutorScreen() {
             <ArrowLeftIcon size={20} /> Back
           </button>
           <StepDots count={lesson.steps.length} current={i} maxSeen={maxSeen} onJump={goTo} />
-          <button
+          <motion.button
             type="button"
             onClick={next}
             disabled={!!step.check && picked === null}
+            // once the step has played (and any check is answered) the button gently beckons
+            animate={invite ? { scale: [1, 1.07, 1] } : { scale: 1 }}
+            transition={invite ? { duration: 1.3, repeat: Infinity, ease: 'easeInOut' } : { duration: 0.2 }}
             className="kid-text inline-flex min-h-[56px] items-center gap-2 rounded-full px-4 sm:px-6 text-lg sm:text-xl whitespace-nowrap transition-opacity disabled:opacity-45 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ocean-500"
             style={{ background: last ? M.coral : '#5fcf8f', color: M.ink, boxShadow: `${INK_RING}, 0 5px 0 0 rgba(58,44,56,0.3)` }}
           >
             {last ? '🚀 Now practice' : 'Next'}
             {!last && <ArrowRightIcon size={22} />}
-          </button>
+          </motion.button>
         </div>
       </div>
 

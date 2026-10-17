@@ -2,7 +2,7 @@
 import type { ReactNode } from 'react'
 import { arc, ease, lerp, mixColor, progress, pulse, wobble } from '../anim'
 import { Arrow, Badge, Brace, Burst, Camera, Chip, Draw, Equation, Fade, Glow, Paper, Pop, Ring, T, Title, Twinkle, Words } from '../kit'
-import { PV, shade, tint } from '../layout'
+import { PV, shade, tint, tokenXs } from '../layout'
 import { DEEP, M } from '../palette'
 import { BigCube, Flat, Rod, UnitCube } from '../shapes'
 import type { Scene, SceneProps } from '../types'
@@ -160,6 +160,7 @@ const regroup: Scene = ({ t, cue }: SceneProps) => {
   // phase 4: rods squeeze into a flat
   const squeeze = ease.inOutCubic(progress(t, oneHundred - 0.15, 0.7))
   const flatOn = t > oneHundred + 0.5
+  const bandAt = Math.max(bundle2 + 0.3, tenTens + 0.98)
   // phase 5: hundred | ten | one
   const fin = ease.inOutCubic(progress(t, each - 0.2, 0.9))
   const s3 = 17
@@ -169,110 +170,112 @@ const regroup: Scene = ({ t, cue }: SceneProps) => {
   return (
     <>
       <Paper />
-      <Words t={t} at={secret - 0.2} text="the secret of place value" x={480} y={56} size={42} colors={[undefined, DEEP.pink, undefined, DEEP.pink, DEEP.pink]} out={tenOnes + 0.2} />
+      <Camera t={t} keys={[{ at: 0, x: 480, y: 262, zoom: 1.12 }, { at: tenTens + 0.4, x: 480, y: 270, zoom: 1 }]}>
+        <Words t={t} at={secret - 0.2} text="the secret of place value" x={480} y={56} size={42} colors={[undefined, DEEP.pink, undefined, DEEP.pink, DEEP.pink]} out={tenOnes + 0.2} />
 
-      {/* phase 1–2: ten ones → one ten */}
-      {t < oneTen + 0.35 &&
-        Array.from({ length: 10 }, (_, i) => {
-          const k = ease.inOutCubic(progress(t, bundle1 + i * 0.06, 0.65))
-          const from: [number, number] = [rowX(i), 250]
-          const to: [number, number] = [rodX, rodTop + i * S]
-          const [x, y] = arc(from, to, 50, k)
-          return (
-            <Pop key={i} t={t} at={0.3 + i * 0.13} x={from[0] + S / 2} y={from[1] + S / 2} bounce={12}>
-              <UnitCube x={x} y={y} s={S} color={mixColor(PV.ones, PV.tens, progress(t, oneTen - 0.1, 0.4))} />
-            </Pop>
-          )
-        })}
-      {Array.from({ length: 10 }, (_, i) => (
-        <Badge key={i} t={t} at={0.3 + i * 0.13 + 0.1} x={rowX(i) + S / 2 + 4} y={312} text={i + 1} r={15} size={17} out={bundle1} />
-      ))}
-      <Brace t={t} at={tenOnes} x0={rowX(0)} x1={rowX(9) + S + 10} y={196} dir="up" label="10 ones" labelColor={DEEP.gold} color={DEEP.gold} labelSize={32} out={bundle1} />
-
-      {/* the ten (rod) — first alone, then shrinking into a row of ten rods */}
-      {t >= oneTen + 0.3 && !flatOn && !phase5 && (
-        <g>
-          {Array.from({ length: 10 }, (_, k) => {
-            if (k > 0 && t < tenTens + (k - 1) * 0.1) return null
-            const slide = k === 0 ? 1 : ease.outBack(progress(t, tenTens + (k - 1) * 0.1, 0.5))
-            const x0 = k === 0 ? lerp(rodX, rods10X(0), shrink) : lerp(980, rods10X(k), slide)
-            const x = lerp(x0, 480 - 100 + k * s2, squeeze)
-            const s = k === 0 ? lerp(S, s2, shrink) : s2
-            const top = k === 0 ? lerp(rodTop, 140, shrink) : 140
+        {/* phase 1–2: ten ones → one ten */}
+        {t < oneTen + 0.35 &&
+          Array.from({ length: 10 }, (_, i) => {
+            const k = ease.inOutCubic(progress(t, bundle1 + i * 0.06, 0.65))
+            const from: [number, number] = [rowX(i), 250]
+            const to: [number, number] = [rodX, rodTop + i * S]
+            const [x, y] = arc(from, to, 50, k)
             return (
-              <g key={k}>
-                <Rod x={x} y={top} s={s} color={mixColor(PV.tens, PV.hundreds, squeeze)} />
-              </g>
+              <Pop key={i} t={t} at={0.3 + i * 0.13} x={from[0] + S / 2} y={from[1] + S / 2} bounce={12}>
+                <UnitCube x={x} y={y} s={S} color={mixColor(PV.ones, PV.tens, progress(t, oneTen - 0.1, 0.4))} />
+              </Pop>
             )
           })}
-        </g>
-      )}
-      {/* the bundle band around the ten tens (it tightens as they squeeze) */}
-      {t > bundle2 + 0.15 && t < oneHundred + 0.5 && (
-        <Pop t={t} at={bundle2 + 0.15} x={480} y={240}>
-          <rect x={lerp(rods10X(0) - 12, 370, squeeze)} y={228} width={lerp(rods10X(9) + s2 + 20 - rods10X(0), 236, squeeze)} height={24} rx={8} fill={M.coral} stroke={M.ink} strokeWidth={3.5} />
-        </Pop>
-      )}
-      {flatOn && !phase5 && (
-        <Pop t={t} at={oneHundred + 0.45} x={480} y={240} bounce={16}>
-          <Flat x={380} y={140} s={s2} />
-        </Pop>
-      )}
-      {/* the bundle band on the ten */}
-      {t > oneTen && t < tenTens - 0.3 && (
-        <Pop t={t} at={oneTen} x={480} y={rodTop + 5 * S}>
-          <rect x={rodX - 8} y={rodTop + 5 * S - 12} width={S + 26} height={24} rx={8} fill={M.coral} stroke={M.ink} strokeWidth={3.5} />
-        </Pop>
-      )}
-      <Chip t={t} at={oneTen + 0.2} x={640} y={rodTop + 5 * S} text="1 ten" color={PV.tens} size={30} out={tenTens - 0.3} />
-      <Burst t={t} at={oneTen + 0.05} x={480} y={rodTop + 5 * S} color={M.mint} r={150} rays={12} />
-      <Words t={t} at={oneTen + 0.3} text="10 ones = 1 ten" x={480} y={470} size={44} colors={[DEEP.gold, DEEP.gold, undefined, DEEP.mint, DEEP.mint]} out={tenTens - 0.2} />
-      <Brace t={t} at={tenTens + 1.0} x0={rods10X(0)} x1={rods10X(9) + s2 + 8} y={380} label="10 tens" labelColor={DEEP.mint} color={DEEP.mint} labelSize={32} out={oneHundred - 0.2} />
-      <Chip t={t} at={oneHundred + 0.6} x={700} y={240} text="1 hundred" color={PV.hundreds} size={30} out={each - 0.3} />
-      <Burst t={t} at={oneHundred + 0.45} x={480} y={240} color={PV.hundreds} r={170} rays={14} />
-      <Words t={t} at={oneHundred + 0.7} text="10 tens = 1 hundred" x={480} y={470} size={44} colors={[DEEP.mint, DEEP.mint, undefined, DEEP.sea, DEEP.sea]} out={each - 0.3} />
+        {Array.from({ length: 10 }, (_, i) => (
+          <Badge key={i} t={t} at={0.3 + i * 0.13 + 0.1} x={rowX(i) + S / 2 + 4} y={312} text={i + 1} r={15} size={17} out={bundle1} />
+        ))}
+        <Brace t={t} at={tenOnes} x0={rowX(0)} x1={rowX(9) + S + 10} y={196} dir="up" label="10 ones" labelColor={DEEP.gold} color={DEEP.gold} labelSize={32} out={bundle1} />
 
-      {/* phase 5: hundred | ten | one, ×10 each step left */}
-      {phase5 && (
-        <g>
-          <T x={lerp(380, slotX[0] - 85, fin)} y={lerp(140, baseY - 170, fin)} s={lerp(1, s3 / s2, fin)}>
-            <Flat x={0} y={0} s={s2} />
-          </T>
-          <Pop t={t} at={each + 0.2} x={slotX[1]} y={baseY - 85}>
-            <Rod x={slotX[1] - s3 / 2} y={baseY - 170} s={s3} />
+        {/* the ten (rod) — first alone, then shrinking into a row of ten rods */}
+        {t >= oneTen + 0.3 && !flatOn && !phase5 && (
+          <g>
+            {Array.from({ length: 10 }, (_, k) => {
+              if (k > 0 && t < tenTens + (k - 1) * 0.06) return null
+              const slide = k === 0 ? 1 : ease.outBack(progress(t, tenTens + (k - 1) * 0.06, 0.45))
+              const x0 = k === 0 ? lerp(rodX, rods10X(0), shrink) : lerp(980, rods10X(k), slide)
+              const x = lerp(x0, 480 - 100 + k * s2, squeeze)
+              const s = k === 0 ? lerp(S, s2, shrink) : s2
+              const top = k === 0 ? lerp(rodTop, 140, shrink) : 140
+              return (
+                <g key={k}>
+                  <Rod x={x} y={top} s={s} color={mixColor(PV.tens, PV.hundreds, squeeze)} />
+                </g>
+              )
+            })}
+          </g>
+        )}
+        {/* the bundle band around the ten tens (it tightens as they squeeze) */}
+        {t > bandAt && t < oneHundred + 0.5 && (
+          <Pop t={t} at={bandAt} x={480} y={240}>
+            <rect x={lerp(rods10X(0) - 12, 370, squeeze)} y={228} width={lerp(rods10X(9) + s2 + 20 - rods10X(0), 236, squeeze)} height={24} rx={8} fill={M.coral} stroke={M.ink} strokeWidth={3.5} />
           </Pop>
-          <Glow t={t} at={each + 0.4} x={slotX[2] + 3} y={baseY - 10} r={34} color={M.gold} />
-          <Pop t={t} at={each + 0.4} x={slotX[2]} y={baseY - 8}>
-            <UnitCube x={slotX[2] - s3 / 2} y={baseY - s3} s={s3} />
+        )}
+        {flatOn && !phase5 && (
+          <Pop t={t} at={oneHundred + 0.45} x={480} y={240} bounce={16}>
+            <Flat x={380} y={140} s={s2} />
           </Pop>
-          {[
-            ['1 hundred', DEEP.sea],
-            ['1 ten', DEEP.mint],
-            ['1 one', DEEP.gold],
-          ].map(([label, c], i) => (
-            <Pop key={i} t={t} at={each + 0.3 + i * 0.15} x={slotX[i]} y={baseY + 40}>
-              <Title x={slotX[i]} y={baseY + 40} size={32} color={c} stroke={M.white}>
-                {label}
-              </Title>
+        )}
+        {/* the bundle band on the ten */}
+        {t > oneTen && t < tenTens - 0.3 && (
+          <Pop t={t} at={oneTen} x={480} y={rodTop + 5 * S}>
+            <rect x={rodX - 8} y={rodTop + 5 * S - 12} width={S + 26} height={24} rx={8} fill={M.coral} stroke={M.ink} strokeWidth={3.5} />
+          </Pop>
+        )}
+        <Chip t={t} at={oneTen + 0.2} x={640} y={rodTop + 5 * S} text="1 ten" color={PV.tens} size={30} out={tenTens - 0.3} />
+        <Burst t={t} at={oneTen + 0.05} x={480} y={rodTop + 5 * S} color={M.mint} r={150} rays={12} />
+        <Words t={t} at={oneTen + 0.3} text="10 ones = 1 ten" x={480} y={470} size={44} colors={[DEEP.gold, DEEP.gold, undefined, DEEP.mint, DEEP.mint]} out={tenTens - 0.2} />
+        <Brace t={t} at={tenTens + 1.0} x0={rods10X(0)} x1={rods10X(9) + s2 + 8} y={380} label="10 tens" labelColor={DEEP.mint} color={DEEP.mint} labelSize={32} out={oneHundred - 0.2} />
+        <Chip t={t} at={oneHundred + 0.6} x={700} y={240} text="1 hundred" color={PV.hundreds} size={30} out={each - 0.3} />
+        <Burst t={t} at={oneHundred + 0.45} x={480} y={240} color={PV.hundreds} r={170} rays={14} />
+        <Words t={t} at={oneHundred + 0.7} text="10 tens = 1 hundred" x={480} y={470} size={44} colors={[DEEP.mint, DEEP.mint, undefined, DEEP.sea, DEEP.sea]} out={each - 0.3} />
+
+        {/* phase 5: hundred | ten | one, ×10 each step left */}
+        {phase5 && (
+          <g>
+            <T x={lerp(380, slotX[0] - 85, fin)} y={lerp(140, baseY - 170, fin)} s={lerp(1, s3 / s2, fin)}>
+              <Flat x={0} y={0} s={s2} />
+            </T>
+            <Pop t={t} at={each + 0.2} x={slotX[1]} y={baseY - 85}>
+              <Rod x={slotX[1] - s3 / 2} y={baseY - 170} s={s3} />
             </Pop>
-          ))}
-          {[
-            { from: slotX[2] - 4, to: slotX[1] + 30, at: tenTimes - 0.1 },
-            { from: slotX[1] - 22, to: slotX[0] + 100, at: tenTimes + 0.6 },
-          ].map((a, i) => (
-            <g key={i}>
-              <Arrow t={t} at={a.at} from={[a.from, 196]} to={[a.to, 196]} bend={0.32} color={M.coral} width={6} dur={0.55} />
-              <Pop t={t} at={a.at + 0.3} x={(a.from + a.to) / 2} y={128}>
-                <Title x={(a.from + a.to) / 2} y={128} size={38} color={DEEP.coral} stroke={M.white}>
-                  ×10
+            <Glow t={t} at={each + 0.4} x={slotX[2] + 3} y={baseY - 10} r={34} color={M.gold} />
+            <Pop t={t} at={each + 0.4} x={slotX[2]} y={baseY - 8}>
+              <UnitCube x={slotX[2] - s3 / 2} y={baseY - s3} s={s3} />
+            </Pop>
+            {[
+              ['1 hundred', DEEP.sea],
+              ['1 ten', DEEP.mint],
+              ['1 one', DEEP.gold],
+            ].map(([label, c], i) => (
+              <Pop key={i} t={t} at={each + 0.3 + i * 0.15} x={slotX[i]} y={baseY + 40}>
+                <Title x={slotX[i]} y={baseY + 40} size={32} color={c} stroke={M.white}>
+                  {label}
                 </Title>
               </Pop>
-            </g>
-          ))}
-          <Words t={t} at={right} text="×10 each step to the left" x={480} y={482} size={38} colors={[DEEP.coral]} />
-        </g>
-      )}
-      <Twinkle t={t} at={right + 1} x={slotX[0]} y={baseY - 80} r={110} n={4} color={PV.hundreds} />
+            ))}
+            {[
+              { from: slotX[2] - 4, to: slotX[1] + 30, at: tenTimes - 0.1 },
+              { from: slotX[1] - 22, to: slotX[0] + 100, at: tenTimes + 0.6 },
+            ].map((a, i) => (
+              <g key={i}>
+                <Arrow t={t} at={a.at} from={[a.from, 196]} to={[a.to, 196]} bend={0.32} color={M.coral} width={6} dur={0.55} />
+                <Pop t={t} at={a.at + 0.3} x={(a.from + a.to) / 2} y={128}>
+                  <Title x={(a.from + a.to) / 2} y={128} size={38} color={DEEP.coral} stroke={M.white}>
+                    ×10
+                  </Title>
+                </Pop>
+              </g>
+            ))}
+            <Words t={t} at={right} text="×10 each step to the left" x={480} y={482} size={38} colors={[DEEP.coral]} />
+          </g>
+        )}
+        <Twinkle t={t} at={right + 1} x={slotX[0]} y={baseY - 80} r={110} n={4} color={PV.hundreds} />
+      </Camera>
     </>
   )
 }
@@ -315,45 +318,52 @@ const value: Scene = ({ t, cue }: SceneProps) => {
           { at: means + 0.5, x: 480, y: 270, zoom: 1 },
         ]}
       >
-      <Chart t={t} headAt={(i) => 0.15 + i * 0.1} tileAt={(i) => 0.2 + i * 0.1} digitAt={(i) => digitAt[i]} dim={dim} colBottom={276} tileY={196} />
-      <Ring t={t} at={place} x={COL_X[1]} y={112} r={72} color={PV.hundreds} out={means} />
-      {/* the 2 in the hundreds house glows */}
-      <Ring t={t} at={two + 0.2} x={COL_X[1]} y={196} r={72} color={M.gold} out={means} />
-      {/* "just 2"? no! */}
-      <Fade t={t} at={notJust - 0.1} out={means + 0.2}>
-        <g transform={`translate(${wobble(t, notJust + 0.5, { amp: 10, freq: 3, decay: 4 })} 0)`}>
-          <Title x={600} y={372} size={70} color={M.inkSoft} stroke={M.white}>
-            2
-          </Title>
-          <UnitCube x={652} y={356} s={30} />
-          <UnitCube x={700} y={356} s={30} />
-          <Draw t={t} at={notJust + 0.35} dur={0.25} d="M 568 330 L 760 410" stroke={DEEP.coral} width={9} />
-          <Draw t={t} at={notJust + 0.5} dur={0.25} d="M 568 410 L 760 330" stroke={DEEP.coral} width={9} />
-        </g>
-      </Fade>
-      {/* the 2 slides down and becomes 200 */}
-      {t > means && t < end + 0.4 && (
-        <g opacity={1 - progress(t, end, 0.4)}>
-          <Title x={bigX - 52 * zeros} y={bigY} size={lerp(104, 120, grow)} color={DEEP.sea} stroke={M.white}>
-            2
-          </Title>
-          {zeros > 0.001 && (
-            <g transform={`translate(${bigX - 14} ${bigY}) scale(${zeros})`}>
-              <Title x={0} y={0} size={120} color={DEEP.sea} stroke={M.white} anchor="start">
-                00
-              </Title>
-            </g>
-          )}
-        </g>
-      )}
-      {t > means && t < end + 0.4 &&
-        [0, 1].map((k) => (
-          <Pop key={k} t={t} at={twoHundred + 0.3 + k * 0.2} x={590 + k * 140} y={372} out={end}>
-            <Flat x={540 + k * 140} y={318} s={10} />
-          </Pop>
-        ))}
-      <Burst t={t} at={twoHundred + 0.25} x={330} y={372} color={M.gold} r={110} />
+        <Chart t={t} headAt={(i) => 0.15 + i * 0.1} tileAt={(i) => 0.2 + i * 0.1} digitAt={(i) => digitAt[i]} dim={dim} colBottom={276} tileY={196} />
+        <Ring t={t} at={place} x={COL_X[1]} y={112} r={72} color={PV.hundreds} out={means} />
+        {/* the 2 in the hundreds house glows */}
+        <Ring t={t} at={two + 0.2} x={COL_X[1]} y={196} r={72} color={M.gold} out={means} />
+        {/* "just 2"? no! */}
+        <Fade t={t} at={notJust - 0.1} out={means + 0.2}>
+          <g transform={`translate(${wobble(t, notJust + 0.5, { amp: 10, freq: 3, decay: 4 })} 0)`}>
+            <Title x={600} y={372} size={70} color={M.inkSoft} stroke={M.white}>
+              2
+            </Title>
+            <UnitCube x={652} y={356} s={30} />
+            <UnitCube x={700} y={356} s={30} />
+            <Draw t={t} at={notJust + 0.35} dur={0.25} d="M 568 330 L 760 410" stroke={DEEP.coral} width={9} />
+            <Draw t={t} at={notJust + 0.5} dur={0.25} d="M 568 410 L 760 330" stroke={DEEP.coral} width={9} />
+          </g>
+        </Fade>
+        {/* the 2 slides down and becomes 200 */}
+        {t > means && t < end + 0.4 && (
+          <g opacity={1 - progress(t, end, 0.4)}>
+            <Title x={bigX - 52 * zeros} y={bigY} size={lerp(104, 120, grow)} color={DEEP.sea} stroke={M.white}>
+              2
+            </Title>
+            {zeros > 0.001 && (
+              <g transform={`translate(${bigX - 14} ${bigY}) scale(${zeros})`}>
+                <Title x={0} y={0} size={120} color={DEEP.sea} stroke={M.white} anchor="start">
+                  00
+                </Title>
+              </g>
+            )}
+          </g>
+        )}
+        {t > means && t < end + 0.4 &&
+          [0, 1].map((k) => (
+            <Pop key={k} t={t} at={twoHundred + 0.3 + k * 0.2} x={590 + k * 140} y={372} out={end}>
+              <Flat x={540 + k * 140} y={318} s={10} />
+            </Pop>
+          ))}
+        <Burst t={t} at={twoHundred + 0.25} x={330} y={372} color={M.gold} r={110} />
       </Camera>
+      {/* each digit drops down to what it's worth */}
+      {(() => {
+        const xs = tokenXs(['1000', '+', '200', '+', '30', '+', '4'], 480, 60, 0.3)
+        return PLACES.map((p, i) => (
+          <Draw key={i} t={t} at={end + 0.1 + i * 0.15} dur={0.45} d={`M ${COL_X[i]} 270 L ${xs[i * 2]} 368`} stroke={p.ink} width={4} dash="3 9" />
+        ))
+      })()}
       {/* expanded form */}
       <Equation
         t={t}

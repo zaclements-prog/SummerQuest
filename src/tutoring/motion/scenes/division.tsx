@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components -- scene modules export a Record<stepId, Scene> registry of components; not an HMR boundary */
 import { arc, clamp, ease, lerp, progress, pulse, spring, wobble } from '../anim'
-import { Arrow, Burst, Chip, Equation, Fade, Flip, Paper, Pop, Ring, T, Title, Twinkle, Words } from '../kit'
+import { Arrow, Burst, Camera, Chip, Equation, Fade, Flip, Paper, Pop, Ring, T, Title, Twinkle, Words } from '../kit'
 import { tokenXs } from '../layout'
 import { DEEP, M } from '../palette'
 import { Cookie, Friend, Plate } from '../shapes'
@@ -171,61 +171,69 @@ const answer: Scene = ({ t, cue }: SceneProps) => {
   return (
     <>
       <Paper />
-      <Words t={t} at={0.1} text="one for you…" x={480} y={70} size={46} out={so - 0.4} colors={[NEACH]} />
-      <Table
-        t={t}
-        friendsAt={-1}
-        look={-0.15}
-        smile={(f) => 0.45 + 0.12 * landed(f) + (t > fourC ? 0.3 : 0)}
-        bounce={(f) => {
-          let b = 0
-          for (let i = f; i < 12; i += 3) b += wobble(t, dealAt(i) + DUR, { amp: -10, freq: 2, decay: 7 })
-          return b
-        }}
-      />
-      {/* the cookies */}
-      {Array.from({ length: 12 }, (_, i) => {
-        const f = i % 3
-        const k = ease.inOutCubic(progress(t, dealAt(i), DUR))
-        const from = pileAt(11 - i) // deal from the top of the heap
-        const to = plateAt(f, Math.floor(i / 3))
-        const [x, y] = arc(from, to, 70, k)
-        const rot = (11 - i) * 47 + k * 360
-        const lift = k > 0 && k < 1 ? 1.12 : 1
-        return (
-          <g key={i} transform={`translate(${x} ${y}) scale(${lift})`}>
-            <Cookie x={0} y={0} r={k > 0.5 ? 21 : 23} rot={rot} />
-          </g>
-        )
-      })}
-      {/* each plate: 4 */}
-      {FX.map((x, f) => (
-        <Pop key={f} t={t} at={fourC + f * 0.2} x={x + 98} y={PLATE_Y - 62}>
-          <circle cx={x + 98} cy={PLATE_Y - 62} r={27} fill={M.white} stroke={NEACH} strokeWidth={4} />
-          <Title x={x + 98} y={PLATE_Y - 60} size={34} color={NEACH}>
-            4
+      <Camera t={t} keys={[{ at: 0, x: 480, y: 270, zoom: 1 }, { at: fourC + 0.3, x: 480, y: 372, zoom: 1.12 }, { at: so + 0.7, x: 480, y: 270, zoom: 1 }]}>
+        <Words t={t} at={0.1} text="one for you…" x={480} y={70} size={46} out={so - 0.4} colors={[NEACH]} />
+        <Table
+          t={t}
+          friendsAt={-1}
+          look={-0.15}
+          smile={(f) => 0.45 + 0.12 * landed(f) + (t > fourC ? 0.3 : 0)}
+          bounce={(f) => {
+            let b = 0
+            for (let i = f; i < 12; i += 3) b += wobble(t, dealAt(i) + DUR, { amp: -10, freq: 2, decay: 7 })
+            return b
+          }}
+        />
+        {/* the cookies */}
+        {Array.from({ length: 12 }, (_, i) => {
+          const f = i % 3
+          const k = ease.inOutCubic(progress(t, dealAt(i), DUR))
+          const from = pileAt(11 - i) // deal from the top of the heap
+          const to = plateAt(f, Math.floor(i / 3))
+          const [x, y] = arc(from, to, 70, k)
+          const rot = (11 - i) * 47 + k * 360
+          const lift = k > 0 && k < 1 ? 1.12 : 1
+          return (
+            <g key={i} transform={`translate(${x} ${y}) scale(${lift})`}>
+              <Cookie x={0} y={0} r={k > 0.5 ? 21 : 23} rot={rot} />
+            </g>
+          )
+        })}
+        {/* each plate: 4 */}
+        {FX.map((x, f) => (
+          <Pop key={f} t={t} at={fourC + f * 0.2} x={x + 98} y={PLATE_Y - 62}>
+            <circle cx={x + 98} cy={PLATE_Y - 62} r={27} fill={M.white} stroke={NEACH} strokeWidth={4} />
+            <Title x={x + 98} y={PLATE_Y - 60} size={34} color={NEACH}>
+              4
+            </Title>
+          </Pop>
+        ))}
+        <Chip t={t} at={gone + 0.9} x={PILE_X} y={PILE_Y} text="all gone!" color={M.sky} out={so} />
+        {/* 12 ÷ 3 = 4 */}
+        <Equation
+          t={t}
+          x={480}
+          y={92}
+          size={70}
+          gap={0.26}
+          tokens={[
+            { text: '12', at: so + 0.15 },
+            { text: '÷', at: div },
+            { text: '3', color: NGROUPS, at: byThree + 0.1 },
+            { text: '=', at: eq },
+            { text: '4', color: NEACH, at: eq + 0.3 },
+          ]}
+        />
+        <Ring t={t} at={eq + 0.5} x={xs[4]} y={92} r={40} color={M.gold} />
+        <Burst t={t} at={eq + 0.4} x={xs[4]} y={92} color={M.gold} r={80} />
+        <Twinkle t={t} at={eq + 1} x={480} y={PLATE_Y - 30} r={330} n={6} />
+        {/* check it: the three shares add back up to 12 */}
+        <Fade t={t} at={eq + 1.1}>
+          <Title x={480} y={196} size={30} color={M.inkSoft}>
+            check: 4 + 4 + 4 = 12
           </Title>
-        </Pop>
-      ))}
-      <Chip t={t} at={gone + 0.9} x={PILE_X} y={PILE_Y} text="all gone!" color={M.sky} out={so} />
-      {/* 12 ÷ 3 = 4 */}
-      <Equation
-        t={t}
-        x={480}
-        y={92}
-        size={70}
-        gap={0.26}
-        tokens={[
-          { text: '12', at: so + 0.15 },
-          { text: '÷', at: div },
-          { text: '3', color: NGROUPS, at: byThree + 0.1 },
-          { text: '=', at: eq },
-          { text: '4', color: NEACH, at: eq + 0.3 },
-        ]}
-      />
-      <Ring t={t} at={eq + 0.5} x={xs[4]} y={92} r={40} color={M.gold} />
-      <Burst t={t} at={eq + 0.4} x={xs[4]} y={92} color={M.gold} r={80} />
-      <Twinkle t={t} at={eq + 1} x={480} y={PLATE_Y - 30} r={330} n={6} />
+        </Fade>
+      </Camera>
     </>
   )
 }
@@ -349,7 +357,7 @@ const inverse: Scene = ({ t, cue }: SceneProps) => {
         )
       })}
       {t > div - 0.1 && <Flip t={t} at={div} x={xs2[1]} y={l2} from="×" to="÷" size={size} />}
-      <Ring t={t} at={isF + 0.9} x={xs2[4]} y={l2} r={44} color={M.gold} />
+      <Ring t={t} at={isF + 0.9} x={xs2[4]} y={l2} r={38} color={M.gold} />
 
       {/* backwards */}
       <Arrow t={t} at={back} from={[xs1[4] + 10, l1 + 46]} to={[xs1[0] - 10, l1 + 46]} bend={-0.12} color={DEEP.pink} width={6} dur={0.8} />

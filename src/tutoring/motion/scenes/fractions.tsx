@@ -483,7 +483,7 @@ const samebottom: Scene = ({ t, cue }: SceneProps) => {
 }
 
 // ── 4. same top, different bottoms ───────────────────────────────────────────
-const WALL_X = 270
+const WALL_X = 240
 const WALL_W = 500
 const ROW_H = 56
 const ROWS = [2, 3, 4, 6]
@@ -510,7 +510,7 @@ const unlikebottom: Scene = ({ t, cue }: SceneProps) => {
   const third = cue('one third')
   const trick = cue('This trick')
   const match = cue('tops match')
-  const fly = ease.inOutCubic(progress(t, size, 0.9))
+  const fly = ease.inOutCubic(progress(t, size - 0.15, 0.7))
   const dimLow = ease.inOutCubic(progress(t, half, 0.5))
   const big = [
     { x: 380, ink: A.ink, num: '1', den: '2' },
@@ -519,17 +519,6 @@ const unlikebottom: Scene = ({ t, cue }: SceneProps) => {
   return (
     <>
       <Paper />
-      {/* phase 1: same tops */}
-      {big.map((b, i) => {
-        const x = lerp(b.x, 200, fly)
-        const y = lerp(260, rowY(i) + ROW_H / 2, fly)
-        const s = lerp(1, 0.33, fly)
-        return (
-          <T key={i} x={x} y={y} s={s}>
-            <Frac t={t} x={0} y={0} num={b.num} den={b.den} size={92} color={b.ink} at={0.2 + i * 0.2} />
-          </T>
-        )
-      })}
       <Fade t={t} at={topSame + 0.2} out={size - 0.1}>
         <circle cx={380} cy={205} r={42} fill="none" stroke={M.gold} strokeWidth={6} />
         <circle cx={580} cy={205} r={42} fill="none" stroke={M.gold} strokeWidth={6} />
@@ -542,7 +531,7 @@ const unlikebottom: Scene = ({ t, cue }: SceneProps) => {
       {/* phase 2: the fraction wall */}
       {ROWS.map((d, i) => {
         const y = rowY(i)
-        const at = size + 0.35 + i * 0.18
+        const at = size + 0.5 + i * 0.16
         const o = i >= 2 ? 1 - 0.75 * dimLow : 1
         const lit = ease.outCubic(progress(t, fewer + 0.3 + i * 0.3, 0.45))
         const cw = WALL_W / d
@@ -551,20 +540,31 @@ const unlikebottom: Scene = ({ t, cue }: SceneProps) => {
             <Pop t={t} at={at} x={WALL_X + WALL_W / 2} y={y + ROW_H / 2} bounce={15}>
               <Bar x={WALL_X} y={y} w={WALL_W} h={ROW_H} d={d} fill={(c) => (c === 0 ? { k: lit, color: ROW_COLORS[i] } : null)} />
             </Pop>
-            {i >= 2 && <Frac t={t} x={200} y={y + ROW_H / 2} num="1" den={String(d)} size={30} color={ROW_INK[i]} at={at} />}
+            {i >= 2 && <Frac t={t} x={170} y={y + ROW_H / 2} num="1" den={String(d)} size={30} color={ROW_INK[i]} at={at} />}
             {/* glow on the head-to-head pieces */}
             {i < 2 && t > half && <rect x={WALL_X + 2} y={y + 2} width={cw - 4} height={ROW_H - 4} rx={12} fill="none" stroke={M.gold} strokeWidth={5 + 2 * pulse(t, 1.2)} opacity={ease.outCubic(progress(t, half + i * 0.6, 0.3))} />}
           </g>
         )
       })}
+      {/* the two fractions fly in as the top rows' labels (drawn over the wall) */}
+      {big.map((b, i) => {
+        const x = lerp(b.x, 170, fly)
+        const y = lerp(260, rowY(i) + ROW_H / 2, fly)
+        const s = lerp(1, 0.33, fly)
+        return (
+          <T key={i} x={x} y={y} s={s}>
+            <Frac t={t} x={0} y={0} num={b.num} den={b.den} size={92} color={b.ink} at={0.2 + i * 0.2} />
+          </T>
+        )
+      })}
       {/* fewer pieces → bigger pieces */}
-      <Draw t={t} at={each - 0.2} dur={0.6} d={`M 830 ${rowY(3) + ROW_H / 2} L 830 ${rowY(0) + 14}`} stroke={M.ink} width={6} />
-      {t > each + 0.35 && <path d={`M 816 ${rowY(0) + 30} L 830 ${rowY(0) + 12} L 844 ${rowY(0) + 30}`} fill="none" stroke={M.ink} strokeWidth={6} strokeLinecap="round" strokeLinejoin="round" />}
+      <Draw t={t} at={each - 0.2} dur={0.6} d={`M 800 ${rowY(3) + ROW_H / 2} L 800 ${rowY(0) + 14}`} stroke={M.ink} width={6} />
+      {t > each + 0.35 && <path d={`M 786 ${rowY(0) + 30} L 800 ${rowY(0) + 12} L 814 ${rowY(0) + 30}`} fill="none" stroke={M.ink} strokeWidth={6} strokeLinecap="round" strokeLinejoin="round" />}
       <Fade t={t} at={each + 0.3}>
-        <Title x={830} y={rowY(0) - 16} size={26} color={M.ink}>
+        <Title x={800} y={rowY(0) - 16} size={26} color={M.ink}>
           bigger
         </Title>
-        <Title x={830} y={rowY(3) + ROW_H + 22} size={26} color={M.inkSoft}>
+        <Title x={800} y={rowY(3) + ROW_H + 22} size={26} color={M.inkSoft}>
           smaller
         </Title>
       </Fade>
@@ -731,7 +731,7 @@ const matchbottoms: Scene = ({ t, cue }: SceneProps) => {
         ]}
       />
       {c2 > 0.001 && (
-        <T x={150} y={botY - 40 + (t > bigger + 1 ? Math.sin(t * 2.4) * 3 : 0)} s={c2} r={8}>
+        <T x={64} y={botY + 30 + (t > bigger + 1 ? Math.sin(t * 2.4) * 3 : 0)} s={c2} r={-14}>
           <Crown x={0} y={0} r={24} />
         </T>
       )}
