@@ -1,42 +1,31 @@
 import type { ReactNode } from 'react'
-import { motion } from 'framer-motion'
+import { TONES, type Tone } from './tones'
 
 interface CardProps {
-  tone?: 'quest' | 'island' | 'ocean' | 'monster' | 'correct' | 'wrong'
+  tone?: Tone
   accent?: boolean
   className?: string
   children: ReactNode
   onClick?: () => void
 }
 
-const toneAccentClass: Record<NonNullable<CardProps['tone']>, string> = {
-  quest: 'border-quest-400',
-  island: 'border-island-500',
-  ocean: 'border-ocean-500',
-  monster: 'border-monster-500',
-  correct: 'border-correct-500',
-  wrong: 'border-wrong-500',
-}
-
-const toneShadowClass: Record<NonNullable<CardProps['tone']>, string> = {
-  quest: 'shadow-[0_6px_0_0_theme(colors.quest.400),0_10px_24px_-4px_rgba(0,0,0,0.15)]',
-  island: 'shadow-[0_6px_0_0_theme(colors.island.500),0_10px_24px_-4px_rgba(0,0,0,0.15)]',
-  ocean: 'shadow-[0_6px_0_0_theme(colors.ocean.500),0_10px_24px_-4px_rgba(0,0,0,0.15)]',
-  monster: 'shadow-[0_6px_0_0_theme(colors.monster.500),0_10px_24px_-4px_rgba(0,0,0,0.15)]',
-  correct: 'shadow-[0_6px_0_0_theme(colors.correct.500),0_10px_24px_-4px_rgba(0,0,0,0.15)]',
-  wrong: 'shadow-[0_6px_0_0_theme(colors.wrong.500),0_10px_24px_-4px_rgba(0,0,0,0.15)]',
-}
-
+/**
+ * The toon card: cream paper, big soft corners, a subtle warm outline and a
+ * chunky drop. `tone` tints the ledge under the card; `accent` adds the full
+ * warm-dark outline (hero cards, results, anything you can tap).
+ */
 export default function Card({ tone, accent, className = '', children, onClick }: CardProps) {
-  const baseShadow = 'shadow-[0_6px_0_0_rgba(0,0,0,0.12),0_10px_24px_-4px_rgba(0,0,0,0.12)]'
-  const shadowClass = tone ? toneShadowClass[tone] : baseShadow
-  const borderClass = accent && tone ? `border-4 ${toneAccentClass[tone]}` : ''
+  const t = tone ? TONES[tone] : null
+  const outline = accent || onClick ? 'border-[3px] border-line' : 'border-2 border-line/15'
+  const shadow = t ? t.ledge : 'shadow-card'
 
   const classes = [
-    'bg-paper rounded-3xl',
-    borderClass,
-    shadowClass,
-    onClick ? 'cursor-pointer' : '',
+    'bg-paper rounded-toon text-ink-900',
+    outline,
+    shadow,
+    onClick
+      ? 'cursor-pointer select-none transition-[translate,box-shadow] duration-100 ease-out hover:-translate-y-1 active:translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ocean-600/70'
+      : '',
     className,
   ]
     .filter(Boolean)
@@ -44,14 +33,20 @@ export default function Card({ tone, accent, className = '', children, onClick }
 
   if (onClick) {
     return (
-      <motion.div
+      <div
         className={classes}
         onClick={onClick}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault()
+            onClick()
+          }
+        }}
       >
         {children}
-      </motion.div>
+      </div>
     )
   }
 

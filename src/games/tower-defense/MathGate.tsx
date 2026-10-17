@@ -68,7 +68,7 @@ export default function MathGate({ title, provider, onAnswer, onCorrect, onCance
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-ink-900/60 flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 bg-ink-900/45 backdrop-blur-[3px] flex items-center justify-center p-4"
       onClick={onCancel}
     >
       <motion.div
@@ -78,12 +78,12 @@ export default function MathGate({ title, provider, onAnswer, onCorrect, onCance
         onClick={(e) => e.stopPropagation()}
         className="w-full max-w-md"
       >
-        <Card tone="quest" accent className="p-6">
+        <Card tone="quest" accent className="p-6 !shadow-pop">
           <div className="text-center mb-4">
-            <div className="kid-text text-xs uppercase tracking-wide text-ink-700">
+            <div className="kid-text text-sm uppercase tracking-wide text-ink-700">
               Answer correctly to confirm
             </div>
-            <div className="kid-text text-lg text-ink-900 mt-0.5">{title}</div>
+            <div className="kid-text font-bold text-xl text-ink-900 mt-0.5">{title}</div>
           </div>
 
           <div className="flex flex-col items-center gap-4">

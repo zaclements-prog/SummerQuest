@@ -16,8 +16,8 @@ import { ProgressBar } from '../../components/ui'
 
 export function QuizProgress({ current, total }: { current: number; total: number }) {
   return (
-    <div className="w-full max-w-md mb-3">
-      <div className="kid-text text-sm text-sky text-center mb-1">
+    <div className="w-full max-w-md mb-4">
+      <div className="kid-text text-base text-ink-700 text-center mb-1.5">
         Question {current} of {total}
       </div>
       <ProgressBar value={current} max={total} tone="quest" />
@@ -26,11 +26,13 @@ export function QuizProgress({ current, total }: { current: number; total: numbe
 }
 
 // ── Question prompt ────────────────────────────────────────────────────────────
-// A clean, bright, high-contrast surface (paper + dark ink) — readable, not a
-// translucent pill.
+// A clean, bright, high-contrast surface (paper + warm ink), outlined and
+// chunky like every toon card — readable, not a translucent pill.
 
 export function QuestionPrompt({ children }: { children: ReactNode }) {
   const reduced = useReducedMotion()
+  // Short facts ("8 × 6 = ?") read big and bold; sentences get a calmer size.
+  const short = typeof children === 'string' && children.length <= 28
   return (
     <motion.div
       initial={reduced ? { opacity: 0 } : { scale: 0.96, opacity: 0 }}
@@ -38,9 +40,10 @@ export function QuestionPrompt({ children }: { children: ReactNode }) {
       transition={{ type: 'spring', stiffness: 260, damping: 22 }}
       className={[
         'bg-paper text-ink-900 kid-text',
-        'text-2xl md:text-3xl text-center leading-snug',
-        'rounded-3xl px-6 py-4 max-w-2xl w-full',
-        'shadow-[0_4px_0_0_rgba(0,0,0,0.10),0_8px_20px_-6px_rgba(0,0,0,0.18)]',
+        short ? 'font-bold text-3xl md:text-5xl' : 'font-semibold text-2xl md:text-3xl',
+        'text-center leading-snug',
+        'rounded-toon px-6 py-5 max-w-2xl w-full',
+        'border-[3px] border-line shadow-card',
       ].join(' ')}
     >
       {children}
@@ -71,7 +74,7 @@ export function AnswerGrid({ options, answer, picked, onPick, disabled }: Answer
   return (
     <div
       className={[
-        'grid gap-2.5 w-full max-w-md',
+        'grid gap-3 w-full max-w-md',
         longLabels ? 'grid-cols-1' : 'grid-cols-2',
       ].join(' ')}
     >
@@ -118,11 +121,13 @@ function AnswerButton({
     else state = 'dim'
   }
 
+  // Toon answer tiles: outlined paper that lifts on hover and sinks on press;
+  // the reveal paints the answer leaf-green and a wrong pick coral (ink text on both).
   const stateClass: Record<typeof state, string> = {
-    idle: 'bg-paper text-ink-900 border-ocean-300 hover:bg-ocean-300/30 hover:border-ocean-500 hover:-translate-y-0.5',
-    correct: 'bg-correct-600 text-white border-correct-700',
-    wrong: 'bg-wrong-600 text-white border-wrong-700',
-    dim: 'bg-paper/40 text-ink-700/50 border-ink-500/20',
+    idle: 'bg-paper text-ink-900 border-line shadow-ledge hover:bg-cream-50 hover:-translate-y-0.5 active:translate-y-[3px] active:shadow-ledge-sm',
+    correct: 'bg-correct-400 text-ink-900 border-line shadow-ledge',
+    wrong: 'bg-wrong-400 text-ink-900 border-line shadow-ledge',
+    dim: 'bg-paper/60 text-ink-500 border-line/25 shadow-none',
   }
 
   const anim =
@@ -145,23 +150,29 @@ function AnswerButton({
             : String(opt)
       }
       className={[
-        'choice kid-text relative justify-center text-center',
-        longLabels ? 'text-xl' : 'text-3xl',
-        'min-h-[56px] transition',
+        'choice kid-text font-bold relative justify-center text-center !border-[3px]',
+        longLabels ? 'text-xl min-h-[60px]' : 'text-3xl min-h-[68px]',
+        'transition-[translate,box-shadow,background-color] duration-100',
         stateClass[state],
-        'focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ocean-400 focus-visible:ring-offset-2',
+        'focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ocean-600/70 focus-visible:ring-offset-2',
         revealed && state === 'dim' ? 'cursor-default' : '',
         anim,
       ].join(' ')}
     >
       <span>{opt}</span>
       {state === 'correct' && (
-        <span className="absolute -top-2 -right-2 text-2xl" aria-hidden="true">
+        <span
+          className="absolute -top-3 -right-3 grid place-items-center w-9 h-9 rounded-full bg-correct-500 border-[3px] border-line text-lg text-ink-900"
+          aria-hidden="true"
+        >
           ✓
         </span>
       )}
       {state === 'wrong' && (
-        <span className="absolute -top-2 -right-2 text-2xl" aria-hidden="true">
+        <span
+          className="absolute -top-3 -right-3 grid place-items-center w-9 h-9 rounded-full bg-wrong-500 border-[3px] border-line text-lg text-ink-900"
+          aria-hidden="true"
+        >
           ✗
         </span>
       )}

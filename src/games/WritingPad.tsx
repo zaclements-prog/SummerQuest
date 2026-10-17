@@ -7,7 +7,7 @@ import { buildWritingEvalPrompt } from '../lib/prompts'
 import { useProgress } from '../store/progress'
 import { useSettings } from '../store/settings'
 import { sfx } from '../lib/sound'
-import { Card, Button, ProgressBar, Pill, StarRating, Loading } from '../components/ui'
+import { Card, Button, Medallion, ProgressBar, Pill, StarRating, Loading } from '../components/ui'
 import { useEntrance } from '../lib/motion'
 import { heuristicFeedback } from '../lib/writingGrader'
 
@@ -204,7 +204,7 @@ function WritingPadView({
     <div className="flex-1 flex flex-col items-center p-4 overflow-y-auto">
       {/* Progress */}
       <div className="w-full max-w-2xl mb-3">
-        <div className="kid-text text-sm text-sky text-center mb-1">
+        <div className="kid-text text-base text-ink-700 text-center mb-1.5">
           Prompt {idx + 1} of {questionCount}
         </div>
         <ProgressBar value={idx + 1} max={questionCount} tone="quest" />
@@ -219,13 +219,13 @@ function WritingPadView({
       >
         {/* Prompt surface — bright paper, dark ink, high contrast */}
         <motion.div variants={item} className="w-full">
-          <Card tone="quest" accent className="p-5">
-            <div className="flex items-center gap-2 mb-2">
+          <Card tone="quest" accent className="p-5 sm:p-6 !bg-quest-100">
+            <div className="flex items-center gap-2 mb-3">
               <Pill tone="quest" icon="✍️">
                 {KIND_LABEL[kind]} prompt
               </Pill>
             </div>
-            <p className="kid-text text-ink-900 text-xl md:text-2xl leading-snug">
+            <p className="kid-text font-bold text-ink-900 text-xl md:text-2xl leading-snug">
               {problem.prompt}
             </p>
           </Card>
@@ -245,11 +245,11 @@ function WritingPadView({
                   onChange={(e) => setText(e.target.value)}
                   placeholder={`Write your ${kind} here…`}
                   className={[
-                    'w-full bg-paper text-ink-900 rounded-2xl p-4 resize-none',
-                    'kid-text text-lg leading-relaxed',
-                    'border-2 border-ocean-300',
-                    'outline-none focus:border-ocean-500 focus:ring-4 focus:ring-ocean-400/40',
-                    'placeholder:text-ink-700/40',
+                    'paper-lines w-full text-ink-900 rounded-[1.25rem] pl-14 pr-4 py-3 resize-none',
+                    'kid-text text-xl',
+                    'border-[3px] border-line',
+                    'outline-none focus:ring-4 focus:ring-ocean-600/50',
+                    'placeholder:text-ink-500',
                     'disabled:opacity-60',
                   ].join(' ')}
                   rows={rows}
@@ -274,7 +274,7 @@ function WritingPadView({
             {!llmEnabled && (
               <motion.p
                 variants={item}
-                className="text-sm text-sky kid-text max-w-md text-center"
+                className="text-sm text-ink-700 kid-text max-w-md text-center"
               >
                 AI feedback is off in settings — you'll still get a score, but for richer feedback turn it on in the Parent dashboard.
               </motion.p>
@@ -282,7 +282,7 @@ function WritingPadView({
             {llmAvailable === false && llmEnabled && (
               <motion.p
                 variants={item}
-                className="text-sm text-sky kid-text max-w-md text-center"
+                className="text-sm text-ink-700 kid-text max-w-md text-center"
               >
                 AI server isn't responding. Your work will get a basic score.
               </motion.p>
@@ -307,27 +307,27 @@ function WritingPadView({
             >
               {/* Score header */}
               <div className="flex items-center gap-4 mb-3">
-                <div className="text-5xl" aria-hidden="true">
+                <Medallion tone={feedback.stars >= 2 ? 'correct' : feedback.stars >= 1 ? 'quest' : 'ocean'} size="xl">
                   {feedback.stars >= 3 ? '🏆' : feedback.stars >= 2 ? '🎉' : feedback.stars >= 1 ? '💪' : '📝'}
-                </div>
+                </Medallion>
                 <div className="flex-1">
                   <StarRating earned={feedback.stars} total={3} size="lg" />
-                  <div className="kid-text text-sm text-ink-700 mt-0.5">
+                  <div className="kid-text text-base text-ink-700 mt-1">
                     Score: {feedback.score}/100
                   </div>
                 </div>
               </div>
 
-              <p className="kid-text text-lg text-ink-900 mb-3 leading-snug">
+              <p className="kid-text text-xl text-ink-900 mb-4 leading-snug">
                 {feedback.summary}
               </p>
 
               {feedback.celebrations.length > 0 && (
-                <div className="bg-correct-600/10 border-l-4 border-correct-600 p-3 rounded-r-2xl mb-2">
-                  <div className="kid-text text-correct-700 text-sm mb-1">
+                <div className="bg-correct-100 border-2 border-line/20 p-3 rounded-2xl mb-3">
+                  <div className="kid-text text-correct-800 text-base mb-1">
                     <span aria-hidden="true">✨</span> You nailed
                   </div>
-                  <ul className="list-disc list-inside text-sm text-ink-900 space-y-0.5">
+                  <ul className="list-disc list-inside text-base text-ink-900 space-y-0.5">
                     {feedback.celebrations.map((c, i) => (
                       <li key={i}>{c}</li>
                     ))}
@@ -336,11 +336,11 @@ function WritingPadView({
               )}
 
               {feedback.improvements.length > 0 && (
-                <div className="bg-quest-400/20 border-l-4 border-quest-500 p-3 rounded-r-2xl mb-3">
-                  <div className="kid-text text-quest-700 text-sm mb-1">
+                <div className="bg-quest-100 border-2 border-line/20 p-3 rounded-2xl mb-4">
+                  <div className="kid-text text-quest-800 text-base mb-1">
                     <span aria-hidden="true">💡</span> Try next time
                   </div>
-                  <ul className="list-disc list-inside text-sm text-ink-900 space-y-0.5">
+                  <ul className="list-disc list-inside text-base text-ink-900 space-y-0.5">
                     {feedback.improvements.map((c, i) => (
                       <li key={i}>{c}</li>
                     ))}
@@ -350,6 +350,7 @@ function WritingPadView({
 
               <Button
                 variant="primary"
+                size="lg"
                 onClick={nextOrFinish}
                 className="w-full"
               >

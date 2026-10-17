@@ -7,7 +7,7 @@ export const TOWER_STATS: Record<string, TowerStats> = {
     damage: 1,
     fireRateHz: 1.25,
     projectileSpeed: 380,
-    color: '#3b82f6',
+    color: '#5f9fd6',
     emoji: '🏰',
     label: 'Cannon Tower',
   },
@@ -20,7 +20,7 @@ export const ENEMY_STATS: Record<string, EnemyStats> = {
     reward: 8,
     size: 22,
     emoji: '👾',
-    color: '#dc2626',
+    color: '#f2766b',
   },
 }
 

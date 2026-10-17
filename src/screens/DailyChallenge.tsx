@@ -10,13 +10,15 @@ import { DAILY_BONUS, DAILY_QUESTION_COUNT, todayStr, pickTodaysChallenge } from
 import {
   Card,
   Button,
-  BackButton,
+  Medallion,
   Pill,
   StarRating,
   ErrorState,
   Celebration,
+  TopBar,
+  TONES,
+  toneOf,
 } from '../components/ui'
-import { subjectTheme, type Subject } from '../lib/theme'
 import { useEntrance } from '../lib/motion'
 import { useWorldUi } from '../world/useWorldUi'
 import { motion } from 'framer-motion'
@@ -52,7 +54,7 @@ export default function DailyChallenge() {
   const [celebrationOpen, setCelebrationOpen] = useState(false)
 
   const alreadyClaimed = claimedDate === todayStr()
-  const theme = subjectTheme(zone.themeColor as Subject)
+  const tone = toneOf(zone.themeColor)
   const { container, item } = useEntrance()
 
   // ── Already finished today ─────────────────────────────────────────────────
@@ -61,15 +63,18 @@ export default function DailyChallenge() {
       <Screen>
         <Header exitPath={exitPath} />
         <div className="flex-1 flex items-center justify-center p-4">
-          <Card tone="quest" accent className="p-8 max-w-md w-full text-center">
-            <div className="text-6xl mb-3" aria-hidden="true">🌟</div>
-            <h2 className="kid-text text-3xl text-ink-900 mb-2">All done for today!</h2>
-            <p className="text-ink-700 mb-6">
+          <Card tone="quest" accent className="relative overflow-hidden p-8 max-w-md w-full text-center flex flex-col items-center">
+            <div className="absolute left-1/2 top-16 -translate-x-1/2 -translate-y-1/2 w-64 h-64 sunburst pointer-events-none" aria-hidden="true" />
+            <Medallion tone="quest" size="xl" className="relative mb-3">🌟</Medallion>
+            <h2 className="relative kid-text font-bold text-3xl text-ink-900 mb-2">All done for today!</h2>
+            <p className="relative text-ink-700 text-lg mb-6">
               You already finished today's challenge. Come back tomorrow for a brand-new one!
             </p>
-            <Button variant="primary" size="lg" to={exitPath} className="w-full justify-center">
-              ← Back to map
-            </Button>
+            <div className="relative w-full flex">
+              <Button variant="primary" size="lg" to={exitPath} className="w-full justify-center">
+                ← Back to map
+              </Button>
+            </div>
           </Card>
         </div>
       </Screen>
@@ -92,10 +97,12 @@ export default function DailyChallenge() {
             className="w-full max-w-md"
           >
             <Card tone={great ? 'correct' : 'quest'} accent className="p-8 text-center">
-              <motion.div variants={item} className="text-6xl mb-2" aria-hidden="true">
-                {great ? '🎉' : '💪'}
+              <motion.div variants={item} className="flex justify-center mb-3">
+                <Medallion tone={great ? 'correct' : 'quest'} size="xl">
+                  {great ? '🎉' : '💪'}
+                </Medallion>
               </motion.div>
-              <motion.h2 variants={item} className="kid-text text-3xl text-ink-900 mb-2">
+              <motion.h2 variants={item} className="kid-text font-bold text-3xl text-ink-900 mb-2">
                 Daily Challenge complete!
               </motion.h2>
 
@@ -103,16 +110,16 @@ export default function DailyChallenge() {
                 <StarRating earned={res.stars} total={3} size="lg" />
               </motion.div>
 
-              <motion.p variants={item} className="text-ink-700 mb-4">
+              <motion.p variants={item} className="text-ink-700 text-lg mb-4">
                 You got <span className="kid-text text-ink-900">{res.correct}</span> of{' '}
                 {res.total} correct
               </motion.p>
 
               <motion.div variants={item} className="flex justify-center gap-2 mb-6">
-                <Pill tone="quest" icon="🪙">+{reward} coins</Pill>
+                <Pill tone="quest" icon="🪙" className="text-lg px-4">+{reward} coins</Pill>
               </motion.div>
 
-              <motion.div variants={item}>
+              <motion.div variants={item} className="flex">
                 <Button variant="success" size="lg" to={exitPath} className="w-full justify-center">
                   Back to map →
                 </Button>
@@ -168,11 +175,13 @@ export default function DailyChallenge() {
       {/* Topic banner + progress affordance */}
       <div className="px-4">
         <div className="max-w-2xl mx-auto">
-          <Card tone="quest" accent className="px-5 py-3 mb-2">
-            <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-center">
-              <span className="kid-text text-lg text-ink-900">
-                <span aria-hidden="true">{zone.emoji}</span> Today's topic:{' '}
-                <span className={theme.accent}>{zone.title}</span>
+          <Card tone={tone} accent className={`px-4 py-3 mb-2 ${TONES[tone].soft}`}>
+            <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-center">
+              <span className="kid-text text-lg text-ink-900 inline-flex items-center gap-2">
+                <Medallion tone={tone} size="sm">{zone.emoji}</Medallion>
+                <span>
+                  Today's topic: <span className={`font-bold ${TONES[tone].text}`}>{zone.title}</span>
+                </span>
               </span>
               <Pill tone="quest" icon="🪙">+{DAILY_BONUS} bonus coins</Pill>
             </div>
@@ -184,7 +193,7 @@ export default function DailyChallenge() {
             className="flex items-center justify-center mb-1"
             aria-label={`${DAILY_QUESTION_COUNT} questions in today's challenge`}
           >
-            <span className="text-sky kid-text text-sm">
+            <span className="text-ink-700 kid-text text-sm">
               {DAILY_QUESTION_COUNT} quick questions
             </span>
           </div>
@@ -233,14 +242,5 @@ function Screen({ children }: { children: React.ReactNode }) {
 }
 
 function Header({ exitPath }: { exitPath: string }) {
-  return (
-    <div className="px-4 py-3 flex items-center gap-3">
-      <BackButton to={exitPath} label="Quit" />
-      <h1 className="kid-text text-2xl sm:text-3xl text-sky drop-shadow-md flex-1 text-center">
-        <span aria-hidden="true">🌟</span> Daily Challenge
-      </h1>
-      {/* spacer to keep the title visually centered against the back button */}
-      <div className="w-[88px] flex-shrink-0" aria-hidden="true" />
-    </div>
-  )
+  return <TopBar back={{ to: exitPath, label: 'Quit' }} icon="🌟" title="Daily Challenge" />
 }

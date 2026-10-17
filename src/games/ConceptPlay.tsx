@@ -102,12 +102,12 @@ export default function ConceptPlay({ provider, params, onComplete, meta }: Game
         <QuestionPrompt>{problem.prompt}</QuestionPrompt>
 
         {hasGenuineVisual && (
-          <div className="my-4 flex justify-center">
+          <div className="my-5 flex justify-center">
             <VisualRenderer visual={problem.visual} size="md" />
           </div>
         )}
 
-        <div className={hasGenuineVisual ? '' : 'mt-4'}>
+        <div className={hasGenuineVisual ? 'w-full flex justify-center' : 'mt-6 w-full flex justify-center'}>
           <AnswerGrid
             options={problem.options}
             answer={problem.answer}
@@ -122,9 +122,14 @@ export default function ConceptPlay({ provider, params, onComplete, meta }: Game
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mt-4 bg-quest-400/20 text-ink-900 px-4 py-3 rounded-2xl kid-text text-base max-w-md text-center"
+          className="mt-5 flex items-center gap-3 bg-quest-100 text-ink-900 pl-2 pr-4 py-2 rounded-[1.25rem] border-[3px] border-line shadow-ledge-sm kid-text text-lg max-w-md text-left"
         >
-          <span className="mr-1" aria-hidden="true">💡</span>
+          <span
+            className="grid place-items-center w-10 h-10 shrink-0 rounded-full bg-quest-300 border-2 border-line text-xl"
+            aria-hidden="true"
+          >
+            💡
+          </span>
           {problem.hint}
         </motion.div>
       )}

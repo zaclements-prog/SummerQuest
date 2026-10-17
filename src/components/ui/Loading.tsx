@@ -9,10 +9,11 @@ export default function Loading({ label = 'Loading…' }: LoadingProps) {
       role="status"
       aria-label={label}
     >
-      <span className="text-5xl animate-bounce-soft" aria-hidden="true">
-        🌞
+      <span className="relative grid place-items-center w-20 h-20" aria-hidden="true">
+        <span className="absolute inset-0 rounded-full sunburst animate-spin-slow" />
+        <span className="relative text-5xl animate-bob">🌞</span>
       </span>
-      <p className="text-sky kid-text text-lg">{label}</p>
+      <p className="kid-text text-lg text-ink-700">{label}</p>
     </div>
   )
 }

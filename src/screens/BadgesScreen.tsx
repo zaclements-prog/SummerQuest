@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useProgress } from '../store/progress'
 import { computeBadges, type BadgeStatus } from '../lib/badges'
 import { sfx } from '../lib/sound'
@@ -11,6 +11,10 @@ import {
   Pill,
   EmptyState,
   Celebration,
+  Medallion,
+  Modal,
+  Page,
+  SectionTitle,
 } from '../components/ui'
 import { useEntrance } from '../lib/motion'
 
@@ -51,54 +55,53 @@ export default function BadgesScreen() {
   const pct = badges.length > 0 ? Math.round((earned.length / badges.length) * 100) : 0
 
   return (
-    <div className="flex-1 flex flex-col p-4 overflow-y-auto">
-      <div className="max-w-3xl w-full mx-auto">
-        <PageHeader title="🏅 My Badges" back={{ to: '/map', label: 'Map' }} />
+    <Page width="lg">
+      <PageHeader title="🏅 My Badges" back={{ to: '/map', label: 'Map' }} className="!mb-0" />
 
-        {/* ── Overall progress ─────────────────────────────────────────── */}
-        <div className="text-center mb-6">
-          <p className="kid-text text-2xl text-sky drop-shadow">
+      {/* ── Overall progress ─────────────────────────────────────────── */}
+      <Card tone="quest" accent className="relative overflow-hidden p-5 sm:p-6 flex items-center gap-4 sm:gap-5">
+        <div className="absolute -left-12 top-1/2 -translate-y-1/2 w-52 h-52 sunburst pointer-events-none" aria-hidden="true" />
+        <Medallion tone="quest" size="xl" className="relative">
+          🏆
+        </Medallion>
+        <div className="relative flex-1 min-w-0">
+          <p className="kid-text font-bold text-3xl text-ink-900 leading-tight">
             {earned.length} of {badges.length} earned
           </p>
-          <p className="text-sky text-sm mt-1">
+          <p className="text-ink-700 text-base mt-0.5">
             {earned.length === 0
               ? 'Play to collect your first badge!'
               : pct >= 100
                 ? 'You collected them all! 🎉'
                 : 'Keep questing to fill your trophy case.'}
           </p>
-          <ProgressBar
-            value={earned.length}
-            max={badges.length}
-            tone="quest"
-            className="max-w-xs mx-auto mt-3"
-          />
+          <ProgressBar value={earned.length} max={badges.length} tone="quest" className="mt-3 max-w-sm" />
         </div>
+      </Card>
 
-        {earned.length === 0 ? (
-          <EmptyState
-            emoji="🏆"
-            title="Your trophy case is waiting"
-            message="Finish a stage to earn your very first badge. Every island has trophies to collect!"
-            cta={{ label: 'Play now →', to: '/map' }}
+      {earned.length === 0 ? (
+        <EmptyState
+          emoji="🏆"
+          title="Your trophy case is waiting"
+          message="Finish a stage to earn your very first badge. Every island has trophies to collect!"
+          cta={{ label: 'Play now →', to: '/map' }}
+        />
+      ) : (
+        <>
+          <Section
+            title="Subject Badges"
+            badges={zoneBadges}
+            newIds={newIds}
+            onSelect={setSelected}
           />
-        ) : (
-          <>
-            <Section
-              title="Subject Badges"
-              badges={zoneBadges}
-              newIds={newIds}
-              onSelect={setSelected}
-            />
-            <Section
-              title="Achievements"
-              badges={milestones}
-              newIds={newIds}
-              onSelect={setSelected}
-            />
-          </>
-        )}
-      </div>
+          <Section
+            title="Achievements"
+            badges={milestones}
+            newIds={newIds}
+            onSelect={setSelected}
+          />
+        </>
+      )}
 
       {/* ── Badge detail modal ───────────────────────────────────────────── */}
       <BadgeDetailModal badge={selected} onClose={() => setSelected(null)} />
@@ -111,19 +114,16 @@ export default function BadgesScreen() {
       >
         <div className="flex flex-wrap justify-center gap-3 my-2">
           {celebrating.map((b) => (
-            <div key={b.id} className="flex flex-col items-center w-24">
-              <div
-                className="text-5xl animate-glow text-quest-500"
-                aria-hidden="true"
-              >
+            <div key={b.id} className="flex flex-col items-center gap-1 w-24">
+              <Medallion tone="quest" size="lg">
                 {b.emoji}
-              </div>
+              </Medallion>
               <div className="kid-text text-sm text-ink-700">{b.title}</div>
             </div>
           ))}
         </div>
       </Celebration>
-    </div>
+    </Page>
   )
 }
 
@@ -144,18 +144,21 @@ function Section({
   const { container, item } = useEntrance()
 
   return (
-    <section className="mb-7">
-      <div className="flex items-center justify-between mb-3">
-        <h2 className="kid-text text-xl text-sky drop-shadow">{title}</h2>
-        <Pill tone={earnedCount === badges.length ? 'correct' : 'ink'} icon="🏅">
-          {earnedCount} of {badges.length}
-        </Pill>
-      </div>
+    <section className="flex flex-col gap-3">
+      <SectionTitle
+        right={
+          <Pill tone={earnedCount === badges.length ? 'correct' : 'ink'} icon="🏅">
+            {earnedCount} of {badges.length}
+          </Pill>
+        }
+      >
+        {title}
+      </SectionTitle>
       <motion.div
         variants={container}
         initial="hidden"
         animate="show"
-        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3"
+        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4"
       >
         {badges.map((b) => (
           <motion.div key={b.id} variants={item}>
@@ -189,42 +192,30 @@ function BadgeCard({
         onSelect(badge)
       }}
       className={[
-        'relative h-full p-3 text-center flex flex-col items-center gap-1.5',
-        earned ? '' : 'border-4 border-ocean-300/60 bg-ocean-900/15',
+        'relative h-full px-3 pt-4 pb-3 text-center flex flex-col items-center gap-2',
+        earned ? '' : '!bg-cream-100 !border-line/40 !border-dashed',
         isNew ? 'animate-pop' : '',
       ].join(' ')}
     >
       {/* NEW! ribbon for badges earned since last visit */}
       {isNew && (
-        <span className="absolute -top-2 -right-2 z-10 rounded-full bg-correct-600 text-white kid-text text-[11px] px-2 py-0.5 shadow-md ring-2 ring-paper">
+        <span className="absolute -top-3 -right-2 z-10 rotate-6 rounded-full bg-wrong-400 text-ink-900 kid-text text-xs px-2.5 py-0.5 border-2 border-line shadow-ledge-sm">
           NEW!
         </span>
       )}
 
-      <div
-        className={
-          earned
-            ? 'text-4xl animate-glow text-quest-500'
-            : 'text-4xl grayscale opacity-60'
-        }
-        aria-hidden="true"
-      >
+      <Medallion tone={earned ? 'quest' : 'cream'} size="lg" className={earned ? '' : 'opacity-80'}>
         {earned ? badge.emoji : '🔒'}
-      </div>
+      </Medallion>
 
-      <div
-        className={[
-          'kid-text text-sm leading-tight',
-          earned ? 'text-ink-900' : 'text-ink-700',
-        ].join(' ')}
-      >
-        {badge.title}
-      </div>
+      <div className="kid-text text-base leading-tight text-ink-900">{badge.title}</div>
 
       {earned ? (
-        <div className="kid-text text-[13px] text-correct-600">Earned!</div>
+        <span className="kid-text text-sm rounded-full bg-correct-300 border-2 border-line px-2.5 leading-6">
+          ✓ Earned!
+        </span>
       ) : (
-        <div className="text-[13px] leading-snug text-sky/90">{badge.description}</div>
+        <div className="text-sm leading-snug text-ink-700">{badge.description}</div>
       )}
     </Card>
   )
@@ -239,69 +230,35 @@ function BadgeDetailModal({
   badge: BadgeStatus | null
   onClose: () => void
 }) {
-  const reduced = useReducedMotion() ?? false
-  const open = badge != null
-
   return (
-    <AnimatePresence>
-      {open && badge && (
-        <>
-          <motion.div
-            className="fixed inset-0 z-40 bg-ink-900/50 backdrop-blur-sm"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={onClose}
-            aria-hidden="true"
-          />
-          <motion.div
-            role="dialog"
-            aria-modal="true"
-            aria-label={badge.title}
-            className="fixed inset-0 z-50 flex items-center justify-center p-6"
-            initial={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.85, y: 32 }}
-            animate={reduced ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
-            exit={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.85, y: 32 }}
-            transition={{ type: 'spring', stiffness: 280, damping: 24 }}
-          >
-            <Card
-              tone={badge.earned ? 'quest' : undefined}
-              accent={badge.earned}
-              className="relative p-8 w-full max-w-sm text-center"
-            >
-              <div
-                className={
-                  badge.earned
-                    ? 'text-6xl mb-3 animate-glow text-quest-500'
-                    : 'text-6xl mb-3 grayscale opacity-70'
-                }
-                aria-hidden="true"
-              >
-                {badge.earned ? badge.emoji : '🔒'}
-              </div>
+    <Modal open={badge != null} onClose={onClose} label={badge?.title ?? 'Badge'}>
+      {badge && (
+        <div className="relative p-7 text-center overflow-hidden rounded-toon">
+          {badge.earned && (
+            <div
+              className="absolute left-1/2 top-16 -translate-x-1/2 -translate-y-1/2 w-64 h-64 sunburst animate-spin-slow pointer-events-none"
+              aria-hidden="true"
+            />
+          )}
+          <Medallion tone={badge.earned ? 'quest' : 'cream'} size="xl" className="relative mb-3">
+            {badge.earned ? badge.emoji : '🔒'}
+          </Medallion>
 
-              <h2 className="kid-text text-2xl text-ink-900 mb-2">{badge.title}</h2>
+          <h2 className="relative kid-text font-bold text-2xl text-ink-900 mb-2">{badge.title}</h2>
 
-              <div className="flex justify-center mb-3">
-                <Pill tone={badge.earned ? 'correct' : 'ocean'} icon={badge.earned ? '✅' : '🎯'}>
-                  {badge.earned ? 'Earned!' : 'How to earn'}
-                </Pill>
-              </div>
+          <div className="relative flex justify-center mb-3">
+            <Pill tone={badge.earned ? 'correct' : 'ocean'} icon={badge.earned ? '✅' : '🎯'}>
+              {badge.earned ? 'Earned!' : 'How to earn'}
+            </Pill>
+          </div>
 
-              <p className="text-ink-700 text-base mb-6">{badge.description}</p>
+          <p className="relative text-ink-700 text-lg mb-6">{badge.description}</p>
 
-              <Button
-                variant="primary"
-                size="lg"
-                onClick={onClose}
-                className="w-full justify-center"
-              >
-                {badge.earned ? 'Awesome! 🎉' : 'Got it! 👍'}
-              </Button>
-            </Card>
-          </motion.div>
-        </>
+          <Button variant="primary" size="lg" onClick={onClose} className="relative w-full justify-center">
+            {badge.earned ? 'Awesome! 🎉' : 'Got it! 👍'}
+          </Button>
+        </div>
       )}
-    </AnimatePresence>
+    </Modal>
   )
 }
