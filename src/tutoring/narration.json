@@ -112,7 +112,7 @@
   "wordProblem": [
     {
       "stepId": "read",
-      "text": "For a word problem, the first thing to do is read it slowly and picture what is happening in the story. Imagine the box and the crayons in your mind."
+      "text": "First, read the problem slowly: A box has six rows of four crayons. How many crayons are there in all? Then picture the story in your mind. See the box, and the crayons lined up inside it."
     },
     {
       "stepId": "plan",
@@ -120,27 +120,43 @@
     },
     {
       "stepId": "solve",
-      "text": "Now solve it. There are six rows, and each row has four crayons, so we multiply six times four to find how many crayons there are in all."
+      "text": "Now solve it. There are six rows, and each row has four crayons, so we multiply six times four. Count by fours: four, eight, twelve, sixteen, twenty, twenty-four! There are twenty-four crayons in all."
     }
   ],
   "reading": [
     {
       "stepId": "mainidea",
-      "text": "Good readers look for the main idea, which is what the whole passage is mostly about. As you read about the frog, ask yourself what the writer wants you to learn."
+      "text": "Good readers look for the main idea: what the whole passage is mostly about. Read each sentence and ask, who or what is it about? Frogs. Frogs. Frogs! So this passage is mostly about frogs."
+    },
+    {
+      "stepId": "supports",
+      "text": "Think of the main idea as a tabletop. The details are the legs that hold it up. Frogs live near ponds. Frogs eat insects. Frogs can jump far. Each detail tells us more about frogs."
     },
     {
       "stepId": "detail",
-      "text": "For a detail question, you go back into the text and find the exact words that answer it. Do not guess from memory. Look for the sentence that talks about what frogs eat."
+      "text": "For a detail question, go back into the text and find the exact words. Don’t guess from memory! What do frogs eat? Find the clue word, eat, in the passage. There it is: they eat insects."
+    },
+    {
+      "stepId": "infer",
+      "text": "Sometimes the answer is not written down, so you use clues. The text says frogs can jump very far. What do you know about jumping far? It takes strong legs! Clues plus what you know make an inference."
     }
   ],
   "writing": [
     {
       "stepId": "parts",
-      "text": "A complete sentence has two important parts. It has a naming part, which tells who or what the sentence is about, and an action part, which tells what they do. It also begins with a capital letter and ends with a punctuation mark."
+      "text": "A complete sentence has two parts. The naming part tells who or what the sentence is about. The action part tells what they do. And every sentence starts with a capital letter and ends with a punctuation mark."
     },
     {
       "stepId": "example",
       "text": "Here is an example. The dog ran fast. The naming part is the dog, because that is who the sentence is about, and the action part is ran fast, because that tells what the dog does."
+    },
+    {
+      "stepId": "fragments",
+      "text": "If a part is missing, it is not a complete sentence. The big dog. What did it do? Ran fast. Who ran? Put the parts together: The big dog ran fast. Now it is complete!"
+    },
+    {
+      "stepId": "endmarks",
+      "text": "Every sentence ends with an end mark. A period ends a telling sentence. A question mark ends an asking sentence. And an exclamation point shows a strong feeling, like wow!"
     }
   ],
   "science": [
@@ -151,6 +167,14 @@
     {
       "stepId": "water",
       "text": "Water is amazing because it can be all three states. When it is frozen, ice is a solid. When you pour it, water is a liquid. And when it boils away, steam is a gas."
+    },
+    {
+      "stepId": "cycle",
+      "text": "Water moves in a cycle. The sun warms the lake, and water rises as vapor. That’s evaporation. Up high, the vapor cools into tiny drops that make clouds. That’s condensation. When the drops get heavy, they fall as rain. That’s precipitation!"
+    },
+    {
+      "stepId": "plants",
+      "text": "Plants make their own food! Leaves catch sunlight, roots soak up water, and leaves take in a gas called carbon dioxide. Using the sun’s energy, the plant turns them into sugar, and gives off the oxygen we breathe. That’s photosynthesis!"
     }
   ]
 }

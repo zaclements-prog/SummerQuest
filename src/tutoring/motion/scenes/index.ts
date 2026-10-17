@@ -1,5 +1,9 @@
 import type { Scene } from '../types'
 import { fractionsScenes } from './fractions'
+import { wordProblemScenes } from './wordProblem'
+import { readingScenes } from './reading'
+import { writingScenes } from './writing'
+import { scienceScenes } from './science'
 
 /**
  * Motion graphics by lesson → step id. A step without a scene falls back to
@@ -8,6 +12,10 @@ import { fractionsScenes } from './fractions'
  */
 const SCENES: Record<string, Record<string, Scene>> = {
   fractions: fractionsScenes,
+  wordProblem: wordProblemScenes,
+  reading: readingScenes,
+  writing: writingScenes,
+  science: scienceScenes,
 }
 
 export function sceneFor(lessonId: string, stepId: string): Scene | undefined {
