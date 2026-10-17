@@ -8,100 +8,194 @@ import { nextProblem } from '../lib/problem'
 import type { Collider } from '../world/worldLayout'
 import { useProgress } from '../store/progress'
 import { sfx } from '../lib/sound'
-import { TOON } from '../toon/palette'
-import { geo } from '../toon/geometry'
-import { TBox, TCyl } from '../toon/shapes'
-import { Decal } from '../world/areas/fraction-falls/kit'
-import { blobDisc } from '../world/areas/fraction-falls/shapes'
-import { Instances } from '../world/town/kit'
-import { chalkText } from '../world/town/chalk'
 import { useWanderWalk } from '../world/useWanderWalk'
-import WorldCameraRig from '../world/WorldCameraRig'
 import { creatureBuilder } from '../home/models/registry'
 import CreatureAccessories from '../home/world/CreatureAccessories'
+import { useStarterCreature } from '../home/starterCreature'
 import { collidesAt } from '../world/collision'
 import {
+  BOSS_CRACKED_SPEED,
+  BOSS_FINISH_BONUS,
+  KNOCKBACK,
   ROUNDS,
+  advanceProgress,
   arenaFactConfig,
-  arenaStars,
-  isRightCrystal,
+  arenaPlan,
+  arenaStarsOf,
+  bossChain,
+  bossKMax,
+  herdSpots,
+  laneZ,
   makePedestalOptions,
   parseDivRound,
-  shatters,
-  splitPositions,
+  shatterPoints,
+  throwOutcome,
+  warmFactConfig,
+  type BossChain,
   type DivRound,
+  type RoundPlan,
 } from '../lib/arena/divisionCore'
 import { makeDivisionProvider } from '../lib/providers/division'
 import { DEFAULT_GRADE, GRADE_TIERS } from '../lib/gradeTiers'
-import { Crystal, FlyingCrystal, Golem, HeldCrystal, MiniCamel } from './DivisionArena.parts'
-import { ChalkEasel } from './_shared/ChalkEasel'
-import { GroundRing } from './_shared/GroundRing'
-import { fitChalk } from './_shared/chalkBoard'
+import { BossBar, CamelHerd, FlyingCrystal, Golem, HeldCrystal, HintArrow, HostCamel, Pedestal, Pen, type HerdJob, type HostMood } from './DivisionArena.parts'
+import { ArenaSet } from './DivisionArena.set'
+import {
+  ARENA_YAW,
+  CAM_FOCUS_LOCAL,
+  CAM_FOV,
+  CAM_OFFSET,
+  GRAB_R,
+  HOST,
+  PEDESTALS,
+  PEN,
+  PLAY,
+  SPAWN_LOCAL,
+  THROW_R,
+  crystalColor,
+  makeGolemSim,
+  setGolemAnim,
+  toWorld,
+  wpos,
+  type GolemSim,
+} from './DivisionArena.layout'
+import { GameSky } from './_scene/GameSky'
+import { localX, localZ, worldX, worldZ } from './_scene/isoFrame'
+import { GameCameraRig } from './_scene/GameCameraRig'
+import JuiceLayer from './_juice/JuiceLayer'
+import { juice } from './_juice/juice'
+import { Banner, RoundPips, ScoreChip, StreakMeter } from './_juice/JuiceHud'
+import { RunResults } from './_juice/RunResults'
+import { loadBest, recordRun } from './_juice/bests'
+import { multLabel } from './_juice/score'
+import { voice } from './_juice/voice'
 
 /**
- * Crystal Golems — the intrinsic-integration division arena (vertical slice).
- * The chalkboard shows `24 ÷ O = 8` (CCSS 3.OA.A.4, missing factor). Three
- * pedestals hold divisor crystals: walk onto one to grab it, then walk near
- * the golem to throw. The RIGHT crystal shatters the golem into exactly the
- * pen's many mini-camels (the quotient, seen physically); another true factor
- * scatters the WRONG count (the pen visibly stays half-empty); a non-divisor
- * bounces off. The math IS the combat — spec:
- * docs/superpowers/specs/2026-10-12-division-arena-design.md
+ * Crystal Golems — the division arena, fun pass (docs/superpowers/specs/
+ * 2026-10-17-mini-games-fun-pass.md over 2026-10-12-division-arena-design.md).
  *
- * Architecture: all game flow lives HERE as React state (`view`); the scene is
- * presentational and only detects proximity, reporting through callbacks. Refs
- * are touched in effects/callbacks only (react-hooks lint), never in render.
+ * Golems carrying a dividend MARCH down a lane toward the camel pen; the pen
+ * shows `quotient` empty stalls (rows of five). The kid grabs a divisor crystal
+ * and throws it (it launches by itself once you're close): the right crystal
+ * shatters the golem into exactly `quotient` mini-camels that run into the
+ * stalls, counted out loud — 24 ÷ 3 = 8, seen. Another true factor splits it
+ * into the wrong number (stalls left empty, or camels stuck outside), then they
+ * hop back in; a non-divisor bounces off. A golem that reaches the pen stomps
+ * (streak lost, knocked back) — never a fail-out. Two slow warm-ups, faster
+ * golems, then a Giant Golem cracked down in two steps (48 ÷ 2 = 24, 24 ÷ 3 =
+ * 8). Score = base + speed bonus (shatter it far from the pen) × streak, with
+ * a personal best kept in localStorage; the results card hands the run to
+ * GameRunner (stars/coins/session unchanged).
+ *
+ * Architecture: game flow lives HERE as React state (`view`); the golem's
+ * march is a mutable sim (ref) advanced in the scene's frame loop; the scene
+ * is presentational and reports proximity / landings through callbacks.
  */
 
-const ARENA_BOUND = 7.2
-const SPAWN: [number, number] = [4.9, 5.4]
-const PEDESTALS: [number, number][] = [[-2.3, 3.0], [0, 2.4], [2.3, 3.0]]
-const GOLEM: [number, number] = [0, -1.6]
-const PEN: [number, number] = [0, -5.7]
-const GRAB_R = 1.05
-const THROW_R = 3.6
-const CRYSTAL = [TOON.sky, TOON.lilac, TOON.mint]
-// closer + flatter than the open world's rig so the small arena fills the frame
-// and the (tall) chalkboard still fits above the play area
-const ARENA_CAM: [number, number, number] = [10.5, 8.6, 10.5]
+const BEST_KEY = 'sq-best-crystal-golems-v1'
+const GOLEM_SCALE = 1.15
+const GIANT_SCALE = 1.75
 
-export type Phase = 'loading' | 'explore' | 'throw' | 'shatter' | 'fail' | 'bounce' | 'won'
+/** Shatter palette: the crystal's own colour, a pale tint of it, gold and white sparkle. */
+function shards(n: number): string[] {
+  return [crystalColor(n), crystalColor(n), crystalColor(n), '#ffffff', '#ffe58a']
+}
 
-export interface View {
+type Phase = 'march' | 'throw' | 'bounce' | 'split' | 'shatter' | 'stomp' | 'crack' | 'cleared' | 'results'
+
+interface Flight {
+  id: number
+  n: number
+  from: [number, number]
+  /** set for a bounce: fly home to this pedestal */
+  back?: [number, number]
+}
+
+export interface ArenaView {
+  index: number
+  plan: RoundPlan
+  /** 0 = crack the giant, 1 = its fact (normal golems are always 1) */
+  step: 0 | 1
+  /** the equation being solved right now */
   round: DivRound
+  /** the giant's own dividend while it's still giant */
+  chain: BossChain | null
   options: number[]
   phase: Phase
   held: number | null
-  /** launch point of the thrown crystal (phase 'throw') */
-  from: Vector3 | null
-  /** mini-camel marks while the golem is shattered */
-  targets: [number, number][] | null
-  /** true = marks are inside the pen (right split); false = scattered outside */
-  minisOk: boolean
-  /** bumped every throw so shard/animation subtrees remount cleanly */
-  token: number
+  flight: Flight | null
+  herd: HerdJob | null
 }
 
-export default function DivisionArena({ params, onComplete, meta, paused = false }: GameProps) {
-  const totalRounds = (params?.rounds as number | undefined) ?? ROUNDS
-  const grade = useProgress((s) => s.player?.grade)
-  // The arena draws its OWN bounded facts: the grade tier widens division to
-  // ÷12 (dividends to 144), which the pen (12 marks) and the chalk board can't
-  // model legibly. Never harder than the grade, never wider than the model.
-  const facts = useMemo(
-    () => makeDivisionProvider(arenaFactConfig(GRADE_TIERS[grade ?? DEFAULT_GRADE].divMax)),
-    [grade],
-  )
-  const posRef = useRef(new Vector3(...SPAWN, 0))
-  const avatarRef = useRef<Group>(null)
-  const [view, setView] = useState<View | null>(null)
-  const [hud, setHud] = useState<{ text: string; dot: number; flash: 'good' | 'bad' | null } | null>(null)
+interface Hud {
+  score: number
+  streak: number
+  banner: string | null
+  bannerColor?: string
+  eq: 'open' | 'right' | 'wrong'
+  /** the divisor that just shattered it (shown in the chip) */
+  solved: number | null
+  mood: HostMood
+  moodToken: number
+  say: string | null
+  bossHp: number | null
+  hint: boolean
+}
 
-  const viewRef = useRef<View | null>(null)
+interface Stats {
+  firstTry: number
+  cleared: number
+  streak: number
+  bestStreak: number
+  score: number
+  camels: number
+  speedy: number
+  misses: number
+  stomps: number
+}
+
+interface Results {
+  stars: number
+  score: number
+  prevBest: number
+  newBest: boolean
+  perfect: boolean
+  stats: Stats
+}
+
+const freshStats = (): Stats => ({ firstTry: 0, cleared: 0, streak: 0, bestStreak: 0, score: 0, camels: 0, speedy: 0, misses: 0, stomps: 0 })
+
+export default function DivisionArena({ params, onComplete, meta, paused = false }: GameProps) {
+  useStarterCreature()
+  const totalRounds = Math.max(1, (params?.rounds as number | undefined) ?? ROUNDS)
+  const plan = useMemo(() => arenaPlan(totalRounds), [totalRounds])
+  const grade = useProgress((s) => s.player?.grade)
+  const tierDivMax = GRADE_TIERS[grade ?? DEFAULT_GRADE].divMax
+  // The arena draws its OWN bounded facts: the grade tier widens division to
+  // ÷12 (dividends to 144), which the pen (rows of five) and the chalk can't
+  // model legibly. Never harder than the grade, never wider than the model.
+  // Warm-ups come from the friendly corner of the same range.
+  const facts = useMemo(() => makeDivisionProvider(arenaFactConfig(tierDivMax)), [tierDivMax])
+  const warmFacts = useMemo(() => makeDivisionProvider(warmFactConfig(tierDivMax)), [tierDivMax])
+
+  const spawnWorld = useMemo(() => toWorld(...SPAWN_LOCAL), [])
+  const posRef = useRef(new Vector3(spawnWorld[0], 0, spawnWorld[1]))
+  const avatarRef = useRef<Group>(null)
+  const simRef = useRef<GolemSim>(makeGolemSim())
+
+  const [view, setView] = useState<ArenaView | null>(null)
+  const [hud, setHud] = useState<Hud>({ score: 0, streak: 0, banner: null, eq: 'open', solved: null, mood: 'wave', moodToken: 0, say: null, bossHp: null, hint: true })
+  const [results, setResults] = useState<Results | null>(null)
+  const [best] = useState(() => loadBest(BEST_KEY).score)
+
+  const viewRef = useRef<ArenaView | null>(null)
   const problemRef = useRef<Problem | null>(null)
   const triedRef = useRef(false)
   const finishedRef = useRef(false)
   const timersRef = useRef<number[]>([])
+  const stats = useRef<Stats>(freshStats())
+  const flightId = useRef(0)
+  const herdId = useRef(0)
+  const counted = useRef(0)
 
   const recordAnswer = useProgress((s) => s.recordAnswer)
   const recordAttempt = useProgress((s) => s.recordAttempt)
@@ -111,121 +205,383 @@ export default function DivisionArena({ params, onComplete, meta, paused = false
     viewRef.current = view
   }, [view])
 
+  const later = useCallback((ms: number, fn: () => void) => {
+    timersRef.current.push(window.setTimeout(fn, ms))
+  }, [])
   const clearTimers = useCallback(() => {
     for (const t of timersRef.current) window.clearTimeout(t)
     timersRef.current = []
   }, [])
-  useEffect(() => clearTimers, [clearTimers])
+  useEffect(
+    () => () => {
+      clearTimers()
+      voice.cancel()
+    },
+    [clearTimers],
+  )
 
-  const tallyIndex = useRef(0)
+  const patchHud = useCallback((p: Partial<Hud>) => setHud((h) => ({ ...h, ...p })), [])
+  const react = useCallback((mood: HostMood, say: string | null) => setHud((h) => ({ ...h, mood, say, moodToken: h.moodToken + 1 })), [])
+  const banner = useCallback(
+    (text: string, color?: string, ms = 1500) => {
+      patchHud({ banner: text, bannerColor: color })
+      later(ms, () => setHud((h) => (h.banner === text ? { ...h, banner: null } : h)))
+    },
+    [later, patchHud],
+  )
 
-  const say = useCallback((text: string, flash: 'good' | 'bad' | null = null) => {
-    setHud({ text, dot: tallyIndex.current, flash })
-  }, [])
+  // ── rounds ────────────────────────────────────────────────────────────────
 
   const applyRound = useCallback(
     (problem: Problem, index: number) => {
-      const round = parseDivRound(problem)
+      const p = plan[index]
+      const base = parseDivRound(problem)
       problemRef.current = problem
       triedRef.current = false
-      tallyIndex.current = index
+      const chain = p.kind === 'boss' ? bossChain(base, bossKMax(tierDivMax)) : null
+      const round = chain ? chain.steps[0] : base
+      const s = simRef.current
+      s.progress = 0
+      s.speed = p.speed
+      s.x = 0
+      s.z = laneZ(0)
+      s.walk = 0
+      s.targetScale = chain ? GIANT_SCALE : GOLEM_SCALE
+      s.scale = s.targetScale
+      setGolemAnim(s, 'enter')
       setView({
+        index,
+        plan: p,
+        step: chain ? 0 : 1,
         round,
-        options: makePedestalOptions(round.dividend, round.divisor),
-        phase: 'explore',
+        chain,
+        options: makePedestalOptions(round.dividend, round.divisor, p.crystals),
+        phase: 'march',
         held: null,
-        from: null,
-        targets: null,
-        minisOk: true,
-        token: Date.now(),
+        flight: null,
+        herd: null,
       })
-      say(`Which crystal? ${round.dividend} ÷ ? = ${round.quotient}`)
+      patchHud({ eq: 'open', solved: null, bossHp: chain ? 2 : null })
+      // a rumble from the cave as each golem stomps out
+      juice.shake(0.18)
+      sfx.thud()
+      react(index === 0 ? 'wave' : 'idle', chain ? 'Crack it!' : `${round.quotient} 🐪`)
+      if (p.banner) {
+        banner(p.banner, p.kind === 'boss' ? '#ff9f80' : '#ffcf4d', 1700)
+        if (p.kind === 'boss') {
+          juice.shake(0.5)
+          sfx.thud()
+        }
+      }
+      if (index === 0) banner('Crystal Golems!', '#ffcf4d', 1800)
     },
-    [say],
+    [plan, tierDivMax, patchHud, react, banner],
   )
 
-  // first round (ConceptPlay's pattern: setState only in the .then)
+  // the giant is built over a meaty fact: re-draw a few times for one big
+  // enough to feel like a boss — and with a big camel parade at the end
+  // (every draw is still a legit provider fact)
+  const bossMin = tierDivMax <= 5 ? 12 : 18
+  const bossQ = tierDivMax <= 5 ? 4 : 6
+  const drawRound = useCallback(
+    async (index: number) => {
+      const kind = plan[index].kind
+      let p = await nextProblem(kind === 'warm' ? warmFacts : facts)
+      // (≤ 49 keeps the doubled giant a two-digit chalk number)
+      const meaty = (q: Problem) => {
+        const r = parseDivRound(q)
+        return r.dividend >= bossMin && r.dividend <= 49 && r.quotient >= bossQ
+      }
+      for (let i = 0; kind === 'boss' && i < 8 && !meaty(p); i++) p = await nextProblem(facts)
+      return p
+    },
+    [plan, warmFacts, facts, bossMin, bossQ],
+  )
+
+  // first round (setState only in the .then)
   useEffect(() => {
     let cancel = false
-    nextProblem(facts).then((p) => {
+    drawRound(0).then((p) => {
       if (!cancel) applyRound(p, 0)
     })
     return () => {
       cancel = true
     }
-  }, [facts, applyRound])
+  }, [drawRound, applyRound])
 
-  const tally = useRef({ cleared: 0, firstTry: 0 })
+  const finish = useCallback(() => {
+    if (finishedRef.current) return
+    finishedRef.current = true
+    const st = stats.current
+    const stars = arenaStarsOf(st.firstTry, totalRounds)
+    const perfect = st.firstTry === totalRounds && st.misses === 0
+    const run = recordRun(BEST_KEY, { score: st.score, streak: st.bestStreak, perfect })
+    setResults({ stars, score: st.score, prevBest: run.prev.score, newBest: run.newBest, perfect, stats: { ...st } })
+    setView((v) => (v ? { ...v, phase: 'results', held: null, flight: null } : v))
+    react('cheer', perfect ? 'Perfect!' : 'Hooray!')
+  }, [react, totalRounds])
 
-  const loadNext = useCallback(() => {
-    const t = tally.current
-    const index = tallyIndex.current + 1
-    if (index >= totalRounds) {
-      if (finishedRef.current) return
-      finishedRef.current = true
-      setView((v) => (v ? { ...v, phase: 'won', targets: null } : v))
-      say(t.firstTry === totalRounds ? 'Arena cleared — every one first try! 🏆' : `Arena cleared! ${t.firstTry} of ${totalRounds} first try.`)
-      onComplete({ stars: arenaStars(t.firstTry), score: t.firstTry * 20, correct: t.firstTry, total: totalRounds })
+  const endRound = useCallback(() => {
+    const v = viewRef.current
+    if (!v) return
+    const next = v.index + 1
+    if (next >= plan.length) {
+      later(700, finish)
       return
     }
-    nextProblem(facts).then((p) => applyRound(p, index))
-  }, [applyRound, onComplete, facts, totalRounds, say])
+    setView((w) => (w ? { ...w, phase: 'cleared', herd: w.herd } : w))
+    drawRound(next).then((p) => later(500, () => applyRound(p, next)))
+  }, [plan.length, drawRound, applyRound, finish, later])
 
-  const grab = useCallback((n: number) => {
-    sfx.click()
-    setView((v) => (v && v.phase === 'explore' && v.held === null ? { ...v, held: n } : v))
+  // ── verbs ─────────────────────────────────────────────────────────────────
+
+  const grab = useCallback((slot: number) => {
+    const v = viewRef.current
+    if (!v || (v.phase !== 'march' && v.phase !== 'bounce')) return
+    const n = v.options[slot]
+    if (n === undefined || v.held === n) return
+    sfx.pop()
+    const [lx, lz] = PEDESTALS[v.plan.crystals][slot]
+    juice.burst({ pos: wpos(lx, 1.1, lz), color: [crystalColor(n), '#ffffff'], count: 12, speed: 2.2, up: 2.5, size: 0.08, life: 0.6 })
+    setView((w) => (w && w.held !== n ? { ...w, held: n } : w))
   }, [])
 
-  const startThrow = useCallback((from: Vector3) => {
-    setView((v) => (v && v.phase === 'explore' && v.held !== null ? { ...v, phase: 'throw', from } : v))
-  }, [])
+  const startThrow = useCallback((from: [number, number]) => {
+    const v = viewRef.current
+    if (!v || v.phase !== 'march' || v.held === null) return
+    sfx.whoosh()
+    patchHud({ hint: false })
+    setView((w) => (w && w.phase === 'march' && w.held !== null ? { ...w, phase: 'throw', flight: { id: ++flightId.current, n: w.held, from } } : w))
+  }, [patchHud])
 
+  const credit = useCallback(
+    (right: boolean, problem: Problem) => {
+      recordAnswer(right, problem)
+      const sk = problem.skill
+      if (meta && sk) recordAttempt({ zoneId: meta.zoneId, topic: facts.topic, skillId: sk.id, skillLabel: sk.label, correct: right })
+    },
+    [recordAnswer, recordAttempt, meta, facts.topic],
+  )
+
+  const miss = useCallback(() => {
+    const st = stats.current
+    st.misses += 1
+    if (st.streak > 1) juice.text({ pos: wpos(HOST.x, 3.4, HOST.z), text: 'streak lost', size: 'sm', color: '#ffd0c8' })
+    st.streak = 0
+    triedRef.current = true
+    patchHud({ streak: 0 })
+  }, [patchHud])
+
+  const scoreHit = useCallback(
+    (v: ArenaView, extra = 0) => {
+      const st = stats.current
+      const s = simRef.current
+      st.streak += 1
+      st.bestStreak = Math.max(st.bestStreak, st.streak)
+      const hit = shatterPoints({ progress: s.progress, streak: st.streak, kind: v.plan.kind })
+      const pts = hit.points + extra
+      st.score += pts
+      if (s.progress < 0.45) st.speedy += 1
+      const at = wpos(s.x, 2.9 * s.scale, s.z)
+      juice.text({ pos: at, text: `+${pts}`, size: 'lg', color: '#ffe58a' })
+      if (hit.mult > 1) later(160, () => juice.text({ pos: wpos(s.x + 0.9, 2.4 * s.scale, s.z), text: multLabel(hit.mult), size: 'md', color: '#ffb54d' }))
+      if (st.streak >= 2) sfx.combo(st.streak)
+      patchHud({ score: st.score, streak: st.streak })
+    },
+    [later, patchHud],
+  )
+
+  /** A crystal reached the golem: grade it, then play it out. */
   const land = useCallback(
     (picked: number) => {
       const v = viewRef.current
       const problem = problemRef.current
-      if (!v || !problem || v.phase !== 'throw' || v.held !== picked) return
-      clearTimers()
-      const { dividend, divisor, quotient } = v.round
-      const right = isRightCrystal(divisor, picked)
-      const divides = shatters(dividend, picked)
-      const first = !triedRef.current
-      triedRef.current = true
-      recordAnswer(right, problem)
-      const sk = problem.skill
-      if (meta && sk) recordAttempt({ zoneId: meta.zoneId, topic: facts.topic, skillId: sk.id, skillLabel: sk.label, correct: right })
+      if (!v || !problem || v.phase !== 'throw') return
+      const s = simRef.current
+      const out = throwOutcome(v.round, picked)
+      const right = out.kind === 'right'
+      const crack = v.chain !== null && v.step === 0
+      // the giant's first crack is its own small step (no factId); the fact
+      // itself — and every normal golem — goes to factStats
+      const asked: Problem = crack
+        ? { ...problem, id: `${problem.id}-crack`, prompt: `${v.round.dividend} ÷ ${v.round.divisor} = ?`, answer: v.round.quotient, factId: undefined, skill: { id: 'div-basic', label: 'basic division facts' } }
+        : problem
+      credit(right, asked)
+      const hitAt = wpos(s.x, 1.5 * s.scale, s.z + 0.5)
+
+      if (right && crack && v.chain) {
+        // ── the giant cracks down to size
+        scoreHit(v)
+        juice.hitstop(130)
+        juice.shake(0.65)
+        sfx.thud()
+        sfx.sparkle()
+        juice.burst({ pos: hitAt, color: shards(picked), count: 50, speed: 5, up: 4, size: 0.15, life: 1.1 })
+        juice.burst({ pos: hitAt, color: ['#e2b672', '#c99a5a'], count: 18, speed: 3.5, up: 3, size: 0.22, life: 0.9, gravity: 12 })
+        juice.ring({ pos: wpos(s.x, 0, s.z), color: crystalColor(picked), radius: 3.2 })
+        setGolemAnim(s, 'crack')
+        s.targetScale = GOLEM_SCALE
+        patchHud({ eq: 'right', solved: picked, bossHp: 1 })
+        react('cheer', 'Again!')
+        banner(`${v.chain.giant} ÷ ${picked} = ${v.round.quotient}`, '#9fe6c8', 1400)
+        const next = v.chain.steps[1]
+        setView({ ...v, phase: 'crack', held: null, flight: null })
+        later(950, () => {
+          s.speed = BOSS_CRACKED_SPEED
+          setGolemAnim(s, 'march')
+          setView((w) => (w ? { ...w, phase: 'march', step: 1, round: next, options: makePedestalOptions(next.dividend, next.divisor, w.plan.crystals) } : w))
+          patchHud({ eq: 'open', solved: null })
+          react('idle', `${next.quotient} 🐪`)
+        })
+        return
+      }
 
       if (right) {
-        tally.current.cleared += 1
-        tally.current.firstTry += first ? 1 : 0
-        sfx.correct()
-        say(first ? `Yes! ${dividend} ÷ ${divisor} = ${quotient}!` : `Right! ${dividend} ÷ ${divisor} = ${quotient}`, 'good')
-        setView({ ...v, phase: 'shatter', held: null, from: null, targets: splitPositions(quotient, PEN[0], PEN[1], 1.3), minisOk: true, token: v.token + 1 })
-        timersRef.current.push(window.setTimeout(loadNext, 1900))
-      } else if (divides) {
-        sfx.wrong()
-        say(`That splits it into ${dividend / picked} — the pen needs ${quotient}! Try again!`, 'bad')
-        setView({
-          ...v,
-          phase: 'fail',
-          held: null,
-          from: null,
-          targets: splitPositions(Math.min(Math.floor(dividend / picked), 10), GOLEM[0], GOLEM[1] - 1.6, 2.6),
-          minisOk: false,
-          token: v.token + 1,
-        })
-        timersRef.current.push(
-          window.setTimeout(() => setView((w) => (w && w.phase === 'fail' ? { ...w, phase: 'explore', targets: null } : w)), 2600),
-        )
-      } else {
-        sfx.wrong()
-        say(`${dividend} can't split into ${picked}s — it bounced! Try again!`, 'bad')
-        setView({ ...v, phase: 'bounce', held: null, from: null, token: v.token + 1 })
-        timersRef.current.push(window.setTimeout(() => setView((w) => (w && w.phase === 'bounce' ? { ...w, phase: 'explore' } : w)), 1100))
+        // ── shatter → the camels pour into the stalls, counted
+        const st = stats.current
+        if (!triedRef.current) st.firstTry += 1
+        st.cleared += 1
+        st.camels += v.round.quotient
+        const boss = v.chain !== null
+        scoreHit(v, boss ? BOSS_FINISH_BONUS : 0)
+        juice.hitstop(boss ? 160 : 95)
+        juice.shake(boss ? 0.9 : 0.5)
+        sfx.thud()
+        sfx.sparkle()
+        juice.burst({ pos: hitAt, color: shards(picked), count: boss ? 90 : 56, speed: boss ? 6.5 : 5, up: 4.5, size: 0.15, life: 1.2 })
+        juice.burst({ pos: hitAt, color: ['#e2b672', '#c99a5a', '#f2d39b'], count: boss ? 30 : 18, speed: 3.8, up: 3.2, size: 0.24, life: 1.0, gravity: 12 })
+        juice.ring({ pos: wpos(s.x, 0, s.z), color: crystalColor(picked), radius: boss ? 4.5 : 3 })
+        if (boss) juice.confetti(wpos(s.x, 2.5, s.z), 110)
+        setGolemAnim(s, 'shatter')
+        counted.current = 0
+        const job: HerdJob = { id: ++herdId.current, from: [s.x, s.z + 0.3], spots: herdSpots(v.round.quotient, v.round.quotient, PEN.x, PEN.z, PEN.r), returnAfter: null }
+        patchHud({ eq: 'right', solved: picked, bossHp: boss ? 0 : null })
+        react('cheer', 'Yes!')
+        if (boss) banner('GIANT DOWN!', '#ffcf4d', 1800)
+        setView({ ...v, phase: 'shatter', held: null, flight: null, herd: job })
+        return
       }
+
+      // ── wrong: a true factor splits it the wrong way, anything else bounces
+      miss()
+      sfx.wrong()
+      patchHud({ eq: 'wrong' })
+      later(900, () => patchHud({ eq: 'open' }))
+      if (out.kind === 'split' && !crack) {
+        juice.hitstop(70)
+        juice.shake(0.3)
+        sfx.thud()
+        juice.burst({ pos: hitAt, color: [crystalColor(picked), '#e2b672', '#f2d39b'], count: 26, speed: 3.4, up: 3, size: 0.11, life: 0.9 })
+        setGolemAnim(s, 'shatter')
+        counted.current = 0
+        const job: HerdJob = { id: ++herdId.current, from: [s.x, s.z + 0.3], spots: herdSpots(out.camels, v.round.quotient, PEN.x, PEN.z, PEN.r), returnAfter: 1.1 }
+        react('worry', out.camels > v.round.quotient ? 'Too many!' : 'Not enough!')
+        setView({ ...v, phase: 'split', held: null, flight: null, herd: job })
+        return
+      }
+      // bounce (or a wrong crack on the giant): thud, wobble, fly home
+      sfx.thud()
+      juice.dust(hitAt)
+      juice.text({ pos: wpos(s.x, 3.1 * s.scale, s.z), text: `÷${picked} ✗`, size: 'md', color: '#ffd0c8' })
+      setGolemAnim(s, 'wobble')
+      react('worry', 'Bounced!')
+      const slot = v.options.indexOf(picked)
+      const home = PEDESTALS[v.plan.crystals][Math.max(0, slot)]
+      setView({ ...v, phase: 'bounce', held: null, flight: { id: ++flightId.current, n: picked, from: [s.x, s.z + 0.5], back: home } })
     },
-    [clearTimers, loadNext, meta, facts.topic, recordAnswer, recordAttempt, say],
+    [credit, scoreHit, miss, react, banner, patchHud, later],
   )
+
+  /** The bounced crystal is home again: back to marching. */
+  const homeAgain = useCallback(() => {
+    const s = simRef.current
+    if (s.anim === 'wobble') setGolemAnim(s, 'march')
+    setView((w) => (w && w.phase === 'bounce' ? { ...w, phase: 'march', flight: null } : w))
+  }, [])
+
+  /** A camel reached its spot: count it out loud. */
+  const arrive = useCallback(
+    (k: number, spot: [number, number], inPen: boolean) => {
+      const v = viewRef.current
+      if (!v) return
+      counted.current = k
+      const right = v.phase === 'shatter'
+      const q = v.round.quotient
+      const last = right && k === q
+      juice.text({ pos: wpos(spot[0], 1.25, spot[1]), text: last ? `${k}!` : String(k), size: last ? 'lg' : 'md', color: inPen ? '#ffffff' : '#ffd0c8' })
+      juice.burst({ pos: wpos(spot[0], 0.3, spot[1]), color: inPen ? ['#ffe58a', '#ffffff'] : ['#ffd0c8'], count: 6, speed: 1.4, up: 1.6, size: 0.06, life: 0.5 })
+      sfx.combo(Math.min(k, 9))
+      voice.say(String(k))
+    },
+    [],
+  )
+
+  /** Every camel is in place. */
+  const settled = useCallback(() => {
+    const v = viewRef.current
+    if (!v) return
+    const { dividend, divisor, quotient } = v.round
+    if (v.phase === 'shatter') {
+      sfx.correct()
+      juice.burst({ pos: wpos(PEN.x, 1.0, PEN.z), color: ['#ffe58a', '#9fe6c8', '#ffffff'], count: 30, speed: 3, up: 4, size: 0.09, life: 1.0 })
+      voice.say(`${dividend} divided by ${divisor} is ${quotient}!`)
+      react('cheer', `${quotient} 🐪!`)
+      later(1300, endRound)
+    } else if (v.phase === 'split') {
+      const n = counted.current
+      juice.text({ pos: wpos(PEN.x, 2.2, PEN.z), text: `${n} ≠ ${quotient}`, size: 'lg', color: '#ffd0c8' })
+    }
+  }, [react, later, endRound])
+
+  /** The wrong split's camels ran back in: the golem pulls itself together. */
+  const returned = useCallback(() => {
+    const v = viewRef.current
+    if (!v || v.phase !== 'split') return
+    const s = simRef.current
+    setGolemAnim(s, 'enter')
+    juice.burst({ pos: wpos(s.x, 1.2, s.z), color: ['#e2b672', '#f2d39b'], count: 16, speed: 2, up: 2, size: 0.1, life: 0.6 })
+    sfx.pop()
+    setView((w) => (w && w.phase === 'split' ? { ...w, phase: 'march', herd: null } : w))
+    react('idle', `${v.round.quotient} 🐪`)
+  }, [react])
+
+  /** The golem reached the pen. STOMP — streak lost, knocked back; never a fail. */
+  const stomp = useCallback(() => {
+    const v = viewRef.current
+    const s = simRef.current
+    if (!v || s.anim === 'stomp' || (v.phase !== 'march' && v.phase !== 'bounce' && v.phase !== 'throw')) return
+    setGolemAnim(s, 'stomp')
+    s.moving = false
+    stats.current.stomps += 1
+    const hadStreak = stats.current.streak > 1
+    stats.current.streak = 0
+    patchHud({ streak: 0 })
+    setView((w) => (w ? { ...w, phase: 'stomp', flight: null, held: w.held } : w))
+    later(500, () => {
+      juice.shake(0.85)
+      sfx.thud()
+      juice.ring({ pos: wpos(s.x, 0, s.z + 0.5), color: '#f2d39b', radius: 3.6 })
+      juice.burst({ pos: wpos(s.x, 0.2, s.z + 0.6), color: ['#e9cf98', '#f6e3b4', '#ffffff'], count: 34, speed: 3.6, up: 2, size: 0.13, life: 0.9 })
+      juice.text({ pos: wpos(s.x, 3.2 * s.scale, s.z), text: 'STOMP!', size: 'lg', color: '#ffb54d' })
+      if (hadStreak) juice.text({ pos: wpos(HOST.x, 3.4, HOST.z), text: 'streak lost', size: 'sm', color: '#ffd0c8' })
+      react('startle', 'Eek!')
+    })
+    later(1250, () => {
+      // knocked back up the lane — the golem keeps coming, you keep trying
+      setGolemAnim(s, 'enter')
+      s.progress = KNOCKBACK
+      s.z = laneZ(KNOCKBACK)
+      juice.dust(wpos(s.x, 0.1, s.z))
+      setView((w) => (w && w.phase === 'stomp' ? { ...w, phase: 'march' } : w))
+      react('idle', 'Hurry!')
+    })
+  }, [later, patchHud, react])
+
+  const collect = useCallback(() => {
+    const r = results
+    if (!r) return
+    onComplete({ stars: r.stars, score: r.score, correct: r.stats.firstTry, total: totalRounds })
+  }, [results, onComplete, totalRounds])
 
   // dev/QA hook: honest live machine state; `walk` teleports the avatar and the
   // REAL grab/throw detection reacts to it — nothing in QA results is faked.
@@ -235,14 +591,35 @@ export default function DivisionArena({ params, onComplete, meta, paused = false
       __sqArena: {
         state: () => {
           const v = viewRef.current
+          const s = simRef.current
           return {
             phase: v?.phase ?? 'loading',
-            index: tallyIndex.current,
-            ...tally.current,
+            index: v?.index ?? 0,
+            kind: v?.plan.kind ?? null,
+            step: v?.step ?? null,
             round: v?.round ?? null,
+            giant: v?.chain?.giant ?? null,
             options: v?.options ?? null,
             held: v?.held ?? null,
+            golem: { progress: +s.progress.toFixed(3), anim: s.anim, scale: +s.scale.toFixed(2) },
+            counted: counted.current,
+            ...stats.current,
+            results: results ? { stars: results.stars, score: results.score, newBest: results.newBest, perfect: results.perfect } : null,
           }
+        },
+        /** world (x, z) of pedestal `slot` this round */
+        pedestal: (slot: number) => {
+          const v = viewRef.current
+          if (!v) return null
+          const [lx, lz] = PEDESTALS[v.plan.crystals][slot]
+          const [x, z] = toWorld(lx, lz)
+          return { x: +x.toFixed(2), z: +z.toFixed(2) }
+        },
+        /** world (x, z) of the golem right now */
+        golem: () => {
+          const s = simRef.current
+          const [x, z] = toWorld(s.x, s.z)
+          return { x: +x.toFixed(2), z: +z.toFixed(2) }
         },
         walk: (x: number, z: number) => {
           avatarRef.current?.position.set(x, 0, z)
@@ -252,250 +629,333 @@ export default function DivisionArena({ params, onComplete, meta, paused = false
           const p = avatarRef.current?.position
           return p ? { x: +p.x.toFixed(2), z: +p.z.toFixed(2) } : null
         },
+        collect,
       },
     })
-  }, [])
+  }, [results, collect])
+
+  const eqText = view ? (view.chain && view.step === 0 ? view.chain.giant : view.round.dividend) : 0
+  const chipDivisor = !view ? null : hud.eq === 'right' ? hud.solved : (view.held ?? (view.phase === 'throw' ? (view.flight?.n ?? null) : null))
 
   return (
-    <div className="flex-1 relative select-none">
+    <div className="flex-1 relative select-none overflow-hidden">
+      {/* TODO(merge): graphics setting — import { canvasQuality, useLowGraphics } from
+          '../world/graphicsQuality'; const gfx = canvasQuality(useLowGraphics()); then
+          <Canvas shadows={gfx.shadows} dpr={gfx.dpr}> and <GameSky castShadow={!low} />. */}
       <Canvas
         shadows
         flat
         dpr={[1, 1.5]}
         gl={{ antialias: true, powerPreference: 'high-performance', preserveDrawingBuffer: import.meta.env.DEV }}
-        camera={{ position: [SPAWN[0] + ARENA_CAM[0], ARENA_CAM[1], SPAWN[1] + ARENA_CAM[2]], fov: 46, near: 0.3, far: 220 }}
+        camera={{ position: [spawnWorld[0] + CAM_OFFSET[0], CAM_OFFSET[1], spawnWorld[1] + CAM_OFFSET[2]], fov: CAM_FOV, near: 0.3, far: 260 }}
         style={{ position: 'absolute', inset: 0 }}
-        onCreated={({ scene }) => {
-          if (import.meta.env.DEV) Object.assign(window, { __sqScene: scene })
+        onCreated={({ scene, gl }) => {
+          if (import.meta.env.DEV) Object.assign(window, { __sqScene: scene, __sqGl: gl })
         }}
       >
-        <color attach="background" args={['#d9effa']} />
-        <fog attach="fog" args={['#d9effa', 42, 120]} />
-        <ambientLight intensity={0.45} />
-        <directionalLight
-          position={[9, 15, 6]}
-          intensity={1.15}
-          castShadow
-          shadow-mapSize={[1024, 1024]}
-          shadow-camera-left={-12}
-          shadow-camera-right={12}
-          shadow-camera-top={12}
-          shadow-camera-bottom={-12}
-        />
+        <GameSky ground={'#f2d79c'} horizon={'#fbeed2'} fog={'#f6e6c6'} fogNear={30} fogFar={95} shadowBox={11} />
         {view && (
           <ArenaScene
             view={view}
+            hud={hud}
+            simRef={simRef}
             avatarRef={avatarRef}
             activeCreature={activeCreature}
-            paused={paused}
+            paused={paused || !!results}
             posRef={posRef}
+            spawn={spawnWorld}
             onGrab={grab}
             onStartThrow={startThrow}
             onLand={land}
+            onHome={homeAgain}
+            onStomp={stomp}
+            onArrive={arrive}
+            onSettled={settled}
+            onReturned={returned}
           />
         )}
       </Canvas>
 
-      {/* round dots — completed rounds light up, and all light on a clear */}
-      <div className="absolute top-2 left-1/2 -translate-x-1/2 flex items-center gap-2 pointer-events-none">
-        {Array.from({ length: totalRounds }, (_, i) => {
-          const done = view?.phase === 'won' || i < (hud?.dot ?? 0)
-          return (
-            <span
-              key={i}
-              className={`w-3.5 h-3.5 rounded-full border-2 border-white/80 shadow ${done ? 'bg-yellow-300' : 'bg-sky-900/25'}`}
-            />
-          )
-        })}
+      {/* ── HUD ── */}
+      {/* left column (the top centre stays clear: that's where the golems come out) */}
+      <div className="absolute top-2 left-2 z-10 flex flex-col items-start gap-1.5 pointer-events-none">
+        <ScoreChip score={hud.score} best={best} />
+        <div className="rounded-full bg-[#3a2c38]/45 px-2 py-1">
+          <RoundPips total={totalRounds} current={view?.index ?? 0} finaleIcon="🗿" done={!!results} />
+        </div>
+        <StreakMeter streak={hud.streak} />
       </div>
-      {hud && (
-        <div
-          key={`${hud.dot}-${hud.text}`}
-          className={`absolute bottom-16 left-1/2 -translate-x-1/2 max-w-[92%] kid-text text-lg sm:text-2xl text-center px-5 py-2 rounded-full shadow-lg text-white hud-pop ${
-            hud.flash === 'bad' ? 'bg-rose-600/85' : hud.flash === 'good' ? 'bg-emerald-600/85' : 'bg-sky-900/70'
-          }`}
-        >
-          {hud.text}
+      <Banner text={hud.banner} color={hud.bannerColor} />
+
+      {view && !results && (
+        <div className="absolute top-2 right-2 z-10 flex flex-col items-end gap-1.5 pointer-events-none">
+          <div
+            key={`${view.index}:${view.step}:${hud.eq}`}
+            className={`kid-text flex items-center gap-1.5 rounded-2xl px-3 py-1 text-3xl sm:text-4xl text-white shadow-lg eq-pop ${
+              hud.eq === 'right' ? 'bg-emerald-600/90' : hud.eq === 'wrong' ? 'bg-rose-600/90' : 'bg-[#3a2c38]/80'
+            }`}
+            style={{ border: '3px solid rgba(255,255,255,.85)' }}
+          >
+            <span className="tabular-nums">{eqText}</span>
+            <span>÷</span>
+            {chipDivisor !== null ? (
+              <span className="rounded-xl px-2 text-[#3a2c38]" style={{ background: crystalColor(chipDivisor) }}>
+                {chipDivisor}
+              </span>
+            ) : (
+              <span className="rounded-xl px-2 bg-white/20">?</span>
+            )}
+            <span>=</span>
+            <span className="tabular-nums">{view.round.quotient}</span>
+            <span className="text-2xl" aria-hidden="true">
+              {view.chain && view.step === 0 ? '🗿' : '🐪'}
+            </span>
+          </div>
         </div>
       )}
-      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 kid-text text-white/90 text-[11px] sm:text-xs bg-sky-900/50 px-3 py-1 rounded-full pointer-events-none whitespace-nowrap">
-        WASD walk · step onto a crystal to grab · walk close to the golem to throw
+      {/* first golem only: how to move, and the verb in two icons */}
+      {view && !results && hud.hint && view.index === 0 && (
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 pointer-events-none">
+          <div className="kid-text flex items-center gap-2 whitespace-nowrap rounded-2xl bg-[#fffaf0]/95 px-3 py-1 text-lg text-[#3a2c38] shadow-lg" style={{ border: '3px solid #3a2c38' }}>
+            <span>WASD / tap to walk</span>
+            <span className="opacity-40">·</span>
+            <span aria-label="grab a crystal, then go to the golem">💎 → 🗿</span>
+          </div>
+        </div>
+      )}
+
+      {results && (
+        <RunResults
+          title={results.perfect ? 'Perfect arena!' : 'Arena cleared!'}
+          emoji={results.perfect ? '🏆' : '🐪'}
+          score={results.score}
+          prevBest={results.prevBest}
+          newBest={results.newBest}
+          stars={results.stars}
+          perfect={results.perfect ? 'Golem Smasher' : null}
+          rows={[
+            { icon: '🗿', label: 'First-try golems', value: `${results.stats.firstTry}/${totalRounds}` },
+            { icon: '🐪', label: 'Camels freed', value: results.stats.camels },
+            { icon: '🔥', label: 'Best streak', value: `×${results.stats.bestStreak}` },
+            { icon: '⚡', label: 'Speedy shatters', value: results.stats.speedy },
+          ]}
+          onCollect={collect}
+        />
+      )}
+      <style>{`.eq-pop{animation:eqpop .32s cubic-bezier(.2,1.5,.4,1)}@keyframes eqpop{from{transform:scale(.7)}to{transform:scale(1)}}`}</style>
+      {/* screen-reader summary of the board */}
+      <div className="sr-only" aria-live="polite">
+        {view ? `${eqText} divided by what equals ${view.round.quotient}? Score ${hud.score}.` : ''}
       </div>
-      <style>{`.hud-pop{animation:hudpop .3s ease-out}@keyframes hudpop{from{transform:translate(-50%,10px);opacity:0}to{transform:translate(-50%,0);opacity:1}}`}</style>
     </div>
   )
 }
 
-// ── scene: presentational + proximity detection only ─────────────────────────
+// ── scene: presentational + proximity detection + the golem's march ──────────
 
 function ArenaScene({
   view,
+  hud,
+  simRef,
   avatarRef,
   activeCreature,
   paused,
   posRef,
+  spawn,
   onGrab,
   onStartThrow,
   onLand,
+  onHome,
+  onStomp,
+  onArrive,
+  onSettled,
+  onReturned,
 }: {
-  view: View
+  view: ArenaView
+  hud: Hud
+  simRef: RefObject<GolemSim>
   avatarRef: RefObject<Group | null>
   activeCreature: string | null
   paused: boolean
   posRef: RefObject<Vector3>
-  onGrab: (n: number) => void
-  onStartThrow: (from: Vector3) => void
+  spawn: [number, number]
+  onGrab: (slot: number) => void
+  onStartThrow: (from: [number, number]) => void
   onLand: (picked: number) => void
+  onHome: () => void
+  onStomp: () => void
+  onArrive: (k: number, spot: [number, number], inPen: boolean) => void
+  onSettled: () => void
+  onReturned: () => void
 }) {
-  const colliders = useMemo<Collider[]>(
-    () => [
-      ...PEDESTALS.map(([cx, cz]): Collider => ({ kind: 'circle', cx, cz, r: 0.6 })),
-      { kind: 'circle', cx: GOLEM[0], cz: GOLEM[1], r: 1.15 },
-      { kind: 'circle', cx: PEN[0], cz: PEN[1], r: 2.3 },
-    ],
-    [],
-  )
+  const pedestals = PEDESTALS[view.plan.crystals]
+  const colliders = useMemo<Collider[]>(() => {
+    const at = (lx: number, lz: number, r: number): Collider => {
+      const [cx, cz] = toWorld(lx, lz)
+      return { kind: 'circle', cx, cz, r }
+    }
+    const [bx, bz] = toWorld(PLAY.x, PLAY.z)
+    return [
+      ...pedestals.map(([x, z]) => at(x, z, 0.5)),
+      at(PEN.x, PEN.z, PEN.r + 0.1),
+      at(HOST.x, HOST.z, 0.75),
+      { kind: 'bounds', cx: bx, cz: bz, r: PLAY.r },
+    ]
+  }, [pedestals])
 
   useWanderWalk({
     group: avatarRef,
-    bound: ARENA_BOUND,
+    bound: 30,
     collide: (x, z) => collidesAt(colliders, x, z, 0),
     wander: false,
     paused: () => paused,
   })
 
-  // the camera rig targets posRef, but WASD only moves the avatar group —
-  // mirror it each frame so the camera actually follows live play
-  useFrame(() => {
-    const p = avatarRef.current?.position
-    if (p) posRef.current.set(p.x, p.y, p.z)
+  // latest props for the frame loop (refs touched in effects only)
+  const live = useRef({ view, paused, onGrab, onStartThrow, onStomp })
+  useEffect(() => {
+    live.current = { view, paused, onGrab, onStartThrow, onStomp }
+  }, [view, paused, onGrab, onStartThrow, onStomp])
+
+  // a little wind-up hop + squash on every throw
+  const hopRef = useRef<Group>(null)
+  const throwHop = useRef({ t: 1, id: -1 })
+
+  useFrame((_, rawDt) => {
+    const dt = Math.min(rawDt, 0.05)
+    const a = avatarRef.current
+    if (a) posRef.current.set(a.position.x, a.position.y, a.position.z)
+    const { view: v, paused: hold, onGrab: grab, onStartThrow: start, onStomp: stomp } = live.current
+    const th = throwHop.current
+    if (v.flight && v.phase === 'throw' && th.id !== v.flight.id) {
+      th.id = v.flight.id
+      th.t = 0
+    }
+    const hg = hopRef.current
+    if (hg) {
+      th.t = Math.min(1, th.t + dt / 0.35)
+      const k = th.t
+      const up = Math.sin(k * Math.PI)
+      hg.position.y = up * 0.35
+      const sq = k < 1 ? 1 + Math.sin(k * Math.PI * 2) * 0.12 : 1
+      hg.scale.set(1.3 / Math.sqrt(sq), 1.3 * sq, 1.3 / Math.sqrt(sq))
+    }
+    const s = simRef.current
+    if (!s) return
+    const frozen = juice.frozen()
+    if (!hold && !frozen) s.animT += dt
+    if (s.anim === 'enter' && s.animT > 0.5) setGolemAnim(s, 'march')
+
+    // the march: only while the golem is up and nobody is paused
+    const marching = (v.phase === 'march' || v.phase === 'throw' || v.phase === 'bounce') && (s.anim === 'march' || s.anim === 'wobble' || s.anim === 'enter')
+    s.moving = marching && !hold && !frozen && s.progress < 1
+    if (s.moving) {
+      s.progress = advanceProgress(s.progress, s.speed, dt)
+      s.z = laneZ(s.progress)
+      s.walk += dt * (3.2 + s.speed * 6) / Math.max(0.8, s.scale * 0.8)
+      if (s.progress >= 1) stomp()
+    }
+    if (!a || hold) return
+    const lx = localX(a.position.x, a.position.z)
+    const lz = localZ(a.position.x, a.position.z)
+
+    // the golem shoves the kid aside instead of walking through them
+    if (s.anim !== 'gone' && s.anim !== 'shatter') {
+      const dx = lx - s.x
+      const dz = lz - s.z
+      const d = Math.hypot(dx, dz)
+      const r = 0.95 * s.scale + 0.3
+      if (d < r && d > 1e-3) {
+        const px = s.x + (dx / d) * r
+        const pz = s.z + (dz / d) * r
+        a.position.x = worldX(px, pz)
+        a.position.z = worldZ(px, pz)
+      }
+    }
+
+    if (v.phase !== 'march' && v.phase !== 'bounce') return
+    // grab (or swap) a crystal by touching its pedestal
+    const slots = PEDESTALS[v.plan.crystals]
+    for (let i = 0; i < slots.length; i++) {
+      if (v.options[i] === undefined || v.options[i] === v.held) continue
+      if (v.phase === 'bounce' && v.flight?.n === v.options[i]) continue
+      if (Math.hypot(lx - slots[i][0], lz - slots[i][1]) < GRAB_R) {
+        grab(i)
+        return
+      }
+    }
+    // throw by itself once close enough to the golem
+    if (v.phase === 'march' && v.held !== null && s.anim !== 'gone') {
+      const reach = THROW_R + (s.scale - 1) * 1.2
+      if (Math.hypot(lx - s.x, lz - s.z) < reach) start([lx, lz])
+    }
   })
 
-  // proximity poll (a tick, not render): grab / start-throw only.
-  const vRef = useRef(view)
-  useEffect(() => {
-    vRef.current = view
-  }, [view])
-  const cbRef = useRef({ onGrab, onStartThrow, paused })
-  useEffect(() => {
-    cbRef.current = { onGrab, onStartThrow, paused }
-  }, [onGrab, onStartThrow, paused])
-  useEffect(() => {
-    const id = window.setInterval(() => {
-      const { onGrab: grab, onStartThrow: start, paused: hold } = cbRef.current
-      const v = vRef.current
-      const g = avatarRef.current
-      if (hold || !g || v.phase !== 'explore') return
-      const px = g.position.x
-      const pz = g.position.z
-      if (v.held === null) {
-        for (let i = 0; i < PEDESTALS.length; i++) {
-          const [cx, cz] = PEDESTALS[i]
-          if (Math.hypot(px - cx, pz - cz) < GRAB_R) {
-            grab(v.options[i])
-            return
-          }
-        }
-      } else if (Math.hypot(px - GOLEM[0], pz - GOLEM[1]) < THROW_R) {
-        start(new Vector3(px, 1.15, pz))
-      }
-    }, 60)
-    return () => window.clearInterval(id)
-  }, [avatarRef])
-
-  const { round, options, phase, held } = view
-  // the board fills in the crystal you're carrying: 24 ÷ [3] = 8; `_` is the
-  // classic fill-in-the-blank for the unknown factor
-  const board = phase === 'explore' && held !== null ? `${round.dividend} ÷ ${held} = ${round.quotient}` : `${round.dividend} ÷ _ = ${round.quotient}`
-  const chalk = useMemo(() => {
-    const { w, gap } = fitChalk(board)
-    return chalkText(board, { y: 0, z: 0.06, w, h: 0.32, t: 0.048, gap, color: TOON.white })
-  }, [board])
-  const penChalk = useMemo(
-    () => chalkText(`pen: ${round.quotient}`, { y: 0, z: 0.05, w: 0.14, h: 0.2, t: 0.035, gap: 0.06, color: TOON.flowerYellow }),
-    [round.quotient],
-  )
+  const { options, held, phase } = view
+  const golemDividend = view.chain && view.step === 0 ? view.chain.giant : view.round.dividend
   const b = useMemo(() => ({ Builder: creatureBuilder(activeCreature) }), [activeCreature])
+  const showGolem = phase !== 'results' && phase !== 'cleared'
 
   return (
     <group>
-      <Decal geometry={blobDisc(9.6, 0.16, 7, 48)} color={TOON.sand} position={[0, 0, 0]} />
-      <Decal geometry={blobDisc(8.3, 0.12, 8, 44)} color={'#f9e6bb'} position={[0, 0.004, 0]} />
-      <Decal geometry={blobDisc(2.5, 0.1, 9, 32)} color={TOON.sandWet} position={[GOLEM[0], 0.008, GOLEM[1]]} />
-      <Decal geometry={blobDisc(2.25, 0.1, 10, 28)} color={TOON.grassLight} position={[PEN[0], 0.006, PEN[1]]} />
+      <group rotation={[0, ARENA_YAW, 0]}>
+        <ArenaSet />
+        <Pen quotient={view.chain ? view.chain.steps[1].quotient : view.round.quotient} glow={phase === 'shatter'} />
+        <HostCamel position={[HOST.x, HOST.z]} mood={hud.mood} token={hud.moodToken} say={hud.say} />
 
-      {/* chalkboard easel — west side, turned toward the arena/camera */}
-      <ChalkEasel items={chalk} position={[-4.4, 0, -2.1]} />
-
-      {/* the pen: fence + its quotient sign (the spots the camels must fill) */}
-      <group position={[PEN[0], 0, PEN[1]]}>
-        {Array.from({ length: 14 }, (_, i) => {
-          const a = (i / 14) * Math.PI * 2
-          return <TCyl key={i} radiusTop={0.06} height={0.6} position={[Math.cos(a) * 2.15, 0.3, Math.sin(a) * 2.15]} color={TOON.woodLight} castShadow={false} segments={6} />
+        {options.map((n, i) => {
+          const [x, z] = pedestals[i]
+          const away = held === n || (view.flight !== null && view.flight.n === n)
+          return (
+            <group key={`${view.index}:${view.step}:${i}`} position={[x, 0, z]}>
+              <Pedestal n={n} taken={away} hint={hud.hint && view.index === 0 && held === null && phase === 'march'} />
+            </group>
+          )
         })}
-        <group position={[0, 1.05, -2.2]}>
-          <TCyl radiusTop={0.05} height={1.1} position={[0, -0.55, 0]} color={TOON.woodDark} castShadow={false} />
-          <TBox size={[1.5, 0.52, 0.06]} radius={0.03} color={'#3f6b5a'} outline />
-          <group position={[0, 0, 0.05]}>
-            <Instances geometry={geo.box(1, 1, 1, 0.2)} color={TOON.white} items={penChalk} />
-          </group>
-        </group>
+
+        {showGolem && <Golem key={`${view.index}`} simRef={simRef} dividend={golemDividend} giant={view.chain !== null && view.step === 0} />}
+        {hud.bossHp !== null && hud.bossHp > 0 && showGolem && <BossBar simRef={simRef} hp={hud.bossHp} />}
+        {hud.hint && view.index === 0 && held !== null && phase === 'march' && <GolemHint simRef={simRef} />}
+
+        {view.flight && !view.flight.back && phase === 'throw' && (
+          <FlyingCrystal key={view.flight.id} n={view.flight.n} from={view.flight.from} simRef={simRef} onLanded={() => onLand(view.flight!.n)} />
+        )}
+        {view.flight && view.flight.back && phase === 'bounce' && (
+          <FlyingCrystal key={view.flight.id} n={view.flight.n} from={view.flight.from} to={view.flight.back} duration={0.55} simRef={simRef} onLanded={onHome} />
+        )}
+        <CamelHerd job={view.herd} onArrive={onArrive} onSettled={onSettled} onReturned={onReturned} />
       </group>
 
-      {/* where you may grab / throw — chalk rings on the sand make the verb discoverable */}
-      {phase === 'explore' &&
-        options.map((_, i) => <GroundRing key={`pr${i}`} x={PEDESTALS[i][0]} z={PEDESTALS[i][1]} r={GRAB_R} opacity={held === null ? 0.55 : 0.18} />)}
-      {phase === 'explore' && held !== null && <GroundRing x={GOLEM[0]} z={GOLEM[1]} r={THROW_R} opacity={0.55} />}
-
-      {/* pedestals + crystals (carried/thrown crystal leaves its pedestal, but
-          its number card stays so the kid can still tell the pedestals apart) */}
-      {options.map((n, i) => {
-        const [x, z] = PEDESTALS[i]
-        const away = held === n || phase === 'throw'
-        const label = String(n)
-        const cardW = label.length > 1 ? 0.74 : 0.56
-        const cardChalk = chalkText(label, { y: 0, z: 0, w: 0.2, h: 0.3, t: 0.05, gap: 0.07, color: '#fff3c4' })
-        return (
-          <group key={`${round.dividend}:${i}`} position={[x, 0, z]}>
-            <TCyl radiusTop={0.48} radiusBottom={0.6} height={0.5} position={[0, 0.25, 0]} color={TOON.rockLight} outline segments={8} />
-            <TCyl radiusTop={0.4} radiusBottom={0.4} height={0.05} position={[0, 0.53, 0]} color={TOON.rockDark} castShadow={false} segments={8} />
-            {/* slate number card leaning on the pedestal front — white chalk on
-                dark slate reads at play distance; white-on-pastel gem did not */}
-            <group position={[0, 0.5, 0.6]} rotation={[-0.42, 0, 0]}>
-              <TBox size={[cardW, 0.5, 0.07]} radius={0.08} color={'#3c4657'} castShadow={false} />
-              <group position={[0, 0, 0.05]}>
-                <Instances geometry={geo.box(1, 1, 1, 0.2)} color={'#fff3c4'} items={cardChalk} />
-              </group>
-            </group>
-            {away ? null : <Crystal n={n} color={CRYSTAL[i]} />}
-          </group>
-        )
-      })}
-
-      {/* the golem — remounts per round/phase so its entry/exit animations replay */}
-      {phase !== 'won' && phase !== 'loading' && (
-        <group key={`g${round.dividend}:${phase === 'explore' || phase === 'throw' ? 'up' : phase}`} position={[GOLEM[0], 0, GOLEM[1]]}>
-          <Golem
-            dividend={round.dividend}
-            mode={phase === 'shatter' ? 'shatter' : phase === 'fail' ? 'hide' : phase === 'bounce' ? 'wobble' : 'idle'}
-          />
-        </group>
-      )}
-
-      {/* crystal in flight (lands → parent grades it) and the shattered minis */}
-      {phase === 'throw' && view.from && held !== null && <FlyingCrystal from={view.from} color={CRYSTAL[Math.max(0, options.indexOf(held))]} onLanded={() => onLand(held)} />}
-      {(phase === 'shatter' || phase === 'fail') &&
-        view.targets?.map(([tx, tz], i) => <MiniCamel key={`${view.token}:${i}`} tx={tx} tz={tz} ok={view.minisOk} i={i} />)}
-
-      {/* carried crystal + the kid's creature */}
-      {held !== null && phase !== 'throw' && <HeldCrystal n={held} color={CRYSTAL[Math.max(0, options.indexOf(held))]} avatarRef={avatarRef} />}
-      <group ref={avatarRef} position={[SPAWN[0], 0, SPAWN[1]]}>
-        <group>
+      {/* carried crystal + the kid's creature (world space) */}
+      {held !== null && phase !== 'throw' && phase !== 'results' && <HeldCrystal n={held} avatarRef={avatarRef} />}
+      <group ref={avatarRef} position={[spawn[0], 0, spawn[1]]}>
+        <group ref={hopRef} scale={1.3}>
           <b.Builder />
           <CreatureAccessories />
         </group>
       </group>
-      <WorldCameraRig targetRef={posRef} offset={ARENA_CAM} />
+      <GameCameraRig targetRef={posRef} focus={FOCUS} offset={CAM_OFFSET} follow={0.18} />
+      <JuiceLayer />
     </group>
   )
 }
+
+const FOCUS: [number, number, number] = (() => {
+  const [x, z] = toWorld(...CAM_FOCUS_LOCAL)
+  return [x, 0, z]
+})()
+
+/** First round only: an arrow over the marching golem once you hold a crystal. */
+function GolemHint({ simRef }: { simRef: RefObject<GolemSim> }) {
+  const g = useRef<Group>(null)
+  useFrame(() => {
+    const s = simRef.current
+    if (g.current && s) g.current.position.set(s.x, 0.6 * s.scale, s.z)
+  })
+  return (
+    <group ref={g}>
+      <HintArrow y={3.1} color={'#ff9f80'} />
+    </group>
+  )
+}
+

@@ -6,6 +6,8 @@
  *   juice.confetti([x, 1, z])                          // big celebration
  *   juice.text({ pos: [x, 2, z], text: '+3!' })         // floating label
  *   juice.shake(0.6)                                   // camera trauma (0–1)
+ *   juice.ring({ pos: [x, 0, z] })                      // ground shockwave
+ *   juice.hitstop(90); if (juice.frozen()) return       // impact freeze
  *
  * Pair with `sfx.pop / whoosh / thud / sparkle / combo(n) / fanfare` from
  * src/lib/sound.ts and the DOM pieces in JuiceHud.tsx (streak meter, banner,
@@ -52,9 +54,23 @@ export interface FloatTextEvent {
   size?: 'sm' | 'md' | 'lg'
 }
 
+export interface RingEvent {
+  pos: Vec3
+  color?: string
+  /** Final radius (units). */
+  radius?: number
+  /** Seconds to expand and fade. */
+  life?: number
+}
+
 export const burstBus = bus<BurstEvent>()
 export const textBus = bus<FloatTextEvent>()
 export const shakeBus = bus<number>()
+export const ringBus = bus<RingEvent>()
+
+/** Hit-stop clock: games skip their sim while `juice.frozen()` (see below). */
+let frozenUntil = 0
+const now = () => (typeof performance !== 'undefined' ? performance.now() : Date.now())
 
 const CONFETTI = ['#ffcf4d', '#f2766b', '#8ab8ff', '#9fe6c8', '#f7a1c4', '#b79af0', '#ffffff']
 
@@ -69,4 +85,15 @@ export const juice = {
   text: (e: FloatTextEvent) => textBus.emit(e),
   /** Add camera trauma (0–1); it decays on its own. */
   shake: (amount = 0.5) => shakeBus.emit(amount),
+  /** A flat shockwave ring expanding on the ground (stomps, impacts, plantings). */
+  ring: (e: RingEvent) => ringBus.emit(e),
+  /**
+   * Hit-stop: freeze the game's simulation for `ms` (impact frames). Games
+   * check `juice.frozen()` in their useFrame and skip motion while it's true;
+   * particles and the camera keep moving so the moment still reads.
+   */
+  hitstop: (ms = 90) => {
+    frozenUntil = Math.max(frozenUntil, now() + ms)
+  },
+  frozen: () => now() < frozenUntil,
 }

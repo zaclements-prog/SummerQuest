@@ -85,3 +85,78 @@ export function ConfettiOverlay({ show, pieces = 70 }: { show: boolean; pieces?:
     </div>
   )
 }
+
+const BUBBLE_CSS = `
+.sq-bubble{position:relative;white-space:nowrap;background:#fffaf0;color:#3a2c38;border:3px solid #3a2c38;border-radius:16px;padding:2px 10px;
+  font-size:18px;box-shadow:0 3px 0 rgba(58,44,56,.3);animation:sqbub .35s cubic-bezier(.2,1.6,.4,1)}
+.sq-bubble:after{content:'';position:absolute;left:50%;bottom:-9px;margin-left:-7px;border:7px solid transparent;border-top-color:#3a2c38;border-bottom:0}
+@keyframes sqbub{from{transform:scale(.3);opacity:0}to{transform:scale(1);opacity:1}}
+`
+
+/**
+ * A host character's speech bubble (one or two words + an icon). Render it
+ * inside a drei <Html> over the character; it pops each time `text` changes.
+ */
+export function SpeechBubble({ text }: { text: string }) {
+  return (
+    <>
+      <style>{BUBBLE_CSS}</style>
+      <div key={text} className="sq-bubble kid-text">
+        {text}
+      </div>
+    </>
+  )
+}
+
+/** Run score in a chunky chip; the number springs each time it changes. */
+export function ScoreChip({ score, best }: { score: number; best?: number }) {
+  return (
+    <div
+      className="kid-text pointer-events-none select-none flex items-center gap-2 rounded-2xl px-3 py-1 text-white shadow-lg"
+      style={{ background: 'rgba(58,44,56,.72)', border: '3px solid rgba(255,255,255,.75)' }}
+    >
+      <span className="text-lg" aria-hidden="true">
+        ⭐
+      </span>
+      <motion.span
+        key={score}
+        initial={{ scale: 1.5, color: '#ffe58a' }}
+        animate={{ scale: 1, color: '#ffffff' }}
+        transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+        className="text-2xl tabular-nums leading-none"
+      >
+        {score.toLocaleString()}
+      </motion.span>
+      {best != null && best > 0 && <span className="text-xs opacity-75 leading-none">best {best.toLocaleString()}</span>}
+    </div>
+  )
+}
+
+/**
+ * Round progress: one pip per round, the current one bigger, the last shown
+ * as the finale's icon (e.g. 👑 / 💎). Done pips turn gold.
+ */
+export function RoundPips({ total, current, finaleIcon = '👑', done = false }: { total: number; current: number; finaleIcon?: string; done?: boolean }) {
+  return (
+    <div className="pointer-events-none select-none flex items-center gap-1.5" aria-label={`Round ${Math.min(current + 1, total)} of ${total}`}>
+      {Array.from({ length: total }, (_, i) => {
+        const finished = done || i < current
+        const now = !done && i === current
+        const finale = i === total - 1
+        return finale ? (
+          <span
+            key={i}
+            className={`grid place-items-center rounded-full border-2 border-white/90 shadow transition-all ${now ? 'w-8 h-8 text-lg' : 'w-6 h-6 text-sm'} ${finished ? 'bg-yellow-300' : now ? 'bg-rose-400' : 'bg-sky-900/35'}`}
+          >
+            {finaleIcon}
+          </span>
+        ) : (
+          <span
+            key={i}
+            className={`rounded-full border-2 border-white/90 shadow transition-all ${now ? 'w-5 h-5' : 'w-3.5 h-3.5'} ${finished ? 'bg-yellow-300' : now ? 'bg-white' : 'bg-sky-900/35'}`}
+          />
+        )
+      })}
+    </div>
+  )
+}
