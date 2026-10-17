@@ -13,6 +13,7 @@ import TowerDefense from '../games/tower-defense/TowerDefense'
 import WritingPad from '../games/WritingPad'
 import DivisionArena from '../games/DivisionArena'
 import FractionForge from '../games/FractionForge'
+import CloudKeeper from '../games/CloudKeeper'
 import { sfx } from '../lib/sound'
 import { Card, Button, BackButton, Pill, Celebration, ConfirmDialog, ErrorState } from '../components/ui'
 import { isStageUnlocked } from '../lib/stageLocks'
@@ -147,6 +148,8 @@ export default function GameRunner() {
         return DivisionArena
       case 'fractionForge':
         return FractionForge
+      case 'cloudKeeper':
+        return CloudKeeper
       case 'writingPad':
         return WritingPad
       default:

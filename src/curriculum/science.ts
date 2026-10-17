@@ -23,6 +23,16 @@ export const scienceZone: Zone = {
       starsToEarn: 3,
     },
     {
+      id: 'science-cycle',
+      kind: 'practice',
+      title: 'Cloud Keeper',
+      description: 'Run the water cycle: walk to the right step and perform it.',
+      gameId: 'cloudKeeper',
+      providerConfig: { kind: 'scienceCycle' },
+      params: { rounds: 5 },
+      starsToEarn: 3,
+    },
+    {
       id: 'science-4th',
       kind: 'practice',
       title: 'High Ridge',

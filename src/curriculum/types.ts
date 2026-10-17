@@ -10,6 +10,7 @@ export type GameId =
   | 'writingPad'
   | 'divisionArena'
   | 'fractionForge'
+  | 'cloudKeeper'
 
 export interface Stage {
   id: string
