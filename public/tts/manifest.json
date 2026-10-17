@@ -1,82 +1,272 @@
 {
-  "multiplication/intro": {
-    "file": "tts/multiplication/intro.mp3",
-    "hash": "8415088c00"
+  "dataGraph/bars": {
+    "file": "tts/dataGraph/bars.mp3",
+    "hash": "57d1c4f91c",
+    "duration": 10.49,
+    "words": "tts/dataGraph/bars.words.json"
   },
-  "multiplication/count": {
-    "file": "tts/multiplication/count.mp3",
-    "hash": "29143de9a7"
+  "dataGraph/compare": {
+    "file": "tts/dataGraph/compare.mp3",
+    "hash": "678d49ebde",
+    "duration": 14.56,
+    "words": "tts/dataGraph/compare.words.json"
   },
-  "multiplication/commutative": {
-    "file": "tts/multiplication/commutative.mp3",
-    "hash": "0662901e9a"
+  "dataGraph/read": {
+    "file": "tts/dataGraph/read.mp3",
+    "hash": "a5387ba171",
+    "duration": 12.33,
+    "words": "tts/dataGraph/read.words.json"
   },
-  "multiplication/skip": {
-    "file": "tts/multiplication/skip.mp3",
-    "hash": "b87ac62b69"
+  "dataGraph/tally": {
+    "file": "tts/dataGraph/tally.mp3",
+    "hash": "7fe316dc59",
+    "duration": 13.77,
+    "words": "tts/dataGraph/tally.words.json"
   },
-  "division/share": {
-    "file": "tts/division/share.mp3",
-    "hash": "b89355d689"
+  "division/answer": {
+    "file": "tts/division/answer.mp3",
+    "hash": "6a6e051fbc",
+    "duration": 12.21,
+    "words": "tts/division/answer.words.json"
   },
   "division/inverse": {
     "file": "tts/division/inverse.mp3",
-    "hash": "cb937522e6"
+    "hash": "b8bcf6e4b0",
+    "duration": 8.69,
+    "words": "tts/division/inverse.words.json"
   },
-  "fractions/parts": {
-    "file": "tts/fractions/parts.mp3",
-    "hash": "833f893604"
+  "division/share": {
+    "file": "tts/division/share.mp3",
+    "hash": "a79fbc86b2",
+    "duration": 7.47,
+    "words": "tts/division/share.words.json"
   },
   "fractions/equivalent": {
     "file": "tts/fractions/equivalent.mp3",
-    "hash": "711513396f"
+    "hash": "05a5c71477",
+    "duration": 10.76,
+    "words": "tts/fractions/equivalent.words.json"
+  },
+  "fractions/matchbottoms": {
+    "file": "tts/fractions/matchbottoms.mp3",
+    "hash": "62eb295b1d",
+    "duration": 12.82,
+    "words": "tts/fractions/matchbottoms.words.json"
+  },
+  "fractions/parts": {
+    "file": "tts/fractions/parts.mp3",
+    "hash": "125a38ccf7",
+    "duration": 9.16,
+    "words": "tts/fractions/parts.words.json"
   },
   "fractions/samebottom": {
     "file": "tts/fractions/samebottom.mp3",
-    "hash": "7012fbe89e"
+    "hash": "19e1f284c0",
+    "duration": 10.25,
+    "words": "tts/fractions/samebottom.words.json"
   },
-  "placeValue/places": {
-    "file": "tts/placeValue/places.mp3",
-    "hash": "e334ff3a39"
+  "fractions/unlikebottom": {
+    "file": "tts/fractions/unlikebottom.mp3",
+    "hash": "81742ce579",
+    "duration": 14.5,
+    "words": "tts/fractions/unlikebottom.words.json"
   },
-  "placeValue/value": {
-    "file": "tts/placeValue/value.mp3",
-    "hash": "ad26214f53"
-  },
-  "placeValue/rounding": {
-    "file": "tts/placeValue/rounding.mp3",
-    "hash": "19d35679ca"
-  },
-  "geometry/shapes": {
-    "file": "tts/geometry/shapes.mp3",
-    "hash": "52935846d3"
+  "geometry/angleTypes": {
+    "file": "tts/geometry/angleTypes.mp3",
+    "hash": "1ca6dd996e",
+    "duration": 11.44,
+    "words": "tts/geometry/angleTypes.words.json"
   },
   "geometry/angles": {
     "file": "tts/geometry/angles.mp3",
-    "hash": "5ad396de8b"
+    "hash": "24d55f1c87",
+    "duration": 8.31,
+    "words": "tts/geometry/angles.words.json"
   },
   "geometry/count": {
     "file": "tts/geometry/count.mp3",
-    "hash": "22dabaf4b5"
+    "hash": "5d9646733f",
+    "duration": 6.41,
+    "words": "tts/geometry/count.words.json"
   },
-  "dataGraph/bars": {
-    "file": "tts/dataGraph/bars.mp3",
-    "hash": "2678b57289"
+  "geometry/family": {
+    "file": "tts/geometry/family.mp3",
+    "hash": "4497b90b83",
+    "duration": 10.66,
+    "words": "tts/geometry/family.words.json"
   },
-  "wordProblem/plan": {
-    "file": "tts/wordProblem/plan.mp3",
-    "hash": "f939b34a7c"
+  "geometry/lines": {
+    "file": "tts/geometry/lines.mp3",
+    "hash": "a612c050dc",
+    "duration": 10.4,
+    "words": "tts/geometry/lines.words.json"
   },
-  "writing/example": {
-    "file": "tts/writing/example.mp3",
-    "hash": "7afe4c1afa"
+  "geometry/shapes": {
+    "file": "tts/geometry/shapes.mp3",
+    "hash": "f8e427977d",
+    "duration": 8.75,
+    "words": "tts/geometry/shapes.words.json"
+  },
+  "measurement/area": {
+    "file": "tts/measurement/area.mp3",
+    "hash": "4dfbb7bf2b",
+    "duration": 12.91,
+    "words": "tts/measurement/area.words.json"
+  },
+  "measurement/money": {
+    "file": "tts/measurement/money.mp3",
+    "hash": "85873d6848",
+    "duration": 12.03,
+    "words": "tts/measurement/money.words.json"
+  },
+  "measurement/perimeter": {
+    "file": "tts/measurement/perimeter.mp3",
+    "hash": "af4f7b2f9c",
+    "duration": 10.68,
+    "words": "tts/measurement/perimeter.words.json"
+  },
+  "measurement/time": {
+    "file": "tts/measurement/time.mp3",
+    "hash": "02ab1817ba",
+    "duration": 14.29,
+    "words": "tts/measurement/time.words.json"
+  },
+  "multiplication/commutative": {
+    "file": "tts/multiplication/commutative.mp3",
+    "hash": "a28e5af3bc",
+    "duration": 7.4,
+    "words": "tts/multiplication/commutative.words.json"
+  },
+  "multiplication/count": {
+    "file": "tts/multiplication/count.mp3",
+    "hash": "de1af424df",
+    "duration": 9.28,
+    "words": "tts/multiplication/count.words.json"
+  },
+  "multiplication/intro": {
+    "file": "tts/multiplication/intro.mp3",
+    "hash": "3dbb2ea2d0",
+    "duration": 7.09,
+    "words": "tts/multiplication/intro.words.json"
+  },
+  "multiplication/skip": {
+    "file": "tts/multiplication/skip.mp3",
+    "hash": "c7830d2460",
+    "duration": 7.82,
+    "words": "tts/multiplication/skip.words.json"
+  },
+  "placeValue/places": {
+    "file": "tts/placeValue/places.mp3",
+    "hash": "c8408e7c20",
+    "duration": 11.28,
+    "words": "tts/placeValue/places.words.json"
+  },
+  "placeValue/regroup": {
+    "file": "tts/placeValue/regroup.mp3",
+    "hash": "76d9c081c9",
+    "duration": 11.41,
+    "words": "tts/placeValue/regroup.words.json"
+  },
+  "placeValue/rounding": {
+    "file": "tts/placeValue/rounding.mp3",
+    "hash": "8ec483e3d8",
+    "duration": 11.29,
+    "words": "tts/placeValue/rounding.words.json"
+  },
+  "placeValue/value": {
+    "file": "tts/placeValue/value.mp3",
+    "hash": "55ab0acc75",
+    "duration": 9.03,
+    "words": "tts/placeValue/value.words.json"
+  },
+  "reading/detail": {
+    "file": "tts/reading/detail.mp3",
+    "hash": "4e9b6871e8",
+    "duration": 13,
+    "words": "tts/reading/detail.words.json"
+  },
+  "reading/infer": {
+    "file": "tts/reading/infer.mp3",
+    "hash": "6653fc2f5b",
+    "duration": 15.32,
+    "words": "tts/reading/infer.words.json"
+  },
+  "reading/mainidea": {
+    "file": "tts/reading/mainidea.mp3",
+    "hash": "24546a249d",
+    "duration": 14.51,
+    "words": "tts/reading/mainidea.words.json"
+  },
+  "reading/supports": {
+    "file": "tts/reading/supports.mp3",
+    "hash": "d8603f0f58",
+    "duration": 13.42,
+    "words": "tts/reading/supports.words.json"
+  },
+  "science/cycle": {
+    "file": "tts/science/cycle.mp3",
+    "hash": "262e4808f7",
+    "duration": 17.4,
+    "words": "tts/science/cycle.words.json"
+  },
+  "science/plants": {
+    "file": "tts/science/plants.mp3",
+    "hash": "ba46158e36",
+    "duration": 15.59,
+    "words": "tts/science/plants.words.json"
   },
   "science/states": {
     "file": "tts/science/states.mp3",
-    "hash": "35f1a405ee"
+    "hash": "7e1385ae04",
+    "duration": 12.87,
+    "words": "tts/science/states.words.json"
   },
   "science/water": {
     "file": "tts/science/water.mp3",
-    "hash": "96e0a772cb"
+    "hash": "a89f145e20",
+    "duration": 11.6,
+    "words": "tts/science/water.words.json"
+  },
+  "wordProblem/plan": {
+    "file": "tts/wordProblem/plan.mp3",
+    "hash": "d2f3928054",
+    "duration": 12.18,
+    "words": "tts/wordProblem/plan.words.json"
+  },
+  "wordProblem/read": {
+    "file": "tts/wordProblem/read.mp3",
+    "hash": "8d8242c7aa",
+    "duration": 12.66,
+    "words": "tts/wordProblem/read.words.json"
+  },
+  "wordProblem/solve": {
+    "file": "tts/wordProblem/solve.mp3",
+    "hash": "500937abc6",
+    "duration": 15.34,
+    "words": "tts/wordProblem/solve.words.json"
+  },
+  "writing/endmarks": {
+    "file": "tts/writing/endmarks.mp3",
+    "hash": "cd53d04b86",
+    "duration": 11.52,
+    "words": "tts/writing/endmarks.words.json"
+  },
+  "writing/example": {
+    "file": "tts/writing/example.mp3",
+    "hash": "5ddab6c0c7",
+    "duration": 12.13,
+    "words": "tts/writing/example.words.json"
+  },
+  "writing/fragments": {
+    "file": "tts/writing/fragments.mp3",
+    "hash": "a33011c703",
+    "duration": 12.37,
+    "words": "tts/writing/fragments.words.json"
+  },
+  "writing/parts": {
+    "file": "tts/writing/parts.mp3",
+    "hash": "f316d52211",
+    "duration": 12.64,
+    "words": "tts/writing/parts.words.json"
   }
 }

@@ -1,0 +1,6 @@
+# deps for scripts/tts/render_local.py — install into the qwen3-tts venv:
+#   ~/Projects/contentgen/qwen3-tts/.venv/bin/pip install -r scripts/tts/requirements.txt
+# mlx_audio + torch + soundfile already live in that venv along with the models.
+stable-ts>=2.19
+soundfile>=0.12
+numpy>=1.26
