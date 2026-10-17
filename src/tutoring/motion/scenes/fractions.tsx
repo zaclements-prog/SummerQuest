@@ -366,12 +366,10 @@ const equivalent: Scene = ({ t, cue }: SceneProps) => {
       <T x={150} y={botY + STRIP_H / 2} r={-wig}>
         <Frac t={t} x={0} y={0} num="2" den="4" size={54} color={B.ink} at={fourths} />
       </T>
-      {/* "they look different…" */}
-      <Pop t={t} at={diff + 0.1} x={150} y={(topY + botY + STRIP_H) / 2} out={exact}>
-        <Title x={150} y={(topY + botY + STRIP_H) / 2} size={44} color={M.inkSoft} stroke={M.white}>
-          ?
-        </Title>
-      </Pop>
+      {/* "they look different…" — both labels get circled while they wobble */}
+      <Ring t={t} at={diff} x={150} y={topY + STRIP_H / 2} r={58} color={M.lilac} out={exact} />
+      <Ring t={t} at={diff + 0.12} x={150} y={botY + STRIP_H / 2} r={58} color={M.lilac} out={exact} />
+      <Chip t={t} at={diff + 0.25} x={150} y={(topY + STRIP_H + botY) / 2} text="different?" color={M.lilac} size={22} out={exact} />
       {/* the match line */}
       <Draw t={t} at={same} dur={0.6} d={`M ${lineX} ${topY - 30} L ${lineX} ${botY + STRIP_H + 30}`} stroke={M.ink} width={4} dash="10 10" />
 
