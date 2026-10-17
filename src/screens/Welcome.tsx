@@ -124,39 +124,39 @@ export default function Welcome() {
   const { container, item } = useEntrance()
 
   return (
-    <div className="relative flex-1 flex flex-col px-6 pt-[3vh] pb-[29vh] overflow-hidden">
+    <div className="relative flex-1 flex flex-col px-6 pt-[3vh] pb-[29vh] short:pb-[20vh] overflow-hidden">
       <WelcomeScene />
 
       <motion.div
         variants={container}
         initial="hidden"
         animate="show"
-        className="relative my-auto mx-auto max-w-2xl w-full text-center flex flex-col items-center gap-3"
+        className="relative my-auto mx-auto max-w-2xl w-full text-center flex flex-col items-center gap-3 short:gap-2"
       >
         {/* the sun (decorative) */}
-        <motion.div variants={item} className="relative grid place-items-center w-28 h-28 sm:w-32 sm:h-32" aria-hidden="true">
+        <motion.div variants={item} className="relative grid place-items-center w-28 h-28 sm:w-32 sm:h-32 short:w-16 short:h-16" aria-hidden="true">
           <span className="absolute inset-[-35%] sunburst animate-spin-slow" />
-          <span className="relative text-7xl sm:text-8xl animate-bob">🌞</span>
+          <span className="relative text-7xl sm:text-8xl short:text-5xl animate-bob">🌞</span>
         </motion.div>
 
-        <motion.h1 variants={item} className="text-display toon-title">
+        <motion.h1 variants={item} className="text-display toon-title short:!text-[3.25rem]">
           SummerQuest
         </motion.h1>
 
         <motion.p
           variants={item}
-          className="kid-text text-xl sm:text-2xl text-ink-900 max-w-md bg-paper/85 border-2 border-line/15 rounded-[1.25rem] px-5 py-2"
+          className="kid-text text-xl sm:text-2xl short:text-lg text-ink-900 max-w-md bg-paper/85 border-2 border-line/15 rounded-[1.25rem] px-5 py-2 short:py-1"
         >
           An island adventure to keep your brain sharp this summer
         </motion.p>
 
-        <motion.div variants={item} className="mt-2">
+        <motion.div variants={item} className="mt-2 short:mt-0">
           <Button
             variant="primary"
             size="lg"
             to="/avatar"
             onClick={() => sfx.enter()}
-            className="!text-2xl sm:!text-3xl !px-10 !min-h-[68px]"
+            className="!text-2xl sm:!text-3xl !px-10 !min-h-[68px] short:!text-2xl short:!min-h-[56px]"
           >
             Start your quest →
           </Button>
@@ -173,7 +173,7 @@ export default function Welcome() {
           </Link>
         </motion.div>
 
-        <motion.p variants={item} className="kid-text text-base text-ink-800">
+        <motion.p variants={item} className="kid-text text-base text-ink-800 short:bg-paper/85 short:rounded-full short:px-3">
           For kids finishing 2nd, 3rd or 4th grade
         </motion.p>
       </motion.div>

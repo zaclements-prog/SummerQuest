@@ -23,7 +23,8 @@ import {
 } from '../components/ui'
 import { useEntrance } from '../lib/motion'
 
-// The grown-up check / form input, in the toon style.
+// The grown-up check / form input, in the toon style. (20px text: iOS zooms
+// the page into any field under 16px.)
 const inputClass =
   'mt-2 w-full rounded-2xl border-[3px] border-line bg-paper px-4 py-2.5 min-h-[52px] text-xl kid-text text-ink-900 outline-none focus:ring-4 focus:ring-ocean-600/60'
 import { GRADE_LABEL, GRADE_LEVELS, type GradeLevel } from '../lib/gradeTiers'
@@ -150,7 +151,7 @@ export default function ParentDashboard() {
                       type="button"
                       onClick={openGrade}
                       className={[
-                        'inline-flex items-center gap-1.5 rounded-full px-3.5 min-h-[44px] kid-text text-base',
+                        'inline-flex items-center gap-1.5 rounded-full px-3.5 min-h-12 kid-text text-base',
                         'bg-paper text-ink-900 border-2 border-line shadow-ledge-sm',
                         'hover:bg-cream-100 active:translate-y-0.5 transition-colors',
                         'outline-none focus-visible:ring-4 focus-visible:ring-ocean-600/70',
@@ -377,11 +378,17 @@ export default function ParentDashboard() {
             <input
               type="text"
               inputMode="numeric"
+              pattern="[0-9]*"
+              enterKeyHint="done"
               autoComplete="off"
+              autoCorrect="off"
               value={gateAnswer}
               onChange={(e) => setGateAnswer(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === 'Enter') handleReset()
+                // Enter = "🗑️ Yes, reset" once the answer is right; otherwise just close the keyboard.
+                if (e.key !== 'Enter') return
+                if (gatePassed) handleReset()
+                else e.currentTarget.blur()
               }}
               className={inputClass}
               aria-label={`Grown-up check: ${gate.a} times ${gate.b}`}
@@ -413,9 +420,18 @@ export default function ParentDashboard() {
             <input
               type="text"
               inputMode="numeric"
+              pattern="[0-9]*"
+              enterKeyHint="done"
               autoComplete="off"
+              autoCorrect="off"
               value={gradeGateAnswer}
               onChange={(e) => setGradeGateAnswer(e.target.value)}
+              onKeyDown={(e) => {
+                // Enter = "✅ Save grade" (once a grade is picked); otherwise just close the keyboard.
+                if (e.key !== 'Enter') return
+                if (gradeGatePassed && gradePick !== null) applyGrade()
+                else e.currentTarget.blur()
+              }}
               className={inputClass}
               aria-label={`Grown-up check: ${gradeGate.a} times ${gradeGate.b}`}
             />

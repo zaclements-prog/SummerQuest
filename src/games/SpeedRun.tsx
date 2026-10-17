@@ -6,7 +6,7 @@ import { sfx } from '../lib/sound'
 import { useProgress } from '../store/progress'
 import { skillOf } from '../tutoring/skills'
 import { ProgressBar, Pill, Loading } from '../components/ui'
-import { QuestionPrompt, AnswerGrid } from './_shared/QuizUI'
+import { QuestionPrompt, AnswerGrid, QuizSplit } from './_shared/QuizUI'
 
 const DEFAULT_STAR_THRESHOLDS: [number, number, number] = [10, 15, 20]
 
@@ -108,10 +108,10 @@ export default function SpeedRun({ provider, params, onComplete, meta, paused = 
   }
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-center p-4">
+    <div className="game-surface flex-1 flex flex-col items-center justify-center p-4 short:justify-start short:px-3 short:pt-1">
       {/* ── Status bar: prominent timer + live score/streak ──────────────── */}
-      <div className="w-full max-w-md mb-6 bg-paper rounded-[1.5rem] border-2 border-line/15 shadow-card px-4 pt-3 pb-4">
-        <div className="flex items-center justify-between gap-2 mb-2.5">
+      <div className="w-full max-w-md mb-6 bg-paper rounded-[1.5rem] border-2 border-line/15 shadow-card px-4 pt-3 pb-4 short:mb-3 short:max-w-2xl short:pt-2 short:pb-2.5">
+        <div className="flex items-center justify-between gap-2 mb-2.5 short:mb-1.5">
           <motion.div
             // Pulse the seconds when time is running low (reduced-motion: static).
             animate={!reduced && low ? { scale: [1, 1.12, 1] } : { scale: 1 }}
@@ -155,17 +155,21 @@ export default function SpeedRun({ provider, params, onComplete, meta, paused = 
 
       {/* Plain keyed wrapper (not AnimatePresence mode="wait") so the new
           question always mounts immediately — see BossBattle for the rationale. */}
-      <div key={problem.id} className="w-full flex flex-col items-center gap-5">
-        <QuestionPrompt>{problem.prompt}</QuestionPrompt>
-
-        <AnswerGrid
-          options={problem.options}
-          answer={problem.answer}
-          picked={picked}
-          onPick={pick}
-          disabled={feedback !== null}
-        />
-      </div>
+      <QuizSplit
+        key={problem.id}
+        gap="gap-5"
+        center
+        question={<QuestionPrompt>{problem.prompt}</QuestionPrompt>}
+        answers={
+          <AnswerGrid
+            options={problem.options}
+            answer={problem.answer}
+            picked={picked}
+            onPick={pick}
+            disabled={feedback !== null}
+          />
+        }
+      />
     </div>
   )
 }

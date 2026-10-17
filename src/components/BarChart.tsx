@@ -59,6 +59,10 @@ export default function BarChart({
   const n = Math.max(bars.length, 1)
   const slot = (W - padX * 2) / n
   const barW = Math.min(46, slot * 0.62)
+  // Many bars on a phone-width chart: shrink the numbers so "70%" labels don't run together.
+  const valueSize = Math.min(16, Math.round(slot * 0.46 * 10) / 10)
+  const labelSize = Math.min(14, Math.round(slot * 0.44 * 10) / 10)
+  const emojiSize = Math.min(17, Math.round(slot * 0.62 * 10) / 10)
 
   return (
     <div className="bg-cream-50 text-ink-900 rounded-[1.25rem] border-2 border-line/15 p-3 sm:p-4 w-full">
@@ -102,7 +106,7 @@ export default function BarChart({
                 x={x + barW / 2}
                 y={y - 6}
                 textAnchor="middle"
-                fontSize="16"
+                fontSize={valueSize}
                 fontWeight={700}
                 fontFamily="Fredoka, system-ui, sans-serif"
                 fill={INK}
@@ -113,7 +117,7 @@ export default function BarChart({
                 x={x + barW / 2}
                 y={baseline + 17}
                 textAnchor="middle"
-                fontSize="14"
+                fontSize={labelSize}
                 fontWeight={600}
                 fontFamily="Fredoka, system-ui, sans-serif"
                 fill="#5b4a57"
@@ -121,7 +125,7 @@ export default function BarChart({
                 {b.label}
               </text>
               {b.emoji && (
-                <text x={x + barW / 2} y={baseline + 38} textAnchor="middle" fontSize="17">
+                <text x={x + barW / 2} y={baseline + 38} textAnchor="middle" fontSize={emojiSize}>
                   {b.emoji}
                 </text>
               )}

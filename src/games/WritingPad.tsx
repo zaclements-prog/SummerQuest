@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import type { GameProps } from '../screens/GameRunner'
 import { nextProblem, type Problem } from '../lib/problem'
@@ -10,6 +10,7 @@ import { sfx } from '../lib/sound'
 import { Card, Button, Medallion, ProgressBar, Pill, StarRating, Loading } from '../components/ui'
 import { useEntrance } from '../lib/motion'
 import { heuristicFeedback } from '../lib/writingGrader'
+import { useKeepAboveKeyboard, useKeyboardInset, useVisibleHeight } from '../components/useViewport'
 
 interface Feedback {
   score: number
@@ -200,6 +201,35 @@ function WritingPadView({
   const rows = kind === 'sentence' ? 3 : kind === 'paragraph' ? 6 : 10
   const enoughWords = wordCount >= minWords
 
+  // On-screen keyboard (iPad / phones): while typing, the word count + Submit
+  // ride on a bar just above the keyboard, and the writing box shrinks to fit
+  // the space that's left, so the words you're typing and the button both stay
+  // in sight.
+  const areaRef = useRef<HTMLTextAreaElement>(null)
+  const [focused, setTyping] = useState(false)
+  // (the box unmounts when feedback shows, without a blur event)
+  const typing = focused && !feedback
+  const keyboard = useKeyboardInset()
+  const visibleH = useVisibleHeight()
+  const docked = typing && keyboard > 0
+  const BAR_H = 76
+  useKeepAboveKeyboard(areaRef, typing, docked ? BAR_H + 8 : 16)
+
+  const actions = (
+    <>
+      <Pill tone={enoughWords ? 'correct' : 'ink'} icon={enoughWords ? '✓' : '✎'}>
+        {wordCount} word{wordCount === 1 ? '' : 's'}
+        {!enoughWords && ` · aim for ~${minWords}`}
+      </Pill>
+      {/* pointerdown is cancelled so the tap doesn't close the keyboard (and move this bar) before it lands */}
+      <div onPointerDown={(e) => e.preventDefault()}>
+        <Button variant="success" onClick={submit} disabled={!canSubmit}>
+          {submitting ? 'Reading…' : 'Submit ✨'}
+        </Button>
+      </div>
+    </>
+  )
+
   return (
     <div className="flex-1 flex flex-col items-center p-4 overflow-y-auto">
       {/* Progress */}
@@ -241,8 +271,16 @@ function WritingPadView({
                 </label>
                 <textarea
                   id="writing-input"
+                  ref={areaRef}
+                  inputMode="text"
+                  enterKeyHint="enter"
+                  autoCapitalize="sentences"
+                  autoComplete="off"
                   value={text}
                   onChange={(e) => setText(e.target.value)}
+                  onFocus={() => setTyping(true)}
+                  onBlur={() => setTyping(false)}
+                  style={docked ? { maxHeight: Math.max(96, visibleH - BAR_H - 24) } : undefined}
                   placeholder={`Write your ${kind} here…`}
                   className={[
                     'paper-lines w-full text-ink-900 rounded-[1.25rem] pl-14 pr-4 py-3 resize-none',
@@ -255,19 +293,16 @@ function WritingPadView({
                   rows={rows}
                   disabled={submitting}
                 />
-                <div className="flex items-center justify-between gap-3 mt-3">
-                  <Pill tone={enoughWords ? 'correct' : 'ink'} icon={enoughWords ? '✓' : '✎'}>
-                    {wordCount} word{wordCount === 1 ? '' : 's'}
-                    {!enoughWords && ` · aim for ~${minWords}`}
-                  </Pill>
-                  <Button
-                    variant="success"
-                    onClick={submit}
-                    disabled={!canSubmit}
+                {docked ? (
+                  <div
+                    className="fixed inset-x-0 z-40 flex items-center justify-between gap-3 px-4 bg-paper/95 backdrop-blur border-t-[3px] border-line"
+                    style={{ bottom: keyboard, height: BAR_H }}
                   >
-                    {submitting ? 'Reading…' : 'Submit ✨'}
-                  </Button>
-                </div>
+                    {actions}
+                  </div>
+                ) : (
+                  <div className="flex flex-wrap items-center justify-between gap-3 mt-3">{actions}</div>
+                )}
               </Card>
             </motion.div>
 
@@ -360,6 +395,10 @@ function WritingPadView({
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* While the keyboard covers the bottom of the page, room to scroll the
+          writing box up above it (the page may be shorter than that). */}
+      {docked && <div aria-hidden="true" className="shrink-0" style={{ height: keyboard + BAR_H }} />}
     </div>
   )
 }
