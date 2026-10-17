@@ -6,6 +6,10 @@ import { geometryScenes } from './geometry'
 import { measurementScenes } from './measurement'
 import { multiplicationScenes } from './multiplication'
 import { placeValueScenes } from './placeValue'
+import { readingScenes } from './reading'
+import { scienceScenes } from './science'
+import { wordProblemScenes } from './wordProblem'
+import { writingScenes } from './writing'
 
 /**
  * Motion graphics by lesson → step id. A step without a scene falls back to
@@ -20,6 +24,10 @@ const SCENES: Record<string, Record<string, Scene>> = {
   geometry: geometryScenes,
   measurement: measurementScenes,
   dataGraph: dataGraphScenes,
+  wordProblem: wordProblemScenes,
+  reading: readingScenes,
+  writing: writingScenes,
+  science: scienceScenes,
 }
 
 export function sceneFor(lessonId: string, stepId: string): Scene | undefined {

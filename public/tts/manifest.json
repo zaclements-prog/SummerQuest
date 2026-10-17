@@ -63,29 +63,9 @@
     "file": "tts/dataGraph/bars.mp3",
     "hash": "2678b57289"
   },
-  "wordProblem/read": {
-    "file": "tts/wordProblem/read.mp3",
-    "hash": "4309ab9f26"
-  },
   "wordProblem/plan": {
     "file": "tts/wordProblem/plan.mp3",
     "hash": "f939b34a7c"
-  },
-  "wordProblem/solve": {
-    "file": "tts/wordProblem/solve.mp3",
-    "hash": "2e515c15d2"
-  },
-  "reading/mainidea": {
-    "file": "tts/reading/mainidea.mp3",
-    "hash": "d3b9f5abbd"
-  },
-  "reading/detail": {
-    "file": "tts/reading/detail.mp3",
-    "hash": "544612a8cc"
-  },
-  "writing/parts": {
-    "file": "tts/writing/parts.mp3",
-    "hash": "2c55bf3425"
   },
   "writing/example": {
     "file": "tts/writing/example.mp3",
