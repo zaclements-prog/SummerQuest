@@ -23,6 +23,13 @@ Everything runs locally in the browser; progress is saved in `localStorage`.
 - **This Week's Focus** — finds the skills the child is missing and recommends a
   lesson + practice stage.
 - **Daily learning goal** — 2 × 15 minutes of active learning per day earns bonus coins.
+- **3D intrinsic mini-games** — four arena-style games where the game mechanic
+  *is* the math (no quiz-doors): Crystal Golems (Division Dunes — throw the
+  divisor crystal that shatters the golem into exactly the pen's camels),
+  Fraction Forge (Fraction Falls — measure the recipe strip), Cloud Keeper
+  (Science Summit — run the water cycle), Times Grove (Multiplication Mesa —
+  plant the array plot that grows the order). Same stars/coins/tutor award path
+  as the 2D stages.
 - **3D Home** — buy furniture and decorate a room; become (and dress up) a creature.
 - **3D World (beta)** — a storybook toon island with a town, a river and an area
   for every subject. Walk up
