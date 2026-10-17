@@ -1,14 +1,88 @@
 import { describe, expect, it } from 'vitest'
 import {
   FORGE_LIMITS,
+  MAX_STACK,
   ROUNDS,
+  SCORE,
   fillState,
   forgeFactConfig,
+  forgeProblemCount,
+  forgeRunPlan,
+  forgeScore,
   forgeStarThresholds,
   forgeStars,
   parseFracEqRound,
+  pourOutcome,
   slabOffsets,
+  stampStack,
 } from '../fractionCore'
+
+describe('stampStack', () => {
+  it('stamps up and nibbles down, clamped to 0..MAX_STACK', () => {
+    expect(stampStack(0, 1)).toBe(1)
+    expect(stampStack(3, -1)).toBe(2)
+    expect(stampStack(0, -1)).toBe(0)
+    expect(stampStack(MAX_STACK, 1)).toBe(MAX_STACK)
+  })
+  it('lets the kid build any answer the forge can ask (≤ 11 slabs for /12)', () => {
+    expect(MAX_STACK).toBeGreaterThanOrEqual(FORGE_LIMITS.denomMax)
+  })
+})
+
+describe('pourOutcome', () => {
+  it('fills exactly and keeps the candy', () => {
+    expect(pourOutcome(0, 4, 4)).toEqual({ state: 'exact', total: 4, fitted: 4, spill: 0, gap: 0, moldAfter: 4 })
+  })
+  it('stops short, keeps the poured slabs and shows the gap', () => {
+    expect(pourOutcome(0, 3, 6)).toEqual({ state: 'short', total: 3, fitted: 3, spill: 0, gap: 3, moldAfter: 3 })
+  })
+  it('a second pour adds to what is already in the mold', () => {
+    const first = pourOutcome(0, 3, 6)
+    expect(pourOutcome(first.moldAfter, 3, 6).state).toBe('exact')
+    expect(pourOutcome(first.moldAfter, 2, 6)).toMatchObject({ state: 'short', gap: 1, moldAfter: 5 })
+  })
+  it('overflows: the extras spill and the mold tips out', () => {
+    expect(pourOutcome(0, 8, 6)).toEqual({ state: 'over', total: 8, fitted: 6, spill: 2, gap: 0, moldAfter: 0 })
+    expect(pourOutcome(4, 3, 6)).toMatchObject({ state: 'over', spill: 1, moldAfter: 0 })
+  })
+  it('agrees with fillState for every count', () => {
+    for (let t = 1; t <= 11; t++) for (let n = 1; n <= MAX_STACK; n++) expect(pourOutcome(0, n, t).state).toBe(fillState(n, t))
+  })
+})
+
+describe('forgeRunPlan', () => {
+  it('builds the arc: 2 warm-ups (ruler), rush orders, a two-candy finale', () => {
+    const plan = forgeRunPlan(5)
+    expect(plan.map((r) => r.kind)).toEqual(['warmup', 'warmup', 'rush', 'rush', 'finale'])
+    expect(plan.map((r) => r.grid)).toEqual([true, true, false, false, false])
+    expect(plan[4].orders).toBe(2)
+    expect(forgeProblemCount(plan)).toBe(6)
+  })
+  it('customers get less patient as the run escalates', () => {
+    const [w, , r] = forgeRunPlan(5)
+    expect(r.patienceSec).toBeLessThan(w.patienceSec)
+  })
+  it('degrades gracefully for short stages', () => {
+    expect(forgeRunPlan(1).map((r) => r.kind)).toEqual(['warmup'])
+    expect(forgeRunPlan(2).map((r) => r.kind)).toEqual(['warmup', 'finale'])
+    expect(forgeRunPlan(3).map((r) => r.kind)).toEqual(['warmup', 'warmup', 'finale'])
+    expect(forgeRunPlan(0)).toHaveLength(1)
+  })
+})
+
+describe('forgeScore', () => {
+  it('pays base + streak + speed', () => {
+    expect(forgeScore({ firstTry: true, streak: 1, patienceLeft: 1 })).toEqual({ base: 100, streak: 0, speed: 50, total: 150 })
+    expect(forgeScore({ firstTry: true, streak: 3, patienceLeft: 0.5 })).toEqual({ base: 100, streak: 40, speed: 25, total: 165 })
+  })
+  it('caps the streak bonus and clamps patience', () => {
+    expect(forgeScore({ firstTry: true, streak: 40, patienceLeft: 3 }).streak).toBe(SCORE.streakCap)
+    expect(forgeScore({ firstTry: true, streak: 1, patienceLeft: -1 }).speed).toBe(0)
+  })
+  it('a fixed-up pour still scores, without a streak bonus', () => {
+    expect(forgeScore({ firstTry: false, streak: 0, patienceLeft: 0 })).toEqual({ base: 50, streak: 0, speed: 0, total: 50 })
+  })
+})
 
 describe('parseFracEqRound', () => {
   it('reads a fraction-equivalence provider problem', () => {

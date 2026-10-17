@@ -1,6 +1,46 @@
 import { describe, expect, it } from 'vitest'
-import { CYCLE_SITUATIONS, makeScienceCycleProvider } from '../scienceCycle'
+import { CYCLE_SITUATIONS, makeScienceCycleProvider, situationShort } from '../scienceCycle'
 import { PROCESSES } from '../../cycle/cycleCore'
+
+describe('short captions (the host speech bubble)', () => {
+  it('every situation has a short, leak-free caption', () => {
+    for (const s of CYCLE_SITUATIONS) {
+      expect(s.short.length).toBeGreaterThan(5)
+      expect(s.short.length).toBeLessThanOrEqual(28)
+      for (const p of PROCESSES) expect(s.short.toLowerCase()).not.toContain(p)
+      expect(situationShort(s.prompt)).toBe(s.short)
+    }
+  })
+  it('falls back to the prompt for unknown text', () => {
+    expect(situationShort('mystery')).toBe('mystery')
+  })
+})
+
+describe('nextFor (route-order legs)', () => {
+  it('serves a situation whose answer is the asked process', async () => {
+    const p = makeScienceCycleProvider()
+    for (const proc of [...PROCESSES, ...PROCESSES, ...PROCESSES]) {
+      const problem = p.nextFor(proc)
+      expect(problem.answer).toBe(proc)
+      expect([...problem.options].sort()).toEqual([...PROCESSES].sort())
+      expect(problem.skill?.id).toBe('sci-water-cycle')
+      expect(problem.factId).toBeUndefined()
+    }
+  })
+  it('cycles through every situation of a process before repeating, never back to back', () => {
+    const p = makeScienceCycleProvider()
+    const evap = CYCLE_SITUATIONS.filter((s) => s.answer === 'evaporation')
+    const seen = new Set<string>()
+    for (let i = 0; i < evap.length; i++) seen.add(p.nextFor('evaporation').prompt)
+    expect(seen.size).toBe(evap.length)
+    let prev = ''
+    for (let i = 0; i < 40; i++) {
+      const cur = p.nextFor('evaporation').prompt
+      expect(cur).not.toBe(prev)
+      prev = cur
+    }
+  })
+})
 
 describe('water-cycle situation bank', () => {
   it('answers are valid processes and balanced across all three', () => {
