@@ -68,7 +68,7 @@ export default function Celebration({
 
   return (
     <Modal open={open} onClose={onClose} label={title}>
-      <div className="relative px-6 pb-7 pt-6 text-center overflow-hidden rounded-toon">
+      <div className="relative px-6 pb-7 pt-6 short:pb-5 short:pt-4 text-center overflow-hidden rounded-toon">
         {/* sunny wash + rays behind the trophy */}
         <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-quest-100 to-transparent" aria-hidden="true" />
         <div
@@ -78,7 +78,7 @@ export default function Celebration({
         <ConfettiBurst reduced={reduced} />
 
         <motion.div
-          className="relative mx-auto mb-3 grid place-items-center w-24 h-24 rounded-full bg-quest-300 border-[3px] border-line shadow-ledge text-5xl"
+          className="relative mx-auto mb-3 grid place-items-center w-24 h-24 short:w-16 short:h-16 short:text-4xl short:mb-2 rounded-full bg-quest-300 border-[3px] border-line shadow-ledge text-5xl"
           initial={reduced ? {} : { scale: 0, rotate: -20 }}
           animate={reduced ? {} : { scale: 1, rotate: 0 }}
           transition={{ type: 'spring', stiffness: 320, damping: 14, delay: 0.05 }}
@@ -87,12 +87,12 @@ export default function Celebration({
           🏆
         </motion.div>
 
-        <h2 className="relative kid-text font-bold text-3xl text-ink-900 mb-3 leading-tight">{title}</h2>
+        <h2 className="relative kid-text font-bold text-3xl short:text-2xl text-ink-900 mb-3 short:mb-2 leading-tight">{title}</h2>
 
         {/* Stars reveal */}
         {stars != null && stars > 0 && (
           <motion.div
-            className="relative flex justify-center gap-1.5 mb-4"
+            className="relative flex justify-center gap-1.5 mb-4 short:mb-2"
             variants={containerStagger}
             initial="hidden"
             animate="show"
@@ -110,7 +110,7 @@ export default function Celebration({
         {/* Coins reveal */}
         {coins != null && coins > 0 && (
           <motion.div
-            className="relative inline-flex items-center gap-2 bg-quest-300 text-ink-900 kid-text rounded-full border-2 border-line px-5 py-1.5 text-xl mb-4"
+            className="relative inline-flex items-center gap-2 bg-quest-300 text-ink-900 kid-text rounded-full border-2 border-line px-5 py-1.5 text-xl mb-4 short:mb-3"
             initial={reduced ? { opacity: 0 } : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}

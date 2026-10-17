@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import type { FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, useReducedMotion } from 'framer-motion'
 import { useProgress } from '../store/progress'
@@ -6,6 +7,7 @@ import type { GradeLevel } from '../lib/gradeTiers'
 import { sfx } from '../lib/sound'
 import { Card, Button, BackButton } from '../components/ui'
 import { useEntrance } from '../lib/motion'
+import { useKeepAboveKeyboard, useKeyboardInset } from '../components/useViewport'
 
 // A selectable toon tile: outlined paper that lifts on hover and sinks when
 // pressed; the chosen one turns sunny with a check badge.
@@ -65,6 +67,13 @@ export default function AvatarCreate() {
   const reduced = useReducedMotion()
   const { container, item } = useEntrance()
   const inputRef = useRef<HTMLInputElement>(null)
+  const nameRowRef = useRef<HTMLDivElement>(null)
+  const gradeRef = useRef<HTMLDivElement>(null)
+  // While typing on a phone/tablet the on-screen keyboard covers the bottom of
+  // the page: keep the name field and its Go button above it.
+  const [typing, setTyping] = useState(false)
+  const keyboard = useKeyboardInset()
+  useKeepAboveKeyboard(nameRowRef, typing)
 
   const canStart = name.trim().length > 0 && grade !== null
   const colorName = COLORS.find((c) => c.value === color)?.name ?? ''
@@ -74,13 +83,26 @@ export default function AvatarCreate() {
       // Helpful feedback instead of a dead button: pulse the field and focus it.
       sfx.wrong()
       setNudge(true)
-      inputRef.current?.focus()
-      window.setTimeout(() => setNudge(false), 500)
+      if (!name.trim()) {
+        inputRef.current?.focus()
+      } else {
+        // Only the grade is missing: close the keyboard and bring the grade picker up.
+        inputRef.current?.blur()
+        gradeRef.current?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' })
+      }
+      window.setTimeout(() => setNudge(false), name.trim() ? 1600 : 500)
       return
     }
     sfx.victory()
     setAvatar({ emoji, color, name: name.trim(), grade: grade! })
     navigate('/world')
+  }
+
+  // The keyboard's Go/Next key and the Go button next to the field do what
+  // "Begin adventure!" does: begin, or show what's still missing.
+  function submitName(e: FormEvent) {
+    e.preventDefault()
+    start()
   }
 
   function surprise() {
@@ -111,14 +133,14 @@ export default function AvatarCreate() {
         >
           {/* ── Live preview ───────────────────────────────────────────── */}
           <motion.div variants={item} className="lg:w-80 lg:sticky lg:top-6 shrink-0">
-            <Card className="relative overflow-hidden p-5 sm:p-6 flex flex-col sm:flex-row lg:flex-col items-center justify-center gap-4 sm:gap-6 lg:gap-4">
+            <Card className="relative overflow-hidden p-5 sm:p-6 short:py-3 flex flex-col sm:flex-row lg:flex-col items-center justify-center gap-4 sm:gap-6 lg:gap-4">
               <div className="absolute left-1/2 sm:left-[30%] lg:left-1/2 top-24 -translate-x-1/2 -translate-y-1/2 w-72 h-72 sunburst pointer-events-none" aria-hidden="true" />
               <motion.div
                 key={emoji + color}
                 initial={reduced ? { opacity: 0 } : { scale: 0.6, opacity: 0 }}
                 animate={reduced ? { opacity: 1 } : { scale: 1, opacity: 1 }}
                 transition={{ type: 'spring', damping: 10 }}
-                className="relative w-36 h-36 rounded-full flex items-center justify-center text-7xl border-[4px] border-line shadow-[0_6px_0_0_var(--color-line)]"
+                className="relative w-36 h-36 short:w-24 short:h-24 short:text-5xl rounded-full flex items-center justify-center text-7xl border-[4px] border-line shadow-[0_6px_0_0_var(--color-line)]"
                 style={{ background: color }}
               >
                 <span className="absolute left-[20%] top-[11%] w-[22%] h-[9%] rounded-full bg-white/35 -rotate-[20deg]" aria-hidden="true" />
@@ -186,7 +208,7 @@ export default function AvatarCreate() {
                 <div
                   role="radiogroup"
                   aria-labelledby="color-label"
-                  className="grid grid-cols-6 gap-3"
+                  className="grid grid-cols-6 gap-1.5 min-[400px]:gap-3"
                 >
                   {COLORS.map((c) => {
                     const selected = color === c.value
@@ -218,20 +240,45 @@ export default function AvatarCreate() {
               {/* Name input */}
               <div>
                 <SectionLabel htmlFor="explorer-name">What's your name?</SectionLabel>
-                <input
-                  id="explorer-name"
-                  ref={inputRef}
-                  value={name}
-                  onChange={(e) => setName(e.target.value.slice(0, 20))}
-                  placeholder="Type your name"
-                  maxLength={20}
-                  className={[
-                    'w-full px-5 py-3 min-h-[60px] rounded-[1.25rem] text-2xl kid-text',
-                    'text-ink-900 bg-cream-50 border-[3px] outline-none transition-colors placeholder:text-ink-500',
-                    'focus:bg-paper focus:ring-4 focus:ring-ocean-600/50',
-                    nudge ? 'border-wrong-600 bg-wrong-50 animate-shake' : 'border-line',
-                  ].join(' ')}
-                />
+                <form onSubmit={submitName} className="scroll-mt-4">
+                  <div ref={nameRowRef} className="flex gap-2 sm:gap-3">
+                    <input
+                      id="explorer-name"
+                      ref={inputRef}
+                      type="text"
+                      inputMode="text"
+                      enterKeyHint={grade === null ? 'next' : 'go'}
+                      autoComplete="off"
+                      autoCapitalize="words"
+                      autoCorrect="off"
+                      spellCheck={false}
+                      value={name}
+                      onChange={(e) => setName(e.target.value.slice(0, 20))}
+                      onFocus={() => setTyping(true)}
+                      onBlur={() => setTyping(false)}
+                      placeholder="Type your name"
+                      maxLength={20}
+                      className={[
+                        'min-w-0 flex-1 px-5 py-3 max-sm:px-4 max-sm:text-xl min-h-[60px] rounded-[1.25rem] text-2xl kid-text',
+                        'text-ink-900 bg-cream-50 border-[3px] outline-none transition-colors placeholder:text-ink-500',
+                        'focus:bg-paper focus:ring-4 focus:ring-ocean-600/50',
+                        nudge && !name.trim() ? 'border-wrong-600 bg-wrong-50 animate-shake' : 'border-line',
+                      ].join(' ')}
+                    />
+                    <button
+                      type="submit"
+                      // keep the keyboard up while the tap lands (it closes on its own if we move on)
+                      onPointerDown={(e) => e.preventDefault()}
+                      className={[
+                        tileBase,
+                        tileIdle,
+                        'shrink-0 min-h-[60px] min-w-[60px] px-4 kid-text text-xl text-ink-900 bg-quest-300 hover:bg-quest-200',
+                      ].join(' ')}
+                    >
+                      {grade === null ? 'Next ↓' : 'Go! 🚀'}
+                    </button>
+                  </div>
+                </form>
                 {nudge && (
                   <p className="kid-text text-wrong-800 text-lg mt-2" role="alert">
                     {grade === null
@@ -242,7 +289,7 @@ export default function AvatarCreate() {
               </div>
 
               {/* Grade picker (sets the difficulty of every adventure) */}
-              <div>
+              <div ref={gradeRef} className={nudge && grade === null && name.trim() ? 'rounded-[1.25rem] ring-4 ring-wrong-500 ring-offset-4 ring-offset-paper' : ''}>
                 <SectionLabel id="grade-label">
                   What grade are you finishing?{' '}
                   <span className="text-ink-700 text-lg font-semibold">— this picks your quests</span>
@@ -294,6 +341,8 @@ export default function AvatarCreate() {
             </div>
           </motion.div>
         </motion.div>
+        {/* While the keyboard covers the bottom of the page, room to scroll the name field up above it. */}
+        {typing && keyboard > 0 && <div aria-hidden="true" style={{ height: keyboard }} />}
       </div>
     </div>
   )

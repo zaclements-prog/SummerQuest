@@ -316,3 +316,12 @@
     animation: none !important;
   }
 }
+
+/* ── responsive & touch (workstream 2) ── */
+/* `short:` — a short screen (a phone held sideways). Screens use it to put
+   things side by side instead of stacking them, so the primary actions stay on
+   screen without scrolling. This is the SAME definition as the platform shell's
+   (workstream 1); it's repeated here only so this branch builds on its own —
+   drop this line when the shell block is present. */
+@custom-variant short (@media (max-height: 32rem));
+/* ── end responsive & touch (workstream 2) ── */

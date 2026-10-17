@@ -15,7 +15,7 @@ interface TopBarProps {
  */
 export default function TopBar({ back, title, icon, right }: TopBarProps) {
   return (
-    <div className="px-3 sm:px-4 pt-3 pb-2 grid grid-cols-[1fr_auto_1fr] items-center gap-2 sm:gap-3">
+    <div className="px-3 sm:px-4 pt-3 pb-2 short:pt-1.5 short:pb-1 grid grid-cols-[1fr_auto_1fr] items-center gap-2 sm:gap-3">
       <div className="justify-self-start">
         <BackButton to={back.to} label={back.label} onClick={back.onClick} />
       </div>

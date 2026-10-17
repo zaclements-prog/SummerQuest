@@ -15,6 +15,7 @@ import MathGate from './MathGate'
 import { sfx } from '../../lib/sound'
 import { Button, Pill, Card } from '../../components/ui'
 import { TOON } from '../../toon/palette'
+import { SHORT_SCREEN, useMediaQuery } from '../../components/useViewport'
 
 const INK = TOON.outline
 
@@ -29,6 +30,12 @@ export default function TowerDefense({ provider, onComplete, meta, paused = fals
   const [selectedTower, setSelectedTower] = useState<'cannon' | null>('cannon')
   const [hoverPos, setHoverPos] = useState<Vec2 | null>(null)
   const [pending, setPending] = useState<PendingPurchase | null>(null)
+  // A tap where a tower can't go: a red ring + a short reason, so a touch player
+  // (who has no hover preview) knows why nothing happened.
+  const [nope, setNope] = useState<{ pos: Vec2; text: string; id: number } | null>(null)
+  const nopeId = useRef(0)
+  // Phone held sideways: the board fills the height, stats + shop sit beside it.
+  const short = useMediaQuery(SHORT_SCREEN)
   // The RAF loop runs for the component's lifetime and reads these through refs.
   const frozenRef = useRef(false)
   useEffect(() => {
@@ -91,12 +98,15 @@ export default function TowerDefense({ provider, onComplete, meta, paused = fals
     const local = pt.matrixTransform(ctm.inverse())
     const pos: Vec2 = { x: local.x, y: local.y }
     const s = game
-    if (!canAffordTower(s, selectedTower)) {
+    const afford = canAffordTower(s, selectedTower)
+    if (!afford || !canPlaceTower(s, pos)) {
+      sfx.wrong()
+      const id = ++nopeId.current
+      setNope({ pos, id, text: !afford ? `Need ${TOWER_STATS[selectedTower].cost} 🪙` : 'Not here!' })
+      setTimeout(() => setNope((n) => (n && n.id === id ? null : n)), 1100)
       return
     }
-    if (!canPlaceTower(s, pos)) {
-      return
-    }
+    setNope(null)
     sfx.click()
     setPending({
       kind: 'placeTower',
@@ -127,13 +137,34 @@ export default function TowerDefense({ provider, onComplete, meta, paused = fals
     !s.isGameOver &&
     (s.waveProgress === 'idle' || s.waveProgress === 'between-waves')
 
+  const startButton = (
+    <Button variant="success" size="lg" onClick={startWaveClick}>
+      <span aria-hidden="true">▶︎</span>
+      {s.wave === 0 ? 'Start Wave 1' : `Start Wave ${s.wave + 1}`}
+    </Button>
+  )
+
   return (
-    <div className="flex-1 flex flex-col items-center p-3">
-      <StatsBar state={s} />
+    <div
+      className={[
+        'game-surface flex-1 flex flex-col items-center p-3',
+        // sideways phone: board on the left (full height), stats + shop on the right
+        'short:grid short:grid-cols-[auto_minmax(0,15rem)] short:grid-rows-[auto_1fr] short:content-start short:justify-center short:items-start short:gap-x-3 short:pt-1',
+      ].join(' ')}
+    >
+      <div className="short:col-start-2 short:row-start-1">
+        <StatsBar state={s} />
+      </div>
 
       <div
-        className="relative w-full max-w-[760px] mt-3 rounded-toon border-[3px] border-line shadow-card overflow-hidden"
-        style={{ aspectRatio: `${GAME_W} / ${GAME_H}` }}
+        className="relative mt-3 short:mt-0 short:col-start-1 short:row-start-1 short:row-span-2 rounded-toon border-[3px] border-line shadow-card overflow-hidden"
+        style={{
+          aspectRatio: `${GAME_W} / ${GAME_H}`,
+          // As big as fits: the whole board, its stats and the shop stay on screen.
+          width: short
+            ? `min(64vw, calc((100dvh - 140px) * ${GAME_W / GAME_H}))`
+            : `min(760px, 100%, max(320px, calc((100dvh - 330px) * ${GAME_W / GAME_H})))`,
+        }}
       >
         <svg
           viewBox={`0 0 ${GAME_W} ${GAME_H}`}
@@ -159,19 +190,17 @@ export default function TowerDefense({ provider, onComplete, meta, paused = fals
           <TowersView state={s} />
           <EnemiesView state={s} />
           <ProjectilesView state={s} />
-          {hoverPos && selectedTower && !pending && (
+          {hoverPos && selectedTower && !pending && !nope && (
             <PlacementPreview pos={hoverPos} state={s} />
           )}
+          {nope && <NopeMark pos={nope.pos} text={nope.text} />}
           <FloatsView state={s} />
         </svg>
 
+        {/* Big screens: the start button floats on the board. Phones: it sits
+            under the board instead, so it doesn't cover the spots you tap. */}
         {showStart && !s.isGameOver && (
-          <div className="absolute left-1/2 -translate-x-1/2 top-1/3">
-            <Button variant="success" size="lg" onClick={startWaveClick}>
-              <span aria-hidden="true">▶︎</span>
-              {s.wave === 0 ? 'Start Wave 1' : `Start Wave ${s.wave + 1}`}
-            </Button>
-          </div>
+          <div className="absolute left-1/2 -translate-x-1/2 top-1/3 hidden md:block short:hidden">{startButton}</div>
         )}
 
         {s.isGameOver && (
@@ -181,14 +210,17 @@ export default function TowerDefense({ provider, onComplete, meta, paused = fals
         )}
       </div>
 
-      <TowerPicker
-        state={s}
-        selected={selectedTower}
-        onSelect={(k) => {
-          sfx.click()
-          setSelectedTower(k)
-        }}
-      />
+      <div className="mt-3 flex flex-wrap items-center justify-center gap-3 short:col-start-2 short:row-start-2 short:flex-col short:items-stretch">
+        {showStart && !s.isGameOver && <div className="flex justify-center md:hidden short:flex">{startButton}</div>}
+        <TowerPicker
+          state={s}
+          selected={selectedTower}
+          onSelect={(k) => {
+            sfx.click()
+            setSelectedTower(k)
+          }}
+        />
+      </div>
 
       {pending && (
         <MathGate
@@ -209,7 +241,7 @@ export default function TowerDefense({ provider, onComplete, meta, paused = fals
 
 function StatsBar({ state: s }: { state: GameState }) {
   return (
-    <div className="flex gap-2 flex-wrap justify-center">
+    <div className="flex gap-2 flex-wrap justify-center short:gap-1.5">
       <Pill tone="quest" icon="🪙" className="text-lg px-4 py-0.5 tabular-nums">
         {s.gold}
       </Pill>
@@ -263,7 +295,7 @@ function TowerPicker({
   onSelect: (k: 'cannon' | null) => void
 }) {
   return (
-    <div className="mt-3 flex gap-3 justify-center flex-wrap">
+    <div className="flex gap-3 justify-center flex-wrap">
       {(['cannon'] as const).map((k) => {
         const stats = TOWER_STATS[k]
         const afford = s.gold >= stats.cost
@@ -280,7 +312,7 @@ function TowerPicker({
             disabled={!afford}
             aria-pressed={active}
             className={[
-              'kid-text rounded-[1.25rem] border-[3px] px-6 py-2.5 min-h-[48px] text-center',
+              'kid-text rounded-[1.25rem] border-[3px] px-6 py-2.5 short:py-1.5 min-h-[48px] text-center',
               'transition-[translate,box-shadow,background-color] duration-100 active:translate-y-[3px]',
               'focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ocean-600/70 focus-visible:ring-offset-2',
               stateClass,
@@ -453,6 +485,19 @@ function FloatsView({ state: s }: { state: GameState }) {
           </text>
         )
       })}
+    </g>
+  )
+}
+
+/** Where a tapped tower can't go: a red dashed ring and a short reason. */
+function NopeMark({ pos, text }: { pos: Vec2; text: string }) {
+  const y = pos.y < 60 ? pos.y + 44 : pos.y - 30
+  return (
+    <g pointerEvents="none">
+      <circle cx={pos.x} cy={pos.y} r="20" fill={TOON.flowerRed} opacity={0.55} stroke={INK} strokeWidth="2.5" strokeDasharray="4 4" />
+      <text x={pos.x} y={y} textAnchor="middle" fontSize="20" fontWeight="bold" fill="#fff" stroke={INK} strokeWidth="5" paintOrder="stroke" fontFamily="Fredoka, system-ui, sans-serif">
+        {text}
+      </text>
     </g>
   )
 }

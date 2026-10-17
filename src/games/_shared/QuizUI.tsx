@@ -1,7 +1,9 @@
+import { createContext, useContext } from 'react'
 import type { ReactNode } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import type { ProblemAnswer } from '../../lib/problem'
 import { ProgressBar } from '../../components/ui'
+import { WIDE_SHORT, useMediaQuery } from '../../components/useViewport'
 
 /**
  * Shared, presentational quiz-UI layer used by every multiple-choice game and the
@@ -16,8 +18,8 @@ import { ProgressBar } from '../../components/ui'
 
 export function QuizProgress({ current, total }: { current: number; total: number }) {
   return (
-    <div className="w-full max-w-md mb-4">
-      <div className="kid-text text-base text-ink-700 text-center mb-1.5">
+    <div className="w-full max-w-md mb-4 short:mb-2">
+      <div className="kid-text text-base text-ink-700 text-center mb-1.5 short:mb-1 short:text-sm">
         Question {current} of {total}
       </div>
       <ProgressBar value={current} max={total} tone="quest" />
@@ -40,14 +42,52 @@ export function QuestionPrompt({ children }: { children: ReactNode }) {
       transition={{ type: 'spring', stiffness: 260, damping: 22 }}
       className={[
         'bg-paper text-ink-900 kid-text',
-        short ? 'font-bold text-3xl md:text-5xl' : 'font-semibold text-2xl md:text-3xl',
+        short ? 'font-bold text-3xl md:text-5xl short:text-3xl' : 'font-semibold text-2xl md:text-3xl short:text-xl',
         'text-center leading-snug',
-        'rounded-toon px-6 py-5 max-w-2xl w-full',
+        'rounded-toon px-6 py-5 max-sm:px-4 max-sm:py-3.5 short:px-4 short:py-2.5 max-w-2xl w-full',
         'border-[3px] border-line shadow-card',
       ].join(' ')}
     >
       {children}
     </motion.div>
+  )
+}
+
+// ── Question beside answers (wide, short screens) ─────────────────────────────
+// Stacked on phones held upright, tablets held upright and big screens; on a
+// phone held sideways or a wide tablet in landscape the question (and its
+// picture or passage) sits on the left and the answers on the right, pinned in
+// view, so a kid never has to scroll to reach the buttons.
+
+const SplitContext = createContext(false)
+
+export function QuizSplit({
+  question,
+  answers,
+  gap = '',
+  center = false,
+}: {
+  question: ReactNode
+  answers: ReactNode
+  /** Space between question and answers when stacked (e.g. 'gap-5'). */
+  gap?: string
+  /** Side by side: centre the two columns vertically (no tall picture). */
+  center?: boolean
+}) {
+  const split = useMediaQuery(WIDE_SHORT)
+  return (
+    <SplitContext.Provider value={split}>
+      <div
+        className={
+          split
+            ? `w-full max-w-5xl grid grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] gap-4 lg:gap-6 ${center ? 'items-center' : 'items-start'}`
+            : `w-full flex flex-col items-center ${gap}`
+        }
+      >
+        <div className="w-full flex flex-col items-center">{question}</div>
+        <div className={`w-full flex flex-col items-center ${split ? 'sticky top-2' : ''}`}>{answers}</div>
+      </div>
+    </SplitContext.Provider>
   )
 }
 
@@ -68,14 +108,18 @@ interface AnswerGridProps {
 export function AnswerGrid({ options, answer, picked, onPick, disabled }: AnswerGridProps) {
   const reduced = useReducedMotion()
   const revealed = picked !== null
-  // Long labels (e.g. word answers) read better stacked in a single column.
+  // Long labels (e.g. word answers) read better stacked in a single column —
+  // except beside the question (short screen), where a column of four would run
+  // off the bottom: there, word answers up to a short phrase stay two-up.
+  const split = useContext(SplitContext)
   const longLabels = options.some((o) => String(o).length > 8)
+  const oneColumn = longLabels && !(split && options.every((o) => String(o).length <= 18))
 
   return (
     <div
       className={[
-        'grid gap-3 w-full max-w-md',
-        longLabels ? 'grid-cols-1' : 'grid-cols-2',
+        'grid gap-3 short:gap-2.5 w-full max-w-md',
+        oneColumn ? 'grid-cols-1' : 'grid-cols-2',
       ].join(' ')}
     >
       {options.map((opt) => (
@@ -151,7 +195,7 @@ function AnswerButton({
       }
       className={[
         'choice kid-text font-bold relative justify-center text-center !border-[3px]',
-        longLabels ? 'text-xl min-h-[60px]' : 'text-3xl min-h-[68px]',
+        longLabels ? 'text-xl min-h-[60px] short:min-h-[52px] short:text-lg' : 'text-3xl min-h-[68px] short:min-h-[56px]',
         'transition-[translate,box-shadow,background-color] duration-100',
         stateClass[state],
         'focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ocean-600/70 focus-visible:ring-offset-2',
