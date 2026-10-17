@@ -4,12 +4,14 @@ import { describe, it, expect } from 'vitest'
 import { allLessons } from '../lessons'
 import narrationJson from '../narration.json'
 import manifestJson from '../../../public/tts/manifest.json'
+import voiceJson from '../narrationVoice.json'
 
-// Must match scripts/generate-tts.mjs (VOICE + hash recipe + file layout).
-const VOICE = 'en-US-JennyNeural'
+// The voice id is part of every clip's hash (see docs/narration-handoff.md):
+// switching voices means re-rendering every clip.
+const VOICE = voiceJson.voice
 
 type Narration = Record<string, { stepId: string; text: string }[]>
-type Manifest = Record<string, { file: string; hash: string }>
+type Manifest = Record<string, { file: string; hash: string; duration?: number; words?: string }>
 const narration: Narration = narrationJson
 const manifest: Manifest = manifestJson
 
