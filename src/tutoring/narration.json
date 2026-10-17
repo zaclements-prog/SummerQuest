@@ -24,7 +24,7 @@
     },
     {
       "stepId": "answer",
-      "text": "Each of the three friends gets four cookies. So twelve divided by three equals four."
+      "text": "Let's deal them out fairly: one for you, one for you, one for you, and again, until they are all gone. Each of the three friends gets four cookies. So twelve divided by three equals four."
     },
     {
       "stepId": "inverse",
@@ -57,6 +57,10 @@
     {
       "stepId": "places",
       "text": "Every digit sits in a special place. From the right, we have ones, then tens, then hundreds, then thousands. The place a digit sits in tells you its value."
+    },
+    {
+      "stepId": "regroup",
+      "text": "Here is the secret of place value. Ten ones bundle together to make one ten. Ten tens bundle together to make one hundred. So each place is worth ten times the place to its right."
     },
     {
       "stepId": "value",

@@ -91,3 +91,46 @@ export function slicePath(cx: number, cy: number, r: number, a0: number, a1: num
   const large = a1 - a0 > Math.PI ? 1 : 0
   return `M ${cx} ${cy} L ${x0.toFixed(2)} ${y0.toFixed(2)} A ${r} ${r} 0 ${large} 1 ${x1.toFixed(2)} ${y1.toFixed(2)} Z`
 }
+
+// ── extras (additive) ────────────────────────────────────────────────────────
+
+export const lerp = (a: number, b: number, k: number) => a + (b - a) * k
+
+/** 0→1 progress between two absolute times (eased), e.g. between two cues. */
+export const between = (t: number, a: number, b: number, easing: Easing = ease.inOutCubic) => easing(progress(t, a, b - a))
+
+/** Deterministic pseudo-random in [0, 1) for seed `i` (confetti, jitter): pure, so frames are stable. */
+export function rand(i: number): number {
+  const x = Math.sin(i * 127.1 + 311.7) * 43758.5453
+  return x - Math.floor(x)
+}
+
+/**
+ * A point along a curved flight from `from` to `to` (quadratic arc that rises
+ * `lift` px above the straight line) at progress k ∈ [0, 1]. Objects that get
+ * "dealt" or "tossed" travel this way.
+ */
+export function arc(from: [number, number], to: [number, number], lift: number, k: number): [number, number] {
+  const cx = (from[0] + to[0]) / 2
+  const cy = Math.min(from[1], to[1]) - lift
+  const u = 1 - k
+  return [u * u * from[0] + 2 * u * k * cx + k * k * to[0], u * u * from[1] + 2 * u * k * cy + k * k * to[1]]
+}
+
+/** A decaying wiggle starting at `at` (squash on landing, "no!" shakes). */
+export function wobble(t: number, at: number, { amp = 1, freq = 3, decay = 4 } = {}): number {
+  const x = t - at
+  if (x <= 0) return 0
+  return amp * Math.sin(x * freq * Math.PI * 2) * Math.exp(-decay * x)
+}
+
+/** Extra easings (kept out of `ease` so its shape stays stable for other scenes). */
+export const ease2 = {
+  inCubic: (x: number) => x * x * x,
+  outExpo: (x: number) => (x === 1 ? 1 : 1 - Math.pow(2, -10 * x)),
+  inOutExpo: (x: number) => (x === 0 ? 0 : x === 1 ? 1 : x < 0.5 ? Math.pow(2, 20 * x - 10) / 2 : (2 - Math.pow(2, -20 * x + 10)) / 2),
+  inOutBack: (x: number) => {
+    const c2 = 1.70158 * 1.525
+    return x < 0.5 ? (Math.pow(2 * x, 2) * ((c2 + 1) * 2 * x - c2)) / 2 : (Math.pow(2 * x - 2, 2) * ((c2 + 1) * (x * 2 - 2) + c2) + 2) / 2
+  },
+} satisfies Record<string, Easing>

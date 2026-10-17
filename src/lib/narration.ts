@@ -64,6 +64,8 @@ interface ClockState {
   cps: number // estimated characters per second (speech / virtual)
   clipDuration: number | null // from the manifest
   aligned: { start: number; s: number }[] | null
+  paused: boolean // frozen by pause(): now() holds at pausedAt until resume()
+  pausedAt: number
 }
 
 const perf = () => (typeof performance !== 'undefined' ? performance.now() : Date.now())
@@ -77,6 +79,7 @@ export function useNarration(lessonId: string, stepId: string, text: string) {
   // nothing starts or speaks after the kid has moved on.
   const genRef = useRef(0)
   const [playing, setPlaying] = useState(false)
+  const [paused, setPaused] = useState(false)
   const clockRef = useRef<ClockState>({
     source: 'virtual',
     start: perf(),
@@ -85,6 +88,8 @@ export function useNarration(lessonId: string, stepId: string, text: string) {
     cps: DEFAULT_CHARS_PER_SEC,
     clipDuration: null,
     aligned: null,
+    paused: false,
+    pausedAt: 0,
   })
 
   const textRef = useRef(text)
@@ -104,6 +109,7 @@ export function useNarration(lessonId: string, stepId: string, text: string) {
     return {
       now() {
         const s = c()
+        if (s.paused) return s.pausedAt
         if (s.source === 'audio' && s.audio) {
           if (s.endedAt != null) return duration() + (perf() - s.endedAt) / 1000
           return s.audio.currentTime
@@ -127,6 +133,7 @@ export function useNarration(lessonId: string, stepId: string, text: string) {
     s.endedAt = null
     s.cps = DEFAULT_CHARS_PER_SEC
     s.aligned = null
+    s.paused = false
   }
 
   const stop = () => {
@@ -143,6 +150,83 @@ export function useNarration(lessonId: string, stepId: string, text: string) {
     window.speechSynthesis?.cancel()
     goVirtual(at)
     setPlaying(false)
+    setPaused(false)
+  }
+
+  /**
+   * Freeze the narration AND the visuals where they are (resume() carries on
+   * from the same moment). Works for the audio clip, browser speech and the
+   * silent timeline alike.
+   */
+  const pause = () => {
+    const s = clockRef.current
+    if (s.paused) return
+    const at = clock.now()
+    s.paused = true
+    s.pausedAt = at
+    const audio = audioRef.current
+    if (s.source === 'audio' && audio && s.endedAt == null) {
+      audio.pause() // keeps currentTime; the pending play() rejects with AbortError (ignored)
+    } else if (s.source === 'speech') {
+      genRef.current++ // the cancelled utterance's callbacks are now stale
+      window.speechSynthesis?.cancel()
+    } else if (s.source === 'virtual') {
+      genRef.current++ // a clip still loading must not start while we're paused
+    }
+    setPlaying(false)
+    setPaused(true)
+  }
+
+  /** Carry on after pause(). Speech restarts from the word it stopped on. */
+  const resume = () => {
+    const s = clockRef.current
+    if (!s.paused) return
+    const at = s.pausedAt
+    s.paused = false
+    setPaused(false)
+    const audio = audioRef.current
+    if (s.source === 'audio' && s.endedAt != null) {
+      // the clip already finished: keep counting from the frozen moment
+      s.endedAt = perf() - Math.max(0, at - clock.duration()) * 1000
+      return
+    }
+    if (s.source === 'audio' && audio && s.audio === audio) {
+      const gen = genRef.current
+      setPlaying(true)
+      audio.play().catch((e: unknown) => {
+        if (e instanceof DOMException && e.name === 'AbortError') return
+        if (gen !== genRef.current) return
+        goVirtual(at) // can't play any more: keep the visuals going silently
+        setPlaying(false)
+      })
+      return
+    }
+    if (s.source === 'speech') {
+      const text = textRef.current
+      let from = Math.min(text.length, Math.round(at * s.cps))
+      while (from > 0 && /\S/.test(text[from - 1])) from-- // back to the start of that word
+      if (from >= text.length - 1) {
+        goVirtual(at) // nothing left to say
+        return
+      }
+      const gen = ++genRef.current
+      const offset = from / s.cps
+      s.start = perf() - offset * 1000
+      speak(text.slice(from), setPlaying, {
+        onStart: () => {
+          if (gen === genRef.current) clockRef.current.start = perf() - offset * 1000
+        },
+        onBoundary: (charIndex) => {
+          if (gen !== genRef.current) return
+          const st = clockRef.current
+          const elapsed = (perf() - st.start) / 1000
+          if (elapsed > 0.4 && charIndex + from > 8) st.cps = (charIndex + from) / elapsed
+        },
+      })
+      return
+    }
+    // silent timeline: carry on from where it froze
+    s.start = perf() - at * 1000
   }
 
   const startSpeech = (gen: number) => {
@@ -219,7 +303,7 @@ export function useNarration(lessonId: string, stepId: string, text: string) {
   // switched off. Deferred so we don't setState synchronously in the effect body.
   useEffect(() => {
     goVirtual(0)
-    if (!soundEnabled) return
+    if (!soundEnabled) return () => setPaused(false)
     const t = setTimeout(() => {
       play()
     }, 0)
@@ -233,10 +317,13 @@ export function useNarration(lessonId: string, stepId: string, text: string) {
   /** Restart the visuals (and the narration, if sound is on). */
   const replay = () => {
     if (soundEnabled) void play()
-    else goVirtual(0)
+    else {
+      goVirtual(0)
+      setPaused(false)
+    }
   }
 
-  return { playing, play, stop, replay, clock }
+  return { playing, paused, play, stop, pause, resume, replay, clock }
 }
 
 function speak(

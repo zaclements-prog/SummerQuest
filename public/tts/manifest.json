@@ -19,10 +19,6 @@
     "file": "tts/division/share.mp3",
     "hash": "b89355d689"
   },
-  "division/answer": {
-    "file": "tts/division/answer.mp3",
-    "hash": "48cf85782f"
-  },
   "division/inverse": {
     "file": "tts/division/inverse.mp3",
     "hash": "cb937522e6"
