@@ -19,24 +19,33 @@ Everything runs locally in the browser; progress is saved in `localStorage`.
   Word Problem Woods, Reading Reef, Writing Workshop, Science Summit and
   Tower Battlefront (tower defense where buying a tower costs a math answer).
 - **Daily Challenge** — 5 questions from the day's subject, once per (local) day.
-- **Tutor** — 11 narrated mini-lessons (pre-generated MP3s, browser speech as fallback).
+- **Tutor** — 11 narrated lessons played as motion graphics: every step is an
+  animated scene timed to its narration (`cue('a spoken phrase')`), with
+  karaoke captions, replay and animated check questions. Narration comes from
+  pre-rendered clips (browser speech as fallback); see
+  [`docs/narration-handoff.md`](docs/narration-handoff.md) for re-rendering the voice.
 - **This Week's Focus** — finds the skills the child is missing and recommends a
   lesson + practice stage.
 - **Daily learning goal** — 2 × 15 minutes of active learning per day earns bonus coins.
-- **3D intrinsic mini-games** — four arena-style games where the game mechanic
-  *is* the math (no quiz-doors): Crystal Golems (Division Dunes — throw the
-  divisor crystal that shatters the golem into exactly the pen's camels),
-  Fraction Forge (Fraction Falls — measure the recipe strip), Cloud Keeper
-  (Science Summit — run the water cycle), Times Grove (Multiplication Mesa —
-  plant the array plot that grows the order). Same stars/coins/tutor award path
-  as the 2D stages.
+- **3D mini-games** where the kid *builds* the answer (the math is the mechanic),
+  each a full run with warm-ups, a finale, score, streak and a personal best:
+  Crystal Golems (Division Dunes — golems march on the camel pen; throw the
+  divisor that shatters one into exactly the quotient's camels; Giant Golem
+  finale), Candy Forge (Fraction Falls — stamp 1/d slabs and pour them to fill
+  the order exactly), Cloud Keeper (Science Summit — guide Drip the droplet
+  around the water cycle; storm rescue finale), Times Grove (Multiplication Mesa
+  — plant the rows × columns array yourself). Same stars/coins/tutor award path
+  as the 2D stages. Design notes: `docs/superpowers/specs/2026-10-17-mini-games-fun-pass.md`.
 - **3D Home** — buy furniture and decorate a room; become (and dress up) a creature.
 - **3D World** — the game's hub: a storybook toon island with a town, a river and an area
-  for every subject. Walk up
-  to an NPC and press E to pick a stage and play it without leaving the World;
+  for every subject, and where the app opens. Walk with WASD/arrows or tap/click
+  to walk (touch screens too). Walk up
+  to an NPC and press E (or tap) to pick a stage and play it without leaving the World;
   you come back where you stood. The **Schoolhouse** (owl teacher) has the
   Daily Challenge, This Week's Focus and all Tutor lessons; the **Library**
-  (bookworm) has Reading Reef and the reading/writing lessons.
+  (bookworm) has Reading Reef and the reading/writing lessons. Your **House** is
+  your Home room: step inside and "Decorate my room". ⚙️ picks graphics
+  (Auto measures the computer and drops shadows/outlines if it's slow).
 - **Badges, levels, streaks**, a **Progress** screen, and a **Parent Dashboard**
   (stats, optional local-AI settings, reset behind a grown-up check).
 
@@ -90,9 +99,13 @@ Without the server everything still works: writing is graded offline.
   (`&cam=dx,dy,dz` sets the camera offset; `?studio=at&x=..&z=..` looks at any point).
 - `VITE_DEV_TOOLS=true` in `.env.local` shows "Seed sample week" on
   This Week's Focus (fills in fake attempts — never enable it for the child).
-- `npm run tts` regenerates lesson narration MP3s after editing lesson text
-  (needs internet). Steps without a current MP3 fall back to the browser's
-  speech voice; a test fails if an MP3 no longer matches its step's text.
+- Narration: after editing lesson text run `npm run tts:dump` (lesson text →
+  `narration.json`) and `npm run tts:prune` (drops clips that no longer match).
+  Re-render with the local Higgs/Qwen pipeline (`docs/narration-handoff.md`) or
+  `npm run tts` (Edge voice, needs internet); `npm run tts:check` validates the
+  clips. Steps without a current clip fall back to the browser's speech voice.
+- `window.__sqMotionT = 3.2` (dev) pins a lesson's motion graphic at 3.2 s for
+  screenshots.
 
 ## Checks
 
@@ -189,8 +202,11 @@ in a row retire a fact from the boost.
 - [x] Weekly focus: track missed skills and recommend lessons/practice
 - [x] 3D World — toon island with all 12 areas, in-world stage launching,
       Schoolhouse and Library hubs
-- [ ] Make the World the main hub (replace the 2D map; fold the Home room into
-      the World's house)
+- [x] Make the World the main hub (2D map secondary; the Home room is the House)
+- [x] Touch / tap-to-walk and a graphics-quality setting
+- [x] Motion-graphics lessons synced to narration
+- [x] Mini-games fun pass (construct-the-answer mechanics, run arcs, juice)
+- [ ] Re-render narration with a local Higgs/Qwen voice (`docs/narration-handoff.md`)
 - [x] Adaptive difficulty inside a stage (weight the facts a kid misses)
 - [ ] Electron wrapper for a "real" desktop app
 - [ ] Multi-profile (more than one kid per install)
