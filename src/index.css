@@ -1,70 +1,142 @@
 @import "tailwindcss";
 
+/*
+ * SummerQuest 2D design tokens — the "soft toon" look of the 3D World and Home
+ * (src/toon/palette.ts) carried onto every 2D screen: sunny pastels, cream
+ * paper cards, thin warm-dark outlines (#3a2c38) and a hazy sky.
+ *
+ * The scale NAMES are the old ones (quest/island/ocean/monster/correct/wrong/ink)
+ * so every screen, HUD and lesson keeps working; their VALUES are retuned to the
+ * toon palette. Rules of thumb:
+ *   - 300–500 are pastel fills: put ink-900 text on them, never white.
+ *   - 600 is the deep fill that still carries white text (AA, except quest).
+ *   - 700–900 are text shades: AA on paper/cream and on the soft 50–200 tints.
+ */
 @theme {
-  --color-quest-50: #fef9e7;
-  --color-quest-100: #fdf0bc;
-  --color-quest-200: #fce58e;
-  --color-quest-300: #fad95f;
-  --color-quest-400: #f9cd31;
-  --color-quest-500: #f7c102;
-  --color-quest-600: #c69b02;
-  --color-quest-700: #957401;
-  --color-quest-800: #644d01;
-  --color-quest-900: #322700;
+  /* sunshine / gold (TOON.gold, flowerYellow) */
+  --color-quest-50: #fff9e8;
+  --color-quest-100: #fff0c2;
+  --color-quest-200: #ffe594;
+  --color-quest-300: #ffd95e;
+  --color-quest-400: #ffcf4d;
+  --color-quest-500: #f5b93b;
+  --color-quest-600: #d8901f;
+  --color-quest-700: #9a600c;
+  --color-quest-800: #6e430a;
+  --color-quest-900: #4a2d08;
 
-  --color-island-400: #5eead4;
-  --color-island-500: #2dd4bf;
-  --color-island-600: #14b8a6;
-  --color-island-700: #0f766e;
-  --color-island-800: #115e59;
+  /* mint / teal (TOON.mint, roofTeal) */
+  --color-island-50: #ebf9f5;
+  --color-island-100: #d2f2ea;
+  --color-island-200: #b4ebdc;
+  --color-island-300: #9fe6c8;
+  --color-island-400: #74d3bd;
+  --color-island-500: #4fb3a6;
+  --color-island-600: #2f8378;
+  --color-island-700: #276d64;
+  --color-island-800: #225f57;
+  --color-island-900: #1a4540;
 
-  --color-ocean-50: #eff6ff;
-  --color-ocean-100: #dbeafe;
-  --color-ocean-200: #bfdbfe;
-  --color-ocean-300: #93c5fd;
-  --color-ocean-400: #60a5fa;
-  --color-ocean-500: #3b82f6;
-  --color-ocean-600: #2563eb;
-  --color-ocean-700: #1d4ed8;
-  --color-ocean-800: #1e40af;
-  --color-ocean-900: #1e3a8a;
+  /* sky & water (TOON.sky, water, waterDeep) */
+  --color-ocean-50: #eef8fd;
+  --color-ocean-100: #dcf0fb;
+  --color-ocean-200: #bfe5f8;
+  --color-ocean-300: #9fd3f2;
+  --color-ocean-400: #6cc7ea;
+  --color-ocean-500: #4aa6d6;
+  --color-ocean-600: #2f7bb0;
+  --color-ocean-700: #286895;
+  --color-ocean-800: #22547a;
+  --color-ocean-900: #1f3a56;
 
-  --color-monster-400: #c084fc;
-  --color-monster-500: #a855f7;
-  --color-monster-600: #9333ea;
-  --color-monster-700: #7e22ce;
-  --color-monster-800: #6b21a8;
+  /* lilac / plum (TOON.lilac, flowerPurple, roofPlum) */
+  --color-monster-50: #f6f1fd;
+  --color-monster-100: #ece3fb;
+  --color-monster-200: #ddcdf7;
+  --color-monster-300: #cdb8f5;
+  --color-monster-400: #b79af0;
+  --color-monster-500: #9c78c9;
+  --color-monster-600: #8461b6;
+  --color-monster-700: #6f4ea3;
+  --color-monster-800: #573c80;
+  --color-monster-900: #3e2b5c;
 
-  --color-correct-400: #4ade80;
-  --color-correct-500: #22c55e;
-  --color-correct-600: #16a34a;
-  --color-correct-700: #15803d;
+  /* leaf green (TOON.leafLight, leaf, leafDark) */
+  --color-correct-50: #effaea;
+  --color-correct-100: #dcf3d1;
+  --color-correct-200: #c3eab2;
+  --color-correct-300: #a9e08f;
+  --color-correct-400: #8edb7c;
+  --color-correct-500: #6cc56b;
+  --color-correct-600: #3f8f4b;
+  --color-correct-700: #33783c;
+  --color-correct-800: #2b6233;
+  --color-correct-900: #1f4625;
 
-  --color-wrong-400: #f87171;
-  --color-wrong-500: #ef4444;
-  --color-wrong-600: #dc2626;
-  --color-wrong-700: #b91c1c;
+  /* coral (TOON.coral, flowerRed, roofRed) */
+  --color-wrong-50: #fff3ef;
+  --color-wrong-100: #ffe4dc;
+  --color-wrong-200: #ffc9b8;
+  --color-wrong-300: #ffb09a;
+  --color-wrong-400: #ff9f80;
+  --color-wrong-500: #f2766b;
+  --color-wrong-600: #c94c42;
+  --color-wrong-700: #a93a33;
+  --color-wrong-800: #8a302b;
+  --color-wrong-900: #5e211e;
 
-  /* Neutral ink scale for body text */
-  --color-ink-500: #64748b;
-  --color-ink-700: #334155;
-  --color-ink-900: #0f172a;
+  /* warm plum ink for text (ink-900 is the toon outline color) */
+  --color-ink-300: #cbbfc6;
+  --color-ink-400: #a493a0;
+  --color-ink-500: #7a6874;
+  --color-ink-600: #66545f;
+  --color-ink-700: #5b4a57;
+  --color-ink-800: #4a3a47;
+  --color-ink-900: #3a2c38;
 
-  /* Near-white surface */
-  --color-paper: #fbfdff;
+  /* the thin warm-dark outline every toon shape wears (TOON.outline) */
+  --color-line: #3a2c38;
+
+  /* paper + sand surfaces (TOON.wallCream, sand, path) */
+  --color-paper: #fffaf0;
+  --color-cream-50: #fffdf7;
+  --color-cream-100: #fdf3dc;
+  --color-cream-200: #f6e6c4;
+  --color-cream-300: #ecd5a8;
+  --color-cream-400: #e2c48a;
+
+  /* hazy sky behind every 2D screen */
+  --color-sky-top: #a9dcf7;
+  --color-sky-mid: #cdebf8;
+  --color-sky-haze: #fbf1dc;
 
   --font-display: "Fredoka", "Comic Sans MS", system-ui, sans-serif;
-  --font-body: system-ui, -apple-system, sans-serif;
+  --font-body: "Fredoka", system-ui, -apple-system, sans-serif;
+
+  --radius-toon: 1.75rem;
+
+  /* chunky toon depth: a solid ledge + a soft warm drop shadow */
+  --shadow-card: 0 4px 0 0 rgb(58 44 56 / 0.1), 0 16px 32px -14px rgb(58 44 56 / 0.3);
+  --shadow-ledge: 0 4px 0 0 var(--color-line);
+  --shadow-ledge-sm: 0 2px 0 0 var(--color-line);
+  --shadow-pop: 0 6px 0 0 rgb(58 44 56 / 0.12), 0 24px 48px -12px rgb(58 44 56 / 0.45);
 
   --animate-bounce-soft: bounce-soft 0.6s ease-out;
   --animate-pop: pop 0.3s ease-out;
   --animate-shake: shake 0.4s ease-in-out;
   --animate-glow: glow 2s ease-in-out infinite;
+  --animate-bob: bob 2.6s ease-in-out infinite;
+  --animate-spin-slow: spin 24s linear infinite;
 }
 
 @keyframes bounce-soft {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-12px); }
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
 }
 
 @keyframes pop {
@@ -80,78 +152,167 @@
 }
 
 @keyframes glow {
-  0%, 100% { filter: drop-shadow(0 0 8px currentColor); }
-  50% { filter: drop-shadow(0 0 18px currentColor); }
+  0%, 100% { filter: drop-shadow(0 0 6px currentColor); }
+  50% { filter: drop-shadow(0 0 14px currentColor); }
 }
 
-html, body, #root {
-  margin: 0;
-  height: 100%;
-  font-family: var(--font-body);
-  -webkit-font-smoothing: antialiased;
-  background: linear-gradient(180deg, #93c5fd 0%, #60a5fa 100%);
+@layer base {
+  html, body, #root {
+    margin: 0;
+    height: 100%;
+  }
+
+  /* The same hazy sky the World is lit by: soft blue up top, warm haze below.
+     It lives on the root so it paints the whole canvas (long pages never show
+     a seam); it is pinned to the viewport, and where `fixed` is unsupported it
+     simply ends in the flat haze color, which is the gradient's last stop. */
+  html {
+    color: var(--color-ink-900);
+    background-color: var(--color-sky-haze);
+    background-image:
+      radial-gradient(120% 60% at 50% 0%, rgb(255 255 255 / 0.55) 0%, rgb(255 255 255 / 0) 60%),
+      linear-gradient(180deg, var(--color-sky-top) 0%, var(--color-sky-mid) 42%, var(--color-sky-haze) 100%);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+
+  body {
+    font-family: var(--font-body);
+    font-weight: 500;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  button {
+    cursor: pointer;
+    transition: transform 0.08s ease-out, box-shadow 0.15s ease-out, background-color 0.15s ease-out;
+  }
+
+  /* every tap gets a little squish (framer-driven buttons override it inline) */
+  button:active:not(:disabled) {
+    transform: scale(0.97);
+  }
 }
 
-.kid-text {
-  font-family: var(--font-display);
-  font-weight: 600;
-  letter-spacing: -0.01em;
+@layer components {
+  .kid-text {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.005em;
+  }
+
+  /* Text on the sky background (headings, captions between cards). The sky is
+     light, so this is warm ink with a soft paper halo — AA everywhere. */
+  .text-sky {
+    color: var(--color-ink-900);
+    text-shadow: 0 1px 0 rgb(255 255 255 / 0.55);
+  }
+
+  /* Responsive display/hero heading */
+  .text-display {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    font-size: clamp(2.75rem, 9vw, 5.5rem);
+    line-height: 1;
+  }
+
+  /* Toon lettering: cream fill with the warm outline drawn behind it. */
+  .toon-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--color-paper);
+    -webkit-text-stroke: 0.16em var(--color-line);
+    paint-order: stroke fill;
+    text-shadow: 0 0.09em 0 var(--color-line);
+    letter-spacing: 0.005em;
+  }
+
+  /* Legacy chunky button (kept for any old callers; the Button component is preferred). */
+  .btn-quest {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.5rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: 1.5rem;
+    border: 3px solid var(--color-line);
+    box-shadow: var(--shadow-ledge);
+  }
+  .btn-quest:active {
+    box-shadow: var(--shadow-ledge-sm);
+    transform: translateY(2px);
+  }
+
+  /* Base style for quiz answer/choice buttons */
+  .choice {
+    font-family: var(--font-display);
+    font-weight: 600;
+    border-width: 3px;
+    border-style: solid;
+    border-radius: 1.25rem;
+    min-height: 56px;
+    padding: 0.75rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: transform 0.1s ease-out, box-shadow 0.12s ease-out, background-color 0.15s ease-out;
+  }
+
+  /* Lined notebook paper (WritingPad) */
+  .paper-lines {
+    background-color: var(--color-paper);
+    background-image:
+      linear-gradient(90deg, transparent 2.6rem, rgb(242 118 107 / 0.35) 2.6rem, rgb(242 118 107 / 0.35) calc(2.6rem + 2px), transparent calc(2.6rem + 2px)),
+      repeating-linear-gradient(180deg, transparent 0, transparent calc(2rem - 2px), rgb(74 166 214 / 0.28) calc(2rem - 2px), rgb(74 166 214 / 0.28) 2rem);
+    background-position: 0 0.75rem;
+    line-height: 2rem;
+  }
+
+  /* A sunburst behind trophies and medallions */
+  .sunburst {
+    background: repeating-conic-gradient(from 0deg, rgb(255 207 77 / 0.55) 0deg 12deg, rgb(255 207 77 / 0) 12deg 30deg);
+    -webkit-mask-image: radial-gradient(circle, #000 35%, transparent 70%);
+    mask-image: radial-gradient(circle, #000 35%, transparent 70%);
+  }
 }
 
-button:active {
-  transform: scale(0.97);
+@keyframes map-drift {
+  from { transform: translateX(-2.5px); }
+  to { transform: translateX(2.5px); }
 }
 
-button {
-  transition: transform 0.08s ease-out, box-shadow 0.2s ease-out, background-color 0.15s ease-out;
-  cursor: pointer;
+@keyframes map-bob {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-0.6px) rotate(-1.5deg); }
 }
 
-/* Big tappable hit targets for kids */
-.btn-quest {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1.5rem;
-  padding: 0.75rem 1.75rem;
-  border-radius: 1.5rem;
-  border: 4px solid;
-  box-shadow: 0 6px 0 0 currentColor, 0 10px 16px -4px rgba(0,0,0,0.2);
-}
-.btn-quest:active {
-  box-shadow: 0 2px 0 0 currentColor, 0 4px 8px -2px rgba(0,0,0,0.2);
-  transform: translateY(4px);
+.map-boat {
+  transform-box: fill-box;
+  transform-origin: center bottom;
 }
 
-/* AA-safe body text over the sky-blue gradient */
-.text-sky {
-  color: #f4f9ff;
-  text-shadow: 0 1px 2px rgba(15, 40, 80, 0.45);
+/* The island map fits the viewport height on wide screens (no scrolling to see it). */
+.map-fit {
+  width: 100%;
+}
+@media (min-width: 1024px) {
+  .map-fit {
+    width: min(100%, calc((100dvh - 7.5rem) * 1.1111));
+  }
 }
 
-/* Responsive display/hero heading */
-.text-display {
-  font-family: var(--font-display);
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  font-size: clamp(2.5rem, 8vw, 5rem);
-  line-height: 1;
-}
-
-/* Base style for quiz answer/choice buttons */
-.choice {
-  font-family: var(--font-display);
-  font-weight: 700;
-  border-width: 4px;
-  border-style: solid;
-  border-radius: 1rem;
-  min-height: 56px;
-  padding: 0.75rem 1.25rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-  transition: transform 0.08s ease-out, box-shadow 0.15s ease-out;
-}
-.choice:active {
-  transform: scale(0.97);
+@media (prefers-reduced-motion: reduce) {
+  .map-cloud,
+  .map-boat,
+  .animate-bob,
+  .animate-spin-slow,
+  .animate-glow,
+  .animate-bounce-soft {
+    animation: none !important;
+  }
 }

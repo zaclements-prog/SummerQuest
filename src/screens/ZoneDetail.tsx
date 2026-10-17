@@ -8,28 +8,29 @@ import {
   Button,
   BackButton,
   Card,
+  Medallion,
+  Page,
   Pill,
+  ProgressBar,
   StarRating,
   Loading,
   ErrorState,
   Celebration,
+  TONES,
+  toneOf,
+  type Tone,
 } from '../components/ui'
-import { subjectTheme } from '../lib/theme'
 import { useEntrance } from '../lib/motion'
 import { isStageUnlocked } from '../lib/stageLocks'
 import { useWorldUi } from '../world/useWorldUi'
 
 // ── Stage-kind presentation ───────────────────────────────────────────────────
-// `tone` drives the Card accent border + shadow; the icon chip uses an AA-safe
-// dark-text-on-light or light-text-on-dark fill (never white-on-*-500).
-const KIND_META: Record<
-  string,
-  { label: string; icon: string; tone: 'ocean' | 'quest' | 'monster'; chip: string }
-> = {
-  concept: { label: 'Learn', icon: '💡', tone: 'ocean', chip: 'bg-ocean-600 text-paper' },
-  practice: { label: 'Practice', icon: '⚡', tone: 'quest', chip: 'bg-quest-400 text-quest-900' },
-  mastery: { label: 'Boss', icon: '👹', tone: 'monster', chip: 'bg-monster-600 text-paper' },
+const KIND_META: Record<string, { label: string; icon: string; tone: Tone }> = {
+  concept: { label: 'Learn', icon: '💡', tone: 'ocean' },
+  practice: { label: 'Practice', icon: '⚡', tone: 'quest' },
+  mastery: { label: 'Boss', icon: '👹', tone: 'monster' },
 }
+const FALLBACK_KIND = { label: 'Play', icon: '🎮', tone: 'quest' as Tone }
 
 export default function ZoneDetail() {
   const { zoneId = '' } = useParams()
@@ -83,111 +84,115 @@ export default function ZoneDetail() {
     )
   }
 
-  const theme = subjectTheme(zone.themeColor)
+  const tone = toneOf(zone.themeColor)
+  const t = TONES[tone]
 
   return (
-    <div className="flex-1 flex flex-col items-center p-4 sm:p-6">
-      <div className="max-w-3xl w-full flex flex-col gap-4">
-        {/* ── Back ──────────────────────────────────────────────────────────── */}
-        <div>
-          <BackButton to={fromWorld ? '/world' : '/map'} label={fromWorld ? 'Back to World' : 'Back to map'} />
-        </div>
+    <Page width="lg">
+      {/* ── Back ──────────────────────────────────────────────────────────── */}
+      <div>
+        <BackButton to={fromWorld ? '/world' : '/map'} label={fromWorld ? 'Back to World' : 'Back to map'} />
+      </div>
 
-        {/* ── Zone header card (themed to the island just tapped) ────────────── */}
-        <Card tone={zone.themeColor} accent className="overflow-hidden">
-          <div className={`p-6 ${theme.bg}`}>
-            <div className="flex items-center gap-4">
-              <div className="text-6xl sm:text-7xl drop-shadow" aria-hidden="true">
-                {zone.emoji}
-              </div>
-              <div className="min-w-0">
-                <h1 className={`kid-text text-3xl sm:text-4xl ${theme.text}`}>{zone.title}</h1>
-                <p className={`kid-text text-lg sm:text-xl ${theme.text} opacity-80`}>
-                  {zone.subtitle}
-                </p>
-              </div>
-            </div>
-            <p className={`mt-4 leading-relaxed ${theme.text} opacity-90`}>{zone.description}</p>
-
-            {/* Zone-level progress: glyphs + count pill + bar */}
-            <div className="mt-5 flex flex-col gap-2">
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <div className="flex items-center gap-2">
-                  <StarRating earned={earnedStars} total={totalStars} size="sm" />
-                  <Pill tone="ink" icon="⭐">
-                    {earnedStars}/{totalStars} stars
-                  </Pill>
-                </div>
-                <Pill tone="ink" icon="⏱️">
-                  ~{zone.estimatedMinutes} min
-                </Pill>
-              </div>
+      {/* ── Zone header card (themed to the island just tapped) ────────────── */}
+      <Card tone={tone} accent className="overflow-hidden">
+        <div className={`relative p-5 sm:p-7 ${t.soft}`}>
+          <div
+            className="absolute -left-16 -top-16 w-64 h-64 sunburst opacity-70 pointer-events-none"
+            aria-hidden="true"
+          />
+          <div className="relative flex items-center gap-4 sm:gap-5">
+            <Medallion tone={tone} size="xl" className="sm:w-28 sm:h-28 sm:text-6xl">
+              {zone.emoji}
+            </Medallion>
+            <div className="min-w-0">
+              <h1 className="kid-text font-bold text-3xl sm:text-5xl text-ink-900 leading-tight">{zone.title}</h1>
+              <p className={`kid-text text-lg sm:text-xl ${t.text}`}>{zone.subtitle}</p>
             </div>
           </div>
-        </Card>
+          <p className="relative mt-4 text-lg leading-relaxed text-ink-800">{zone.description}</p>
+        </div>
 
-        {/* ── Stage list ────────────────────────────────────────────────────── */}
-        <motion.div
-          variants={container}
-          initial="hidden"
-          animate="show"
-          className="flex flex-col gap-4"
-        >
-          {zone.stages.map((stage, idx) => {
-            const meta = KIND_META[stage.kind]
-            const record = zoneProgress?.stages[stage.id]
-            const locked = !isStageUnlocked(zone, stage.id, zoneProgress)
-            const earned = record?.stars ?? 0
-            const cleared = earned > 0
-            const isBoss = stage.kind === 'mastery'
+        {/* Zone-level progress */}
+        <div className="px-5 sm:px-7 py-4 border-t-2 border-line/15 flex flex-col gap-3">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div className="flex flex-wrap items-center gap-2">
+              <StarRating earned={earnedStars} total={totalStars} size="sm" />
+              <Pill tone="quest" icon="⭐">
+                {earnedStars}/{totalStars} stars
+              </Pill>
+            </div>
+            <Pill tone="ink" icon="⏱️">
+              ~{zone.estimatedMinutes} min
+            </Pill>
+          </div>
+          <ProgressBar value={earnedStars} max={totalStars} tone={complete ? 'correct' : 'quest'} />
+        </div>
+      </Card>
 
-            // Card tone: completed → correct; boss → monster (escalated); else kind tone.
-            const cardTone = locked
-              ? undefined
-              : cleared
-                ? 'correct'
-                : isBoss
-                  ? 'monster'
-                  : meta.tone
+      {/* ── Stage path ────────────────────────────────────────────────────── */}
+      <motion.ol
+        variants={container}
+        initial="hidden"
+        animate="show"
+        className="relative flex flex-col gap-4"
+        aria-label={`${zone.title} steps`}
+      >
+        {/* the dotted trail joining the steps */}
+        <span
+          className="absolute left-[3.2rem] sm:left-[3.45rem] top-10 bottom-10 border-l-[5px] border-dotted border-line/35"
+          aria-hidden="true"
+        />
+        {zone.stages.map((stage, idx) => {
+          const meta = KIND_META[stage.kind] ?? FALLBACK_KIND
+          const record = zoneProgress?.stages[stage.id]
+          const locked = !isStageUnlocked(zone, stage.id, zoneProgress)
+          const earned = record?.stars ?? 0
+          const cleared = earned > 0
+          const isBoss = stage.kind === 'mastery'
 
-            return (
-              <motion.div key={stage.id} variants={item}>
-                <Card
-                  tone={cardTone}
-                  accent={!locked}
-                  className={[
-                    'p-4',
-                    locked ? 'opacity-60' : '',
-                    isBoss && !locked
-                      ? 'shadow-[0_0_0_1px_theme(colors.monster.400),0_0_28px_-2px_theme(colors.monster.500)]'
-                      : '',
-                  ]
-                    .filter(Boolean)
-                    .join(' ')}
-                >
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-                    {/* Icon chip */}
-                    <div
-                      className={`w-16 h-16 shrink-0 rounded-2xl flex items-center justify-center text-3xl ${meta.chip}`}
-                      aria-hidden="true"
-                    >
-                      {meta.icon}
+          // Card tone: completed → correct; else the kind's tone. Locked: plain.
+          const cardTone: Tone | undefined = locked ? undefined : cleared ? 'correct' : meta.tone
+
+          return (
+            <motion.li key={stage.id} variants={item} className="relative">
+              <Card
+                tone={cardTone}
+                accent={!locked}
+                className={['p-4 sm:p-5', locked ? 'bg-cream-100' : ''].join(' ')}
+              >
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                  <div className="flex items-center gap-4 flex-1 min-w-0">
+                    {/* Kind token with the step number */}
+                    <div className="relative shrink-0">
+                      <Medallion tone={locked ? 'cream' : meta.tone} size="lg" square>
+                        {locked ? '🔒' : meta.icon}
+                      </Medallion>
+                      <span
+                        className={[
+                          'absolute -top-2 -left-2 grid place-items-center w-7 h-7 rounded-full border-2 border-line kid-text text-sm',
+                          cleared ? 'bg-correct-400' : 'bg-paper',
+                        ].join(' ')}
+                        aria-hidden="true"
+                      >
+                        {cleared ? '✓' : idx + 1}
+                      </span>
                     </div>
 
                     {/* Body */}
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 text-sm kid-text uppercase tracking-wide text-ink-700">
+                      <div className="flex flex-wrap items-center gap-2 text-sm kid-text uppercase tracking-wide text-ink-700">
                         <span>Step {idx + 1}</span>
                         <span aria-hidden="true">·</span>
-                        <span className={theme.accent}>{meta.label}</span>
+                        <span className={locked ? '' : TONES[meta.tone].text}>{meta.label}</span>
                         {isBoss && (
                           <Pill tone="monster" icon="👹" className="normal-case tracking-normal">
                             Final
                           </Pill>
                         )}
                       </div>
-                      <div className="kid-text text-xl sm:text-2xl text-ink-900">{stage.title}</div>
-                      <div className="text-ink-700 text-sm">{stage.description}</div>
+                      <div className="kid-text font-bold text-2xl text-ink-900 leading-tight">{stage.title}</div>
+                      <div className="text-ink-700 text-base">{stage.description}</div>
 
                       {cleared ? (
                         <div className="mt-1.5 flex flex-wrap items-center gap-2">
@@ -207,39 +212,34 @@ export default function ZoneDetail() {
                         </div>
                       )}
                     </div>
-
-                    {/* Action */}
-                    <div className="sm:shrink-0">
-                      {locked ? (
-                        <Button
-                          variant="ghost"
-                          size="md"
-                          disabled
-                          className="w-full sm:w-auto justify-center"
-                        >
-                          🔒 Locked
-                        </Button>
-                      ) : (
-                        <Button
-                          variant={cleared ? 'success' : isBoss ? 'danger' : 'primary'}
-                          size="md"
-                          className="w-full sm:w-auto justify-center"
-                          onClick={() => {
-                            sfx.enter()
-                            navigate(`/play/${zone.id}/${stage.id}`)
-                          }}
-                        >
-                          {cleared ? '↻ Replay' : isBoss ? '⚔️ Battle' : '▶ Play'}
-                        </Button>
-                      )}
-                    </div>
                   </div>
-                </Card>
-              </motion.div>
-            )
-          })}
-        </motion.div>
-      </div>
+
+                  {/* Action */}
+                  <div className="sm:shrink-0">
+                    {locked ? (
+                      <Button variant="ghost" size="md" disabled className="w-full sm:w-auto justify-center">
+                        🔒 Locked
+                      </Button>
+                    ) : (
+                      <Button
+                        variant={cleared ? 'success' : isBoss ? 'danger' : 'primary'}
+                        size="lg"
+                        className="w-full sm:w-auto sm:min-w-[9rem] justify-center"
+                        onClick={() => {
+                          sfx.enter()
+                          navigate(`/play/${zone.id}/${stage.id}`)
+                        }}
+                      >
+                        {cleared ? '↻ Replay' : isBoss ? '⚔️ Battle' : '▶ Play'}
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              </Card>
+            </motion.li>
+          )
+        })}
+      </motion.ol>
 
       {/* ── Zone-complete celebration ─────────────────────────────────────── */}
       <Celebration
@@ -250,6 +250,6 @@ export default function ZoneDetail() {
       >
         <p>You earned all {totalStars} stars on {zone.title}. Amazing work!</p>
       </Celebration>
-    </div>
+    </Page>
   )
 }

@@ -16,10 +16,23 @@ import FractionForge from '../games/FractionForge'
 import CloudKeeper from '../games/CloudKeeper'
 import TimesGrove from '../games/TimesGrove'
 import { sfx } from '../lib/sound'
-import { Card, Button, BackButton, Pill, Celebration, ConfirmDialog, ErrorState } from '../components/ui'
+import {
+  Card,
+  Button,
+  Pill,
+  Celebration,
+  ConfirmDialog,
+  ErrorState,
+  Medallion,
+  TopBar,
+  ToonStar,
+  TONES,
+  accuracyToneOf,
+} from '../components/ui'
 import { isStageUnlocked } from '../lib/stageLocks'
 import { useWorldUi } from '../world/useWorldUi'
-import { accuracyColorClass } from '../lib/theme'
+
+const ARENA_3D = new Set(['divisionArena', 'fractionForge', 'cloudKeeper', 'timesGrove'])
 
 export interface GameResult {
   stars: number
@@ -174,17 +187,14 @@ export default function GameRunner() {
     )
   }
 
+  // The 3D arenas clear their canvas to this soft sky; giving the chrome the same
+  // backdrop keeps the top bar from sitting on a visible seam.
+  const arena3d = ARENA_3D.has(stage.gameId)
+
   return (
-    <div className="flex-1 flex flex-col">
+    <div className={`flex-1 flex flex-col ${arena3d ? 'bg-[#d9effa]' : ''}`}>
       {/* ── Host top bar ──────────────────────────────────────────────────── */}
-      <div className="px-4 py-2 flex items-center gap-3">
-        <BackButton label="Quit" onClick={() => setConfirmQuit(true)} />
-        <h1 className="kid-text text-lg sm:text-xl text-sky text-center flex-1 truncate drop-shadow-md">
-          {stage.title}
-        </h1>
-        {/* spacer to keep the title visually centered against the Quit button */}
-        <div className="w-[88px] flex-shrink-0" aria-hidden="true" />
-      </div>
+      <TopBar back={{ label: 'Quit', onClick: () => setConfirmQuit(true) }} icon={zone.emoji} title={stage.title} />
 
       <Game
         provider={provider}
@@ -244,6 +254,7 @@ function ResultScreen({
     result.stars >= 3 ? 'Perfect!' : result.stars >= 1 ? 'Great job!' : 'Keep trying!'
   const emoji = result.stars >= 3 ? '🏆' : result.stars >= 1 ? '🎉' : '💪'
   const cardTone = won ? 'correct' : 'wrong'
+  const accTone = accuracyToneOf(accuracy)
 
   return (
     <div className="flex-1 flex items-center justify-center p-6">
@@ -253,21 +264,35 @@ function ResultScreen({
         transition={{ type: 'spring', stiffness: 260, damping: 18 }}
         className="w-full max-w-md"
       >
-        <Card tone={cardTone} accent className="p-8 text-center">
-          <div className="text-6xl mb-2" aria-hidden="true">
-            {emoji}
+        <Card tone={cardTone} accent className="relative overflow-hidden p-7 sm:p-8 text-center">
+          <div
+            className={`absolute inset-x-0 top-0 h-40 bg-gradient-to-b ${won ? 'from-correct-100' : 'from-wrong-100'} to-transparent`}
+            aria-hidden="true"
+          />
+          {won && (
+            <div
+              className="absolute left-1/2 top-16 -translate-x-1/2 -translate-y-1/2 w-72 h-72 sunburst pointer-events-none"
+              aria-hidden="true"
+            />
+          )}
+          <div className="relative flex justify-center mb-3">
+            <Medallion tone={won ? 'quest' : 'wrong'} size="xl">
+              {emoji}
+            </Medallion>
           </div>
-          <h2 className="kid-text text-4xl text-ink-900 mb-1">{heading}</h2>
-          <p className="text-ink-700 mb-1">
+          <h2 className="relative kid-text font-bold text-4xl text-ink-900 mb-1">{heading}</h2>
+          <p className="relative text-ink-700 text-lg mb-2">
             You answered {result.correct} out of {result.total}
           </p>
-          <p className={`kid-text text-2xl mb-4 ${accuracyColorClass(accuracy)}`}>
-            {accuracy}%
+          <p className="relative">
+            <span className={`inline-block kid-text font-bold text-2xl rounded-full border-[3px] border-line px-4 ${TONES[accTone].fill}`}>
+              {accuracy}%
+            </span>
           </p>
 
           {/* Stars — scale with how many were earned (3 of 3 total) */}
           <div
-            className="flex justify-center gap-2 my-4 text-5xl"
+            className="relative flex justify-center items-end gap-1 my-5"
             role="img"
             aria-label={`${result.stars} of 3 stars earned`}
           >
@@ -277,22 +302,23 @@ function ResultScreen({
                 filled={result.stars > i}
                 delay={reduced ? 0 : i * 0.18}
                 reduced={reduced}
+                big={i === 1}
               />
             ))}
           </div>
 
           {/* Rewards */}
-          <div className="flex flex-wrap justify-center gap-3 my-4">
-            <Pill tone="quest" icon="🪙" className="text-lg px-4 py-1.5">
+          <div className="relative flex flex-wrap justify-center gap-3 my-4">
+            <Pill tone="quest" icon="🪙" className="text-lg px-4 py-1">
               +{coins}
             </Pill>
-            <Pill tone="ocean" icon="🎯" className="text-lg px-4 py-1.5">
+            <Pill tone="ocean" icon="🎯" className="text-lg px-4 py-1">
               Score {result.score}
             </Pill>
           </div>
 
           {/* Actions */}
-          <div className="flex flex-col sm:flex-row gap-3 mt-6">
+          <div className="relative flex flex-col sm:flex-row gap-3 mt-6">
             <Button
               variant={won ? 'ghost' : 'secondary'}
               size="lg"
@@ -329,24 +355,26 @@ function Star({
   filled,
   delay,
   reduced,
+  big = false,
 }: {
   filled: boolean
   delay: number
   reduced: boolean
+  big?: boolean
 }) {
   return (
     <motion.span
       initial={reduced ? { opacity: 0 } : { scale: 0, rotate: -180 }}
       animate={
         reduced
-          ? { opacity: filled ? 1 : 0.25 }
-          : { scale: 1, rotate: 0, opacity: filled ? 1 : 0.25 }
+          ? { opacity: filled ? 1 : 0.6 }
+          : { scale: 1, rotate: 0, opacity: filled ? 1 : 0.6 }
       }
       transition={{ delay, type: 'spring', stiffness: 260, damping: 12 }}
-      className={filled ? 'text-quest-500' : 'text-ink-500/40'}
+      className={big ? '-translate-y-2' : ''}
       aria-hidden="true"
     >
-      {filled ? '★' : '☆'}
+      <ToonStar filled={filled} px={big ? 68 : 54} />
     </motion.span>
   )
 }

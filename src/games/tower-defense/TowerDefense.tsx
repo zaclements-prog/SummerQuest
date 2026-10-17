@@ -14,6 +14,9 @@ import {
 import MathGate from './MathGate'
 import { sfx } from '../../lib/sound'
 import { Button, Pill, Card } from '../../components/ui'
+import { TOON } from '../../toon/palette'
+
+const INK = TOON.outline
 
 const GAME_W = 720
 const GAME_H = 420
@@ -129,15 +132,14 @@ export default function TowerDefense({ provider, onComplete, meta, paused = fals
       <StatsBar state={s} />
 
       <div
-        className="relative w-full max-w-[760px] mt-2"
+        className="relative w-full max-w-[760px] mt-3 rounded-toon border-[3px] border-line shadow-card overflow-hidden"
         style={{ aspectRatio: `${GAME_W} / ${GAME_H}` }}
       >
         <svg
           viewBox={`0 0 ${GAME_W} ${GAME_H}`}
-          className="absolute inset-0 w-full h-full rounded-2xl shadow-xl"
+          className="absolute inset-0 w-full h-full"
           style={{
-            background:
-              'linear-gradient(180deg, #4ade80 0%, #16a34a 100%)',
+            background: `radial-gradient(120% 90% at 50% 20%, ${TOON.grassLight} 0%, ${TOON.grass} 60%, ${TOON.grassDark} 100%)`,
             cursor: selectedTower ? 'crosshair' : 'default',
           }}
           onClick={svgClick}
@@ -173,7 +175,7 @@ export default function TowerDefense({ provider, onComplete, meta, paused = fals
         )}
 
         {s.isGameOver && (
-          <div className="absolute inset-0 flex items-center justify-center bg-ink-900/60 rounded-2xl p-4">
+          <div className="absolute inset-0 flex items-center justify-center bg-ink-900/45 backdrop-blur-[2px] p-4">
             <GameOverCard reduced={reduced} state={s} />
           </div>
         )}
@@ -208,16 +210,16 @@ export default function TowerDefense({ provider, onComplete, meta, paused = fals
 function StatsBar({ state: s }: { state: GameState }) {
   return (
     <div className="flex gap-2 flex-wrap justify-center">
-      <Pill tone="quest" icon="🪙" className="text-base px-4 py-1">
+      <Pill tone="quest" icon="🪙" className="text-lg px-4 py-0.5 tabular-nums">
         {s.gold}
       </Pill>
-      <Pill tone="wrong" icon="❤️" className="text-base px-4 py-1">
+      <Pill tone="wrong" icon="❤️" className="text-lg px-4 py-0.5 tabular-nums">
         {s.lives}
       </Pill>
-      <Pill tone="ocean" icon="🌊" className="text-base px-4 py-1">
+      <Pill tone="ocean" icon="🌊" className="text-lg px-4 py-0.5">
         Wave {Math.max(s.wave, 1)}/10
       </Pill>
-      <Pill tone="monster" icon="⚔️" className="text-base px-4 py-1">
+      <Pill tone="monster" icon="⚔️" className="text-lg px-4 py-0.5 tabular-nums">
         {s.kills}
       </Pill>
     </div>
@@ -232,10 +234,13 @@ function GameOverCard({ reduced, state: s }: { reduced: boolean | null; state: G
       className="w-full max-w-xs"
     >
       <Card tone={s.hasWon ? 'correct' : 'wrong'} accent className="p-6 text-center">
-        <div className="text-5xl mb-2" aria-hidden="true">
+        <div
+          className="mx-auto mb-2 grid place-items-center w-20 h-20 rounded-full bg-quest-300 border-[3px] border-line text-4xl"
+          aria-hidden="true"
+        >
           {s.hasWon ? '🏆' : '💔'}
         </div>
-        <div className="kid-text text-3xl text-ink-900">
+        <div className="kid-text font-bold text-3xl text-ink-900">
           {s.hasWon ? 'Victory!' : 'Base destroyed'}
         </div>
         <div className="text-ink-700 kid-text text-base mt-2">
@@ -264,10 +269,10 @@ function TowerPicker({
         const afford = s.gold >= stats.cost
         const active = selected === k
         const stateClass = active
-          ? 'bg-quest-400 text-quest-900 border-quest-600'
+          ? 'bg-quest-400 text-ink-900 border-line shadow-ledge'
           : afford
-            ? 'bg-paper text-ink-900 border-ocean-300 hover:border-ocean-500 hover:-translate-y-0.5'
-            : 'bg-ink-500/15 text-ink-700/50 border-ink-500/20 cursor-not-allowed'
+            ? 'bg-paper text-ink-900 border-line shadow-ledge hover:bg-cream-50 hover:-translate-y-0.5'
+            : 'bg-cream-200 text-ink-500 border-line/30 cursor-not-allowed'
         return (
           <button
             key={k}
@@ -275,9 +280,9 @@ function TowerPicker({
             disabled={!afford}
             aria-pressed={active}
             className={[
-              'kid-text rounded-2xl border-4 px-5 py-2.5 min-h-[44px] text-center transition',
-              'shadow-[0_4px_0_0_rgba(0,0,0,0.12)]',
-              'focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ocean-400 focus-visible:ring-offset-2',
+              'kid-text rounded-[1.25rem] border-[3px] px-6 py-2.5 min-h-[48px] text-center',
+              'transition-[translate,box-shadow,background-color] duration-100 active:translate-y-[3px]',
+              'focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ocean-600/70 focus-visible:ring-offset-2',
               stateClass,
             ].join(' ')}
           >
@@ -301,17 +306,19 @@ function PathView({ state: s }: { state: GameState }) {
   }, [s.pathPoints])
   return (
     <g>
-      <path d={d} fill="none" stroke="#78350f" strokeWidth="44" strokeLinecap="round" strokeLinejoin="round" />
-      <path d={d} fill="none" stroke="#a16207" strokeWidth="34" strokeLinecap="round" strokeLinejoin="round" />
-      <path d={d} fill="none" stroke="#fde68a" strokeWidth="2" strokeDasharray="6 8" />
+      <path d={d} fill="none" stroke={INK} strokeWidth="46" strokeLinecap="round" strokeLinejoin="round" />
+      <path d={d} fill="none" stroke={TOON.pathEdge} strokeWidth="41" strokeLinecap="round" strokeLinejoin="round" />
+      <path d={d} fill="none" stroke={TOON.path} strokeWidth="33" strokeLinecap="round" strokeLinejoin="round" />
+      <path d={d} fill="none" stroke={TOON.pathEdge} strokeWidth="2.5" strokeDasharray="2 12" strokeLinecap="round" />
       {/* base */}
       <rect
         x={s.width - 28}
         y={s.height * 0.42 - 28}
         width={28}
         height={56}
-        fill="#1e3a8a"
-        stroke="white"
+        rx={6}
+        fill={TOON.roofRed}
+        stroke={INK}
         strokeWidth="3"
       />
       <text
@@ -345,7 +352,7 @@ function TowersView({ state: s }: { state: GameState }) {
               cy={t.pos.y}
               r="20"
               fill={stats.color}
-              stroke="white"
+              stroke={INK}
               strokeWidth="3"
             />
             <text
@@ -378,8 +385,8 @@ function EnemiesView({ state: s }: { state: GameState }) {
               cy={p.y}
               r={stats.size / 2}
               fill={stats.color}
-              stroke="white"
-              strokeWidth="2"
+              stroke={INK}
+              strokeWidth="2.5"
             />
             <text x={p.x} y={p.y + 5} textAnchor="middle" fontSize="16">
               {stats.emoji}
@@ -388,18 +395,18 @@ function EnemiesView({ state: s }: { state: GameState }) {
               x={p.x - 14}
               y={p.y - stats.size}
               width={28}
-              height={4}
-              fill="#000"
-              opacity="0.4"
-              rx="2"
+              height={5}
+              fill={INK}
+              opacity="0.55"
+              rx="2.5"
             />
             <rect
               x={p.x - 14}
               y={p.y - stats.size}
               width={28 * hpPct}
-              height={4}
-              fill="#22c55e"
-              rx="2"
+              height={5}
+              fill={TOON.leafLight}
+              rx="2.5"
             />
           </g>
         )
@@ -416,10 +423,10 @@ function ProjectilesView({ state: s }: { state: GameState }) {
           key={p.id}
           cx={p.pos.x}
           cy={p.pos.y}
-          r="4"
-          fill="#facc15"
-          stroke="#78350f"
-          strokeWidth="1.5"
+          r="4.5"
+          fill={TOON.gold}
+          stroke={INK}
+          strokeWidth="1.8"
         />
       ))}
     </g>
@@ -460,18 +467,18 @@ function PlacementPreview({ pos, state: s }: { pos: Vec2; state: GameState }) {
         cx={pos.x}
         cy={pos.y}
         r={stats.range}
-        fill={valid ? stats.color : '#dc2626'}
-        opacity={valid ? 0.15 : 0.2}
+        fill={valid ? stats.color : TOON.flowerRed}
+        opacity={valid ? 0.18 : 0.22}
       />
       <circle
         cx={pos.x}
         cy={pos.y}
         r="20"
-        fill={valid ? stats.color : '#dc2626'}
-        opacity={0.6}
-        stroke="white"
-        strokeWidth="2"
-        strokeDasharray="3 3"
+        fill={valid ? stats.color : TOON.flowerRed}
+        opacity={0.7}
+        stroke={INK}
+        strokeWidth="2.5"
+        strokeDasharray="4 4"
       />
     </g>
   )

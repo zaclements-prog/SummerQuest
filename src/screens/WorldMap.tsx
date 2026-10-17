@@ -1,15 +1,14 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { curriculum } from '../curriculum'
+import { curriculum, type Zone } from '../curriculum'
 import { useProgress, zoneStars } from '../store/progress'
 import { sfx } from '../lib/sound'
 import { computeBadges, type BadgeStatus } from '../lib/badges'
 import { todayStr } from '../lib/daily'
 import DailyGoalCard from '../components/DailyGoalCard'
-import { Button, Pill, Celebration } from '../components/ui'
-import { subjectTheme } from '../lib/theme'
-import { useEntrance, hoverPop, tap } from '../lib/motion'
+import { Button, Celebration, Medallion, TONES, toneOf, type Tone } from '../components/ui'
+import IslandArt from '../components/map/IslandArt'
+import { ZONE_SPOTS, toPct } from '../components/map/islandMap'
 import { useWorldUi } from '../world/useWorldUi'
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -31,10 +30,11 @@ function findNextTarget(
   return null
 }
 
-// ── Connector color maps for SVG ──────────────────────────────────────────────
+const maxStarsOf = (zone: Zone) => zone.stages.reduce((s, st) => s + st.starsToEarn, 0)
 
-const CONNECTOR_DONE = 'rgba(251,253,255,0.85)'   // bright for completed
-const CONNECTOR_TODO = 'rgba(251,253,255,0.25)'    // faint for upcoming
+// Marker sizing in container units: the map box is a CSS size container whose
+// width is 100 world units, so 1cqw === 1 world unit (see islandMap.ts).
+const MEDAL = 'clamp(40px, 8.4cqw, 80px)'
 
 export default function WorldMap() {
   const zones = useProgress((s) => s.zones)
@@ -66,240 +66,84 @@ export default function WorldMap() {
 
   // Next-stage deep-link (computed after hooks)
   const nextTarget = useMemo(() => findNextTarget(zones), [zones])
-  const continueHref = nextTarget
-    ? nextTarget.stageId
-      ? `/zone/${nextTarget.zoneId}`
-      : `/zone/${nextTarget.zoneId}`
-    : null
-
-  // Motion variants (respects prefers-reduced-motion)
-  const { container, item } = useEntrance()
+  const continueHref = nextTarget ? `/zone/${nextTarget.zoneId}` : null
+  const nextZone = nextTarget ? curriculum.zones.find((z) => z.id === nextTarget.zoneId) : undefined
 
   return (
-    <div className="flex-1 flex flex-col p-4">
-      <div className="max-w-5xl w-full mx-auto flex flex-col gap-4">
+    <div className="flex-1 flex flex-col px-4 pt-5 pb-8 sm:px-6">
+      {/* One column on tablets (actions → map → daily goal); on wide screens the
+          actions and goal sit in a side column and the map fills the right. */}
+      <div className="w-full max-w-[90rem] mx-auto grid gap-5 lg:gap-x-6 lg:grid-cols-[21rem_minmax(0,1fr)] xl:grid-cols-[23rem_minmax(0,1fr)] lg:grid-rows-[auto_1fr] items-start">
+        {/* ── Title, the way back to the World, quick links ──────────────── */}
+        <div className="flex flex-col gap-4 lg:col-start-1 lg:row-start-1">
+          <div>
+            <h1 className="kid-text font-bold text-4xl sm:text-5xl text-sky leading-none">
+              Island Map
+            </h1>
+            <p className="kid-text text-lg text-ink-700 mt-1.5">
+              Tap a place on the island to start a quest
+            </p>
+          </div>
 
-        {/* ── Title ─────────────────────────────────────────────────────── */}
-        <div className="text-center">
-          <h1 className="kid-text text-4xl sm:text-5xl text-sky drop-shadow-lg">
-            {curriculum.title}
-          </h1>
-          <p className="kid-text text-lg text-sky mt-1">
-            Tap an island to start your quest
+          <div className="flex flex-col sm:flex-row lg:flex-col gap-3">
+            <Button variant="primary" size="lg" to="/world" className="w-full justify-center">
+              <span aria-hidden="true">🌍</span> Back to the World
+            </Button>
+            {continueHref && (
+              <Button variant="secondary" size="lg" to={continueHref} className="w-full justify-center">
+                ▶ Continue your quest
+              </Button>
+            )}
+          </div>
+
+          <nav aria-label="More places" className="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-3 gap-2.5">
+            <NavTile to="/daily" icon="🌟" tone="quest" label={dailyDone ? 'Daily ✓' : 'Daily'} />
+            <NavTile to="/tutor" icon="📚" tone="ocean" label="Tutor" />
+            <NavTile to="/focus" icon="🎯" tone="island" label="This Week" />
+            <NavTile to="/badges" icon="🏅" tone="monster" label={`Badges ${earned.length}/${badges.length}`} />
+            <NavTile to="/progress" icon="📈" tone="correct" label="Progress" />
+            <NavTile to="/home" icon="🏠" tone="wrong" label="Home" />
+          </nav>
+        </div>
+
+        {/* ── The illustrated island ─────────────────────────────────────── */}
+        <section
+          className="min-w-0 flex justify-center lg:col-start-2 lg:row-start-1 lg:row-span-2"
+          aria-label="Island map"
+        >
+          <div className="map-fit">
+            <div className="relative rounded-[2rem] border-[3px] border-line bg-ocean-400 shadow-card overflow-hidden">
+              <div className="relative w-full @container" style={{ aspectRatio: '100 / 90' }}>
+                <IslandArt />
+                {curriculum.zones.map((zone) => (
+                  <ZoneMarker key={zone.id} zone={zone} isNext={zone.id === nextTarget?.zoneId} />
+                ))}
+              </div>
+            </div>
+
+            {/* Small screens: the markers get too tiny to label, so list the places too. */}
+            <ul className="sm:hidden mt-4 grid grid-cols-2 gap-2.5">
+              {curriculum.zones.map((zone) => (
+                <li key={zone.id}>
+                  <ZoneListItem zone={zone} />
+                </li>
+              ))}
+            </ul>
+            {nextZone && (
+              <p className="sr-only">Next up: {nextZone.title}</p>
+            )}
+          </div>
+        </section>
+
+        {/* ── Today's goal ───────────────────────────────────────────────── */}
+        <div className="flex flex-col gap-3 lg:col-start-1 lg:row-start-2">
+          <DailyGoalCard />
+          <p className="kid-text text-center lg:text-left text-ink-700 text-sm">
+            {earned.length > 0
+              ? `🏅 ${earned.length} badge${earned.length > 1 ? 's' : ''} earned — keep exploring!`
+              : 'Explore every island to earn badges and level up!'}
           </p>
         </div>
-
-        {/* ── Primary CTA + primary nav ─────────────────────────────────── */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-          {continueHref && (
-            <Button variant="primary" size="lg" to={continueHref}>
-              ▶ Continue your quest
-            </Button>
-          )}
-          <Button variant="secondary" size="md" to="/daily">
-            🌟 Daily{dailyDone ? ' ✓' : ''}
-          </Button>
-          <Button variant="ghost" size="md" to="/tutor" className="bg-paper/80">
-            📚 Tutor
-          </Button>
-          <Button variant="ghost" size="md" to="/home" className="bg-paper/80">
-            🏠 Home
-          </Button>
-        </div>
-
-        {/* ── Secondary / utility nav ───────────────────────────────────── */}
-        <div className="flex flex-wrap justify-center gap-2">
-          <Pill tone="ink" icon="🏅">
-            <Link to="/badges" onClick={() => sfx.click()} className="hover:underline">
-              Badges {earned.length}/{badges.length}
-            </Link>
-          </Pill>
-          <Pill tone="ocean" icon="📈">
-            <Link to="/progress" onClick={() => sfx.click()} className="hover:underline">
-              Progress
-            </Link>
-          </Pill>
-          <Pill tone="island" icon="🎯">
-            <Link to="/focus" onClick={() => sfx.click()} className="hover:underline">
-              This Week
-            </Link>
-          </Pill>
-          <Pill tone="monster" icon="🌍">
-            <Link to="/world" onClick={() => sfx.click()} className="hover:underline">
-              World (beta)
-            </Link>
-          </Pill>
-        </div>
-
-        {/* ── Daily goal ─────────────────────────────────────────────────── */}
-        <DailyGoalCard />
-
-        {/* ── Island map ─────────────────────────────────────────────────── */}
-        <div
-          className="relative w-full rounded-3xl overflow-hidden shadow-2xl ring-4 ring-ocean-900/30"
-          style={{
-            aspectRatio: '16 / 10',
-            background:
-              'radial-gradient(ellipse at 30% 70%, #fde68a 0%, #34d399 35%, #1e3a8a 100%)',
-          }}
-        >
-          {/* decorative ocean waves */}
-          <svg
-            className="absolute inset-0 w-full h-full opacity-20"
-            preserveAspectRatio="none"
-            viewBox="0 0 200 100"
-            aria-hidden="true"
-          >
-            <path
-              d="M0 80 Q 50 70, 100 80 T 200 80 L 200 100 L 0 100 Z"
-              fill="white"
-            />
-            <path
-              d="M0 88 Q 50 82, 100 88 T 200 88 L 200 100 L 0 100 Z"
-              fill="white"
-              opacity="0.5"
-            />
-          </svg>
-
-          {/* connection paths — solid+glowing for completed, faint dashed for upcoming */}
-          <svg
-            className="absolute inset-0 w-full h-full"
-            preserveAspectRatio="none"
-            aria-hidden="true"
-          >
-            {curriculum.zones.slice(0, -1).map((z, i) => {
-              const next = curriculum.zones[i + 1]
-              const thisZoneStars = zoneStars(z.id)
-              const thisZoneMax = z.stages.reduce((s, st) => s + st.starsToEarn, 0)
-              const isDone = thisZoneStars >= thisZoneMax && thisZoneMax > 0
-              return (
-                <line
-                  key={`${z.id}-${next.id}`}
-                  x1={`${z.position.x}%`}
-                  y1={`${z.position.y}%`}
-                  x2={`${next.position.x}%`}
-                  y2={`${next.position.y}%`}
-                  stroke={isDone ? CONNECTOR_DONE : CONNECTOR_TODO}
-                  strokeWidth={isDone ? 4 : 2.5}
-                  strokeDasharray={isDone ? undefined : '6 6'}
-                />
-              )
-            })}
-          </svg>
-
-          {/* Zone islands */}
-          <motion.div
-            variants={container}
-            initial="hidden"
-            animate="show"
-            className="contents"
-          >
-            {curriculum.zones.map((zone, i) => {
-              const theme = subjectTheme(zone.themeColor)
-              const stars = zoneStars(zone.id)
-              const maxStars = zone.stages.reduce(
-                (s, st) => s + st.starsToEarn,
-                0,
-              )
-
-              return (
-                // Positioning is plain CSS so it never depends on rAF.
-                // Framer entrance is on the inner element where pausing can't hide the island.
-                <div
-                  key={zone.id}
-                  className="absolute -translate-x-1/2 -translate-y-1/2"
-                  style={{ left: `${zone.position.x}%`, top: `${zone.position.y}%` }}
-                >
-                  {zone.available ? (
-                    <Link
-                      to={`/zone/${zone.id}`}
-                      onClick={() => sfx.enter()}
-                      className="block group"
-                      aria-label={`${zone.title}: ${stars} of ${maxStars} stars`}
-                    >
-                      <motion.div
-                        variants={item}
-                        whileHover={hoverPop}
-                        whileTap={tap}
-                        className="relative"
-                      >
-                        {/* island bubble */}
-                        <motion.div
-                          animate={{ y: [0, -6, 0] }}
-                          transition={{
-                            duration: 2.4,
-                            repeat: Infinity,
-                            delay: i * 0.3,
-                          }}
-                          className={[
-                            'w-24 h-24 sm:w-28 sm:h-28 rounded-full',
-                            'flex items-center justify-center text-5xl sm:text-6xl',
-                            'shadow-xl ring-4',
-                            theme.bg,
-                            theme.ring,
-                          ].join(' ')}
-                        >
-                          <span aria-hidden="true">{zone.emoji}</span>
-                        </motion.div>
-
-                        {/* title label */}
-                        <div
-                          className={[
-                            'absolute -bottom-2 left-1/2 -translate-x-1/2',
-                            'px-2.5 py-0.5 rounded-full kid-text text-xs sm:text-sm whitespace-nowrap shadow',
-                            'bg-paper/95',
-                            theme.accent,
-                          ].join(' ')}
-                        >
-                          {zone.title}
-                        </div>
-
-                        {/* compact star-count badge (a full 9-glyph row is too busy on the map) */}
-                        {maxStars > 0 && (
-                          <div
-                            className={[
-                              'absolute -top-1 -right-1',
-                              'rounded-full px-2 py-0.5 shadow-md ring-2 ring-white',
-                              'flex items-center gap-0.5 kid-text text-xs',
-                              stars >= maxStars ? 'bg-quest-400 text-quest-900' : 'bg-paper text-ink-900',
-                            ].join(' ')}
-                          >
-                            <span className="text-quest-500" aria-hidden="true">★</span>
-                            <span>{stars}/{maxStars}</span>
-                          </div>
-                        )}
-                      </motion.div>
-                    </Link>
-                  ) : (
-                    <div
-                      className="relative cursor-not-allowed"
-                      aria-disabled="true"
-                      aria-label={`${zone.title}: locked`}
-                      role="img"
-                    >
-                      <motion.div variants={item}>
-                        <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-ocean-900/60 flex flex-col items-center justify-center grayscale opacity-50 ring-4 ring-white/20">
-                          <span className="text-4xl sm:text-5xl" aria-hidden="true">🔒</span>
-                          <span className="text-white/60 text-2xl" aria-hidden="true">{zone.emoji}</span>
-                        </div>
-                        <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-ocean-900/70 text-white/80 px-3 py-0.5 rounded-full kid-text text-xs sm:text-sm whitespace-nowrap">
-                          {zone.title}
-                        </div>
-                      </motion.div>
-                    </div>
-                  )}
-                </div>
-              )
-            })}
-          </motion.div>
-        </div>
-
-        {/* ── Footer badge note ─────────────────────────────────────────── */}
-        <p className="text-center text-sky text-sm kid-text">
-          {earned.length > 0
-            ? `🏅 ${earned.length} badge${earned.length > 1 ? 's' : ''} earned — keep exploring!`
-            : 'Explore every island to earn badges and level up!'}
-        </p>
       </div>
 
       {/* ── Badge celebration overlay ──────────────────────────────────── */}
@@ -310,19 +154,178 @@ export default function WorldMap() {
       >
         <div className="flex flex-wrap justify-center gap-3 my-2">
           {celebrating.map((b) => (
-            <div key={b.id} className="flex flex-col items-center w-24">
-              <div
-                className="text-5xl"
-                style={{ filter: 'drop-shadow(0 0 8px rgba(247,193,2,0.7))' }}
-                aria-hidden="true"
-              >
+            <div key={b.id} className="flex flex-col items-center gap-1 w-24">
+              <Medallion tone="quest" size="lg">
                 {b.emoji}
-              </div>
+              </Medallion>
               <div className="kid-text text-sm text-ink-700">{b.title}</div>
             </div>
           ))}
         </div>
       </Celebration>
+    </div>
+  )
+}
+
+// ── Quick-link tile ───────────────────────────────────────────────────────────
+
+function NavTile({ to, icon, label, tone }: { to: string; icon: string; label: string; tone: Tone }) {
+  return (
+    <Link
+      to={to}
+      onClick={() => sfx.click()}
+      className={[
+        'group flex flex-col items-center justify-center gap-1 min-h-[5.25rem] px-1.5 py-2 rounded-[1.25rem]',
+        'bg-paper border-[3px] border-line shadow-ledge text-center',
+        'transition-[translate,box-shadow,background-color] duration-100 ease-out',
+        'hover:-translate-y-0.5 hover:bg-cream-50 active:translate-y-[3px] active:shadow-ledge-sm',
+        'outline-none focus-visible:ring-4 focus-visible:ring-ocean-600/70',
+      ].join(' ')}
+    >
+      <Medallion tone={tone} size="sm">
+        {icon}
+      </Medallion>
+      <span className="kid-text text-sm leading-tight text-ink-900">{label}</span>
+    </Link>
+  )
+}
+
+// ── Map marker ────────────────────────────────────────────────────────────────
+
+function ZoneMarker({ zone, isNext }: { zone: Zone; isNext: boolean }) {
+  const spot = ZONE_SPOTS[zone.id]
+  if (!spot) return null
+  const tone = TONES[toneOf(zone.themeColor)]
+  const stars = zoneStars(zone.id)
+  const maxStars = maxStarsOf(zone)
+  const done = maxStars > 0 && stars >= maxStars
+
+  const medal = (
+    <span className="relative block" style={{ width: MEDAL, height: MEDAL }}>
+      {/* soft ground shadow */}
+      <span className="absolute left-[8%] right-[8%] -bottom-[10%] h-[24%] rounded-[50%] bg-line/25" aria-hidden="true" />
+      <span
+        className={[
+          'absolute inset-0 rounded-full border-[3px] border-line grid place-items-center',
+          'shadow-ledge transition-[translate,box-shadow] duration-100 ease-out',
+          zone.available
+            ? 'group-hover:-translate-y-1 group-hover:shadow-[0_6px_0_0_var(--color-line)] group-active:translate-y-[3px] group-active:shadow-ledge-sm group-focus-visible:ring-4 group-focus-visible:ring-paper'
+            : 'grayscale-[0.7] opacity-80',
+        ].join(' ')}
+        style={{
+          background: zone.available
+            ? `radial-gradient(circle at 50% 42%, #fffaf0 0 54%, ${tone.hex} 55% 100%)`
+            : '#e6dfcf',
+        }}
+      >
+        <span className="absolute left-[20%] top-[10%] w-[30%] h-[14%] rounded-full bg-white/70 -rotate-12" aria-hidden="true" />
+        <span className="relative leading-none" style={{ fontSize: 'clamp(20px, 4.3cqw, 42px)' }} aria-hidden="true">
+          {zone.available ? zone.emoji : '🔒'}
+        </span>
+      </span>
+
+      {/* star count */}
+      {zone.available && maxStars > 0 && (
+        <span
+          className={[
+            'absolute -top-[8%] -right-[34%] hidden sm:flex items-center gap-0.5 rounded-full border-2 border-line px-1.5',
+            'kid-text leading-[1.35] tabular-nums shadow-ledge-sm',
+            done ? 'bg-quest-400' : 'bg-paper',
+          ].join(' ')}
+          style={{ fontSize: 'clamp(10px, 1.35cqw, 14px)' }}
+          aria-hidden="true"
+        >
+          <span className="text-quest-600">★</span>
+          {stars}/{maxStars}
+        </span>
+      )}
+
+      {/* "next" flag (top-left, mirroring the star count) */}
+      {isNext && (
+        <span className="absolute -top-[14%] -left-[42%] animate-bob" aria-hidden="true">
+          <span
+            className="block kid-text whitespace-nowrap rounded-full bg-wrong-400 border-2 border-line px-1.5 leading-[1.35] shadow-ledge-sm text-ink-900 -rotate-6"
+            style={{ fontSize: 'clamp(10px, 1.35cqw, 14px)' }}
+          >
+            Next!
+          </span>
+        </span>
+      )}
+    </span>
+  )
+
+  const label = (
+    <span
+      className={[
+        'hidden sm:block mt-[0.5cqw] whitespace-nowrap text-center kid-text leading-snug text-ink-900',
+        'rounded-full border-2 border-line px-[0.7cqw] shadow-ledge-sm',
+        zone.available ? (isNext ? 'bg-quest-200' : 'bg-paper') : 'bg-cream-200 text-ink-700',
+      ].join(' ')}
+      style={{ fontSize: 'clamp(11px, 1.75cqw, 16px)' }}
+    >
+      {zone.title}
+    </span>
+  )
+
+  return (
+    <div
+      className="absolute -translate-x-1/2 flex flex-col items-center"
+      style={{ ...toPct(spot), marginTop: `calc(${MEDAL} / -2)` }}
+    >
+      {zone.available ? (
+        <Link
+          to={`/zone/${zone.id}`}
+          onClick={() => sfx.enter()}
+          className="group flex flex-col items-center outline-none"
+          aria-label={`${zone.title}: ${stars} of ${maxStars} stars`}
+        >
+          {medal}
+          {label}
+        </Link>
+      ) : (
+        <div
+          className="flex flex-col items-center cursor-not-allowed"
+          aria-disabled="true"
+          aria-label={`${zone.title}: locked`}
+          role="img"
+        >
+          {medal}
+          {label}
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ── Small-screen list row ─────────────────────────────────────────────────────
+
+function ZoneListItem({ zone }: { zone: Zone }) {
+  const stars = zoneStars(zone.id)
+  const maxStars = maxStarsOf(zone)
+  const inner = (
+    <>
+      <Medallion tone={zone.available ? toneOf(zone.themeColor) : 'cream'} size="sm">
+        {zone.available ? zone.emoji : '🔒'}
+      </Medallion>
+      <span className="min-w-0">
+        <span className="block kid-text text-sm leading-tight text-ink-900">{zone.title}</span>
+        {zone.available && (
+          <span className="block kid-text text-xs text-ink-700">
+            ★ {stars}/{maxStars}
+          </span>
+        )}
+      </span>
+    </>
+  )
+  const cls =
+    'flex items-center gap-2 p-2 min-h-[56px] rounded-2xl bg-paper border-2 border-line shadow-ledge-sm'
+  return zone.available ? (
+    <Link to={`/zone/${zone.id}`} onClick={() => sfx.enter()} className={cls} aria-label={`${zone.title}: ${stars} of ${maxStars} stars`}>
+      {inner}
+    </Link>
+  ) : (
+    <div className={`${cls} opacity-70`} aria-label={`${zone.title}: locked`}>
+      {inner}
     </div>
   )
 }
