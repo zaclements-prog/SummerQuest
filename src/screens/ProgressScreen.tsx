@@ -60,7 +60,7 @@ export default function ProgressScreen() {
           emoji="🌱"
           title="Your progress will grow here!"
           message="Play a few quizzes and watch your stats, streaks, and charts bloom."
-          cta={{ label: '▶ Start a quest', to: '/map' }}
+          cta={{ label: '▶ Start a quest', to: '/world' }}
         />
       ) : (
         <>

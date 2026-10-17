@@ -107,8 +107,8 @@ export default function GameRunner() {
         <ErrorState
           emoji="🧭"
           title="Stage not found"
-          message="We couldn't find that adventure. Let's head back to the map."
-          back={{ label: 'Back to map', to: '/map' }}
+          message="We couldn't find that adventure. Let's head back to the World."
+          back={{ label: 'Back to the World', to: '/world' }}
         />
       </div>
     )

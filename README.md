@@ -31,7 +31,7 @@ Everything runs locally in the browser; progress is saved in `localStorage`.
   plant the array plot that grows the order). Same stars/coins/tutor award path
   as the 2D stages.
 - **3D Home** — buy furniture and decorate a room; become (and dress up) a creature.
-- **3D World (beta)** — a storybook toon island with a town, a river and an area
+- **3D World** — the game's hub: a storybook toon island with a town, a river and an area
   for every subject. Walk up
   to an NPC and press E to pick a stage and play it without leaving the World;
   you come back where you stood. The **Schoolhouse** (owl teacher) has the
@@ -127,7 +127,7 @@ src/
   screens/             map, zone, game runner, daily, tutor, focus, progress, badges, parent…
   tutoring/            lessons, skill taxonomy (skill → zone/lesson/practice stage)
   home/                3D Home (react-three-fiber): models, world, HUD
-  world/               3D World (beta): layout, terrain, areas, NPC gateways, movement
+  world/               3D World (the hub): layout, terrain, areas, NPC gateways, movement
   toon/                toon art kit: palette, toon materials + outlines, shapes, props
   store/               Zustand stores persisted to localStorage (+ save migrations)
   components/          VisualRenderer, charts, shared UI kit (components/ui)

@@ -80,7 +80,7 @@ export default function AvatarCreate() {
     }
     sfx.victory()
     setAvatar({ emoji, color, name: name.trim(), grade: grade! })
-    navigate('/map')
+    navigate('/world')
   }
 
   function surprise() {

@@ -42,7 +42,7 @@ export default function GraphicsToggle() {
         aria-label="Graphics settings"
         aria-expanded={open}
         title="Graphics"
-        className="kid-text w-9 h-9 grid place-items-center rounded-full bg-ocean-900/60 hover:bg-ocean-900/75 text-lg"
+        className="kid-text w-10 h-10 grid place-items-center rounded-full bg-paper/95 hover:bg-cream-100 text-lg border-2 border-line shadow-[0_3px_0_var(--color-line)]"
       >
         ⚙️
       </button>
@@ -50,7 +50,7 @@ export default function GraphicsToggle() {
         <div
           role="group"
           aria-label="Graphics"
-          className="absolute right-0 mt-2 w-56 rounded-2xl bg-paper text-ink-900 shadow-2xl p-2 [text-shadow:none]"
+          className="absolute right-0 mt-2 w-56 rounded-2xl bg-paper text-ink-900 border-2 border-line shadow-[0_5px_0_var(--color-line)] p-2 [text-shadow:none]"
         >
           <div className="kid-text text-sm px-2 pt-1 pb-2">Graphics</div>
           <div className="flex flex-col gap-1">

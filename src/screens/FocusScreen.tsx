@@ -113,7 +113,7 @@ export default function FocusScreen() {
             emoji="🌱"
             title="No focus plan yet"
             message="Play some quizzes this week and your personalized focus plan will sprout right here."
-            cta={{ label: 'Go play a quiz →', to: '/map' }}
+            cta={{ label: 'Go play a quiz →', to: '/world' }}
           />
           {/* Developer helper — opt-in only (VITE_DEV_TOOLS=true in .env.local), since the
               launchers run the dev server and a child must never see this button. */}

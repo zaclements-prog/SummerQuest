@@ -70,11 +70,11 @@ export default function WorldHud({ posRef }: { posRef: RefObject<Vector3> }) {
           <Link
             to="/map"
             onClick={() => { sfx.click(); rememberSpot() }}
-            className="pointer-events-auto kid-text bg-ocean-900/55 hover:bg-ocean-900/70 text-white px-3 py-1 rounded-full text-sm border-2 border-white/50"
+            className="pointer-events-auto kid-text bg-paper/95 hover:bg-cream-100 text-ink-900 px-3 py-1 rounded-full text-sm border-2 border-line shadow-[0_3px_0_var(--color-line)] [text-shadow:none]"
           >
             🗺️ Map
           </Link>
-          <span className="kid-text bg-ocean-900/50 text-white/90 px-3 py-1 rounded-full text-xs">
+          <span className="kid-text bg-paper/85 text-ink-900 px-3 py-1 rounded-full text-xs border border-line/40 [text-shadow:none]">
             <span className="pointer-coarse:hidden">🌍 WASD / arrows or tap to walk</span>
             <span className="hidden pointer-coarse:inline">👆 Tap or hold to walk</span>
           </span>
@@ -86,7 +86,7 @@ export default function WorldHud({ posRef }: { posRef: RefObject<Vector3> }) {
       {activeNpc && !panel && (
         <button
           onClick={open}
-          className="pointer-events-auto absolute bottom-6 left-1/2 -translate-x-1/2 kid-text bg-quest-500 text-quest-900 px-5 py-2 rounded-full shadow-lg text-lg animate-pulse whitespace-nowrap"
+          className="pointer-events-auto absolute bottom-6 left-1/2 -translate-x-1/2 kid-text bg-quest-500 text-quest-900 px-5 py-2 rounded-full text-lg animate-pulse whitespace-nowrap border-[3px] border-line shadow-[0_4px_0_var(--color-line)] [text-shadow:none]"
         >
           <span className="pointer-coarse:hidden">Press E to visit {activeNpc.label} →</span>
           <span className="hidden pointer-coarse:inline">Tap to visit {activeNpc.label} →</span>
@@ -95,7 +95,7 @@ export default function WorldHud({ posRef }: { posRef: RefObject<Vector3> }) {
       {inHouse && !activeNpc && !panel && (
         <button
           onClick={decorate}
-          className="pointer-events-auto absolute bottom-6 left-1/2 -translate-x-1/2 kid-text bg-quest-500 hover:bg-quest-400 text-quest-900 px-7 py-3 rounded-full shadow-xl text-xl sm:text-2xl border-4 border-white/80 whitespace-nowrap"
+          className="pointer-events-auto absolute bottom-6 left-1/2 -translate-x-1/2 kid-text bg-quest-500 hover:bg-quest-400 text-quest-900 px-7 py-3 rounded-full text-xl sm:text-2xl border-[3px] border-line shadow-[0_5px_0_var(--color-line)] whitespace-nowrap [text-shadow:none]"
         >
           🛠️ Decorate my room
           <span className="pointer-coarse:hidden text-sm opacity-70 ml-2">(E)</span>

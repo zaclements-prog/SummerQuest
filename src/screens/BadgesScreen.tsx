@@ -84,7 +84,7 @@ export default function BadgesScreen() {
           emoji="🏆"
           title="Your trophy case is waiting"
           message="Finish a stage to earn your very first badge. Every island has trophies to collect!"
-          cta={{ label: 'Play now →', to: '/map' }}
+          cta={{ label: 'Play now →', to: '/world' }}
         />
       ) : (
         <>

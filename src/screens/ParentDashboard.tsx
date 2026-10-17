@@ -119,7 +119,7 @@ export default function ParentDashboard() {
       >
         <PageHeader
           title="Parent Dashboard"
-          back={{ to: '/map', label: 'Back to game' }}
+          back={{ to: '/world', label: 'Back to game' }}
           className="!mb-0"
         />
 
