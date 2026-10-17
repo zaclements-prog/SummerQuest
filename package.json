@@ -12,7 +12,10 @@
     "play": "vite build && vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "tts": "node --import tsx scripts/dump-narration.mjs && node scripts/generate-tts.mjs"
+    "tts": "node --import tsx scripts/dump-narration.mjs && node scripts/generate-tts.mjs",
+    "tts:dump": "node --import tsx scripts/dump-narration.mjs",
+    "tts:prune": "node scripts/prune-tts.mjs",
+    "tts:check": "node scripts/check-tts.mjs"
   },
   "dependencies": {
     "@fontsource/fredoka": "^5.2.10",

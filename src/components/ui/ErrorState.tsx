@@ -1,5 +1,6 @@
 import Card from './Card'
 import Button from './Button'
+import Medallion from './Medallion'
 
 interface ErrorStateProps {
   emoji?: string
@@ -15,12 +16,12 @@ export default function ErrorState({
   back,
 }: ErrorStateProps) {
   return (
-    <div className="flex items-center justify-center p-6">
-      <Card tone="wrong" accent className="p-8 max-w-sm w-full text-center">
-        <div className="text-6xl mb-4" aria-hidden="true">
+    <div className="flex items-center justify-center p-4 sm:p-6">
+      <Card tone="wrong" accent className="p-8 max-w-sm w-full text-center flex flex-col items-center">
+        <Medallion tone="wrong" size="xl" className="mb-4">
           {emoji}
-        </div>
-        <h2 className="kid-text text-2xl text-ink-900 mb-2">{title}</h2>
+        </Medallion>
+        <h2 className="kid-text font-bold text-2xl text-ink-900 mb-2">{title}</h2>
         {message && <p className="text-ink-700 text-base mb-6">{message}</p>}
         {back && (
           <Button to={back.to} variant="ghost" className="w-full justify-center">

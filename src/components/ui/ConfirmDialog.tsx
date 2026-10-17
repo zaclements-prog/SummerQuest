@@ -1,8 +1,7 @@
 import { useEffect, useRef } from 'react'
 import type { ReactNode } from 'react'
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
-import Card from './Card'
 import Button from './Button'
+import Modal from './Modal'
 import type { ButtonVariant } from './Button'
 
 interface ConfirmDialogProps {
@@ -36,7 +35,6 @@ export default function ConfirmDialog({
   onConfirm,
   onCancel,
 }: ConfirmDialogProps) {
-  const reduced = useReducedMotion() ?? false
   const cancelRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -53,55 +51,35 @@ export default function ConfirmDialog({
   }, [open, onCancel])
 
   return (
-    <AnimatePresence>
-      {open && (
-        <>
-          <motion.div
-            className="fixed inset-0 z-40 bg-ink-900/50 backdrop-blur-sm"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={onCancel}
+    <Modal open={open} onClose={onCancel} label={title} role="alertdialog" size="md">
+      <div className="p-6 sm:p-7 text-center">
+        {emoji && (
+          <div
+            className="mx-auto mb-3 grid place-items-center w-20 h-20 rounded-full bg-cream-100 border-[3px] border-line text-4xl"
             aria-hidden="true"
-          />
-          <motion.div
-            role="alertdialog"
-            aria-modal="true"
-            aria-label={title}
-            className="fixed inset-0 z-50 flex items-center justify-center p-6 pointer-events-none"
-            initial={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.92, y: 16 }}
-            animate={reduced ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
-            exit={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.92, y: 16 }}
-            transition={{ type: 'spring', stiffness: 300, damping: 26 }}
           >
-            <Card className="pointer-events-auto p-7 w-full max-w-sm text-center [text-shadow:none]">
-              {emoji && (
-                <div className="text-5xl mb-2" aria-hidden="true">
-                  {emoji}
-                </div>
-              )}
-              <h2 className="kid-text text-2xl text-ink-900 mb-3">{title}</h2>
-              {children && <div className="text-ink-700 mb-5">{children}</div>}
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <div ref={cancelRef} className="flex">
-                  <Button variant="ghost" size="md" className="flex-1 justify-center" onClick={onCancel}>
-                    {cancelLabel}
-                  </Button>
-                </div>
-                <Button
-                  variant={confirmVariant}
-                  size="md"
-                  className="justify-center"
-                  disabled={confirmDisabled}
-                  onClick={onConfirm}
-                >
-                  {confirmLabel}
-                </Button>
-              </div>
-            </Card>
-          </motion.div>
-        </>
-      )}
-    </AnimatePresence>
+            {emoji}
+          </div>
+        )}
+        <h2 className="kid-text font-bold text-2xl text-ink-900 mb-2 leading-tight">{title}</h2>
+        {children && <div className="text-ink-700 text-base mb-5">{children}</div>}
+        <div className="flex flex-col-reverse sm:flex-row gap-3 justify-center">
+          <div ref={cancelRef} className="flex sm:flex-1">
+            <Button variant="ghost" size="md" className="flex-1 justify-center" onClick={onCancel}>
+              {cancelLabel}
+            </Button>
+          </div>
+          <Button
+            variant={confirmVariant}
+            size="md"
+            className="justify-center sm:flex-1"
+            disabled={confirmDisabled}
+            onClick={onConfirm}
+          >
+            {confirmLabel}
+          </Button>
+        </div>
+      </div>
+    </Modal>
   )
 }

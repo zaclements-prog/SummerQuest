@@ -1,14 +1,128 @@
 import { describe, expect, it } from 'vitest'
 import {
+  CYCLE_SCORE,
   CYCLE_START,
+  DROP_FORMS,
+  FORM_AFTER,
+  FORM_ICON,
+  NEED_LINE,
+  NEXT_PROCESS,
   PROCESSES,
+  PROCESS_CHEER,
+  PROCESS_ICON,
   ROUNDS,
+  WRONG_HINT,
   applyProcess,
+  cycleLegCount,
+  cycleRunPlan,
   cycleStarThresholds,
   cycleStars,
   isProcess,
+  legScore,
   parseCycleRound,
+  routeStep,
+  type DropForm,
 } from '../cycleCore'
+import { seededRng } from '../../random'
+
+describe('route order (guiding Drip)', () => {
+  it('walks the loop water → vapor → cloud → water in process order', () => {
+    let form: DropForm = 'water'
+    const seen: string[] = []
+    for (let i = 0; i < 6; i++) {
+      const step = routeStep(form, NEXT_PROCESS[form])
+      expect(step.ok).toBe(true)
+      expect(step.hint).toBeNull()
+      seen.push(step.need)
+      form = step.form
+    }
+    expect(seen).toEqual(['evaporation', 'condensation', 'precipitation', 'evaporation', 'condensation', 'precipitation'])
+    expect(form).toBe('water')
+  })
+
+  it('every form has exactly one right station, and wrong ones leave Drip unchanged', () => {
+    for (const form of DROP_FORMS) {
+      const oks = PROCESSES.filter((p) => routeStep(form, p).ok)
+      expect(oks).toEqual([NEXT_PROCESS[form]])
+      for (const p of PROCESSES) {
+        const r = routeStep(form, p)
+        if (!r.ok) {
+          expect(r.form).toBe(form)
+          expect(r.need).toBe(NEXT_PROCESS[form])
+        }
+      }
+    }
+  })
+
+  it('wrong-station hints are three words at most and never empty', () => {
+    for (const form of DROP_FORMS) {
+      for (const p of PROCESSES) {
+        const r = routeStep(form, p)
+        if (r.ok) continue
+        expect(r.hint).toBeTruthy()
+        expect(r.hint!.split(/\s+/).length).toBeLessThanOrEqual(3)
+        expect(r.hint).toBe(WRONG_HINT[form][p])
+      }
+    }
+  })
+
+  it('every process turns Drip into the form whose next process follows it in the cycle', () => {
+    for (let i = 0; i < PROCESSES.length; i++) {
+      const after = FORM_AFTER[PROCESSES[i]]
+      expect(NEXT_PROCESS[after]).toBe(PROCESSES[(i + 1) % PROCESSES.length])
+    }
+  })
+
+  it('has short copy and icons for every form and process', () => {
+    for (const f of DROP_FORMS) {
+      expect(FORM_ICON[f]).toBeTruthy()
+      expect(NEED_LINE[f].split(/\s+/).length).toBeLessThanOrEqual(4)
+    }
+    for (const p of PROCESSES) {
+      expect(PROCESS_ICON[p]).toBeTruthy()
+      expect(PROCESS_CHEER[p].toLowerCase()).toContain(p)
+    }
+    // Drip's cloud icon must never equal a station icon (no icon-matching shortcut)
+    for (const f of DROP_FORMS) expect(Object.values(PROCESS_ICON)).not.toContain(FORM_ICON[f])
+  })
+})
+
+describe('cycleRunPlan', () => {
+  it('builds the arc: guided warm-up loop, windy loop, storm finale (9 legs at 5 rounds)', () => {
+    const plan = cycleRunPlan(5, seededRng('a'))
+    expect(plan.map((g) => g.kind)).toEqual(['warmup', 'twist', 'storm'])
+    expect(plan.map((g) => g.guide)).toEqual([true, false, false])
+    expect(plan[1].twist).toBe('wind')
+    expect(cycleLegCount(plan)).toBe(9)
+  })
+
+  it('the storm rescues one friend of each form, shuffled', () => {
+    const orders = new Set<string>()
+    for (let i = 0; i < 30; i++) {
+      const storm = cycleRunPlan(5, seededRng(`s${i}`)).at(-1)!.storm!
+      expect([...storm].sort()).toEqual([...DROP_FORMS].sort())
+      orders.add(storm.join(','))
+    }
+    expect(orders.size).toBeGreaterThan(1)
+  })
+
+  it('scales with the stage rounds and stays sane at the edges', () => {
+    expect(cycleRunPlan(1).map((g) => g.kind)).toEqual(['warmup', 'storm'])
+    expect(cycleRunPlan(6).map((g) => g.kind)).toEqual(['warmup', 'twist', 'twist', 'storm'])
+    expect(cycleRunPlan(99)).toHaveLength(5)
+  })
+})
+
+describe('legScore', () => {
+  it('pays base + streak + speed for a clean, quick leg', () => {
+    expect(legScore({ firstTry: true, streak: 1, seconds: 2 })).toEqual({ base: 100, streak: 0, speed: CYCLE_SCORE.speedMax, total: 130 })
+    expect(legScore({ firstTry: true, streak: 4, seconds: CYCLE_SCORE.slowSec })).toEqual({ base: 100, streak: 60, speed: 0, total: 160 })
+  })
+  it('caps the streak bonus; a fixed-up leg earns the retry base only', () => {
+    expect(legScore({ firstTry: true, streak: 50, seconds: 99 }).streak).toBe(CYCLE_SCORE.streakCap)
+    expect(legScore({ firstTry: false, streak: 0, seconds: 1 })).toEqual({ base: 40, streak: 0, speed: 0, total: 40 })
+  })
+})
 
 describe('parseCycleRound', () => {
   it('accepts problems whose answer is a process word', () => {

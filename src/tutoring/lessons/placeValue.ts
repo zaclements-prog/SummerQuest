@@ -16,6 +16,14 @@ export const placeValueLesson: Lesson = {
       visual: { kind: 'placeValueBlocks', thousands: 1, hundreds: 2, tens: 3, ones: 4 },
     },
     {
+      // Why each place is worth ten times the one to its right: regrouping.
+      id: 'regroup',
+      narration: 'Here is the secret of place value. Ten ones bundle together to make one ten. Ten tens bundle together to make one hundred. So each place is worth ten times the place to its right.',
+      body: '10 ones = 1 ten.   10 tens = 1 hundred.',
+      visual: { kind: 'placeValueBlocks', thousands: 0, hundreds: 1, tens: 1, ones: 1 },
+      check: { question: 'You have 13 ones. Bundle ten of them into a ten. What do you get?', options: ['1 ten and 3 ones', '13 tens', '3 tens and 1 one', '1 ten and 13 ones'], answer: '1 ten and 3 ones', explain: 'Ten of the ones bundle into 1 ten, and 3 ones are left over. 1 ten and 3 ones is 13.' },
+    },
+    {
       id: 'value',
       narration: 'Look at the number one thousand two hundred thirty-four. The two is sitting in the hundreds place, so it is not just two. It really means two hundred.',
       body: 'In 1,234 the 2 is in the hundreds place → it means 200.',

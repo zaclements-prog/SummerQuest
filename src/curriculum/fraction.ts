@@ -15,8 +15,8 @@ export const fractionZone: Zone = {
     {
       id: 'frac-concept',
       kind: 'concept',
-      title: 'Equivalent Fractions',
-      description: 'Carry trays of fraction pieces and fill the gauge exactly.',
+      title: 'Candy Forge',
+      description: 'Stamp candy slabs and pour them to fill each order exactly. Equivalent fractions!',
       gameId: 'fractionForge',
       providerConfig: { kind: 'fractionEquivalence', maxDenominator: 12 },
       params: { rounds: 5 },

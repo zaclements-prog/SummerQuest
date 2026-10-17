@@ -5,8 +5,9 @@ import { mkdirSync, writeFileSync, existsSync, readFileSync, createWriteStream }
 import { createHash } from 'node:crypto'
 import { fileURLToPath } from 'node:url'
 
-const VOICE = 'en-US-JennyNeural'
 const root = fileURLToPath(new URL('..', import.meta.url))
+// Shared with the app's tests and the local Higgs/Qwen renderer (docs/narration-handoff.md).
+const VOICE = JSON.parse(readFileSync(`${root}src/tutoring/narrationVoice.json`, 'utf8')).voice
 const outDir = `${root}public/tts`
 const lessons = JSON.parse(readFileSync(`${root}src/tutoring/narration.json`, 'utf8'))
 

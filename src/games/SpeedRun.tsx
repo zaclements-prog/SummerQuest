@@ -110,8 +110,8 @@ export default function SpeedRun({ provider, params, onComplete, meta, paused = 
   return (
     <div className="flex-1 flex flex-col items-center justify-center p-4">
       {/* ── Status bar: prominent timer + live score/streak ──────────────── */}
-      <div className="w-full max-w-md mb-5">
-        <div className="flex items-center justify-between gap-2 mb-2">
+      <div className="w-full max-w-md mb-6 bg-paper rounded-[1.5rem] border-2 border-line/15 shadow-card px-4 pt-3 pb-4">
+        <div className="flex items-center justify-between gap-2 mb-2.5">
           <motion.div
             // Pulse the seconds when time is running low (reduced-motion: static).
             animate={!reduced && low ? { scale: [1, 1.12, 1] } : { scale: 1 }}
@@ -121,13 +121,13 @@ export default function SpeedRun({ provider, params, onComplete, meta, paused = 
                 : { duration: 0.2 }
             }
           >
-            <Pill tone={timerTone} icon="⏱" className="text-base px-4 py-1 tabular-nums">
+            <Pill tone={timerTone} icon="⏱" className="text-lg px-4 py-0.5 tabular-nums">
               {secondsLeft}s
             </Pill>
           </motion.div>
 
           <div className="flex items-center gap-2">
-            <Pill tone="ocean" icon="✓">
+            <Pill tone="ocean" icon="✓" className="text-lg px-3.5 tabular-nums">
               {correct}
             </Pill>
             {streak >= 3 && (
@@ -137,7 +137,7 @@ export default function SpeedRun({ provider, params, onComplete, meta, paused = 
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ type: 'spring', stiffness: 320, damping: 18 }}
               >
-                <Pill tone="quest" icon="🔥">
+                <Pill tone="quest" icon="🔥" className="text-lg px-3.5 tabular-nums">
                   {streak}
                 </Pill>
               </motion.div>

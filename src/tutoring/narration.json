@@ -24,7 +24,7 @@
     },
     {
       "stepId": "answer",
-      "text": "Each of the three friends gets four cookies. So twelve divided by three equals four."
+      "text": "Let's deal them out fairly: one for you, one for you, one for you, and again, until they are all gone. Each of the three friends gets four cookies. So twelve divided by three equals four."
     },
     {
       "stepId": "inverse",
@@ -59,6 +59,10 @@
       "text": "Every digit sits in a special place. From the right, we have ones, then tens, then hundreds, then thousands. The place a digit sits in tells you its value."
     },
     {
+      "stepId": "regroup",
+      "text": "Here is the secret of place value. Ten ones bundle together to make one ten. Ten tens bundle together to make one hundred. So each place is worth ten times the place to its right."
+    },
+    {
       "stepId": "value",
       "text": "Look at the number one thousand two hundred thirty-four. The two is sitting in the hundreds place, so it is not just two. It really means two hundred."
     },
@@ -70,19 +74,19 @@
   "measurement": [
     {
       "stepId": "area",
-      "text": "Area is the amount of space inside a shape. You can count all the little squares that fit inside, or you can take a shortcut and multiply the length times the width."
+      "text": "Area is the amount of space inside a shape. You can count all the little squares that fit inside, or take a shortcut and multiply the length times the width. Four times three equals twelve!"
     },
     {
       "stepId": "perimeter",
-      "text": "Perimeter is the distance all the way around the edge of a shape, like walking around the outside of a yard. To find it, add up the length of every single side."
+      "text": "Perimeter is the distance all the way around a shape, like walking around the edge of a yard. Add up every side: four plus three plus four plus three equals fourteen."
     },
     {
       "stepId": "time",
-      "text": "On a clock, the short hand points to the hour, and the long hand points to the minutes. When the long hand is on the three, it is fifteen minutes past the hour."
+      "text": "On a clock, the short hand points to the hour. The long hand points to the minutes, and it counts by fives: five, ten, fifteen. The short hand is just past the eight, so it is eight fifteen!"
     },
     {
       "stepId": "money",
-      "text": "When you count money, count the dollars first, and then count the cents. Putting them together tells you the total amount."
+      "text": "When you count money, count the dollars first: one dollar. Then count the cents: twenty-five, fifty, seventy-five. Put them together, and you have one dollar and seventy-five cents!"
     }
   ],
   "geometry": [
@@ -91,8 +95,20 @@
       "text": "Shapes get their names from their sides and their corners. A square is special because it has four sides that are all the same length, and it has four corners."
     },
     {
+      "stepId": "family",
+      "text": "Count the sides to name a shape. Three sides make a triangle. Four sides make a quadrilateral. Five sides make a pentagon, and six sides make a hexagon!"
+    },
+    {
       "stepId": "angles",
       "text": "A corner, where two sides meet, is called an angle. The square corner that you see in a square is a special angle that we call a right angle."
+    },
+    {
+      "stepId": "angleTypes",
+      "text": "An angle smaller than a right angle is called acute. It is narrow, like the tip of a pizza slice. An angle bigger than a right angle is called obtuse. It opens up wide."
+    },
+    {
+      "stepId": "lines",
+      "text": "Lines that run side by side and never cross are called parallel, like train tracks. Lines that cross to make square corners are called perpendicular, like a plus sign."
     },
     {
       "stepId": "count",
@@ -101,18 +117,26 @@
   ],
   "dataGraph": [
     {
+      "stepId": "tally",
+      "text": "To collect data, make one tally mark for each fruit sold. The fifth mark crosses the other four, making a bundle of five. Count the bundle as five, then six, seven, eight. Eight plums!"
+    },
+    {
       "stepId": "bars",
       "text": "A bar graph shows amounts using bars. Each bar stands for one thing, and the taller a bar is, the bigger its number. A short bar means a small number."
     },
     {
       "stepId": "read",
-      "text": "To read a bar, look at the number right on top of it. That number tells you the amount for that bar. To compare, look at the heights. The tallest bar has the biggest number."
+      "text": "To read a bar, find its top, then slide straight across to the numbers on the side. The apple bar lines up with five, so five apples were sold. The tallest bar shows the biggest number."
+    },
+    {
+      "stepId": "compare",
+      "text": "How many more plums were sold than apples? Draw a line across from the top of the apple bar. The plum bar reaches three spaces higher: six, seven, eight. Eight minus five equals three!"
     }
   ],
   "wordProblem": [
     {
       "stepId": "read",
-      "text": "For a word problem, the first thing to do is read it slowly and picture what is happening in the story. Imagine the box and the crayons in your mind."
+      "text": "First, read the problem slowly: A box has six rows of four crayons. How many crayons are there in all? Then picture the story in your mind. See the box, and the crayons lined up inside it."
     },
     {
       "stepId": "plan",
@@ -120,27 +144,43 @@
     },
     {
       "stepId": "solve",
-      "text": "Now solve it. There are six rows, and each row has four crayons, so we multiply six times four to find how many crayons there are in all."
+      "text": "Now solve it. There are six rows, and each row has four crayons, so we multiply six times four. Count by fours: four, eight, twelve, sixteen, twenty, twenty-four! There are twenty-four crayons in all."
     }
   ],
   "reading": [
     {
       "stepId": "mainidea",
-      "text": "Good readers look for the main idea, which is what the whole passage is mostly about. As you read about the frog, ask yourself what the writer wants you to learn."
+      "text": "Good readers look for the main idea: what the whole passage is mostly about. Read each sentence and ask, who or what is it about? Frogs. Frogs. Frogs! So this passage is mostly about frogs."
+    },
+    {
+      "stepId": "supports",
+      "text": "Think of the main idea as a tabletop. The details are the legs that hold it up. Frogs live near ponds. Frogs eat insects. Frogs can jump far. Each detail tells us more about frogs."
     },
     {
       "stepId": "detail",
-      "text": "For a detail question, you go back into the text and find the exact words that answer it. Do not guess from memory. Look for the sentence that talks about what frogs eat."
+      "text": "For a detail question, go back into the text and find the exact words. Don’t guess from memory! What do frogs eat? Find the clue word, eat, in the passage. There it is: they eat insects."
+    },
+    {
+      "stepId": "infer",
+      "text": "Sometimes the answer is not written down, so you use clues. The text says frogs can jump very far. What do you know about jumping far? It takes strong legs! Clues plus what you know make an inference."
     }
   ],
   "writing": [
     {
       "stepId": "parts",
-      "text": "A complete sentence has two important parts. It has a naming part, which tells who or what the sentence is about, and an action part, which tells what they do. It also begins with a capital letter and ends with a punctuation mark."
+      "text": "A complete sentence has two parts. The naming part tells who or what the sentence is about. The action part tells what they do. And every sentence starts with a capital letter and ends with a punctuation mark."
     },
     {
       "stepId": "example",
       "text": "Here is an example. The dog ran fast. The naming part is the dog, because that is who the sentence is about, and the action part is ran fast, because that tells what the dog does."
+    },
+    {
+      "stepId": "fragments",
+      "text": "If a part is missing, it is not a complete sentence. The big dog. What did it do? Ran fast. Who ran? Put the parts together: The big dog ran fast. Now it is complete!"
+    },
+    {
+      "stepId": "endmarks",
+      "text": "Every sentence ends with an end mark. A period ends a telling sentence. A question mark ends an asking sentence. And an exclamation point shows a strong feeling, like wow!"
     }
   ],
   "science": [
@@ -151,6 +191,14 @@
     {
       "stepId": "water",
       "text": "Water is amazing because it can be all three states. When it is frozen, ice is a solid. When you pour it, water is a liquid. And when it boils away, steam is a gas."
+    },
+    {
+      "stepId": "cycle",
+      "text": "Water moves in a cycle. The sun warms the lake, and water rises as vapor. That’s evaporation. Up high, the vapor cools into tiny drops that make clouds. That’s condensation. When the drops get heavy, they fall as rain. That’s precipitation!"
+    },
+    {
+      "stepId": "plants",
+      "text": "Plants make their own food! Leaves catch sunlight, roots soak up water, and leaves take in a gas called carbon dioxide. Using the sun’s energy, the plant turns them into sugar, and gives off the oxygen we breathe. That’s photosynthesis!"
     }
   ]
 }

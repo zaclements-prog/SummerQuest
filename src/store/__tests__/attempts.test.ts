@@ -17,11 +17,19 @@ describe('recordAttempt', () => {
     expect(a[0].id.length).toBeGreaterThan(0)
   })
   it('caps history at 2000 (keeps newest)', () => {
+    // Seed 1995 attempts in one write (recording 2000+ one by one re-serializes the
+    // whole persisted store each time — quadratic, and slow on a busy machine),
+    // then record across the cap.
+    const seeded = Array.from({ length: 1995 }, (_, i) => ({
+      id: `seed${i}`, at: i, zoneId: 'z', topic: 't', skillId: `s${i}`, skillLabel: 'x', correct: true,
+    }))
+    useProgress.setState({ attempts: seeded })
     const rec = useProgress.getState().recordAttempt
-    for (let i = 0; i < 2010; i++)
+    for (let i = 1995; i < 2010; i++)
       rec({ zoneId: 'z', topic: 't', skillId: `s${i}`, skillLabel: 'x', correct: true })
     const a = useProgress.getState().attempts
     expect(a).toHaveLength(2000)
+    expect(a[0].skillId).toBe('s10') // the 10 oldest dropped
     expect(a[a.length - 1].skillId).toBe('s2009')
   })
   it('resetPlayer clears attempts', () => {

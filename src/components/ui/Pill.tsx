@@ -9,23 +9,24 @@ interface PillProps {
   className?: string
 }
 
+// Pastel chips with ink text (AA on all), outlined like every toon shape.
 const toneBg: Record<PillTone, string> = {
-  quest: 'bg-quest-400 text-quest-900',
-  island: 'bg-island-500 text-white',
-  ocean: 'bg-ocean-600 text-white',
-  monster: 'bg-monster-600 text-white',
-  correct: 'bg-correct-600 text-white',
-  wrong: 'bg-wrong-600 text-white',
-  ink: 'bg-ink-700 text-white',
+  quest: 'bg-quest-300 text-ink-900',
+  island: 'bg-island-300 text-ink-900',
+  ocean: 'bg-ocean-300 text-ink-900',
+  monster: 'bg-monster-300 text-ink-900',
+  correct: 'bg-correct-400 text-ink-900',
+  wrong: 'bg-wrong-400 text-ink-900',
+  ink: 'bg-paper text-ink-900',
 }
 
 export default function Pill({ tone = 'quest', icon, children, className = '' }: PillProps) {
   return (
     <span
       className={[
-        'inline-flex items-center gap-1',
-        'rounded-full px-3 py-0.5',
-        'text-sm font-semibold kid-text',
+        'inline-flex items-center gap-1.5 whitespace-nowrap',
+        'rounded-full px-3 py-0.5 border-2 border-line',
+        'text-sm leading-6 kid-text',
         toneBg[tone],
         className,
       ].join(' ')}

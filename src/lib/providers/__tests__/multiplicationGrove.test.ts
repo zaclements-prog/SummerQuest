@@ -1,18 +1,18 @@
 import { describe, expect, it } from 'vitest'
-import { GROVE_ORDERS, groveSkill, makeMultiplicationGroveProvider } from '../multiplicationGrove'
-import { groveCandidates, groveChant, parseGroveRound } from '../../grove/groveCore'
+import { GROVE_ORDERS, groveOrder, groveOrdersFor, groveProblem, groveSkill, makeMultiplicationGroveProvider } from '../multiplicationGrove'
+import { FIELD, groveCandidates, groveChant, parseGroveRound } from '../../grove/groveCore'
 import { SKILLS } from '../../../tutoring/skills'
 
 describe('grove order bank', () => {
-  it('keeps a healthy curated set of factor pairs between 2 and 6', () => {
-    expect(GROVE_ORDERS.length).toBeGreaterThanOrEqual(10)
+  it('keeps a healthy curated set of factor pairs that fit the 7 × 7 field', () => {
+    expect(GROVE_ORDERS.length).toBeGreaterThanOrEqual(20)
     const pairs = new Set(GROVE_ORDERS.map((o) => `${o.rows}x${o.cols}`))
     expect(pairs.size).toBe(GROVE_ORDERS.length)
     for (const o of GROVE_ORDERS) {
       expect(o.rows).toBeGreaterThanOrEqual(2)
-      expect(o.rows).toBeLessThanOrEqual(6)
+      expect(o.rows).toBeLessThanOrEqual(FIELD.rows)
       expect(o.cols).toBeGreaterThanOrEqual(2)
-      expect(o.cols).toBeLessThanOrEqual(6)
+      expect(o.cols).toBeLessThanOrEqual(FIELD.cols)
     }
   })
 
@@ -21,8 +21,10 @@ describe('grove order bank', () => {
     for (const o of GROVE_ORDERS) {
       expect(seen.has(o.prompt)).toBe(false)
       seen.add(o.prompt)
-      expect(o.prompt.length).toBeGreaterThan(40)
+      expect(o.prompt.length).toBeGreaterThan(30)
       expect(o.prompt).toMatch(new RegExp(`${o.rows}\\s*(rows)?\\s*(of|with)\\s*${o.cols}\\b`))
+      // the verb is planting now — no "which plot" quiz wording
+      expect(o.prompt).not.toMatch(/which/i)
     }
   })
 
@@ -37,15 +39,24 @@ describe('grove order bank', () => {
 
   it('every order round-trips through groveCore with three distinct totals', () => {
     for (const o of GROVE_ORDERS) {
-      const problem = {
-        prompt: o.prompt,
-        answer: o.rows * o.cols,
-        visual: { kind: 'array' as const, rows: o.rows, cols: o.cols },
-      }
-      const round = parseGroveRound(problem)
+      const round = parseGroveRound(groveProblem(o))
       expect(round.shape.total).toBe(o.rows * o.cols)
       expect(new Set(round.siblings.map((s) => s.total)).size).toBe(3)
     }
+  })
+
+  it('grade filter: each tier only sees its factors, and has room for a full run', () => {
+    for (const mf of [5, 6, 7]) {
+      const bank = groveOrdersFor(mf)
+      expect(bank.length).toBeGreaterThanOrEqual(10)
+      for (const o of bank) expect(Math.max(o.rows, o.cols)).toBeLessThanOrEqual(mf)
+    }
+    expect(groveOrdersFor(7)).toHaveLength(GROVE_ORDERS.length)
+  })
+
+  it('groveOrder finds the bank order, or makes a plain one', () => {
+    expect(groveOrder(3, 4).prompt).toContain('3 rows of 4')
+    expect(groveOrder(7, 7)).toEqual({ rows: 7, cols: 7, prompt: 'Plant 7 rows of 7 trees.' })
   })
 })
 
@@ -88,13 +99,24 @@ describe('makeMultiplicationGroveProvider', () => {
     expect(groveSkill(5, 6).id).toBe('mult-f6_9')
   })
 
-  it('does not repeat an order until the whole bank has been served', async () => {
+  it('does not repeat an order until the whole (grade) bank has been served', async () => {
+    for (const mf of [5, 6, 7]) {
+      const p = makeMultiplicationGroveProvider({ maxFactor: mf })
+      const seen = new Set<string>()
+      for (let i = 0; i < groveOrdersFor(mf).length; i++) {
+        const problem = await p.next()
+        expect(seen.has(problem.prompt)).toBe(false)
+        seen.add(problem.prompt)
+      }
+    }
+  })
+
+  it('the default (GameRunner) provider stays within factors up to 6', async () => {
     const p = makeMultiplicationGroveProvider()
-    const seen = new Set<string>()
-    for (let i = 0; i < GROVE_ORDERS.length; i++) {
+    for (let i = 0; i < 40; i++) {
       const problem = await p.next()
-      expect(seen.has(problem.prompt)).toBe(false)
-      seen.add(problem.prompt)
+      const m = problem.visual?.kind === 'array' ? problem.visual : null
+      expect(Math.max(m!.rows, m!.cols)).toBeLessThanOrEqual(6)
     }
   })
 

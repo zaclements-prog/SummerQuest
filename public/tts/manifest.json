@@ -19,10 +19,6 @@
     "file": "tts/division/share.mp3",
     "hash": "b89355d689"
   },
-  "division/answer": {
-    "file": "tts/division/answer.mp3",
-    "hash": "48cf85782f"
-  },
   "division/inverse": {
     "file": "tts/division/inverse.mp3",
     "hash": "cb937522e6"
@@ -51,22 +47,6 @@
     "file": "tts/placeValue/rounding.mp3",
     "hash": "19d35679ca"
   },
-  "measurement/area": {
-    "file": "tts/measurement/area.mp3",
-    "hash": "1a9506023b"
-  },
-  "measurement/perimeter": {
-    "file": "tts/measurement/perimeter.mp3",
-    "hash": "1fe3dddd8a"
-  },
-  "measurement/time": {
-    "file": "tts/measurement/time.mp3",
-    "hash": "8b0cc0d2aa"
-  },
-  "measurement/money": {
-    "file": "tts/measurement/money.mp3",
-    "hash": "ff0794b007"
-  },
   "geometry/shapes": {
     "file": "tts/geometry/shapes.mp3",
     "hash": "52935846d3"
@@ -83,29 +63,9 @@
     "file": "tts/dataGraph/bars.mp3",
     "hash": "2678b57289"
   },
-  "wordProblem/read": {
-    "file": "tts/wordProblem/read.mp3",
-    "hash": "4309ab9f26"
-  },
   "wordProblem/plan": {
     "file": "tts/wordProblem/plan.mp3",
     "hash": "f939b34a7c"
-  },
-  "wordProblem/solve": {
-    "file": "tts/wordProblem/solve.mp3",
-    "hash": "2e515c15d2"
-  },
-  "reading/mainidea": {
-    "file": "tts/reading/mainidea.mp3",
-    "hash": "d3b9f5abbd"
-  },
-  "reading/detail": {
-    "file": "tts/reading/detail.mp3",
-    "hash": "544612a8cc"
-  },
-  "writing/parts": {
-    "file": "tts/writing/parts.mp3",
-    "hash": "2c55bf3425"
   },
   "writing/example": {
     "file": "tts/writing/example.mp3",

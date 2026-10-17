@@ -14,9 +14,18 @@ import {
   Pill,
   EmptyState,
   ConfirmDialog,
+  Medallion,
+  Page,
+  StatTile,
+  TONES,
+  accuracyToneOf,
+  type Tone,
 } from '../components/ui'
-import { accuracyColorClass, accuracyTone } from '../lib/theme'
-import { useEntrance, hoverPop, tap } from '../lib/motion'
+import { useEntrance } from '../lib/motion'
+
+// The grown-up check / form input, in the toon style.
+const inputClass =
+  'mt-2 w-full rounded-2xl border-[3px] border-line bg-paper px-4 py-2.5 min-h-[52px] text-xl kid-text text-ink-900 outline-none focus:ring-4 focus:ring-ocean-600/60'
 import { GRADE_LABEL, GRADE_LEVELS, type GradeLevel } from '../lib/gradeTiers'
 
 export default function ParentDashboard() {
@@ -88,50 +97,49 @@ export default function ParentDashboard() {
   // ── Fresh-profile empty state ───────────────────────────────────────────────
   if (!player) {
     return (
-      <div className="flex-1 flex flex-col p-4">
-        <div className="max-w-3xl w-full mx-auto flex flex-col gap-4">
-          <PageHeader title="Parent Dashboard" back={{ to: '/', label: 'Home' }} />
-          <EmptyState
-            emoji="👋"
-            title="No profile yet"
-            message="Have your child set up their avatar to start their quest — progress and stats will show up here."
-            cta={{ label: 'Set up a player', to: '/' }}
-          />
-        </div>
-      </div>
+      <Page width="lg">
+        <PageHeader title="Parent Dashboard" back={{ to: '/', label: 'Home' }} className="!mb-0" />
+        <EmptyState
+          emoji="👋"
+          title="No profile yet"
+          message="Have your child set up their avatar to start their quest — progress and stats will show up here."
+          cta={{ label: 'Set up a player', to: '/' }}
+        />
+      </Page>
     )
   }
 
   return (
-    <div className="flex-1 flex flex-col p-4">
+    <div className="flex-1 flex flex-col px-4 pt-5 pb-10 sm:px-6 sm:pt-6">
       <motion.div
         variants={container}
         initial="hidden"
         animate="show"
-        className="max-w-3xl w-full mx-auto flex flex-col gap-4"
+        className="max-w-3xl w-full mx-auto flex flex-col gap-5"
       >
         <PageHeader
           title="Parent Dashboard"
-          back={{ to: '/map', label: 'Back to game' }}
+          back={{ to: '/world', label: 'Back to game' }}
+          className="!mb-0"
         />
 
         {/* ── Profile ───────────────────────────────────────────────────── */}
         <motion.div variants={item}>
           <Card tone="ocean" accent className="overflow-hidden">
-            <div className="bg-gradient-to-br from-ocean-500 to-ocean-700 p-5 sm:p-6">
+            <div className="bg-ocean-100 p-5 sm:p-6">
               <div className="flex items-center gap-4">
                 <div
-                  className="w-20 h-20 rounded-full flex items-center justify-center text-5xl ring-4 ring-paper/70 shadow-lg shrink-0"
+                  className="w-20 h-20 rounded-full flex items-center justify-center text-5xl border-[3px] border-line shadow-ledge shrink-0"
                   style={{ background: player.color }}
                   aria-hidden="true"
                 >
                   {player.emoji}
                 </div>
                 <div className="min-w-0">
-                  <div className="kid-text text-3xl text-sky truncate">
+                  <div className="kid-text font-bold text-3xl text-ink-900 truncate">
                     {player.name}
                   </div>
-                  <div className="flex flex-wrap gap-2 mt-2">
+                  <div className="flex flex-wrap items-center gap-2 mt-2">
                     <Pill tone="wrong" icon="🔥">
                       {stats.streakDays} day streak
                     </Pill>
@@ -142,9 +150,10 @@ export default function ParentDashboard() {
                       type="button"
                       onClick={openGrade}
                       className={[
-                        'inline-flex items-center gap-1 rounded-full px-3 py-1 text-sm font-bold',
-                        'bg-paper/25 text-sky hover:bg-paper/40 transition-colors',
-                        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky',
+                        'inline-flex items-center gap-1.5 rounded-full px-3.5 min-h-[44px] kid-text text-base',
+                        'bg-paper text-ink-900 border-2 border-line shadow-ledge-sm',
+                        'hover:bg-cream-100 active:translate-y-0.5 transition-colors',
+                        'outline-none focus-visible:ring-4 focus-visible:ring-ocean-600/70',
                       ].join(' ')}
                       aria-label={`Grade: ${GRADE_LABEL[player.grade]}. Change grade (grown-ups)`}
                     >
@@ -159,20 +168,21 @@ export default function ParentDashboard() {
 
         {/* ── Activity ──────────────────────────────────────────────────── */}
         <motion.div variants={item}>
-          <Panel emoji="📊" title="Activity" accentClass="text-island-700">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <Stat label="Questions" value={totalQuestions} tone="text-ocean-700" />
-              <Stat label="Correct" value={stats.problemsCorrect} tone="text-island-700" />
-              <Stat
+          <Panel emoji="📊" title="Activity" tone="island">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+              <StatTile icon="❓" label="Questions" value={totalQuestions} tone="ocean" />
+              <StatTile icon="✅" label="Correct" value={stats.problemsCorrect} tone="island" />
+              <StatTile
+                icon="🎯"
                 label="Accuracy"
                 value={`${accuracy}%`}
-                tone={accuracyColorClass(accuracy)}
-                pill={
+                tone={accuracyToneOf(accuracy)}
+                footer={
                   totalQuestions > 0 ? (
-                    <Pill tone={accuracyTone(accuracy)}>
-                      {accuracyTone(accuracy) === 'correct'
+                    <Pill tone="ink" className="mt-1">
+                      {accuracyToneOf(accuracy) === 'correct'
                         ? 'Great'
-                        : accuracyTone(accuracy) === 'quest'
+                        : accuracyToneOf(accuracy) === 'quest'
                           ? 'Good'
                           : 'Practicing'}
                     </Pill>
@@ -185,7 +195,7 @@ export default function ParentDashboard() {
               to="/progress"
               variant="secondary"
               size="lg"
-              className="w-full justify-center mt-4"
+              className="w-full justify-center mt-5"
             >
               📈 Sessions & performance trends →
             </Button>
@@ -194,15 +204,15 @@ export default function ParentDashboard() {
 
         {/* ── Daily goal ────────────────────────────────────────────────── */}
         <motion.div variants={item}>
-          <Panel emoji="🎯" title="Daily goal" accentClass="text-quest-700">
+          <Panel emoji="🎯" title="Daily goal" tone="quest">
             <DailyGoalCard variant="light" />
           </Panel>
         </motion.div>
 
         {/* ── Zone progress ─────────────────────────────────────────────── */}
         <motion.div variants={item}>
-          <Panel emoji="🗺️" title="Zone progress" accentClass="text-ocean-700">
-            <div className="flex flex-col gap-3">
+          <Panel emoji="🗺️" title="Zone progress" tone="ocean">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {curriculum.zones.map((z) => {
                 const progress = zones[z.id]
                 const possible = z.stages.reduce(
@@ -225,14 +235,11 @@ export default function ParentDashboard() {
                 return (
                   <div
                     key={z.id}
-                    className="flex items-center gap-3 p-3 rounded-2xl bg-ink-500/5"
+                    className="flex items-center gap-3 p-3 rounded-[1.25rem] bg-cream-100 border-2 border-line/10"
                   >
-                    <div
-                      className={`text-3xl shrink-0 ${active ? '' : 'grayscale opacity-50'}`}
-                      aria-hidden="true"
-                    >
+                    <Medallion size="md" className={active ? '' : 'grayscale opacity-60'}>
                       {z.emoji}
-                    </div>
+                    </Medallion>
                     <div className="flex-1 min-w-0">
                       <div className="kid-text text-lg text-ink-900 truncate">
                         {z.title}
@@ -240,9 +247,9 @@ export default function ParentDashboard() {
                       {active ? (
                         <div className="mt-1">
                           <ProgressBar value={earned} max={possible} tone="quest" />
-                          <div className="flex items-center justify-between mt-1.5">
+                          <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-0.5 mt-1.5">
                             <StarRating earned={earned} total={possible} size="sm" />
-                            <span className="text-xs text-ink-700">
+                            <span className="text-sm text-ink-700 whitespace-nowrap">
                               {attempts} {attempts === 1 ? 'try' : 'tries'}
                             </span>
                           </div>
@@ -262,7 +269,7 @@ export default function ParentDashboard() {
 
         {/* ── AI settings ───────────────────────────────────────────────── */}
         <motion.div variants={item}>
-          <Panel emoji="🤖" title="AI settings" accentClass="text-monster-700">
+          <Panel emoji="🤖" title="AI settings" tone="monster">
             <div className="flex items-center justify-between gap-4">
               <div className="min-w-0">
                 <div className="kid-text text-lg text-ink-900">
@@ -280,7 +287,7 @@ export default function ParentDashboard() {
               />
             </div>
 
-            <div className="mt-4 flex flex-col sm:flex-row sm:items-center gap-3 pt-3 border-t border-ink-500/15">
+            <div className="mt-4 flex flex-col sm:flex-row sm:items-center gap-3 pt-4 border-t-2 border-line/10">
               <Pill
                 tone={
                   llmAvailable === true
@@ -311,7 +318,7 @@ export default function ParentDashboard() {
             </div>
 
             {llmAvailable === false && (
-              <p className="text-xs text-ink-500 mt-3">
+              <p className="text-sm text-ink-700 mt-3">
                 Tip: start oMLX (or set <code>VITE_OMLX_URL</code> in{' '}
                 <code>.env.local</code>) then restart the dev server.
                 {llmLastCheck && (
@@ -324,14 +331,14 @@ export default function ParentDashboard() {
 
         {/* ── Danger zone ───────────────────────────────────────────────── */}
         <motion.div variants={item}>
-          <Card tone="wrong" accent className="p-5 sm:p-6">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-2xl" aria-hidden="true">
+          <Card tone="wrong" accent className="p-5 sm:p-6 !bg-wrong-50">
+            <div className="flex items-center gap-3 mb-3">
+              <Medallion tone="wrong" size="sm">
                 ⚠️
-              </span>
-              <h2 className="kid-text text-xl text-wrong-700">Danger zone</h2>
+              </Medallion>
+              <h2 className="kid-text font-bold text-2xl text-wrong-800">Danger zone</h2>
             </div>
-            <p className="text-sm text-ink-700 mb-4">
+            <p className="text-base text-ink-700 mb-4">
               Progress is saved locally in this browser only. Resetting deletes
               the player profile, coins, and stage records. This cannot be undone.
             </p>
@@ -376,7 +383,7 @@ export default function ParentDashboard() {
               onKeyDown={(e) => {
                 if (e.key === 'Enter') handleReset()
               }}
-              className="mt-2 w-full rounded-xl border-2 border-ink-500/30 px-3 py-2 text-lg text-ink-900 focus:outline-none focus:border-ocean-500"
+              className={inputClass}
               aria-label={`Grown-up check: ${gate.a} times ${gate.b}`}
             />
           </label>
@@ -409,7 +416,7 @@ export default function ParentDashboard() {
               autoComplete="off"
               value={gradeGateAnswer}
               onChange={(e) => setGradeGateAnswer(e.target.value)}
-              className="mt-2 w-full rounded-xl border-2 border-ink-500/30 px-3 py-2 text-lg text-ink-900 focus:outline-none focus:border-ocean-500"
+              className={inputClass}
               aria-label={`Grown-up check: ${gradeGate.a} times ${gradeGate.b}`}
             />
           </label>
@@ -425,10 +432,11 @@ export default function ParentDashboard() {
                 aria-checked={selected}
                 onClick={() => setGradePick(g)}
                 className={[
-                  'min-h-[44px] rounded-xl font-bold transition-colors',
+                  'min-h-[52px] rounded-2xl kid-text text-base border-[3px] border-line transition-colors',
+                  'outline-none focus-visible:ring-4 focus-visible:ring-ocean-600/70',
                   selected
-                    ? 'bg-ocean-500 text-white ring-2 ring-ocean-700'
-                    : 'bg-ink-500/10 text-ink-900 hover:bg-ink-500/20',
+                    ? 'bg-quest-400 text-ink-900 shadow-ledge-sm'
+                    : 'bg-paper text-ink-900 hover:bg-cream-100',
                   g === player.grade ? 'opacity-60' : '',
                 ].join(' ')}
               >
@@ -445,53 +453,32 @@ export default function ParentDashboard() {
 
 // ── Inline sub-components ──────────────────────────────────────────────────────
 
-/** A titled section panel: rounded-3xl Card with a colored emoji header. */
+/** A titled section panel: a toon Card with a colored token + heading. */
 function Panel({
   emoji,
   title,
-  accentClass,
+  tone,
   children,
 }: {
   emoji: string
   title: string
-  accentClass: string
+  tone: Tone
   children: ReactNode
 }) {
   return (
     <Card className="p-5 sm:p-6">
-      <div className="flex items-center gap-2 mb-3">
-        <span className="text-2xl" aria-hidden="true">
+      <div className="flex items-center gap-3 mb-4">
+        <Medallion tone={tone} size="sm">
           {emoji}
-        </span>
-        <h2 className={`kid-text text-xl ${accentClass}`}>{title}</h2>
+        </Medallion>
+        <h2 className={`kid-text font-bold text-2xl ${TONES[tone].text}`}>{title}</h2>
       </div>
       {children}
     </Card>
   )
 }
 
-/** An accent stat tile with a big numeral. */
-function Stat({
-  label,
-  value,
-  tone,
-  pill,
-}: {
-  label: string
-  value: number | string
-  tone: string
-  pill?: ReactNode
-}) {
-  return (
-    <div className="bg-ink-500/5 rounded-2xl p-4 text-center flex flex-col items-center justify-center gap-1">
-      <div className={`kid-text text-4xl sm:text-5xl ${tone}`}>{value}</div>
-      <div className="text-xs text-ink-700 uppercase tracking-wide">{label}</div>
-      {pill}
-    </div>
-  )
-}
-
-/** A large (>=44px) rounded on/off toggle replacing the native checkbox. */
+/** A large (>=48px) rounded on/off toggle replacing the native checkbox. */
 function Toggle({
   checked,
   onChange,
@@ -502,33 +489,31 @@ function Toggle({
   label: string
 }) {
   return (
-    <motion.button
+    <button
       type="button"
       role="switch"
       aria-checked={checked}
       aria-label={label}
       onClick={onChange}
-      whileHover={hoverPop}
-      whileTap={tap}
       className={[
         'relative shrink-0 rounded-full p-1 transition-colors duration-200',
-        'w-[72px] h-11 min-h-[44px] flex items-center',
-        'outline-none focus-visible:ring-4 focus-visible:ring-ocean-400 focus-visible:ring-offset-2',
-        checked ? 'bg-correct-600' : 'bg-ink-500/40',
+        'w-[80px] h-12 flex items-center border-[3px] border-line shadow-ledge-sm',
+        'outline-none focus-visible:ring-4 focus-visible:ring-ocean-600/70 focus-visible:ring-offset-2',
+        checked ? 'bg-correct-400' : 'bg-cream-200',
       ].join(' ')}
     >
       <motion.span
         layout
         transition={{ type: 'spring', stiffness: 500, damping: 32 }}
         className={[
-          'w-9 h-9 rounded-full bg-paper shadow-md',
-          'flex items-center justify-center text-base',
+          'w-9 h-9 rounded-full bg-paper border-2 border-line',
+          'flex items-center justify-center text-base kid-text text-ink-900',
           checked ? 'ml-auto' : 'ml-0',
         ].join(' ')}
         aria-hidden="true"
       >
         {checked ? '✓' : ''}
       </motion.span>
-    </motion.button>
+    </button>
   )
 }

@@ -9,238 +9,540 @@ import type { Collider } from '../world/worldLayout'
 import { useProgress } from '../store/progress'
 import { sfx } from '../lib/sound'
 import { TOON } from '../toon/palette'
-import { TBox, TCyl } from '../toon/shapes'
-import { Decal } from '../world/areas/fraction-falls/kit'
-import { blobDisc } from '../world/areas/fraction-falls/shapes'
-import { chalkText } from '../world/town/chalk'
 import { useWanderWalk } from '../world/useWanderWalk'
-import WorldCameraRig from '../world/WorldCameraRig'
 import { creatureBuilder } from '../home/models/registry'
 import CreatureAccessories from '../home/world/CreatureAccessories'
+import { useStarterCreature } from '../home/starterCreature'
 import { collidesAt } from '../world/collision'
+import Beaver from '../world/areas/fraction-falls/Beaver'
 import {
+  MAX_STACK,
   ROUNDS,
-  fillState,
   forgeFactConfig,
+  forgeProblemCount,
+  forgeRunPlan,
+  forgeScore,
   forgeStars,
   parseFracEqRound,
+  pourOutcome,
+  stampStack,
+  type ForgeRoundSpec,
   type FracRound,
 } from '../lib/forge/fractionCore'
 import { makeFractionEquivalenceProvider } from '../lib/providers/fractionEquivalence'
 import { DEFAULT_GRADE, GRADE_TIERS } from '../lib/gradeTiers'
-import { BAR, CANDY, ForgeYard, Gauge, HeldTray, MeasureFlight, RecipeStrip, TrayRack, cellW } from './FractionForge.parts'
-import { ChalkEasel } from './_shared/ChalkEasel'
-import { GroundRing } from './_shared/GroundRing'
-import { fitChalk } from './_shared/chalkBoard'
+import {
+  ANVIL,
+  BAR,
+  BEAVER_AT,
+  BEAVER_MOUTH,
+  CANDY,
+  CHOMP,
+  CUSTOMER_AT,
+  CandyDelivery,
+  Critter,
+  Flyers,
+  ForgeYard,
+  GuideArrow,
+  MoldTable,
+  PAD,
+  PILE,
+  POUR,
+  PRESS,
+  Pile,
+  Press,
+  SPAWN,
+  Spill,
+  SpotBadge,
+  SpotRing,
+  TABLE,
+  TABLE_TOP,
+  VAT,
+  cellW,
+  slotWorld,
+  type CritterKind,
+  type CritterMood,
+  type Flight,
+  type MoldFx,
+} from './FractionForge.parts'
+import { juice } from './_juice/juice'
+import { Banner, StreakMeter } from './_juice/JuiceHud'
+import { Backdrop } from './_runkit/Backdrop'
+import { StageCamera } from './_runkit/StageCamera'
+import { HostReact, type HostCue, type HostMood } from './_runkit/HostReact'
+import { PromptPill, RoundPips, RunResults, ScorePill, SoftClock, SpeechBubble } from './_runkit/RunHud'
+import { recordRunBest } from './_runkit/bestScore'
+import { UI } from './_runkit/uiTokens'
+import { useArrowKeys } from './_runkit/useArrowKeys'
+import { JuiceStage, richConfetti } from './_runkit/juiceExtras'
+import { canvasQuality, useLowGraphics } from '../world/graphicsQuality'
 
 /**
- * Fraction Forge — the intrinsic-integration fraction-equivalence game
- * (CCSS 3.NF.A.3 / 4.NF.A.1). The chalkboard shows `2/3 = ?/6`. The recipe
- * bar (top) is the base fraction cut into its own chunks; the measuring gauge
- * (below) is the same length cut into `targetDenom` empty cells. Three market
- * racks hold trays of 1/d slabs: walk onto a rack to grab its row, carry it
- * over your head to the measuring table, and the bench measures it into the
- * gauge. The row that fills the gauge EXACTLY to the recipe's shade is right;
- * short/over rows stop visibly at (or cross) the target curtain. The answer is
- * never printed before measuring — the math IS the walk. Spec:
- * docs/superpowers/specs/2026-10-16-fraction-forge-design.md
+ * Fraction Forge — fraction equivalence you BUILD (CCSS 3.NF.A.3 / 4.NF.A.1).
  *
- * Architecture (the arena's): all game flow lives HERE as React state (`view`);
- * the scene is presentational and only detects proximity, reporting through
- * callbacks. Refs are touched in effects/callbacks only (react-hooks lint),
- * never in render.
+ * A customer orders `2/3` of a candy bar; the chalk board reads `2/3 = ?/9`.
+ * Standing on the press stamps one `1/9` slab per beat onto the kid's stack
+ * (the count rises with a climbing chime); the Beaver eats the top slab if they
+ * stamped too many. Walking to the mold table pours the stack: the mold is
+ * exactly the recipe's length, so the slabs fill it EXACTLY (the candy is
+ * wrapped and rides the conveyor to the customer), stop SHORT (the gap blinks;
+ * stamp the rest and pour again) or go OVER (a silly candy spill, the mold
+ * tips out). Every pour is one recorded answer. The run: a hook, 2 warm-ups
+ * with a ruler, rush orders without it, and the Big Bear's two-candy finale,
+ * then a results card (score count-up, streak, personal best).
+ *
+ * Specs: docs/superpowers/specs/2026-10-16-fraction-forge-design.md (the
+ * slice) and 2026-10-17-mini-games-fun-pass.md (this pass).
+ *
+ * Architecture: game flow lives HERE as React state; the scene is
+ * presentational and only detects proximity, reporting through callbacks.
  */
 
-const FORGE_BOUND = 7.2
-const SPAWN: [number, number] = [4.9, 5.4]
-/** 4 racks — makeFractionEquivalenceProvider always offers 4 options. */
-const RACKS: [number, number][] = [[-4.0, 2.6], [-1.33, 2.2], [1.33, 2.2], [4.0, 2.6]]
-const TABLE: [number, number] = [0, -1.9]
-const GRAB_R = 1.05
-const MEASURE_R = 3.0
-/** Yaw of the market street (racks + measuring station) toward the camera. */
-const DISPLAY_YAW = 0.55
-/** Gauge slab plane, world height (bench top 1.08 + gauge local 0.32). */
-const GAUGE_Y = 1.4
-const FORGE_CAM: [number, number, number] = [10.5, 8.6, 10.5]
+const BOUND = 7.6
+const STAMP_MS = 620
+const CHOMP_MS = 700
+const BEST_KEY = 'sq-best-fraction-forge'
+const CUSTOMER_COLORS = ['#f6d3e4', '#d6e8ff', '#dff3cf', '#fff0c2', '#e8dcff']
+const BEAR_COLOR = '#c99063'
+const ROUND_BANNER: Record<ForgeRoundSpec['kind'], string> = { warmup: 'Warm-up! 🍬', rush: 'Rush order! ⚡', finale: '👑 BIG ORDER!' }
 
-export type ForgePhase = 'loading' | 'explore' | 'measure' | 'good' | 'bad' | 'won'
+export type ForgePhase = 'intro' | 'build' | 'pour' | 'resolve' | 'served' | 'results'
 
-export interface ForgeView {
+interface Order {
   round: FracRound
-  options: number[]
-  phase: ForgePhase
-  held: number | null
-  /** launch point of the carried row (phase 'measure') */
-  from: Vector3 | null
-  /** how many slabs stand in the gauge while a result resolves */
-  fill: number
-  /** bumped every measure so animation subtrees remount cleanly */
-  token: number
+  problem: Problem
 }
 
-/** Where a measured row of `n` slabs lands in the gauge (left-anchored row, world space). */
-function gaugeLand(n: number, denom: number): [number, number, number] {
-  const lx = -BAR.span / 2 + (n * cellW(denom)) / 2
-  const cos = Math.cos(DISPLAY_YAW)
-  const sin = Math.sin(DISPLAY_YAW)
-  const lz = 0.5
-  return [TABLE[0] + lx * cos + lz * sin, GAUGE_Y, TABLE[1] - lx * sin + lz * cos]
+export interface ForgeView {
+  roundIndex: number
+  orderIndex: number
+  order: Order | null
+  phase: ForgePhase
+  stack: number
+  mold: number
+  fx: MoldFx
+  fxToken: number
+  /** the ruler came back as a hint after a miss */
+  hint: boolean
+  /** the last pour's message tone for the prompt */
+  last: 'none' | 'short' | 'over'
+  /** this order's candy is made: the board keeps the answer up */
+  solved: boolean
+  customer: { key: number; kind: CritterKind; color: string; mood: CritterMood }
+}
+
+interface Tally {
+  score: number
+  streak: number
+  bestStreak: number
+  firstTry: number
+  served: number
+  pours: number
 }
 
 export default function FractionForge({ params, onComplete, meta, paused = false }: GameProps) {
+  // Graphics setting (Auto / Pretty / Fast): shadows + resolution follow it here too.
+  const gfx = canvasQuality(useLowGraphics())
+  useStarterCreature()
+  useArrowKeys()
   const totalRounds = (params?.rounds as number | undefined) ?? (params?.questionCount as number | undefined) ?? ROUNDS
+  const plan = useMemo(() => forgeRunPlan(totalRounds), [totalRounds])
+  const problems = useMemo(() => forgeProblemCount(plan), [plan])
   const grade = useProgress((s) => s.player?.grade)
-  // The forge draws its OWN bounded facts: the gauge must show `targetDenom`
+  // The forge draws its OWN bounded facts: the mold must show `targetDenom`
   // cells a child can count at play distance (G4 widens equivalence to /16).
-  // Never harder than the grade, never wider than the model.
   const facts = useMemo(
     () => makeFractionEquivalenceProvider(forgeFactConfig(GRADE_TIERS[grade ?? DEFAULT_GRADE].fracEquivMaxDenom)),
     [grade],
   )
-  const posRef = useRef(new Vector3(...SPAWN, 0))
-  const avatarRef = useRef<Group>(null)
-  const [view, setView] = useState<ForgeView | null>(null)
-  const [hud, setHud] = useState<{ text: string; dot: number; flash: 'good' | 'bad' | null } | null>(null)
-
-  const viewRef = useRef<ForgeView | null>(null)
-  const problemRef = useRef<Problem | null>(null)
-  const triedRef = useRef(false)
-  const finishedRef = useRef(false)
-  const timersRef = useRef<number[]>([])
-
   const recordAnswer = useProgress((s) => s.recordAnswer)
   const recordAttempt = useProgress((s) => s.recordAttempt)
   const activeCreature = useProgress((s) => s.activeCreature)
 
+  const posRef = useRef(new Vector3(SPAWN[0], 0, SPAWN[1]))
+  const avatarRef = useRef<Group>(null)
+  const [view, setView] = useState<ForgeView>({
+    roundIndex: 0,
+    orderIndex: 0,
+    order: null,
+    phase: 'intro',
+    stack: 0,
+    mold: 0,
+    fx: 'none',
+    fxToken: 0,
+    hint: false,
+    last: 'none',
+    solved: false,
+    customer: { key: 0, kind: 'bunny', color: CUSTOMER_COLORS[0], mood: 'wait' },
+  })
+  const viewRef = useRef(view)
   useEffect(() => {
     viewRef.current = view
   }, [view])
 
-  const clearTimers = useCallback(() => {
-    for (const t of timersRef.current) window.clearTimeout(t)
-    timersRef.current = []
+  const [stampToken, setStampToken] = useState(0)
+  const [flights, setFlights] = useState<Flight[]>([])
+  const [spill, setSpill] = useState<{ slabs: { from: [number, number, number]; w: number }[]; token: number } | null>(null)
+  const [delivery, setDelivery] = useState<{ len: number; startX: number; token: number } | null>(null)
+  // the hook opens on these: the Beaver waves the shop open
+  const [cue, setCue] = useState<HostCue>({ mood: 'wave', token: 1 })
+  const [speech, setSpeech] = useState<{ text: string; tone: 'plain' | 'good' | 'bad' } | null>({ text: 'Stamp slabs. Fill the mold!', tone: 'plain' })
+  const [banner, setBanner] = useState<string | null>('🍬 Candy Forge!')
+  const [hud, setHud] = useState({ score: 0, streak: 0 })
+  const [patience, setPatience] = useState({ left: 1, total: 1 })
+  const [results, setResults] = useState<{ score: number; stars: number; bestScore: number; newBest: boolean; perfect: boolean; bestStreak: number; firstTry: number } | null>(null)
+
+  const tally = useRef<Tally>({ score: 0, streak: 0, bestStreak: 0, firstTry: 0, served: 0, pours: 0 })
+  const triedRef = useRef(false)
+  const pourRef = useRef<{ ids: Set<number>; landed: number; mold0: number; poured: number } | null>(null)
+  const chompIds = useRef(new Set<number>())
+  const flightId = useRef(1)
+  const timers = useRef<number[]>([])
+  const patienceRef = useRef({ left: 1, total: 1 })
+  const finished = useRef(false)
+  const started = useRef(false)
+
+  const later = useCallback((ms: number, fn: () => void) => {
+    timers.current.push(window.setTimeout(fn, ms))
   }, [])
-  useEffect(() => clearTimers, [clearTimers])
-
-  const tallyIndex = useRef(0)
-
-  const say = useCallback((text: string, flash: 'good' | 'bad' | null = null) => {
-    setHud({ text, dot: tallyIndex.current, flash })
-  }, [])
-
-  const applyRound = useCallback(
-    (problem: Problem, index: number) => {
-      const round = parseFracEqRound(problem)
-      problemRef.current = problem
-      triedRef.current = false
-      tallyIndex.current = index
-      setView({
-        round,
-        options: problem.options.map(Number),
-        phase: 'explore',
-        held: null,
-        from: null,
-        fill: 0,
-        token: Date.now(),
-      })
-      say(`Which tray? ${round.baseNum}/${round.baseDenom} = ?/${round.targetDenom}`)
+  useEffect(
+    () => () => {
+      for (const t of timers.current) window.clearTimeout(t)
+      timers.current = []
     },
-    [say],
+    [],
   )
 
-  // first round (ConceptPlay's pattern: setState only in the .then)
+  const react = useCallback((mood: HostMood) => setCue((c) => ({ mood, token: c.token + 1 })), [])
+  const say = useCallback((text: string | null, tone: 'plain' | 'good' | 'bad' = 'plain') => setSpeech(text ? { text, tone } : null), [])
+  const flash = useCallback(
+    (text: string, ms = 1500) => {
+      setBanner(text)
+      later(ms, () => setBanner((b) => (b === text ? null : b)))
+    },
+    [later],
+  )
+
+  // ── run flow ──────────────────────────────────────────────────────────────
+
+  const loadOrder = useCallback(
+    (roundIndex: number, orderIndex: number) => {
+      const spec = plan[roundIndex]
+      nextProblem(facts).then((problem) => {
+        const round = parseFracEqRound(problem)
+        triedRef.current = false
+        if (orderIndex === 0) {
+          patienceRef.current = { left: spec.patienceSec, total: spec.patienceSec }
+          setPatience({ left: 1, total: spec.patienceSec })
+          flash(ROUND_BANNER[spec.kind])
+        } else {
+          flash('Candy 2! 🍬')
+        }
+        const kind: CritterKind = spec.kind === 'finale' ? 'bear' : 'bunny'
+        setView((v) => ({
+          ...v,
+          roundIndex,
+          orderIndex,
+          order: { round, problem },
+          phase: 'build',
+          stack: 0,
+          mold: 0,
+          fx: 'none',
+          fxToken: v.fxToken + 1,
+          hint: false,
+          last: 'none',
+          solved: false,
+          customer:
+            orderIndex === 0
+              ? { key: v.customer.key + 1, kind, color: kind === 'bear' ? BEAR_COLOR : CUSTOMER_COLORS[roundIndex % CUSTOMER_COLORS.length], mood: 'wait' }
+              : { ...v.customer, mood: 'wait' },
+        }))
+        const who = kind === 'bear' ? '🐻' : '🐰'
+        say(`${who} wants ${round.baseNum}/${round.baseDenom} of a bar!`)
+        react(roundIndex === 0 && orderIndex === 0 ? 'point' : 'wave')
+      })
+    },
+    [facts, plan, flash, say, react],
+  )
+
+  // the hook: shop opens, the Beaver waves, then the first customer hops in
   useEffect(() => {
-    let cancel = false
-    nextProblem(facts).then((p) => {
-      if (!cancel) applyRound(p, 0)
-    })
+    const t1 = window.setTimeout(() => setBanner(null), 1800)
+    const t2 = window.setTimeout(() => {
+      // once per mount, even if this effect re-runs (dev fast refresh / a grade change)
+      if (started.current) return
+      started.current = true
+      loadOrder(0, 0)
+    }, 2200)
     return () => {
-      cancel = true
+      window.clearTimeout(t1)
+      window.clearTimeout(t2)
     }
-  }, [facts, applyRound])
+  }, [loadOrder])
 
-  const tally = useRef({ cleared: 0, firstTry: 0 })
-
-  const loadNext = useCallback(() => {
+  const finishRun = useCallback(() => {
+    if (finished.current) return
+    finished.current = true
     const t = tally.current
-    const index = tallyIndex.current + 1
-    if (index >= totalRounds) {
-      if (finishedRef.current) return
-      finishedRef.current = true
-      setView((v) => (v ? { ...v, phase: 'won', fill: 0 } : v))
-      say(t.firstTry === totalRounds ? 'Forge fired — every one first try! 🏆' : `Forge fired! ${t.firstTry} of ${totalRounds} first try.`)
-      onComplete({ stars: forgeStars(t.firstTry, totalRounds), score: t.firstTry * 20, correct: t.firstTry, total: totalRounds })
+    const perfect = t.firstTry === problems
+    const stars = forgeStars(t.firstTry, problems)
+    const { prev, newBest } = recordRunBest(BEST_KEY, { score: t.score, streak: t.bestStreak, perfect })
+    setResults({ score: t.score, stars, bestScore: prev?.score ?? 0, newBest, perfect, bestStreak: t.bestStreak, firstTry: t.firstTry })
+    setView((v) => ({ ...v, phase: 'results' }))
+    say(null)
+  }, [problems, say])
+
+  const nextAfterServe = useCallback(() => {
+    const v = viewRef.current
+    const spec = plan[v.roundIndex]
+    if (v.orderIndex + 1 < spec.orders) {
+      loadOrder(v.roundIndex, v.orderIndex + 1)
       return
     }
-    nextProblem(facts).then((p) => applyRound(p, index))
-  }, [applyRound, onComplete, facts, totalRounds, say])
+    setView((w) => ({ ...w, customer: { ...w.customer, mood: 'leave' } }))
+    if (v.roundIndex + 1 < plan.length) later(900, () => loadOrder(v.roundIndex + 1, 0))
+    else later(1100, finishRun)
+  }, [plan, loadOrder, later, finishRun])
 
-  const grab = useCallback(
-    (n: number) => {
-      sfx.click()
-      setView((v) => (v && v.phase === 'explore' && v.held === null ? { ...v, held: n } : v))
-      say('Carry it to the measuring table!')
-    },
-    [say],
-  )
+  // ── verbs ─────────────────────────────────────────────────────────────────
 
-  const startMeasure = useCallback((from: Vector3) => {
-    setView((v) => (v && v.phase === 'explore' && v.held !== null ? { ...v, phase: 'measure', from } : v))
+  const stamp = useCallback(() => {
+    const v = viewRef.current
+    if (v.phase !== 'build' || !v.order) return
+    if (v.stack >= MAX_STACK) {
+      sfx.wrong()
+      juice.text({ pos: [ANVIL[0], 2.0, ANVIL[2]], text: 'Full!', color: TOON.flowerRed, size: 'sm' })
+      return
+    }
+    const n = stampStack(v.stack, 1)
+    setView((w) => ({ ...w, stack: n }))
+    setStampToken((s) => s + 1)
+    sfx.thud()
+    sfx.combo(Math.min(n, 9))
+    juice.burst({ pos: ANVIL, color: ['#ff9d00', '#e07b00', '#ffd000'], count: 10, speed: 2.2, up: 2.4, size: 0.07, life: 0.5 })
+    juice.shake(0.06)
   }, [])
 
-  const land = useCallback(
-    (picked: number) => {
+  const chomp = useCallback(
+    (from: [number, number, number]) => {
       const v = viewRef.current
-      const problem = problemRef.current
-      if (!v || !problem || v.phase !== 'measure' || v.held !== picked) return
-      clearTimers()
-      const { baseNum, baseDenom, targetDenom, targetNum } = v.round
-      const right = picked === targetNum
-      const first = !triedRef.current
-      triedRef.current = true
-      recordAnswer(right, problem)
-      const sk = problem.skill
-      if (meta && sk) recordAttempt({ zoneId: meta.zoneId, topic: facts.topic, skillId: sk.id, skillLabel: sk.label, correct: right })
-
-      if (right) {
-        tally.current.cleared += 1
-        tally.current.firstTry += first ? 1 : 0
-        sfx.correct()
-        say(first ? `Yes! ${baseNum}/${baseDenom} = ${targetNum}/${targetDenom}!` : `Right! ${baseNum}/${baseDenom} = ${targetNum}/${targetDenom}`, 'good')
-        setView({ ...v, phase: 'good', held: null, from: null, fill: picked, token: v.token + 1 })
-        timersRef.current.push(window.setTimeout(loadNext, 2100))
-      } else {
-        sfx.wrong()
-        const f = fillState(picked, targetNum)
-        say(f === 'short' ? `Too few — ${picked}/${targetDenom} leaves a gap. Try again!` : `Too many — ${picked}/${targetDenom} overflows the mark. Try again!`, 'bad')
-        setView({ ...v, phase: 'bad', held: null, from: null, fill: picked, token: v.token + 1 })
-        timersRef.current.push(
-          window.setTimeout(() => setView((w) => (w && w.phase === 'bad' ? { ...w, phase: 'explore', fill: 0 } : w)), 2900),
-        )
-      }
+      if (v.phase !== 'build' || !v.order || v.stack <= 0) return
+      const id = flightId.current++
+      chompIds.current.add(id)
+      setView((w) => ({ ...w, stack: stampStack(w.stack, -1) }))
+      setFlights((fs) => [...fs, { id, from, to: BEAVER_MOUTH, w: Math.max(0.22, cellW(v.order!.round.targetDenom) - 0.04), color: CANDY, delay: 0, dur: 0.32, arc: 0.6, shrink: true }])
+      sfx.whoosh()
     },
-    [clearTimers, loadNext, meta, facts.topic, recordAnswer, recordAttempt, say],
+    [],
   )
 
+  const startPour = useCallback((pileTop: [number, number, number]) => {
+    const v = viewRef.current
+    if (v.phase !== 'build' || !v.order || v.stack <= 0) return
+    const d = v.order.round.targetDenom
+    const target = v.order.round.targetNum
+    const poured = v.stack
+    const ids = new Set<number>()
+    const fl: Flight[] = []
+    for (let i = 0; i < poured; i++) {
+      const id = flightId.current++
+      ids.add(id)
+      const k = v.mold + i
+      const to = slotWorld(k, d)
+      if (k >= target) to[1] += 0.06
+      fl.push({
+        id,
+        from: [pileTop[0], pileTop[1] + 0.09 + (poured - 1 - i) * PILE.step, pileTop[2]],
+        to,
+        w: cellW(d) - 0.035,
+        color: CANDY,
+        delay: i * 0.1,
+        dur: 0.36,
+        arc: 0.9,
+      })
+    }
+    pourRef.current = { ids, landed: 0, mold0: v.mold, poured }
+    setFlights((fs) => [...fs, ...fl])
+    setView((w) => ({ ...w, phase: 'pour', stack: 0 }))
+    sfx.whoosh()
+    react('point')
+  }, [react])
+
+  const resolvePour = useCallback(() => {
+    const v = viewRef.current
+    const p = pourRef.current
+    if (!v.order || !p) return
+    pourRef.current = null
+    const { round, problem } = v.order
+    const out = pourOutcome(p.mold0, p.poured, round.targetNum)
+    const right = out.state === 'exact'
+    const first = !triedRef.current
+    triedRef.current = true
+    tally.current.pours += 1
+    recordAnswer(right, problem)
+    const sk = problem.skill
+    if (meta && sk) recordAttempt({ zoneId: meta.zoneId, topic: facts.topic, skillId: sk.id, skillLabel: sk.label, correct: right })
+    const gate = slotWorld(round.targetNum, round.targetDenom)
+    gate[0] -= cellW(round.targetDenom) / 2
+
+    if (right) {
+      const t = tally.current
+      t.streak = first ? t.streak + 1 : 0
+      t.bestStreak = Math.max(t.bestStreak, t.streak)
+      if (first) t.firstTry += 1
+      t.served += 1
+      const pts = forgeScore({ firstTry: first, streak: t.streak, patienceLeft: patienceRef.current.left / patienceRef.current.total })
+      t.score += pts.total
+      setHud({ score: t.score, streak: t.streak })
+      setView((w) => ({ ...w, phase: 'served', fx: 'exact', fxToken: w.fxToken + 1, mold: out.total, last: 'none', solved: true }))
+      sfx.correct()
+      if (t.streak >= 2) later(260, () => sfx.combo(t.streak))
+      juice.shake(0.32)
+      juice.burst({ pos: [gate[0], gate[1] + 0.2, gate[2]], color: ['#ffb300', '#ffd000', '#ff7a00'], count: 26, speed: 3.2, up: 3.5, size: 0.09 })
+      richConfetti([TABLE[0], TABLE_TOP + 0.6, TABLE[1]], 50)
+      juice.text({ pos: [TABLE[0], 2.4, TABLE[1] + 0.4], text: `+${pts.total}`, color: TOON.gold, size: 'lg' })
+      if (pts.speed >= 25) later(350, () => juice.text({ pos: [TABLE[0] + 1.3, 2.0, TABLE[1] + 0.4], text: 'Speedy! ⚡', color: TOON.flowerBlue, size: 'sm' }))
+      react('cheer')
+      say(`Perfect fit! ${round.baseNum}/${round.baseDenom} = ${round.targetNum}/${round.targetDenom}`, 'good')
+      const len = (BAR * round.baseNum) / round.baseDenom
+      later(900, () => {
+        setDelivery({ len, startX: TABLE[0] - BAR / 2 + len / 2, token: Date.now() })
+        setView((w) => ({ ...w, mold: 0, fx: 'none' }))
+        sfx.whoosh()
+      })
+      return
+    }
+
+    tally.current.streak = 0
+    setHud((h) => ({ ...h, streak: 0 }))
+    if (out.state === 'short') {
+      setView((w) => ({ ...w, phase: 'resolve', fx: 'short', fxToken: w.fxToken + 1, mold: out.moldAfter, hint: true, last: 'short' }))
+      sfx.thud()
+      juice.text({ pos: [gate[0], 1.9, gate[2]], text: 'More! ⬆️', color: TOON.coral, size: 'md' })
+      react('point')
+      say('A bit more!', 'bad')
+      later(1100, () => setView((w) => (w.phase === 'resolve' ? { ...w, phase: 'build' } : w)))
+      return
+    }
+    // over: the extras tumble off the gate (silly), then the mold tips out
+    const d = round.targetDenom
+    const extras = Array.from({ length: out.spill }, (_, i) => ({ from: slotWorld(round.targetNum + i, d), w: cellW(d) - 0.035 }))
+    setView((w) => ({ ...w, phase: 'resolve', fx: 'over', fxToken: w.fxToken + 1, mold: out.fitted, hint: true, last: 'over' }))
+    setSpill({ slabs: extras, token: Date.now() })
+    sfx.thud()
+    later(120, () => sfx.whoosh())
+    juice.shake(0.22)
+    juice.burst({ pos: [gate[0] + 0.3, 1.3, gate[2]], color: ['#ff9d00', '#ff4d6d', '#e07b00'], count: 18, speed: 2.6, up: 3, size: 0.08 })
+    juice.text({ pos: [gate[0] + 0.4, 2.0, gate[2]], text: 'Too many! 😆', color: TOON.flowerRed, size: 'md' })
+    react('oops')
+    say('Too many! Extras? Feed me 😋', 'bad')
+    later(1300, () => {
+      const cur = viewRef.current
+      const tip: Flight[] = Array.from({ length: cur.mold }, (_, k) => ({
+        id: flightId.current++,
+        from: slotWorld(k, d),
+        to: [VAT[0], 1.3, VAT[1]],
+        w: cellW(d) - 0.035,
+        color: CANDY,
+        delay: k * 0.04,
+        dur: 0.55,
+        arc: 1.6,
+        shrink: true,
+      }))
+      setFlights((fs) => [...fs, ...tip])
+      setView((w) => ({ ...w, mold: 0, fx: 'none' }))
+      sfx.whoosh()
+    })
+    later(1900, () => {
+      setSpill(null)
+      setView((w) => (w.phase === 'resolve' ? { ...w, phase: 'build' } : w))
+    })
+  }, [facts.topic, later, meta, recordAnswer, recordAttempt, react, say])
+
+  const onLand = useCallback(
+    (id: number) => {
+      setFlights((fs) => fs.filter((f) => f.id !== id))
+      if (chompIds.current.has(id)) {
+        chompIds.current.delete(id)
+        sfx.pop()
+        juice.burst({ pos: BEAVER_MOUTH, color: ['#e07b00', '#ff9d00'], count: 8, speed: 1.6, up: 1.5, size: 0.05, life: 0.5 })
+        juice.text({ pos: [BEAVER_MOUTH[0], 1.6, BEAVER_MOUTH[2]], text: 'nom!', color: TOON.flowerPink, size: 'sm' })
+        react('chomp')
+        return
+      }
+      const p = pourRef.current
+      if (!p || !p.ids.has(id)) return
+      p.landed += 1
+      const shown = p.mold0 + p.landed
+      setView((w) => ({ ...w, mold: shown }))
+      sfx.pop()
+      const v = viewRef.current
+      if (v.order) {
+        const at = slotWorld(shown - 1, v.order.round.targetDenom)
+        juice.text({ pos: [at[0], at[1] + 0.45, at[2]], text: String(shown), color: TOON.white, size: 'sm' })
+      }
+      if (p.landed >= p.poured) later(170, resolvePour) // a beat of hit-stop before the verdict
+    },
+    [later, react, resolvePour],
+  )
+
+  const onDelivered = useCallback(() => {
+    setDelivery(null)
+    sfx.sparkle()
+    juice.burst({ pos: [CUSTOMER_AT[0], 1.6, CUSTOMER_AT[2]], color: ['#ff4d6d', '#ff85a1', '#c026d3'], count: 16, speed: 1.8, up: 3, size: 0.08 })
+    const v = viewRef.current
+    const spec = plan[v.roundIndex]
+    if (v.orderIndex + 1 >= spec.orders) {
+      setView((w) => ({ ...w, customer: { ...w.customer, mood: 'happy' } }))
+      if (spec.kind === 'finale') {
+        sfx.fanfare()
+        richConfetti([CUSTOMER_AT[0], 1.5, CUSTOMER_AT[2]], 80)
+        flash('🐻 YUM! 🎉', 1600)
+      }
+      later(1100, nextAfterServe)
+    } else later(400, nextAfterServe)
+  }, [plan, later, nextAfterServe, flash])
+
+  // customer patience: a soft clock (bonus only, freezes while paused)
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      const v = viewRef.current
+      if (paused || !v.order || (v.phase !== 'build' && v.phase !== 'pour' && v.phase !== 'resolve')) return
+      const p = patienceRef.current
+      p.left = Math.max(0, p.left - 0.25)
+      setPatience({ left: p.left / p.total, total: p.total })
+    }, 250)
+    return () => window.clearInterval(id)
+  }, [paused])
+
   // dev/QA hook: honest live machine state; `walk` teleports the avatar and the
-  // REAL grab/measure detection reacts to it — nothing in QA results is faked.
+  // REAL pad / mat / mold detection reacts to it — nothing in QA is faked.
   useEffect(() => {
     if (!import.meta.env.DEV) return
     Object.assign(window, {
       __sqForge: {
         state: () => {
           const v = viewRef.current
+          const t = tally.current
           return {
-            phase: v?.phase ?? 'loading',
-            index: tallyIndex.current,
-            ...tally.current,
-            round: v?.round ?? null,
-            options: v?.options ?? null,
-            held: v?.held ?? null,
-            fill: v?.fill ?? 0,
+            phase: v.phase,
+            roundIndex: v.roundIndex,
+            orderIndex: v.orderIndex,
+            kind: plan[v.roundIndex]?.kind,
+            plan: plan.map((r) => r.kind),
+            problems,
+            round: v.order?.round ?? null,
+            target: v.order?.round.targetNum ?? null,
+            stack: v.stack,
+            mold: v.mold,
+            hint: v.hint,
+            ruler: !!plan[v.roundIndex]?.grid || v.hint,
+            patience: +(patienceRef.current.left / patienceRef.current.total).toFixed(2),
+            ...t,
+            results: finished.current,
           }
         },
+        spots: { pad: PAD, chomp: CHOMP, pour: POUR, spawn: SPAWN, press: PRESS, table: TABLE },
         walk: (x: number, z: number) => {
           avatarRef.current?.position.set(x, 0, z)
           posRef.current.set(x, 0, z)
@@ -251,74 +553,111 @@ export default function FractionForge({ params, onComplete, meta, paused = false
         },
       },
     })
-  }, [])
+  }, [plan, problems])
+
+  const order = view.order
+  const spec = plan[view.roundIndex]
+  const prompt = (() => {
+    if (view.phase === 'intro' || !order) return '🍬 Candy Forge is open!'
+    if (view.phase === 'pour') return 'Pouring… ⬇️'
+    if (view.phase === 'served') return 'Perfect fit! 🎉'
+    if (view.phase === 'resolve') return view.last === 'short' ? 'Need more! 🔨' : 'Too many! 🔨 again'
+    if (view.stack === 0) return view.mold > 0 ? `🔨 Stamp more 1/${order.round.targetDenom}s` : `🔨 Stamp 1/${order.round.targetDenom} slabs`
+    return '⬇️ Pour at the mold!'
+  })()
+  const promptTone = view.phase === 'resolve' ? 'bad' : view.phase === 'served' ? 'good' : 'plain'
 
   return (
-    <div className="flex-1 relative select-none">
+    <div className="flex-1 relative select-none overflow-hidden">
       <Canvas
-        shadows
+        shadows={gfx.shadows}
         flat
-        dpr={[1, 1.5]}
+        dpr={gfx.dpr}
         gl={{ antialias: true, powerPreference: 'high-performance', preserveDrawingBuffer: import.meta.env.DEV }}
-        camera={{ position: [SPAWN[0] + FORGE_CAM[0], FORGE_CAM[1], SPAWN[1] + FORGE_CAM[2]], fov: 46, near: 0.3, far: 220 }}
+        camera={{ position: [1.5, 8, 9], fov: 42, near: 0.3, far: 400 }}
         style={{ position: 'absolute', inset: 0 }}
         onCreated={({ scene }) => {
           if (import.meta.env.DEV) Object.assign(window, { __sqScene: scene })
         }}
       >
-        <color attach="background" args={['#d9effa']} />
-        <fog attach="fog" args={['#d9effa', 42, 120]} />
-        <ambientLight intensity={0.45} />
-        <directionalLight
-          position={[9, 15, 6]}
-          intensity={1.15}
-          castShadow
-          shadow-mapSize={[1024, 1024]}
-          shadow-camera-left={-12}
-          shadow-camera-right={12}
-          shadow-camera-top={12}
-          shadow-camera-bottom={-12}
+        <Backdrop ground={TOON.grass} />
+        <ForgeScene
+          view={view}
+          spec={spec}
+          stampToken={stampToken}
+          flights={flights}
+          spill={spill}
+          delivery={delivery}
+          cue={cue}
+          impatient={patience.left < 0.25}
+          avatarRef={avatarRef}
+          activeCreature={activeCreature}
+          paused={paused}
+          posRef={posRef}
+          onStamp={stamp}
+          onChomp={chomp}
+          onPour={startPour}
+          onLand={onLand}
+          onDelivered={onDelivered}
         />
-        {view && (
-          <ForgeScene
-            view={view}
-            avatarRef={avatarRef}
-            activeCreature={activeCreature}
-            paused={paused}
-            posRef={posRef}
-            onGrab={grab}
-            onStartMeasure={startMeasure}
-            onLand={land}
-          />
-        )}
+        <StageCamera targetRef={posRef} center={[-0.45, 0, -1.0]} offset={[0.35, 6.2, 7.8]} follow={0.2} />
+        <JuiceStage />
       </Canvas>
 
-      {/* round dots — completed rounds light up, and all light on a clear */}
-      <div className="absolute top-2 left-1/2 -translate-x-1/2 flex items-center gap-2 pointer-events-none">
-        {Array.from({ length: totalRounds }, (_, i) => {
-          const done = view?.phase === 'won' || i < (hud?.dot ?? 0)
-          return (
-            <span
-              key={i}
-              className={`w-3.5 h-3.5 rounded-full border-2 border-white/80 shadow ${done ? 'bg-yellow-300' : 'bg-sky-900/25'}`}
-            />
-          )
-        })}
+      {/* top bar: the order ticket + patience · round pips · score + streak */}
+      <div className="absolute top-2 left-2 right-2 flex items-start justify-between gap-2 pointer-events-none">
+        <div className="flex flex-col items-start gap-1.5">
+          {order && view.phase !== 'results' && (
+            <div className="flex items-center gap-2 rounded-2xl px-3 py-1" style={{ background: UI.paper, border: `3px solid ${UI.line}`, boxShadow: UI.ledge }}>
+              <span className="text-2xl leading-none">{view.customer.kind === 'bear' ? '🐻' : '🐰'}</span>
+              <span className="kid-text text-2xl" style={{ color: '#3a2c38' }}>
+                {order.round.baseNum}/{order.round.baseDenom}
+              </span>
+              {spec?.orders > 1 && (
+                <span className="kid-text text-sm" style={{ color: '#3a2c38' }}>
+                  {view.orderIndex + 1}/{spec.orders}
+                </span>
+              )}
+            </div>
+          )}
+          {order && view.phase !== 'results' && <SoftClock frac={patience.left} icon={patience.left < 0.25 ? '😤' : '⏳'} />}
+          <SpeechBubble face="🦫" text={speech?.text ?? null} tone={speech?.tone} />
+        </div>
+        <div className="pt-1">
+          <RoundPips total={plan.length} current={view.roundIndex} done={view.phase === 'results' ? plan.length : view.roundIndex} />
+        </div>
+        <div className="flex flex-col items-end gap-1.5">
+          <ScorePill score={hud.score} />
+          <StreakMeter streak={hud.streak} />
+        </div>
       </div>
-      {hud && (
-        <div
-          key={`${hud.dot}-${hud.text}`}
-          className={`absolute bottom-16 left-1/2 -translate-x-1/2 max-w-[92%] kid-text text-lg sm:text-2xl text-center px-5 py-2 rounded-full shadow-lg text-white hud-pop ${
-            hud.flash === 'bad' ? 'bg-rose-600/85' : hud.flash === 'good' ? 'bg-emerald-600/85' : 'bg-sky-900/70'
-          }`}
-        >
-          {hud.text}
+
+      <Banner text={banner} />
+
+      {view.phase !== 'results' && (
+        <div className="absolute bottom-3 inset-x-0 flex justify-center pointer-events-none">
+          <PromptPill text={prompt} tone={promptTone} />
         </div>
       )}
-      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 kid-text text-white/90 text-[11px] sm:text-xs bg-sky-900/50 px-3 py-1 rounded-full pointer-events-none whitespace-nowrap">
-        WASD walk · step onto a tray to grab it · carry it to the table to measure
-      </div>
-      <style>{`.hud-pop{animation:hudpop .3s ease-out}@keyframes hudpop{from{transform:translate(-50%,10px);opacity:0}to{transform:translate(-50%,0);opacity:1}}`}</style>
+
+      {results && (
+        <RunResults
+          title={results.perfect ? 'Master Candy Maker!' : 'Shop closed!'}
+          face="🦫"
+          score={results.score}
+          stars={results.stars}
+          bestScore={results.bestScore}
+          newBest={results.newBest}
+          perfect={results.perfect}
+          paused={paused}
+          lines={[
+            { icon: '🍬', label: 'First-pour fits', value: `${results.firstTry} / ${problems}` },
+            { icon: '🔥', label: 'Best streak', value: `×${results.bestStreak}` },
+          ]}
+          onContinue={() => onComplete({ stars: results.stars, score: results.score, correct: results.firstTry, total: problems })}
+        />
+      )}
+      <style>{`@keyframes ffpop{from{transform:scale(1.6)}to{transform:scale(1)}}`}</style>
     </div>
   )
 }
@@ -327,155 +666,168 @@ export default function FractionForge({ params, onComplete, meta, paused = false
 
 function ForgeScene({
   view,
+  spec,
+  stampToken,
+  flights,
+  spill,
+  delivery,
+  cue,
+  impatient,
   avatarRef,
   activeCreature,
   paused,
   posRef,
-  onGrab,
-  onStartMeasure,
+  onStamp,
+  onChomp,
+  onPour,
   onLand,
+  onDelivered,
 }: {
   view: ForgeView
+  spec: ForgeRoundSpec | undefined
+  stampToken: number
+  flights: Flight[]
+  spill: { slabs: { from: [number, number, number]; w: number }[]; token: number } | null
+  delivery: { len: number; startX: number; token: number } | null
+  cue: HostCue
+  impatient: boolean
   avatarRef: RefObject<Group | null>
   activeCreature: string | null
   paused: boolean
   posRef: RefObject<Vector3>
-  onGrab: (n: number) => void
-  onStartMeasure: (from: Vector3) => void
-  onLand: (picked: number) => void
+  onStamp: () => void
+  onChomp: (from: [number, number, number]) => void
+  onPour: (pileTop: [number, number, number]) => void
+  onLand: (id: number) => void
+  onDelivered: () => void
 }) {
   const colliders = useMemo<Collider[]>(
     () => [
-      ...RACKS.map(([cx, cz]): Collider => ({ kind: 'circle', cx, cz, r: 0.6 })),
-      { kind: 'circle', cx: TABLE[0], cz: TABLE[1], r: 1.5 },
-      { kind: 'circle', cx: -4.7, cz: -3.4, r: 1.15 },
-      { kind: 'box', cx: 3.5, cz: -5.0, w: 5.4, d: 3.2 },
+      { kind: 'box', cx: TABLE[0], cz: TABLE[1] - 0.05, w: BAR + 1.3, d: 1.55 },
+      { kind: 'box', cx: PRESS[0], cz: PRESS[1], w: 1.8, d: 1.3 },
+      { kind: 'circle', cx: BEAVER_AT[0], cz: BEAVER_AT[2], r: 0.45 },
+      { kind: 'circle', cx: VAT[0], cz: VAT[1], r: 1.1 },
+      { kind: 'circle', cx: CUSTOMER_AT[0] + 0.55, cz: CUSTOMER_AT[2] - 1.2, r: 1.0 },
+      { kind: 'circle', cx: CUSTOMER_AT[0], cz: CUSTOMER_AT[2], r: 0.45 },
+      { kind: 'box', cx: TABLE[0] + BAR / 2 + 1.05, cz: TABLE[1] + 0.6, w: 1.2, d: 0.7 },
     ],
     [],
   )
 
   useWanderWalk({
     group: avatarRef,
-    bound: FORGE_BOUND,
+    bound: BOUND,
     collide: (x, z) => collidesAt(colliders, x, z, 0),
     wander: false,
-    paused: () => paused,
+    paused: () => paused || view.phase === 'results',
   })
 
-  // the camera rig targets posRef, but WASD only moves the avatar group —
-  // mirror it each frame so the camera actually follows live play
   useFrame(() => {
     const p = avatarRef.current?.position
     if (p) posRef.current.set(p.x, p.y, p.z)
   })
 
-  // proximity poll (a tick, not render): grab / start-measure only.
+  // proximity poll (a tick, not render): stand on the press → it stamps per
+  // beat; stand on the snack mat → the Beaver nibbles per beat; walk into the
+  // mold ring carrying slabs → pour. No re-arm gates: each spot has its own
+  // rhythm, and a pour needs slabs.
   const vRef = useRef(view)
   useEffect(() => {
     vRef.current = view
   }, [view])
-  const cbRef = useRef({ onGrab, onStartMeasure, paused })
+  const cbRef = useRef({ onStamp, onChomp, onPour, paused })
   useEffect(() => {
-    cbRef.current = { onGrab, onStartMeasure, paused }
-  }, [onGrab, onStartMeasure, paused])
+    cbRef.current = { onStamp, onChomp, onPour, paused }
+  }, [onStamp, onChomp, onPour, paused])
   useEffect(() => {
+    let spot: 'pad' | 'chomp' | 'pour' | null = null
+    let next = 0
     const id = window.setInterval(() => {
-      const { onGrab: grab, onStartMeasure: start, paused: hold } = cbRef.current
+      const cb = cbRef.current
       const v = vRef.current
       const g = avatarRef.current
-      if (hold || !g || !v || v.phase !== 'explore') return
+      if (cb.paused || !g || v.phase !== 'build') {
+        spot = null
+        return
+      }
       const px = g.position.x
       const pz = g.position.z
-      if (v.held === null) {
-        for (let i = 0; i < RACKS.length; i++) {
-          const [cx, cz] = RACKS[i]
-          if (Math.hypot(px - cx, pz - cz) < GRAB_R) {
-            grab(v.options[i])
-            return
-          }
-        }
-      } else if (Math.hypot(px - TABLE[0], pz - TABLE[1]) < MEASURE_R) {
-        start(new Vector3(px, 1.15, pz))
+      const now = performance.now()
+      const here = Math.hypot(px - PAD.x, pz - PAD.z) < PAD.r ? 'pad' : Math.hypot(px - CHOMP.x, pz - CHOMP.z) < CHOMP.r ? 'chomp' : Math.hypot(px - POUR.x, pz - POUR.z) < POUR.r ? 'pour' : null
+      if (here !== spot) {
+        spot = here
+        next = now + 160 // a wind-up beat on entry
       }
-    }, 60)
+      if (!spot || now < next) return
+      const top: [number, number, number] = [px, PILE.y + 0.09 + Math.max(0, v.stack - 1) * PILE.step, pz]
+      if (spot === 'pad') {
+        cb.onStamp()
+        next = now + STAMP_MS
+      } else if (spot === 'chomp') {
+        if (v.stack > 0) cb.onChomp(top)
+        next = now + CHOMP_MS
+      } else if (spot === 'pour' && v.stack > 0) {
+        cb.onPour([px, PILE.y, pz])
+        next = now + 1e9
+      }
+    }, 50)
     return () => window.clearInterval(id)
   }, [avatarRef])
 
-  const { round, options, phase, held } = view
-  const resolving = phase === 'good' || phase === 'bad'
-  // the board fills in the row you're carrying: 2/3 = 2/6; `?` is the unknown
-  const board = phase === 'explore' && held !== null ? `${round.baseNum}/${round.baseDenom} = ${held}/${round.targetDenom}` : `${round.baseNum}/${round.baseDenom} = ?/${round.targetDenom}`
-  const chalk = useMemo(() => {
-    const { w, gap } = fitChalk(board)
-    return chalkText(board, { y: 0, z: 0.06, w, h: 0.32, t: 0.048, gap, color: TOON.white })
-  }, [board])
+  const order = view.order
   const b = useMemo(() => ({ Builder: creatureBuilder(activeCreature) }), [activeCreature])
+  const build = view.phase === 'build'
+  const tutorial = view.roundIndex === 0 && build && !!order
+  const equation = order
+    ? view.solved
+      ? `${order.round.baseNum}/${order.round.baseDenom} = ${order.round.targetNum}/${order.round.targetDenom}`
+      : view.mold + view.stack > 0 && view.phase !== 'resolve'
+        ? `${order.round.baseNum}/${order.round.baseDenom} = ${view.mold + view.stack}/${order.round.targetDenom}`
+        : `${order.round.baseNum}/${order.round.baseDenom} = ?/${order.round.targetDenom}`
+    : ''
 
   return (
     <group>
-      <Decal geometry={blobDisc(9.6, 0.16, 7, 48)} color={TOON.sand} position={[0, 0, 0]} />
-      <Decal geometry={blobDisc(8.3, 0.12, 8, 44)} color={'#f9e6bb'} position={[0, 0.004, 0]} />
-      <Decal geometry={blobDisc(2.6, 0.1, 9, 32)} color={TOON.waterShallow} position={[3.5, 0.008, -4.7]} />
-
-      {/* chalkboard easel — west side, clear of the gantry's post line, turned
-          toward the yard/camera (at the arena's spot it sat behind the left
-          gantry post, which cut the equation's last glyph) */}
-      <ChalkEasel items={chalk} position={[-5.6, 0, -0.4]} rotation={[0, 0.9, 0]} />
-
-      {/* candy vat + the falls */}
       <ForgeYard />
 
-      {/* where you may grab / measure — chalk rings on the sand make the verb discoverable */}
-      {phase === 'explore' &&
-        options.map((_, i) => <GroundRing key={`rr${i}`} x={RACKS[i][0]} z={RACKS[i][1]} r={GRAB_R} opacity={held === null ? 0.55 : 0.18} />)}
-      {phase === 'explore' && held !== null && <GroundRing x={TABLE[0]} z={TABLE[1]} r={MEASURE_R} opacity={0.55} />}
+      {/* the three spots: press pad, snack mat, pour ring */}
+      <SpotRing x={PAD.x} z={PAD.z} r={PAD.r} color={'#ffd75e'} glow={build && view.stack === 0} opacity={0.75} />
+      <SpotRing x={CHOMP.x} z={CHOMP.z} r={CHOMP.r} color={'#f7a1c4'} opacity={build && view.stack > 0 ? 0.7 : 0.3} />
+      <SpotRing x={POUR.x} z={POUR.z} r={POUR.r} color={'#9fe6c8'} glow={build && view.stack > 0} opacity={build && view.stack > 0 ? 0.8 : 0.3} />
+      <SpotBadge x={CHOMP.x + 0.15} z={CHOMP.z + 0.75} y={0.25} icon="😋" dim={!build || view.stack === 0} />
+      {tutorial && (view.stack === 0 ? <GuideArrow x={PAD.x} z={PAD.z} y={2.2} /> : <GuideArrow x={POUR.x} z={POUR.z} y={2.2} color={TOON.mint} />)}
 
-      {/* the measuring station: bench + gantry, recipe strip above, gauge below.
-          Racks and station share ONE cell grid, so the fill is a real comparison. */}
-      <group position={[TABLE[0], 0, TABLE[1]]} rotation={[0, DISPLAY_YAW, 0]}>
-        {/* bench */}
-        <TCyl radiusTop={0.09} height={0.98} position={[-1.45, 0.49, 0.38]} color={TOON.woodDark} segments={8} />
-        <TCyl radiusTop={0.09} height={0.98} position={[1.45, 0.49, 0.38]} color={TOON.woodDark} segments={8} />
-        <TCyl radiusTop={0.09} height={0.98} position={[-1.45, 0.49, -0.38]} color={TOON.woodDark} segments={8} />
-        <TCyl radiusTop={0.09} height={0.98} position={[1.45, 0.49, -0.38]} color={TOON.woodDark} segments={8} />
-        <TBox size={[3.6, 0.16, 1.1]} radius={0.06} position={[0, 1.0, 0]} color={TOON.woodLight} outline />
-        {/* gantry posts + beam */}
-        <TCyl radiusTop={0.08} height={2.6} position={[-1.95, 1.3, -0.2]} color={TOON.woodDark} segments={8} />
-        <TCyl radiusTop={0.08} height={2.6} position={[1.95, 1.3, -0.2]} color={TOON.woodDark} segments={8} />
-        <TBox size={[4.1, 0.16, 0.26]} radius={0.05} position={[0, 2.66, -0.2]} color={TOON.wood} outline />
-        <group position={[0, 1.08, 0]}>
-          <RecipeStrip num={round.baseNum} denom={round.baseDenom} y={1.26} z={0.4} />
-          <Gauge
-            denom={round.targetDenom}
-            fill={resolving ? view.fill : 0}
-            fillFx={phase === 'good' ? 'pop' : phase === 'bad' ? 'shake' : null}
-            fillColor={phase === 'good' ? '#ffd188' : CANDY}
-            curtainAt={resolving ? round.targetNum : null}
-            y={0.32}
-            z={0.4}
-          />
-        </group>
-      </group>
-
-      {/* market racks (a grabbed row leaves its rack, but the count card stays) */}
-      {options.map((n, i) => (
-        <TrayRack key={`${round.factId}:${i}`} n={n} denom={round.targetDenom} held={held === n} position={RACKS[i]} rotation={DISPLAY_YAW} />
-      ))}
-
-      {/* measured row in flight (lands → parent grades it) */}
-      {phase === 'measure' && view.from && held !== null && (
-        <MeasureFlight from={view.from} to={gaugeLand(held, round.targetDenom)} n={held} denom={round.targetDenom} onLanded={() => onLand(held)} />
+      <Press denom={order?.round.targetDenom ?? 4} stamp={stampToken} active={build} />
+      {order && (
+        <MoldTable
+          baseNum={order.round.baseNum}
+          baseDenom={order.round.baseDenom}
+          targetDenom={order.round.targetDenom}
+          mold={view.mold}
+          target={order.round.targetNum}
+          equation={equation}
+          ruler={!!spec?.grid || view.hint}
+          fx={view.fx}
+          fxToken={view.fxToken}
+        />
       )}
 
-      {/* carried row + the kid's creature */}
-      {held !== null && phase !== 'measure' && <HeldTray n={held} denom={round.targetDenom} avatarRef={avatarRef} />}
+      <HostReact cue={cue} watchRef={avatarRef} position={BEAVER_AT} facing={0.4} scale={1.35}>
+        <Beaver />
+      </HostReact>
+      {order && <Critter key={view.customer.key} kind={view.customer.kind} color={view.customer.color} mood={view.customer.mood} impatient={impatient && view.customer.mood === 'wait'} />}
+
+      <Flyers flights={flights} onLand={onLand} />
+      {spill && <Spill slabs={spill.slabs} token={spill.token} />}
+      {delivery && <CandyDelivery len={delivery.len} startX={delivery.startX} token={delivery.token} onArrive={onDelivered} />}
+
+      {order && <Pile avatarRef={avatarRef} count={view.stack} denom={order.round.targetDenom} />}
       <group ref={avatarRef} position={[SPAWN[0], 0, SPAWN[1]]}>
         <group>
           <b.Builder />
           <CreatureAccessories />
         </group>
       </group>
-      <WorldCameraRig targetRef={posRef} offset={FORGE_CAM} />
     </group>
   )
 }

@@ -1,15 +1,21 @@
 import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import type { Variants } from 'framer-motion'
 import { allLessons } from '../tutoring/lessons'
 import { useProgress } from '../store/progress'
 import { weeklyFocus } from '../lib/analytics'
 import { getZone } from '../curriculum'
 import { sfx } from '../lib/sound'
-import { subjectTheme, type Subject } from '../lib/theme'
-import { useEntrance, hoverPop, tap } from '../lib/motion'
-import { BackButton, Pill, StarRating, EmptyState } from '../components/ui'
+import type { Subject } from '../lib/theme'
+import { useEntrance } from '../lib/motion'
+import { BackButton, StarRating, EmptyState } from '../components/ui'
+import { M } from '../tutoring/motion/palette'
+import { slicePath } from '../tutoring/motion/anim'
+import { starPath } from '../tutoring/motion/layout'
+import { Apple, UnitCube, Rod } from '../tutoring/motion/shapes'
+import { DEFAULT_CHARS_PER_SEC } from '../tutoring/motion/cues'
+import LessonPoster from '../tutoring/ui/LessonPoster'
 
 // ── Per-lesson progress derivation ─────────────────────────────────────────────
 
@@ -28,6 +34,9 @@ interface LessonView {
   maxStars: number
   /** Whether the learner has practiced this lesson at all. */
   started: boolean
+  steps: number
+  /** Rough watch time in minutes (narration at a kid-friendly pace). */
+  minutes: number
 }
 
 /** Section a lesson is listed under on the Tutor index. */
@@ -37,24 +46,28 @@ const NON_MATH_AREAS: Record<string, string> = {
   'science-summit': 'Science',
 }
 const areaOf = (zoneId: string) => NON_MATH_AREAS[zoneId] ?? 'Math'
+const AREA_COLOR: Record<string, string> = { Math: M.coral, 'Reading & Writing': '#8ab8ff', Science: '#7fd36b' }
 
 /** A lesson is "done" when it has earned its full star allotment. */
 function isComplete(v: LessonView): boolean {
   return v.maxStars > 0 && v.stars >= v.maxStars
 }
 
+const INK = `0 0 0 3px ${M.ink}`
+
 export default function TutorIndex() {
   const attempts = useProgress((s) => s.attempts)
   const sessions = useProgress((s) => s.sessions)
   // Subscribe to zones so progress badges re-render when stars are earned.
   const zonesProgress = useProgress((s) => s.zones)
+  const reduced = !!useReducedMotion()
 
   const recommended = useMemo(
     () => new Set(weeklyFocus(attempts, sessions).map((f) => f.lessonId)),
     [attempts, sessions],
   )
 
-  // Build a view-model per lesson, then group by subject (curriculum zone).
+  // Build a view-model per lesson, then group by subject area.
   const groups = useMemo(() => {
     const views: LessonView[] = allLessons.map((l) => {
       const zone = getZone(l.zoneId)
@@ -67,6 +80,7 @@ export default function TutorIndex() {
         getZone(l.zoneId)?.stages.find((s) => s.id === l.practiceStageId)
           ?.starsToEarn ?? 3
       const started = (stageRec?.attempts ?? 0) > 0 || stars > 0
+      const chars = l.steps.reduce((n, s) => n + s.narration.length, 0)
       return {
         id: l.id,
         title: l.title,
@@ -79,6 +93,8 @@ export default function TutorIndex() {
         stars,
         maxStars,
         started,
+        steps: l.steps.length,
+        minutes: Math.max(1, Math.round(chars / DEFAULT_CHARS_PER_SEC / 60 + l.steps.length * 0.15)),
       }
     })
 
@@ -103,7 +119,6 @@ export default function TutorIndex() {
 
     return order.map((area) => ({
       area,
-      subject: byArea.get(area)![0].subject,
       lessons: byArea.get(area)!,
     }))
   }, [zonesProgress, recommended])
@@ -121,11 +136,14 @@ export default function TutorIndex() {
   const { container, item } = useEntrance()
 
   return (
-    <div className="flex-1 flex flex-col p-4">
-      <div className="max-w-3xl w-full mx-auto flex flex-col gap-4">
+    <div className="flex-1 flex flex-col px-3 pb-8 pt-3 sm:px-4">
+      <div className="max-w-5xl w-full mx-auto flex flex-col gap-5">
+        <div>
+          <BackButton to="/world" label="World" />
+        </div>
 
-        {/* ── Header ─────────────────────────────────────────────────────── */}
-        <PageIntro back doneCount={doneCount} total={totalLessons} />
+        {/* ── Hero ───────────────────────────────────────────────────────── */}
+        <Hero doneCount={doneCount} total={totalLessons} reduced={reduced} />
 
         {/* ── Lesson groups ──────────────────────────────────────────────── */}
         {totalLessons === 0 ? (
@@ -133,44 +151,43 @@ export default function TutorIndex() {
             emoji="📚"
             title="No lessons yet"
             message="New tutor lessons are on their way — check back soon!"
-            cta={{ label: 'Back to map', to: '/map' }}
+            cta={{ label: 'Back to World', to: '/world' }}
           />
         ) : (
           <motion.div
             variants={container}
             initial="hidden"
             animate="show"
-            className="flex flex-col gap-6"
+            className="flex flex-col gap-7"
           >
-            {groups.map((group) => {
-              const theme = subjectTheme(group.subject)
-              const title = group.area
-              return (
-                <motion.section
-                  key={group.area}
-                  variants={item}
-                  aria-label={title}
-                  className="flex flex-col gap-3"
-                >
-                  {/* section header */}
-                  <div className="flex items-center gap-2">
-                    <span
-                      className={`h-2.5 w-2.5 rounded-full ${theme.bg}`}
-                      aria-hidden="true"
-                    />
-                    <h2 className="kid-text text-lg sm:text-xl text-sky drop-shadow-sm">
-                      {title}
-                    </h2>
-                  </div>
+            {groups.map((group) => (
+              <motion.section
+                key={group.area}
+                variants={item}
+                aria-label={group.area}
+                className="flex flex-col gap-3"
+              >
+                {/* section header */}
+                <div className="flex items-center gap-3">
+                  <h2
+                    className="kid-text rounded-full px-4 py-1 text-lg sm:text-xl"
+                    style={{ background: M.paper, color: M.ink, boxShadow: `0 0 0 2.5px ${M.ink}, 0 4px 0 0 rgba(58,44,56,0.25)` }}
+                  >
+                    <span className="mr-2 inline-block h-3 w-3 rounded-full align-middle" style={{ background: AREA_COLOR[group.area] ?? M.gold, boxShadow: `0 0 0 2px ${M.ink}` }} aria-hidden="true" />
+                    {group.area}
+                  </h2>
+                  <span className="kid-text text-sm text-sky">
+                    {group.lessons.length} {group.lessons.length === 1 ? 'lesson' : 'lessons'}
+                  </span>
+                </div>
 
-                  <div className="grid sm:grid-cols-2 gap-3">
-                    {group.lessons.map((l) => (
-                      <LessonCard key={l.id} lesson={l} variant={item} />
-                    ))}
-                  </div>
-                </motion.section>
-              )
-            })}
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {group.lessons.map((l) => (
+                    <LessonCard key={l.id} lesson={l} variant={item} reduced={reduced} />
+                  ))}
+                </div>
+              </motion.section>
+            ))}
           </motion.div>
         )}
       </div>
@@ -178,34 +195,65 @@ export default function TutorIndex() {
   )
 }
 
-// ── Intro / header block ───────────────────────────────────────────────────────
+// ── Hero banner ─────────────────────────────────────────────────────────────────
 
-function PageIntro({
-  back,
-  doneCount,
-  total,
-}: {
-  back: boolean
-  doneCount: number
-  total: number
-}) {
+function Hero({ doneCount, total, reduced }: { doneCount: number; total: number; reduced: boolean }) {
+  const float = (d: number, delay = 0) =>
+    reduced ? undefined : { animate: { y: [0, -d, 0], rotate: [0, d / 3, 0] }, transition: { duration: 3 + delay, repeat: Infinity, ease: 'easeInOut' as const, delay } }
   return (
-    <div className="flex flex-col gap-3">
-      {back && <BackButton to="/map" label="Back to map" />}
-      <div className="text-center">
-        <h1 className="kid-text text-4xl sm:text-5xl text-sky drop-shadow-lg">
-          📚 Tutor
+    <motion.div
+      initial={reduced ? { opacity: 0 } : { opacity: 0, y: 14, scale: 0.98 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ type: 'spring', stiffness: 220, damping: 22 }}
+      className="relative overflow-hidden rounded-[30px]"
+      style={{ background: M.paper, boxShadow: `${INK}, 0 8px 0 0 rgba(58,44,56,0.28), 0 18px 40px -14px rgba(30,40,90,0.45)` }}
+    >
+      <div className="relative z-10 flex flex-col gap-2 p-5 sm:p-7 sm:pr-[42%]">
+        <h1 className="kid-text text-4xl sm:text-5xl leading-none" style={{ color: M.ink }}>
+          <span aria-hidden="true">📚 </span>Tutor
         </h1>
-        <p className="kid-text text-base sm:text-lg text-sky mt-1">
+        <p className="kid-text text-lg sm:text-xl font-medium" style={{ color: '#5a4a56' }}>
           Pick a topic to learn — listen and watch!
         </p>
-        <div className="mt-2 flex justify-center">
-          <Pill tone="ink" icon="✅">
+        <div className="mt-1 flex flex-wrap items-center gap-2">
+          <span className="kid-text inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-base" style={{ background: '#dcf7e8', color: M.ink, boxShadow: `0 0 0 2.5px ${M.ink}` }}>
+            <span aria-hidden="true">✅</span>
             {doneCount}/{total} lessons mastered
-          </Pill>
+          </span>
         </div>
       </div>
-    </div>
+      {/* floating maths friends */}
+      <svg viewBox="0 0 400 220" className="pointer-events-none absolute right-0 top-0 hidden h-full sm:block" style={{ width: '44%' }} aria-hidden="true">
+        <circle cx={250} cy={110} r={110} fill="#ffe7c2" />
+        <circle cx={250} cy={110} r={70} fill="#fff3dc" />
+        <motion.g {...float(8)}>
+          <path d={slicePath(170, 88, 54, 0.2, 1.75)} fill="#f2b866" stroke={M.ink} strokeWidth={3.5} strokeLinejoin="round" />
+          <path d={slicePath(170, 88, 46, 0.2, 1.75)} fill="#ffd96a" />
+          <circle cx={196} cy={76} r={6} fill={M.coral} stroke={M.ink} strokeWidth={2} />
+          <circle cx={186} cy={104} r={6} fill={M.coral} stroke={M.ink} strokeWidth={2} />
+        </motion.g>
+        <motion.g {...float(6, 0.6)}>
+          <Apple x={300} y={70} r={26} color="#f2766b" />
+        </motion.g>
+        <motion.g {...float(7, 1.1)}>
+          <Rod x={330} y={110} s={9} />
+          <UnitCube x={352} y={182} s={16} />
+        </motion.g>
+        <motion.g {...float(5, 0.3)}>
+          <g transform="translate(250 168)">
+            <path d={starPath(24)} fill={M.gold} stroke={M.ink} strokeWidth={3.5} strokeLinejoin="round" />
+          </g>
+        </motion.g>
+        <motion.g {...float(6, 0.9)}>
+          <text x={110} y={176} fontFamily={M.font} fontWeight={700} fontSize={46} fill="#d4558f">
+            ×
+          </text>
+          <text x={150} y={196} fontFamily={M.font} fontWeight={700} fontSize={40} fill="#3f6fd1">
+            ÷
+          </text>
+        </motion.g>
+      </svg>
+    </motion.div>
   )
 }
 
@@ -214,82 +262,78 @@ function PageIntro({
 function LessonCard({
   lesson,
   variant,
+  reduced,
 }: {
   lesson: LessonView
   variant: Variants
+  reduced: boolean
 }) {
-  const theme = subjectTheme(lesson.subject)
   const complete = isComplete(lesson)
+  const status = lesson.recommended ? null : complete ? 'Mastered' : lesson.started ? 'In progress' : 'New'
 
   return (
-    <motion.div variants={variant} whileHover={hoverPop} whileTap={tap}>
+    <motion.div variants={variant} whileHover={reduced ? undefined : { y: -5 }} whileTap={{ scale: 0.97 }} className="h-full">
       <Link
         to={`/tutor/${lesson.id}`}
         onClick={() => sfx.enter()}
         aria-label={`${lesson.title}: ${lesson.stars} of ${lesson.maxStars} stars${
           complete ? ', mastered' : ''
         }${lesson.recommended ? ', recommended' : ''}`}
-        className={[
-          'group block h-full rounded-3xl p-4',
-          'bg-paper',
-          'ring-2',
-          theme.ring,
-          'shadow-[0_6px_0_0_rgba(0,0,0,0.10),0_10px_22px_-6px_rgba(0,0,0,0.18)]',
-          'transition-shadow duration-150',
-          'hover:shadow-[0_8px_0_0_rgba(0,0,0,0.12),0_14px_28px_-6px_rgba(0,0,0,0.22)]',
-          'focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-2',
-        ].join(' ')}
+        className="group flex h-full flex-col overflow-hidden rounded-[26px] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ocean-500 focus-visible:ring-offset-2"
+        style={{ background: M.paper, boxShadow: `${INK}, 0 6px 0 0 rgba(58,44,56,0.28)` }}
       >
-        <div className="flex items-start gap-3">
-          {/* subject-tinted emoji chip */}
-          <div
-            className={[
-              'flex-shrink-0 grid place-items-center',
-              'h-14 w-14 rounded-full text-3xl',
-              'ring-2 ring-white shadow-md',
-              theme.bg,
-            ].join(' ')}
-            aria-hidden="true"
+        <div className="relative" style={{ borderBottom: `3px solid ${M.ink}` }}>
+          <div className="transition-transform duration-300 group-hover:scale-[1.04]">
+            <LessonPoster id={lesson.id} emoji={lesson.emoji} reduced={reduced} done={complete} />
+          </div>
+          {lesson.recommended && (
+            <span
+              className="kid-text absolute left-2.5 top-2.5 inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-sm"
+              style={{ background: M.gold, color: M.ink, boxShadow: `0 0 0 2.5px ${M.ink}` }}
+            >
+              <span aria-hidden="true">⭐</span> Recommended
+            </span>
+          )}
+          <span
+            className="kid-text absolute bottom-2 right-2.5 rounded-full px-2.5 py-0.5 text-xs"
+            style={{ background: 'rgba(255,255,255,0.9)', color: M.ink, boxShadow: `0 0 0 2px ${M.ink}` }}
           >
-            {lesson.emoji}
-          </div>
-
-          <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-2 flex-wrap">
-              <h3 className={`kid-text text-lg leading-tight ${theme.text}`}>
-                {lesson.title}
-              </h3>
-              {complete && (
-                <span
-                  className="text-correct-600 text-lg leading-none"
-                  aria-hidden="true"
-                >
-                  ✓
-                </span>
-              )}
-            </div>
-            <p className="text-ink-700 text-sm mt-0.5 line-clamp-2">
-              {lesson.intro}
-            </p>
-          </div>
+            {lesson.steps} steps · {lesson.minutes} min
+          </span>
         </div>
 
-        {/* footer: progress + badges */}
-        <div className="mt-3 flex items-center justify-between gap-2">
-          <StarRating earned={lesson.stars} total={lesson.maxStars} size="sm" />
-          {lesson.recommended ? (
-            <Pill tone="quest" icon="⭐">
-              Recommended
-            </Pill>
-          ) : lesson.started && !complete ? (
-            <span className={`kid-text text-xs ${theme.accent}`}>
-              In progress
+        <div className="flex flex-1 flex-col gap-1 p-3.5">
+          <div className="flex items-center gap-2">
+            <span className="text-2xl" aria-hidden="true">
+              {lesson.emoji}
             </span>
-          ) : complete ? (
-            <span className="kid-text text-xs text-correct-600">Mastered</span>
-          ) : (
-            <span className="kid-text text-xs text-ink-700">New</span>
-          )}
+            <h3 className="kid-text text-xl leading-tight" style={{ color: M.ink }}>
+              {lesson.title}
+            </h3>
+            {complete && (
+              <span className="kid-text text-lg leading-none text-correct-600" aria-hidden="true">
+                ✓
+              </span>
+            )}
+          </div>
+          <p className="line-clamp-2 text-sm" style={{ color: '#5a4a56' }}>
+            {lesson.intro}
+          </p>
+          <div className="mt-auto flex items-center justify-between gap-2 pt-2">
+            <StarRating earned={lesson.stars} total={lesson.maxStars} size="sm" />
+            {status && (
+              <span className="kid-text text-xs" style={{ color: status === 'Mastered' ? '#15803d' : status === 'In progress' ? '#957401' : '#5a4a56' }}>
+                {status}
+              </span>
+            )}
+            <span
+              className="kid-text inline-flex items-center gap-1 rounded-full px-3 py-1 text-sm transition-colors"
+              style={{ background: M.coral, color: '#fff', boxShadow: `0 0 0 2px ${M.ink}`, textShadow: '0 1px 0 rgba(58,44,56,0.35)' }}
+              aria-hidden="true"
+            >
+              ▶ Watch
+            </span>
+          </div>
         </div>
       </Link>
     </motion.div>

@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useHomeUi } from '../useHomeUi'
+import { useWorldUi } from '../../world/useWorldUi'
+import { insideDoorSpot } from '../../world/worldLayout'
 import { useProgress } from '../../store/progress'
 import ModeToggle from './ModeToggle'
 import CatalogDrawer from './CatalogDrawer'
@@ -15,6 +17,15 @@ export default function HomeHud() {
   const cancelPlacing = useHomeUi((s) => s.cancelPlacing)
   const removeItem = useProgress((s) => s.removeItem)
   const active = !!placingItemId || !!movingUid
+  const navigate = useNavigate()
+
+  // This room is your House in the World: "Back" walks you out into the World,
+  // standing just inside the House door.
+  const back = () => {
+    sfx.click()
+    useWorldUi.getState().setReturnSpot(insideDoorSpot('house'))
+    navigate('/world')
+  }
 
   // While placing or moving: R rotates, Esc cancels (keyboard parity with the buttons).
   useEffect(() => {
@@ -31,7 +42,7 @@ export default function HomeHud() {
     <div className="absolute inset-0 pointer-events-none">
       <div className="absolute top-2 left-2 right-2 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Link to="/map" onClick={() => sfx.click()} className="pointer-events-auto kid-text bg-ocean-900/70 text-white px-3 py-1 rounded-full text-sm">← Map</Link>
+          <button type="button" onClick={back} title="Back to the World" className="pointer-events-auto kid-text bg-ocean-900/70 text-white px-3 py-1 rounded-full text-sm">← Back</button>
           <ControlsHelp />
         </div>
         <ModeToggle />

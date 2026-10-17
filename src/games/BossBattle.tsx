@@ -167,7 +167,7 @@ export default function BossBattle({ provider, params, onComplete, meta }: GameP
                 initial={reduced ? { opacity: 0 } : { x: -80, scale: 0.6, opacity: 0 }}
                 animate={reduced ? { opacity: 1 } : { x: 0, scale: 1, opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="text-4xl"
+                className="kid-text font-bold text-2xl text-ink-900 bg-quest-300 border-[3px] border-line rounded-full px-5 py-1 shadow-ledge-sm"
               >
                 ⚡✨ Hit!
               </motion.div>
@@ -178,7 +178,7 @@ export default function BossBattle({ provider, params, onComplete, meta }: GameP
                 initial={reduced ? { opacity: 0 } : { x: 80, scale: 0.6, opacity: 0 }}
                 animate={reduced ? { opacity: 1 } : { x: 0, scale: 1, opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="text-4xl"
+                className="kid-text font-bold text-2xl text-ink-900 bg-wrong-300 border-[3px] border-line rounded-full px-5 py-1 shadow-ledge-sm"
               >
                 💢 Ouch!
               </motion.div>
@@ -207,7 +207,7 @@ export default function BossBattle({ provider, params, onComplete, meta }: GameP
               </div>
             )}
 
-            <div className="mt-4">
+            <div className="mt-5 w-full flex justify-center">
               <AnswerGrid
                 options={problem.options}
                 answer={problem.answer}
@@ -227,7 +227,7 @@ export default function BossBattle({ provider, params, onComplete, meta }: GameP
             transition={{ type: 'spring', stiffness: 260, damping: 20 }}
             className="mt-6 text-center"
           >
-            <div className="kid-text text-3xl md:text-4xl text-sky">
+            <div className="kid-text font-bold text-3xl md:text-4xl text-ink-900 bg-paper border-[3px] border-line rounded-full px-8 py-2 shadow-ledge">
               {bossDefeated
                 ? '🏆 Victory!'
                 : playerHp <= 0
@@ -267,21 +267,25 @@ function BossArena({
   return (
     <div
       className={[
-        'relative w-full max-w-md rounded-3xl px-6 pt-6 pb-4',
-        'bg-monster-800 border-4 border-monster-600',
-        'shadow-[0_6px_0_0_theme(colors.monster.700),0_10px_24px_-4px_rgba(0,0,0,0.25)]',
-        !reduced ? 'animate-glow text-monster-500' : 'text-monster-500',
+        'relative w-full max-w-md rounded-toon px-6 pt-5 pb-4 overflow-hidden',
+        'bg-gradient-to-b from-monster-200 to-monster-400 border-[3px] border-line',
+        'shadow-[0_5px_0_0_var(--color-monster-600),0_16px_30px_-14px_rgb(58_44_56/0.35)]',
       ].join(' ')}
     >
+      {/* rays behind the boss */}
+      <div
+        className={`absolute left-1/2 top-[45%] -translate-x-1/2 -translate-y-1/2 w-80 h-80 sunburst opacity-60 ${reduced ? '' : 'animate-spin-slow'}`}
+        aria-hidden="true"
+      />
       {/* Name plate */}
-      <div className="flex justify-center mb-1">
-        <Pill tone="monster" icon="👾">
+      <div className="relative z-20 flex justify-center mb-3">
+        <Pill tone="ink" icon="👾" className="text-base px-4">
           {name}
         </Pill>
       </div>
 
       {/* Boss character */}
-      <div className="flex justify-center" aria-hidden="true">
+      <div className="relative flex flex-col items-center" aria-hidden="true">
         <motion.div
           animate={
             reduced
@@ -297,10 +301,12 @@ function BossArena({
               ? { duration: 0.5 }
               : { duration: 2.4, repeat: defeated ? 0 : Infinity, ease: 'easeInOut' }
           }
-          className="text-8xl md:text-9xl leading-none select-none"
+          className="relative z-10 text-8xl md:text-9xl leading-none select-none"
         >
           {defeated ? '💥' : emoji}
         </motion.div>
+        {/* the round stone stage the boss stands on (like the World's NPC stages) */}
+        <div className="-mt-5 w-48 h-10 rounded-[50%] bg-[#e6dfcf] border-[3px] border-line shadow-[inset_0_-6px_0_rgb(58_44_56/0.12)]" />
       </div>
 
       {/* Hit-flash overlay on a successful attack */}
@@ -318,14 +324,14 @@ function BossArena({
       </AnimatePresence>
 
       {/* Boss HP bar (monster tone, drains on correct answers) */}
-      <div className="mt-3" aria-label={`Boss health: ${hp} of ${maxHp}`}>
+      <div className="relative mt-3" aria-label={`Boss health: ${hp} of ${maxHp}`}>
         <div className="flex items-center justify-between mb-1">
-          <span className="kid-text text-sm text-monster-400">Boss HP</span>
-          <span className="kid-text text-sm text-monster-400">
+          <span className="kid-text text-base text-ink-900">Boss HP</span>
+          <span className="kid-text text-base text-ink-900 tabular-nums">
             {hp}/{maxHp}
           </span>
         </div>
-        <ProgressBar value={hp} max={maxHp} tone="monster" />
+        <ProgressBar value={hp} max={maxHp} tone="wrong" />
       </div>
     </div>
   )
@@ -369,7 +375,7 @@ function PlayerHearts({
           </motion.span>
         ))}
       </div>
-      <div className="kid-text text-sm text-sky mt-1">Your hearts</div>
+      <div className="kid-text text-base text-ink-700 mt-1">Your hearts</div>
     </div>
   )
 }

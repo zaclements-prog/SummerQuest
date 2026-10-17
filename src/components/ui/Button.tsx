@@ -1,8 +1,6 @@
-import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import type { ReactNode } from 'react'
 import { sfx } from '../../lib/sound'
-import { hoverPop, tap } from '../../lib/motion'
 
 export type ButtonVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'ghost'
 export type ButtonSize = 'md' | 'lg'
@@ -18,43 +16,22 @@ interface ButtonProps {
   type?: 'button' | 'submit' | 'reset'
 }
 
-// AA-safe: fills are -600/-700 with light text, or -400 with dark text
+/*
+ * The toon button: a pastel fill with ink text (AA on every fill), the warm
+ * outline every toon shape wears, and a chunky dark ledge underneath. Hover
+ * lifts it a hair; pressing sinks it onto its ledge. Pure CSS, so it stays fast.
+ */
 const variantClasses: Record<ButtonVariant, string> = {
-  primary: [
-    'bg-quest-400 text-quest-900',
-    'shadow-[0_5px_0_0_theme(colors.quest.600)]',
-    'hover:bg-quest-300 active:shadow-[0_2px_0_0_theme(colors.quest.600)] active:translate-y-[3px]',
-    'focus-visible:ring-4 focus-visible:ring-quest-500 focus-visible:ring-offset-2',
-  ].join(' '),
-  secondary: [
-    'bg-island-500 text-white',
-    'shadow-[0_5px_0_0_theme(colors.island.700)]',
-    'hover:bg-island-400 active:shadow-[0_2px_0_0_theme(colors.island.700)] active:translate-y-[3px]',
-    'focus-visible:ring-4 focus-visible:ring-island-600 focus-visible:ring-offset-2',
-  ].join(' '),
-  success: [
-    'bg-correct-600 text-white',
-    'shadow-[0_5px_0_0_theme(colors.correct.700)]',
-    'hover:bg-correct-500 active:shadow-[0_2px_0_0_theme(colors.correct.700)] active:translate-y-[3px]',
-    'focus-visible:ring-4 focus-visible:ring-correct-600 focus-visible:ring-offset-2',
-  ].join(' '),
-  danger: [
-    'bg-wrong-600 text-white',
-    'shadow-[0_5px_0_0_theme(colors.wrong.700)]',
-    'hover:bg-wrong-500 active:shadow-[0_2px_0_0_theme(colors.wrong.700)] active:translate-y-[3px]',
-    'focus-visible:ring-4 focus-visible:ring-wrong-600 focus-visible:ring-offset-2',
-  ].join(' '),
-  ghost: [
-    'bg-transparent text-ink-900',
-    'shadow-none border-2 border-ink-700/30',
-    'hover:bg-ink-900/8 active:bg-ink-900/12',
-    'focus-visible:ring-4 focus-visible:ring-ink-700 focus-visible:ring-offset-2',
-  ].join(' '),
+  primary: 'bg-quest-400 hover:bg-quest-300',
+  secondary: 'bg-ocean-300 hover:bg-ocean-200',
+  success: 'bg-correct-400 hover:bg-correct-300',
+  danger: 'bg-wrong-400 hover:bg-wrong-300',
+  ghost: 'bg-paper hover:bg-cream-100',
 }
 
 const sizeClasses: Record<ButtonSize, string> = {
-  md: 'px-5 py-2.5 text-lg min-h-[44px]',
-  lg: 'px-7 py-3.5 text-xl min-h-[52px]',
+  md: 'px-5 py-2 text-lg min-h-[48px] rounded-2xl',
+  lg: 'px-6 py-3 text-xl min-h-[56px] rounded-[1.25rem]',
 }
 
 export default function Button({
@@ -73,43 +50,41 @@ export default function Button({
   }
 
   const baseClasses = [
-    'kid-text rounded-2xl font-semibold',
-    'inline-flex items-center justify-center gap-2',
-    'transition-[transform,box-shadow,background-color] duration-100',
-    'outline-none select-none',
+    'kid-text text-ink-900 leading-tight',
+    'inline-flex items-center justify-center gap-2 text-center',
+    'border-[3px] border-line shadow-ledge',
+    'transition-[translate,box-shadow,background-color] duration-100 ease-out',
+    'outline-none select-none focus-visible:ring-4 focus-visible:ring-ocean-600/70 focus-visible:ring-offset-2 focus-visible:ring-offset-paper',
     variantClasses[variant],
     sizeClasses[size],
-    disabled ? 'opacity-50 cursor-not-allowed pointer-events-none' : 'cursor-pointer',
+    disabled
+      ? 'opacity-50 cursor-not-allowed pointer-events-none'
+      : 'cursor-pointer hover:-translate-y-0.5 hover:shadow-[0_6px_0_0_var(--color-line)] active:translate-y-[3px] active:shadow-ledge-sm',
     className,
   ]
     .filter(Boolean)
     .join(' ')
 
   if (to && !disabled) {
+    // The link sits in a wrapper (it carries the click sound); let the wrapper
+    // stretch too when the caller asks the button to fill its row.
+    const wrap = /(^|\s)w-full(\s|$)/.test(className)
+      ? 'flex w-full'
+      : /(^|\s)flex-1(\s|$)/.test(className)
+        ? 'flex flex-1'
+        : 'inline-flex'
     return (
-      <motion.div
-        whileHover={hoverPop}
-        whileTap={tap}
-        className="inline-flex"
-        onClick={handleClick}
-      >
+      <div className={wrap} onClick={handleClick}>
         <Link to={to} className={baseClasses}>
           {children}
         </Link>
-      </motion.div>
+      </div>
     )
   }
 
   return (
-    <motion.button
-      type={type}
-      disabled={disabled}
-      onClick={handleClick}
-      whileHover={disabled ? undefined : hoverPop}
-      whileTap={disabled ? undefined : tap}
-      className={baseClasses}
-    >
+    <button type={type} disabled={disabled} onClick={handleClick} className={baseClasses}>
       {children}
-    </motion.button>
+    </button>
   )
 }

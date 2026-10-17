@@ -1,5 +1,15 @@
 # Fraction Forge — second intrinsic-integration slice (Fraction Falls)
 
+> **Superseded in play by the 2026-10-17 fun pass** (`2026-10-17-mini-games-fun-pass.md`).
+> The kid no longer picks one of four finished trays. They stamp `1/d` slabs one
+> at a time at the press and feed extras to the Beaver. Walking to the table pours
+> the stack into a mold exactly as long as the recipe's shade: it fills exactly,
+> stops short (stamp the rest) or spills over (the mold tips out). The run has 2
+> warm-ups with ruler ticks, rush orders without them, and the Big Bear's
+> two-candy finale, then a results card. Pure logic: `pourOutcome`, `stampStack`,
+> `forgeRunPlan` and `forgeScore` in `src/lib/forge/fractionCore.ts`. The doctrine,
+> fact bounds and parity rules below still hold.
+
 Date: 2026-10-16 · Branch: `fraction-forge` (stacks on `division-arena`)
 Design basis: same doctrine as the Division Arena (Habgood & Ainsworth 2011;
 DragonBox concreteness fading; the "controls are a second job" rule for ages
