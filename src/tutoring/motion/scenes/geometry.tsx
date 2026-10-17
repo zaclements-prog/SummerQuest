@@ -1010,7 +1010,7 @@ const count: Scene = ({ t, cue, reduced }: SceneProps) => {
           { at: edges, x: 420, y: 270, zoom: 1.08 },
         ]}
       >
-        <Backdrop t={t} at={sq - 0.3} x={C[0]} y={C[1]} r={215} reduced={reduced} />
+        <Backdrop t={t} at={0.3} x={C[0]} y={C[1]} r={215} reduced={reduced} />
         <g filter="url(#sq-shadow)">
           <BuiltPolygon t={t} pts={P} w={12} at={sq} dur={1.4} fillAt={sq + 1.0} colorOf={(i) => (i < 0 ? M.ink : mixColor(M.ink, SIDE, tapped(i)))} glowOf={shineK} />
         </g>

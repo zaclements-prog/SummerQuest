@@ -279,12 +279,12 @@ const tally: Scene = ({ t, cue, reduced }: SceneProps) => {
           )
         })()}
         <Fade t={t} at={bundle + 0.1} out={asFive - 0.3}>
-          <Title x={399} y={py - 84} size={26} color={GOLD_TXT}>
+          <Title x={399} y={py + 72} size={26} color={GOLD_TXT}>
             bundle of 5
           </Title>
         </Fade>
         <Burst t={t} at={eightPlums} x={760} y={py} color={FRUIT[2].color} r={70} />
-        <Fade t={t} at={markCue} out={hero}>
+        <Fade t={t} at={markCue} out={bundle - 0.3}>
           <Title x={620} y={py + 82} size={22} color={M.inkSoft}>
             one mark for each plum
           </Title>
@@ -376,7 +376,7 @@ const bars: Scene = ({ t, cue, reduced }: SceneProps) => {
               const cy = lerp(from.y, OY - (j + 0.5) * UH, k) - Math.sin(k * Math.PI) * 30
               const w = lerp(7, BW - 8, k)
               const h = lerp(from.diag ? 70 : 48, UH - 6 + 6 * merge, k)
-              const rot = lerp(from.diag ? -58 : 0, 0, k)
+              const rot = lerp(from.diag ? 58 : 0, 0, k)
               const fill = mixColor(M.ink, f.color, k)
               return (
                 <g key={`${r}-${j}`} transform={`translate(${cx} ${cy}) rotate(${rot})`} opacity={1 - merge}>
