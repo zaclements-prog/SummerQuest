@@ -51,22 +51,6 @@
     "file": "tts/placeValue/rounding.mp3",
     "hash": "19d35679ca"
   },
-  "measurement/area": {
-    "file": "tts/measurement/area.mp3",
-    "hash": "1a9506023b"
-  },
-  "measurement/perimeter": {
-    "file": "tts/measurement/perimeter.mp3",
-    "hash": "1fe3dddd8a"
-  },
-  "measurement/time": {
-    "file": "tts/measurement/time.mp3",
-    "hash": "8b0cc0d2aa"
-  },
-  "measurement/money": {
-    "file": "tts/measurement/money.mp3",
-    "hash": "ff0794b007"
-  },
   "geometry/shapes": {
     "file": "tts/geometry/shapes.mp3",
     "hash": "52935846d3"

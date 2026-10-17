@@ -1,5 +1,8 @@
 import type { Scene } from '../types'
+import { dataGraphScenes } from './dataGraph'
 import { fractionsScenes } from './fractions'
+import { geometryScenes } from './geometry'
+import { measurementScenes } from './measurement'
 
 /**
  * Motion graphics by lesson → step id. A step without a scene falls back to
@@ -8,6 +11,9 @@ import { fractionsScenes } from './fractions'
  */
 const SCENES: Record<string, Record<string, Scene>> = {
   fractions: fractionsScenes,
+  geometry: geometryScenes,
+  measurement: measurementScenes,
+  dataGraph: dataGraphScenes,
 }
 
 export function sceneFor(lessonId: string, stepId: string): Scene | undefined {

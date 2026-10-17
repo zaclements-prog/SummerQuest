@@ -70,19 +70,19 @@
   "measurement": [
     {
       "stepId": "area",
-      "text": "Area is the amount of space inside a shape. You can count all the little squares that fit inside, or you can take a shortcut and multiply the length times the width."
+      "text": "Area is the amount of space inside a shape. You can count all the little squares that fit inside, or take a shortcut and multiply the length times the width. Four times three equals twelve!"
     },
     {
       "stepId": "perimeter",
-      "text": "Perimeter is the distance all the way around the edge of a shape, like walking around the outside of a yard. To find it, add up the length of every single side."
+      "text": "Perimeter is the distance all the way around a shape, like walking around the edge of a yard. Add up every side: four plus three plus four plus three equals fourteen."
     },
     {
       "stepId": "time",
-      "text": "On a clock, the short hand points to the hour, and the long hand points to the minutes. When the long hand is on the three, it is fifteen minutes past the hour."
+      "text": "On a clock, the short hand points to the hour. The long hand points to the minutes, and it counts by fives: five, ten, fifteen. The short hand is just past the eight, so it is eight fifteen!"
     },
     {
       "stepId": "money",
-      "text": "When you count money, count the dollars first, and then count the cents. Putting them together tells you the total amount."
+      "text": "When you count money, count the dollars first: one dollar. Then count the cents: twenty-five, fifty, seventy-five. Put them together, and you have one dollar and seventy-five cents!"
     }
   ],
   "geometry": [
@@ -91,8 +91,20 @@
       "text": "Shapes get their names from their sides and their corners. A square is special because it has four sides that are all the same length, and it has four corners."
     },
     {
+      "stepId": "family",
+      "text": "Count the sides to name a shape. Three sides make a triangle. Four sides make a quadrilateral. Five sides make a pentagon, and six sides make a hexagon!"
+    },
+    {
       "stepId": "angles",
       "text": "A corner, where two sides meet, is called an angle. The square corner that you see in a square is a special angle that we call a right angle."
+    },
+    {
+      "stepId": "angleTypes",
+      "text": "An angle smaller than a right angle is called acute. It is narrow, like the tip of a pizza slice. An angle bigger than a right angle is called obtuse. It opens up wide."
+    },
+    {
+      "stepId": "lines",
+      "text": "Lines that run side by side and never cross are called parallel, like train tracks. Lines that cross to make square corners are called perpendicular, like a plus sign."
     },
     {
       "stepId": "count",
@@ -101,12 +113,20 @@
   ],
   "dataGraph": [
     {
+      "stepId": "tally",
+      "text": "To collect data, make one tally mark for each fruit sold. The fifth mark crosses the other four, making a bundle of five. Count the bundle as five, then six, seven, eight. Eight plums!"
+    },
+    {
       "stepId": "bars",
       "text": "A bar graph shows amounts using bars. Each bar stands for one thing, and the taller a bar is, the bigger its number. A short bar means a small number."
     },
     {
       "stepId": "read",
-      "text": "To read a bar, look at the number right on top of it. That number tells you the amount for that bar. To compare, look at the heights. The tallest bar has the biggest number."
+      "text": "To read a bar, find its top, then slide straight across to the numbers on the side. The apple bar lines up with five, so five apples were sold. The tallest bar shows the biggest number."
+    },
+    {
+      "stepId": "compare",
+      "text": "How many more plums were sold than apples? Draw a line across from the top of the apple bar. The plum bar reaches three spaces higher: six, seven, eight. Eight minus five equals three!"
     }
   ],
   "wordProblem": [
