@@ -16,9 +16,27 @@ export const geometryLesson: Lesson = {
       visual: { kind: 'shape', type: 'square', width: 3, height: 3 },
     },
     {
+      id: 'family',
+      narration: 'Count the sides to name a shape. Three sides make a triangle. Four sides make a quadrilateral. Five sides make a pentagon, and six sides make a hexagon!',
+      body: 'Triangle: 3 sides. Quadrilateral: 4 sides. Pentagon: 5 sides. Hexagon: 6 sides.',
+    },
+    {
       id: 'angles',
       narration: 'A corner, where two sides meet, is called an angle. The square corner that you see in a square is a special angle that we call a right angle.',
       body: 'Two sides meeting = an angle. A square corner = a right angle.',
+    },
+    {
+      // The practice stage (geo-angles) asks about acute / obtuse / parallel /
+      // perpendicular, so the lesson teaches them before sending kids there.
+      id: 'angleTypes',
+      narration: 'An angle smaller than a right angle is called acute. It is narrow, like the tip of a pizza slice. An angle bigger than a right angle is called obtuse. It opens up wide.',
+      body: 'Acute: smaller than a right angle. Obtuse: bigger than a right angle.',
+      check: { question: 'Which angle is smaller than a right angle?', options: ['acute', 'obtuse', 'right', 'straight'], answer: 'acute', explain: 'Acute angles are narrower than a square corner. Obtuse angles open wider.' },
+    },
+    {
+      id: 'lines',
+      narration: 'Lines that run side by side and never cross are called parallel, like train tracks. Lines that cross to make square corners are called perpendicular, like a plus sign.',
+      body: 'Parallel: never cross. Perpendicular: cross at right angles.',
     },
     {
       id: 'count',
