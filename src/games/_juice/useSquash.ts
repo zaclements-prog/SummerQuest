@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useCallback, useRef } from 'react'
 import type { RefObject } from 'react'
 import { useFrame } from '@react-three/fiber'
 import type { Group } from 'three'
@@ -6,6 +6,7 @@ import type { Group } from 'three'
 /**
  * Squash-and-stretch on a group: call `kick(1)` on a hit/landing/pickup and the
  * group wobbles back to rest on a damped spring. Use on golems, trays, plants…
+ * `kick` is stable across renders (safe in effect deps).
  */
 export function useSquash(): [RefObject<Group | null>, (amount?: number) => void] {
   const ref = useRef<Group>(null)
@@ -19,5 +20,8 @@ export function useSquash(): [RefObject<Group | null>, (amount?: number) => void
     s.x += s.v * dt
     g.scale.set(1 + s.x * 0.5, 1 - s.x, 1 + s.x * 0.5)
   })
-  return [ref, (amount = 1) => (st.current.v += amount * 6)]
+  const kick = useCallback((amount = 1) => {
+    st.current.v += amount * 6
+  }, [])
+  return [ref, kick]
 }

@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
+import { memo, useEffect, useRef, useState } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import { Html } from '@react-three/drei'
-import { Color, InstancedMesh, Matrix4, Object3D, Quaternion, Euler } from 'three'
+import { Color, InstancedMesh, Matrix4, Object3D, Quaternion, Euler, Mesh, MeshBasicMaterial, RingGeometry } from 'three'
 import { geo } from '../../toon/geometry'
 import { toonMaterial } from '../../toon/materials'
-import { burstBus, shakeBus, textBus, type FloatTextEvent } from './juice'
+import { burstBus, ringBus, shakeBus, textBus, type FloatTextEvent } from './juice'
 
 const MAX = 320
 
@@ -27,12 +27,18 @@ function Bursts() {
   // Mutable simulation state lives in refs (touched only in effects / frames).
   const simRef = useRef(newSim())
   const tmpRef = useRef({ o: new Object3D(), c: new Color(), zero: new Matrix4().makeScale(0, 0, 0) })
+  const [colors] = useState(() => new Float32Array(MAX * 3).fill(1))
 
   useEffect(() => {
     const sim = simRef.current
     const tmp = tmpRef.current
     const m = mesh.current
-    if (m) for (let i = 0; i < MAX; i++) m.setMatrixAt(i, tmp.zero)
+    if (m) {
+      // hide every slot until it is used (and upload it: until the first
+      // burst the frame loop never runs, so identity matrices would show)
+      for (let i = 0; i < MAX; i++) m.setMatrixAt(i, tmp.zero)
+      m.instanceMatrix.needsUpdate = true
+    }
     return burstBus.on((e) => {
       const m2 = mesh.current
       if (!m2) return
@@ -91,8 +97,8 @@ function Bursts() {
   })
 
   return (
-    <instancedMesh ref={mesh} args={[geo.blob(0), toonMaterial('#ffffff', { emissive: '#ffffff', emissiveIntensity: 0.25 }), MAX]} frustumCulled={false}>
-      <instancedBufferAttribute attach="instanceColor" args={[new Float32Array(MAX * 3).fill(1), 3]} />
+    <instancedMesh ref={mesh} args={[geo.blob(0), toonMaterial('#ffffff', { emissive: '#ffffff', emissiveIntensity: 0.08 }), MAX]} frustumCulled={false}>
+      <instancedBufferAttribute attach="instanceColor" args={[colors, 3]} />
     </instancedMesh>
   )
 }
@@ -168,13 +174,90 @@ function ShakeCamera() {
   return null
 }
 
-/** Mount once inside the game's <Canvas>, after the camera rig. */
-export default function JuiceLayer() {
+const RINGS = 10
+const ringGeo = (() => {
+  const g = new RingGeometry(0.84, 1, 48)
+  g.rotateX(-Math.PI / 2)
+  return g
+})()
+
+// one material per pool slot (each fades on its own); made once, never per frame
+const ringMats = Array.from({ length: RINGS }, () => new MeshBasicMaterial({ color: '#fff6cf', transparent: true, opacity: 0, depthWrite: false }))
+
+/** Ground shockwaves: a small pool of flat rings that expand and fade. */
+function Rings() {
+  const refs = useRef<(Mesh | null)[]>([])
+  const st = useRef({ t: new Float32Array(RINGS).fill(-1), life: new Float32Array(RINGS), r: new Float32Array(RINGS), next: 0 })
+  useEffect(
+    () =>
+      ringBus.on((e) => {
+        const s = st.current
+        const i = s.next
+        s.next = (s.next + 1) % RINGS
+        s.t[i] = 0
+        s.life[i] = e.life ?? 0.55
+        s.r[i] = e.radius ?? 2.2
+        ringMats[i].color.set(e.color ?? '#fff6cf')
+        const m = refs.current[i]
+        if (m) m.position.set(e.pos[0], e.pos[1] + 0.03, e.pos[2])
+      }),
+    [],
+  )
+  useFrame((_, rawDt) => {
+    const s = st.current
+    const dt = Math.min(rawDt, 0.05)
+    for (let i = 0; i < RINGS; i++) {
+      const m = refs.current[i]
+      if (!m) continue
+      if (s.t[i] < 0) {
+        m.visible = false
+        continue
+      }
+      s.t[i] += dt
+      const k = s.t[i] / s.life[i]
+      if (k >= 1) {
+        s.t[i] = -1
+        m.visible = false
+        continue
+      }
+      const e = 1 - (1 - k) * (1 - k)
+      m.visible = true
+      m.scale.setScalar(0.2 + e * s.r[i])
+      ringMats[i].opacity = (1 - k) * 0.85
+    }
+  })
+  return (
+    <>
+      {ringMats.map((mat, i) => (
+        <mesh
+          key={i}
+          ref={(el) => {
+            refs.current[i] = el
+          }}
+          geometry={ringGeo}
+          material={mat}
+          visible={false}
+          renderOrder={2}
+        />
+      ))}
+    </>
+  )
+}
+
+/**
+ * Mount once inside the game's <Canvas>, after the camera rig. Memoized and
+ * prop-less: the game's own re-renders never touch it (everything arrives
+ * through the juice buses), so its instance buffers are never rebuilt.
+ */
+function JuiceLayerImpl() {
   return (
     <>
       <Bursts />
+      <Rings />
       <FloatTexts />
       <ShakeCamera />
     </>
   )
 }
+const JuiceLayer = memo(JuiceLayerImpl)
+export default JuiceLayer

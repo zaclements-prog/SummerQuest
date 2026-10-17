@@ -1,16 +1,39 @@
 import { describe, expect, it } from 'vitest'
 import {
   ARENA_LIMITS,
+  BOSS_SPEED,
+  BOSS_STEP_POINTS,
+  GOLEM_POINTS,
+  KNOCKBACK,
+  LANE,
+  LANE_LEN,
+  MAIN_SPEED,
+  MAX_HERD,
+  PEN_MARKS,
   ROUNDS,
+  STALL_PITCH_X,
   STAR_THRESHOLDS,
+  WARM_SPEED,
+  advanceProgress,
   arenaFactConfig,
+  arenaPlan,
   arenaStars,
+  arenaStarsOf,
+  bossChain,
+  bossKMax,
+  herdSpots,
   isRightCrystal,
+  laneSeconds,
+  laneZ,
   makePedestalOptions,
   parseDivRound,
+  penStalls,
+  shatterPoints,
   shatters,
   splitPositions,
+  throwOutcome,
   trueFactors,
+  warmFactConfig,
 } from '../divisionCore'
 
 describe('parseDivRound', () => {
@@ -108,5 +131,175 @@ describe('arenaFactConfig', () => {
     // worst case for the pen: the largest dividend the config can produce
     const maxQuotient = c.quotientMax
     expect(splitPositions(maxQuotient, 0, 0)).toHaveLength(maxQuotient)
+    expect(penStalls(maxQuotient, 0, 0)).toHaveLength(maxQuotient)
+  })
+})
+
+describe('makePedestalOptions — four crystals', () => {
+  it('serves 4 unique crystals with the answer when asked', () => {
+    for (let divisor = 2; divisor <= 9; divisor++) {
+      for (let quotient = 2; quotient <= 10; quotient++) {
+        const opts = makePedestalOptions(divisor * quotient, divisor, 4)
+        expect(opts).toHaveLength(4)
+        expect(new Set(opts).size).toBe(4)
+        expect(opts).toContain(divisor)
+        for (const d of opts) expect(d).toBeGreaterThanOrEqual(2)
+      }
+    }
+  })
+  it('defaults to three', () => {
+    expect(makePedestalOptions(24, 3)).toHaveLength(3)
+  })
+})
+
+describe('throwOutcome', () => {
+  it('right / wrong-size split / bounce', () => {
+    const r = { dividend: 24, divisor: 3 }
+    expect(throwOutcome(r, 3)).toEqual({ kind: 'right', camels: 8 })
+    expect(throwOutcome(r, 4)).toEqual({ kind: 'split', camels: 6 })
+    expect(throwOutcome(r, 2)).toEqual({ kind: 'split', camels: 12 })
+    expect(throwOutcome(r, 5)).toEqual({ kind: 'bounce' })
+  })
+})
+
+describe('the pen', () => {
+  it('lays stalls out in rows of five, like a ten-frame', () => {
+    const s = penStalls(8, 0, 0)
+    expect(s).toHaveLength(8)
+    expect(new Set(s.map(([, z]) => z.toFixed(3))).size).toBe(2)
+    // first row is full (5), second has 3, both left-aligned
+    expect(s.slice(0, 5).every(([, z]) => z === s[0][1])).toBe(true)
+    expect(s[5][0]).toBeCloseTo(s[0][0])
+    expect(s[1][0] - s[0][0]).toBeCloseTo(STALL_PITCH_X)
+    expect(penStalls(3, 0, 0).every(([, z]) => z === 0)).toBe(true)
+    expect(penStalls(50, 0, 0)).toHaveLength(PEN_MARKS)
+  })
+
+  it('a right split fills every stall exactly', () => {
+    const spots = herdSpots(8, 8, 0, 2.75, 1.85)
+    expect(spots).toHaveLength(8)
+    expect(spots.every((x) => x.inPen)).toBe(true)
+    expect(spots.map((x) => x.spot)).toEqual(penStalls(8, 0, 2.75))
+  })
+
+  it('too many camels: extras stand OUTSIDE the fence', () => {
+    const spots = herdSpots(12, 8, 0, 2.75, 1.85)
+    expect(spots.filter((x) => x.inPen)).toHaveLength(8)
+    for (const x of spots.filter((y) => !y.inPen)) expect(Math.hypot(x.spot[0], x.spot[1] - 2.75)).toBeGreaterThan(1.85)
+  })
+
+  it('not enough camels: some stalls stay empty', () => {
+    const spots = herdSpots(6, 8, 0, 2.75, 1.85)
+    expect(spots).toHaveLength(6)
+    expect(spots.every((x) => x.inPen)).toBe(true)
+  })
+
+  it('caps a huge split at MAX_HERD', () => {
+    expect(herdSpots(45, 10, 0, 0, 1.85)).toHaveLength(MAX_HERD)
+  })
+})
+
+describe('arenaPlan', () => {
+  it('5 rounds: two slow warm-ups (3 crystals), two faster mains (4), the giant last', () => {
+    const p = arenaPlan(5)
+    expect(p.map((r) => r.kind)).toEqual(['warm', 'warm', 'main', 'main', 'boss'])
+    expect(p.map((r) => r.crystals)).toEqual([3, 3, 4, 4, 4])
+    expect(p[0].speed).toBe(WARM_SPEED)
+    expect(p[2].speed).toBe(MAIN_SPEED[0])
+    expect(p[3].speed).toBe(MAIN_SPEED[1])
+    expect(p[4].speed).toBe(BOSS_SPEED)
+    expect(p[4].banner).toMatch(/GIANT/)
+  })
+  it('mains march faster each round and never slower than the warm-up', () => {
+    const p = arenaPlan(8).filter((r) => r.kind === 'main')
+    for (let i = 1; i < p.length; i++) expect(p[i].speed).toBeGreaterThan(p[i - 1].speed)
+    for (const r of p) expect(r.speed).toBeGreaterThan(WARM_SPEED)
+  })
+  it('degrades gracefully for short runs', () => {
+    expect(arenaPlan(1).map((r) => r.kind)).toEqual(['boss'])
+    expect(arenaPlan(2).map((r) => r.kind)).toEqual(['warm', 'boss'])
+    expect(arenaPlan(3).map((r) => r.kind)).toEqual(['warm', 'main', 'boss'])
+    expect(arenaPlan(0)).toHaveLength(1)
+  })
+})
+
+describe('golem lane timing', () => {
+  it('maps progress to the lane and clamps', () => {
+    expect(laneZ(0)).toBe(LANE.start)
+    expect(laneZ(1)).toBeCloseTo(LANE.end)
+    expect(laneZ(0.5)).toBeCloseTo((LANE.start + LANE.end) / 2)
+    expect(laneZ(-1)).toBe(LANE.start)
+    expect(laneZ(3)).toBeCloseTo(LANE.end)
+  })
+  it('advances at speed / lane length and stops at the pen', () => {
+    expect(advanceProgress(0, 1, 1)).toBeCloseTo(1 / LANE_LEN)
+    expect(advanceProgress(0.99, 10, 1)).toBe(1)
+    expect(advanceProgress(0.3, 1, -5)).toBe(0.3)
+  })
+  it('gives a 7–9-year-old real time: warm-ups ≥ 15 s, every golem ≥ 10 s down the lane', () => {
+    expect(laneSeconds(WARM_SPEED)).toBeGreaterThanOrEqual(15)
+    for (const r of arenaPlan(5)) expect(laneSeconds(r.speed)).toBeGreaterThanOrEqual(10)
+    expect(laneSeconds(0)).toBe(Infinity)
+  })
+  it('a stomp knocks the golem back up the lane, not to the start', () => {
+    expect(KNOCKBACK).toBeGreaterThan(0)
+    expect(KNOCKBACK).toBeLessThan(1)
+  })
+})
+
+describe('bossChain', () => {
+  it('builds giant = dividend × k, cracked down in two true steps', () => {
+    for (const r of [0.01, 0.6]) {
+      const c = bossChain({ dividend: 24, divisor: 3, quotient: 8, factId: 'div:24/3' }, 3, () => r)
+      expect(c.giant).toBe(24 * c.steps[0].divisor)
+      expect(c.steps[0]).toEqual({ dividend: c.giant, divisor: c.giant / 24, quotient: 24 })
+      expect(c.steps[1]).toEqual({ dividend: 24, divisor: 3, quotient: 8, factId: 'div:24/3' })
+    }
+  })
+  it('keeps the giant a two-digit number and k within the grade', () => {
+    for (let d = 4; d <= 45; d++) {
+      for (const kMax of [2, 3]) {
+        for (const r of [0, 0.5, 0.99]) {
+          const c = bossChain({ dividend: d, divisor: 2, quotient: d / 2 }, kMax, () => r)
+          expect(c.steps[0].divisor).toBeGreaterThanOrEqual(2)
+          expect(c.steps[0].divisor).toBeLessThanOrEqual(kMax)
+          expect(c.giant).toBeLessThanOrEqual(99)
+        }
+      }
+    }
+  })
+  it('the youngest grade only ever doubles', () => {
+    expect(bossKMax(5)).toBe(2)
+    expect(bossKMax(10)).toBe(3)
+  })
+})
+
+describe('shatterPoints', () => {
+  it('pays more for shattering early and for streaks; the giant is worth more', () => {
+    const early = shatterPoints({ progress: 0.1, streak: 1, kind: 'main' })
+    const late = shatterPoints({ progress: 0.9, streak: 1, kind: 'main' })
+    expect(early.points).toBeGreaterThan(late.points)
+    expect(late.points).toBeGreaterThanOrEqual(GOLEM_POINTS)
+    expect(shatterPoints({ progress: 0.5, streak: 4, kind: 'main' }).points).toBeGreaterThan(shatterPoints({ progress: 0.5, streak: 1, kind: 'main' }).points)
+    expect(shatterPoints({ progress: 1, streak: 1, kind: 'boss' }).points).toBe(BOSS_STEP_POINTS)
+  })
+})
+
+describe('arenaStarsOf', () => {
+  it('matches arenaStars for 5 and scales for other round counts', () => {
+    for (let c = 0; c <= 5; c++) expect(arenaStarsOf(c, 5)).toBe(arenaStars(c))
+    expect([0, 1, 2, 3, 4].map((c) => arenaStarsOf(c, 4))).toEqual([0, 1, 1, 2, 3])
+  })
+})
+
+describe('warmFactConfig', () => {
+  it('stays in the friendly corner and never above the arena config', () => {
+    for (const tier of [2, 5, 10, 12]) {
+      const w = warmFactConfig(tier)
+      const a = arenaFactConfig(tier)
+      expect(w.divisorMax).toBeLessThanOrEqual(Math.min(5, a.divisorMax))
+      expect(w.quotientMax).toBeLessThanOrEqual(Math.min(5, a.quotientMax))
+      expect(w.divisorMin).toBe(2)
+    }
   })
 })
