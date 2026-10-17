@@ -1,5 +1,17 @@
 # Cloud Keeper — water-cycle machine (design)
 
+> **Superseded in play by the 2026-10-17 fun pass** (`2026-10-17-mini-games-fun-pass.md`).
+> The kid now guides Drip, a droplet whose shape is the water's state
+> (💧 → 💨 → ☁️), to the station whose process comes next. The sun pool
+> evaporates, the cold cloud condenses (on the windy loop it drifts and its
+> shadow is the station) and the rain peak precipitates; then the river carries
+> Drip home. Every station visit is one recorded answer, and the host speaks a
+> situation clue from the bank (`nextFor(process)` plus a `short` caption). The
+> run has a guided warm-up loop, a windy/snowy loop and a storm finale (three
+> friends in mixed shapes, before the rainbow). Pure logic: `routeStep`,
+> `cycleRunPlan` and `legScore` in `src/lib/cycle/cycleCore.ts`. The numbered
+> stations and the re-arm gate below are gone: stations are edge-triggered.
+
 **Status:** in build (vertical slice) · 2026-10-16 · zone: Science Summit
 **CCCS/NGSS:** water cycle (3-ESS2-ish, grade 3–4): evaporation, condensation,
 precipitation as an ordered loop.
