@@ -71,6 +71,16 @@ export interface SkillAttempt {
 
 export interface PlacedItem { uid: string; itemId: string; gx: number; gz: number; rot: number }
 
+/**
+ * 3D graphics quality (the ⚙️ toggle in the World): 'auto' measures the machine
+ * the first time the World opens each session, 'high' is "Pretty", 'low' is
+ * "Fast" (no shadows or outlines, pixel ratio 1). See world/graphicsQuality.ts.
+ */
+export type GraphicsQuality = 'auto' | 'high' | 'low'
+const GRAPHICS_QUALITIES: readonly GraphicsQuality[] = ['auto', 'high', 'low']
+const isGraphicsQuality = (v: unknown): v is GraphicsQuality =>
+  typeof v === 'string' && (GRAPHICS_QUALITIES as readonly string[]).includes(v)
+
 const MAX_SESSIONS = 300
 const MAX_ATTEMPTS = 2000
 
@@ -86,6 +96,8 @@ interface ProgressState {
   /** Per-fact record ("mult:6x8" → attempts/misses/streak) behind adaptive practice. Capped. */
   factStats: FactStats
   soundEnabled: boolean
+  /** A device setting: kept when the player is reset. */
+  graphicsQuality: GraphicsQuality
   seenBadges: string[]
   dailyClaimedDate?: string
   ownedAccessories: string[]
@@ -120,6 +132,7 @@ interface ProgressState {
   bumpStreakIfNeeded: () => void
   markZoneMastered: (zoneId: string) => void
   toggleSound: () => void
+  setGraphicsQuality: (q: GraphicsQuality) => void
   markBadgesSeen: (ids: string[]) => void
   claimDaily: () => void
   buyAccessory: (id: string, price: number) => boolean
@@ -156,6 +169,7 @@ export const useProgress = create<ProgressState>()(
       attempts: [],
       factStats: {},
       soundEnabled: true,
+      graphicsQuality: 'auto',
       seenBadges: [],
       ownedAccessories: [],
       equippedAccessories: { head: null, face: null, back: null, body: null },
@@ -291,6 +305,10 @@ export const useProgress = create<ProgressState>()(
 
       toggleSound: () => set({ soundEnabled: !get().soundEnabled }),
 
+      setGraphicsQuality: (q) => {
+        if (isGraphicsQuality(q)) set({ graphicsQuality: q })
+      },
+
       markBadgesSeen: (ids) =>
         set({ seenBadges: Array.from(new Set([...get().seenBadges, ...ids])) }),
 
@@ -423,6 +441,8 @@ export const useProgress = create<ProgressState>()(
           ...p,
           player,
           equippedAccessories: { ...c.equippedAccessories, ...(p.equippedAccessories ?? {}) },
+          // Saves from before the graphics setting (or with a bad value) start on 'auto'.
+          graphicsQuality: isGraphicsQuality(p.graphicsQuality) ? p.graphicsQuality : c.graphicsQuality,
           // Saves from before adaptive practice have no factStats (→ the empty default).
           factStats:
             p.factStats && typeof p.factStats === 'object' && !Array.isArray(p.factStats)

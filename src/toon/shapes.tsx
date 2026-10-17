@@ -3,6 +3,7 @@ import { Outlines } from '@react-three/drei'
 import type { BufferGeometry, ColorRepresentation } from 'three'
 import { toonMaterial, OUTLINE } from './materials'
 import { faceted, geo } from './geometry'
+import { useLowGraphics } from '../world/graphicsQuality'
 
 export type Vec3 = [number, number, number]
 
@@ -24,6 +25,16 @@ export interface ToonMeshProps {
   /** Faceted low-poly shading instead of smooth. */
   flat?: boolean
   children?: ReactNode
+}
+
+/**
+ * The outline of one outlined primitive. Only outlined meshes mount this, so only
+ * they subscribe to the (tiny, rarely changing) graphics-quality flag; on "Fast"
+ * graphics the outline is skipped (it costs a draw call per mesh).
+ */
+function ToonOutline({ thickness }: { thickness: number }) {
+  const low = useLowGraphics()
+  return low ? null : <Outlines thickness={thickness} color={OUTLINE.color} />
 }
 
 function ToonMesh({
@@ -53,7 +64,7 @@ function ToonMesh({
       receiveShadow={receiveShadow}
     >
       {outline && (opacity ?? 1) >= 0.5 && (
-        <Outlines thickness={outlineThickness ?? OUTLINE.thickness} color={OUTLINE.color} />
+        <ToonOutline thickness={outlineThickness ?? OUTLINE.thickness} />
       )}
       {children}
     </mesh>
