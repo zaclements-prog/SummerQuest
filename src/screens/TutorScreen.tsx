@@ -5,6 +5,8 @@ import type { ProblemAnswer } from '../lib/problem'
 import { getLesson } from '../tutoring/lessons'
 import VisualRenderer from '../components/VisualRenderer'
 import { useNarration } from '../lib/narration'
+import MotionStage from '../tutoring/motion/MotionStage'
+import { sceneFor } from '../tutoring/motion/scenes'
 import { seededShuffle } from '../lib/random'
 import { playableStageId } from '../lib/stageLocks'
 import { getZone } from '../curriculum'
@@ -130,7 +132,8 @@ export default function TutorScreen() {
   // Opened from the Schoolhouse / Library in the 3D World? "Back" returns there.
   const fromWorld = useWorldUi((s) => s.enteredFromWorld)
   // Hooks must run unconditionally, so call useNarration before any early return.
-  const { playing, play, stop } = useNarration(lesson?.id ?? '', step?.id ?? '', step?.narration ?? '')
+  const { playing, play, stop, clock } = useNarration(lesson?.id ?? '', step?.id ?? '', step?.narration ?? '')
+  const scene = lesson && step ? sceneFor(lesson.id, step.id) : undefined
 
   // Lesson with no resolvable step yet → loading shimmer (id matched, content pending).
   if (lesson && !step) {
@@ -233,9 +236,16 @@ export default function TutorScreen() {
                 </p>
               </div>
 
+              {/* Motion graphic synced to the narration (falls back to the static visual). */}
+              {scene && (
+                <div className="my-4">
+                  <MotionStage scene={scene} text={step.narration} clock={clock} reduced={!!reduced} />
+                </div>
+              )}
+
               {/* VisualRenderer draws light-on-dark (white labels, translucent
                   pieces), so give it the same deep-blue stage the games use. */}
-              {step.visual && (
+              {!scene && step.visual && (
                 <div className="flex justify-center my-4 rounded-3xl bg-ocean-700 p-4 text-sky">
                   <VisualRenderer visual={step.visual} size="lg" />
                 </div>

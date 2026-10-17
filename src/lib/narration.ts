@@ -1,7 +1,19 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useProgress } from '../store/progress'
+import { DEFAULT_CHARS_PER_SEC, alignWords, timeAtChar, type TimedWord } from '../tutoring/motion/cues'
 
-type Manifest = Record<string, { file: string; hash: string }>
+/**
+ * One rendered narration clip (public/tts/manifest.json). `duration` (seconds)
+ * and `words` (path to a `{ words: TimedWord[] }` JSON of word timings) are
+ * optional extras a renderer may add; see docs/narration-handoff.md.
+ */
+export interface NarrationClip {
+  file: string
+  hash: string
+  duration?: number
+  words?: string
+}
+type Manifest = Record<string, NarrationClip>
 let manifestCache: Manifest | null = null
 
 async function loadManifest(): Promise<Manifest> {
@@ -16,6 +28,46 @@ async function loadManifest(): Promise<Manifest> {
   }
 }
 
+const wordsCache = new Map<string, Promise<TimedWord[] | null>>()
+function loadWords(path: string): Promise<TimedWord[] | null> {
+  let p = wordsCache.get(path)
+  if (!p) {
+    p = fetch(`${import.meta.env.BASE_URL}${path}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((j: { words?: TimedWord[] } | null) => (j && Array.isArray(j.words) ? j.words : null))
+      .catch(() => null)
+    wordsCache.set(path, p)
+  }
+  return p
+}
+
+/**
+ * The narration's timeline, read every animation frame by the lesson motion
+ * graphics. It always runs: from the audio clip when there is one, from browser
+ * speech otherwise, and on a silent estimate when sound is off or stopped, so
+ * the visuals play either way.
+ */
+export interface NarrationClock {
+  /** Seconds since this step's narration (or silent timeline) started. Keeps counting after it ends. */
+  now(): number
+  /** Best-known narration length in seconds. */
+  duration(): number
+  /** Seconds at which character `i` of the narration text is spoken. */
+  timeAtChar(i: number): number
+}
+
+interface ClockState {
+  source: 'virtual' | 'audio' | 'speech'
+  start: number // performance.now() ms when the timeline started
+  audio: HTMLAudioElement | null
+  endedAt: number | null // perf ms when the audio ended
+  cps: number // estimated characters per second (speech / virtual)
+  clipDuration: number | null // from the manifest
+  aligned: { start: number; s: number }[] | null
+}
+
+const perf = () => (typeof performance !== 'undefined' ? performance.now() : Date.now())
+
 /** Plays narration for a lesson step: MP3 if available, else browser speech synthesis. */
 export function useNarration(lessonId: string, stepId: string, text: string) {
   const soundEnabled = useProgress((s) => s.soundEnabled)
@@ -25,8 +77,61 @@ export function useNarration(lessonId: string, stepId: string, text: string) {
   // nothing starts or speaks after the kid has moved on.
   const genRef = useRef(0)
   const [playing, setPlaying] = useState(false)
+  const clockRef = useRef<ClockState>({
+    source: 'virtual',
+    start: perf(),
+    audio: null,
+    endedAt: null,
+    cps: DEFAULT_CHARS_PER_SEC,
+    clipDuration: null,
+    aligned: null,
+  })
+
+  const textRef = useRef(text)
+  useEffect(() => {
+    textRef.current = text
+  }, [text])
+
+  // A stable clock object; it reads the mutable state on every call.
+  const clock = useMemo<NarrationClock>(() => {
+    const c = () => clockRef.current
+    const duration = () => {
+      const s = c()
+      if (s.source === 'audio' && s.audio && Number.isFinite(s.audio.duration) && s.audio.duration > 0) return s.audio.duration
+      if (s.source === 'audio' && s.clipDuration) return s.clipDuration
+      return Math.max(1, textRef.current.length / s.cps)
+    }
+    return {
+      now() {
+        const s = c()
+        if (s.source === 'audio' && s.audio) {
+          if (s.endedAt != null) return duration() + (perf() - s.endedAt) / 1000
+          return s.audio.currentTime
+        }
+        return (perf() - s.start) / 1000
+      },
+      duration,
+      timeAtChar(i: number) {
+        const s = c()
+        return timeAtChar(i, textRef.current.length, duration(), s.source === 'audio' ? s.aligned : null)
+      },
+    }
+  }, [])
+
+  /** Restart the timeline silently from `at` seconds (narration off / stopped). */
+  const goVirtual = (at = 0) => {
+    const s = clockRef.current
+    s.source = 'virtual'
+    s.start = perf() - at * 1000
+    s.audio = null
+    s.endedAt = null
+    s.cps = DEFAULT_CHARS_PER_SEC
+    s.aligned = null
+  }
 
   const stop = () => {
+    // keep the visuals running from where they were, silently
+    const at = clock.now()
     genRef.current++
     const audio = audioRef.current
     audioRef.current = null
@@ -36,32 +141,69 @@ export function useNarration(lessonId: string, stepId: string, text: string) {
       audio.pause()
     }
     window.speechSynthesis?.cancel()
+    goVirtual(at)
     setPlaying(false)
+  }
+
+  const startSpeech = (gen: number) => {
+    const s = clockRef.current
+    s.source = 'speech'
+    s.start = perf()
+    s.audio = null
+    s.endedAt = null
+    s.aligned = null
+    s.cps = DEFAULT_CHARS_PER_SEC
+    speak(textRef.current, setPlaying, {
+      onStart: () => {
+        if (gen === genRef.current) clockRef.current.start = perf()
+      },
+      onBoundary: (charIndex) => {
+        if (gen !== genRef.current) return
+        const st = clockRef.current
+        const elapsed = (perf() - st.start) / 1000
+        // learn the voice's real pace from word boundaries (where browsers send them)
+        if (elapsed > 0.4 && charIndex > 8) st.cps = charIndex / elapsed
+      },
+    })
   }
 
   const play = async () => {
     stop()
+    goVirtual(0)
     const gen = genRef.current
     const isCurrent = () => gen === genRef.current
     const man = await loadManifest()
     if (!isCurrent()) return
     const clip = man[`${lessonId}/${stepId}`]
     if (!clip) {
-      speak(text, setPlaying)
+      startSpeech(gen)
       return
     }
     const audio = new Audio(`${import.meta.env.BASE_URL}${clip.file}`)
     audioRef.current = audio
+    const s = clockRef.current
+    s.source = 'audio'
+    s.audio = audio
+    s.endedAt = null
+    s.clipDuration = clip.duration ?? null
+    s.aligned = null
+    if (clip.words) {
+      void loadWords(clip.words).then((w) => {
+        if (isCurrent() && w) clockRef.current.aligned = alignWords(textRef.current, w)
+      })
+    }
     // The MP3 can fail via onerror AND a rejected play(); fall back to speech once.
     let fellBack = false
     const fallBack = () => {
       if (fellBack || !isCurrent()) return
       fellBack = true
       audioRef.current = null
-      speak(text, setPlaying)
+      startSpeech(gen)
     }
     audio.onended = () => {
-      if (isCurrent()) setPlaying(false)
+      if (!isCurrent()) return
+      clockRef.current.endedAt = perf()
+      setPlaying(false)
     }
     audio.onerror = fallBack
     setPlaying(true)
@@ -72,10 +214,11 @@ export function useNarration(lessonId: string, stepId: string, text: string) {
     })
   }
 
-  // Auto-play when the step changes (only if sound is on); stop when the step
-  // changes, the screen unmounts, or sound is switched off. Deferred so we don't
-  // setState synchronously inside the effect body.
+  // On every step: restart the (silent) timeline, then auto-play the narration
+  // if sound is on. Stop when the step changes, the screen unmounts, or sound is
+  // switched off. Deferred so we don't setState synchronously in the effect body.
   useEffect(() => {
+    goVirtual(0)
     if (!soundEnabled) return
     const t = setTimeout(() => {
       play()
@@ -87,10 +230,20 @@ export function useNarration(lessonId: string, stepId: string, text: string) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lessonId, stepId, soundEnabled])
 
-  return { playing, play, stop }
+  /** Restart the visuals (and the narration, if sound is on). */
+  const replay = () => {
+    if (soundEnabled) void play()
+    else goVirtual(0)
+  }
+
+  return { playing, play, stop, replay, clock }
 }
 
-function speak(text: string, setPlaying: (b: boolean) => void) {
+function speak(
+  text: string,
+  setPlaying: (b: boolean) => void,
+  hooks: { onStart?: () => void; onBoundary?: (charIndex: number) => void } = {},
+) {
   if (!('speechSynthesis' in window)) {
     setPlaying(false)
     return
@@ -99,6 +252,8 @@ function speak(text: string, setPlaying: (b: boolean) => void) {
   u.rate = 0.95
   const v = window.speechSynthesis.getVoices().find((x) => x.lang.startsWith('en'))
   if (v) u.voice = v
+  u.onstart = () => hooks.onStart?.()
+  u.onboundary = (e) => hooks.onBoundary?.(e.charIndex)
   u.onend = () => setPlaying(false)
   u.onerror = () => setPlaying(false)
   setPlaying(true)
