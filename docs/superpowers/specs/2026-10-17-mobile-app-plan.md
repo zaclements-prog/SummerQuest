@@ -3,6 +3,12 @@
 Date: 2026-10-17 · Goal: SummerQuest runs as a first-class app on iPad and Android
 tablets (and works well on phones), installed from a home-screen icon, fully offline.
 
+> **Scope update (owner, 2026-10-17):** phase 1 is **mobile view + controls only**:
+> workstreams 1 (shell CSS, viewport, compact top bar, iOS audio unlock; *no*
+> manifest/service worker/icons), 2 and 3. App packaging (installable PWA and the
+> Capacitor native shell, workstream 4) is **deferred** to a later phase; the
+> sections about it below are kept as the plan for then.
+
 ## Distribution (one web build, two wrappers)
 - **Native apps via Capacitor 8** (iOS + Android) are the primary "app".
   - The Vite build is the web layer.
