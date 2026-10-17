@@ -31,6 +31,26 @@ export function chalkText(
       out.push(hz(cx, y + h / 8), hz(cx, y - h / 8))
       return
     }
+    if (ch === '÷') {
+      out.push(hz(cx, y), { x: cx, y: y + h / 3, z, s: [t * 1.6, t * 1.6, t], color }, { x: cx, y: y - h / 3, z, s: [t * 1.6, t * 1.6, t], color })
+      return
+    }
+    // A fill-in-the-blank: a low underline, the classic "unknown" on a board
+    // (a box glyph reads as a C/zero at chalk size).
+    if (ch === '_') {
+      out.push(hz(cx, y - h / 2))
+      return
+    }
+    // A fraction slash: one tall stick leaning right (top toward +x).
+    if (ch === '/') {
+      out.push({ x: cx, y, z, s: [t, h * 1.18, t], rz: -0.42, color })
+      return
+    }
+    // A question mark: top bar, upper-right hook, middle bar, floating dot.
+    if (ch === '?') {
+      out.push(hz(cx, y + h / 2), vt(cx + w / 2, y + h / 4), hz(cx, y), { x: cx, y: y - h / 2 + t * 1.4, z, s: [t * 1.4, t * 1.4, t], color })
+      return
+    }
     for (const seg of GLYPHS[ch] ?? '') {
       if (seg === 'a') out.push(hz(cx, y + h / 2))
       if (seg === 'g') out.push(hz(cx, y))

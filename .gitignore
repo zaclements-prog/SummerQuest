@@ -28,3 +28,7 @@ public/tts/**/*.mp3.hash
 
 # Claude Code agent worktrees
 .claude/worktrees/
+
+# Local browser/QA tooling + render output (never committed)
+.playwright-mcp/
+*.mp4

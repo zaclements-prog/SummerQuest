@@ -22,6 +22,8 @@ import { makeWritingPromptProvider } from './writingPrompt'
 import { makeScienceProvider } from './science'
 import { makeGeometryProvider } from './geometry'
 import { makeDataGraphProvider } from './dataGraph'
+import { makeScienceCycleProvider } from './scienceCycle'
+import { makeMultiplicationGroveProvider } from './multiplicationGrove'
 
 export type ProviderConfig =
   | { kind: 'multiplication'; factorMin: number; factorMax: number }
@@ -37,6 +39,8 @@ export type ProviderConfig =
   | { kind: 'science'; level: 2 | 3 | 4; source?: 'static' | 'llm' }
   | { kind: 'geometry'; level: 2 | 3 | 4; source?: 'static' | 'llm' }
   | { kind: 'dataGraph'; level: 2 | 3 | 4; source?: 'static' | 'llm' }
+  | { kind: 'scienceCycle' }
+  | { kind: 'multiplicationGrove' }
 
 export function createProvider(config: ProviderConfig): ProblemProvider {
   switch (config.kind) {
@@ -66,5 +70,9 @@ export function createProvider(config: ProviderConfig): ProblemProvider {
       return makeGeometryProvider(config)
     case 'dataGraph':
       return makeDataGraphProvider(config)
+    case 'scienceCycle':
+      return makeScienceCycleProvider()
+    case 'multiplicationGrove':
+      return makeMultiplicationGroveProvider()
   }
 }

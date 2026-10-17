@@ -16,10 +16,10 @@ export const fractionZone: Zone = {
       id: 'frac-concept',
       kind: 'concept',
       title: 'Equivalent Fractions',
-      description: 'Find fractions that mean the same thing.',
-      gameId: 'conceptPlay',
+      description: 'Carry trays of fraction pieces and fill the gauge exactly.',
+      gameId: 'fractionForge',
       providerConfig: { kind: 'fractionEquivalence', maxDenominator: 12 },
-      params: { questionCount: 6 },
+      params: { rounds: 5 },
       starsToEarn: 3,
     },
     {

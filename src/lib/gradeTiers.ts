@@ -139,6 +139,8 @@ export function effectiveConfig(
       return { ...config, level: t.bankLevels[idx] as 2 | 3 | 4 }
     }
     case 'writingPrompt':
+    case 'scienceCycle':
+    case 'multiplicationGrove':
       return config
   }
 }

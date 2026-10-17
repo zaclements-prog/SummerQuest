@@ -41,8 +41,9 @@ export const SKILLS: Record<string, SkillMeta> = {
   'read-comprehend': { label: 'reading comprehension', zoneId: 'reading-reef', lessonId: 'reading', practiceStageId: 'read-4th' },
   // writing-workshop (practice-kind stage is write-paragraph)
   'write-craft': { label: 'writing', zoneId: 'writing-workshop', lessonId: 'writing', practiceStageId: 'write-paragraph' },
-  // science-summit (practice-kind stage is science-4th)
+  // science-summit (practice-kind stages are science-cycle and science-4th)
   'sci-explore': { label: 'science', zoneId: 'science-summit', lessonId: 'science', practiceStageId: 'science-4th' },
+  'sci-water-cycle': { label: 'the water cycle', zoneId: 'science-summit', lessonId: 'science', practiceStageId: 'science-cycle' },
 }
 
 export interface Skill { id: string; label: string }
@@ -74,6 +75,7 @@ const TOPIC_DEFAULT_SKILL: Record<string, string> = {
   'reading-comprehension': 'read-comprehend',
   writing: 'write-craft',
   science: 'sci-explore',
+  'science-water-cycle': 'sci-water-cycle',
 }
 
 function deriveSkillId(problem: Problem): string {
