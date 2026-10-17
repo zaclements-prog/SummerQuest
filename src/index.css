@@ -156,6 +156,110 @@
   50% { filter: drop-shadow(0 0 14px currentColor); }
 }
 
+/* ===== PLATFORM SHELL: phones and tablets (view + touch) ===== (begin)
+ *
+ * index.html sets viewport-fit=cover, so the page reaches under notches,
+ * rounded corners and the home indicator. The app bar (.app-bar) and <main>
+ * (AppShell) pad themselves; anything else pinned to an edge should use:
+ *   pt-safe pr-safe pb-safe pl-safe px-safe py-safe p-safe   padding = the inset
+ *   top-safe right-safe bottom-safe left-safe                offset  = the inset
+ *   var(--safe-top|right|bottom|left) inside calc(), e.g. bottom-[calc(1rem+var(--safe-bottom))]
+ *   min-h-app   full height that follows the mobile browser chrome (100dvh, 100vh fallback)
+ *   short:      variant for short screens (landscape phones), e.g. short:py-1
+ *
+ * And app-like touch: no pull-to-refresh / rubber-band, no grey tap flash,
+ * no double-tap zoom (pinch-zoom stays, for accessibility), no long-press
+ * callout or text selection on game surfaces (canvas, .game-surface, and every
+ * screen on touch-only devices). Text fields stay selectable; .selectable opts
+ * any other element back in. The long-press context menu is stopped in
+ * src/platform/web/touchGuards.ts.
+ */
+:root {
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+}
+
+@utility pt-safe { padding-top: var(--safe-top); }
+@utility pr-safe { padding-right: var(--safe-right); }
+@utility pb-safe { padding-bottom: var(--safe-bottom); }
+@utility pl-safe { padding-left: var(--safe-left); }
+@utility px-safe { padding-left: var(--safe-left); padding-right: var(--safe-right); }
+@utility py-safe { padding-top: var(--safe-top); padding-bottom: var(--safe-bottom); }
+@utility p-safe { padding: var(--safe-top) var(--safe-right) var(--safe-bottom) var(--safe-left); }
+@utility top-safe { top: var(--safe-top); }
+@utility right-safe { right: var(--safe-right); }
+@utility bottom-safe { bottom: var(--safe-bottom); }
+@utility left-safe { left: var(--safe-left); }
+@utility min-h-app {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+@custom-variant short (@media (max-height: 32rem));
+
+@layer base {
+  html {
+    overscroll-behavior: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    /* pan + pinch-zoom, but no double-tap zoom (and no 300 ms tap delay) */
+    touch-action: manipulation;
+  }
+
+  body {
+    overscroll-behavior: none;
+  }
+
+  a, button, input, select, textarea, label, summary,
+  [role='button'], [role='link'], [role='tab'], [role='checkbox'], [role='radio'], [role='switch'] {
+    touch-action: manipulation;
+  }
+
+  canvas, .game-surface {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* Touch-only devices: the whole game is a play surface. */
+  @media (hover: none) and (pointer: coarse) {
+    body {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+  }
+
+  input, textarea, select, [contenteditable]:not([contenteditable='false']), .selectable {
+    -webkit-touch-callout: default;
+    -webkit-user-select: text;
+    user-select: text;
+  }
+}
+
+@layer components {
+  /* AppShell's top bar: its padding grows by the status bar / notch insets. */
+  .app-bar {
+    padding: calc(0.5rem + var(--safe-top)) calc(0.5rem + var(--safe-right)) 0.5rem calc(0.5rem + var(--safe-left));
+  }
+  @media (min-width: 40rem) {
+    .app-bar {
+      padding-left: calc(1rem + var(--safe-left));
+      padding-right: calc(1rem + var(--safe-right));
+    }
+  }
+  @media (max-height: 32rem) {
+    .app-bar {
+      padding-top: calc(0.25rem + var(--safe-top));
+      padding-bottom: 0.25rem;
+    }
+  }
+}
+/* ===== PLATFORM SHELL (end) ===== */
+
 @layer base {
   html, body, #root {
     margin: 0;

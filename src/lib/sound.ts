@@ -151,9 +151,48 @@ export const sfx = {
   },
 }
 
+let primed = false
+
+function resume(c: AudioContext) {
+  // 'suspended' (autoplay policy, or the app was backgrounded) or iOS's
+  // 'interrupted' (a call, Siri, switching apps): both come back with resume().
+  if (c.state === 'running' || c.state === 'closed') return
+  try {
+    void c.resume().catch(() => {})
+  } catch {
+    /* very old WebKit: resume() may throw; the next gesture tries again */
+  }
+}
+
+/**
+ * Wake the effects AudioContext. Browsers (iOS above all) only let audio start
+ * from a user gesture, so call this from tap / click / key handlers
+ * (src/platform/web/audioUnlock.ts does, on every pointerdown, pointerup,
+ * touchend, click and keydown). Cheap and safe to call often. The first call
+ * also plays one silent sample, which older iOS needs before a context really
+ * makes sound.
+ */
 export function unlockAudio() {
   const c = getCtx()
-  if (c && c.state === 'suspended') {
-    void c.resume()
+  if (!c) return
+  resume(c)
+  if (primed) return
+  try {
+    const src = c.createBufferSource()
+    src.buffer = c.createBuffer(1, 1, 22050)
+    src.connect(c.destination)
+    src.start(0)
+    primed = true
+  } catch {
+    /* try again on the next gesture */
   }
+}
+
+/**
+ * Best-effort resume when the app comes back from the background. iOS may
+ * still hold the context until the next tap, which unlockAudio() then handles.
+ * Never creates a context (that has to happen inside a gesture).
+ */
+export function resumeAudio() {
+  if (ctx) resume(ctx)
 }

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useProgress } from '../store/progress'
 import { DEFAULT_CHARS_PER_SEC, alignWords, timeAtChar, type TimedWord } from '../tutoring/motion/cues'
+import { claimNarrationAudio, controlsNarrationAudio, releaseNarrationAudio } from '../platform/web/audioUnlock'
 
 /**
  * One rendered narration clip (public/tts/manifest.json). `duration` (seconds)
@@ -76,6 +77,10 @@ const perf = () => (typeof performance !== 'undefined' ? performance.now() : Dat
 export function useNarration(lessonId: string, stepId: string, text: string) {
   const soundEnabled = useProgress((s) => s.soundEnabled)
   const audioRef = useRef<HTMLAudioElement | null>(null)
+  // Identifies this player to the shared, gesture-unlocked <audio> element
+  // (src/platform/web/audioUnlock.ts): every clip reuses that one element on
+  // iOS, and only its current owner may pause or restart it.
+  const [audioOwner] = useState(() => ({}))
   // Bumped by every play() AND stop(): async work (manifest fetch, play() promise,
   // load errors) checks it and bails if it's no longer the current playback, so
   // nothing starts or speaks after the kid has moved on.
@@ -144,11 +149,12 @@ export function useNarration(lessonId: string, stepId: string, text: string) {
     genRef.current++
     const audio = audioRef.current
     audioRef.current = null
-    if (audio) {
+    if (audio && controlsNarrationAudio(audio, audioOwner)) {
       audio.onended = null
       audio.onerror = null
       audio.pause()
     }
+    releaseNarrationAudio(audioOwner)
     window.speechSynthesis?.cancel()
     goVirtual(at)
     setPlaying(false)
@@ -168,7 +174,8 @@ export function useNarration(lessonId: string, stepId: string, text: string) {
     s.pausedAt = at
     const audio = audioRef.current
     if (s.source === 'audio' && audio && s.endedAt == null) {
-      audio.pause() // keeps currentTime; the pending play() rejects with AbortError (ignored)
+      // keeps currentTime; the pending play() rejects with AbortError (ignored)
+      if (controlsNarrationAudio(audio, audioOwner)) audio.pause()
     } else if (s.source === 'speech') {
       genRef.current++ // the cancelled utterance's callbacks are now stale
       window.speechSynthesis?.cancel()
@@ -193,6 +200,10 @@ export function useNarration(lessonId: string, stepId: string, text: string) {
       return
     }
     if (s.source === 'audio' && audio && s.audio === audio) {
+      if (!controlsNarrationAudio(audio, audioOwner)) {
+        goVirtual(at) // another player took the shared element: carry on silently
+        return
+      }
       const gen = genRef.current
       setPlaying(true)
       audio.play().catch((e: unknown) => {
@@ -265,7 +276,12 @@ export function useNarration(lessonId: string, stepId: string, text: string) {
       startSpeech(gen)
       return
     }
-    const audio = new Audio(`${import.meta.env.BASE_URL}${clip.file}`)
+    const url = `${import.meta.env.BASE_URL}${clip.file}`
+    // After the first tap: the one shared, already-unlocked element (iOS lets it
+    // start here, after an await, outside the gesture). Before that: a fresh one.
+    const shared = claimNarrationAudio(audioOwner)
+    const audio = shared ?? new Audio(url)
+    if (shared) shared.src = url
     audioRef.current = audio
     const s = clockRef.current
     s.source = 'audio'
