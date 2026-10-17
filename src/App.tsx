@@ -1,4 +1,4 @@
-import { BrowserRouter, HashRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, HashRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { useEffect, lazy, Suspense } from 'react'
 import { useProgress } from './store/progress'
 import { unlockAudio } from './lib/sound'
@@ -25,6 +25,29 @@ function RequireAvatar({ children }: { children: React.ReactNode }) {
   const player = useProgress((s) => s.player)
   if (!player) return <Navigate to="/" replace />
   return <>{children}</>
+}
+
+/** The World (/world) is the game's hub once you have an avatar. */
+const HUB = '/world'
+
+// The path that was showing before the current navigation (committed after each one).
+let lastPath: string | null = null
+function PathMemory() {
+  const { pathname } = useLocation()
+  useEffect(() => {
+    lastPath = pathname
+  }, [pathname])
+  return null
+}
+
+/**
+ * The 2D map stays available at /map, but a brand-new explorer lands in the
+ * World: AvatarCreate finishes with navigate('/map'), so that one hop
+ * (/avatar → /map) is sent on to the hub instead.
+ */
+function MapRoute() {
+  if (lastPath === '/avatar') return <Navigate to={HUB} replace />
+  return <WorldMap />
 }
 
 export default function App() {
@@ -54,18 +77,19 @@ export default function App() {
 
   return (
     <Router>
+      <PathMemory />
       <AppShell>
         <Routes>
           <Route
             path="/"
-            element={player ? <Navigate to="/map" replace /> : <Welcome />}
+            element={player ? <Navigate to={HUB} replace /> : <Welcome />}
           />
           <Route path="/avatar" element={<AvatarCreate />} />
           <Route
             path="/map"
             element={
               <RequireAvatar>
-                <WorldMap />
+                <MapRoute />
               </RequireAvatar>
             }
           />

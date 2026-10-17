@@ -229,6 +229,16 @@ export function areaById(id: string): WorldArea | undefined {
   return WORLD_AREAS.find((a) => a.id === id)
 }
 
+/**
+ * A spot just inside a building's door (doors are on the +z wall), `depth`
+ * units in — where you reappear after leaving the House's Home room.
+ */
+export function insideDoorSpot(id: string, depth = 1): [number, number] {
+  const a = areaById(id)
+  if (!a?.door) return SPAWN
+  return [a.door.pos[0], a.door.pos[1] - depth]
+}
+
 let collidersCache: Collider[] | null = null
 export function worldColliders(): Collider[] {
   if (!collidersCache) {

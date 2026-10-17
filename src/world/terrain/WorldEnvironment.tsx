@@ -3,6 +3,7 @@ import { useFrame } from '@react-three/fiber'
 import { BackSide, Color, ShaderMaterial } from 'three'
 import type { Group } from 'three'
 import { Cloud } from '../../toon/props'
+import { useLowGraphics } from '../graphicsQuality'
 
 /** Sky colors: a pale, hazy horizon (matching the fog) up to a soft blue zenith. */
 const SKY = { zenith: '#74c0ef', horizon: '#e4f4fa', fog: '#d4edf7' }
@@ -70,8 +71,11 @@ function Clouds() {
 /**
  * Sky, fog and light for the toon world. No post-processing: the toon ramp,
  * outlines and a warm key light carry the look (and keep it fast on laptops).
+ * On "Fast" graphics the sun casts no shadow (switching it also recompiles the
+ * lit materials without shadow sampling; the Canvas turns its shadow map off).
  */
 export default function WorldEnvironment() {
+  const low = useLowGraphics()
   return (
     <>
       <SkyDome />
@@ -82,7 +86,7 @@ export default function WorldEnvironment() {
         position={[24, 34, 16]}
         intensity={1.5}
         color="#fff3dc"
-        castShadow
+        castShadow={!low}
         shadow-mapSize={[2048, 2048]}
         shadow-camera-left={-42}
         shadow-camera-right={42}
