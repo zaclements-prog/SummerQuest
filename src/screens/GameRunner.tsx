@@ -14,6 +14,7 @@ import WritingPad from '../games/WritingPad'
 import DivisionArena from '../games/DivisionArena'
 import FractionForge from '../games/FractionForge'
 import CloudKeeper from '../games/CloudKeeper'
+import TimesGrove from '../games/TimesGrove'
 import { sfx } from '../lib/sound'
 import { Card, Button, BackButton, Pill, Celebration, ConfirmDialog, ErrorState } from '../components/ui'
 import { isStageUnlocked } from '../lib/stageLocks'
@@ -150,6 +151,8 @@ export default function GameRunner() {
         return FractionForge
       case 'cloudKeeper':
         return CloudKeeper
+      case 'timesGrove':
+        return TimesGrove
       case 'writingPad':
         return WritingPad
       default:

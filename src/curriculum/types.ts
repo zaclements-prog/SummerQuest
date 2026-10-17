@@ -11,6 +11,7 @@ export type GameId =
   | 'divisionArena'
   | 'fractionForge'
   | 'cloudKeeper'
+  | 'timesGrove'
 
 export interface Stage {
   id: string

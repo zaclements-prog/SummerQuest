@@ -140,6 +140,7 @@ export function effectiveConfig(
     }
     case 'writingPrompt':
     case 'scienceCycle':
+    case 'multiplicationGrove':
       return config
   }
 }
