@@ -11,10 +11,7 @@ import SpeedRun from '../games/SpeedRun'
 import BossBattle from '../games/BossBattle'
 import TowerDefense from '../games/tower-defense/TowerDefense'
 import WritingPad from '../games/WritingPad'
-import DivisionArena from '../games/DivisionArena'
-import FractionForge from '../games/FractionForge'
-import CloudKeeper from '../games/CloudKeeper'
-import TimesGrove from '../games/TimesGrove'
+import { CloudKeeper, DivisionArena, FractionForge, TimesGrove } from '../games/lazyGames'
 import { sfx } from '../lib/sound'
 import {
   Card,
