@@ -61,6 +61,41 @@ tablets (and works well on phones), installed from a home-screen icon, fully off
 - Orientation: both. The 3D World and games are tuned for landscape and still usable in portrait.
 - Local-AI writing grading is a desktop-only extra. On mobile the offline heuristic grader is used and the parent setting is hidden.
 
+## Phase 1 results (2026-10-17)
+
+GPU draws per frame, counted at the WebGL draw entry points, so shadow passes are
+included. Headless Chromium (SwiftShader), 1024×700, before = `9add457`, after =
+this phase.
+
+| Scene | Fast before | Fast after | Pretty before | Pretty after |
+|---|---|---|---|---|
+| World (town square) | 607 | **144** | 1491 | **305** |
+| Home | 151 | **125** | 172 | 172 |
+| Crystal Golems | 255 | **148** | 443 | **259** |
+| Times Grove | 186 | **97** | 258 | **153** |
+| Fraction Forge | 235 | **159** | 342 | **244** |
+| Cloud Keeper | 236 | **146** | 296 | **201** |
+
+Every scene is inside the ≤ 250 budget on Fast.
+
+**Memory:** JS heap after GC, cycling World → Home → Crystal Golems → map in-app
+four times (Pretty):
+- before: 127 → 133 → 138 → 144 MB (grows each cycle);
+- after: 118 → 119 → 120 → 121 MB (flat).
+
+**Load:** three.js and the 3D scenes now load only with the World, Home or a 3D
+game:
+- startup bundle 665 → 509 kB;
+- stage-runner chunk 217 → 42 kB.
+
+`build:single` still produces one offline file.
+
+**Deferred follow-ups:**
+- Times Grove in landscape phones is cramped (the stage header takes a row).
+- Island-map markers are 40 px on phones.
+- Bar-chart answers fall below the fold on portrait phones.
+- Home has no touch equivalent for walking (the creature wanders on its own).
+
 ## Verification
 - Playwright device emulation (iPhone 13, Pixel 7, iPad gen 7, Galaxy Tab S4) in both orientations, with real touch events.
 - Lighthouse-style PWA checks: manifest, SW, offline reload.
