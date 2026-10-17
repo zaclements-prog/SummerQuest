@@ -26,7 +26,7 @@ export const scienceZone: Zone = {
       id: 'science-cycle',
       kind: 'practice',
       title: 'Cloud Keeper',
-      description: 'Run the water cycle: walk to the right step and perform it.',
+      description: 'Guide Drip the droplet around the water cycle, then rescue friends in the storm.',
       gameId: 'cloudKeeper',
       providerConfig: { kind: 'scienceCycle' },
       params: { rounds: 5 },

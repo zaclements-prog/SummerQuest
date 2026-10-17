@@ -4,6 +4,7 @@ import { BackSide, Color, DirectionalLight, Fog, HemisphereLight, ShaderMaterial
 import type { Group } from 'three'
 import { Cloud } from '../../toon/props'
 import { toonMaterial } from '../../toon/materials'
+import { useLowGraphics } from '../../world/graphicsQuality'
 
 /** The World's sky (src/world/terrain/WorldEnvironment.tsx), so a game reads as the same island. */
 const CALM = { zenith: '#74c0ef', horizon: '#e4f4fa', fog: '#d4edf7', hemiSky: '#dff2ff', key: '#fff3dc' }
@@ -45,6 +46,7 @@ export function Backdrop({ ground, storm = 0, shadowSpan = 13 }: { ground: strin
   const scene = useThree((s) => s.scene)
   const hemi = useRef<HemisphereLight>(null)
   const key = useRef<DirectionalLight>(null)
+  const low = useLowGraphics() // Fast graphics: no sun shadows
   const clouds = useRef<Group>(null)
   const mix = useRef(storm)
   useFrame((_, dt) => {
@@ -72,13 +74,12 @@ export function Backdrop({ ground, storm = 0, shadowSpan = 13 }: { ground: strin
       <fog attach="fog" args={[CALM.fog, 34, 95]} />
       <hemisphereLight ref={hemi} args={[CALM.hemiSky, '#a6d68c', 1.0]} />
       <ambientLight intensity={0.22} />
-      {/* TODO(gfx): the sun's shadow map (1024²) — drop shadows / shrink the map under useLowGraphics at merge */}
       <directionalLight
         ref={key}
         position={[10, 16, 9]}
         intensity={1.45}
         color={CALM.key}
-        castShadow
+        castShadow={!low}
         shadow-mapSize={[1024, 1024]}
         shadow-camera-left={-shadowSpan}
         shadow-camera-right={shadowSpan}

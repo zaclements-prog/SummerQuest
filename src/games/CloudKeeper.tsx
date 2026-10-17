@@ -70,6 +70,7 @@ import { PromptPill, RoundPips, RunResults, ScorePill, SoftClock, SpeechBubble }
 import { recordRunBest } from './_runkit/bestScore'
 import { useArrowKeys } from './_runkit/useArrowKeys'
 import { JuiceStage, richConfetti } from './_runkit/juiceExtras'
+import { canvasQuality, useLowGraphics } from '../world/graphicsQuality'
 
 /**
  * Cloud Keeper — the water cycle you GUIDE (3-ESS2-ish: evaporation →
@@ -128,6 +129,8 @@ let flightSerial = 0
 const fly = (to: [number, number, number], dur: number, arc = 0.6): DripMotion => ({ kind: 'fly', to, dur, arc, token: ++flightSerial })
 
 export default function CloudKeeper({ params, onComplete, meta, paused = false }: GameProps) {
+  // Graphics setting (Auto / Pretty / Fast): shadows + resolution follow it here too.
+  const gfx = canvasQuality(useLowGraphics())
   useStarterCreature()
   useArrowKeys()
   const totalRounds = (params?.rounds as number | undefined) ?? (params?.questionCount as number | undefined) ?? ROUNDS
@@ -575,11 +578,10 @@ export default function CloudKeeper({ params, onComplete, meta, paused = false }
 
   return (
     <div className="flex-1 relative select-none overflow-hidden">
-      {/* TODO(gfx): wire canvasQuality / useLowGraphics (src/world/graphicsQuality.ts) into dpr/shadows/antialias at merge */}
       <Canvas
-        shadows
+        shadows={gfx.shadows}
         flat
-        dpr={[1, 1.5]}
+        dpr={gfx.dpr}
         gl={{ antialias: true, powerPreference: 'high-performance', preserveDrawingBuffer: import.meta.env.DEV }}
         camera={{ position: [0.5, 7, 8], fov: 42, near: 0.3, far: 400 }}
         style={{ position: 'absolute', inset: 0 }}
