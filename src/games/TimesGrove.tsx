@@ -40,6 +40,7 @@ import { RunResults } from './_juice/RunResults'
 import { loadBest, recordRun } from './_juice/bests'
 import { multLabel } from './_juice/score'
 import { voice } from './_juice/voice'
+import { canvasQuality, useLowGraphics } from '../world/graphicsQuality'
 
 /**
  * Times Grove — the array orchard, fun pass (docs/superpowers/specs/
@@ -132,6 +133,8 @@ function needText(t: GroveTask, p: Planted): string {
 }
 
 export default function TimesGrove({ params, onComplete, meta, paused = false }: GameProps) {
+  // Graphics setting (Auto / Pretty / Fast): shadows + resolution follow it here too.
+  const gfx = canvasQuality(useLowGraphics())
   useStarterCreature()
   const totalRounds = Math.max(1, (params?.rounds as number | undefined) ?? (params?.questionCount as number | undefined) ?? GROVE_ROUNDS)
   const grade = useProgress((s) => s.player?.grade)
@@ -439,13 +442,10 @@ export default function TimesGrove({ params, onComplete, meta, paused = false }:
 
   return (
     <div className="flex-1 relative select-none overflow-hidden">
-      {/* TODO(merge): graphics setting — import { canvasQuality, useLowGraphics } from
-          '../world/graphicsQuality'; const gfx = canvasQuality(useLowGraphics()); then
-          <Canvas shadows={gfx.shadows} dpr={gfx.dpr}> and <GameSky castShadow={!low} />. */}
       <Canvas
-        shadows
+        shadows={gfx.shadows}
         flat
-        dpr={[1, 1.5]}
+        dpr={gfx.dpr}
         gl={{ antialias: true, powerPreference: 'high-performance', preserveDrawingBuffer: import.meta.env.DEV }}
         camera={{ position: [spawnWorld[0] + CAM_OFFSET[0], CAM_OFFSET[1], spawnWorld[1] + CAM_OFFSET[2]], fov: CAM_FOV, near: 0.3, far: 260 }}
         style={{ position: 'absolute', inset: 0 }}

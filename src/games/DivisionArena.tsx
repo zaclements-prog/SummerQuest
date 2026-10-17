@@ -68,6 +68,7 @@ import { RunResults } from './_juice/RunResults'
 import { loadBest, recordRun } from './_juice/bests'
 import { multLabel } from './_juice/score'
 import { voice } from './_juice/voice'
+import { canvasQuality, useLowGraphics } from '../world/graphicsQuality'
 
 /**
  * Crystal Golems — the division arena, fun pass (docs/superpowers/specs/
@@ -165,6 +166,8 @@ interface Results {
 const freshStats = (): Stats => ({ firstTry: 0, cleared: 0, streak: 0, bestStreak: 0, score: 0, camels: 0, speedy: 0, misses: 0, stomps: 0 })
 
 export default function DivisionArena({ params, onComplete, meta, paused = false }: GameProps) {
+  // Graphics setting (Auto / Pretty / Fast): shadows + resolution follow it here too.
+  const gfx = canvasQuality(useLowGraphics())
   useStarterCreature()
   const totalRounds = Math.max(1, (params?.rounds as number | undefined) ?? ROUNDS)
   const plan = useMemo(() => arenaPlan(totalRounds), [totalRounds])
@@ -639,13 +642,10 @@ export default function DivisionArena({ params, onComplete, meta, paused = false
 
   return (
     <div className="flex-1 relative select-none overflow-hidden">
-      {/* TODO(merge): graphics setting — import { canvasQuality, useLowGraphics } from
-          '../world/graphicsQuality'; const gfx = canvasQuality(useLowGraphics()); then
-          <Canvas shadows={gfx.shadows} dpr={gfx.dpr}> and <GameSky castShadow={!low} />. */}
       <Canvas
-        shadows
+        shadows={gfx.shadows}
         flat
-        dpr={[1, 1.5]}
+        dpr={gfx.dpr}
         gl={{ antialias: true, powerPreference: 'high-performance', preserveDrawingBuffer: import.meta.env.DEV }}
         camera={{ position: [spawnWorld[0] + CAM_OFFSET[0], CAM_OFFSET[1], spawnWorld[1] + CAM_OFFSET[2]], fov: CAM_FOV, near: 0.3, far: 260 }}
         style={{ position: 'absolute', inset: 0 }}

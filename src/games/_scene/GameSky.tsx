@@ -3,6 +3,7 @@ import { useFrame } from '@react-three/fiber'
 import { BackSide, Color, ShaderMaterial } from 'three'
 import type { Group } from 'three'
 import { Cloud } from '../../toon/props'
+import { useLowGraphics } from '../../world/graphicsQuality'
 
 /**
  * Sky, haze and sunlight for a mini-game set — the World's look (gradient sky
@@ -19,7 +20,7 @@ export function GameSky({
   ground = '#a6d68c',
   shadowBox = 13,
   sun = [14, 22, 9],
-  castShadow = true,
+  castShadow,
 }: {
   zenith?: string
   horizon?: string
@@ -31,9 +32,11 @@ export function GameSky({
   /** Half-size of the shadow camera: just covers the play space. */
   shadowBox?: number
   sun?: [number, number, number]
-  /** Off on the low graphics setting (the canvas then also drops `shadows`). */
+  /** Defaults to the graphics setting (off on Fast, where the canvas also drops `shadows`). */
   castShadow?: boolean
 }) {
+  const low = useLowGraphics()
+  const shadows = castShadow ?? !low
   const material = useMemo(
     () =>
       new ShaderMaterial({
@@ -70,7 +73,7 @@ export function GameSky({
         position={sun}
         intensity={1.45}
         color="#fff3dc"
-        castShadow={castShadow}
+        castShadow={shadows}
         shadow-mapSize={[1024, 1024]}
         shadow-camera-left={-shadowBox}
         shadow-camera-right={shadowBox}
