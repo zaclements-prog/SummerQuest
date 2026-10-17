@@ -15,7 +15,8 @@
     "tts": "node --import tsx scripts/dump-narration.mjs && node scripts/generate-tts.mjs",
     "tts:dump": "node --import tsx scripts/dump-narration.mjs",
     "tts:prune": "node scripts/prune-tts.mjs",
-    "tts:check": "node scripts/check-tts.mjs"
+    "tts:check": "node scripts/check-tts.mjs",
+    "tts:local": "python3 scripts/tts/render_local.py"
   },
   "dependencies": {
     "@fontsource/fredoka": "^5.2.10",
