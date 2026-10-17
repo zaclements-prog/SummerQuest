@@ -29,3 +29,22 @@ export const M = {
 /** Stage size (SVG viewBox). Scenes draw in these units. */
 export const W = 960
 export const H = 540
+
+/**
+ * Deeper, text-safe partners of the pastels: draw numbers and words in these
+ * (with a white stroke) so a colour-coded label stays readable on paper.
+ */
+export const DEEP = {
+  coral: '#e0564a',
+  gold: '#c98a00',
+  mint: '#2a9b75',
+  sea: '#2a86b8',
+  blue: '#3f6fd1',
+  lilac: '#8559cf',
+  pink: '#d4558f',
+  leaf: '#3c9446',
+  orange: '#e07a4a',
+} as const
+
+/** `M.set[i]`'s deep partner, so a group's number matches its colour. */
+export const DEEP_SET = [DEEP.coral, DEEP.gold, DEEP.mint, DEEP.blue, DEEP.lilac, DEEP.pink, DEEP.leaf, DEEP.orange] as const

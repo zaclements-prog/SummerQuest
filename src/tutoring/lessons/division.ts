@@ -17,7 +17,7 @@ export const divisionLesson: Lesson = {
     },
     {
       id: 'answer',
-      narration: 'Each of the three friends gets four cookies. So twelve divided by three equals four.',
+      narration: "Let's deal them out fairly: one for you, one for you, one for you, and again, until they are all gone. Each of the three friends gets four cookies. So twelve divided by three equals four.",
       body: '12 ÷ 3 = 4',
     },
     {

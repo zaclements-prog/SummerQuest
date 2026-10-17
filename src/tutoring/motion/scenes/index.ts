@@ -1,8 +1,11 @@
 import type { Scene } from '../types'
 import { dataGraphScenes } from './dataGraph'
+import { divisionScenes } from './division'
 import { fractionsScenes } from './fractions'
 import { geometryScenes } from './geometry'
 import { measurementScenes } from './measurement'
+import { multiplicationScenes } from './multiplication'
+import { placeValueScenes } from './placeValue'
 
 /**
  * Motion graphics by lesson → step id. A step without a scene falls back to
@@ -11,6 +14,9 @@ import { measurementScenes } from './measurement'
  */
 const SCENES: Record<string, Record<string, Scene>> = {
   fractions: fractionsScenes,
+  multiplication: multiplicationScenes,
+  division: divisionScenes,
+  placeValue: placeValueScenes,
   geometry: geometryScenes,
   measurement: measurementScenes,
   dataGraph: dataGraphScenes,
