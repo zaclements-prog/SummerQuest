@@ -65,7 +65,7 @@ function AccessoryOn({ creatureId, accessoryId }: { creatureId: string; accessor
  *   /home?studio=accessories  — the active creature scaled up in its equipped accessories
  *   /home?studio=furniture    — all furniture in a grid
  *   /home?studio=growth       — every creature as baby, kid and adult beside a height ruler
- *   /home?studio=growth&only=fox,lion — just those creatures (closer camera)
+ *   /home?studio=growth&only=fox,lion — just those creatures (also for creatures / anchors)
  * `cam=x,y,z` and `target=x,y,z` override the camera. Not linked from the UI.
  */
 export default function ModelStudio({ kind, only, target }: { kind: StudioKind; only?: string[]; target?: [number, number, number] }) {
@@ -77,7 +77,7 @@ export default function ModelStudio({ kind, only, target }: { kind: StudioKind; 
   const entries =
     kind === 'furniture'
       ? HOME_ITEMS.map((i) => ({ id: i.modelId, Builder: furnitureBuilder(i.modelId), creatureId: null as string | null }))
-      : CREATURES.map((c) => ({ id: c.id, Builder: creatureBuilder(c.id), creatureId: c.id as string | null }))
+      : CREATURES.filter((c) => !only?.length || only.includes(c.id)).map((c) => ({ id: c.id, Builder: creatureBuilder(c.id), creatureId: c.id as string | null }))
   const cols = entries.length > 14 ? 6 : 4
   const spacing = kind === 'furniture' ? 3.3 : 2.4 // furniture: room for the 3-wide sofa and 3-deep bed
   const rows = Math.ceil(entries.length / cols)
