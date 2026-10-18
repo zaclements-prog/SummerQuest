@@ -9,6 +9,7 @@ import {
 } from 'three'
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js'
 import { registerSharedGpuCache } from '../platform/gl/release'
+import { isTouchFirst } from '../platform/gl/deviceClass'
 
 // ── Geometry cache: identical shapes share one BufferGeometry ────────────────
 // Faceted (flat-shaded) variants are derived once per source geometry: split into
@@ -38,9 +39,17 @@ function cached<T extends BufferGeometry>(key: string, make: () => T): T {
   return g
 }
 
+/**
+ * Bevel steps a rounded box gets when the caller doesn't say: phones and tablets get a
+ * single bevel (108 triangles instead of 300 per box). Instanced scenery (fences,
+ * shingles, crates: hundreds of copies) is most of the World's triangles, and the
+ * second step is hard to see on a tablet screen. Read once: the device doesn't change.
+ */
+export const DEFAULT_BOX_SEGMENTS = isTouchFirst() ? 1 : 2
+
 export const geo = {
   /** Rounded box; `segments` per rounded edge (2 = soft; 1 = a single bevel, ~⅓ the triangles). */
-  box: (w: number, h: number, d: number, r: number, segments = 2) =>
+  box: (w: number, h: number, d: number, r: number, segments = DEFAULT_BOX_SEGMENTS) =>
     cached(`box|${w}|${h}|${d}|${r}|${segments}`, () => new RoundedBoxGeometry(w, h, d, segments, Math.min(r, Math.min(w, h, d) / 2 - 1e-3))),
   blob: (detail: number) => cached(`blob|${detail}`, () => new IcosahedronGeometry(1, detail)),
   sphere: (seg: number) => cached(`sphere|${seg}`, () => new SphereGeometry(1, seg, Math.max(4, Math.round(seg * 0.75)))),

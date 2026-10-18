@@ -16,6 +16,7 @@ import DailyChallenge from './screens/DailyChallenge'
 import ProgressScreen from './screens/ProgressScreen'
 import FocusScreen from './screens/FocusScreen'
 import { Loading } from './components/ui'
+import NativeShell from './platform/native/NativeShell'
 // The single-file offline build is opened straight from disk (file://), where the
 // History API can't change the path — so it routes on the URL hash instead.
 const Router = import.meta.env.VITE_OFFLINE === 'true' ? HashRouter : BrowserRouter
@@ -103,6 +104,7 @@ export default function App() {
   return (
     <Router>
       <PathMemory />
+      <NativeShell />
       {/* Anything a screen throws (or a screen's code that fails to load) → the "Oops!" screen. */}
       <AppErrorBoundary>
         <AppShell>

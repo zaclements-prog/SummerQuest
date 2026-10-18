@@ -70,7 +70,7 @@ import { Banner, StreakMeter } from './_juice/JuiceHud'
 import { Backdrop } from './_runkit/Backdrop'
 import { StageCamera } from './_runkit/StageCamera'
 import { HostReact, type HostCue, type HostMood } from './_runkit/HostReact'
-import { PromptPill, RoundPips, RunResults, ScorePill, SoftClock, SpeechBubble } from './_runkit/RunHud'
+import { PromptPill, RoundPips, RunResults, ScorePill, SpeechBubble, TickingSoftClock } from './_runkit/RunHud'
 import { recordRunBest } from './_runkit/bestScore'
 import { useArrowKeys } from './_runkit/useArrowKeys'
 import { JuiceStage, richConfetti } from './_runkit/juiceExtras'
@@ -174,7 +174,6 @@ export default function CloudKeeper({ params, onComplete, meta, paused: hostPaus
   const [banner, setBanner] = useState<string | null>('☁️ Cloud Keeper!')
   const [hud, setHud] = useState({ score: 0, streak: 0 })
   const [guide, setGuide] = useState(false)
-  const [stormClock, setStormClock] = useState(1)
   const [flash, setFlash] = useState(0)
   const [results, setResults] = useState<{ score: number; stars: number; bestScore: number; newBest: boolean; perfect: boolean; bestStreak: number; firstTry: number; loops: number; saved: number } | null>(null)
 
@@ -183,6 +182,11 @@ export default function CloudKeeper({ params, onComplete, meta, paused: hostPaus
   const legRef = useRef<{ problem: Problem; tried: boolean; secs: number } | null>(null)
   /** the storm's soft clock (pause-aware seconds) */
   const stormRef = useRef<{ secs: number; done: boolean } | null>(null)
+  // the storm's rainbow clock, read by its HUD bar (see TickingSoftClock)
+  const readStorm = useCallback(() => {
+    const st = stormRef.current
+    return st ? Math.max(0, 1 - st.secs / STORM_SEC) : 1
+  }, [])
   const timers = useRef<number[]>([])
   const finished = useRef(false)
   const started = useRef(false)
@@ -508,7 +512,6 @@ export default function CloudKeeper({ params, onComplete, meta, paused: hostPaus
       const s = stormRef.current
       if (!s || s.done) return
       s.secs += 0.25
-      setStormClock(Math.max(0, 1 - s.secs / STORM_SEC))
     }, 250)
     return () => window.clearInterval(id)
   }, [paused])
@@ -618,7 +621,7 @@ export default function CloudKeeper({ params, onComplete, meta, paused: hostPaus
       <div className={`absolute ${SAFE.top2} ${SAFE.left2} ${SAFE.right2} flex items-start justify-between gap-2 pointer-events-none`}>
         <div className="flex flex-col items-start gap-1.5">
           <SpeechBubble face="🐧" text={speech?.text ?? null} tone={speech?.tone} />
-          {view.storm && <SoftClock frac={stormClock} icon="🌈" />}
+          {view.storm && <TickingSoftClock read={readStorm} icon="🌈" />}
         </div>
         <div className="pt-1">
           <RoundPips total={plan.length} current={view.segIndex} done={view.phase === 'results' ? plan.length : view.segIndex} />

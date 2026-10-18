@@ -174,6 +174,25 @@ export function SoftClock({ frac, icon, label }: { frac: number; icon: string; l
   )
 }
 
+/**
+ * A SoftClock that reads its own value (`read`, every 250 ms). A game keeps its clock in
+ * a ref and renders this: the ticks re-render only the clock. (A clock in the game's
+ * state re-renders its whole 3D scene four times a second, a visible stutter on a
+ * slow tablet.) `icon` may depend on the value.
+ */
+export function TickingSoftClock({ read, icon }: { read: () => number; icon: string | ((frac: number) => string) }) {
+  const [frac, setFrac] = useState(1)
+  const readRef = useRef(read)
+  useEffect(() => {
+    readRef.current = read
+  }, [read])
+  useEffect(() => {
+    const id = window.setInterval(() => setFrac(readRef.current()), 250)
+    return () => window.clearInterval(id)
+  }, [])
+  return <SoftClock frac={frac} icon={typeof icon === 'function' ? icon(frac) : icon} />
+}
+
 export interface ResultLine {
   icon: string
   label: string

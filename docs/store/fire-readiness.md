@@ -16,11 +16,11 @@ The store-listing documents sit beside it in `docs/store/`.
 | Fire tablet layouts | ✅ Fire 7, HD 8, HD 10 and Max 11, both orientations, with system bars showing. |
 | Touch / Pencil / rotation | ✅ Tap-to-walk everywhere (World, Home, games). Drags and pinches never misfire. The view survives rotation. |
 | Production build health | ✅ 70 routes and 0 page errors on the production build. |
-| Low-end performance | ✅ / ⚠️ 2D screens are interactive in about 1 s and 3D in about 3 s at 6× CPU throttle. See [Performance](#performance). Confirm on a real Fire 7. |
+| Low-end performance | ✅ / ⚠️ Fire HD 10: every measured 3D screen ~58–59 fps (was ~50). At 3× CPU (≈ Fire 7) World 48 fps, Candy Forge 53, the rest 59–60. See [Performance](#performance). Confirm on a real Fire 7. |
 | Kid safety / COPPA | ✅ No ads, no analytics, no SDKs, no network. `npm run build:store` compiles out the AI writing feeder and fails on any network use. Parental gate on the Parent area and every grown-up setting. Store build sweep: 70 routes, 0 errors, 0 outside requests. See `privacy-policy.md`. |
 | Store assets | ✅ Icons 512×512 and 114×114 (`assets/`). ✅ Screenshots 1920×1200. ⏳ Listing text: `listing-draft.md`. |
-| Packaging for Fire OS | ⏳ **Not started.** This is a decision for the owner (see [Packaging](#packaging)). |
-| Real-device check | ⏳ Owner: run on a physical Fire tablet before submitting (see [Before you submit](#before-you-submit)). |
+| Packaging for Fire OS | ✅ Capacitor Android app in `android/` (2026-10-18). Debug APK builds and passes the emulator checks. ⏳ Release signing key (owner). See [Packaging](#packaging). |
+| Real-device check | ✅ Fire HD 10 (Fire OS 8.3), 2026-10-18. ⏳ Fire 7 / HD 8 still to do (see [Packaging](#packaging)). |
 
 ## What Amazon requires, and where we stand
 
@@ -43,34 +43,56 @@ The store-listing documents sit beside it in `docs/store/`.
   - navigation;
   - behavior on Fire devices: status bar, soft keys, and the app going to the background.
 
-  Status: a root error boundary turns a crash or a failed screen load into a friendly "Oops!" screen. Everything goes silent when the app is backgrounded (sound effects, narration, speech), and a lesson's voice and pictures pause together. Back-button handling belongs to the packaging step (below).
+  Status: a root error boundary turns a crash or a failed screen load into a friendly "Oops!" screen. Everything goes silent when the app is backgrounded (sound effects, narration, speech), and a lesson's voice and pictures pause together. Back is handled by the Capacitor app (see [Packaging](#packaging)).
 
 ## Packaging
 
-The web app has to be wrapped for Fire OS. Fire tablets run web content in
-**Amazon WebView**, a Chromium build (about Chromium 120–124 on Fire OS 8), so the app
-runs unchanged inside either wrapper:
+**Done: Capacitor Android app** (`capacitor.config.ts`, `android/`, Capacitor 8). Fire
+tablets run it in Amazon WebView (Chromium), and the web app runs unchanged inside it.
 
-1. **Android app via Capacitor (recommended).** A small native shell around the built `dist/`.
-   - We control:
-     - the **Back button**: go back a screen, or leave from the World;
-     - **full-screen** play: hide the status and navigation bars, which gives Fire 7 / HD 8 their full 600 px height;
-     - keep-awake during lessons, splash and icon, and durable storage.
-   - Builds an APK for upload to the Amazon Developer Console. No Google Play services are needed.
-2. **Amazon packaged web app.** Upload the built files as a ZIP with a launch page.
-   - Less work, but less control: no native Back handling, full screen, or keep-awake.
-   - Unknowns to test on a device: the page origin, and whether storage persists across updates.
+| Requirement | How it is met |
+|---|---|
+| No network | The manifest requests **no permissions at all**, not even INTERNET. Capacitor serves `dist/` from inside the APK. |
+| No SDKs | Only Capacitor core and two Capacitor plugins (`@capacitor/app` for Back, `@capacitor-community/keep-awake`). No analytics, ads or Google Play services. |
+| Backup | `allowBackup="false"`. |
+| Back button | `src/platform/native/`: goes back a screen. On the World or Welcome it leaves the app. With nothing to go back to, it returns to the World. |
+| Full screen | `MainActivity` hides the status and navigation bars. A swipe from the edge shows them briefly. |
+| Backgrounding | The WebView pauses with the activity, so the page goes hidden and the app's existing silence-on-hidden code runs. |
+| Keep-awake | The screen stays on only while a lesson is open. |
+| Routing | Capacitor's local server serves `index.html` for every path. |
+| Icon / splash | SummerQuest icon at every launcher density. The splash is the icon on the sky gradient. |
 
-**Wrapper requirements** (whichever path):
-- **Network:** request **no** INTERNET permission (or never load a remote URL).
-- **Permissions and SDKs:** no other permissions, and no SDKs.
-- **Backup:** set `allowBackup="false"`.
-- **Routing:** serve `index.html` for any app path. The app uses path routes, and "Restart" reloads the current one. Capacitor's local server already does this.
-- **Speech:** check that text-to-speech uses the on-device voice. It is only a fallback; the narration is recorded.
+**Build:**
+- `npm run android:sync` runs the store build (with its no-network check) and copies it into `android/`.
+- `npm run android:apk` builds a debug APK at `android/app/build/outputs/apk/debug/app-debug.apk`.
+- `npm run android:release` builds the release APK/AAB. It needs the signing key below.
 
-**Recommendation:** Capacitor. It is the path Amazon's test criteria (Back, soft keys,
-backgrounding) are easiest to satisfy on. The earlier Capacitor groundwork was set
-aside when packaging was deferred, and can be resumed.
+The toolchain is JDK 21 (`brew install openjdk@21`) and the Android SDK at
+`~/Library/Android/sdk`, with platform 36 and build-tools 36. Set `JAVA_HOME` and
+`ANDROID_HOME`, or write `sdk.dir` in `android/local.properties`, which is not committed.
+
+**Emulator check (2026-10-18)**, on Android 14 with WebView 113, 1280×800 (Fire HD 8 size):
+- The APK installs and launches offline and full screen.
+- First run works: Welcome → create an explorer → the 3D World renders.
+- Back works: create explorer → Welcome, Map → World, and World → leaves the app.
+- A cold restart keeps the explorer and progress.
+- Lesson narration plays, and the screen stays on. On Home, both audio streams stop. On return, they resume. Leaving the lesson lets the screen sleep again.
+- Rotating to portrait mid-app re-lays out without restarting the app.
+
+**Real Fire tablet (2026-10-18):** Fire HD 10 (KFTUWI, 1920×1200), Fire OS 8.3.3.8, Amazon WebView 148. Debug APK installed over USB with ADB.
+- Cold start takes 1.4 s and opens full screen in landscape.
+- First run works, and the World's first 3D frame appears within 3 s. The World shows the touch hint ("Tap or hold to walk"), and tap-to-walk works.
+- Back works: with the on-screen keyboard open, Back closes the keyboard and stays on the screen. Map → Back returns to the World.
+- A lesson plays narration and keeps the screen on. On Home, the audio stops. Back in the app, the narration resumes. Leaving the lesson lets the screen sleep again.
+- No crashes in the log. The test explorer was cleared afterwards.
+- Still to check on a **Fire 7 / HD 8**, the slowest targets.
+
+**Still to do (owner):**
+- **Release signing key.** Create it once and keep it safe and out of git:
+  `keytool -genkeypair -v -keystore summerquest-release.jks -alias summerquest -keyalg RSA -keysize 2048 -validity 10000`.
+  Then wire it into `android/app/build.gradle` `signingConfigs` through `~/.gradle/gradle.properties`. Amazon re-signs the upload with its own certificate for your account.
+- **Version.** Set `versionCode` and `versionName` in `android/app/build.gradle`. They are now 1 and "1.0". Bump `versionCode` on every upload.
+- **App ID.** `com.summerquest.app` is permanent once published. Change it now if you want a different one, in `capacitor.config.ts` and `android/app/build.gradle`.
 
 ## Quality passes (2026-10-18)
 
@@ -113,9 +135,45 @@ the Fire 7's quad-core A53). It runs in a software-GL browser here, so 3D number
 - Every 3D screen stays under 250 draw calls per frame on Fast.
 - **Watch on a real Fire 7:** the first seconds of the World and the 3D games, while the scenery is merged.
 
+### On a real Fire tablet (2026-10-18)
+
+Measured on the Fire HD 10 (Fire OS 8.3, Amazon WebView 148) with `scripts/fire-perf.mjs`. It attaches to the
+debug APK over USB and counts frames, draw calls and triangles, and can CPU-profile.
+"3× CPU" slows the page's CPU threefold with DevTools throttling, roughly a Fire 7's quad Cortex-A53.
+It shows the CPU side only.
+
+| Screen | Before: fps (p95 frame) | After | After, 3× CPU (before → after) |
+|---|---|---|---|
+| World | 49.7 (33 ms) | **58.7 (17 ms)** | 36 → **48** |
+| Home | 49.5 (33 ms) | **55–59 (17 ms)** | 60 → 60 |
+| Times Grove | 56.9 (33 ms) | **58.7 (17 ms)** | 60 → 60 |
+| Candy Forge | 53.4 (33 ms) | **58.7 (17 ms)** | 40 → **53** |
+| Pets | 52.9 (33 ms) | 57 | — → 59 |
+
+What made the difference:
+- **World CPU.** The static batcher kept ~1,800 merged-away meshes in the scene, and three.js walked all ~3,000 objects every frame.
+  - Merged leaves are now frozen: no matrix updates.
+  - Leaves that React owns are taken out of the tree until they change.
+  - The World now walks ~1,000 objects per frame.
+  - Areas out of the camera's view are hidden as a whole (`StaticBatch cull`). The island fills most of the view, so this helps most near the edges.
+- **Triangles.**
+  - On phones and tablets, instanced rounded boxes (fences, shingles, crates) use one bevel step: 108 triangles instead of 300.
+  - The island's trees, bushes and rocks are split into 24-unit tiles, so off-screen tiles aren't drawn.
+  - World triangles went from 297k to 194k per frame, and Times Grove's from 99k to 67k.
+- **Background blur.** Touch devices skip `backdrop-filter`: Home's toolbar blurred the live 3D view on every frame.
+- **Game clocks.** Candy Forge's patience clock and Cloud Keeper's storm clock no longer re-render the whole 3D scene 4× a second. A small `TickingSoftClock` ticks on its own.
+- Unchanged: tablets still start in Fast graphics (1× pixels, no shadows or outlines). Going from 1× to 0.6× pixels made no difference on the HD 10, so it is not fill-rate bound.
+
+Not measured here:
+- Cloud Keeper and Crystal Golems are locked for a new explorer. They get the same engine fixes, and Cloud Keeper also gets the clock fix.
+- A real Fire 7 / HD 8 is still the final word.
+
+To measure again, connect the tablet over USB, then run `npm run android:apk`, install the APK, and run
+`node scripts/fire-perf.mjs /world /home --throttle 3`. Add `--profile` for the CPU hot spots.
+
 ## Owner decisions
 
-- **Packaging:** Capacitor APK (recommended) or Amazon packaged web app.
+- ~~**Packaging**~~: done. Capacitor APK (see [Packaging](#packaging)).
 - **Four narration lines** worth re-recording. The text change would make their clips stale, so they were left as is:
   - `division/share`: "shared with three friends" → "shared equally among three friends" (as written, it could mean four people);
   - `geometry/shapes`: a square has four *square* corners;

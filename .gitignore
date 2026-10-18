@@ -32,3 +32,6 @@ public/tts/**/*.mp3.hash
 # Local browser/QA tooling + render output (never committed)
 .playwright-mcp/
 *.mp4
+
+# Tablet perf probe output (scripts/fire-perf.mjs)
+perf-results/
