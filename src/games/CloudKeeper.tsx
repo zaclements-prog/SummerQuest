@@ -13,6 +13,7 @@ import { sfx } from '../lib/sound'
 import { TOON } from '../toon/palette'
 import { useWanderWalk } from '../world/useWanderWalk'
 import { creatureBuilder } from '../home/models/registry'
+import { anchorsFor } from '../home/models/anchors'
 import CreatureAccessories from '../home/world/CreatureAccessories'
 import { useStarterCreature } from '../home/starterCreature'
 import { collidesAt } from '../world/collision'
@@ -783,6 +784,8 @@ function CycleScene({
   }, [avatarRef, cloudSpotRef])
 
   const b = useMemo(() => ({ Builder: creatureBuilder(activeCreature) }), [activeCreature])
+  // A carried drop rides clear of the avatar's head (and its horns or ears).
+  const carryY = Math.max(1.75, anchorsFor(activeCreature).head[1] + 0.85)
   const roaming = view.phase === 'roam' && view.carrying !== null
   const carried = view.carrying === null ? null : view.drops[view.carrying]
   const need = carried ? NEXT_PROCESS[carried.form] : null
@@ -809,7 +812,7 @@ function CycleScene({
       {view.drops.map((d, i) =>
         d.visible ? (
           <group key={i}>
-            <Drip form={d.form} motion={d.motion} avatarRef={avatarRef} shake={d.shake} worried={view.storm && i > 0 && view.carrying !== i} tint={i > 0 ? FRIEND_TINTS[d.form] : undefined} scale={i > 0 ? 1.0 : 1.25} />
+            <Drip form={d.form} motion={d.motion} avatarRef={avatarRef} carryY={carryY} shake={d.shake} worried={view.storm && i > 0 && view.carrying !== i} tint={i > 0 ? FRIEND_TINTS[d.form] : undefined} scale={i > 0 ? 1.0 : 1.25} />
             {view.storm && i > 0 && view.carrying !== i && !d.saved && (
               <group position={[FRIEND_SPOTS[i - 1][0], 0.6, FRIEND_SPOTS[i - 1][1]]}>
                 <HelpBubble />
