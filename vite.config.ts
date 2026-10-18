@@ -14,11 +14,18 @@ export default defineConfig(({ mode }) => {
   // `npm run build:single` sets SINGLEFILE=1 → one self-contained, fully-offline index.html
   // (all JS/CSS/font inlined; writing grader forced to its built-in heuristic, no network).
   const single = process.env.SINGLEFILE === '1'
+  // `npm run build:store` sets VITE_STORE=true → the app-store build (Amazon Appstore, a
+  // child-directed listing): the local-AI writing feeder is compiled out and developer
+  // helpers stay off whatever .env.local says, so nothing in the bundle talks to a server.
+  // scripts/check-store-bundle.mjs then checks dist/ for any way out.
+  const store = process.env.VITE_STORE === 'true'
 
   return {
     plugins: [react(), tailwindcss(), ...(single ? [viteSingleFile()] : [])],
     define: {
       'import.meta.env.VITE_OFFLINE': JSON.stringify(single ? 'true' : 'false'),
+      'import.meta.env.VITE_STORE': JSON.stringify(store ? 'true' : 'false'),
+      ...(store ? { 'import.meta.env.VITE_DEV_TOOLS': JSON.stringify('false') } : {}),
     },
     // `npm run play` (what the launchers use) serves the production build on the
     // SAME port as the dev server, so the browser origin — and the saved progress

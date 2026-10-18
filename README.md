@@ -78,6 +78,19 @@ double-click — no server or internet needed. It routes with a URL hash so it
 works from `file://`; the writing grader uses its built-in (non-AI) scoring and
 lesson narration uses the browser's speech voice.
 
+### App-store build (Amazon Appstore for Fire tablets)
+
+```bash
+npm run build:store   # → dist/ (VITE_STORE=true), then scripts/check-store-bundle.mjs
+```
+
+The build for the child-directed store listing. The local-AI writing feeder is
+compiled out (writing uses the built-in grader, and the Parent area has no AI
+section), developer helpers stay off, and the post-build check fails if `dist/`
+can reach any server: no `/api/llm`, every `fetch()` same-origin, no beacons or
+sockets, nothing loaded from another origin. Store paperwork (privacy policy,
+privacy labels, content rating, listing draft) lives in `docs/store/`.
+
 ### Optional: local AI (oMLX)
 
 Writing feedback (and, if a stage is switched to `source: 'llm'`, generated

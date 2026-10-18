@@ -38,6 +38,8 @@ export function makeLlmCachedProvider(opts: LlmCachedProviderOpts): ProblemProvi
   let initialPromise: Promise<void> | null = null
 
   function llmEnabledForUser(): boolean {
+    // The store build has no AI: the parent setting is ignored and nothing is generated.
+    if (import.meta.env.VITE_STORE === 'true') return false
     try {
       return useSettings.getState().llmEnabled
     } catch {

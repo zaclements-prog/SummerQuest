@@ -79,6 +79,7 @@ export default function ParentDashboard() {
   const closeReset = useCallback(() => setConfirmReset(false), [])
 
   useEffect(() => {
+    if (import.meta.env.VITE_STORE === 'true') return // the store build has no AI to check
     void refreshLlmStatus()
   }, [refreshLlmStatus])
 
@@ -268,67 +269,69 @@ export default function ParentDashboard() {
           </Panel>
         </motion.div>
 
-        {/* ── AI settings ───────────────────────────────────────────────── */}
-        <motion.div variants={item}>
-          <Panel emoji="🤖" title="AI settings" tone="monster">
-            <div className="flex items-center justify-between gap-4">
-              <div className="min-w-0">
-                <div className="kid-text text-lg text-ink-900">
-                  Use AI for Word Problems, Reading & Writing
+        {/* ── AI settings (not in the store build: it ships no AI) ─────── */}
+        {import.meta.env.VITE_STORE !== 'true' && (
+          <motion.div variants={item}>
+            <Panel emoji="🤖" title="AI settings" tone="monster">
+              <div className="flex items-center justify-between gap-4">
+                <div className="min-w-0">
+                  <div className="kid-text text-lg text-ink-900">
+                    Use AI for Word Problems, Reading & Writing
+                  </div>
+                  <div className="text-sm text-ink-700">
+                    Generates fresh problems, passages, and grades writing using
+                    your local AI server (oMLX).
+                  </div>
                 </div>
-                <div className="text-sm text-ink-700">
-                  Generates fresh problems, passages, and grades writing using
-                  your local AI server (oMLX).
-                </div>
+                <Toggle
+                  checked={llmEnabled}
+                  onChange={toggleLlm}
+                  label="Use AI for generated content"
+                />
               </div>
-              <Toggle
-                checked={llmEnabled}
-                onChange={toggleLlm}
-                label="Use AI for generated content"
-              />
-            </div>
 
-            <div className="mt-4 flex flex-col sm:flex-row sm:items-center gap-3 pt-4 border-t-2 border-line/10">
-              <Pill
-                tone={
-                  llmAvailable === true
-                    ? 'correct'
+              <div className="mt-4 flex flex-col sm:flex-row sm:items-center gap-3 pt-4 border-t-2 border-line/10">
+                <Pill
+                  tone={
+                    llmAvailable === true
+                      ? 'correct'
+                      : llmAvailable === false
+                        ? 'wrong'
+                        : 'ink'
+                  }
+                  icon={llmAvailable === null ? '○' : '●'}
+                >
+                  {llmAvailable === true
+                    ? 'Connected'
                     : llmAvailable === false
-                      ? 'wrong'
-                      : 'ink'
-                }
-                icon={llmAvailable === null ? '○' : '●'}
-              >
-                {llmAvailable === true
-                  ? 'Connected'
-                  : llmAvailable === false
-                    ? 'Offline'
-                    : 'Checking…'}
-              </Pill>
-              <span className="text-sm text-ink-700">
-                Model: <code className="text-xs">{llmModel}</code>
-              </span>
-              <Button
-                variant="ghost"
-                size="md"
-                onClick={() => void refreshLlmStatus(true)}
-                className="sm:ml-auto"
-              >
-                🔄 Recheck
-              </Button>
-            </div>
+                      ? 'Offline'
+                      : 'Checking…'}
+                </Pill>
+                <span className="text-sm text-ink-700">
+                  Model: <code className="text-xs">{llmModel}</code>
+                </span>
+                <Button
+                  variant="ghost"
+                  size="md"
+                  onClick={() => void refreshLlmStatus(true)}
+                  className="sm:ml-auto"
+                >
+                  🔄 Recheck
+                </Button>
+              </div>
 
-            {llmAvailable === false && (
-              <p className="text-sm text-ink-700 mt-3">
-                Tip: start oMLX (or set <code>VITE_OMLX_URL</code> in{' '}
-                <code>.env.local</code>) then restart the dev server.
-                {llmLastCheck && (
-                  <> Last checked {new Date(llmLastCheck).toLocaleTimeString()}.</>
-                )}
-              </p>
-            )}
-          </Panel>
-        </motion.div>
+              {llmAvailable === false && (
+                <p className="text-sm text-ink-700 mt-3">
+                  Tip: start oMLX (or set <code>VITE_OMLX_URL</code> in{' '}
+                  <code>.env.local</code>) then restart the dev server.
+                  {llmLastCheck && (
+                    <> Last checked {new Date(llmLastCheck).toLocaleTimeString()}.</>
+                  )}
+                </p>
+              )}
+            </Panel>
+          </motion.div>
+        )}
 
         {/* ── Danger zone ───────────────────────────────────────────────── */}
         <motion.div variants={item}>

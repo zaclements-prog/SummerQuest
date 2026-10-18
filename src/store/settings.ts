@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { isLLMAvailable, getBackend, OmlxBackend } from '../lib/llm'
+import { isLLMAvailable, getBackend } from '../lib/llm'
 
 interface SettingsState {
   llmEnabled: boolean
@@ -22,8 +22,7 @@ export const useSettings = create<SettingsState>()(
       llmLastCheck: null,
       toggleLlm: () => set({ llmEnabled: !get().llmEnabled }),
       setLlmModel: (m) => {
-        const b = getBackend()
-        if (b instanceof OmlxBackend) b.setModel(m)
+        getBackend().setModel?.(m)
         set({ llmModel: m })
       },
       refreshLlmStatus: async (force = false) => {
@@ -39,6 +38,4 @@ export const useSettings = create<SettingsState>()(
 )
 
 // initialize backend model from persisted setting on first load
-const initial = useSettings.getState()
-const b = getBackend()
-if (b instanceof OmlxBackend) b.setModel(initial.llmModel)
+getBackend().setModel?.(useSettings.getState().llmModel)
