@@ -20,8 +20,10 @@ export function retryFailedLoads() {
  * so a screen or game whose code didn't arrive (an interrupted update, a
  * storage hiccup) would fail on every visit, even after the error screen's
  * "Back to the World". The failure still throws to the nearest error boundary;
- * retryFailedLoads() then swaps in a fresh lazy component. (If the browser
- * remembers the failed module too, the error screen's Restart reloads.)
+ * retryFailedLoads() then swaps in a fresh lazy component, so the next visit
+ * imports again. That helps where the browser retries the fetch. Chromium (and
+ * so Fire's WebView) remembers a failed module until the page reloads, so
+ * there the error screen's Restart is what brings it back.
  */
 export function lazyWithRetry<P extends object>(load: () => Promise<{ default: ComponentType<P> }>): ComponentType<P> {
   const make = () =>

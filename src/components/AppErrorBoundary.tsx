@@ -23,24 +23,32 @@ interface Props {
 
 interface State {
   failed: boolean
+  /** It was code that failed to load (not a crash). */
+  chunk: boolean
   /** The path the error happened on. */
   key: string
 }
 
 class Boundary extends Component<Props, State> {
-  state: State = { failed: false, key: this.props.resetKey }
+  state: State = { failed: false, chunk: false, key: this.props.resetKey }
 
-  static getDerivedStateFromError() {
-    return { failed: true }
+  static getDerivedStateFromError(error: unknown): Partial<State> {
+    return { failed: true, chunk: isChunkLoadError(error) }
   }
 
   // Moved on (Back to the World, the back button): try the new screen. Done
   // while rendering it, so the broken screen is never drawn again on the way
   // out (the router navigates in a transition, after the click's own render).
+  // Pure: a transition can render this many times before it commits.
   static getDerivedStateFromProps(props: Props, state: State): Partial<State> | null {
-    if (props.resetKey === state.key) return null
-    retryFailedLoads() // (idempotent) code that failed to load gets a fresh import
-    return { failed: false, key: props.resetKey }
+    return props.resetKey === state.key ? null : { failed: false, key: props.resetKey }
+  }
+
+  componentDidUpdate(prev: Props) {
+    // The new screen is up: code that failed to load earlier gets a fresh
+    // import next time. Only now, once per move, never while rendering: a
+    // retry during a transition that hasn't committed would loop.
+    if (prev.resetKey !== this.props.resetKey) retryFailedLoads()
   }
 
   componentDidCatch(error: unknown, info: ErrorInfo) {
@@ -50,11 +58,12 @@ class Boundary extends Component<Props, State> {
   }
 
   goHome = () => {
-    if (this.props.resetKey === HUB) {
-      // Already in the World (its own code failed to load): try it again here.
-      retryFailedLoads()
-      this.setState({ failed: false })
-    } else this.props.onHome()
+    if (this.props.resetKey !== HUB) return this.props.onHome()
+    // Already in the World. Its own code failed to load: Chromium (Fire's
+    // WebView too) remembers a failed module until the page reloads, so only a
+    // restart can bring it back. A crash just gets another try.
+    if (this.state.chunk) return this.props.onRestart()
+    this.setState({ failed: false })
   }
 
   render() {

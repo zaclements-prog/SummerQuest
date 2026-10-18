@@ -119,24 +119,122 @@ describe('root error boundary', () => {
     expect(consoleError).toHaveBeenCalledWith('[app] a screen failed to load', expect.any(TypeError), expect.anything())
   })
 
-  it('a chunk that failed to load is fetched again after "Back to the World"', async () => {
-    const World = () => h('div', null, 'World page')
+  it('a game whose code failed to load is fetched again on the next visit', async () => {
+    const Game = () => h('div', null, 'Game page')
     let online = false
     const load = vi.fn<() => Promise<{ default: ComponentType<object> }>>(() =>
-      online ? Promise.resolve({ default: World }) : Promise.reject(chunkError()),
+      online ? Promise.resolve({ default: Game }) : Promise.reject(chunkError()),
     )
-    const LazyWorld = lazyWithRetry(load)
-    act(() => root.render(app([{ path: '/world', element: h(LazyWorld) }], { at: '/world' })))
+    const LazyGame = lazyWithRetry(load)
+    const nav: { go: (to: string) => void } = { go: () => {} }
+    function Nav() {
+      const navigate = useNavigate()
+      useEffect(() => {
+        nav.go = (to) => void navigate(to)
+      })
+      return null
+    }
+    act(() =>
+      root.render(
+        h(
+          MemoryRouter,
+          { initialEntries: ['/play'] },
+          h(Nav),
+          h(AppErrorBoundary, {
+            reload: () => {},
+            children: h(
+              Suspense,
+              { fallback: h('div', null, 'Loading…') },
+              h(Routes, null, h(Route, { path: '/play', element: h(LazyGame) }), h(Route, { path: '/world', element: h('div', null, 'World page') })),
+            ),
+          }),
+        ),
+      ),
+    )
     await settle()
     await settle()
     expect(text()).toContain('Oops')
     // a failed chunk waits on the error screen: no import loop in the background
-    const tries = load.mock.calls.length
-    expect(tries).toBe(1)
-    online = true
+    expect(load).toHaveBeenCalledTimes(1)
+
     clickButton('Back to the World')
     await settle()
-    expect(load.mock.calls.length).toBeGreaterThan(tries)
     expect(text()).toContain('World page')
+
+    online = true
+    act(() => nav.go('/play'))
+    await settle()
+    expect(load).toHaveBeenCalledTimes(2)
+    expect(text()).toContain('Game page')
+  })
+
+  it("when the World's own code failed to load, Back to the World restarts the app", async () => {
+    const reload = vi.fn()
+    const LazyWorld = lazyWithRetry<object>(() => Promise.reject(chunkError()))
+    act(() => root.render(app([{ path: '/world', element: h(LazyWorld) }], { at: '/world', reload })))
+    await settle()
+    expect(text()).toContain('Oops')
+    // (Chromium, and Fire's WebView, remember a failed module until the page reloads)
+    clickButton('Back to the World')
+    expect(reload).toHaveBeenCalledTimes(1)
+  })
+
+  it('a crash in the World itself gets another try in place', () => {
+    let broken = true
+    function FlakyWorld(): ReactNode {
+      if (broken) throw new Error('kaboom')
+      return h('div', null, 'World page')
+    }
+    const reload = vi.fn()
+    act(() => root.render(app([{ path: '/world', element: h(FlakyWorld) }], { at: '/world', reload })))
+    expect(text()).toContain('Oops')
+    broken = false
+    clickButton('Back to the World')
+    expect(text()).toContain('World page')
+    expect(reload).not.toHaveBeenCalled()
+  })
+
+  // The app's lazy routes share one loading wrapper, so going from one to
+  // another suspends inside a boundary that is already showing: the router's
+  // transition then can't commit until the new code arrives. A failure must
+  // still reach the error screen, not retry in a loop behind the old screen.
+  it('a failing screen opened from another lazy screen reaches the error screen (no retry loop)', async () => {
+    const load = vi.fn<() => Promise<{ default: ComponentType<object> }>>(() => Promise.reject(chunkError()))
+    const LessonA = lazyWithRetry<object>(() => Promise.resolve({ default: () => h('div', null, 'Lesson list') }))
+    const LessonB = lazyWithRetry(load)
+    const Loader = ({ children }: { children: ReactNode }) => h(Suspense, { fallback: h('div', null, 'Loading…') }, children)
+    const nav: { go: (to: string) => void } = { go: () => {} }
+    function Nav() {
+      const navigate = useNavigate()
+      useEffect(() => {
+        nav.go = (to) => void navigate(to)
+      })
+      return null
+    }
+    act(() =>
+      root.render(
+        h(
+          MemoryRouter,
+          { initialEntries: ['/tutor'] },
+          h(Nav),
+          h(AppErrorBoundary, {
+            reload: () => {},
+            children: h(
+              Routes,
+              null,
+              h(Route, { path: '/tutor', element: h(Loader, null, h(LessonA)) }),
+              h(Route, { path: '/tutor/b', element: h(Loader, null, h(LessonB)) }),
+            ),
+          }),
+        ),
+      ),
+    )
+    await settle()
+    expect(text()).toContain('Lesson list')
+    act(() => nav.go('/tutor/b'))
+    await settle()
+    await settle()
+    expect(text()).toContain("Oops! Let's try that again")
+    expect(load).toHaveBeenCalledTimes(1)
   })
 })
