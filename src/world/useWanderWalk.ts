@@ -4,12 +4,14 @@ import { useFrame, useThree } from '@react-three/fiber'
 import { Group, Raycaster, Vector2, Vector3 } from 'three'
 import { walkState } from '../home/models/walkState'
 import { walkStep, MAX_WALK_DT } from './collision'
-import { groundHit, tapWalkFrame, walkKey } from './tapWalk'
+import { groundHit, isWalkTap, tapWalkFrame, walkKey } from './tapWalk'
 import { createTapMarker } from './tapMarker'
 import type { TapMarker } from './tapMarker'
 
 const WALK_SPEED = 3
 const COLLIDE_RADIUS = 0.3
+/** After a walk the player directed (keys or a tap), a wandering creature waits this long (s) before wandering on. */
+const LINGER_S = 4
 
 // reused each frame to avoid per-frame allocation
 const _f = new Vector3()
@@ -39,6 +41,13 @@ export interface TapDebug { target: [number, number] | null; held: boolean }
  * walk key cancels it. Only taps on the canvas itself count, so HUD buttons and
  * panels laid over it never walk.
  *
+ * `tapToWalk: 'tap'` is the tap-only variant for scenes where a one-finger drag
+ * moves the camera (Home): the walk starts when a press lifts without having
+ * travelled (see `isWalkTap`) and never from a pinch; no hold-to-walk.
+ *
+ * A wandering creature (Home) that the player walked somewhere stays there for
+ * a few seconds before it wanders on.
+ *
  * Updates `group.position`/`group.rotation.y` and the shared `walkState`
  * (`.t`, `.moving`) each frame.
  */
@@ -48,11 +57,12 @@ export function useWanderWalk(opts: {
   bound: number
   paused?: () => boolean
   wander?: boolean
-  tapToWalk?: boolean
+  tapToWalk?: boolean | 'tap'
 }) {
   // `groupRef`: the Group is mutated through the ref's `.current` inside the frame loop.
   const { group: groupRef, collide, bound, paused, wander = true } = opts
   const tapToWalk = opts.tapToWalk ?? !wander
+  const tapOnly = tapToWalk === 'tap'
   const keys = useRef({ w: false, a: false, s: false, d: false })
   const target = useRef(new Vector3())
 
@@ -67,7 +77,17 @@ export function useWanderWalk(opts: {
     cy: 0,
     stuck: 0,
     aimNow: false, // a new press waiting for its first ground hit
+    // tap-only mode: the press being watched, where it went down, how far it travelled
+    pressId: -1,
+    downX: 0,
+    downY: 0,
+    travel: 0,
+    multi: false, // a second finger joined the press (pinch / two-finger pan)
   })
+  // touch pointers currently down on the canvas (tap-only mode: spot pinches)
+  const touches = useRef(new Set<number>())
+  // the scene clock (s) until which a wandering creature stays put
+  const lingerUntil = useRef(0)
   // Was the walk paused last frame? Pointer handlers read it (they can't call
   // `paused()` themselves: its closure may be a render-time value).
   const pausedNow = useRef(false)
@@ -126,13 +146,25 @@ export function useWanderWalk(opts: {
   useEffect(() => {
     if (!tapToWalk) return
     const el = gl.domElement
+    const fingers = touches.current
     const prevTouchAction = el.style.getPropertyValue('touch-action')
     el.style.setProperty('touch-action', 'none') // a drag walks; it must not scroll or zoom the page
     const onDown = (e: PointerEvent) => {
+      const t = tap.current
+      if (e.pointerType !== 'mouse') fingers.add(e.pointerId)
+      if (fingers.size > 1) t.multi = true
       if (!e.isPrimary) return
       if (e.pointerType === 'mouse' && e.button !== 0) return
       if (pausedNow.current) return
-      const t = tap.current
+      if (tapOnly) {
+        // walk on lift, if this press turns out to be a tap
+        t.pressId = e.pointerId
+        t.downX = e.clientX
+        t.downY = e.clientY
+        t.travel = 0
+        t.multi = fingers.size > 1
+        return
+      }
       t.held = true
       t.pointerId = e.pointerId
       t.cx = e.clientX
@@ -142,12 +174,29 @@ export function useWanderWalk(opts: {
     }
     const onMove = (e: PointerEvent) => {
       const t = tap.current
+      if (tapOnly) {
+        if (e.pointerId === t.pressId) t.travel = Math.max(t.travel, Math.hypot(e.clientX - t.downX, e.clientY - t.downY))
+        return
+      }
       if (!t.held || e.pointerId !== t.pointerId) return
       t.cx = e.clientX
       t.cy = e.clientY
     }
     const onUp = (e: PointerEvent) => {
       const t = tap.current
+      fingers.delete(e.pointerId)
+      if (tapOnly) {
+        if (e.pointerId !== t.pressId) return
+        t.pressId = -1
+        const travel = Math.max(t.travel, Math.hypot(e.clientX - t.downX, e.clientY - t.downY))
+        if (e.type === 'pointerup' && !pausedNow.current && isWalkTap(travel, e.pointerType, t.multi)) {
+          t.cx = e.clientX
+          t.cy = e.clientY
+          t.aimNow = true
+          t.stuck = 0
+        }
+        return
+      }
       if (e.pointerId !== t.pointerId) return
       t.held = false
     }
@@ -162,8 +211,9 @@ export function useWanderWalk(opts: {
       window.removeEventListener('pointermove', onMove)
       window.removeEventListener('pointerup', onUp)
       window.removeEventListener('pointercancel', onUp)
+      fingers.clear()
     }
-  }, [gl, tapToWalk])
+  }, [gl, tapToWalk, tapOnly])
 
   // Dev-only: let headless checks read the tap target.
   useEffect(() => {
@@ -247,6 +297,7 @@ export function useWanderWalk(opts: {
         target.current.set(pos.x, 0, pos.z)
         moving = true
       }
+      lingerUntil.current = state.clock.elapsedTime + LINGER_S
     } else if (t.active) {
       const f = tapWalkFrame(pos.x, pos.z, t.tx, t.tz, t.stuck, WALK_SPEED, dt, collide, COLLIDE_RADIUS, bound)
       pos.x = f.x
@@ -255,6 +306,7 @@ export function useWanderWalk(opts: {
       t.stuck = f.stuck
       moving = f.moving
       target.current.set(pos.x, 0, pos.z)
+      lingerUntil.current = state.clock.elapsedTime + LINGER_S
       // Arrived, or bumped into something for a moment: stop. While the pointer is
       // still held the target stays (the ring keeps following the finger).
       if (f.done && !t.held) {
@@ -262,7 +314,7 @@ export function useWanderWalk(opts: {
         t.stuck = 0
         ring?.hide()
       }
-    } else if (wander) {
+    } else if (wander && state.clock.elapsedTime >= lingerUntil.current) {
       if (pos.distanceTo(target.current) < 0.2) {
         target.current.set((Math.random() * 2 - 1) * bound, 0, (Math.random() * 2 - 1) * bound)
       }

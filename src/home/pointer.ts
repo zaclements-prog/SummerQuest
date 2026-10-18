@@ -1,6 +1,6 @@
 /** Pointer travel (px) between press and click beyond which the "click" was a camera drag. */
 export const CLICK_SLOP_PX = 5
-/** Fingers wobble more than a mouse: a touch tap may travel this far and still be a tap. */
+/** Fingers (and an Apple Pencil) wobble more than a mouse: such a tap may travel this far and still be a tap. */
 export const TOUCH_SLOP_PX = 12
 /** After a two-finger gesture (pinch / pan) ends, ignore taps for this long. */
 const GESTURE_GRACE_MS = 350
@@ -49,6 +49,6 @@ export function trackGestures(el: HTMLElement): () => void {
  */
 export function isDragClick(e: { delta: number; nativeEvent?: Event }): boolean {
   if (performance.now() < multiUntil) return true
-  const touch = (e.nativeEvent as PointerEvent | undefined)?.pointerType === 'touch'
-  return e.delta > (touch ? TOUCH_SLOP_PX : CLICK_SLOP_PX)
+  const type = (e.nativeEvent as PointerEvent | undefined)?.pointerType
+  return e.delta > (type === 'touch' || type === 'pen' ? TOUCH_SLOP_PX : CLICK_SLOP_PX)
 }

@@ -38,7 +38,7 @@ export default function ControlsHelp() {
               <ul className="space-y-2 text-base leading-relaxed">
                 <li>👆 <b>Drag</b> one finger to spin the room and look from any side.</li>
                 <li>🤏 <b>Pinch</b> with two fingers to zoom in and out — or slide two fingers to move the view.</li>
-                <li>🐾 Your creature walks around the room all by itself.</li>
+                <li>🐾 Your creature wanders around the room by itself — <b>tap the floor</b> in Play mode to walk it there.</li>
                 <li>🎮 <b>Play mode:</b> tap your creature to make it hop and cheer!</li>
                 <li>🛠️ <b>Decorate mode:</b> buy furniture, tap <b>Place</b>, then tap a green tile to put it there. Tap <b>⟳ Rotate</b> to turn it first.</li>
                 <li>✋ <b>Tap</b> any placed item to pick it: then <b>⟳ Rotate</b> it, <b>✋ Move</b> it to a new tile, or <b>📦 Put away</b> to send it back to your bag. Tap <b>✓ Done</b> when it looks right.</li>
@@ -50,7 +50,7 @@ export default function ControlsHelp() {
                 <li>🖱️ <b>Drag</b> the room to spin it around and look from any side.</li>
                 <li>✋ <b>Right-drag</b> (or two fingers) to slide the view across the room.</li>
                 <li>🔍 <b>Scroll</b> or <b>pinch</b> to zoom in and out.</li>
-                <li>⌨️ Press <b>W A S D</b> to walk your creature around the room.</li>
+                <li>⌨️ Press <b>W A S D</b> (or click the floor in Play mode) to walk your creature around the room.</li>
                 <li>🎮 <b>Play mode:</b> click your creature to make it hop and cheer!</li>
                 <li>🛠️ <b>Decorate mode:</b> buy furniture, then click a green tile to place it. Click <b>⟳ Rotate</b> (or press <b>R</b>) to turn it before you drop it.</li>
                 <li>📦 Click any placed item to pick it: <b>⟳ Rotate</b> (or <b>R</b>), <b>✋ Move</b> it to a new green tile, or <b>📦 Put away</b> to send it back to your bag. <b>✓ Done</b> (or <b>Esc</b>) lets go; <b>✕ Cancel</b> (or <b>Esc</b>) stops a move and leaves it where it was.</li>
