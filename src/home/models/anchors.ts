@@ -26,11 +26,11 @@ export interface AnchorSet {
 // Measured from each creature's head/body ellipsoids (see the HC/HR constants in
 // the creature files) and checked in /home?studio=anchors.
 export const CREATURE_ANCHORS: Record<string, AnchorSet> = {
-  fox:      { head: [0, 0.865, 0.02],  face: [0, 0.705, 0.27],  back: [0, 0.43, -0.175], body: [0, 0.47, 0.15],  scale: 1.0 },
+  fox:      { head: [0, 1.222, 0.03],  face: [0, 1.085, 0.282], back: [0, 0.75, -0.162], body: [0, 0.82, 0.155], scale: 1.05 },
   tiger:    { head: [0, 0.867, 0.02],  face: [0, 0.715, 0.27],  back: [0, 0.43, -0.175], body: [0, 0.47, 0.15],  scale: 1.04 },
-  lion:     { head: [0, 0.97, -0.02],  face: [0, 0.72, 0.27],   back: [0, 0.43, -0.175], body: [0, 0.47, 0.15],  scale: 1.0 },
-  bear:     { head: [0, 0.867, 0.02],  face: [0, 0.72, 0.27],   back: [0, 0.43, -0.18],  body: [0, 0.47, 0.155], scale: 1.04 },
-  panda:    { head: [0, 0.868, 0.02],  face: [0, 0.71, 0.27],   back: [0, 0.43, -0.18],  body: [0, 0.47, 0.155], scale: 1.055 },
+  lion:     { head: [0, 1.32, -0.02],  face: [0, 1.085, 0.293], back: [0, 0.72, -0.18],  body: [0, 0.78, 0.15],  scale: 1.1 },
+  bear:     { head: [0, 1.247, 0.03],  face: [0, 1.1, 0.285],   back: [0, 0.75, -0.19],  body: [0, 0.82, 0.155], scale: 1.1 },
+  panda:    { head: [0, 1.249, 0.03],  face: [0, 1.09, 0.293],  back: [0, 0.75, -0.19],  body: [0, 0.82, 0.17],  scale: 1.1 },
   frog:     { head: [0, 0.8, -0.07],   face: [0, 0.805, 0.21],  back: [0, 0.4, -0.18],   body: [0, 0.43, 0.17],  scale: 1.1 },
   owl:      { head: [0, 0.874, 0.02],  face: [0, 0.71, 0.28],   back: [0, 0.47, -0.22],  body: [0, 0.47, 0.2],   scale: 1.04 },
   dragonet: { head: [0, 0.864, 0.03],  face: [0, 0.72, 0.28],   back: [0, 0.43, -0.175], body: [0, 0.47, 0.15],  scale: 1.0 },
