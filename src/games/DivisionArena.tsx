@@ -16,6 +16,7 @@ import { collidesAt } from '../world/collision'
 import {
   BOSS_CRACKED_SPEED,
   BOSS_FINISH_BONUS,
+  BOSS_REDRAWS,
   KNOCKBACK,
   ROUNDS,
   advanceProgress,
@@ -25,6 +26,7 @@ import {
   bossChain,
   bossKMax,
   herdSpots,
+  isBossFact,
   laneZ,
   makePedestalOptions,
   parseDivRound,
@@ -281,24 +283,16 @@ export default function DivisionArena({ params, onComplete, meta, paused = false
     [plan, tierDivMax, patchHud, react, banner],
   )
 
-  // the giant is built over a meaty fact: re-draw a few times for one big
-  // enough to feel like a boss — and with a big camel parade at the end
-  // (every draw is still a legit provider fact)
-  const bossMin = tierDivMax <= 5 ? 12 : 18
-  const bossQ = tierDivMax <= 5 ? 4 : 6
+  // the giant is built over a meaty fact (see isBossFact): re-draw until one
+  // comes up (every draw is still a legit provider fact)
   const drawRound = useCallback(
     async (index: number) => {
       const kind = plan[index].kind
       let p = await nextProblem(kind === 'warm' ? warmFacts : facts)
-      // (≤ 49 keeps the doubled giant a two-digit chalk number)
-      const meaty = (q: Problem) => {
-        const r = parseDivRound(q)
-        return r.dividend >= bossMin && r.dividend <= 49 && r.quotient >= bossQ
-      }
-      for (let i = 0; kind === 'boss' && i < 8 && !meaty(p); i++) p = await nextProblem(facts)
+      for (let i = 0; kind === 'boss' && i < BOSS_REDRAWS && !isBossFact(parseDivRound(p), tierDivMax); i++) p = await nextProblem(facts)
       return p
     },
-    [plan, warmFacts, facts, bossMin, bossQ],
+    [plan, warmFacts, facts, tierDivMax],
   )
 
   // first round (setState only in the .then)

@@ -1,6 +1,7 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import {
   ARENA_LIMITS,
+  BOSS_REDRAWS,
   BOSS_SPEED,
   BOSS_STEP_POINTS,
   GOLEM_POINTS,
@@ -22,6 +23,7 @@ import {
   bossChain,
   bossKMax,
   herdSpots,
+  isBossFact,
   isRightCrystal,
   laneSeconds,
   laneZ,
@@ -35,6 +37,10 @@ import {
   trueFactors,
   warmFactConfig,
 } from '../divisionCore'
+import { GRADE_LEVELS, GRADE_TIERS } from '../../gradeTiers'
+import { makeDivisionProvider } from '../../providers/division'
+import { seededRng } from '../../random'
+import type { Problem } from '../../problem'
 
 describe('parseDivRound', () => {
   it('reads a division provider problem', () => {
@@ -300,6 +306,39 @@ describe('warmFactConfig', () => {
       expect(w.divisorMax).toBeLessThanOrEqual(Math.min(5, a.divisorMax))
       expect(w.quotientMax).toBeLessThanOrEqual(Math.min(5, a.quotientMax))
       expect(w.divisorMin).toBe(2)
+    }
+  })
+})
+
+describe('the Giant Golem’s fact', () => {
+  it('every boss fact cracks down from a two-digit giant', () => {
+    for (const tier of [5, 10, 12]) {
+      const c = arenaFactConfig(tier)
+      for (let divisor = c.divisorMin; divisor <= c.divisorMax; divisor++) {
+        for (let quotient = c.quotientMin; quotient <= c.quotientMax; quotient++) {
+          const r = { dividend: divisor * quotient, divisor, quotient }
+          if (!isBossFact(r, tier)) continue
+          for (const pick of [0, 0.5, 0.99]) expect(bossChain(r, bossKMax(tier), () => pick).giant).toBeLessThanOrEqual(99)
+        }
+      }
+    }
+  })
+
+  it('the arena’s own provider finds one within the re-draws, at every grade', () => {
+    // 8 re-draws (the old limit) missed ~4% of the time at 3rd/4th grade and
+    // built a three-digit giant over a 50–90 dividend
+    for (const grade of GRADE_LEVELS) {
+      const tier = GRADE_TIERS[grade].divMax
+      vi.spyOn(Math, 'random').mockImplementation(seededRng(`giant:${grade}`))
+      const facts = makeDivisionProvider(arenaFactConfig(tier))
+      const draw = () => parseDivRound(facts.next() as Problem)
+      for (let run = 0; run < 300; run++) {
+        let r = draw()
+        for (let i = 0; i < BOSS_REDRAWS && !isBossFact(r, tier); i++) r = draw()
+        expect(isBossFact(r, tier), `G${grade}: ${r.dividend} ÷ ${r.divisor}`).toBe(true)
+        expect(bossChain(r, bossKMax(tier)).giant).toBeLessThanOrEqual(99)
+      }
+      vi.restoreAllMocks()
     }
   })
 })
