@@ -1,5 +1,6 @@
 import { TSphere } from '../../../toon/shapes'
-import { Arm, Blush, Eye, Ink, Leg, Smile, faceYaw, onFace } from '../parts'
+import { Arm, Blush, Eye, Ink, Leg, Smile, Staged, faceYaw, onFace } from '../parts'
+import type { CreatureProps } from '../parts'
 
 const HC = [0, 0.69, 0.02] as const
 const HR = [0.28, 0.25, 0.25] as const
@@ -9,7 +10,7 @@ const HR = [0.28, 0.25, 0.25] as const
  * a soft tan muzzle with a big dark button nose, a tan tummy and paw pads, and
  * a little bobble tail.
  */
-export function Bear() {
+function BearKid() {
   const brown = '#bd8559'
   const tan = '#f1d4ac'
   const pad = '#e9b98f'
@@ -59,4 +60,9 @@ export function Bear() {
       ))}
     </group>
   )
+}
+
+/** Bear: baby, kid and adult (see `Staged`). */
+export function Bear({ stage }: CreatureProps) {
+  return <Staged stage={stage} kid={BearKid} />
 }

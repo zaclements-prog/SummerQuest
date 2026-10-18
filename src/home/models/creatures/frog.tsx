@@ -1,6 +1,7 @@
 import { TSphere } from '../../../toon/shapes'
 import { TOON } from '../../../toon/palette'
-import { Arm, Blush, Eye, Ink, Leg, Smile, faceYaw, onFace } from '../parts'
+import { Arm, Blush, Eye, Ink, Leg, Smile, Staged, faceYaw, onFace } from '../parts'
+import type { CreatureProps } from '../parts'
 
 const HC = [0, 0.625, 0.03] as const
 const HR = [0.31, 0.225, 0.26] as const
@@ -10,7 +11,7 @@ const HR = [0.31, 0.225, 0.26] as const
  * (glossy eyes peeking out of them), a wide happy smile, rosy cheeks, darker
  * spots on the back of the head, a chubby pale tummy and wide light-green feet.
  */
-export function Frog() {
+function FrogKid() {
   const green = '#7fd46a'
   const greenDark = '#5cb85a'
   const light = '#b6ea95'
@@ -57,4 +58,9 @@ export function Frog() {
       <Smile position={onFace(HC, HR, 0, -0.06, 0.004)} width={0.085} pitch={-0.25} />
     </group>
   )
+}
+
+/** Frog: baby, kid and adult (see `Staged`). */
+export function Frog({ stage }: CreatureProps) {
+  return <Staged stage={stage} kid={FrogKid} />
 }

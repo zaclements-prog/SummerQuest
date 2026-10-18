@@ -1,6 +1,7 @@
 import { TCone, TSphere } from '../../../toon/shapes'
 import { TOON } from '../../../toon/palette'
-import { Arm, Blush, Eye, Ink, Leg, Wag, faceYaw, frontZ, onFace } from '../parts'
+import { Arm, Blush, Eye, Ink, Leg, Staged, Wag, faceYaw, frontZ, onFace } from '../parts'
+import type { CreatureProps } from '../parts'
 
 const HC = [0, 0.71, 0.02] as const
 const HR = [0.265, 0.24, 0.25] as const
@@ -15,7 +16,7 @@ const SR = [0.2, 0.1, 0.19] as const
  * pale-yellow tummy, orange plates down the neck and back, and a thick tail
  * that rests on the floor and sways.
  */
-export function Trex() {
+function TrexKid() {
   const green = '#68c27a'
   const spot = '#4fa765'
   const belly = '#f8f1b4'
@@ -107,4 +108,9 @@ export function Trex() {
       ))}
     </group>
   )
+}
+
+/** Trex: baby, kid and adult (see `Staged`). */
+export function Trex({ stage }: CreatureProps) {
+  return <Staged stage={stage} kid={TrexKid} />
 }

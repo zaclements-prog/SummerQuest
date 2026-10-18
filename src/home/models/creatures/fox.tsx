@@ -1,6 +1,7 @@
 import { TCone, TSphere } from '../../../toon/shapes'
 import { TOON } from '../../../toon/palette'
-import { Arm, Blush, Eye, Ink, Leg, Smile, Wag, faceYaw, onFace } from '../parts'
+import { Arm, Blush, Eye, Ink, Leg, Smile, Staged, Wag, faceYaw, onFace } from '../parts'
+import type { CreatureProps } from '../parts'
 
 // Head ellipsoid (centre + radii): face features and the anchors are measured from it.
 const HC = [0, 0.69, 0.02] as const
@@ -11,7 +12,7 @@ const HR = [0.27, 0.245, 0.25] as const
  * pointy ears with pink insides and dark tips, a cream tummy, dark socks and
  * paws, and a huge fluffy white-tipped tail that wags behind.
  */
-export function Fox() {
+function FoxKid() {
   const orange = '#f7924a'
   const cream = '#fff4e2'
   const sock = '#6b4434'
@@ -72,4 +73,9 @@ export function Fox() {
       ))}
     </group>
   )
+}
+
+/** Fox: baby, kid and adult (see `Staged`). */
+export function Fox({ stage }: CreatureProps) {
+  return <Staged stage={stage} kid={FoxKid} />
 }

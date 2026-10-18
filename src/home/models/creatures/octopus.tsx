@@ -1,5 +1,6 @@
 import { TSphere } from '../../../toon/shapes'
-import { Blush, Eye, Ink, Smile, Tentacle, faceYaw, onFace } from '../parts'
+import { Blush, Eye, Ink, Smile, Staged, Tentacle, faceYaw, onFace } from '../parts'
+import type { CreatureProps } from '../parts'
 
 // The mantle is the octopus' head and body in one.
 const HC = [0, 0.55, 0] as const
@@ -12,7 +13,7 @@ const ARMS = Array.from({ length: 8 }, (_, i) => (i + 0.5) * (Math.PI / 4))
  * glossy eyes low on the front, rosy cheeks and a tiny smile, standing on eight
  * curling tentacles that wiggle softly at rest and paddle while it walks.
  */
-export function Octopus() {
+function OctopusKid() {
   const lilac = '#b98cf0'
   const pale = '#e2cffd'
   const tip = '#d4b8fa'
@@ -65,4 +66,9 @@ export function Octopus() {
       <Smile position={onFace(HC, HR, 0, -0.15, 0.002)} width={0.035} pitch={-0.45} />
     </group>
   )
+}
+
+/** Octopus: baby, kid and adult (see `Staged`). */
+export function Octopus({ stage }: CreatureProps) {
+  return <Staged stage={stage} kid={OctopusKid} />
 }

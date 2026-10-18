@@ -1,6 +1,7 @@
 import { TCapsule, TCone, TSphere } from '../../../toon/shapes'
 import { TOON } from '../../../toon/palette'
-import { Arm, Blush, Eye, Ink, Leg, Smile, Wag, Wing, faceYaw, onFace } from '../parts'
+import { Arm, Blush, Eye, Ink, Leg, Smile, Staged, Wag, Wing, faceYaw, onFace } from '../parts'
+import type { CreatureProps } from '../parts'
 
 const HC = [0, 0.69, 0.03] as const
 const HR = [0.27, 0.245, 0.25] as const
@@ -10,7 +11,7 @@ const HR = [0.27, 0.245, 0.25] as const
  * stubby cream horns, little fin ears, pink back spikes, small flapping pink
  * wings and a wagging tail with a pink spade tip.
  */
-export function Dragonet() {
+function DragonetKid() {
   const aqua = '#6fc8ea'
   const aquaDark = '#4ea6cf'
   const belly = '#fff3c6'
@@ -96,4 +97,9 @@ export function Dragonet() {
       ))}
     </group>
   )
+}
+
+/** Dragonet: baby, kid and adult (see `Staged`). */
+export function Dragonet({ stage }: CreatureProps) {
+  return <Staged stage={stage} kid={DragonetKid} />
 }

@@ -1,5 +1,6 @@
 import { TCapsule, TSphere, TTorus } from '../../../toon/shapes'
-import { Arm, Blush, Eye, Ink, Leg, Smile, Wag, faceYaw, onFace } from '../parts'
+import { Arm, Blush, Eye, Ink, Leg, Smile, Staged, Wag, faceYaw, onFace } from '../parts'
+import type { CreatureProps } from '../parts'
 
 const HC = [0, 0.69, 0.02] as const
 const HR = [0.28, 0.25, 0.25] as const
@@ -28,7 +29,7 @@ function HeadStripe({ dx, dy, w, h, roll = 0 }: { dx: number; dy: number; w: num
  * forehead, cheeks, back and ringed tail, a puffy white muzzle with a pink
  * nose, round white-lined ears, white paws and a white tummy.
  */
-export function Tiger() {
+function TigerKid() {
   return (
     <group>
       <Leg x={-0.1} y={0.17} color={ORANGE} footColor={WHITE} phase={0} />
@@ -100,4 +101,9 @@ export function Tiger() {
       ))}
     </group>
   )
+}
+
+/** Tiger: baby, kid and adult (see `Staged`). */
+export function Tiger({ stage }: CreatureProps) {
+  return <Staged stage={stage} kid={TigerKid} />
 }

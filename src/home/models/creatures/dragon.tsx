@@ -1,6 +1,7 @@
 import { TCapsule, TCone, TSphere } from '../../../toon/shapes'
 import { TOON } from '../../../toon/palette'
-import { Arm, Blush, Eye, Ink, Leg, Smile, Wag, Wing, faceYaw, onFace } from '../parts'
+import { Arm, Blush, Eye, Ink, Leg, Smile, Staged, Wag, Wing, faceYaw, onFace } from '../parts'
+import type { CreatureProps } from '../parts'
 
 const HC = [0, 0.72, 0.03] as const
 const HR = [0.275, 0.25, 0.255] as const
@@ -11,7 +12,7 @@ const HR = [0.275, 0.25, 0.255] as const
  * spade-tipped tail, and big orange wings (a bone arm with a scalloped
  * three-lobe membrane) that beat slowly at rest and fast while walking.
  */
-export function Dragon() {
+function DragonKid() {
   const red = '#f0665a'
   const redDark = '#cf4b45'
   const belly = '#ffe3a1'
@@ -110,4 +111,9 @@ export function Dragon() {
       ))}
     </group>
   )
+}
+
+/** Dragon: baby, kid and adult (see `Staged`). */
+export function Dragon({ stage }: CreatureProps) {
+  return <Staged stage={stage} kid={DragonKid} />
 }

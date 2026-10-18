@@ -1,5 +1,6 @@
 import { TCone, TSphere } from '../../../toon/shapes'
-import { Blush, Eye, Ink, Leg, Wing, faceYaw, onFace } from '../parts'
+import { Blush, Eye, Ink, Leg, Staged, Wing, faceYaw, onFace } from '../parts'
+import type { CreatureProps } from '../parts'
 
 const HC = [0, 0.7, 0.02] as const
 const HR = [0.28, 0.245, 0.25] as const
@@ -10,7 +11,7 @@ const HR = [0.28, 0.245, 0.25] as const
  * little orange beak and feathery ear tufts; a cream chest with feather
  * chevrons, flapping wings and orange feet.
  */
-export function Owl() {
+function OwlKid() {
   const caramel = '#c99064'
   const wing = '#a8714c'
   const cream = '#fdf1dc'
@@ -99,4 +100,9 @@ export function Owl() {
       </TCone>
     </group>
   )
+}
+
+/** Owl: baby, kid and adult (see `Staged`). */
+export function Owl({ stage }: CreatureProps) {
+  return <Staged stage={stage} kid={OwlKid} />
 }

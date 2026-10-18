@@ -1,5 +1,6 @@
 import { TCapsule, TSphere } from '../../../toon/shapes'
-import { Arm, Blush, Eye, Ink, Leg, Smile, Wag, faceYaw, onFace } from '../parts'
+import { Arm, Blush, Eye, Ink, Leg, Smile, Staged, Wag, faceYaw, onFace } from '../parts'
+import type { CreatureProps } from '../parts'
 
 const HC = [0, 0.69, 0.04] as const
 const HR = [0.25, 0.23, 0.23] as const
@@ -16,7 +17,7 @@ const MANE: [number, number, number][] = Array.from({ length: 10 }, (_, i) => {
  * mane (a back puff plus a scalloped ring of tufts), little round ears poking
  * out on top, a cream muzzle, and a tail with a dark tuft.
  */
-export function Lion() {
+function LionKid() {
   const gold = '#ffc45e'
   const mane = '#df7638'
   const cream = '#fff1d2'
@@ -92,4 +93,9 @@ export function Lion() {
       ))}
     </group>
   )
+}
+
+/** Lion: baby, kid and adult (see `Staged`). */
+export function Lion({ stage }: CreatureProps) {
+  return <Staged stage={stage} kid={LionKid} />
 }

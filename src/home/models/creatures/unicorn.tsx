@@ -1,6 +1,7 @@
 import { TCone, TSphere, TTorus } from '../../../toon/shapes'
 import { TOON } from '../../../toon/palette'
-import { Arm, Blush, Eye, Ink, Leg, Smile, Wag, faceYaw, onFace } from '../parts'
+import { Arm, Blush, Eye, Ink, Leg, Smile, Staged, Wag, faceYaw, onFace } from '../parts'
+import type { CreatureProps } from '../parts'
 
 const HC = [0, 0.69, 0.02] as const
 const HR = [0.27, 0.245, 0.25] as const
@@ -20,7 +21,7 @@ const MANE: [number, number, number, number, string][] = [
  * puffs from forelock to shoulders, a golden striped horn with a little glow,
  * pointy ears, a pink muzzle, lilac hooves and a rainbow puff tail.
  */
-export function Unicorn() {
+function UnicornKid() {
   const white = '#fdfaff'
   const muzzle = '#ffdcec'
   const hoof = '#c6b0ef'
@@ -105,4 +106,9 @@ export function Unicorn() {
       ))}
     </group>
   )
+}
+
+/** Unicorn: baby, kid and adult (see `Staged`). */
+export function Unicorn({ stage }: CreatureProps) {
+  return <Staged stage={stage} kid={UnicornKid} />
 }

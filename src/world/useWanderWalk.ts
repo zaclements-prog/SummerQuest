@@ -3,6 +3,7 @@ import type { RefObject } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import { Group, Raycaster, Vector2, Vector3 } from 'three'
 import { walkState } from '../home/models/walkState'
+import type { WalkState } from '../home/models/walkState'
 import { walkStep, MAX_WALK_DT } from './collision'
 import { groundHit, isWalkTap, tapWalkFrame, walkKey } from './tapWalk'
 import { createTapMarker } from './tapMarker'
@@ -22,6 +23,12 @@ const _ray = new Raycaster()
 const _ndc = new Vector2()
 
 /** Dev/test hooks: read the tap target (null = none). */
+/** Advance a walk state by one frame (it's shared with the limb parts, read imperatively). */
+function stepWalk(walk: WalkState, dt: number, moving: boolean) {
+  walk.t += dt
+  walk.moving = moving
+}
+
 export interface TapDebug { target: [number, number] | null; held: boolean }
 
 /**
@@ -48,8 +55,8 @@ export interface TapDebug { target: [number, number] | null; held: boolean }
  * A wandering creature (Home) that the player walked somewhere stays there for
  * a few seconds before it wanders on.
  *
- * Updates `group.position`/`group.rotation.y` and the shared `walkState`
- * (`.t`, `.moving`) each frame.
+ * Updates `group.position`/`group.rotation.y` and the walk state (`.t`,
+ * `.moving`) each frame: the player's `walkState` unless `walk` names another.
  */
 export function useWanderWalk(opts: {
   group: RefObject<Group | null>
@@ -58,9 +65,13 @@ export function useWanderWalk(opts: {
   paused?: () => boolean
   wander?: boolean
   tapToWalk?: boolean | 'tap'
+  /** The walk state to drive (a pet's own); default the player's `walkState`. */
+  walk?: WalkState
+  /** Walk keys (WASD / arrows) steer it; default true. Off for pets that wander on their own. */
+  steer?: boolean
 }) {
   // `groupRef`: the Group is mutated through the ref's `.current` inside the frame loop.
-  const { group: groupRef, collide, bound, paused, wander = true } = opts
+  const { group: groupRef, collide, bound, paused, wander = true, walk = walkState, steer = true } = opts
   const tapToWalk = opts.tapToWalk ?? !wander
   const tapOnly = tapToWalk === 'tap'
   const keys = useRef({ w: false, a: false, s: false, d: false })
@@ -243,8 +254,7 @@ export function useWanderWalk(opts: {
       t.active = false
       t.held = false
       t.aimNow = false
-      walkState.t += dt
-      walkState.moving = false
+      stepWalk(walk, dt, false)
       return
     }
 
@@ -274,7 +284,7 @@ export function useWanderWalk(opts: {
     const k = keys.current
     const pos = g.position
 
-    if (k.w || k.a || k.s || k.d) {
+    if (steer && (k.w || k.a || k.s || k.d)) {
       // move relative to the camera, projected onto the floor
       state.camera.getWorldDirection(_f)
       _f.y = 0
@@ -334,7 +344,6 @@ export function useWanderWalk(opts: {
       }
     }
 
-    walkState.t += dt
-    walkState.moving = moving
+    stepWalk(walk, dt, moving)
   })
 }

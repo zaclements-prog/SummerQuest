@@ -9,8 +9,10 @@ import { ACCESSORIES, accessoryById } from '../../lib/home/accessories'
 import { accessoryBuilder } from '../models/accessoryRegistry'
 import CreatureAccessories from './CreatureAccessories'
 import { StudioStage } from './Lights'
+import { TBox, TCyl } from '../../toon/shapes'
+import { PET_STAGES } from '../../lib/pets/types'
 
-export type StudioKind = 'creatures' | 'furniture' | 'accessories' | 'anchors' | 'accgrid'
+export type StudioKind = 'creatures' | 'furniture' | 'accessories' | 'anchors' | 'accgrid' | 'growth'
 
 const SLOTS: Slot[] = ['head', 'face', 'back', 'body']
 // One accessory per slot — the standard set used to verify every creature's anchors.
@@ -62,11 +64,14 @@ function AccessoryOn({ creatureId, accessoryId }: { creatureId: string; accessor
  *   /home?studio=anchors      — every creature wearing the standard accessory set (anchor QA)
  *   /home?studio=accessories  — the active creature scaled up in its equipped accessories
  *   /home?studio=furniture    — all furniture in a grid
- * Not linked from the UI.
+ *   /home?studio=growth       — every creature as baby, kid and adult beside a height ruler
+ *   /home?studio=growth&only=fox,lion — just those creatures (closer camera)
+ * `cam=x,y,z` and `target=x,y,z` override the camera. Not linked from the UI.
  */
-export default function ModelStudio({ kind }: { kind: StudioKind }) {
+export default function ModelStudio({ kind, only, target }: { kind: StudioKind; only?: string[]; target?: [number, number, number] }) {
   if (kind === 'accessories') return <AccessoryStand />
   if (kind === 'accgrid') return <AccessoryGrid />
+  if (kind === 'growth') return <GrowthStudio only={only} target={target} />
 
   const showAccessories = kind === 'anchors'
   const entries =
@@ -79,7 +84,7 @@ export default function ModelStudio({ kind }: { kind: StudioKind }) {
 
   return (
     <>
-      <OrbitControls makeDefault target={[0, 0.6, 0]} />
+      <OrbitControls makeDefault target={target ?? [0, 0.6, 0]} />
       <StudioStage size={40} />
       {entries.map((e, i) => {
         const col = i % cols
@@ -137,5 +142,63 @@ function AccessoryGrid() {
         )
       })}
     </>
+  )
+}
+
+/** Stage spacing inside one creature's row, and the gap between creatures. */
+const GROWTH_STEP = 1.25
+const GROWTH_GAP = 1.4
+
+/**
+ * Baby → kid → adult for each creature, left to right, with a ruler behind
+ * them: ticks every 0.25, longer at 0.5 / 1.0 / 1.5 (the kid stands about 1.0
+ * to the tips of its ears).
+ */
+function GrowthStudio({ only, target }: { only?: string[]; target?: [number, number, number] }) {
+  const ids = CREATURES.map((c) => c.id).filter((id) => !only?.length || only.includes(id))
+  const cols = Math.min(ids.length, 4)
+  const rows = Math.ceil(ids.length / cols)
+  const width = GROWTH_STEP * 2 + GROWTH_GAP
+  return (
+    <>
+      <OrbitControls makeDefault target={target ?? [0, ids.length > 2 ? 0.6 : 0.7, 0]} />
+      <StudioStage size={40} />
+      {ids.map((id, i) => {
+        const Builder = creatureBuilder(id)
+        const x = (i % cols - (cols - 1) / 2) * (width + GROWTH_STEP)
+        const z = (Math.floor(i / cols) - (rows - 1) / 2) * 3
+        return (
+          <group key={id} position={[x, 0, z]}>
+            <Ruler position={[-GROWTH_STEP * 1.6, 0, -0.55]} />
+            {PET_STAGES.map((stage, si) => (
+              <group key={stage} position={[(si - 1) * GROWTH_STEP, 0, 0]}>
+                <Builder stage={stage} />
+              </group>
+            ))}
+          </group>
+        )
+      })}
+    </>
+  )
+}
+
+function Ruler({ position }: { position: [number, number, number] }) {
+  const ticks = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75]
+  return (
+    <group position={position}>
+      <TCyl radiusTop={0.018} height={1.8} position={[0, 0.9, 0]} color="#8a7a6a" castShadow={false} />
+      {ticks.map((h) => {
+        const major = h === 0.5 || h === 1 || h === 1.5
+        return (
+          <TBox
+            key={h}
+            size={[major ? 0.22 : 0.12, 0.014, 0.014]}
+            position={[major ? 0.11 : 0.06, h, 0]}
+            color={major ? '#e25d4a' : '#8a7a6a'}
+            castShadow={false}
+          />
+        )
+      })}
+    </group>
   )
 }

@@ -1,5 +1,6 @@
 import { TSphere } from '../../../toon/shapes'
-import { Arm, Blush, Eye, Ink, Leg, Smile, faceYaw, onFace } from '../parts'
+import { Arm, Blush, Eye, Ink, Leg, Smile, Staged, faceYaw, onFace } from '../parts'
+import type { CreatureProps } from '../parts'
 
 const HC = [0, 0.69, 0.02] as const
 const HR = [0.285, 0.25, 0.25] as const
@@ -9,7 +10,7 @@ const HR = [0.285, 0.25, 0.25] as const
  * teardrop eye patches (big glossy eyes on top), a little white muzzle with a
  * black nose, black arms and legs, and a white tummy and bobble tail.
  */
-export function Panda() {
+function PandaKid() {
   const white = '#fcfbf6'
   const black = '#3b3440'
   const cream = '#fffdf6'
@@ -70,4 +71,9 @@ export function Panda() {
       })}
     </group>
   )
+}
+
+/** Panda: baby, kid and adult (see `Staged`). */
+export function Panda({ stage }: CreatureProps) {
+  return <Staged stage={stage} kid={PandaKid} />
 }
