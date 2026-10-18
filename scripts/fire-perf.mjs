@@ -8,6 +8,9 @@
  * with an explorer already created. Debug builds let the WebView be inspected
  * (MainActivity); release builds don't, so this can't attach to them.
  *
+ * A route of `.` measures whatever is on screen now (no navigation: e.g. a lesson you
+ * started by tapping Watch, since narration only starts after a tap).
+ *
  * For each route it switches screens in-app (no reload), waits `--settle` seconds for
  * loading and scenery merging, then measures `--seconds` of frames:
  *   - frame times (avg / p50 / p95 / worst) and fps, counted on requestAnimationFrame;
@@ -15,6 +18,8 @@
  *   - the canvas's drawn size and the page's devicePixelRatio;
  *   - long tasks (> 50 ms main-thread blocks);
  *   - with --profile, the functions that spent the most CPU (self time);
+ *   - with --trace, where the browser's own time goes (style, layout, paint, raster…), from a
+ *     DevTools timeline trace: total ms per event type over the window;
  *   - with --throttle N, the page's CPU slowed N× (DevTools CPU throttling) to stand in
  *     for a slower tablet: ~3× on a Fire HD 10 (2023) ≈ a Fire 7's quad Cortex-A53;
  *   - the scene census: objects three.js walks every frame, meshes, meshes it walks but
@@ -39,11 +44,12 @@ const settle = flag('settle', 6)
 const throttle = flag('throttle', 1)
 const seconds = flag('seconds', 8)
 const profile = args.includes('--profile')
+const trace = args.includes('--trace')
 // --eval "<js>": run in the page after settling, before measuring (experiments; `R` = the
 // renderer, `S` = the scene, `gl` = its WebGL context)
 const evalIdx = args.indexOf('--eval')
 const experiment = evalIdx >= 0 ? args[evalIdx + 1] : null
-const routes = args.filter((a, i) => a.startsWith('/') && !(i > 0 && args[i - 1].startsWith('--')))
+const routes = args.filter((a, i) => (a.startsWith('/') || a === '.') && !(i > 0 && args[i - 1].startsWith('--')))
 if (routes.length === 0) routes.push('/world')
 
 const adb = (...a) => execFileSync(ADB, a, { encoding: 'utf8' }).trim()
@@ -73,8 +79,12 @@ await new Promise((res, rej) => {
 })
 let nextId = 1
 const pending = new Map()
+const traceEvents = []
+let traceDone = null
 ws.onmessage = (ev) => {
   const msg = JSON.parse(ev.data)
+  if (msg.method === 'Tracing.dataCollected') traceEvents.push(...msg.params.value)
+  if (msg.method === 'Tracing.tracingComplete') traceDone?.()
   if (msg.id && pending.has(msg.id)) {
     const { res, rej } = pending.get(msg.id)
     pending.delete(msg.id)
@@ -143,17 +153,25 @@ await evaluate(`(() => {
 if (throttle !== 1) await send('Emulation.setCPUThrottlingRate', { rate: throttle })
 const results = []
 for (const route of routes) {
+  if (route === '.') {
+    await sleep(settle)
+  } else {
   // via a 2D screen, so the route's 3D scene is built fresh (and announced) after the hook
   await evaluate(`(() => { history.pushState({}, '', '/progress'); dispatchEvent(new PopStateEvent('popstate')) })()`)
   await sleep(1)
   await evaluate(`(() => { history.pushState({}, '', ${JSON.stringify(route)}); dispatchEvent(new PopStateEvent('popstate')) })()`)
   await sleep(settle)
+  }
   if (experiment) {
     const out = await evaluate(`(() => { const R = window.__sqPerf.renderer?.deref(), S = window.__sqPerf.scene?.deref(), gl = R?.getContext(); return (${experiment}) })()`)
     console.log(`  eval → ${JSON.stringify(out)}`)
     await sleep(1)
   }
   await evaluate(`Object.assign(window.__sqPerf, { draws: 0, tris: 0, frames: [], longMs: 0, longN: 0, on: true })`)
+  if (trace) {
+    traceEvents.length = 0
+    await send('Tracing.start', { categories: 'devtools.timeline,disabled-by-default-devtools.timeline', transferMode: 'ReportEvents' })
+  }
   if (profile) {
     await send('Profiler.enable')
     await send('Profiler.setSamplingInterval', { interval: 500 })
@@ -183,6 +201,13 @@ for (const route of routes) {
       return c
     }
   })()`)
+  let timeline = []
+  if (trace) {
+    const done = new Promise((r) => (traceDone = r))
+    await send('Tracing.end')
+    await done
+    timeline = timelineTotals(traceEvents)
+  }
   let hot = []
   if (profile) {
     const { profile: prof } = await send('Profiler.stop')
@@ -206,6 +231,7 @@ for (const route of routes) {
     dpr: raw.dpr,
     longTasks: `${raw.longN} (${Math.round(raw.longMs)} ms)`,
     census: raw.census,
+    timeline,
     hot,
   }
   results.push(r)
@@ -217,6 +243,7 @@ for (const route of routes) {
     const c = r.census
     console.log(`  scene: ${c.objects} objects walked/frame (${c.autoMatrix} re-composed), ${c.meshes} meshes (${c.hiddenMeshes} never drawn), ${c.lights} lights`)
   }
+  for (const e of timeline) console.log(`    ${e.ms.toFixed(0).padStart(6)} ms  ${e.name} (${e.n}×)`)
   for (const h of hot) console.log(`    ${h.ms.toFixed(0).padStart(6)} ms  ${h.fn}`)
 }
 
@@ -248,4 +275,20 @@ function hotFunctions(prof) {
     .sort((a, b) => b[1] - a[1])
     .slice(0, 15)
     .map(([fn, us]) => ({ fn, ms: us / 1000 }))
+}
+
+/** Total time per timeline event type (complete events with a duration), top 14. */
+function timelineTotals(events) {
+  const WANT = new Set(['UpdateLayoutTree', 'Layout', 'PrePaint', 'Paint', 'Layerize', 'UpdateLayer', 'CompositeLayers',
+    'RasterTask', 'GPUTask', 'FunctionCall', 'FireAnimationFrame', 'EventDispatch', 'HitTest', 'ScrollLayer',
+    'Commit', 'DecodeImage', 'ParseHTML', 'TimerFire', 'v8.run', 'MajorGC', 'MinorGC', 'V8.GC_SCAVENGER', 'PaintImage'])
+  const by = new Map()
+  for (const e of events) {
+    if (e.ph !== 'X' || !WANT.has(e.name)) continue
+    const t = by.get(e.name) ?? { ms: 0, n: 0 }
+    t.ms += (e.dur ?? 0) / 1000
+    t.n++
+    by.set(e.name, t)
+  }
+  return [...by.entries()].map(([name, t]) => ({ name, ...t })).sort((a, b) => b.ms - a.ms).slice(0, 14)
 }

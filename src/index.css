@@ -440,4 +440,13 @@
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
   }
+
+  /*
+   * …and no SVG filters on the lesson stage (drop shadows, glow halos): the stage is
+   * redrawn every frame, and every filter is re-run with it. The shadows are faint
+   * (18%) and glows are gradients now (kit.tsx Glow), so the look barely changes.
+   */
+  .sq-stage [filter] {
+    filter: none !important;
+  }
 }
