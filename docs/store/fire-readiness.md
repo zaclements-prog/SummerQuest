@@ -12,7 +12,7 @@ The store-listing documents sit beside it in `docs/store/`.
 | Area | Status |
 |---|---|
 | Content correctness (math, text) | ✅ Fuzz-tested every stage at every grade. Generator bugs fixed. Copy proofread. |
-| Every activity completes | ✅ 32 2D stages, 11 lessons and the Daily Challenge play to their result screens. Progress and coins save. ⏳ The 4 3D games are being re-run on the latest code (Cloud Keeper ✅). |
+| Every activity completes | ✅ 32 2D stages, 11 lessons, the Daily Challenge and all 4 3D games play to their result screens. Progress and coins save. |
 | Fire tablet layouts | ✅ Fire 7, HD 8, HD 10 and Max 11, both orientations, with system bars showing. |
 | Touch / Pencil / rotation | ✅ Tap-to-walk everywhere (World, Home, games). Drags and pinches never misfire. The view survives rotation. |
 | Production build health | ✅ 70 routes and 0 page errors on the production build. |
@@ -75,7 +75,7 @@ aside when packaging was deferred, and can be resumed.
      - water-cycle prompts with no question in them.
    - About 100 kid-facing text fixes.
 2. **Full playthrough bot** on Fire HD 8 landscape. It played every 2D stage to its result screen with correct answers, checked that stars saved, then played all 11 lessons (answering their quick checks) and the Daily Challenge. Result: 44/44, with no errors.
-3. **3D games.** Each one plays a full run to its results through its QA hooks. Cloud Keeper ✅ on the latest code; ⏳ Crystal Golems, Times Grove and Candy Forge are being re-run.
+3. **3D games.** Crystal Golems, Times Grove, Candy Forge and Cloud Keeper each played a full run to their results through their QA hooks, with no errors. Crystal Golems and Times Grove both finished with 3 stars, and the Giant Golem stayed two-digit (98).
 4. **Fire layout audit.** Every screen on Fire 7, HD 8, HD 10 and Max 11, in both orientations, with Fire OS bars showing.
    - Problem: a Fire 7 or HD 8 held sideways (about 1024/960 × 528) fell between the phone and tablet layouts.
    - Fix: they now get the compact layout. Sideways boss battles keep their answers on screen, and the Tower Defense board sits beside its shop.
