@@ -324,6 +324,12 @@ export const BATCH = {
   maxChanges: 6,
   /** …nor one that swapped its material this many times (fading walls swap twice per visit). */
   maxSwaps: 24,
+  /**
+   * Merging is spread over frames (ms of merge work per frame, at least one group):
+   * on a slow tablet a whole area merged in one frame is a visible hitch. Until its
+   * group is merged a mesh simply keeps drawing on its own.
+   */
+  flushBudgetMs: 6,
 } as const
 
 function dropArray(this: BufferAttribute) {
@@ -352,6 +358,8 @@ export class Batcher {
   private cursor = 0
   private groups = new Map<string, MergeGroup>()
   private dirty = new Set<string>()
+  /** dirty groups that lost a source: rebuilt this frame, or its old copy would linger as a ghost */
+  private urgent = new Set<string>()
   /** local matrices of every node at the last scan (arrays reused between scans) */
   private locals = new Map<Object3D, Float64Array>()
   /** nodes seen animating (their own position / rotation / scale changed) */
@@ -401,6 +409,7 @@ export class Batcher {
     for (const g of this.groups.values()) this.dropMesh(g)
     this.groups.clear()
     this.dirty.clear()
+    this.urgent.clear()
   }
 
   private settledOut(o: Object3D) {
@@ -508,8 +517,7 @@ export class Batcher {
       this.order.push(s)
       this.join(body, parent, key, null, s)
       if (hull && hullGroup) this.join(hullGroup, parent, key, hull.material as Material, s)
-      mesh.layers.mask = 0
-      if (hull) hull.layers.mask = 0
+      // (it keeps drawing on its own until its group is merged: see flush)
     }
     this.ready = []
   }
@@ -529,6 +537,7 @@ export class Batcher {
       if (!id) continue
       this.groups.get(id)?.sources.delete(s)
       this.dirty.add(id)
+      this.urgent.add(id)
     }
   }
 
@@ -545,11 +554,24 @@ export class Batcher {
   }
 
   /** Rebuild the merged meshes of every group that changed. */
+  /**
+   * Rebuild dirty merged meshes: groups that lost a source first and all at once,
+   * then the rest within `BATCH.flushBudgetMs` (the others wait for later frames).
+   * Each group's sources stop drawing on their own the moment its merged mesh is
+   * placed, so nothing ever blinks out or draws twice.
+   */
   private flush() {
+    const end = performance.now() + BATCH.flushBudgetMs
     const inverses = new Map<Object3D, Matrix4>()
-    for (const id of this.dirty) {
+    const queue = [...this.urgent, ...[...this.dirty].filter((id) => !this.urgent.has(id))]
+    let merged = 0
+    for (const id of queue) {
+      if (!this.urgent.has(id) && merged > 0 && performance.now() > end) break
+      this.dirty.delete(id)
+      this.urgent.delete(id)
       const g = this.groups.get(id)
       if (!g) continue
+      merged++
       this.dropMesh(g)
       if (g.sources.size === 0) {
         this.groups.delete(id)
@@ -584,8 +606,12 @@ export class Batcher {
         mesh.receiveShadow = receive
       }
       g.mesh = this.place(g.parent, mesh)
+      for (const s of g.sources) {
+        if (g.hull) {
+          if (s.hull) s.hull.layers.mask = 0
+        } else s.mesh.layers.mask = 0
+      }
     }
-    this.dirty.clear()
   }
 
   /**

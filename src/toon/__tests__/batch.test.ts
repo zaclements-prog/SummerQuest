@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi, afterEach } from 'vitest'
 import { BoxGeometry, Color, Group, Matrix4, Mesh, MeshBasicMaterial, MeshToonMaterial, Scene, Vector3 } from 'three'
 import type { BufferAttribute, Material } from 'three'
 import { BATCH, Batcher, batchKey, mergeParts } from '../batch'
@@ -199,5 +199,57 @@ describe('Batcher', () => {
     s.b.dispose()
     expect(s.out.children).toHaveLength(0)
     for (const m of s.meshes) expect(m.layers.mask).toBe(1)
+  })
+})
+
+describe('Batcher merging over several frames', () => {
+  afterEach(() => vi.restoreAllMocks())
+  /** every call to performance.now() moves the clock past the flush budget: one group per frame */
+  const slowClock = () => {
+    let now = 0
+    vi.spyOn(performance, 'now').mockImplementation(() => (now += BATCH.flushBudgetMs + 1))
+  }
+  /** six boxes in two looks (plain and glowing): two merge groups of three */
+  const twoLooks = () => {
+    const s = setup(0)
+    const geo = new BoxGeometry(1, 1, 1)
+    const boxes = Array.from({ length: 6 }, (_, i) => {
+      const m = new Mesh(geo, i < 3 ? toon('#00ff00') : toon('#00ff00', { emissive: '#333333' }))
+      m.position.set(i * 2, 0, 0)
+      s.root.add(m)
+      return m
+    })
+    return { ...s, boxes }
+  }
+
+  it('keeps a mesh drawing on its own until its group is merged', () => {
+    slowClock()
+    const s = twoLooks()
+    let sawHalf = false
+    for (let i = 0; i < 6 * BATCH.scanFrames; i++) {
+      s.frame()
+      const drawn = s.drawn()
+      const merged = drawn.filter((m) => m.userData.batched).length
+      const loose = drawn.filter((m) => !m.userData.batched).length
+      // never a gap: each look is either one merged mesh or its three boxes
+      expect(merged * 3 + loose).toBe(6)
+      if (merged === 1) sawHalf = true
+    }
+    expect(sawHalf).toBe(true)
+    expect(s.drawn()).toHaveLength(2)
+  })
+
+  it('rebuilds a group the same frame it loses a mesh, even over budget', () => {
+    const s = twoLooks()
+    s.settle()
+    expect(s.drawn()).toHaveLength(2)
+    slowClock()
+    s.boxes[0].position.y = 1
+    s.frame()
+    // the mover draws on its own and its old merged copy is gone at once (no ghost)
+    expect(s.drawn()).toContain(s.boxes[0])
+    const merged = s.drawn().filter((m) => m.userData.batched)
+    const verts = merged.reduce((n, m) => n + m.geometry.getAttribute('position').count, 0)
+    expect(verts).toBe(5 * s.boxes[0].geometry.getAttribute('position').count)
   })
 })
