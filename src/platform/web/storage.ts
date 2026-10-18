@@ -28,3 +28,21 @@ export function persistStorageAfterFirstGesture(): () => void {
   for (const type of EVENTS) window.addEventListener(type, ask, opts)
   return off
 }
+
+/**
+ * Delete every saved key that starts with `prefix`: the mini-games keep their
+ * personal bests under their own "sq-best-…" keys, outside the progress store,
+ * so the Parent area's reset clears them with this. Never throws.
+ */
+export function removeSavedKeys(prefix: string) {
+  try {
+    const keys: string[] = []
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i)
+      if (k?.startsWith(prefix)) keys.push(k)
+    }
+    for (const k of keys) localStorage.removeItem(k)
+  } catch {
+    /* storage blocked: nothing was saved to delete */
+  }
+}

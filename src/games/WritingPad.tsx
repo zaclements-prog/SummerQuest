@@ -29,7 +29,10 @@ export default function WritingPad({ provider, params, onComplete, meta }: GameP
 
   const player = useProgress((s) => s.player)
   const recordAttempt = useProgress((s) => s.recordAttempt)
-  const llmEnabled = useSettings((s) => s.llmEnabled)
+  // The store build (VITE_STORE) has no AI grader: the setting is ignored and
+  // every piece of writing gets the built-in heuristic score.
+  const llmSetting = useSettings((s) => s.llmEnabled)
+  const llmEnabled = import.meta.env.VITE_STORE !== 'true' && llmSetting
   const [idx, setIdx] = useState(0)
   const [problem, setProblem] = useState<Problem | null>(null)
   const [text, setText] = useState('')
@@ -40,6 +43,7 @@ export default function WritingPad({ provider, params, onComplete, meta }: GameP
   const [scores, setScores] = useState<number[]>([])
 
   useEffect(() => {
+    if (import.meta.env.VITE_STORE === 'true') return
     isLLMAvailable().then(setLlmAvailable)
   }, [])
 
@@ -68,7 +72,7 @@ export default function WritingPad({ provider, params, onComplete, meta }: GameP
     setSubmitting(true)
     sfx.click()
 
-    const useAI = llmEnabled && llmAvailable !== false
+    const useAI = import.meta.env.VITE_STORE !== 'true' && llmEnabled && llmAvailable !== false
 
     let fb: Feedback
     if (useAI) {
@@ -319,7 +323,8 @@ function WritingPadView({
               </Card>
             </motion.div>
 
-            {!llmEnabled && (
+            {/* (no AI notes at all in the store build: there is no AI to mention) */}
+            {import.meta.env.VITE_STORE !== 'true' && !llmEnabled && (
               <motion.p
                 variants={item}
                 className="text-sm text-ink-700 kid-text max-w-md text-center"
@@ -327,7 +332,7 @@ function WritingPadView({
                 AI feedback is off in settings — you'll still get a score, but for richer feedback turn it on in the Parent dashboard.
               </motion.p>
             )}
-            {llmAvailable === false && llmEnabled && !touch && (
+            {import.meta.env.VITE_STORE !== 'true' && llmAvailable === false && llmEnabled && !touch && (
               <motion.p
                 variants={item}
                 className="text-sm text-ink-700 kid-text max-w-md text-center"

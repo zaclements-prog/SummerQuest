@@ -1,10 +1,12 @@
-import { useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useProgress } from '../store/progress'
 import { levelFromProgress } from '../lib/levels'
 import { usePlayClock } from '../lib/usePlayClock'
 import { SESSIONS_PER_DAY, SESSION_BONUS_COINS } from '../lib/dailyGoal'
+import { parentGateOpen } from '../lib/parentGateSession'
+import ParentGate from './ParentGate'
 
 /*
  * The top bar lays itself out by its OWN width (a container query on <header>),
@@ -48,7 +50,15 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     clearTimeCelebration,
   } = useProgress()
   const { pathname } = useLocation()
+  const navigate = useNavigate()
   const isParent = pathname.startsWith('/parent')
+  // 👨‍👩‍👧 asks the grown-up check right here, over the current screen (Back
+  // leaves the kid where they were); a pass in the last 10 minutes goes straight in.
+  const [askGrownUp, setAskGrownUp] = useState(false)
+  const openParent = () => {
+    if (parentGateOpen()) navigate('/parent')
+    else setAskGrownUp(true)
+  }
   const fullBleed = FULL_BLEED.some((p) => pathname === p || pathname.startsWith(`${p}/`))
   const level = levelFromProgress(stats.problemsCorrect, zones)
   const showStats = !!player && !isParent
@@ -153,9 +163,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           >
             {soundEnabled ? '🔊' : '🔇'}
           </button>
-          <Link to="/parent" className={iconBtn} title="Grown-ups" aria-label="Parent dashboard">
+          <button type="button" onClick={openParent} className={iconBtn} title="Grown-ups" aria-label="Parent dashboard (grown-ups only)">
             👨‍👩‍👧
-          </Link>
+          </button>
         </div>
       </header>
 
@@ -196,6 +206,16 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <ParentGate
+        open={askGrownUp}
+        emoji="👨‍👩‍👧"
+        onPass={() => {
+          setAskGrownUp(false)
+          navigate('/parent')
+        }}
+        onCancel={() => setAskGrownUp(false)}
+      />
     </div>
   )
 }

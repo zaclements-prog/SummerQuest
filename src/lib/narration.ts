@@ -72,6 +72,7 @@ interface ClockState {
 }
 
 const perf = () => (typeof performance !== 'undefined' ? performance.now() : Date.now())
+const pageHidden = () => typeof document !== 'undefined' && document.visibilityState === 'hidden'
 
 /** Plays narration for a lesson step: MP3 if available, else browser speech synthesis. */
 export function useNarration(lessonId: string, stepId: string, text: string) {
@@ -85,6 +86,11 @@ export function useNarration(lessonId: string, stepId: string, text: string) {
   // load errors) checks it and bails if it's no longer the current playback, so
   // nothing starts or speaks after the kid has moved on.
   const genRef = useRef(0)
+  // True from play() until the clip or speech actually starts (manifest fetch, clip load).
+  const startingRef = useRef(false)
+  // What the app going to the background did, for the way back: 'resume' the
+  // frozen narration, or 'restart' one that never got to start.
+  const backgroundRef = useRef<'none' | 'resume' | 'restart'>('none')
   const [playing, setPlaying] = useState(false)
   const [paused, setPaused] = useState(false)
   const clockRef = useRef<ClockState>({
@@ -147,6 +153,8 @@ export function useNarration(lessonId: string, stepId: string, text: string) {
     // keep the visuals running from where they were, silently
     const at = clock.now()
     genRef.current++
+    startingRef.current = false
+    backgroundRef.current = 'none'
     const audio = audioRef.current
     audioRef.current = null
     if (audio && controlsNarrationAudio(audio, audioOwner)) {
@@ -182,6 +190,7 @@ export function useNarration(lessonId: string, stepId: string, text: string) {
     } else if (s.source === 'virtual') {
       genRef.current++ // a clip still loading must not start while we're paused
     }
+    startingRef.current = false
     setPlaying(false)
     setPaused(true)
   }
@@ -245,11 +254,14 @@ export function useNarration(lessonId: string, stepId: string, text: string) {
   const startSpeech = (gen: number) => {
     const s = clockRef.current
     s.source = 'speech'
-    s.start = perf()
     s.audio = null
     s.endedAt = null
     s.aligned = null
     s.cps = DEFAULT_CHARS_PER_SEC
+    // Paused (or in the background) before the clip could fall back: stay
+    // quiet; resume() speaks from the frozen moment.
+    if (s.paused) return
+    s.start = perf()
     speak(textRef.current, setPlaying, {
       onStart: () => {
         if (gen === genRef.current) clockRef.current.start = perf()
@@ -267,10 +279,19 @@ export function useNarration(lessonId: string, stepId: string, text: string) {
   const play = async () => {
     stop()
     goVirtual(0)
+    if (pageHidden()) {
+      // asked to start while in the background (a new step's auto-play): wait,
+      // frozen at the start, and begin when the kid is back
+      pause()
+      backgroundRef.current = 'restart'
+      return
+    }
+    startingRef.current = true
     const gen = genRef.current
     const isCurrent = () => gen === genRef.current
     const man = await loadManifest()
     if (!isCurrent()) return
+    startingRef.current = false
     const clip = man[`${lessonId}/${stepId}`]
     if (!clip) {
       startSpeech(gen)
@@ -331,6 +352,37 @@ export function useNarration(lessonId: string, stepId: string, text: string) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lessonId, stepId, soundEnabled])
+
+  // The app going to the background (home button, another app, the screen
+  // locked) freezes the voice AND the visuals together, exactly like the Pause
+  // button, and coming back carries both on from that same moment, so they
+  // can't drift apart (the clock would otherwise count on through the
+  // background while the voice is stopped). A narration the kid paused stays
+  // paused. src/platform/web/audioUnlock.ts silences all audio on the way out
+  // too; this is what keeps the lesson's clock in step with it.
+  const lifecycle = useRef({ pause, resume, play })
+  useEffect(() => {
+    lifecycle.current = { pause, resume, play }
+  })
+  useEffect(() => {
+    const onVisibility = () => {
+      const s = clockRef.current
+      if (pageHidden()) {
+        if (s.paused) return // the kid's own pause (or already frozen)
+        const restart = startingRef.current // the clip hadn't started yet
+        lifecycle.current.pause()
+        backgroundRef.current = restart ? 'restart' : 'resume'
+        return
+      }
+      const how = backgroundRef.current
+      backgroundRef.current = 'none'
+      if (how === 'none' || !s.paused) return
+      if (how === 'restart') void lifecycle.current.play()
+      else lifecycle.current.resume()
+    }
+    document.addEventListener('visibilitychange', onVisibility)
+    return () => document.removeEventListener('visibilitychange', onVisibility)
+  }, [])
 
   /** Restart the visuals (and the narration, if sound is on). */
   const replay = () => {

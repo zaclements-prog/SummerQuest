@@ -6,6 +6,10 @@
  *
  * In production builds (no Vite proxy), set OmlxBackend to call the URL directly with
  * the API key supplied by some other mechanism (Electron main process, etc.).
+ *
+ * The app-store build (`npm run build:store`, VITE_STORE) has no AI at all: every entry
+ * point below returns "unavailable" / nothing before touching the backend, and the
+ * oMLX backend is never created, so the bundler drops it (and its /api/llm URLs).
  */
 
 import type { Problem } from './problem'
@@ -15,6 +19,8 @@ export interface LLMBackend {
   readonly id: string
   /** `force` bypasses the short-lived health cache. */
   isAvailable(force?: boolean): Promise<boolean>
+  /** Which model to ask (backends with a choice of models). */
+  setModel?(model: string): void
   generateProblems(args: GenerateArgs): Promise<Problem[]>
   generateText(args: TextGenArgs): Promise<string>
 }
@@ -50,8 +56,9 @@ let healthCache: { ok: boolean; at: number } | null = null
 const HEALTH_TTL_MS = 30_000
 
 async function pingHealth(force = false): Promise<boolean> {
-  // Fully-offline single-file build: never reach for a server (writing falls back to its heuristic grader).
-  if (import.meta.env.VITE_OFFLINE === 'true') return false
+  // Store build and the fully-offline single file: never reach for a server (writing
+  // falls back to its heuristic grader).
+  if (import.meta.env.VITE_STORE === 'true' || import.meta.env.VITE_OFFLINE === 'true') return false
   if (!force && healthCache && Date.now() - healthCache.at < HEALTH_TTL_MS) {
     return healthCache.ok
   }
@@ -198,7 +205,8 @@ export const stubBackend: LLMBackend = {
   },
 }
 
-let activeBackend: LLMBackend = new OmlxBackend()
+// (Store build: the stub, so OmlxBackend is unused and compiled out.)
+let activeBackend: LLMBackend = import.meta.env.VITE_STORE === 'true' ? stubBackend : new OmlxBackend()
 
 export function getBackend(): LLMBackend {
   return activeBackend
@@ -209,10 +217,12 @@ export function setBackend(backend: LLMBackend) {
 }
 
 export async function isLLMAvailable(force = false): Promise<boolean> {
+  if (import.meta.env.VITE_STORE === 'true') return false
   return activeBackend.isAvailable(force)
 }
 
 export async function generateProblemBatch(args: GenerateArgs): Promise<Problem[]> {
+  if (import.meta.env.VITE_STORE === 'true') return []
   try {
     return await activeBackend.generateProblems(args)
   } catch (e) {
@@ -222,6 +232,7 @@ export async function generateProblemBatch(args: GenerateArgs): Promise<Problem[
 }
 
 export async function generateText(args: TextGenArgs): Promise<string | null> {
+  if (import.meta.env.VITE_STORE === 'true') return null
   try {
     return await activeBackend.generateText(args)
   } catch (e) {

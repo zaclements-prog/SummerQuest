@@ -14,8 +14,22 @@ function getCtx(): AudioContext | null {
   return ctx
 }
 
+/** The app is in the background (home button, another app, the screen locked). */
+function pageHidden(): boolean {
+  return typeof document !== 'undefined' && document.visibilityState === 'hidden'
+}
+
+/** Sound is on, and someone can see the app: nothing starts while it's in the background. */
 function enabled(): boolean {
-  return useProgress.getState().soundEnabled
+  return useProgress.getState().soundEnabled && !pageHidden()
+}
+
+// Every effect node that is playing (or scheduled to, a beat later), so going
+// to the background can cut them all at once.
+const live = new Set<AudioScheduledSourceNode>()
+function track(node: AudioScheduledSourceNode) {
+  live.add(node)
+  node.addEventListener('ended', () => live.delete(node))
 }
 
 function tone(
@@ -39,6 +53,7 @@ function tone(
   osc.connect(g).connect(c.destination)
   osc.start(start)
   osc.stop(start + durationMs / 1000 + 0.02)
+  track(osc)
 }
 
 /** A short filtered-noise swoosh (throws, whooshes, pours). */
@@ -65,6 +80,7 @@ function noise(durationMs: number, from: number, to: number, gain = 0.12, delayM
   src.connect(bp).connect(g).connect(c.destination)
   src.start(start)
   src.stop(start + durationMs / 1000 + 0.02)
+  track(src)
 }
 
 /** A quick pitch sweep (boings, pops, rising chimes). */
@@ -84,6 +100,7 @@ function sweep(from: number, to: number, durationMs: number, type: OscillatorTyp
   osc.connect(g).connect(c.destination)
   osc.start(start)
   osc.stop(start + durationMs / 1000 + 0.02)
+  track(osc)
 }
 
 function chord(freqs: number[], durationMs: number, type: OscillatorType = 'sine') {
@@ -195,4 +212,27 @@ export function unlockAudio() {
  */
 export function resumeAudio() {
   if (ctx) resume(ctx)
+}
+
+/**
+ * The app went to the background: stop every effect now (including the notes
+ * of a jingle still queued to start) and suspend the context, so nothing plays
+ * while nobody can see the app. src/platform/web/audioUnlock.ts calls this on
+ * the way out and resumeAudio() on the way back. Never creates a context.
+ */
+export function silenceAudio() {
+  for (const node of live) {
+    try {
+      node.stop()
+    } catch {
+      /* already stopped */
+    }
+  }
+  live.clear()
+  if (!ctx || ctx.state !== 'running') return
+  try {
+    void ctx.suspend().catch(() => {})
+  } catch {
+    /* very old WebKit: suspend() may throw; the stopped nodes are silent anyway */
+  }
 }

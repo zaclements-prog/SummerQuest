@@ -1,7 +1,8 @@
-import { lazy, Suspense } from 'react'
+import { Suspense } from 'react'
 import type { ReactNode } from 'react'
 import type { GameProps } from '../screens/GameRunner'
 import { Loading } from '../components/ui'
+import { lazyWithRetry } from '../lib/lazyWithRetry'
 
 /**
  * The four 3D mini-games, each loaded on demand (three.js and its scene code
@@ -11,12 +12,14 @@ import { Loading } from '../components/ui'
  *
  *   import { CloudKeeper, DivisionArena, FractionForge, TimesGrove } from '../games/lazyGames'
  *
- * The single-file build inlines these chunks, so it still works offline.
+ * The single-file build inlines these chunks, so it still works offline. A
+ * chunk that fails to load throws to the app's error screen
+ * (src/components/AppErrorBoundary.tsx), and the next visit imports it again.
  */
-const DivisionArenaGame = lazy(() => import('./DivisionArena'))
-const FractionForgeGame = lazy(() => import('./FractionForge'))
-const CloudKeeperGame = lazy(() => import('./CloudKeeper'))
-const TimesGroveGame = lazy(() => import('./TimesGrove'))
+const DivisionArenaGame = lazyWithRetry(() => import('./DivisionArena'))
+const FractionForgeGame = lazyWithRetry(() => import('./FractionForge'))
+const CloudKeeperGame = lazyWithRetry(() => import('./CloudKeeper'))
+const TimesGroveGame = lazyWithRetry(() => import('./TimesGrove'))
 
 function Loader({ children }: { children: ReactNode }) {
   return (

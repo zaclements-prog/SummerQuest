@@ -18,6 +18,8 @@ export const voice = {
   /** Speak `text`. `interrupt` cuts off whatever is still being said first. */
   say(text: string, opts: { interrupt?: boolean; rate?: number; pitch?: number } = {}) {
     if (!useProgress.getState().soundEnabled) return
+    // nothing plays while the app is in the background (audioUnlock cancels speech on the way out)
+    if (typeof document !== 'undefined' && document.visibilityState === 'hidden') return
     const s = synth()
     if (!s) return
     try {

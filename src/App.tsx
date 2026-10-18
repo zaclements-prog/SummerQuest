@@ -1,5 +1,5 @@
 import { BrowserRouter, HashRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
-import { useEffect, lazy, Suspense } from 'react'
+import { useEffect, Suspense } from 'react'
 import { useProgress } from './store/progress'
 import { unlockAudio } from './lib/sound'
 import AppShell from './components/AppShell'
@@ -8,6 +8,9 @@ import AvatarCreate from './screens/AvatarCreate'
 import WorldMap from './screens/WorldMap'
 import ZoneDetail from './screens/ZoneDetail'
 import ParentDashboard from './screens/ParentDashboard'
+import { RequireParent } from './components/ParentGate'
+import AppErrorBoundary from './components/AppErrorBoundary'
+import { lazyWithRetry } from './lib/lazyWithRetry'
 import BadgesScreen from './screens/BadgesScreen'
 import DailyChallenge from './screens/DailyChallenge'
 import ProgressScreen from './screens/ProgressScreen'
@@ -20,11 +23,12 @@ const Router = import.meta.env.VITE_OFFLINE === 'true' ? HashRouter : BrowserRou
 // Heavy routes load on demand, so the first screen appears fast on a tablet:
 // the 3D World and Home (three.js), the stage runner (the 3D mini-games) and
 // the Tutor (its motion-graphic scenes). The single-file build inlines them all.
-const WorldScreen = lazy(() => import('./world/WorldScreen'))
-const HomeScreen = lazy(() => import('./screens/HomeScreen'))
-const GameRunner = lazy(() => import('./screens/GameRunner'))
-const TutorIndex = lazy(() => import('./screens/TutorIndex'))
-const TutorScreen = lazy(() => import('./screens/TutorScreen'))
+// A chunk that fails to load lands on the error screen, which can try it again.
+const WorldScreen = lazyWithRetry(() => import('./world/WorldScreen'))
+const HomeScreen = lazyWithRetry(() => import('./screens/HomeScreen'))
+const GameRunner = lazyWithRetry(() => import('./screens/GameRunner'))
+const TutorIndex = lazyWithRetry(() => import('./screens/TutorIndex'))
+const TutorScreen = lazyWithRetry(() => import('./screens/TutorScreen'))
 
 /** A lazily loaded route with its friendly loading state. */
 function Lazy({ label, children }: { label: string; children: React.ReactNode }) {
@@ -98,99 +102,111 @@ export default function App() {
   return (
     <Router>
       <PathMemory />
-      <AppShell>
-        <Routes>
-          <Route
-            path="/"
-            element={player ? <Navigate to={HUB} replace /> : <Welcome />}
-          />
-          <Route path="/avatar" element={<AvatarCreate />} />
-          <Route
-            path="/map"
-            element={
-              <RequireAvatar>
-                <MapRoute />
-              </RequireAvatar>
-            }
-          />
-          <Route
-            path="/zone/:zoneId"
-            element={
-              <RequireAvatar>
-                <ZoneDetail />
-              </RequireAvatar>
-            }
-          />
-          <Route
-            path="/play/:zoneId/:stageId"
-            element={
-              <RequireAvatar>
-                <Lazy label="Getting your game ready…">
-                  <GameRunner />
-                </Lazy>
-              </RequireAvatar>
-            }
-          />
-          <Route
-            path="/badges"
-            element={
-              <RequireAvatar>
-                <BadgesScreen />
-              </RequireAvatar>
-            }
-          />
-          <Route
-            path="/daily"
-            element={
-              <RequireAvatar>
-                <DailyChallenge />
-              </RequireAvatar>
-            }
-          />
-          <Route
-            path="/progress"
-            element={
-              <RequireAvatar>
-                <ProgressScreen />
-              </RequireAvatar>
-            }
-          />
-          <Route
-            path="/tutor"
-            element={
-              <RequireAvatar>
-                <Lazy label="Opening the lessons…">
-                  <TutorIndex />
-                </Lazy>
-              </RequireAvatar>
-            }
-          />
-          <Route
-            path="/tutor/:lessonId"
-            element={
-              <RequireAvatar>
-                <Lazy label="Opening your lesson…">
-                  <TutorScreen />
-                </Lazy>
-              </RequireAvatar>
-            }
-          />
-          <Route path="/focus" element={<RequireAvatar><FocusScreen /></RequireAvatar>} />
-          <Route
-            path="/home"
-            element={
-              <RequireAvatar>
-                <Lazy label="Loading your home…">
-                  <HomeScreen />
-                </Lazy>
-              </RequireAvatar>
-            }
-          />
-          <Route path="/world" element={<RequireAvatar><Lazy label="Loading the world…"><WorldScreen /></Lazy></RequireAvatar>} />
-          <Route path="/parent" element={<ParentDashboard />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </AppShell>
+      {/* Anything a screen throws (or a screen's code that fails to load) → the "Oops!" screen. */}
+      <AppErrorBoundary>
+        <AppShell>
+          <Routes>
+            <Route
+              path="/"
+              element={player ? <Navigate to={HUB} replace /> : <Welcome />}
+            />
+            {/* Once there's a player, making a new one would rename them and change
+                their grade, a grown-ups' setting: that lives behind the Parent gate. */}
+            <Route path="/avatar" element={player ? <Navigate to={HUB} replace /> : <AvatarCreate />} />
+            <Route
+              path="/map"
+              element={
+                <RequireAvatar>
+                  <MapRoute />
+                </RequireAvatar>
+              }
+            />
+            <Route
+              path="/zone/:zoneId"
+              element={
+                <RequireAvatar>
+                  <ZoneDetail />
+                </RequireAvatar>
+              }
+            />
+            <Route
+              path="/play/:zoneId/:stageId"
+              element={
+                <RequireAvatar>
+                  <Lazy label="Getting your game ready…">
+                    <GameRunner />
+                  </Lazy>
+                </RequireAvatar>
+              }
+            />
+            <Route
+              path="/badges"
+              element={
+                <RequireAvatar>
+                  <BadgesScreen />
+                </RequireAvatar>
+              }
+            />
+            <Route
+              path="/daily"
+              element={
+                <RequireAvatar>
+                  <DailyChallenge />
+                </RequireAvatar>
+              }
+            />
+            <Route
+              path="/progress"
+              element={
+                <RequireAvatar>
+                  <ProgressScreen />
+                </RequireAvatar>
+              }
+            />
+            <Route
+              path="/tutor"
+              element={
+                <RequireAvatar>
+                  <Lazy label="Opening the lessons…">
+                    <TutorIndex />
+                  </Lazy>
+                </RequireAvatar>
+              }
+            />
+            <Route
+              path="/tutor/:lessonId"
+              element={
+                <RequireAvatar>
+                  <Lazy label="Opening your lesson…">
+                    <TutorScreen />
+                  </Lazy>
+                </RequireAvatar>
+              }
+            />
+            <Route path="/focus" element={<RequireAvatar><FocusScreen /></RequireAvatar>} />
+            <Route
+              path="/home"
+              element={
+                <RequireAvatar>
+                  <Lazy label="Loading your home…">
+                    <HomeScreen />
+                  </Lazy>
+                </RequireAvatar>
+              }
+            />
+            <Route path="/world" element={<RequireAvatar><Lazy label="Loading the world…"><WorldScreen /></Lazy></RequireAvatar>} />
+            <Route
+              path="/parent"
+              element={
+                <RequireParent>
+                  <ParentDashboard />
+                </RequireParent>
+              }
+            />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </AppShell>
+      </AppErrorBoundary>
     </Router>
   )
 }

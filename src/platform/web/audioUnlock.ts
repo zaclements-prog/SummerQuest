@@ -9,11 +9,13 @@
  *   so a step's voice can start after the manifest fetch without a fresh gesture;
  * - wakes the effects AudioContext (src/lib/sound.ts) on touchend / pointerup /
  *   click / keydown, and again when the app returns from the background;
- * - primes speechSynthesis (the narration fallback) with one empty utterance.
+ * - primes speechSynthesis (the narration fallback) with one empty utterance;
+ * - silences everything when the app goes to the background (app stores test
+ *   that nothing plays while hidden): effects, the narration element and speech.
  *
  * Installed once from src/platform/web/boot.ts.
  */
-import { resumeAudio, unlockAudio } from '../../lib/sound'
+import { resumeAudio, silenceAudio, unlockAudio } from '../../lib/sound'
 
 type UnlockState = 'locked' | 'pending' | 'unlocked'
 
@@ -130,8 +132,33 @@ function onGesture(e: Event) {
   primeSpeech()
 }
 
-function onForeground() {
-  if (document.visibilityState === 'visible') resumeAudio()
+/**
+ * Going to the background: cut the effects, pause the narration element and
+ * stop browser speech (lesson narration and the mini-games' chants). Only the
+ * effects context is woken again on return (onLifecycle); the lesson player
+ * resumes its own narration together with its clock (useNarration in
+ * src/lib/narration.ts), so the voice and the visuals stay in step.
+ */
+function silenceForBackground() {
+  silenceAudio()
+  // (a silent unlock clip still starting is left to finish, so the unlock completes)
+  if (shared && !shared.paused && (owner || state === 'unlocked')) {
+    try {
+      shared.pause()
+    } catch {
+      /* nothing to pause */
+    }
+  }
+  try {
+    window.speechSynthesis?.cancel()
+  } catch {
+    /* no speech support */
+  }
+}
+
+function onLifecycle(e: Event) {
+  if (e.type === 'pagehide' || document.visibilityState === 'hidden') silenceForBackground()
+  else if (document.visibilityState === 'visible') resumeAudio()
 }
 
 let uninstall: (() => void) | null = null
@@ -142,12 +169,14 @@ export function installAudioUnlock(): () => void {
   if (typeof window === 'undefined') return () => {}
   const opts: AddEventListenerOptions = { capture: true, passive: true }
   for (const type of GESTURES) window.addEventListener(type, onGesture, opts)
-  document.addEventListener('visibilitychange', onForeground)
-  window.addEventListener('pageshow', onForeground)
+  document.addEventListener('visibilitychange', onLifecycle)
+  window.addEventListener('pagehide', onLifecycle)
+  window.addEventListener('pageshow', onLifecycle)
   uninstall = () => {
     for (const type of GESTURES) window.removeEventListener(type, onGesture, opts)
-    document.removeEventListener('visibilitychange', onForeground)
-    window.removeEventListener('pageshow', onForeground)
+    document.removeEventListener('visibilitychange', onLifecycle)
+    window.removeEventListener('pagehide', onLifecycle)
+    window.removeEventListener('pageshow', onLifecycle)
     uninstall = null
   }
   return uninstall
