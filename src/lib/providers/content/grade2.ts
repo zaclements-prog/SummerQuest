@@ -31,24 +31,24 @@ export interface GeoItem {
 
 export const G2_GEOMETRY: GeoItem[] = [
   // A cube is the one solid in the G2 band (2.G.A.1).
-  { level: 2, question: 'Which shape is a cube?', answer: 'a board-game dice box', options: ['a round bouncing playground ball', 'a board-game dice box', 'a flat shiny coin'], hint: 'A cube is a solid box with 6 flat sides.' },
+  { level: 2, question: 'Which object is shaped like a cube?', answer: 'a die from a board game', options: ['a round, bouncy playground ball', 'a die from a board game', 'a flat shiny coin'], hint: 'A cube is a solid shape with 6 square faces.' },
   { level: 2, question: 'How many flat faces does a cube have?', answer: '6', options: ['4', '6', '8'], hint: 'Count: top, bottom, front, back, and two sides.' },
   { level: 2, question: 'A triangle has 3 sides. A square has 4 sides. Which shape has MORE sides?', answer: 'square', options: ['triangle', 'square', 'they have the same number'] },
-  { level: 2, question: 'Which shape has exactly 4 sides?', answer: 'quadrilateral', options: ['a five-sided home plate', 'quadrilateral', 'triangle'], hint: 'The "quad" in quadrilateral means four.' },
-  { level: 2, question: 'A pentagon has how many sides?', answer: '5', options: ['4', '5', '6'], hint: '"Penta" means five, like a pentagon-shaped house roof.' },
+  { level: 2, question: 'Which shape has exactly 4 sides?', answer: 'quadrilateral', options: ['pentagon', 'quadrilateral', 'triangle'], hint: '"Quad" means four.' },
+  { level: 2, question: 'A pentagon has how many sides?', answer: '5', options: ['4', '5', '6'], hint: '"Penta" means five. A house shape with a pointy roof is a pentagon.' },
   { level: 2, question: 'Which shape has 6 sides?', answer: 'hexagon', options: ['hexagon', 'triangle', 'square'], hint: 'A honeycomb cell is a hexagon.' },
   { level: 2, question: 'A shape has 3 corners and 3 sides. What shape is it?', answer: 'triangle', options: ['pentagon', 'rectangle', 'triangle'], hint: 'Tri means three.' },
   { level: 2, question: 'Which shape has NO corners?', answer: 'circle', options: ['rectangle', 'circle', 'pentagon'] },
   { level: 2, question: 'If you cut an apple in half, how many equal shares do you get?', answer: '2', options: ['2', '3', '4'], hint: 'Half means two equal parts.' },
-  { level: 2, question: 'You share a pizza with 2 friends, everyone getting the same size slice group. Each person gets what share?', answer: 'one third', options: ['one half', 'one third', 'one fourth'], hint: 'Three equal shares are called thirds.' },
+  { level: 2, question: 'You and 2 friends share a pizza equally. What part of the pizza does each of you get?', answer: 'one third', options: ['one half', 'one third', 'one fourth'], hint: 'Three equal shares are called thirds.' },
   { level: 2, question: 'A rectangle is split into 3 rows and 4 columns of equal squares. How many squares are there?', answer: '12', options: ['7', '12', '16'], hint: 'Count by rows: 4, 8, 12.' },
-  { level: 2, question: 'Which IS one fourth of the sandwich?', answer: 'a single fourth-slice', options: ['half the sandwich', 'a single fourth-slice', 'the entire sandwich'], hint: 'Fourths come from four equal shares.' },
+  { level: 2, question: 'A sandwich is cut into 4 equal pieces. How much of it is ONE piece?', answer: 'one fourth', options: ['one half', 'one fourth', 'the whole sandwich'], hint: 'Fourths come from four equal shares.' },
   { level: 2, question: 'Two shapes are both rectangles. One is tall and thin, one is short and wide. How many corners does the wide one have?', answer: '4', options: ['2', '4', '8'], hint: 'Every rectangle has 4 corners, no matter its shape.' },
   { level: 2, question: 'Which of these is a 3-dimensional (solid) shape?', answer: 'sphere', options: ['sphere', 'oval', 'heart'], hint: 'Solids take up space — you can hold a ball.' },
-  { level: 2, question: 'A die (dice cube) has dots on how many faces?', answer: '6', options: ['5', '6', '7'], hint: 'Same as any cube.' },
+  { level: 2, question: 'A die from a board game has dots on how many faces?', answer: '6', options: ['5', '6', '7'], hint: 'A die is a cube, and every cube has 6 faces.' },
   { level: 2, question: 'You cut a circle into 4 equal pieces. What is one piece called?', answer: 'a fourth', options: ['a third', 'a half', 'a fourth'], hint: 'Four equal shares make fourths.' },
-  { level: 2, question: 'Which shape can you expect to find on a cube?', answer: 'square', options: ['circle', 'square', 'triangle'], hint: 'Each flat face of a cube is a square.' },
-  { level: 2, question: 'A hexagon table seats 1 kid per side. How many kids can sit around it?', answer: '6', options: ['4', '6', '8'], hint: 'One seat per side, six sides.' },
+  { level: 2, question: 'What shape is each flat face of a cube?', answer: 'square', options: ['circle', 'square', 'triangle'], hint: 'Look at a die or a toy block: every face has 4 equal sides.' },
+  { level: 2, question: 'A table shaped like a hexagon seats 1 kid on each side. How many kids can sit around it?', answer: '6', options: ['4', '6', '8'], hint: 'One seat per side, six sides.' },
 ]
 
 // ---- Data & graphs, level 2 (2.MD.D.10: single-unit scale, ≤4 categories) ------
@@ -65,7 +65,7 @@ export interface ChartItem {
 }
 
 export const G2_CHARTS: ChartItem[] = [
-  { level: 2, title: 'Recess Games', unit: 'children', bars: [{ label: 'Swing', value: 7, emoji: '🛝' }, { label: 'Slide', value: 4, emoji: '🛞' }, { label: 'Climb', value: 5, emoji: '🧗' }], question: 'Which game was the MOST popular?', answer: 'Swing', options: ['Slide', 'Swing', 'Climb'], hint: 'Look for the tallest bar.' },
+  { level: 2, title: 'Recess Favorites', unit: 'children', bars: [{ label: 'Tag', value: 7, emoji: '🏃' }, { label: 'Slide', value: 4, emoji: '🛝' }, { label: 'Climb', value: 5, emoji: '🧗' }], question: 'Which one was the MOST popular?', answer: 'Tag', options: ['Slide', 'Tag', 'Climb'], hint: 'Look for the tallest bar.' },
   { level: 2, title: 'Class Pets', unit: 'votes', bars: [{ label: 'Dog', value: 3, emoji: '🐶' }, { label: 'Cat', value: 9, emoji: '🐱' }, { label: 'Rabbit', value: 5, emoji: '🐰' }], question: 'How many votes did rabbits get?', answer: '5', options: ['3', '5', '9'], hint: 'Find the rabbit bar and read its top.' },
   { level: 2, title: 'Flavors Sold', unit: 'cones', bars: [{ label: 'Vanilla', value: 6, emoji: '🍦' }, { label: 'Chocolate', value: 8, emoji: '🍫' }, { label: 'Strawberry', value: 4, emoji: '🍓' }], question: 'Which flavor sold the FEWEST cones?', answer: 'Strawberry', options: ['Vanilla', 'Chocolate', 'Strawberry'], hint: 'The fewest is the shortest bar.' },
   { level: 2, title: 'Weather Today', unit: 'hours', bars: [{ label: 'Sunny', value: 5, emoji: '☀️' }, { label: 'Cloudy', value: 2, emoji: '☁️' }, { label: 'Rainy', value: 3, emoji: '🌧️' }], question: 'How many hours were sunny?', answer: '5', options: ['2', '3', '5'], hint: 'Read the top of the sunny bar.' },
@@ -95,27 +95,27 @@ export const G2_READING: ReadingItem[] = [
   {
     title: 'Lulu’s Red Kite',
     level: 2,
-    text: `Lulu had a red kite. It had a long white tail. One windy day, she ran to the park with her dad. The wind pushed the kite up, up, up. "Let it go!" said Dad. Lulu let go of the string. The kite flew over the tall trees. Oh no! Then the wind stopped, and the kite landed soft in the grass. Lulu laughed. The kite was not stuck after all.`,
+    text: `Lulu had a red kite. It had a long white tail. One windy day, she ran to the park with her dad. The wind pushed the kite up, up, up. "Let out more string!" said Dad. Lulu let the string out. The kite flew over the tall trees. Oh no! Then the wind stopped, and the kite floated gently down into the grass. Lulu laughed. The kite was not stuck after all.`,
     questions: [
       { question: 'What color was Lulu’s kite?', answer: 'red', options: ['blue', 'red', 'yellow'], type: 'detail' },
       { question: 'Where did the kite land at the end?', answer: 'in the grass', options: ['in a tall tree', 'in the grass', 'in the pond'], type: 'detail' },
-      { question: 'The word "soft" means the landing was:', answer: 'soft and gentle', options: ['bursting in loud and sudden', 'soft and gentle', 'very fast'], type: 'vocab' },
+      { question: 'The kite floated "gently" down. "Gently" means:', answer: 'softly and slowly', options: ['loudly and suddenly', 'softly and slowly', 'very fast'], type: 'vocab' },
     ],
   },
   {
     title: 'The Ant and the Crumb',
     level: 2,
-    text: `An ant found a big crumb of bread. It was much bigger than the ant. The ant tried to push it home alone. The crumb did not move. So the ant touched heads with three other ants with its feelers. Now four ants carried the crumb together, step by step. They sang a tiny ant song all the way home. That night, the ant family had a fine bread feast.`,
+    text: `An ant found a big crumb of bread. It was much bigger than the ant. The ant tried to push it home alone. The crumb did not move. So the ant tapped feelers with three other ants to ask for help. Now four ants carried the crumb together, step by step. They sang a tiny ant song all the way home. That night, the ant family had a fine bread feast.`,
     questions: [
-      { question: 'Why did the first ant get help?', answer: 'the crumb was too heavy to move alone', options: ['the bread was too smelly for one ant to carry', 'the crumb was too heavy to move alone', 'it lost the smell of its home trail'], type: 'detail' },
+      { question: 'Why did the first ant get help?', answer: 'the crumb was too heavy to move alone', options: ['the bread smelled too strong for one ant', 'the crumb was too heavy to move alone', 'it lost the smell of its home trail'], type: 'detail' },
       { question: 'What is this story mostly about?', answer: 'working together gets hard jobs done', options: ['a small ant learns to bake the finest bread', 'working together gets hard jobs done', 'ants are stronger than people'], type: 'main-idea' },
-      { question: 'What did the ants do to ask for help?', answer: 'touched heads with their feelers', options: ['shouted as loud as an ant can ever shout', 'touched heads with their feelers', 'danced a wiggle dance'], type: 'detail' },
+      { question: 'What did the first ant do to ask for help?', answer: 'tapped feelers with other ants', options: ['shouted as loud as an ant can shout', 'tapped feelers with other ants', 'danced a wiggle dance'], type: 'detail' },
     ],
   },
   {
-    title: 'A Frog for Breakfast?',
+    title: 'From Egg to Frog',
     level: 2,
-    text: `Pond life starts small. A mother frog lays hundreds of tiny eggs in the water. Out hatch tadpoles with bushy tails. The tadpoles swim and eat algae all day. Slowly, back legs pop out. Then front legs. The tail shrinks and shrinks. By summer, the tadpole is a frog with long legs for hopping. It jumps onto a log and croaks, "Ribbit!"`,
+    text: `Pond life starts small. A mother frog lays hundreds of tiny eggs in the water. Out hatch tadpoles with long, wiggly tails. The tadpoles swim and eat algae all day. Slowly, back legs pop out. Then front legs. The tail shrinks and shrinks. By summer, the tadpole is a frog with long legs for hopping. It jumps onto a log and croaks, "Ribbit!"`,
     questions: [
       { question: 'What do tadpoles eat?', answer: 'algae', options: ['flies', 'algae', 'bread'], type: 'detail' },
       { question: 'What happens FIRST in the story?', answer: 'a frog lays eggs', options: ['a frog lays eggs', 'legs pop out', 'the tail shrinks'], type: 'detail' },
@@ -138,17 +138,17 @@ export const G2_READING: ReadingItem[] = [
     text: `Deep under the grass, an earthworm is busy all day. It eats tiny bits of dead leaves in the dirt. As it wiggles through the soil, it makes little tunnels. Air and water use those tunnels to reach plant roots. Gardeners love earthworms because soil with tunnels helps gardens grow. After the rain, worms come up for a breath of air on the sidewalk.`,
     questions: [
       { question: 'What does the earthworm eat?', answer: 'tiny bits of dead leaves', options: ['grass blades and flower petals', 'tiny bits of dead leaves', 'small stones'], type: 'detail' },
-      { question: 'Why do gardeners love earthworms?', answer: 'their tunnels help plants grow', options: ['they chase the beetles away', 'their tunnels help plants grow', 'they sing to the worms'], type: 'detail' },
-      { question: 'When do worms come up to the sidewalk?', answer: 'after the rain', options: ['at sunrise sharp', 'after the rain', 'when it snows deeply'], type: 'detail' },
+      { question: 'Why do gardeners love earthworms?', answer: 'their tunnels help plants grow', options: ['they chase the beetles away', 'their tunnels help plants grow', 'they sing to the flowers'], type: 'detail' },
+      { question: 'When do worms come up to the sidewalk?', answer: 'after the rain', options: ['right at sunrise', 'after the rain', 'when it snows'], type: 'detail' },
     ],
   },
   {
     title: 'Maple Seeds Spin',
     level: 2,
-    text: `In autumn, the maple tree lets go of its seeds. Each seed has a curly wing, like a tiny helicopter. The wind spins the seeds down, down, down. One seed lands in a crack in the sidewalk. Another lands deep in the forest. The forest seed gets sun and rain. Next spring, a little maple sprout pokes through the leaves. The sidewalk seed just gets raked away.`,
+    text: `In autumn, the maple tree lets go of its seeds. Each seed has a curly wing, like a tiny helicopter. The wind spins the seeds down, down, down. One seed lands in a crack in the sidewalk. Another lands deep in the forest. The forest seed gets sun and rain. Next spring, a little maple sprout pokes through the leaves. The sidewalk seed just gets swept away.`,
     questions: [
       { question: 'What part helps the maple seed spin?', answer: 'its curly wing', options: ['its heavy shell', 'its curly wing', 'its long root'], type: 'detail' },
-      { question: 'Which seed could grow into a tree?', answer: 'the one sitting in soil with rain and sun', options: ['the one sitting in soil with rain and sun', 'the one in the sidewalk crack', 'neither seed can grow'], type: 'inference' },
+      { question: 'Which seed could grow into a tree?', answer: 'the one in the forest with sun and rain', options: ['the one in the forest with sun and rain', 'the one in the sidewalk crack', 'neither seed can grow'], type: 'inference' },
       { question: 'This story is mostly about how trees…', answer: 'send their seeds to new places', options: ['spin their golden leaves down at dusk', 'send their seeds to new places', 'drink rain with their bark'], type: 'main-idea' },
     ],
   },
@@ -169,7 +169,7 @@ export const G2_READING: ReadingItem[] = [
     questions: [
       { question: 'Where does the fork go?', answer: 'on the left side of the place setting', options: ['on the left side of the place setting', 'tucked under the big dinner plate', 'in her pocket'], type: 'detail' },
       { question: 'What do people say at the table?', answer: 'one good thing about their whole day', options: ['one good thing about their whole day', 'the entire grocery list twice', 'their spelling grades'], type: 'detail' },
-      { question: 'Why did Mama turn clean-up into a race?', answer: 'to make hard work fun', options: ['to make hard work fun', 'because she was losing', 'because Mia asked her to'], type: 'inference' },
+      { question: 'Why did Mama turn clean-up into a race?', answer: 'to make hard work fun', options: ['to make hard work fun', 'because she was in a hurry', 'because Mia asked her to'], type: 'inference' },
     ],
   },
 ]
@@ -180,21 +180,21 @@ export const G2_SCIENCE: ReadingItem[] = [
   {
     title: 'Touch, Look, Describe',
     level: 2,
-    text: `How do you tell materials apart? You can use your senses! A cotton ball is soft. A rock is hard. A rubber band can bend, but a stick cannot. Some things are rough, and some are smooth. Science uses these observable properties to sort materials. Sorting helps a builder pick the right material — soft cotton would make a very bad spoon!`,
+    text: `How do you tell materials apart? You can use your senses! A cotton ball is soft. A rock is hard. A rubber band can bend, but a stick cannot. Some things are rough, and some are smooth. Scientists use these observable properties to sort materials. Sorting helps a builder pick the right material — soft cotton would make a very bad spoon!`,
     questions: [
-      { question: 'Which material is HARD?', answer: 'a river-smoothed rock', options: ['a soft grey cotton ball', 'a river-smoothed rock', 'a floppy rubber band'], type: 'detail' },
-      { question: 'Why would cotton make a bad spoon?', answer: 'it is far too soft to hold hot soup', options: ['it is far too soft to hold hot soup', 'it is way too heavy for any spoon ever made', 'it is too shiny'], type: 'inference' },
+      { question: 'Which material is HARD?', answer: 'a river-smoothed rock', options: ['a soft white cotton ball', 'a river-smoothed rock', 'a floppy rubber band'], type: 'detail' },
+      { question: 'Why would cotton make a bad spoon?', answer: 'it is far too soft to hold hot soup', options: ['it is far too soft to hold hot soup', 'it is much too heavy to lift up to your mouth', 'it is too shiny'], type: 'inference' },
       { question: 'We can sort materials by…', answer: 'observable properties like hardness', options: ['how many dollars they cost at the shop', 'observable properties like hardness', 'what language they speak'], type: 'main-idea' },
     ],
   },
   {
     title: 'The Sunshine Test',
     level: 2,
-    text: `Two friends grow bean seeds in two cups. Both cups get the same soil and the same water. But one cup sits on a sunny windowsill, and the other lives in a dark closet. After a week, the windowsill bean has a green sprout. The closet bean is pale and floppy. The test shows that plants need sunlight to grow strong — and water too!`,
+    text: `Two friends grow bean seeds in two cups. Both cups get the same soil and the same water. But one cup sits on a sunny windowsill, and the other lives in a dark closet. After a week, the windowsill bean has a green sprout. The closet bean is pale and floppy. The test shows that plants need sunlight to grow strong and green.`,
     questions: [
-      { question: 'What was the ONE difference between the two cups?', answer: 'the morning sunlight', options: ['the exact type of soil in each cup', 'the morning sunlight', 'the water spoon'], type: 'detail' },
-      { question: 'How did the closet bean look?', answer: 'pale and floppy thin', options: ['tall, thick, and green', 'pale and floppy thin', 'curly and purple'], type: 'detail' },
-      { question: 'This test shows plants need…', answer: 'sunlight and water to grow strong and green', options: ['sunlight and water to grow strong and green', 'music and loud dancing every morning', 'sandy soil only'], type: 'main-idea' },
+      { question: 'What was the ONE difference between the two cups?', answer: 'sunlight', options: ['the kind of soil in each cup', 'sunlight', 'the amount of water'], type: 'detail' },
+      { question: 'How did the closet bean look?', answer: 'pale and floppy', options: ['tall, thick, and green', 'pale and floppy', 'curly and purple'], type: 'detail' },
+      { question: 'This test shows plants need…', answer: 'sunlight to grow strong and green', options: ['sunlight to grow strong and green', 'music and loud dancing every morning', 'sandy soil only'], type: 'main-idea' },
     ],
   },
   {
@@ -202,7 +202,7 @@ export const G2_SCIENCE: ReadingItem[] = [
     level: 2,
     text: `An acorn cannot walk anywhere, but it travels far anyway. A squirrel finds the acorn and buries it in the ground for winter. Sometimes the squirrel forgets exactly where! That forgotten acorn gets sunlight, rain, and safe soil — and it grows into an oak tree. Animals like squirrels and birds are seed taxis. They carry seeds to new places and plant gardens without trying.`,
     questions: [
-      { question: 'Who buries the acorn?', answer: 'a busy red squirrel', options: ['a busy red squirrel', 'a honeybee', 'a child'], type: 'detail' },
+      { question: 'Who buries the acorn?', answer: 'a squirrel', options: ['a squirrel', 'a honeybee', 'a child'], type: 'detail' },
       { question: 'Why do forgotten acorns often grow?', answer: 'they land in good soil with sun and rain', options: ['they land in good soil with sun and rain', 'the squirrel comes back every week to water them', 'they grow in bare rock'], type: 'inference' },
       { question: 'Animals are called "seed taxis" because they…', answer: 'carry seeds away to brand-new places', options: ['carry seeds away to brand-new places', 'eat every single seed they can ever find', 'sing to the seeds'], type: 'detail' },
     ],
@@ -220,27 +220,27 @@ export const G2_SCIENCE: ReadingItem[] = [
   {
     title: 'Water Is On the Move',
     level: 2,
-    text: `Find water on Earth, and you will find it moving. It pools in lakes, rushes in rivers, and waves in the big ocean. When winter comes, lake water freezes into solid ice — hard enough to skate on! When spring warms the ice, it melts back into liquid water that flows downhill to the river again. Solid and liquid, frozen and flowing: it is still the same water.`,
+    text: `Find water on Earth, and you will find it moving. It pools in lakes, rushes in rivers, and rolls in waves across the big ocean. When winter comes, lake water freezes into solid ice — hard enough to skate on! When spring warms the ice, it melts back into liquid water that flows downhill to the river again. Solid and liquid, frozen and flowing: it is still the same water.`,
     questions: [
       { question: 'What happens to lake water in winter?', answer: 'it freezes into hard, solid ice', options: ['it freezes into hard, solid ice', 'it floats up into the clouds', 'it turns to steam'], type: 'detail' },
       { question: 'Melted ice becomes…', answer: 'liquid water', options: ['bright red sand', 'liquid water', 'sea salt'], type: 'detail' },
-      { question: 'Where is Earth’s water found?', answer: 'in oceans, rivers, lakes, ponds, ice, and rain', options: ['in oceans, rivers, lakes, ponds, ice, and rain', 'only inside the highest clouds', 'only under the ground'], type: 'main-idea' },
+      { question: 'Where is Earth’s water found?', answer: 'in oceans, rivers, lakes, and ice', options: ['in oceans, rivers, lakes, and ice', 'only inside the highest clouds', 'only under the ground'], type: 'main-idea' },
     ],
   },
   {
-    title: 'Slow Work, Hard Work',
+    title: 'Slow Change, Fast Change',
     level: 2,
-    text: `A hill by the road crumbles a little more every rainy day. Bits of dirt wash into the ditch, one raindrop at a time. This is slow change — you cannot see it happen, but a deep cut in the hill shows years of work. Then one storm snaps a big branch off an oak and dumps it across the path. That is fast change. Wind and water change the land both ways: slow and steady, and fast and suddenly.`,
+    text: `A hill by the road crumbles a little more every rainy day. Bits of dirt wash into the ditch, one raindrop at a time. This is slow change — you cannot see it happen, but a deep cut in the hill shows years of work. Then one big storm sends a whole chunk of the hill sliding onto the path in a single night. That is fast change. Wind and water change the land both ways: slow and steady, and fast and sudden.`,
     questions: [
       { question: 'What washes tiny bits of dirt down the hill?', answer: 'rain', options: ['rain', 'bees', 'the moon'], type: 'detail' },
       { question: 'The deep cut in the hill shows…', answer: 'slow change over many quiet years', options: ['slow change over many quiet years', 'one fast summer thunderstorm', 'a giant orange shovel'], type: 'inference' },
-      { question: 'The snapped branch is an example of…', answer: 'fast change', options: ['fast change', 'slow change', 'growing'], type: 'detail' },
+      { question: 'The hill sliding onto the path in one night is an example of…', answer: 'fast change', options: ['fast change', 'slow change', 'growing'], type: 'detail' },
     ],
   },
   {
     title: 'The Sand Fence Test',
     level: 2,
-    text: `The beach at Turtle Park was washing away. The town tried three fixes. Fix one: a tall wooden fence that slows the wind before it hits the sand. Fix two: thick beach grass with roots that grab the sand. Fix three: big rocks at the water’s edge to break the waves. Which fix wins? A good scientist tests them and watches what happens. At Turtle Park, the grass won best — living fences work hard for free!`,
+    text: `The beach at Turtle Park was washing away. The town tried three fixes. Fix one: a tall wooden fence that slows the wind before it hits the sand. Fix two: thick beach grass with roots that grab the sand. Fix three: big rocks at the water’s edge to break the waves. Which fix works best? A good scientist tests them and watches what happens. At Turtle Park, the grass worked best — living fences work hard for free!`,
     questions: [
       { question: 'What problem did the park have?', answer: 'its sandy beach kept washing away', options: ['its sandy beach kept washing away', 'there were far too many turtles visiting', 'the fence was too tall'], type: 'detail' },
       { question: 'How does the beach grass help?', answer: 'its deep roots grab the sand', options: ['its deep roots grab the sand', 'it scares the wild waves far away', 'it blows new sand up'], type: 'detail' },

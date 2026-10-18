@@ -187,14 +187,14 @@ export const CHARTS: DataChart[] = [
     unit: 'votes',
     bars: [
       { label: 'Vanilla', value: 4, emoji: '🍦' },
-      { label: 'Choc', value: 8, emoji: '🍫' },
+      { label: 'Chocolate', value: 8, emoji: '🍫' },
       { label: 'Mint', value: 5, emoji: '🌿' },
       { label: 'Berry', value: 3, emoji: '🍓' },
     ],
     question: 'How many children chose chocolate?',
     answer: '8',
     options: ['8', '4', '5', '3'],
-    hint: 'Read the height of the Choc bar.',
+    hint: 'Read the height of the Chocolate bar.',
   },
   {
     level: 3,
@@ -304,7 +304,7 @@ export const CHARTS: DataChart[] = [
     unit: 'slices',
     bars: [
       { label: 'Cheese', value: 22, emoji: '🍕' },
-      { label: 'Pepper', value: 16, emoji: '🍕' },
+      { label: 'Pepperoni', value: 16, emoji: '🍕' },
       { label: 'Veggie', value: 13, emoji: '🍕' },
     ],
     question: 'How many cheese and veggie slices were sold TOGETHER?',

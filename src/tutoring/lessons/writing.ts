@@ -32,7 +32,7 @@ export const writingLesson: Lesson = {
       id: 'endmarks',
       narration: 'Every sentence ends with an end mark. A period ends a telling sentence. A question mark ends an asking sentence. And an exclamation point shows a strong feeling, like wow!',
       body: '.  telling  ·  ?  asking  ·  !  strong feeling',
-      check: { question: 'Which end mark goes after this sentence:  Where is my hat', options: ['?', '.', '!', ','], answer: '?', explain: 'It asks something, so it ends with a question mark: Where is my hat?' },
+      check: { question: 'Which end mark goes after this sentence: Where is my hat', options: ['?', '.', '!', ','], answer: '?', explain: 'It asks something, so it ends with a question mark: Where is my hat?' },
     },
   ],
 }
