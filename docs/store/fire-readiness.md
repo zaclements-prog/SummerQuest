@@ -19,7 +19,7 @@ The store-listing documents sit beside it in `docs/store/`.
 | Low-end performance | ✅ / ⚠️ 2D screens are interactive in about 1 s and 3D in about 3 s at 6× CPU throttle. See [Performance](#performance). Confirm on a real Fire 7. |
 | Kid safety / COPPA | ✅ No ads, no analytics, no SDKs, no network. `npm run build:store` compiles out the AI writing feeder and fails on any network use. Parental gate on the Parent area and every grown-up setting. Store build sweep: 70 routes, 0 errors, 0 outside requests. See `privacy-policy.md`. |
 | Store assets | ✅ Icons 512×512 and 114×114 (`assets/`). ✅ Screenshots 1920×1200. ⏳ Listing text: `listing-draft.md`. |
-| Packaging for Fire OS | ⏳ **Not started.** This is a decision for the owner (see [Packaging](#packaging)). |
+| Packaging for Fire OS | ✅ Capacitor Android app in `android/` (2026-10-18). Debug APK builds and passes the emulator checks. ⏳ Release signing key (owner). See [Packaging](#packaging). |
 | Real-device check | ⏳ Owner: run on a physical Fire tablet before submitting (see [Before you submit](#before-you-submit)). |
 
 ## What Amazon requires, and where we stand
@@ -43,34 +43,48 @@ The store-listing documents sit beside it in `docs/store/`.
   - navigation;
   - behavior on Fire devices: status bar, soft keys, and the app going to the background.
 
-  Status: a root error boundary turns a crash or a failed screen load into a friendly "Oops!" screen. Everything goes silent when the app is backgrounded (sound effects, narration, speech), and a lesson's voice and pictures pause together. Back-button handling belongs to the packaging step (below).
+  Status: a root error boundary turns a crash or a failed screen load into a friendly "Oops!" screen. Everything goes silent when the app is backgrounded (sound effects, narration, speech), and a lesson's voice and pictures pause together. Back is handled by the Capacitor app (see [Packaging](#packaging)).
 
 ## Packaging
 
-The web app has to be wrapped for Fire OS. Fire tablets run web content in
-**Amazon WebView**, a Chromium build (about Chromium 120–124 on Fire OS 8), so the app
-runs unchanged inside either wrapper:
+**Done: Capacitor Android app** (`capacitor.config.ts`, `android/`, Capacitor 8). Fire
+tablets run it in Amazon WebView (Chromium), and the web app runs unchanged inside it.
 
-1. **Android app via Capacitor (recommended).** A small native shell around the built `dist/`.
-   - We control:
-     - the **Back button**: go back a screen, or leave from the World;
-     - **full-screen** play: hide the status and navigation bars, which gives Fire 7 / HD 8 their full 600 px height;
-     - keep-awake during lessons, splash and icon, and durable storage.
-   - Builds an APK for upload to the Amazon Developer Console. No Google Play services are needed.
-2. **Amazon packaged web app.** Upload the built files as a ZIP with a launch page.
-   - Less work, but less control: no native Back handling, full screen, or keep-awake.
-   - Unknowns to test on a device: the page origin, and whether storage persists across updates.
+| Requirement | How it is met |
+|---|---|
+| No network | The manifest requests **no permissions at all**, not even INTERNET. Capacitor serves `dist/` from inside the APK. |
+| No SDKs | Only Capacitor core and two Capacitor plugins (`@capacitor/app` for Back, `@capacitor-community/keep-awake`). No analytics, ads or Google Play services. |
+| Backup | `allowBackup="false"`. |
+| Back button | `src/platform/native/`: goes back a screen. On the World or Welcome it leaves the app. With nothing to go back to, it returns to the World. |
+| Full screen | `MainActivity` hides the status and navigation bars. A swipe from the edge shows them briefly. |
+| Backgrounding | The WebView pauses with the activity, so the page goes hidden and the app's existing silence-on-hidden code runs. |
+| Keep-awake | The screen stays on only while a lesson is open. |
+| Routing | Capacitor's local server serves `index.html` for every path. |
+| Icon / splash | SummerQuest icon at every launcher density. The splash is the icon on the sky gradient. |
 
-**Wrapper requirements** (whichever path):
-- **Network:** request **no** INTERNET permission (or never load a remote URL).
-- **Permissions and SDKs:** no other permissions, and no SDKs.
-- **Backup:** set `allowBackup="false"`.
-- **Routing:** serve `index.html` for any app path. The app uses path routes, and "Restart" reloads the current one. Capacitor's local server already does this.
-- **Speech:** check that text-to-speech uses the on-device voice. It is only a fallback; the narration is recorded.
+**Build:**
+- `npm run android:sync` runs the store build (with its no-network check) and copies it into `android/`.
+- `npm run android:apk` builds a debug APK at `android/app/build/outputs/apk/debug/app-debug.apk`.
+- `npm run android:release` builds the release APK/AAB. It needs the signing key below.
 
-**Recommendation:** Capacitor. It is the path Amazon's test criteria (Back, soft keys,
-backgrounding) are easiest to satisfy on. The earlier Capacitor groundwork was set
-aside when packaging was deferred, and can be resumed.
+The toolchain is JDK 21 (`brew install openjdk@21`) and the Android SDK at
+`~/Library/Android/sdk`, with platform 36 and build-tools 36. Set `JAVA_HOME` and
+`ANDROID_HOME`, or write `sdk.dir` in `android/local.properties`, which is not committed.
+
+**Emulator check (2026-10-18)**, on Android 14 with WebView 113, 1280×800 (Fire HD 8 size):
+- The APK installs and launches offline and full screen.
+- First run works: Welcome → create an explorer → the 3D World renders.
+- Back works: create explorer → Welcome, Map → World, and World → leaves the app.
+- A cold restart keeps the explorer and progress.
+- Lesson narration plays, and the screen stays on. On Home, both audio streams stop. On return, they resume. Leaving the lesson lets the screen sleep again.
+- Rotating to portrait mid-app re-lays out without restarting the app.
+
+**Still to do (owner):**
+- **Release signing key.** Create it once and keep it safe and out of git:
+  `keytool -genkeypair -v -keystore summerquest-release.jks -alias summerquest -keyalg RSA -keysize 2048 -validity 10000`.
+  Then wire it into `android/app/build.gradle` `signingConfigs` through `~/.gradle/gradle.properties`. Amazon re-signs the upload with its own certificate for your account.
+- **Version.** Set `versionCode` and `versionName` in `android/app/build.gradle`. They are now 1 and "1.0". Bump `versionCode` on every upload.
+- **App ID.** `com.summerquest.app` is permanent once published. Change it now if you want a different one, in `capacitor.config.ts` and `android/app/build.gradle`.
 
 ## Quality passes (2026-10-18)
 
@@ -115,7 +129,7 @@ the Fire 7's quad-core A53). It runs in a software-GL browser here, so 3D number
 
 ## Owner decisions
 
-- **Packaging:** Capacitor APK (recommended) or Amazon packaged web app.
+- ~~**Packaging**~~: done. Capacitor APK (see [Packaging](#packaging)).
 - **Four narration lines** worth re-recording. The text change would make their clips stale, so they were left as is:
   - `division/share`: "shared with three friends" → "shared equally among three friends" (as written, it could mean four people);
   - `geometry/shapes`: a square has four *square* corners;

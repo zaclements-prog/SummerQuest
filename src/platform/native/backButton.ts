@@ -1,5 +1,5 @@
-/** Screens where Back leaves the app instead of going back a screen. */
-export const ROOT_PATHS = ['/', '/world', '/avatar']
+/** Screens where Back leaves the app instead of going back a screen: Welcome and the World hub. */
+export const ROOT_PATHS = ['/', '/world']
 
 /** What the hardware Back button does on `pathname`. */
 export function backAction(pathname: string, canGoBack: boolean): 'exit' | 'back' | 'hub' {

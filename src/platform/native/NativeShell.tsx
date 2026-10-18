@@ -8,7 +8,7 @@ import { backAction, keepsAwake } from './backButton'
 /**
  * The Fire OS (Capacitor) side of the shell, rendered inside the router. On the web
  * it renders nothing and does nothing.
- *  - Back button: go back a screen; from the World (or the first-run screens) leave the app.
+ *  - Back button: go back a screen; from the World or Welcome, leave the app.
  *  - Keep-awake while a lesson is open.
  */
 export default function NativeShell() {

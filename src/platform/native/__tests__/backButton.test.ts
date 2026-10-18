@@ -5,8 +5,11 @@ import { backAction, keepsAwake } from '../backButton'
 // and leave the app from its top screen rather than doing nothing.
 
 describe('Fire OS Back button', () => {
-  it('leaves the app from the World and the first-run screens', () => {
-    for (const p of ['/world', '/', '/avatar']) expect(backAction(p, true)).toBe('exit')
+  it('leaves the app from the World and from Welcome', () => {
+    for (const p of ['/world', '/']) expect(backAction(p, true)).toBe('exit')
+  })
+  it('goes from creating an explorer back to Welcome', () => {
+    expect(backAction('/avatar', true)).toBe('back')
   })
   it('goes back a screen anywhere else', () => {
     expect(backAction('/zone/fraction-falls', true)).toBe('back')
