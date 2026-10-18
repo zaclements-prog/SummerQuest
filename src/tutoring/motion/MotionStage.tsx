@@ -16,6 +16,14 @@ import type { Scene } from './types'
 const STAGE_FRAME_MS = isTouchFirst() ? 1000 / 30 : 0
 
 /**
+ * Phones and tablets hold the last frame this long (s) after the narration ends. Every
+ * scene keeps some ambient motion going (twinkles, bobbing, a breathing backdrop), so
+ * without this the stage repaints forever while the child reads or answers the check.
+ * Replay (or the next step) restarts the clock, and the stage with it.
+ */
+const IDLE_HOLD_S = isTouchFirst() ? 1.5 : Infinity
+
+/**
  * Plays a lesson step's motion graphic in sync with its narration: every frame
  * it reads the narration clock and re-renders the scene at that time.
  * `framed` (default) draws the stage's own rounded ink frame; the lesson player
@@ -33,8 +41,10 @@ export default function MotionStage({ scene: SceneComp, text, clock, reduced, la
       // (−2 ms: rAF timestamps jitter; without it a 60 Hz screen would drop to 20 fps)
       if (now - last >= STAGE_FRAME_MS - 2) {
         last = now
-        setT(stageNow(clock))
-        setDur(clock.duration())
+        const d = clock.duration()
+        // (an unchanged value doesn't re-render: once held, the stage costs nothing)
+        setT(Math.min(stageNow(clock), d + IDLE_HOLD_S))
+        setDur(d)
       }
       raf = requestAnimationFrame(loop)
     }
