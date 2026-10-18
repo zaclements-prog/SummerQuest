@@ -32,21 +32,21 @@ export const CYCLE_SITUATIONS: Situation[] = [
   { prompt: 'Wet clothes dry on a breezy, sunny afternoon. Where does the water go?', answer: 'evaporation', short: '👕 Wet clothes dry' },
   { prompt: 'The sun heats a river, and water rises as invisible vapor into the air. This step is called ___.', answer: 'evaporation', short: '🏞️ Sun heats the river' },
   { prompt: 'Rain flows into the river. Then the sun heats the river again. What happens next?', answer: 'evaporation', short: '🔁 Rain, river, sun again' },
-  { prompt: 'The sun warms a lake, and invisible water vapor floats up into the sky.', answer: 'evaporation', short: '🏝️ Warm lake, rising air' },
+  { prompt: 'The sun warms a lake, and invisible water vapor floats up into the sky. Which step is this?', answer: 'evaporation', short: '🏝️ Warm lake, rising air' },
   // ── condensation ───────────────────────────────────────────────────────────
   { prompt: 'High in the sky the air is cool, so water vapor turns back into tiny droplets. This step is called ___.', answer: 'condensation', short: '🌬️ Cool air up high' },
   { prompt: 'Tiny droplets of water gather around bits of dust in the sky and form a cloud. This step is called ___.', answer: 'condensation', short: '✨ Droplets gather on dust' },
   { prompt: 'Water vapor rises high into the cool sky. What happens to it up there?', answer: 'condensation', short: '⬆️ Vapor rises, air cools' },
   { prompt: 'Dew forms on the cool grass in the early morning. This step is called ___.', answer: 'condensation', short: '🌱 Dew on cool grass' },
-  { prompt: 'The air cools, and tiny water droplets appear on the outside of a cold glass.', answer: 'condensation', short: '🥛 Drops on a cold glass' },
-  { prompt: 'Water vapor spreads through the cool upper sky and turns back into tiny drops.', answer: 'condensation', short: '❄️ Vapor meets cold sky' },
+  { prompt: 'Water vapor in the air touches a cold glass, and tiny droplets appear on the outside. Which step is this?', answer: 'condensation', short: '🥛 Drops on a cold glass' },
+  { prompt: 'Water vapor spreads through the cool upper sky and turns back into tiny drops. Which step is this?', answer: 'condensation', short: '❄️ Vapor meets cold sky' },
   // ── precipitation ──────────────────────────────────────────────────────────
   { prompt: 'A cloud grows heavy with droplets. The water falls as rain onto the ground. This step is called ___.', answer: 'precipitation', short: '🏋️ The cloud gets heavy' },
   { prompt: 'Thick gray clouds let their droplets fall to the earth as rain or snow. This step is called ___.', answer: 'precipitation', short: '🌫️ Thick gray clouds' },
   { prompt: 'A cloud is full of droplets and turns dark gray. What happens next?', answer: 'precipitation', short: '🌑 Dark, full cloud' },
-  { prompt: 'Snow falls from the sky onto the mountain tops.', answer: 'precipitation', short: '🏔️ Snowy mountain tops' },
+  { prompt: 'Snow falls from the sky onto the mountaintops. Which step is this?', answer: 'precipitation', short: '🏔️ Snowy mountain tops' },
   { prompt: 'The droplets in a cloud get heavy. What step brings water back down to the ground?', answer: 'precipitation', short: '⬇️ Heavy drops come down' },
-  { prompt: 'Rain pours down from a dark cloud and fills the pond again.', answer: 'precipitation', short: '☔ The pond fills up' },
+  { prompt: 'Rain pours down from a dark cloud and fills the pond again. Which step is this?', answer: 'precipitation', short: '☔ The pond fills up' },
 ]
 
 const SHORT_BY_PROMPT = new Map(CYCLE_SITUATIONS.map((s) => [s.prompt, s.short]))

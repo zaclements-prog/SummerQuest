@@ -88,7 +88,7 @@ function time(idx: number): Problem {
     answer: ans,
     topic: 'measurement-time',
     visual: { kind: 'clock', hour: startH, minute: startM },
-    hint: `Add ${elapsedH} hours and ${elapsedM} minutes.`,
+    hint: `Add ${elapsedStr}.`,
     skill: { id: 'meas-time', label: 'telling time' },
   }
 }

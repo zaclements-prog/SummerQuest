@@ -12,6 +12,7 @@
 
 import type { ProviderConfig } from './providers'
 import type { Stage } from '../curriculum/types'
+import { groveMaxFactor } from './grove/groveCore'
 
 export type GradeLevel = 2 | 3 | 4
 
@@ -138,9 +139,12 @@ export function effectiveConfig(
       const idx = Math.min(stageIndex, 2)
       return { ...config, level: t.bankLevels[idx] as 2 | 3 | 4 }
     }
+    case 'multiplicationGrove':
+      // Times Grove filters its own bank; this keeps other hosts (the Daily
+      // Challenge) inside the grade's orders too.
+      return { ...config, maxFactor: groveMaxFactor(grade) }
     case 'writingPrompt':
     case 'scienceCycle':
-    case 'multiplicationGrove':
       return config
   }
 }
