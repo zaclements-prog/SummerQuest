@@ -1,5 +1,6 @@
 package com.summerquest.app;
 
+import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
 import android.webkit.WebView;
 
@@ -14,6 +15,9 @@ public class MainActivity extends BridgeActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Debug builds only: let chrome://inspect (and scripts/fire-perf.mjs) attach to the
+        // WebView on a test tablet. Release builds keep the config's `false`.
+        if ((getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0) WebView.setWebContentsDebuggingEnabled(true);
         hideSystemBars();
     }
 
