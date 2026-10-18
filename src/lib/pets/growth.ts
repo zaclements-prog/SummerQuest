@@ -153,6 +153,17 @@ export function pendingMoments(stages: Record<string, PetGrowth>, seen: Record<s
   return out
 }
 
+/**
+ * The stage a pet shows in the Home room and the World: the one last
+ * celebrated (never more than its stage now). A pet that grew while you were
+ * busy learning keeps its old look until its celebration reveals the new one,
+ * and a just-hatched pet only comes out once you've seen it hatch.
+ */
+export function shownStage(stage: PetGrowth, seen: PetGrowth | undefined): PetGrowth {
+  const s = isPetGrowth(seen) ? seen : 'egg'
+  return growthRank(s) < growthRank(stage) ? s : stage
+}
+
 /** Creatures whose pet is grown up (they belong among the avatars). */
 export function adultPets(stages: Record<string, PetGrowth>): string[] {
   return PETS.filter((p) => stages[p.creatureId] === 'adult').map((p) => p.creatureId)

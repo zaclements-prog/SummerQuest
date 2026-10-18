@@ -13,6 +13,7 @@ import {
   petStages,
   petStatus,
   petStatuses,
+  shownStage,
   zoneStarTotals,
 } from '../growth'
 import type { ZonesLike } from '../growth'
@@ -214,6 +215,14 @@ describe('all pets', () => {
     // never seen counts as an egg; a junk saved value too
     expect(pendingMoments({ octopus: 'baby' }, {})).toEqual([{ creatureId: 'octopus', from: 'egg', to: 'baby' }])
     expect(pendingMoments({ octopus: 'kid' }, { octopus: 'huge' as never })).toEqual([{ creatureId: 'octopus', from: 'egg', to: 'kid' }])
+  })
+
+  it('Home and the World show a pet as last celebrated', () => {
+    expect(shownStage('baby', undefined)).toBe('egg') // hatched, not yet seen hatching: stays inside
+    expect(shownStage('kid', 'baby')).toBe('baby') // grew: keeps its old look until the celebration
+    expect(shownStage('kid', 'kid')).toBe('kid')
+    expect(shownStage('baby', 'adult')).toBe('baby') // never ahead of what it is now
+    expect(shownStage('adult', 'junk' as never)).toBe('egg')
   })
 
   it('growthRank orders the stages', () => {

@@ -43,7 +43,8 @@ function cueAt(done: { current: number }, t: number, silent: boolean, bit: numbe
 }
 
 // ── Timeline (seconds) ───────────────────────────────────────────────────────
-const HATCH = { open: 2.2, petIn: 2.25, reveal: 2.45 }
+// (the pet comes out once the top of the shell is well off)
+const HATCH = { open: 2.2, petIn: 2.45, reveal: 2.7 }
 const GROW = { swap: 1.7, reveal: 1.9 }
 
 // ── Sparkles: a handful of little gold diamonds ──────────────────────────────

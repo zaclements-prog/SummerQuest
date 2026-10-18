@@ -11,7 +11,7 @@ import { GRID_SIZE, TILE } from '../../lib/home/grid'
 import { avatarBlockedAt, avatarSpawnPoint } from '../../lib/home/occupancy'
 import { useAvatarBlockers } from '../useOccupied'
 import { useWanderWalk } from '../../world/useWanderWalk'
-import { usePetStatuses } from '../../lib/pets/usePets'
+import { useShownPetStages } from '../../lib/pets/usePets'
 import { hatchedPets } from '../../lib/pets/growth'
 import { homePetIds } from '../../lib/pets/roster'
 import type { PetStage } from '../../lib/pets/types'
@@ -30,15 +30,16 @@ const hitBall = new SphereGeometry(1, 8, 6)
 
 /**
  * Hatched pets toddling around the Home room: up to six, the buddy first,
- * never the creature you're playing as (see `homePetIds`). Each walks on its
+ * never the creature you're playing as (see `homePetIds`), each at the stage
+ * last celebrated (`shownStage`). Each walks on its
  * own (its own walk state, so its legs don't march in step with yours) and
  * bumps into furniture like the avatar does. In Play mode a tap opens its card.
  */
 export default function HomePets() {
-  const statuses = usePetStatuses()
+  // (as last celebrated: a pet comes out once you've seen it hatch)
+  const stages = useShownPetStages()
   const buddy = useProgress((s) => s.buddyPet)
   const active = useProgress((s) => s.activeCreature)
-  const stages = useMemo(() => Object.fromEntries(statuses.map((s) => [s.pet.creatureId, s.stage])), [statuses])
   const ids = useMemo(() => homePetIds(hatchedPets(stages), buddy, active), [stages, buddy, active])
   return (
     <>

@@ -6,7 +6,7 @@ import { useProgress } from '../store/progress'
 import { creatureBuilder } from '../home/models/registry'
 import { WalkStateContext, newWalkState } from '../home/models/walkState'
 import type { WalkState } from '../home/models/walkState'
-import { usePetStatusMap } from '../lib/pets/usePets'
+import { useShownPetStages } from '../lib/pets/usePets'
 import type { PetStage } from '../lib/pets/types'
 import { worldColliders } from './worldLayout'
 import { collidesAt, MAX_WALK_DT } from './collision'
@@ -30,7 +30,8 @@ const POP_S = 0.3
  */
 export default function WorldBuddy({ posRef }: { posRef: RefObject<Vector3> }) {
   const buddy = useProgress((s) => s.buddyPet)
-  const stage = usePetStatusMap()[buddy ?? '']?.stage
+  // as last celebrated: it comes along once you've seen it hatch
+  const stage = useShownPetStages()[buddy ?? '']
   if (!buddy || !stage || stage === 'egg') return null
   return <Buddy key={buddy} creatureId={buddy} stage={stage} posRef={posRef} />
 }
@@ -98,7 +99,7 @@ function Buddy({ creatureId, stage, posRef }: { creatureId: string; stage: PetSt
   })
 
   return (
-    <group ref={group} visible={false}>
+    <group ref={group} name="world-buddy" visible={false}>
       <group ref={inner}>
         {/* the provider must wrap the model: its limbs read the walk state from context */}
         <WalkStateContext.Provider value={walk}>
