@@ -5,10 +5,11 @@ import { nextProblem, type Problem } from '../lib/problem'
 import { sfx } from '../lib/sound'
 import { useProgress } from '../store/progress'
 import VisualRenderer from '../components/VisualRenderer'
+import { visualSize } from '../components/visualSize'
 import { skillOf } from '../tutoring/skills'
 import { Loading } from '../components/ui'
 import { QuizProgress, QuestionPrompt, AnswerGrid, QuizSplit } from './_shared/QuizUI'
-import { SHORT_SCREEN, useMediaQuery } from '../components/useViewport'
+import { SHORT_SCREEN, WIDE_SHORT, useMediaQuery } from '../components/useViewport'
 
 /**
  * Generic concept stage. Shows a problem with its visual representation, presents
@@ -28,6 +29,7 @@ export default function ConceptPlay({ provider, params, onComplete, meta }: Game
   const recordAttempt = useProgress((s) => s.recordAttempt)
   // Phone held sideways: smaller pictures, question beside the answers.
   const short = useMediaQuery(SHORT_SCREEN)
+  const wide = useMediaQuery(WIDE_SHORT)
 
   useEffect(() => {
     let cancel = false
@@ -99,6 +101,9 @@ export default function ConceptPlay({ provider, params, onComplete, meta }: Game
 
   return (
     <div className="game-surface flex-1 flex flex-col items-center p-4 short:px-3 short:pt-1 overflow-y-auto">
+      {/* On a tablet the quiz sits in the middle of the screen (margin-auto centring
+          still scrolls from the top when a long passage doesn't fit). */}
+      <div className="w-full flex flex-col items-center roomy:my-auto">
       <QuizProgress current={idx + 1} total={questionCount} />
 
       <QuizSplit
@@ -108,7 +113,7 @@ export default function ConceptPlay({ provider, params, onComplete, meta }: Game
             <QuestionPrompt>{problem.prompt}</QuestionPrompt>
             {hasGenuineVisual && (
               <div className="my-5 max-sm:my-3.5 short:my-3 flex justify-center">
-                <VisualRenderer visual={problem.visual} size={short ? 'sm' : 'md'} />
+                <VisualRenderer visual={problem.visual} size={visualSize(problem.visual, short, wide)} />
               </div>
             )}
           </>
@@ -142,6 +147,7 @@ export default function ConceptPlay({ provider, params, onComplete, meta }: Game
           </>
         }
       />
+      </div>
     </div>
   )
 }

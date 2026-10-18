@@ -15,7 +15,7 @@ import MathGate from './MathGate'
 import { sfx } from '../../lib/sound'
 import { Button, Pill, Card } from '../../components/ui'
 import { TOON } from '../../toon/palette'
-import { SHORT_SCREEN, useMediaQuery } from '../../components/useViewport'
+import { ROOMY_SCREEN, SHORT_SCREEN, useMediaQuery } from '../../components/useViewport'
 
 const INK = TOON.outline
 
@@ -36,6 +36,8 @@ export default function TowerDefense({ provider, onComplete, meta, paused = fals
   const nopeId = useRef(0)
   // Phone held sideways: the board fills the height, stats + shop sit beside it.
   const short = useMediaQuery(SHORT_SCREEN)
+  // tablets: bigger shop tiles and a little more air, so the board leaves them a bit more room
+  const roomy = useMediaQuery(ROOMY_SCREEN)
   // The RAF loop runs for the component's lifetime and reads these through refs.
   const frozenRef = useRef(false)
   useEffect(() => {
@@ -147,7 +149,8 @@ export default function TowerDefense({ provider, onComplete, meta, paused = fals
   return (
     <div
       className={[
-        'game-surface flex-1 flex flex-col items-center p-3',
+        // tablets: the board, stats and shop sit in the middle of the screen
+        'game-surface flex-1 flex flex-col items-center p-3 roomy:justify-center roomy:gap-2',
         // sideways phone: board on the left (full height), stats + shop on the right
         'short:grid short:grid-cols-[auto_minmax(0,15rem)] short:grid-rows-[auto_1fr] short:content-start short:justify-center short:items-start short:gap-x-3 short:pt-1',
       ].join(' ')}
@@ -163,7 +166,7 @@ export default function TowerDefense({ provider, onComplete, meta, paused = fals
           // As big as fits: the whole board, its stats and the shop stay on screen.
           width: short
             ? `min(64vw, calc((100dvh - 140px) * ${GAME_W / GAME_H}))`
-            : `min(760px, 100%, max(320px, calc((100dvh - 330px) * ${GAME_W / GAME_H})))`,
+            : `min(960px, 100%, max(320px, calc((100dvh - ${roomy ? 362 : 330}px) * ${GAME_W / GAME_H})))`,
         }}
       >
         <svg
@@ -312,15 +315,15 @@ function TowerPicker({
             disabled={!afford}
             aria-pressed={active}
             className={[
-              'kid-text rounded-[1.25rem] border-[3px] px-6 py-2.5 short:py-1.5 min-h-[48px] text-center',
+              'kid-text rounded-[1.25rem] border-[3px] px-6 py-2.5 short:py-1.5 min-h-[48px] text-center roomy:px-8 roomy:py-3',
               'transition-[translate,box-shadow,background-color] duration-100 active:translate-y-[3px]',
               'focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ocean-600/70 focus-visible:ring-offset-2',
               stateClass,
             ].join(' ')}
           >
             <div className="text-3xl" aria-hidden="true">{stats.emoji}</div>
-            <div className="text-sm">{stats.label}</div>
-            <div className="text-xs inline-flex items-center gap-1 justify-center">
+            <div className="text-sm roomy:text-base">{stats.label}</div>
+            <div className="text-xs roomy:text-sm inline-flex items-center gap-1 justify-center">
               <span aria-hidden="true">🪙</span> {stats.cost}
             </div>
           </button>

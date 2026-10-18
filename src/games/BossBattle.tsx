@@ -6,9 +6,10 @@ import { sfx } from '../lib/sound'
 import { useProgress } from '../store/progress'
 import { skillOf } from '../tutoring/skills'
 import { Loading, ProgressBar, Pill } from '../components/ui'
-import { QuizProgress, QuestionPrompt, AnswerGrid } from './_shared/QuizUI'
+import { QuizProgress, QuestionPrompt, AnswerGrid, QuizSplit } from './_shared/QuizUI'
 import VisualRenderer from '../components/VisualRenderer'
-import { SHORT_SCREEN, WIDE_SHORT, useMediaQuery } from '../components/useViewport'
+import { visualSize } from '../components/visualSize'
+import { ROOMY_SCREEN, SHORT_SCREEN, WIDE_SHORT, useMediaQuery } from '../components/useViewport'
 
 // Visuals the question can't be answered without (a reading passage, a bar graph).
 // Teaching aids like multiplication arrays or fraction bars stay hidden in the boss
@@ -55,6 +56,11 @@ export default function BossBattle({ provider, params, onComplete, meta }: GameP
   const short = useMediaQuery(SHORT_SCREEN)
   // Wide, short screens (that phone, or a wide tablet in landscape): two columns.
   const wide = useMediaQuery(WIDE_SHORT)
+  // A tablet held sideways: boss | question + picture | answers, so the answers
+  // never sit under a tall chart, below the fold. (Phones keep the answers under
+  // the question: three columns would squeeze long word answers.)
+  const roomy = useMediaQuery(ROOMY_SCREEN)
+  const sideAnswers = wide && roomy
 
   useEffect(() => {
     let cancel = false
@@ -148,13 +154,28 @@ export default function BossBattle({ provider, params, onComplete, meta }: GameP
   // Battle escalates as the boss weakens — pulse the arena glow more urgently.
   const bossDefeated = bossHp <= 0
 
+  const question = (
+    <>
+      <QuestionPrompt>{problem.prompt}</QuestionPrompt>
+      {problem.visual && REQUIRED_VISUALS.has(problem.visual.kind) && (
+        <div className="mt-4 short:mt-3 w-full flex justify-center">
+          <VisualRenderer visual={problem.visual} size={visualSize(problem.visual, short, wide)} />
+        </div>
+      )}
+    </>
+  )
+  const answers = (
+    <AnswerGrid options={problem.options} answer={problem.answer} picked={picked} onPick={pick} disabled={state !== 'idle'} />
+  )
+
   return (
     <div className="game-surface flex-1 flex flex-col items-center p-4 short:px-3 short:pt-1 overflow-y-auto">
       <div
         className={
           wide
-            ? `w-full max-w-5xl grid items-start gap-4 lg:gap-6 ${short ? 'grid-cols-[minmax(0,15rem)_minmax(0,1fr)]' : 'grid-cols-[minmax(0,20rem)_minmax(0,1fr)]'}`
-            : 'w-full max-w-2xl flex flex-col items-center'
+            ? `w-full grid items-start gap-4 lg:gap-6 roomy:my-auto ${sideAnswers ? 'max-w-6xl' : 'max-w-5xl'} ${short ? 'grid-cols-[minmax(0,15rem)_minmax(0,1fr)]' : sideAnswers ? 'grid-cols-[minmax(0,16rem)_minmax(0,1fr)]' : 'grid-cols-[minmax(0,20rem)_minmax(0,1fr)]'}`
+            : // on a tablet the battle sits in the middle of the screen, not stuck to the top
+              'w-full max-w-2xl roomy:max-w-3xl flex flex-col items-center roomy:my-auto'
         }
       >
         {/* The boss, the hit/hurt cue and your hearts (a pinned left column when sideways) */}
@@ -217,23 +238,14 @@ export default function BossBattle({ provider, params, onComplete, meta }: GameP
           <div key={problem.id} className={`${wide ? 'mt-0' : 'mt-4'} w-full flex flex-col items-center`}>
             <QuizProgress current={Math.min(questionsAnswered + 1, questionCount)} total={questionCount} />
 
-            <QuestionPrompt>{problem.prompt}</QuestionPrompt>
-
-            {problem.visual && REQUIRED_VISUALS.has(problem.visual.kind) && (
-              <div className="mt-4 short:mt-3 w-full flex justify-center">
-                <VisualRenderer visual={problem.visual} size={short ? 'sm' : 'md'} />
-              </div>
+            {sideAnswers ? (
+              <QuizSplit question={question} answers={answers} />
+            ) : (
+              <>
+                {question}
+                <div className="mt-5 short:mt-3 w-full flex justify-center">{answers}</div>
+              </>
             )}
-
-            <div className="mt-5 short:mt-3 w-full flex justify-center">
-              <AnswerGrid
-                options={problem.options}
-                answer={problem.answer}
-                picked={picked}
-                onPick={pick}
-                disabled={state !== 'idle'}
-              />
-            </div>
           </div>
         )}
 

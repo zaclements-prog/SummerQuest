@@ -73,6 +73,7 @@ import { multLabel } from './_juice/score'
 import { voice } from './_juice/voice'
 import { canvasQuality, useLowGraphics } from '../world/graphicsQuality'
 import { SAFE } from './_runkit/uiTokens'
+import { WalkHint } from './_runkit/RunHud'
 
 /**
  * Crystal Golems — the division arena, fun pass (docs/superpowers/specs/
@@ -721,7 +722,7 @@ export default function DivisionArena({ params, onComplete, meta, paused: hostPa
       {view && !results && hud.hint && view.index === 0 && (
         <div className={`absolute ${SAFE.bottom3} left-1/2 -translate-x-1/2 z-10 pointer-events-none`}>
           <div className="kid-text flex items-center gap-2 whitespace-nowrap rounded-2xl bg-[#fffaf0]/95 px-3 py-1 text-lg text-[#3a2c38] shadow-lg" style={{ border: '3px solid #3a2c38' }}>
-            <span>WASD / tap to walk</span>
+            <span><WalkHint keys="WASD / tap to walk" touch="👆 Tap to walk" /></span>
             <span className="opacity-40">·</span>
             <span aria-label="grab a crystal, then go to the golem">💎 → 🗿</span>
           </div>

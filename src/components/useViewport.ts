@@ -15,11 +15,20 @@ import type { RefObject } from 'react'
  */
 export const SHORT_SCREEN = '(max-height: 32rem)'
 /**
- * Wide and not very tall: a phone held sideways, or a wide tablet/laptop in
- * landscape. A 16:9 picture stacked above text would push the text off screen,
- * so players put the two side by side.
+ * Wide and not very tall: a phone held sideways, a wide laptop window, or any
+ * touch tablet in landscape (iPad Safari, a full-screen iPad web app, iPad Pro
+ * 13", Android tablets). A 16:9 picture stacked above text would push the text
+ * off screen, so players put the two side by side — and on a tablet held in
+ * both hands the answers land near a thumb.
  */
-export const WIDE_SHORT = '(min-aspect-ratio: 4/3) and (max-height: 32rem), (min-aspect-ratio: 3/2) and (max-height: 760px)'
+export const WIDE_SHORT =
+  '(min-aspect-ratio: 4/3) and (max-height: 32rem), (min-aspect-ratio: 3/2) and (max-height: 760px), (pointer: coarse) and (min-aspect-ratio: 4/3) and (max-height: 1100px)'
+/**
+ * Room to spare in both directions: any tablet in either orientation, or a big
+ * desktop window (not phones, not iPad Split View). Game screens centre their
+ * content and use bigger tiles and pictures. Must match the `roomy:` CSS variant.
+ */
+export const ROOMY_SCREEN = '(min-width: 700px) and (min-height: 640px)'
 /** The main pointer is a finger (phones, tablets) rather than a mouse or trackpad. */
 export const COARSE_POINTER = '(pointer: coarse)'
 

@@ -10,7 +10,7 @@ import { sfx } from '../lib/sound'
 import { Card, Button, Medallion, ProgressBar, Pill, StarRating, Loading } from '../components/ui'
 import { useEntrance } from '../lib/motion'
 import { heuristicFeedback } from '../lib/writingGrader'
-import { useKeepAboveKeyboard, useKeyboardInset, useVisibleHeight } from '../components/useViewport'
+import { ROOMY_SCREEN, WIDE_SHORT, useCoarsePointer, useKeepAboveKeyboard, useKeyboardInset, useMediaQuery, useVisibleHeight } from '../components/useViewport'
 
 interface Feedback {
   score: number
@@ -198,8 +198,14 @@ function WritingPadView({
 }: WritingPadViewProps) {
   const reduced = useReducedMotion()
   const { container, item } = useEntrance()
-  const rows = kind === 'sentence' ? 3 : kind === 'paragraph' ? 6 : 10
   const enoughWords = wordCount >= minWords
+  // a tablet held upright has height to spare for a bigger writing box
+  const roomy = useMediaQuery(ROOMY_SCREEN)
+  const sideways = useMediaQuery(WIDE_SHORT)
+  const upright = roomy && !sideways
+  // The local AI grader runs on a computer; a tablet can't fix it being down, so
+  // kids there just get the basic score without the warning.
+  const touch = useCoarsePointer()
 
   // On-screen keyboard (iPad / phones): while typing, the word count + Submit
   // ride on a bar just above the keyboard, and the writing box shrinks to fit
@@ -212,6 +218,8 @@ function WritingPadView({
   const keyboard = useKeyboardInset()
   const visibleH = useVisibleHeight()
   const docked = typing && keyboard > 0
+  // (until the keyboard takes half the screen)
+  const rows = (kind === 'sentence' ? 3 : kind === 'paragraph' ? 6 : 10) + (upright && !docked ? (kind === 'sentence' ? 1 : 4) : 0)
   const BAR_H = 76
   useKeepAboveKeyboard(areaRef, typing, docked ? BAR_H + 8 : 16)
 
@@ -232,6 +240,7 @@ function WritingPadView({
 
   return (
     <div className="flex-1 flex flex-col items-center p-4 overflow-y-auto">
+      <div className="w-full flex flex-col items-center roomy:my-auto">
       {/* Progress */}
       <div className="w-full max-w-2xl mb-3">
         <div className="kid-text text-base text-ink-700 text-center mb-1.5">
@@ -314,7 +323,7 @@ function WritingPadView({
                 AI feedback is off in settings — you'll still get a score, but for richer feedback turn it on in the Parent dashboard.
               </motion.p>
             )}
-            {llmAvailable === false && llmEnabled && (
+            {llmAvailable === false && llmEnabled && !touch && (
               <motion.p
                 variants={item}
                 className="text-sm text-ink-700 kid-text max-w-md text-center"
@@ -395,6 +404,7 @@ function WritingPadView({
           </motion.div>
         )}
       </AnimatePresence>
+      </div>
 
       {/* While the keyboard covers the bottom of the page, room to scroll the
           writing box up above it (the page may be shorter than that). */}

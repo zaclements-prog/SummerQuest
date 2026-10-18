@@ -72,11 +72,12 @@ export default function WorldHud({ posRef }: { posRef: RefObject<Vector3> }) {
           <Link
             to="/map"
             onClick={() => { sfx.click(); rememberSpot() }}
-            className="pointer-events-auto kid-text bg-paper/95 hover:bg-cream-100 text-ink-900 px-3 py-1 rounded-full text-sm border-2 border-line shadow-[0_3px_0_var(--color-line)] [text-shadow:none]"
+            // finger-sized on tablets and phones (48px), compact for a mouse
+            className="pointer-events-auto kid-text inline-flex items-center bg-paper/95 hover:bg-cream-100 text-ink-900 px-3 py-1 pointer-coarse:min-h-12 pointer-coarse:px-4 pointer-coarse:text-base rounded-full text-sm border-2 border-line shadow-[0_3px_0_var(--color-line)] [text-shadow:none]"
           >
             🗺️ Map
           </Link>
-          <span className="kid-text bg-paper/85 text-ink-900 px-3 py-1 rounded-full text-xs border border-line/40 [text-shadow:none]">
+          <span className="kid-text bg-paper/85 text-ink-900 px-3 py-1 rounded-full text-xs pointer-coarse:text-sm pointer-coarse:py-1.5 border border-line/40 [text-shadow:none]">
             <span className="pointer-coarse:hidden">🌍 WASD / arrows or tap to walk</span>
             <span className="hidden pointer-coarse:inline">👆 Tap or hold to walk</span>
           </span>

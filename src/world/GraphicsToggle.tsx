@@ -42,7 +42,7 @@ export default function GraphicsToggle() {
         aria-label="Graphics settings"
         aria-expanded={open}
         title="Graphics"
-        className="kid-text w-10 h-10 grid place-items-center rounded-full bg-paper/95 hover:bg-cream-100 text-lg border-2 border-line shadow-[0_3px_0_var(--color-line)]"
+        className="kid-text w-10 h-10 pointer-coarse:w-12 pointer-coarse:h-12 grid place-items-center rounded-full bg-paper/95 hover:bg-cream-100 text-lg border-2 border-line shadow-[0_3px_0_var(--color-line)]"
       >
         ⚙️
       </button>

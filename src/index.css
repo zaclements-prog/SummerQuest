@@ -198,6 +198,10 @@
 }
 
 @custom-variant short (@media (max-height: 32rem));
+/* A tablet in either orientation (or a big desktop window): room to spare in both
+   directions, so game screens centre their content and grow their tiles and pictures.
+   Matches ROOMY_SCREEN in src/components/useViewport.ts. */
+@custom-variant roomy (@media (min-width: 700px) and (min-height: 640px));
 
 @layer base {
   html {

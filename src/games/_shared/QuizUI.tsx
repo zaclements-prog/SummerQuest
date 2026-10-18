@@ -18,8 +18,8 @@ import { WIDE_SHORT, useMediaQuery } from '../../components/useViewport'
 
 export function QuizProgress({ current, total }: { current: number; total: number }) {
   return (
-    <div className="w-full max-w-md mb-4 short:mb-2">
-      <div className="kid-text text-base text-ink-700 text-center mb-1.5 short:mb-1 short:text-sm">
+    <div className="w-full max-w-md mb-4 short:mb-2 roomy:max-w-xl roomy:mb-6">
+      <div className="kid-text text-base text-ink-700 text-center mb-1.5 short:mb-1 short:text-sm roomy:text-lg">
         Question {current} of {total}
       </div>
       <ProgressBar value={current} max={total} tone="quest" />
@@ -42,9 +42,9 @@ export function QuestionPrompt({ children }: { children: ReactNode }) {
       transition={{ type: 'spring', stiffness: 260, damping: 22 }}
       className={[
         'bg-paper text-ink-900 kid-text',
-        short ? 'font-bold text-3xl md:text-5xl short:text-3xl' : 'font-semibold text-2xl md:text-3xl short:text-xl',
+        short ? 'font-bold text-3xl md:text-5xl short:text-3xl roomy:text-5xl' : 'font-semibold text-2xl md:text-3xl short:text-xl roomy:text-3xl',
         'text-center leading-snug',
-        'rounded-toon px-6 py-5 max-sm:px-4 max-sm:py-3.5 short:px-4 short:py-2.5 max-w-2xl w-full',
+        'rounded-toon px-6 py-5 max-sm:px-4 max-sm:py-3.5 short:px-4 short:py-2.5 roomy:px-8 roomy:py-6 max-w-2xl roomy:max-w-3xl w-full',
         'border-[3px] border-line shadow-card',
       ].join(' ')}
     >
@@ -118,7 +118,7 @@ export function AnswerGrid({ options, answer, picked, onPick, disabled }: Answer
   return (
     <div
       className={[
-        'grid gap-3 short:gap-2.5 w-full max-w-md',
+        'grid gap-3 short:gap-2.5 roomy:gap-4 w-full max-w-md roomy:max-w-xl',
         oneColumn ? 'grid-cols-1' : 'grid-cols-2',
       ].join(' ')}
     >
@@ -195,7 +195,9 @@ function AnswerButton({
       }
       className={[
         'choice kid-text font-bold relative justify-center text-center !border-[3px]',
-        longLabels ? 'text-xl min-h-[60px] short:min-h-[52px] short:text-lg' : 'text-3xl min-h-[68px] short:min-h-[56px]',
+        longLabels
+          ? 'text-xl min-h-[60px] short:min-h-[52px] short:text-lg roomy:text-2xl roomy:min-h-[76px]'
+          : 'text-3xl min-h-[68px] short:min-h-[56px] roomy:text-4xl roomy:min-h-[88px]',
         'transition-[translate,box-shadow,background-color] duration-100',
         stateClass[state],
         'focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ocean-600/70 focus-visible:ring-offset-2',

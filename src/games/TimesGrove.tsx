@@ -45,6 +45,7 @@ import { multLabel } from './_juice/score'
 import { voice } from './_juice/voice'
 import { canvasQuality, useLowGraphics } from '../world/graphicsQuality'
 import { SAFE } from './_runkit/uiTokens'
+import { WalkHint } from './_runkit/RunHud'
 
 /**
  * Times Grove — the array orchard, fun pass (docs/superpowers/specs/
@@ -519,7 +520,7 @@ export default function TimesGrove({ params, onComplete, meta, paused: hostPause
         <div className={`absolute ${SAFE.bottom3} left-1/2 -translate-x-1/2 z-10 pointer-events-none flex flex-col items-center gap-1.5`}>
           {view?.index === 0 && view.phase === 'build' && (
             <div key={isCommittable(live) ? 'still' : 'walk'} className="kid-text rounded-2xl bg-[#3a2c38]/80 px-3 py-0.5 text-lg text-white shadow chip-pop whitespace-nowrap">
-              {isCommittable(live) ? '✋ Stand still to plant!' : 'WASD / tap to walk — trees follow you'}
+              {isCommittable(live) ? '✋ Stand still to plant!' : <WalkHint keys="WASD / tap to walk — trees follow you" touch="👆 Tap to walk — trees follow you" />}
             </div>
           )}
           <div className="kid-text flex items-center gap-2 rounded-2xl bg-white/90 px-4 py-1 text-2xl text-[#3a2c38] shadow-lg" style={{ border: '3px solid #3a2c38' }}>

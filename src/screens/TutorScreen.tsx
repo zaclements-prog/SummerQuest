@@ -61,10 +61,11 @@ function StepDots({ count, current, maxSeen, onJump }: { count: number; current:
             onClick={() => onJump(k)}
             aria-label={`Step ${k + 1}${isCur ? ' (current)' : ''}`}
             aria-current={isCur ? 'step' : undefined}
-            // 48px tall; side by side the dots' hit areas meet, so a finger can't miss
+            // 48px tall and 44px wide where there's room (they shrink on a narrow phone);
+            // side by side the dots' hit areas meet, so a finger can't miss
             className={[
               'grid h-12 shrink place-items-center rounded-full focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ocean-500 disabled:cursor-default',
-              isCur ? 'w-11' : 'w-7 sm:w-8',
+              isCur ? 'w-11' : 'w-9 sm:w-11',
             ].join(' ')}
           >
             <motion.span
@@ -315,12 +316,13 @@ export default function TutorScreen() {
         //    controls beside it, the nav dock underneath. ─────────────────────
         <div className="mx-auto flex w-full max-w-[1200px] flex-1 flex-col gap-2">
           <h1 className="sr-only">{lesson.title}</h1>
-          <div className="flex items-stretch gap-3">
+          {/* (a tablet has height to spare under the 16:9 stage: the row sits in the middle) */}
+          <div className="flex items-stretch gap-3 roomy:my-auto">
             <section
               aria-label="Lesson player"
               className="flex-shrink-0 overflow-hidden rounded-[24px]"
-              // as tall as the screen allows (top bar + dock under it), never over 60% of the width
-              style={{ ...playerFrame, width: 'min(60vw, calc((100dvh - 150px) * 16 / 9))' }}
+              // as tall as the screen allows (top bar + dock under it), never over 62% of the width
+              style={{ ...playerFrame, width: 'min(62vw, calc((100dvh - 150px) * 16 / 9))' }}
             >
               {stage}
             </section>
@@ -359,7 +361,7 @@ export default function TutorScreen() {
           </div>
 
           {/* ── Player: stage + controls + caption ──────────────────────── */}
-          <section aria-label="Lesson player" className="overflow-hidden rounded-[30px]" style={playerFrame}>
+          <section aria-label="Lesson player" className="overflow-hidden rounded-[30px] roomy:my-auto" style={playerFrame}>
             {stage}
             <div className="px-3 pt-3 sm:px-4">{controls}</div>
             <div className="px-4 pb-4 pt-3 sm:px-6 sm:pb-5">
