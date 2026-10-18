@@ -1,6 +1,7 @@
 import { BufferAttribute, BufferGeometry, Box3, Color, Matrix3, Matrix4, Mesh, MeshToonMaterial, Object3D, Sphere, Vector3 } from 'three'
 import type { Material, Texture } from 'three'
 import { registerSharedGpuCache } from '../platform/gl/release'
+import { isTouchFirst } from '../platform/gl/deviceClass'
 
 /**
  * Automatic static batching for toon scenery.
@@ -27,6 +28,20 @@ import { registerSharedGpuCache } from '../platform/gl/release'
  * under a group that has them), transparent materials that write depth,
  * texture-mapped materials, instanced/skinned meshes and custom render hooks
  * are never batched.
+ *
+ * A batched leaf (no children but its own outline hull) is also *frozen*: three.js
+ * stops re-composing its matrices every frame (`matrixAutoUpdate` /
+ * `matrixWorldAutoUpdate` off), since it never draws. In the World that is ~1500
+ * meshes, a big share of a slow tablet's frame. The round-robin re-check composes
+ * its local matrix itself, so a move is still caught; handing it back unfreezes it.
+ *
+ * Once it no longer draws, a frozen leaf that React owns is also *detached*: taken
+ * out of its parent's `children` (its `parent` link stays), so three.js doesn't even
+ * visit it when it walks the scene each frame. React Three Fiber copes with a child
+ * missing from that list (removing it is a no-op; re-ordering puts it back), and on
+ * unmount it deletes the object's `__r3f`, which is how the re-check notices; an
+ * unmounted source is let go without being put back. Plain three.js scenes (no
+ * `__r3f`) are only frozen.
  */
 
 // ── Pure merge ──────────────────────────────────────────────────────────────
@@ -300,6 +315,12 @@ interface Source {
   /** the original layer masks, restored when handed back */
   mask: number
   hullMask: number
+  /** its matrices are frozen while batched (a leaf: no children but its hull) */
+  frozen: boolean
+  /** React Three Fiber owns it (it had `__r3f` when batched) */
+  r3f: boolean
+  /** taken out of its parent's children while it doesn't draw (see the module note) */
+  detached: boolean
 }
 
 interface MergeGroup {
@@ -318,8 +339,12 @@ export const BATCH = {
   scanMs: 1000,
   /** …and at least this many rendered frames between scans, so motion can show. */
   scanFrames: 3,
-  /** Sources re-checked per frame (round robin), so a big area costs the same as a small one. */
-  checksPerFrame: 48,
+  /**
+   * Sources re-checked per frame (round robin), so a big area costs the same as a
+   * small one. Fewer on phones and tablets (slow CPUs, ~15 areas each checking): a
+   * 150-mesh area is still fully re-checked about every 10 frames.
+   */
+  checksPerFrame: isTouchFirst() ? 16 : 48,
   /** A mesh handed back this many times (its own parts keep shifting) is never batched again… */
   maxChanges: 6,
   /** …nor one that swapped its material this many times (fading walls swap twice per visit). */
@@ -340,6 +365,40 @@ const noRaycast = () => {}
 const sameMatrix = (a: ArrayLike<number>, b: ArrayLike<number>) => {
   for (let i = 0; i < 16; i++) if (a[i] !== b[i]) return false
   return true
+}
+
+/** A leaf (no children but its hull) whose matrices three.js composes itself (not set by hand). */
+function freezable(mesh: Mesh, hull: Mesh | null): boolean {
+  const kids = mesh.children
+  if (!(kids.length === 0 || (kids.length === 1 && kids[0] === hull))) return false
+  return [mesh, hull].every((o) => !o || (o.matrixAutoUpdate && o.matrixWorldAutoUpdate))
+}
+
+/** Freeze (or unfreeze) a batched leaf's matrices, and its hull's. */
+function setFrozen(s: Source, on: boolean) {
+  for (const o of s.hull ? [s.mesh, s.hull] : [s.mesh]) {
+    o.matrixAutoUpdate = !on
+    o.matrixWorldAutoUpdate = !on
+    o.userData.batchFrozen = on || undefined
+    // thawed: three.js recomposes it before the next render
+    if (!on) o.matrixWorldNeedsUpdate = true
+  }
+}
+
+/**
+ * `o`'s current world matrix, like `updateWorldMatrix(true, false)` but also through
+ * frozen nodes (three.js skips those, so their matrixWorld can be out of date).
+ */
+function worldMatrix(o: Object3D): Matrix4 {
+  const p = o.parent
+  if (p) {
+    if (p.userData.batchFrozen) worldMatrix(p)
+    else p.updateWorldMatrix(true, false)
+  }
+  if (o.matrixAutoUpdate || o.userData.batchFrozen) o.updateMatrix()
+  if (p) o.matrixWorld.multiplyMatrices(p.matrixWorld, o.matrix)
+  else o.matrixWorld.copy(o.matrix)
+  return o.matrixWorld
 }
 
 let batcherCount = 0
@@ -401,7 +460,7 @@ export class Batcher {
 
   /** Give every source back to normal rendering and drop the merged meshes. */
   dispose(): void {
-    for (const s of this.sources.values()) this.restore(s)
+    for (const s of this.sources.values()) this.restore(s, !s.r3f || !!(s.mesh as R3FObject).__r3f)
     this.sources.clear()
     this.order = []
     this.locals.clear()
@@ -425,6 +484,8 @@ export class Batcher {
       const s = this.order[this.cursor++]
       if (!this.sources.has(s.mesh)) continue
       const mesh = s.mesh
+      // (a frozen leaf's matrix isn't composed by three.js: do it here)
+      if (s.frozen) mesh.updateMatrix()
       // A shift between the mesh and its anchor (or a new geometry) hands it back and
       // counts toward "never batch". A material swap (a building fading as you walk
       // in), a visibility toggle, an outline coming or going (graphics switch) or an
@@ -432,6 +493,13 @@ export class Batcher {
       let moved = mesh.geometry !== s.geometry
       for (let i = 0; !moved && i < s.chain.length; i++) moved = !sameMatrix(s.chain[i].matrix.elements, s.locals[i])
       const swapped = mesh.material !== s.material
+      // (React deletes `__r3f` on unmount: a detached mesh can't tell by its parent link)
+      const unmounted = s.r3f && !(mesh as R3FObject).__r3f
+      if (unmounted) {
+        this.release(s, false)
+        removed = true
+        continue
+      }
       const attached = attachedAndVisible(mesh, this.root) && (!s.anchor || attachedAndVisible(s.anchor, this.root))
       const hull = hullOf(mesh)
       if (moved || swapped || !attached || hull !== s.hull || (hull && hull.material !== s.hull?.material)) {
@@ -512,7 +580,11 @@ export class Batcher {
         hullGroup,
         mask: mesh.layers.mask,
         hullMask: hull ? hull.layers.mask : 0,
+        frozen: freezable(mesh, hull),
+        r3f: !!(mesh as R3FObject).__r3f,
+        detached: false,
       }
+      if (s.frozen) setFrozen(s, true)
       this.sources.set(mesh, s)
       this.order.push(s)
       this.join(body, parent, key, null, s)
@@ -529,9 +601,9 @@ export class Batcher {
     this.dirty.add(id)
   }
 
-  /** Hand a source back to normal rendering; its merged groups are rebuilt on flush. */
-  private release(s: Source) {
-    this.restore(s)
+  /** Hand a source back to normal rendering (or just let go of an unmounted one); its merged groups are rebuilt on flush. */
+  private release(s: Source, reattach = true) {
+    this.restore(s, reattach)
     this.sources.delete(s.mesh)
     for (const id of [s.body, s.hullGroup]) {
       if (!id) continue
@@ -541,9 +613,26 @@ export class Batcher {
     }
   }
 
-  private restore(s: Source) {
+  private restore(s: Source, reattach = true) {
     s.mesh.layers.mask = s.mask
     if (s.hull) s.hull.layers.mask = s.hullMask
+    if (s.frozen) setFrozen(s, false)
+    if (s.detached) {
+      s.detached = false
+      const p = s.mesh.parent
+      // (an unmounted mesh stays out: putting it back would leave a ghost)
+      if (reattach && p && !p.children.includes(s.mesh)) p.children.push(s.mesh)
+    }
+  }
+
+  /** Take a frozen, React-owned source out of its parent's children once nothing of it draws. */
+  private detach(s: Source) {
+    if (s.detached || !s.frozen || !s.r3f || s.mesh.layers.mask !== 0 || (s.hull && s.hull.layers.mask !== 0)) return
+    const kids = s.mesh.parent?.children
+    const i = kids ? kids.indexOf(s.mesh) : -1
+    if (i < 0) return
+    kids!.splice(i, 1)
+    s.detached = true
   }
 
   private dropMesh(g: MergeGroup) {
@@ -589,7 +678,7 @@ export class Batcher {
       let receive = false
       for (const s of g.sources) {
         const o = g.hull ? s.hull! : s.mesh
-        o.updateWorldMatrix(true, false)
+        worldMatrix(o)
         const color = g.hull ? undefined : (s.material as MeshToonMaterial).color
         parts.push({ geometry: o.geometry, matrix: new Matrix4().multiplyMatrices(inv, o.matrixWorld), color })
         if (!like) {
@@ -610,6 +699,7 @@ export class Batcher {
         if (g.hull) {
           if (s.hull) s.hull.layers.mask = 0
         } else s.mesh.layers.mask = 0
+        this.detach(s)
       }
     }
   }

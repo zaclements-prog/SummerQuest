@@ -29,7 +29,9 @@ function setup(n = 4) {
     b.tick(t)
   }
   const settle = () => {
-    for (let i = 0; i < 4 * BATCH.scanFrames; i++) frame()
+    // (+9: batchers stagger their first scan by up to 7 frames; a multiple of
+    // scanFrames keeps the tests' scan timing the same)
+    for (let i = 0; i < 7 * BATCH.scanFrames; i++) frame()
   }
   const drawn = () => {
     const list: Mesh[] = []
@@ -161,6 +163,94 @@ describe('Batcher', () => {
     bob()
     expect(parts[1].layers.mask).toBe(1)
     expect(s.b.batchedCount).toBe(3)
+  })
+
+  it('freezes batched leaves (three.js stops re-composing them) and still catches a move', () => {
+    const s = setup(3)
+    s.settle()
+    const m = s.meshes[0]
+    expect(m.matrixAutoUpdate).toBe(false)
+    expect(m.matrixWorldAutoUpdate).toBe(false)
+    m.position.x += 1
+    s.frame()
+    // handed back, thawed, and drawn where it now is
+    expect(m.layers.mask).toBe(1)
+    expect(m.matrixAutoUpdate).toBe(true)
+    s.scene.updateMatrixWorld()
+    expect(new Vector3().setFromMatrixPosition(m.matrixWorld).x).toBeCloseTo(1)
+  })
+
+  it('rebuilds parts riding a moved group where the group is now (frozen parts included)', () => {
+    const s = setup(0)
+    const npc = new Group()
+    const parts = [0, 1, 2].map(() => new Mesh(new BoxGeometry(0.2, 0.2, 0.2), toon('#ffffff')))
+    parts.forEach((p, i) => {
+      p.position.set(i * 0.4, 1, 0)
+      npc.add(p)
+    })
+    s.root.add(npc)
+    let t = 0
+    const bob = () => {
+      t += 1
+      npc.position.y = Math.sin(t) * 0.1
+      s.frame()
+    }
+    for (let i = 0; i < 6 * BATCH.scanFrames; i++) bob()
+    expect(parts[0].matrixAutoUpdate).toBe(false)
+    // the NPC walks far away, then one part changes: the rest are merged again
+    npc.position.x = 50
+    bob()
+    parts[1].rotation.z = 0.5
+    bob()
+    const merged = npc.children.find((c) => c.userData.batched)!
+    // merged in the NPC's own space: centred between the two remaining parts (x 0 and 0.8)
+    expect(merged.position.x).toBeCloseTo(0.4, 1)
+  })
+
+  it('takes React-owned leaves out of the tree while merged, and puts them back when they change', () => {
+    const s = setup(3)
+    // React Three Fiber marks the objects it owns
+    for (const m of s.meshes) (m as Mesh & { __r3f?: object }).__r3f = {}
+    s.settle()
+    for (const m of s.meshes) {
+      expect(s.root.children).not.toContain(m)
+      expect(m.parent).toBe(s.root) // the link back stays
+    }
+    let walked = 0
+    s.scene.traverse(() => walked++)
+    expect(walked).toBeLessThan(3 + 6) // scene, holder, root, out + merged meshes, none of the originals
+    // it moves: handed back into the tree, drawn where it now is
+    s.meshes[0].position.x += 1
+    s.frame()
+    expect(s.root.children).toContain(s.meshes[0])
+    expect(s.meshes[0].layers.mask).toBe(1)
+  })
+
+  it('lets go of a React-owned leaf that unmounts while out of the tree (no ghost)', () => {
+    const s = setup(2)
+    for (const m of s.meshes) (m as Mesh & { __r3f?: object }).__r3f = {}
+    s.settle()
+    // React unmounts it: the parent's remove() is a no-op for a detached child, and __r3f goes
+    s.root.remove(s.meshes[1])
+    delete (s.meshes[1] as Mesh & { __r3f?: object }).__r3f
+    s.frame()
+    expect(s.root.children).not.toContain(s.meshes[1])
+    expect(s.b.batchedCount).toBe(1)
+    // only the remaining box is in the merged mesh
+    const merged = s.out.children.filter((c) => c.userData.batched) as Mesh[]
+    const verts = merged.reduce((n, m) => n + m.geometry.getAttribute('position').count, 0)
+    expect(verts).toBe(new BoxGeometry(1, 1, 1).getAttribute('position').count)
+  })
+
+  it('gives detached leaves back to their parents on dispose', () => {
+    const s = setup(2)
+    for (const m of s.meshes) (m as Mesh & { __r3f?: object }).__r3f = {}
+    s.settle()
+    s.b.dispose()
+    for (const m of s.meshes) {
+      expect(s.root.children).toContain(m)
+      expect(m.matrixAutoUpdate).toBe(true)
+    }
   })
 
   it('hands back a mesh whose look changes and re-batches it once it holds still', () => {

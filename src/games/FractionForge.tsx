@@ -73,7 +73,7 @@ import { Banner, StreakMeter } from './_juice/JuiceHud'
 import { Backdrop } from './_runkit/Backdrop'
 import { StageCamera } from './_runkit/StageCamera'
 import { HostReact, type HostCue, type HostMood } from './_runkit/HostReact'
-import { PromptPill, RoundPips, RunResults, ScorePill, SoftClock, SpeechBubble } from './_runkit/RunHud'
+import { PromptPill, RoundPips, RunResults, ScorePill, SpeechBubble, TickingSoftClock } from './_runkit/RunHud'
 import { recordRunBest } from './_runkit/bestScore'
 import { SAFE, UI } from './_runkit/uiTokens'
 import { useArrowKeys } from './_runkit/useArrowKeys'
@@ -195,7 +195,8 @@ export default function FractionForge({ params, onComplete, meta, paused: hostPa
   const [speech, setSpeech] = useState<{ text: string; tone: 'plain' | 'good' | 'bad' } | null>({ text: 'Stamp slabs. Fill the mold!', tone: 'plain' })
   const [banner, setBanner] = useState<string | null>('🍬 Candy Forge!')
   const [hud, setHud] = useState({ score: 0, streak: 0 })
-  const [patience, setPatience] = useState({ left: 1, total: 1 })
+  // (the clock itself ticks in <PatienceClock>: a state update here re-renders the whole 3D scene)
+  const [impatient, setImpatient] = useState(false)
   const [results, setResults] = useState<{ score: number; stars: number; bestScore: number; newBest: boolean; perfect: boolean; bestStreak: number; firstTry: number } | null>(null)
 
   const tally = useRef<Tally>({ score: 0, streak: 0, bestStreak: 0, firstTry: 0, served: 0, pours: 0 })
@@ -205,6 +206,10 @@ export default function FractionForge({ params, onComplete, meta, paused: hostPa
   const flightId = useRef(1)
   const timers = useRef<number[]>([])
   const patienceRef = useRef({ left: 1, total: 1 })
+  const readPatience = useCallback(() => {
+    const p = patienceRef.current
+    return p.total > 0 ? p.left / p.total : 1
+  }, [])
   const finished = useRef(false)
   const started = useRef(false)
 
@@ -239,7 +244,7 @@ export default function FractionForge({ params, onComplete, meta, paused: hostPa
         triedRef.current = false
         if (orderIndex === 0) {
           patienceRef.current = { left: spec.patienceSec, total: spec.patienceSec }
-          setPatience({ left: 1, total: spec.patienceSec })
+          setImpatient(false)
           flash(ROUND_BANNER[spec.kind])
         } else {
           flash('Candy 2! 🍬')
@@ -516,7 +521,8 @@ export default function FractionForge({ params, onComplete, meta, paused: hostPa
       if (paused || !v.order || (v.phase !== 'build' && v.phase !== 'pour' && v.phase !== 'resolve')) return
       const p = patienceRef.current
       p.left = Math.max(0, p.left - 0.25)
-      setPatience({ left: p.left / p.total, total: p.total })
+      // only the change the scene shows (the customer gets impatient) re-renders it
+      setImpatient(p.left / p.total < 0.25)
     }, 250)
     return () => window.clearInterval(id)
   }, [paused])
@@ -592,7 +598,7 @@ export default function FractionForge({ params, onComplete, meta, paused: hostPa
           spill={spill}
           delivery={delivery}
           cue={cue}
-          impatient={patience.left < 0.25}
+          impatient={impatient}
           avatarRef={avatarRef}
           activeCreature={activeCreature}
           paused={paused}
@@ -623,7 +629,7 @@ export default function FractionForge({ params, onComplete, meta, paused: hostPa
               )}
             </div>
           )}
-          {order && view.phase !== 'results' && <SoftClock frac={patience.left} icon={patience.left < 0.25 ? '😤' : '⏳'} />}
+          {order && view.phase !== 'results' && <TickingSoftClock read={readPatience} icon={(f) => (f < 0.25 ? '😤' : '⏳')} />}
           <SpeechBubble face="🦫" text={speech?.text ?? null} tone={speech?.tone} />
         </div>
         <div className="pt-1">

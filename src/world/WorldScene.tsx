@@ -27,7 +27,8 @@ import StaticBatch from '../toon/StaticBatch'
 export default function WorldScene({ posRef }: { posRef: RefObject<Vector3> }) {
   // Each area is batched on its own (StaticBatch): its still scenery draws as a
   // few merged meshes, and a change (a fading wall, a prop that starts moving)
-  // only rebuilds that area.
+  // only rebuilds that area. Areas out of the camera's view are skipped entirely
+  // (`cull`); the island itself is always in view.
   return (
     <>
       <StaticBatch>
@@ -35,21 +36,21 @@ export default function WorldScene({ posRef }: { posRef: RefObject<Vector3> }) {
         <Ground />
       </StaticBatch>
       <IslandScatter />
-      <StaticBatch><House /></StaticBatch>
-      <StaticBatch><Schoolhouse posRef={posRef} /></StaticBatch>
-      <StaticBatch><Library posRef={posRef} /></StaticBatch>
-      <StaticBatch><FractionFalls posRef={posRef} /></StaticBatch>
-      <StaticBatch><DivisionDunes posRef={posRef} /></StaticBatch>
-      <StaticBatch><MultiplicationMesa posRef={posRef} /></StaticBatch>
-      <StaticBatch><TowerBattlefront posRef={posRef} /></StaticBatch>
-      <StaticBatch><WordProblemWoods posRef={posRef} /></StaticBatch>
-      <StaticBatch><WritingWorkshop posRef={posRef} /></StaticBatch>
-      <StaticBatch><ReadingReef posRef={posRef} /></StaticBatch>
-      <StaticBatch><MeasurementMarsh posRef={posRef} /></StaticBatch>
-      <StaticBatch><DataDelta posRef={posRef} /></StaticBatch>
-      <StaticBatch><GeometryGrove posRef={posRef} /></StaticBatch>
-      <StaticBatch><ScienceSummit posRef={posRef} /></StaticBatch>
-      <StaticBatch><PlaceValuePlateau posRef={posRef} /></StaticBatch>
+      <StaticBatch cull><House /></StaticBatch>
+      <StaticBatch cull><Schoolhouse posRef={posRef} /></StaticBatch>
+      <StaticBatch cull><Library posRef={posRef} /></StaticBatch>
+      <StaticBatch cull><FractionFalls posRef={posRef} /></StaticBatch>
+      <StaticBatch cull><DivisionDunes posRef={posRef} /></StaticBatch>
+      <StaticBatch cull><MultiplicationMesa posRef={posRef} /></StaticBatch>
+      <StaticBatch cull><TowerBattlefront posRef={posRef} /></StaticBatch>
+      <StaticBatch cull><WordProblemWoods posRef={posRef} /></StaticBatch>
+      <StaticBatch cull><WritingWorkshop posRef={posRef} /></StaticBatch>
+      <StaticBatch cull><ReadingReef posRef={posRef} /></StaticBatch>
+      <StaticBatch cull><MeasurementMarsh posRef={posRef} /></StaticBatch>
+      <StaticBatch cull><DataDelta posRef={posRef} /></StaticBatch>
+      <StaticBatch cull><GeometryGrove posRef={posRef} /></StaticBatch>
+      <StaticBatch cull><ScienceSummit posRef={posRef} /></StaticBatch>
+      <StaticBatch cull><PlaceValuePlateau posRef={posRef} /></StaticBatch>
     </>
   )
 }

@@ -426,3 +426,18 @@
     animation: none !important;
   }
 }
+
+/*
+ * Touch devices (phones, tablets): no background blur. A blurred panel over a live 3D
+ * view is re-blurred on every frame, and a tablet GPU pays for it in dropped frames
+ * (measured on a Fire HD 10: Home went from ~50 to ~57 fps without it). The panels
+ * behind these blurs are 85–95% opaque, so they read the same.
+ */
+@media (pointer: coarse) {
+  *,
+  ::before,
+  ::after {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+}
