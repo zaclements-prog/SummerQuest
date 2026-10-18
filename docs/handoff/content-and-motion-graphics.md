@@ -12,7 +12,7 @@ Read the **Ground rules** first, then pick a task from the priority list in A1.
 
 ## Ground rules (both parts)
 
-1. **Work on a branch.** Start from `claude/sweet-ptolemy-96x364`, or from `master` once PR #7 is merged.
+1. **Work on a branch.** Start from `lesson-perf` (this page and the lesson-stage performance fixes live there), or from whatever it has been merged into.
    - Name it `content/<bank>-<short>` or `motion/<lesson>-<step>`.
    - Commit small batches, one bank or one scene per commit.
 2. **Every commit must pass:** `npm test`, `npm run lint`, `npx tsc -b` and `npm run build:store`.
