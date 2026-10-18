@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useReducedMotion } from 'framer-motion'
 import GLCanvas from '../platform/gl/GLCanvas'
+import { canvasQuality, useLowGraphics } from '../world/graphicsQuality'
 import { Button, Modal } from '../components/ui'
 import { petEmoji, petName } from '../lib/pets/catalog'
 import { momentText } from '../lib/pets/copy'
@@ -25,6 +26,8 @@ export default function PetMomentCard({
   onBecome: (creatureId: string) => void
 }) {
   const reduced = useReducedMotion() ?? false
+  // The screen's own 3D view pauses under this one, so it may use the same pixel ratio (no shadows).
+  const gfx = canvasQuality(useLowGraphics())
   const [revealed, setRevealed] = useState(reduced)
   const name = petName(moment.creatureId)
   const text = momentText(moment)
@@ -46,7 +49,7 @@ export default function PetMomentCard({
         <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-quest-100 to-transparent" aria-hidden="true" />
         <div className="absolute left-1/2 top-30 short:top-24 -translate-x-1/2 -translate-y-1/2 w-80 h-80 sunburst animate-spin-slow opacity-80" aria-hidden="true" />
         <div className="relative h-60 short:h-48 [@media(max-height:25rem)]:h-36">
-          <GLCanvas overlay flat dpr={1} camera={{ fov: 32, position: [0, 1, 3] }} style={{ position: 'absolute', inset: 0 }}>
+          <GLCanvas overlay flat dpr={gfx.dpr} camera={{ fov: 32, position: [0, 1, 3] }} style={{ position: 'absolute', inset: 0 }}>
             <CelebrationScene moment={moment} reduced={reduced} onReveal={() => setRevealed(true)} />
           </GLCanvas>
         </div>

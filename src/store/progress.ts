@@ -518,10 +518,10 @@ export const useProgress = create<ProgressState>()(
             p.factStats && typeof p.factStats === 'object' && !Array.isArray(p.factStats)
               ? p.factStats
               : c.factStats,
-          // Pets: anything malformed falls back to "nothing yet".
-          lessonsDone: cleanLessonsDone(p.lessonsDone),
-          petsSeen: cleanPetsSeen(p.petsSeen),
-          buddyPet: typeof p.buddyPet === 'string' && petById(p.buddyPet) ? p.buddyPet : null,
+          // Pets: anything malformed falls back to "nothing yet" (missing: keep what's here).
+          lessonsDone: p.lessonsDone === undefined ? c.lessonsDone : cleanLessonsDone(p.lessonsDone),
+          petsSeen: p.petsSeen === undefined ? c.petsSeen : cleanPetsSeen(p.petsSeen),
+          buddyPet: p.buddyPet === undefined ? c.buddyPet : typeof p.buddyPet === 'string' && petById(p.buddyPet) ? p.buddyPet : null,
           ownedCreatures: Array.isArray(p.ownedCreatures)
             ? p.ownedCreatures.filter((id): id is string => typeof id === 'string')
             : c.ownedCreatures,
