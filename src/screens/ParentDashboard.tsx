@@ -13,7 +13,6 @@ import {
   StarRating,
   Pill,
   EmptyState,
-  ConfirmDialog,
   Medallion,
   Page,
   StatTile,
@@ -22,11 +21,8 @@ import {
   type Tone,
 } from '../components/ui'
 import { useEntrance } from '../lib/motion'
-
-// The grown-up check / form input, in the toon style. (20px text: iOS zooms
-// the page into any field under 16px.)
-const inputClass =
-  'mt-2 w-full rounded-2xl border-[3px] border-line bg-paper px-4 py-2.5 min-h-[52px] text-xl kid-text text-ink-900 outline-none focus:ring-4 focus:ring-ocean-600/60'
+import ParentGate from '../components/ParentGate'
+import { removeSavedKeys } from '../platform/web/storage'
 import { GRADE_LABEL, GRADE_LEVELS, type GradeLevel } from '../lib/gradeTiers'
 
 export default function ParentDashboard() {
@@ -40,43 +36,26 @@ export default function ParentDashboard() {
     refreshLlmStatus,
   } = useSettings()
 
-  const [confirmReset, setConfirmReset] = useState(false)
-  // Grown-up check for the destructive reset: a 2-digit × 2-digit product is
-  // easy for a parent and out of reach for a 3rd–4th grader.
-  const [gate, setGate] = useState<{ a: number; b: number } | null>(null)
-  const [gateAnswer, setGateAnswer] = useState('')
-  const gatePassed = !!gate && Number(gateAnswer.trim()) === gate.a * gate.b
-
-  // Grade change: same grown-up gate pattern, then pick a new grade in the dialog.
-  const [gradeDialog, setGradeDialog] = useState(false)
-  const [gradeGate, setGradeGate] = useState<{ a: number; b: number } | null>(null)
-  const [gradeGateAnswer, setGradeGateAnswer] = useState('')
+  // Reset and grade change ask the grown-up check again every time, even just
+  // after the one at the door (src/components/ParentGate.tsx): a reset can't be
+  // undone, and a parent may hand the tablet back with this page still open.
+  const [resetGate, setResetGate] = useState(false)
+  const [gradeGate, setGradeGate] = useState(false)
   const [gradePick, setGradePick] = useState<GradeLevel | null>(null)
-  const gradeGatePassed = !!gradeGate && Number(gradeGateAnswer.trim()) === gradeGate.a * gradeGate.b
-
-  function newGate() {
-    return { a: 12 + Math.floor(Math.random() * 13), b: 13 + Math.floor(Math.random() * 12) }
-  }
 
   function openGrade() {
-    setGradeGate(newGate())
-    setGradeGateAnswer('')
     setGradePick(null)
-    setGradeDialog(true)
+    setGradeGate(true)
   }
 
   function applyGrade() {
-    if (!gradeGatePassed || gradePick === null) return
+    if (gradePick === null) return
     setGrade(gradePick)
-    setGradeDialog(false)
+    setGradeGate(false)
   }
 
-  function openReset() {
-    setGate(newGate())
-    setGateAnswer('')
-    setConfirmReset(true)
-  }
-  const closeReset = useCallback(() => setConfirmReset(false), [])
+  const openReset = () => setResetGate(true)
+  const closeReset = useCallback(() => setResetGate(false), [])
 
   useEffect(() => {
     if (import.meta.env.VITE_STORE === 'true') return // the store build has no AI to check
@@ -91,9 +70,9 @@ export default function ParentDashboard() {
     : 0
 
   function handleReset() {
-    if (!gatePassed) return
     resetPlayer()
-    setConfirmReset(false)
+    removeSavedKeys('sq-best-') // the mini-games' personal bests
+    setResetGate(false)
   }
 
   // ── Fresh-profile empty state ───────────────────────────────────────────────
@@ -358,88 +337,37 @@ export default function ParentDashboard() {
         </motion.div>
       </motion.div>
 
-      {/* ── Reset confirmation (grown-ups only) ───────────────────────── */}
-      <ConfirmDialog
-        open={confirmReset}
+      {/* ── Reset (grown-ups only, asked every time) ─────────────────── */}
+      <ParentGate
+        open={resetGate}
         emoji="⚠️"
-        title="Reset all progress?"
-        confirmLabel="🗑️ Yes, reset"
-        cancelLabel="Keep my progress"
-        confirmDisabled={!gatePassed}
-        onConfirm={handleReset}
+        passLabel="🗑️ Yes, reset"
+        passVariant="danger"
+        onPass={handleReset}
         onCancel={closeReset}
       >
-        <p className="mb-4">
+        <p className="kid-text text-xl text-ink-900 mb-1">Reset all progress?</p>
+        <p>
           This deletes <strong>{player.name}</strong>'s profile, coins, and stage
           records. This cannot be undone.
         </p>
-        {gate && (
-          <label className="block text-left">
-            <span className="kid-text text-ink-900">
-              Grown-ups: what is {gate.a} × {gate.b}?
-            </span>
-            <input
-              type="text"
-              inputMode="numeric"
-              pattern="[0-9]*"
-              enterKeyHint="done"
-              autoComplete="off"
-              autoCorrect="off"
-              value={gateAnswer}
-              onChange={(e) => setGateAnswer(e.target.value)}
-              onKeyDown={(e) => {
-                // Enter = "🗑️ Yes, reset" once the answer is right; otherwise just close the keyboard.
-                if (e.key !== 'Enter') return
-                if (gatePassed) handleReset()
-                else e.currentTarget.blur()
-              }}
-              className={inputClass}
-              aria-label={`Grown-up check: ${gate.a} times ${gate.b}`}
-            />
-          </label>
-        )}
-      </ConfirmDialog>
+      </ParentGate>
 
-      {/* ── Grade change (grown-ups only) ─────────────────────────────── */}
-      <ConfirmDialog
-        open={gradeDialog}
+      {/* ── Grade change (grown-ups only, asked every time) ──────────── */}
+      <ParentGate
+        open={gradeGate}
         emoji="🎒"
-        title="Change grade level?"
-        confirmLabel="✅ Save grade"
-        cancelLabel="Cancel"
-        confirmDisabled={!gradeGatePassed || gradePick === null}
-        onConfirm={applyGrade}
-        onCancel={() => setGradeDialog(false)}
+        passLabel="✅ Save grade"
+        passVariant="success"
+        passDisabled={gradePick === null}
+        onPass={applyGrade}
+        onCancel={() => setGradeGate(false)}
       >
+        <p className="kid-text text-xl text-ink-900 mb-1">Change grade level?</p>
         <p className="mb-3">
           This changes how hard {player.name}&apos;s quests are — numbers,
           fractions, and reading passages. Star progress is kept.
         </p>
-        {gradeGate && (
-          <label className="block text-left mb-3">
-            <span className="kid-text text-ink-900">
-              Grown-ups: what is {gradeGate.a} × {gradeGate.b}?
-            </span>
-            <input
-              type="text"
-              inputMode="numeric"
-              pattern="[0-9]*"
-              enterKeyHint="done"
-              autoComplete="off"
-              autoCorrect="off"
-              value={gradeGateAnswer}
-              onChange={(e) => setGradeGateAnswer(e.target.value)}
-              onKeyDown={(e) => {
-                // Enter = "✅ Save grade" (once a grade is picked); otherwise just close the keyboard.
-                if (e.key !== 'Enter') return
-                if (gradeGatePassed && gradePick !== null) applyGrade()
-                else e.currentTarget.blur()
-              }}
-              className={inputClass}
-              aria-label={`Grown-up check: ${gradeGate.a} times ${gradeGate.b}`}
-            />
-          </label>
-        )}
         <div role="radiogroup" aria-label="New grade" className="grid grid-cols-3 gap-2 text-left">
           {GRADE_LEVELS.map((g) => {
             const selected = gradePick === g
@@ -465,7 +393,7 @@ export default function ParentDashboard() {
             )
           })}
         </div>
-      </ConfirmDialog>
+      </ParentGate>
     </div>
   )
 }

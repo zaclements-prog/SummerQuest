@@ -8,6 +8,7 @@ import AvatarCreate from './screens/AvatarCreate'
 import WorldMap from './screens/WorldMap'
 import ZoneDetail from './screens/ZoneDetail'
 import ParentDashboard from './screens/ParentDashboard'
+import { RequireParent } from './components/ParentGate'
 import BadgesScreen from './screens/BadgesScreen'
 import DailyChallenge from './screens/DailyChallenge'
 import ProgressScreen from './screens/ProgressScreen'
@@ -104,7 +105,9 @@ export default function App() {
             path="/"
             element={player ? <Navigate to={HUB} replace /> : <Welcome />}
           />
-          <Route path="/avatar" element={<AvatarCreate />} />
+          {/* Once there's a player, making a new one would rename them and change
+              their grade, a grown-ups' setting: that lives behind the Parent gate. */}
+          <Route path="/avatar" element={player ? <Navigate to={HUB} replace /> : <AvatarCreate />} />
           <Route
             path="/map"
             element={
@@ -187,7 +190,14 @@ export default function App() {
             }
           />
           <Route path="/world" element={<RequireAvatar><Lazy label="Loading the world…"><WorldScreen /></Lazy></RequireAvatar>} />
-          <Route path="/parent" element={<ParentDashboard />} />
+          <Route
+            path="/parent"
+            element={
+              <RequireParent>
+                <ParentDashboard />
+              </RequireParent>
+            }
+          />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AppShell>
