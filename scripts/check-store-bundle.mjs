@@ -45,6 +45,10 @@ const KNOWN_DYNAMIC_FETCHES = [
     name: 'three.js ImageBitmapLoader (no textures are loaded from URLs)',
     test: (_before, after) => /createImageBitmap/.test(after.slice(0, 300)),
   },
+  {
+    name: "Capacitor core's CapacitorHttp web fallback (never called: the app makes no HTTP requests, and the Fire APK has no INTERNET permission)",
+    test: (before) => /shouldEncodeUrlParams/.test(before.slice(-200)),
+  },
 ]
 
 const TEXT = new Set(['.js', '.mjs', '.cjs', '.html', '.css', '.json', '.svg', '.txt', '.webmanifest'])
