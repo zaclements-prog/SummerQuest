@@ -20,7 +20,7 @@ export const writingLesson: Lesson = {
       id: 'example',
       narration: 'Here is an example. The dog ran fast. The naming part is the dog, because that is who the sentence is about, and the action part is ran fast, because that tells what the dog does.',
       body: '“The dog ran fast.” → naming part: the dog · action part: ran fast.',
-      check: { question: 'In “The cat slept.”, which words are the naming part?', options: ['The cat', 'slept', 'cat slept', 'The'], answer: 'The cat', explain: '“The cat” tells who the sentence is about. “slept” is the action part.' },
+      check: { question: 'In “The cat slept.”, which words are the naming part?', options: ['The cat', 'slept', 'cat slept', 'The'], answer: 'The cat', explain: '“The cat” tells who the sentence is about. The action part is “slept.”' },
     },
     {
       id: 'fragments',
@@ -32,7 +32,7 @@ export const writingLesson: Lesson = {
       id: 'endmarks',
       narration: 'Every sentence ends with an end mark. A period ends a telling sentence. A question mark ends an asking sentence. And an exclamation point shows a strong feeling, like wow!',
       body: '.  telling  ·  ?  asking  ·  !  strong feeling',
-      check: { question: 'Which end mark goes after this sentence:  Where is my hat', options: ['?', '.', '!', ','], answer: '?', explain: 'It asks something, so it ends with a question mark: Where is my hat?' },
+      check: { question: 'Which end mark goes after this sentence: Where is my hat', options: ['?', '.', '!', ','], answer: '?', explain: 'It asks something, so it ends with a question mark: Where is my hat?' },
     },
   ],
 }

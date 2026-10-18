@@ -169,7 +169,7 @@ export default function CloudKeeper({ params, onComplete, meta, paused: hostPaus
   }, [view])
 
   const [cue, setCue] = useState<HostCue>({ mood: 'wave', token: 1 })
-  const [speech, setSpeech] = useState<{ text: string; tone: 'plain' | 'good' | 'bad' } | null>({ text: 'Meet Drip! Guide it round the sky.', tone: 'plain' })
+  const [speech, setSpeech] = useState<{ text: string; tone: 'plain' | 'good' | 'bad' } | null>({ text: 'Meet Drip! Guide it around the sky.', tone: 'plain' })
   const [banner, setBanner] = useState<string | null>('☁️ Cloud Keeper!')
   const [hud, setHud] = useState({ score: 0, streak: 0 })
   const [guide, setGuide] = useState(false)

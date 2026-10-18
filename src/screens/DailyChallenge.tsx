@@ -31,6 +31,7 @@ export default function DailyChallenge() {
   const recordSession = useProgress((s) => s.recordSession)
   // Started from the Schoolhouse in the 3D World? Then leaving goes back there.
   const exitPath = useWorldUi((s) => s.enteredFromWorld) ? '/world' : '/map'
+  const exitLabel = exitPath === '/world' ? 'Back to the World' : 'Back to map'
 
   const { zone, stage } = useMemo(() => pickTodaysChallenge(), [])
 
@@ -72,7 +73,7 @@ export default function DailyChallenge() {
             </p>
             <div className="relative w-full flex">
               <Button variant="primary" size="lg" to={exitPath} className="w-full justify-center">
-                ← Back to map
+                ← {exitLabel}
               </Button>
             </div>
           </Card>
@@ -121,7 +122,7 @@ export default function DailyChallenge() {
 
               <motion.div variants={item} className="flex">
                 <Button variant="success" size="lg" to={exitPath} className="w-full justify-center">
-                  Back to map →
+                  {exitLabel} →
                 </Button>
               </motion.div>
             </Card>

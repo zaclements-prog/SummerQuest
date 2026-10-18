@@ -34,7 +34,8 @@ export function makePlaceValueRoundingProvider(cfg: Config): ProblemProvider {
       const placeLabel = cfg.roundTo === 10 ? 'ten' : cfg.roundTo === 100 ? 'hundred' : 'thousand'
       return {
         id: `pv-round-${serial++}`,
-        prompt: `Round ${n.toLocaleString()} to the nearest ${placeLabel}.`,
+        // US digit grouping on every device (a German-locale tablet would print 12.345)
+        prompt: `Round ${n.toLocaleString('en-US')} to the nearest ${placeLabel}.`,
         options: shuffle([answer, ...distractors]),
         answer,
         topic: 'place-value-rounding',

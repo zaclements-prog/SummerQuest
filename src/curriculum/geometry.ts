@@ -7,7 +7,7 @@ export const geometryZone: Zone = {
   emoji: '🔷',
   themeColor: 'island',
   description:
-    'Explore the Geometry Grove! Name shapes by their sides and corners, then climb to lines and angles — right, acute, obtuse, parallel, and perpendicular. Aligned to grade-level geometry standards.',
+    'Explore the Geometry Grove! Name shapes by their sides and corners, then climb to lines and angles — right, acute, obtuse, parallel, and perpendicular.',
   estimatedMinutes: 18,
   available: true,
   position: { x: 61, y: 48 },
@@ -36,7 +36,7 @@ export const geometryZone: Zone = {
       id: 'geo-mastery',
       kind: 'mastery',
       title: 'The Shape Master',
-      description: 'Geometry boss battle (shapes, lines & angles).',
+      description: 'Answer shape and angle questions to defeat the Shape Master!',
       gameId: 'bossBattle',
       providerConfig: { kind: 'geometry', level: 4, source: 'static' },
       params: { questionCount: 6, bossEmoji: '🔷', bossName: 'The Shape Master' },

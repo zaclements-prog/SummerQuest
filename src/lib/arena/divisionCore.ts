@@ -306,3 +306,22 @@ export function warmFactConfig(tierDivMax: number) {
 export function bossKMax(tierDivMax: number): number {
   return tierDivMax <= 5 ? 2 : 3
 }
+
+/**
+ * Is this fact meaty enough to build the Giant Golem over? Big enough to feel
+ * like a boss (with a big camel parade at the end), and ≤ 49 so the doubled
+ * giant stays a two-digit chalk number.
+ */
+export function isBossFact(round: Pick<DivRound, 'dividend' | 'quotient'>, tierDivMax: number): boolean {
+  const min = tierDivMax <= 5 ? 12 : 18
+  const minQuotient = tierDivMax <= 5 ? 4 : 6
+  return round.dividend >= min && round.dividend <= 49 && round.quotient >= minQuotient
+}
+
+/**
+ * Re-draws the boss round may take to find a boss fact. Only about a third of a
+ * 3rd/4th-grade arena's facts qualify, so 8 tries still missed ~4% of the time
+ * (a 50–90 dividend then doubled into a three-digit giant); 40 makes that
+ * vanishingly rare.
+ */
+export const BOSS_REDRAWS = 40

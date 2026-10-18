@@ -3,11 +3,11 @@ import type { Zone } from './types'
 export const multiplicationZone: Zone = {
   id: 'multiplication-mesa',
   title: 'Multiplication Mesa',
-  subtitle: 'Times tables 2-10',
+  subtitle: 'Times tables',
   emoji: '🏜️',
   themeColor: 'quest',
   description:
-    'Master your multiplication facts so they feel automatic. Strong multiplication is the foundation for division, fractions, and almost every math topic in 4th grade.',
+    'Master your multiplication facts so they feel automatic. Strong multiplication helps with division, fractions, and almost every other kind of math.',
   estimatedMinutes: 20,
   available: true,
   position: { x: 13, y: 15 },

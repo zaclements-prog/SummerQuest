@@ -73,7 +73,7 @@ export function makeFractionCompareProvider(cfg: Config): ProblemProvider {
       const answer: '<' | '>' | '=' = cmp < 0 ? '<' : cmp > 0 ? '>' : '='
       return {
         id: `frac-cmp-${serial++}`,
-        prompt: `${n1}/${d1}  ?  ${n2}/${d2}`,
+        prompt: `${n1}/${d1} ? ${n2}/${d2}`,
         options: shuffle(['<', '>', '=']),
         answer,
         visual: {

@@ -145,7 +145,7 @@ export const QUESTIONS: GeoQuestion[] = [
     question: 'Which of these is a 3D solid, not a flat shape?',
     answer: 'cube',
     options: ['cube', 'square', 'triangle', 'circle'],
-    hint: 'A number die (dice) is this shape.',
+    hint: 'A die from a board game is this shape.',
   },
   {
     level: 3,
@@ -173,7 +173,7 @@ export const QUESTIONS: GeoQuestion[] = [
     question: 'How many faces does a cube have?',
     answer: '6',
     options: ['6', '4', '8', '12'],
-    hint: 'Count the flat square sides, like on a dice.',
+    hint: 'Count the flat square sides, like the sides of a game die.',
   },
   {
     level: 3,
@@ -194,7 +194,7 @@ export const QUESTIONS: GeoQuestion[] = [
     question: 'The flat shape at the very bottom of a cone is a ___.',
     answer: 'circle',
     options: ['circle', 'square', 'triangle', 'hexagon'],
-    hint: 'Roll a ball in a ring to picture it.',
+    hint: 'Trace around the bottom of a party hat to picture it.',
   },
   {
     level: 3,
@@ -360,7 +360,7 @@ export const QUESTIONS: GeoQuestion[] = [
   },
   {
     level: 4,
-    question: 'Two angles that add up to make a straight line add up to ___.',
+    question: 'Two angles that together make a straight line add up to ___.',
     answer: '180°',
     options: ['180°', '90°', '360°', '45°'],
     hint: 'A straight angle is 180°.',
@@ -381,7 +381,7 @@ export const QUESTIONS: GeoQuestion[] = [
   },
   {
     level: 4,
-    question: 'Letters and shapes that look like a square corner contain a ___ angle.',
+    question: 'A corner shaped like the letter L is a ___ angle.',
     answer: 'right',
     options: ['right', 'acute', 'obtuse', 'straight'],
     hint: 'Think of the corner where a wall meets the floor.',

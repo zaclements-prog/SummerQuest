@@ -71,12 +71,16 @@ export function groveSkill(rows: number, cols: number): { id: string; label: str
 
 let serial = 0
 
-/** The Problem for one planting order (recordAnswer/recordAttempt carry it). */
+/**
+ * The Problem for one planting order (recordAnswer/recordAttempt carry it). A
+ * multiple-choice host (the Daily Challenge) shows the prompt as its question,
+ * so the order ends by asking for the count.
+ */
 export function groveProblem(o: PlantingOrder): Problem {
   const [target, s1, s2] = groveCandidates(o.rows, o.cols)
   return {
     id: `grove-${serial++}`,
-    prompt: o.prompt,
+    prompt: `${o.prompt} How many trees is that?`,
     options: shuffle([target.total, s1.total, s2.total]),
     answer: target.total,
     visual: { kind: 'array', rows: o.rows, cols: o.cols },

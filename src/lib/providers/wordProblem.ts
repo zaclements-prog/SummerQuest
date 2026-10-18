@@ -143,14 +143,14 @@ const TEMPLATES_MULT: Array<{
 }> = [
   {
     build: (a, b) => ({
-      prompt: `A bakery sells ${a} cupcakes in each box. If they sell ${b} boxes, how many cupcakes did they sell?`,
+      prompt: `A bakery sells ${a} cupcakes in each box. If they sell ${b} boxes, how many cupcakes do they sell?`,
       answer: a * b,
       hint: `${a} per box × ${b} boxes`,
     }),
   },
   {
     build: (a, b) => ({
-      prompt: `A library has ${a} shelves. Each shelf holds ${b} books. How many books total?`,
+      prompt: `A library has ${a} shelves. Each shelf holds ${b} books. How many books are there in all?`,
       answer: a * b,
       hint: `${a} shelves × ${b} books per shelf`,
     }),
@@ -178,7 +178,7 @@ const TEMPLATES_MULT: Array<{
   },
   {
     build: (a, b) => ({
-      prompt: `A farmer collects ${a} eggs from each hen. With ${b} hens, how many eggs does the farmer collect?`,
+      prompt: `A farmer collects ${a} eggs from each hen this week. With ${b} hens, how many eggs does the farmer collect?`,
       answer: a * b,
       hint: `${a} eggs × ${b} hens`,
     }),
@@ -239,7 +239,7 @@ const TEMPLATES_DIV: Array<{
   },
   {
     build: (dividend, divisor) => ({
-      prompt: `A teacher has ${dividend} pencils and wants to put them in ${divisor} pencil boxes evenly. How many in each box?`,
+      prompt: `A teacher has ${dividend} pencils to share equally among ${divisor} pencil boxes. How many pencils go in each box?`,
       answer: dividend / divisor,
       hint: `${dividend} ÷ ${divisor}`,
     }),
@@ -281,7 +281,7 @@ const TEMPLATES_DIV: Array<{
   },
   {
     build: (dividend, divisor) => ({
-      prompt: `A zookeeper has ${dividend} fish to feed ${divisor} penguins evenly. How many fish does each penguin get?`,
+      prompt: `A zookeeper shares ${dividend} fish equally among ${divisor} penguins. How many fish does each penguin get?`,
       answer: dividend / divisor,
       hint: `${dividend} ÷ ${divisor}`,
     }),
@@ -295,7 +295,7 @@ const TEMPLATES_DIV: Array<{
   },
   {
     build: (dividend, divisor) => ({
-      prompt: `There are ${dividend} pages in a book to read over ${divisor} days, the same amount each day. How many pages per day?`,
+      prompt: `Zoe reads a book with ${dividend} pages in ${divisor} days. She reads the same number of pages each day. How many pages does she read each day?`,
       answer: dividend / divisor,
       hint: `${dividend} ÷ ${divisor}`,
     }),
@@ -309,7 +309,7 @@ const TEMPLATES_DIV: Array<{
   },
   {
     build: (dividend, divisor) => ({
-      prompt: `A camp has ${dividend} campers split into ${divisor} equal cabins. How many campers are in each cabin?`,
+      prompt: `A camp has ${dividend} campers split equally into ${divisor} cabins. How many campers are in each cabin?`,
       answer: dividend / divisor,
       hint: `Split ${dividend} into ${divisor} equal cabins.`,
     }),

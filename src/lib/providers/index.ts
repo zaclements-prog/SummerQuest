@@ -40,7 +40,7 @@ export type ProviderConfig =
   | { kind: 'geometry'; level: 2 | 3 | 4; source?: 'static' | 'llm' }
   | { kind: 'dataGraph'; level: 2 | 3 | 4; source?: 'static' | 'llm' }
   | { kind: 'scienceCycle' }
-  | { kind: 'multiplicationGrove' }
+  | { kind: 'multiplicationGrove'; maxFactor?: number }
 
 export function createProvider(config: ProviderConfig): ProblemProvider {
   switch (config.kind) {
@@ -73,6 +73,6 @@ export function createProvider(config: ProviderConfig): ProblemProvider {
     case 'scienceCycle':
       return makeScienceCycleProvider()
     case 'multiplicationGrove':
-      return makeMultiplicationGroveProvider()
+      return makeMultiplicationGroveProvider({ maxFactor: config.maxFactor })
   }
 }

@@ -262,7 +262,7 @@ export default function BossBattle({ provider, params, onComplete, meta }: GameP
               {bossDefeated
                 ? '🏆 Victory!'
                 : playerHp <= 0
-                  ? '💀 You fainted…'
+                  ? '💫 Out of hearts!'
                   : '⏱️ Out of moves!'}
             </div>
           </motion.div>

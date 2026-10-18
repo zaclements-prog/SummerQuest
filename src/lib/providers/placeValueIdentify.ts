@@ -33,7 +33,8 @@ export function makePlaceValueIdentifyProvider(cfg: Config): ProblemProvider {
       const distractors = Array.from(set)
       return {
         id: `pv-id-${serial++}`,
-        prompt: `In ${n.toLocaleString()}, what is the VALUE of the ${placeName} digit?`,
+        // US digit grouping on every device (a German-locale tablet would print 12.345)
+        prompt: `In ${n.toLocaleString('en-US')}, what is the VALUE of the ${placeName} digit?`,
         options: shuffle([placeValue, ...distractors]),
         answer: placeValue,
         topic: 'place-value-identify',
