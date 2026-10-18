@@ -90,11 +90,57 @@ game:
 
 `build:single` still produces one offline file.
 
-**Deferred follow-ups:**
+## Tablet pass (2026-10-18)
+
+Owner priority: **tablets first**, phones second.
+
+**Audit:** every 2D screen and every non-3D stage, plus the World, Home and the
+four 3D games, at real tablet viewports, emulated with touch input:
+- iPad mini (744×1062 / 1133×674);
+- iPad 10 / Air 11 (820×1106 / 1180×746);
+- iPad Pro 13 (1032×1302 / 1376×958);
+- a 10" Android tablet (800×1216 / 1280×736);
+- iPad Split View at 1/2 (590×746) and 1/3 (375×746).
+
+**Findings and fixes:**
+- **Unused space:** the game screens sat in the top half, with 35–45% of the
+  screen empty below them. A `roomy:` variant (≥ 700×640) now centres them and
+  gives them bigger questions and answer tiles.
+- **Landscape layout:** touch tablets in landscape always get the side-by-side
+  quiz layout.
+- **Boss Battle answers:** on a sideways tablet the answers sat below the fold.
+  The layout is now boss | question | answers.
+- **Home walking:** no touch way to walk the creature. Play mode now has
+  tap-to-walk (taps only; a drag still orbits the camera).
+- **Mouse-sized controls:**
+  - World Map chip and ⚙️ were mouse-sized (32–40 px); now 48 px on touch;
+  - lesson step dots were 28 px wide; now 44 px.
+- **Writing pad:** kids on tablets were told "AI server isn't responding". The
+  note is now hidden on touch devices.
+- **Touch wording:** the 3D games said "WASD" on touch; they now say "Tap to walk".
+
+**Touch checks:**
+- World:
+  - tap-to-walk works by finger and by Apple Pencil;
+  - the Map chip responds to a tap;
+  - rotating mid-session resizes the 3D view.
+- Home:
+  - a tap walks the creature;
+  - a drag, a pinch and Decorate mode never start a walk;
+  - a Pencil tap walks.
+- Games:
+  - a Times Grove tap walks;
+  - a quiz tap answers;
+  - a Tower Defense tap opens the math gate.
+
+**Results:** no horizontal overflow, cut-off controls or page errors at any size.
+Only long reading and science passages still scroll.
+
+**Deferred follow-ups (phones):**
 - Times Grove in landscape phones is cramped (the stage header takes a row).
-- Island-map markers are 40 px on phones.
+- Island-map markers are 40 px on narrow screens. A list of big rows sits under
+  the map there.
 - Bar-chart answers fall below the fold on portrait phones.
-- Home has no touch equivalent for walking (the creature wanders on its own).
 
 ## Verification
 - Playwright device emulation (iPhone 13, Pixel 7, iPad gen 7, Galaxy Tab S4) in both orientations, with real touch events.
