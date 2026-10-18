@@ -105,6 +105,10 @@ the Fire 7's quad-core A53). It runs in a software-GL browser here, so 3D number
 | World | 1.1 s | first 3D frame 3.0 s | 8.2 s (was 10.3 s before batching was spread over frames) |
 | Times Grove (3D game) | 0.8 s | first 3D frame 2.9 s | about 12 s, as the scene settles |
 
+- **Pets** (measured again the same way, on the same day, against the build before pets):
+  - **World with a buddy pet:** the same first frame as without, about 6 s here (this machine ran slower than for the table above).
+  - **Home with six pets:** the first 3D frame is unchanged, because the pets walk in one at a time after the room is up.
+  - **Cost of the pets:** three extra shader variants, compiled once per visit as the first pets arrive. Software GL makes that compile slow here; a tablet GPU is much quicker.
 - Tablets start in **Fast** graphics and step up to Pretty only if the device proves smooth.
 - Every 3D screen stays under 250 draw calls per frame on Fast.
 - **Watch on a real Fire 7:** the first seconds of the World and the 3D games, while the scenery is merged.

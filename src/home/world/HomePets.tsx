@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useFrame } from '@react-three/fiber'
 import type { ThreeEvent } from '@react-three/fiber'
 import { SphereGeometry } from 'three'
@@ -23,6 +23,9 @@ const ROOM_LIMIT = (GRID_SIZE * TILE) / 2 - 0.6 // stay just inside the walls (a
 const HOP_MS = 650
 /** Seconds a pet sits before toddling on (randomized up to this). */
 const REST_S = 4
+/** Pets come in one at a time once the room is up, so building them doesn't hold up its first frame. */
+const ARRIVE_FIRST_MS = 500
+const ARRIVE_EACH_MS = 300
 
 // The tap target: one invisible low-poly ball per pet (never drawn, so never uploaded),
 // cheaper to hit-test than every part of the model.
@@ -44,9 +47,15 @@ export default function HomePets() {
   // The furniture stops them like it stops you; as a flat grid, so their frame loops never allocate.
   const blockers = useAvatarBlockers()
   const grid = useMemo(() => blockerGrid(blockers), [blockers])
+  const [arrived, setArrived] = useState(0)
+  useEffect(() => {
+    if (arrived >= ids.length) return
+    const t = window.setTimeout(() => setArrived((n) => n + 1), arrived === 0 ? ARRIVE_FIRST_MS : ARRIVE_EACH_MS)
+    return () => window.clearTimeout(t)
+  }, [arrived, ids.length])
   return (
     <>
-      {ids.map((id, i) => (
+      {ids.slice(0, arrived).map((id, i) => (
         <HomePet key={id} creatureId={id} stage={stages[id] as PetStage} index={i} blockers={blockers} grid={grid} />
       ))}
     </>
