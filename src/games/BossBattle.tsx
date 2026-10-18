@@ -9,7 +9,7 @@ import { Loading, ProgressBar, Pill } from '../components/ui'
 import { QuizProgress, QuestionPrompt, AnswerGrid, QuizSplit } from './_shared/QuizUI'
 import VisualRenderer from '../components/VisualRenderer'
 import { visualSize } from '../components/visualSize'
-import { ROOMY_SCREEN, SHORT_SCREEN, WIDE_SHORT, useMediaQuery } from '../components/useViewport'
+import { SHORT_SCREEN, WIDE_SHORT, useMediaQuery } from '../components/useViewport'
 
 // Visuals the question can't be answered without (a reading passage, a bar graph).
 // Teaching aids like multiplication arrays or fraction bars stay hidden in the boss
@@ -56,11 +56,12 @@ export default function BossBattle({ provider, params, onComplete, meta }: GameP
   const short = useMediaQuery(SHORT_SCREEN)
   // Wide, short screens (that phone, or a wide tablet in landscape): two columns.
   const wide = useMediaQuery(WIDE_SHORT)
-  // A tablet held sideways: boss | question + picture | answers, so the answers
-  // never sit under a tall chart, below the fold. (Phones keep the answers under
-  // the question: three columns would squeeze long word answers.)
-  const roomy = useMediaQuery(ROOMY_SCREEN)
-  const sideAnswers = wide && roomy
+  // A tablet held sideways (960px+ wide, Fire 7 included): boss | question +
+  // picture | answers, so the answers never sit under a tall chart, below the
+  // fold. (Phones keep the answers under the question: three columns would
+  // squeeze long word answers.)
+  const broad = useMediaQuery('(min-width: 960px)')
+  const sideAnswers = wide && broad
 
   useEffect(() => {
     let cancel = false

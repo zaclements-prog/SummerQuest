@@ -141,11 +141,11 @@ export default function TutorScreen() {
   }, [i, reduced])
 
   // The step has played and its check is still waiting below the fold (phones,
-  // tablets): bring the question up so the kid sees why Next is waiting.
+  // tablets): bring the question to the top, so its options clear the nav dock too.
   const waitingCheck = played && !!step?.check && picked === null
   useEffect(() => {
     if (!waitingCheck) return
-    checkRef.current?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'nearest' })
+    checkRef.current?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' })
   }, [waitingCheck, reduced])
 
   // Lesson with no resolvable step yet → loading shimmer (id matched, content pending).

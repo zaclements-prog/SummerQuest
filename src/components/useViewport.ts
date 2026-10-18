@@ -10,10 +10,11 @@ import type { RefObject } from 'react'
  */
 
 /**
- * A short screen — in practice a phone held sideways. Must match the shell's
- * `short:` CSS variant (`@custom-variant short (@media (max-height: 32rem))`).
+ * A short screen: a phone held sideways, or a 7–8" tablet held sideways with its
+ * system bars showing (Fire 7 / Fire HD 8: ~528 CSS px). Must match the shell's
+ * `short:` CSS variant (`@custom-variant short (@media (max-height: 36rem))`).
  */
-export const SHORT_SCREEN = '(max-height: 32rem)'
+export const SHORT_SCREEN = '(max-height: 36rem)'
 /**
  * Wide and not very tall: a phone held sideways, a wide laptop window, or any
  * touch tablet in landscape (iPad Safari, a full-screen iPad web app, iPad Pro
@@ -22,7 +23,7 @@ export const SHORT_SCREEN = '(max-height: 32rem)'
  * both hands the answers land near a thumb.
  */
 export const WIDE_SHORT =
-  '(min-aspect-ratio: 4/3) and (max-height: 32rem), (min-aspect-ratio: 3/2) and (max-height: 760px), (pointer: coarse) and (min-aspect-ratio: 4/3) and (max-height: 1100px)'
+  '(min-aspect-ratio: 4/3) and (max-height: 36rem), (min-aspect-ratio: 3/2) and (max-height: 760px), (pointer: coarse) and (min-aspect-ratio: 4/3) and (max-height: 1100px)'
 /**
  * Room to spare in both directions: any tablet in either orientation, or a big
  * desktop window (not phones, not iPad Split View). Game screens centre their

@@ -197,7 +197,9 @@
   min-height: 100dvh;
 }
 
-@custom-variant short (@media (max-height: 32rem));
+/* A short screen: a phone held sideways, or a 7-8" tablet (Fire 7 / Fire HD 8) held sideways with
+   its system bars showing (~528px). Matches SHORT_SCREEN in src/components/useViewport.ts. */
+@custom-variant short (@media (max-height: 36rem));
 /* A tablet in either orientation (or a big desktop window): room to spare in both
    directions, so game screens centre their content and grow their tiles and pictures.
    Matches ROOMY_SCREEN in src/components/useViewport.ts. */
@@ -255,7 +257,7 @@
       padding-right: calc(1rem + var(--safe-right));
     }
   }
-  @media (max-height: 32rem) {
+  @media (max-height: 36rem) {
     .app-bar {
       padding-top: calc(0.25rem + var(--safe-top));
       padding-bottom: 0.25rem;

@@ -10,7 +10,7 @@ import { sfx } from '../lib/sound'
 import { Card, Button, Medallion, ProgressBar, Pill, StarRating, Loading } from '../components/ui'
 import { useEntrance } from '../lib/motion'
 import { heuristicFeedback } from '../lib/writingGrader'
-import { ROOMY_SCREEN, WIDE_SHORT, useCoarsePointer, useKeepAboveKeyboard, useKeyboardInset, useMediaQuery, useVisibleHeight } from '../components/useViewport'
+import { ROOMY_SCREEN, SHORT_SCREEN, WIDE_SHORT, useCoarsePointer, useKeepAboveKeyboard, useKeyboardInset, useMediaQuery, useVisibleHeight } from '../components/useViewport'
 
 interface Feedback {
   score: number
@@ -203,6 +203,8 @@ function WritingPadView({
   const roomy = useMediaQuery(ROOMY_SCREEN)
   const sideways = useMediaQuery(WIDE_SHORT)
   const upright = roomy && !sideways
+  // a phone or small tablet held sideways: a shorter box, so it starts above the fold
+  const short = useMediaQuery(SHORT_SCREEN)
   // The local AI grader runs on a computer; a tablet can't fix it being down, so
   // kids there just get the basic score without the warning.
   const touch = useCoarsePointer()
@@ -219,7 +221,9 @@ function WritingPadView({
   const visibleH = useVisibleHeight()
   const docked = typing && keyboard > 0
   // (until the keyboard takes half the screen)
-  const rows = (kind === 'sentence' ? 3 : kind === 'paragraph' ? 6 : 10) + (upright && !docked ? (kind === 'sentence' ? 1 : 4) : 0)
+  const rows = short
+    ? (kind === 'sentence' ? 2 : kind === 'paragraph' ? 4 : 5)
+    : (kind === 'sentence' ? 3 : kind === 'paragraph' ? 6 : 10) + (upright && !docked ? (kind === 'sentence' ? 1 : 4) : 0)
   const BAR_H = 76
   useKeepAboveKeyboard(areaRef, typing, docked ? BAR_H + 8 : 16)
 
@@ -242,8 +246,8 @@ function WritingPadView({
     <div className="flex-1 flex flex-col items-center p-4 overflow-y-auto">
       <div className="w-full flex flex-col items-center roomy:my-auto">
       {/* Progress */}
-      <div className="w-full max-w-2xl mb-3">
-        <div className="kid-text text-base text-ink-700 text-center mb-1.5">
+      <div className="w-full max-w-2xl mb-3 short:mb-1.5">
+        <div className="kid-text text-base text-ink-700 text-center mb-1.5 short:mb-1 short:text-sm">
           Prompt {idx + 1} of {questionCount}
         </div>
         <ProgressBar value={idx + 1} max={questionCount} tone="quest" />
@@ -254,17 +258,17 @@ function WritingPadView({
         variants={container}
         initial="hidden"
         animate="show"
-        className="w-full max-w-2xl flex flex-col items-center gap-3"
+        className="w-full max-w-2xl flex flex-col items-center gap-3 short:gap-2"
       >
         {/* Prompt surface — bright paper, dark ink, high contrast */}
         <motion.div variants={item} className="w-full">
-          <Card tone="quest" accent className="p-5 sm:p-6 !bg-quest-100">
-            <div className="flex items-center gap-2 mb-3">
+          <Card tone="quest" accent className="p-5 sm:p-6 short:p-3 !bg-quest-100">
+            <div className="flex items-center gap-2 mb-3 short:mb-1.5">
               <Pill tone="quest" icon="✍️">
                 {KIND_LABEL[kind]} prompt
               </Pill>
             </div>
-            <p className="kid-text font-bold text-ink-900 text-xl md:text-2xl leading-snug">
+            <p className="kid-text font-bold text-ink-900 text-xl md:text-2xl short:text-lg leading-snug">
               {problem.prompt}
             </p>
           </Card>
