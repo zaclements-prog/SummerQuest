@@ -17,7 +17,7 @@ The store-listing documents sit beside it in `docs/store/`.
 | Touch / Pencil / rotation | ✅ Tap-to-walk everywhere (World, Home, games). Drags and pinches never misfire. The view survives rotation. |
 | Production build health | ✅ 70 routes and 0 page errors on the production build. |
 | Low-end performance | ✅ / ⚠️ 2D screens are interactive in about 1 s and 3D in about 3 s at 6× CPU throttle. See [Performance](#performance). Confirm on a real Fire 7. |
-| Kid safety / COPPA | ✅ No ads, no analytics, no SDKs, and no external network calls in the production bundle. ⏳ In progress: a store build without the AI writing feeder, a parental gate on the Parent area, and the privacy policy. |
+| Kid safety / COPPA | ✅ No ads, no analytics, no SDKs, no network. `npm run build:store` compiles out the AI writing feeder and fails on any network use. Parental gate on the Parent area and every grown-up setting. Store build sweep: 70 routes, 0 errors, 0 outside requests. See `privacy-policy.md`. |
 | Store assets | ✅ Icons 512×512 and 114×114 (`assets/`). ✅ Screenshots 1920×1200. ⏳ Listing text: `listing-draft.md`. |
 | Packaging for Fire OS | ⏳ **Not started.** This is a decision for the owner (see [Packaging](#packaging)). |
 | Real-device check | ⏳ Owner: run on a physical Fire tablet before submitting (see [Before you submit](#before-you-submit)). |
@@ -32,7 +32,8 @@ The store-listing documents sit beside it in `docs/store/`.
     - only "child-suitable" SDKs.
   - Where we stand: the app has no ads, no analytics and no third-party SDKs. Nothing leaves the device.
   - Progress, the child's first name or nickname, and settings live in on-device storage only.
-  - ⏳ In progress: the optional local-AI writing grader (a desktop dev extra that posts the child's writing to a local server) gets **compiled out** of a dedicated store build (`npm run build:store`), which fails if any trace of it is left.
+  - The optional local-AI writing grader (a desktop dev extra that posts the child's writing to a local server) is **compiled out** of the store build. `npm run build:store` fails on any trace of it, and on any fetch, beacon, socket or remote import that isn't same-origin.
+  - **Parental gate:** "Grown-ups only: what is 23 × 17?", typed answer, no hints, a 30-second lockout after 3 misses, open for 10 minutes in memory only. It guards the Parent area, reset and grade change.
 - **Privacy Labels.** Answers are in `amazon-privacy-labels.md`: no data collected or transmitted.
 - **Content rating questionnaire.** Answers are in `content-rating.md`. There is mild cartoon fantasy conflict (boss battles, golems, tower defense) and no realistic violence.
 - **Images.** The large icon must be 512×512 and the small icon 114×114, both PNG with transparency. They are in `assets/`. Screenshots: 3–10 at a supported tablet size; we provide 1920×1200 (Fire HD 10).
@@ -42,7 +43,7 @@ The store-listing documents sit beside it in `docs/store/`.
   - navigation;
   - behavior on Fire devices: status bar, soft keys, and the app going to the background.
 
-  Status: ⏳ in progress — a root error boundary for crashes, and audio that stops when the app is backgrounded. Back-button handling belongs to the packaging step (below).
+  Status: a root error boundary turns a crash or a failed screen load into a friendly "Oops!" screen. Everything goes silent when the app is backgrounded (sound effects, narration, speech), and a lesson's voice and pictures pause together. Back-button handling belongs to the packaging step (below).
 
 ## Packaging
 
@@ -59,6 +60,13 @@ runs unchanged inside either wrapper:
 2. **Amazon packaged web app.** Upload the built files as a ZIP with a launch page.
    - Less work, but less control: no native Back handling, full screen, or keep-awake.
    - Unknowns to test on a device: the page origin, and whether storage persists across updates.
+
+**Wrapper requirements** (whichever path):
+- **Network:** request **no** INTERNET permission (or never load a remote URL).
+- **Permissions and SDKs:** no other permissions, and no SDKs.
+- **Backup:** set `allowBackup="false"`.
+- **Routing:** serve `index.html` for any app path. The app uses path routes, and "Restart" reloads the current one. Capacitor's local server already does this.
+- **Speech:** check that text-to-speech uses the on-device voice. It is only a fallback; the narration is recorded.
 
 **Recommendation:** Capacitor. It is the path Amazon's test criteria (Back, soft keys,
 backgrounding) are easiest to satisfy on. The earlier Capacitor groundwork was set
