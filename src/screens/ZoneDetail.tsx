@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { getZone } from '../curriculum'
 import { useProgress } from '../store/progress'
@@ -23,6 +23,10 @@ import {
 import { useEntrance } from '../lib/motion'
 import { isStageUnlocked } from '../lib/stageLocks'
 import { useWorldUi } from '../world/useWorldUi'
+import { zoneStarTotals } from '../lib/pets/growth'
+import { usePetStatuses } from '../lib/pets/usePets'
+import { petEmoji } from '../lib/pets/catalog'
+import { zonePetLine } from '../lib/pets/copy'
 
 // ── Stage-kind presentation ───────────────────────────────────────────────────
 const KIND_META: Record<string, { label: string; icon: string; tone: Tone }> = {
@@ -39,19 +43,17 @@ export default function ZoneDetail() {
   const zoneProgress = useProgress((s) => s.zones[zoneId])
   const markZoneMastered = useProgress((s) => s.markZoneMastered)
   const fromWorld = useWorldUi((s) => s.enteredFromWorld)
+  const pet = usePetStatuses().find((s) => s.pet.zoneId === zoneId)
 
   const { container, item } = useEntrance()
 
   // ── Zone-level star totals (must run every render for hook order) ────────────
+  // Each stage counts up to its starsToEarn: the same totals (and "complete")
+  // that grow the zone's pet into a grown-up.
   const { earnedStars, totalStars, complete } = useMemo(() => {
     if (!zone) return { earnedStars: 0, totalStars: 0, complete: false }
-    let earned = 0
-    let total = 0
-    for (const stage of zone.stages) {
-      earned += zoneProgress?.stages[stage.id]?.stars ?? 0
-      total += stage.starsToEarn
-    }
-    return { earnedStars: earned, totalStars: total, complete: total > 0 && earned >= total }
+    const t = zoneStarTotals(zone, zoneProgress)
+    return { earnedStars: t.earned, totalStars: t.total, complete: t.complete }
   }, [zone, zoneProgress])
 
   // ── Zone-complete celebration (once per zone, ever) ──────────────────────────
@@ -127,6 +129,20 @@ export default function ZoneDetail() {
             </Pill>
           </div>
           <ProgressBar value={earnedStars} max={totalStars} tone={complete ? 'correct' : 'quest'} />
+          {/* This zone's pet, and what it needs from here */}
+          {pet && (
+            <Link
+              to={`/pets?pet=${pet.pet.creatureId}`}
+              onClick={() => sfx.click()}
+              className="flex items-center gap-2.5 min-h-12 rounded-2xl bg-cream-100 border-2 border-line/25 px-3 py-1.5 kid-text text-base leading-snug text-ink-800 hover:bg-cream-200 outline-none focus-visible:ring-4 focus-visible:ring-ocean-600/70"
+            >
+              <span className="text-2xl leading-none" aria-hidden="true">
+                {pet.stage === 'egg' ? '🥚' : petEmoji(pet.pet.creatureId)}
+              </span>
+              <span className="flex-1 min-w-0">{zonePetLine(pet)}</span>
+              <span className="shrink-0 text-ink-700" aria-hidden="true">🐾 →</span>
+            </Link>
+          )}
         </div>
       </Card>
 

@@ -24,9 +24,15 @@ import { useEntrance } from '../lib/motion'
 import ParentGate from '../components/ParentGate'
 import { removeSavedKeys } from '../platform/web/storage'
 import { GRADE_LABEL, GRADE_LEVELS, type GradeLevel } from '../lib/gradeTiers'
+import { adultPets, hatchedPets, petStages } from '../lib/pets/growth'
+import { PETS } from '../lib/pets/catalog'
 
 export default function ParentDashboard() {
-  const { player, coins, zones, stats, resetPlayer, setGrade } = useProgress()
+  const { player, coins, zones, stats, resetPlayer, setGrade, lessonsDone } = useProgress()
+  // Pets grow from learning: a grown-up one is "raised" (it joins the avatars).
+  const petGrowth = petStages(zones, lessonsDone)
+  const petsRaised = adultPets(petGrowth).length
+  const petsHatched = hatchedPets(petGrowth).length
   const {
     llmEnabled,
     llmAvailable,
@@ -193,6 +199,10 @@ export default function ParentDashboard() {
         {/* ── Zone progress ─────────────────────────────────────────────── */}
         <motion.div variants={item}>
           <Panel emoji="🗺️" title="Zone progress" tone="ocean">
+            <p className="text-base text-ink-700 mb-3">
+              🐾 Pets raised: <b className="text-ink-900">{petsRaised} of {PETS.length}</b>
+              <span className="text-ink-500"> · {petsHatched} hatched (each zone&apos;s pet grows as your child earns its stars)</span>
+            </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {curriculum.zones.map((z) => {
                 const progress = zones[z.id]

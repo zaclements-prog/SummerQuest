@@ -58,19 +58,33 @@ export function walkStep(
   blocked: (px: number, pz: number, fromX: number, fromZ: number) => boolean,
   radius: number, bound: number,
 ): { x: number; z: number } {
-  const clamp = (v: number) => Math.max(-bound, Math.min(bound, v))
+  return walkStepInto({ x: 0, z: 0 }, x, z, dx, dz, blocked, radius, bound)
+}
+
+/**
+ * `walkStep` writing its result into `out` (and returning it): no allocation,
+ * for frame loops that move several bodies every frame (the Home pets).
+ */
+export function walkStepInto<T extends { x: number; z: number }>(
+  out: T,
+  x: number, z: number, dx: number, dz: number,
+  blocked: (px: number, pz: number, fromX: number, fromZ: number) => boolean,
+  radius: number, bound: number,
+): T {
   const n = Math.max(1, Math.ceil(Math.hypot(dx, dz) / Math.max(radius / 2, 0.05)))
   const sx = dx / n
   const sz = dz / n
   const ox = Math.sign(dx) * radius
   const oz = Math.sign(dz) * radius
   for (let i = 0; i < n; i++) {
-    const nx = clamp(x + sx)
+    const nx = Math.max(-bound, Math.min(bound, x + sx))
     if (!blocked(nx + ox, z, x, z)) x = nx
-    const nz = clamp(z + sz)
+    const nz = Math.max(-bound, Math.min(bound, z + sz))
     if (!blocked(x, nz + oz, x, z)) z = nz
   }
-  return { x, z }
+  out.x = x
+  out.z = z
+  return out
 }
 
 /** With a fixed iso camera looking toward (-x,-z), the +x and +z walls face the camera. */

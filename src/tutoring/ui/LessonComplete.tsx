@@ -5,6 +5,7 @@ import { Burst, Confetti, Defs, Paper, Pop, Twinkle, Words } from '../motion/kit
 import { M } from '../motion/palette'
 import { starPath } from '../motion/layout'
 import { ArrowRightIcon, ReplayIcon } from './icons'
+import { usePetUi } from '../../lib/pets/usePetUi'
 
 const VW = 640
 const VH = 330
@@ -20,17 +21,26 @@ export default function LessonComplete({ title, emoji, ideas, onPractice, onRepl
   const [t, setT] = useState(reduced ? 99 : 0)
   const goRef = useRef(onPractice)
   const btnRef = useRef<HTMLButtonElement>(null)
+  // A pet hatching over this card holds the countdown until it's dismissed.
+  const held = usePetUi((s) => s.momentOpen)
+  const heldRef = useRef(held)
   useEffect(() => {
     goRef.current = onPractice
   }, [onPractice])
+  useEffect(() => {
+    heldRef.current = held
+  }, [held])
 
   useEffect(() => {
     btnRef.current?.focus()
-    const start = performance.now()
+    let last = performance.now()
+    let s = 0
     let raf = 0
     let gone = false
     const loop = () => {
-      const s = (performance.now() - start) / 1000
+      const now = performance.now()
+      if (!heldRef.current) s += (now - last) / 1000
+      last = now
       if (!reduced) setT(s)
       if (s >= AUTO_GO && !gone) {
         gone = true
@@ -50,7 +60,7 @@ export default function LessonComplete({ title, emoji, ideas, onPractice, onRepl
   const raysK = ease.outCubic(progress(t, 0.2, 0.6))
 
   return (
-    <motion.div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto p-4 pt-[calc(1rem+var(--safe-top,env(safe-area-inset-top,0px)))] pb-[calc(1rem+var(--safe-bottom,env(safe-area-inset-bottom,0px)))] short:pt-[calc(0.5rem+var(--safe-top,env(safe-area-inset-top,0px)))] short:pb-[calc(0.5rem+var(--safe-bottom,env(safe-area-inset-bottom,0px)))]" initial={{ opacity: 0 }} animate={{ opacity: 1 }} role="dialog" aria-modal="true" aria-label="Lesson complete">
+    <motion.div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto p-4 pt-[calc(1rem+var(--safe-top,env(safe-area-inset-top,0px)))] pb-[calc(1rem+var(--safe-bottom,env(safe-area-inset-bottom,0px)))] short:pt-[calc(0.5rem+var(--safe-top,env(safe-area-inset-top,0px)))] short:pb-[calc(0.5rem+var(--safe-bottom,env(safe-area-inset-bottom,0px)))]" initial={{ opacity: 0 }} animate={{ opacity: 1 }} role="dialog" aria-modal="true" aria-label="Lesson complete" data-pet-calm="">
       <div className="absolute inset-0 backdrop-blur-sm" style={{ background: 'rgba(40,30,40,0.55)' }} aria-hidden="true" />
       <motion.div
         className="relative my-auto w-full max-w-xl overflow-hidden rounded-[32px]"

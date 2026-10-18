@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from 'vitest'
 import { BoxGeometry, DataTexture, Group, Mesh, MeshBasicMaterial, MeshToonMaterial, Scene, ShaderMaterial } from 'three'
 import { classifyDevice, isTouchFirst } from '../deviceClass'
 import { RECOVERY, mayAutoRecover, pruneRecoveries } from '../recovery'
-import { collectGpuResources, registerSharedGpuCache, releaseGpuResources } from '../release'
+import { collectGpuResources, registerSharedGpuCache, releaseGpuResources, releaseUnshared } from '../release'
 
 describe('classifyDevice', () => {
   it('a mouse/trackpad-first screen is a desktop, whatever its size', () => {
@@ -85,5 +85,23 @@ describe('GPU resource release', () => {
     expect(onScene).toHaveBeenCalledTimes(1)
     // still usable afterwards (the next canvas uploads it again)
     expect(shared.getAttribute('position').count).toBeGreaterThan(0)
+  })
+
+  it('an overlay closing over another canvas releases only what the other one does not draw', () => {
+    const sharedMat = new MeshToonMaterial()
+    const sharedGeo = new BoxGeometry()
+    const ownGeo = new BoxGeometry()
+    const world = new Scene()
+    world.add(new Mesh(sharedGeo, sharedMat))
+    const overlay = new Scene()
+    overlay.add(new Mesh(sharedGeo, sharedMat), new Mesh(ownGeo, sharedMat))
+    const onShared = vi.fn()
+    const onOwn = vi.fn()
+    sharedMat.addEventListener('dispose', onShared)
+    sharedGeo.addEventListener('dispose', onShared)
+    ownGeo.addEventListener('dispose', onOwn)
+    expect(releaseUnshared(overlay, [world])).toBe(1)
+    expect(onOwn).toHaveBeenCalledTimes(1)
+    expect(onShared).not.toHaveBeenCalled()
   })
 })

@@ -7,6 +7,7 @@ import { usePlayClock } from '../lib/usePlayClock'
 import { SESSIONS_PER_DAY, SESSION_BONUS_COINS } from '../lib/dailyGoal'
 import { parentGateOpen } from '../lib/parentGateSession'
 import ParentGate from './ParentGate'
+import PetMoments from '../pets/PetMoments'
 
 /*
  * The top bar lays itself out by its OWN width (a container query on <header>),
@@ -206,6 +207,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Pet hatch / grow-up celebrations, at calm moments only. */}
+      <PetMoments />
 
       <ParentGate
         open={askGrownUp}

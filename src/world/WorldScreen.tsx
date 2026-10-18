@@ -6,6 +6,7 @@ import WorldEnvironment from './terrain/WorldEnvironment'
 import WorldScene from './WorldScene'
 import WorldCameraRig from './WorldCameraRig'
 import WorldAvatar from './WorldAvatar'
+import WorldBuddy from './WorldBuddy'
 import WorldHud from './WorldHud'
 import WorldStudio from './WorldStudio'
 import QualityProbe from './QualityProbe'
@@ -69,6 +70,7 @@ export default function WorldScreen() {
             <WorldScene posRef={posRef} />
             <WorldCameraRig targetRef={posRef} />
             <WorldAvatar posRef={posRef} spawn={spawn} />
+            <WorldBuddy posRef={posRef} />
             <QualityProbe force={params.has('gfxprobe')} />
           </>
         )}

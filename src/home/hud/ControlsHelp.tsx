@@ -42,8 +42,9 @@ export default function ControlsHelp() {
                 <li>🎮 <b>Play mode:</b> tap your creature to make it hop and cheer!</li>
                 <li>🛠️ <b>Decorate mode:</b> buy furniture, tap <b>Place</b>, then tap a green tile to put it there. Tap <b>⟳ Rotate</b> to turn it first.</li>
                 <li>✋ <b>Tap</b> any placed item to pick it: then <b>⟳ Rotate</b> it, <b>✋ Move</b> it to a new tile, or <b>📦 Put away</b> to send it back to your bag. Tap <b>✓ Done</b> when it looks right.</li>
-                <li>🦄 In the <b>Creatures</b> tab, buy a new animal and <b>Become</b> it!</li>
-                <li>🪙 Earn coins by finishing activities — then spend them here.</li>
+                <li>🐣 <b>Tap a pet</b> in Play mode to see how it's growing, or make it your buddy.</li>
+                <li>🦁 Learn in a zone to hatch its pet and help it grow up. A grown-up pet can be <b>you</b>: tap <b>Become</b> in the <b>🐾 Animals</b> tab!</li>
+                <li>🪙 Earn coins by finishing activities — then spend them on furniture and style here.</li>
               </ul>
             ) : (
               <ul className="space-y-2 text-base leading-relaxed">
@@ -54,8 +55,9 @@ export default function ControlsHelp() {
                 <li>🎮 <b>Play mode:</b> click your creature to make it hop and cheer!</li>
                 <li>🛠️ <b>Decorate mode:</b> buy furniture, then click a green tile to place it. Click <b>⟳ Rotate</b> (or press <b>R</b>) to turn it before you drop it.</li>
                 <li>📦 Click any placed item to pick it: <b>⟳ Rotate</b> (or <b>R</b>), <b>✋ Move</b> it to a new green tile, or <b>📦 Put away</b> to send it back to your bag. <b>✓ Done</b> (or <b>Esc</b>) lets go; <b>✕ Cancel</b> (or <b>Esc</b>) stops a move and leaves it where it was.</li>
-                <li>🦄 In the <b>Creatures</b> tab, buy a new animal and <b>Become</b> it!</li>
-                <li>🪙 Earn coins by finishing activities — then spend them here.</li>
+                <li>🐣 <b>Click a pet</b> in Play mode to see how it's growing, or make it your buddy.</li>
+                <li>🦁 Learn in a zone to hatch its pet and help it grow up. A grown-up pet can be <b>you</b>: click <b>Become</b> in the <b>🐾 Animals</b> tab!</li>
+                <li>🪙 Earn coins by finishing activities — then spend them on furniture and style here.</li>
               </ul>
             )}
           </div>

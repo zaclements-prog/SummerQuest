@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { useHomeUi } from '../useHomeUi'
 import { useWorldUi } from '../../world/useWorldUi'
 import { insideDoorSpot } from '../../world/worldLayout'
@@ -10,6 +10,7 @@ import { occupiedTiles } from '../../lib/home/occupancy'
 import ModeToggle from './ModeToggle'
 import CatalogDrawer from './CatalogDrawer'
 import ControlsHelp from './ControlsHelp'
+import PetCard from './PetCard'
 import { sfx } from '../../lib/sound'
 
 // HUD chrome: dark translucent bubbles with white text, sized for fingers (48px).
@@ -33,6 +34,8 @@ export default function HomeHud() {
   const removeItem = useProgress((s) => s.removeItem)
   const active = !!placingItemId || !!movingUid
   const navigate = useNavigate()
+  const petCard = useHomeUi((s) => s.petCard)
+  const closePetCard = useCallback(() => useHomeUi.getState().openPetCard(null), [])
 
   // The item tapped in decorate mode (gone if it was put away meanwhile).
   const sel = selectedUid && mode === 'decorate' ? placed.find((p) => p.uid === selectedUid) ?? null : null
@@ -123,6 +126,9 @@ export default function HomeHud() {
         <div className="flex items-center gap-2">
           <button type="button" onClick={back} title="Back to the World" className={`${hudBtn} bg-ocean-900/70 text-white px-3 sm:px-4`}>← Back</button>
           <ControlsHelp />
+          <Link to="/pets" onClick={() => sfx.click()} title="My pets" className={`${hudBtn} bg-ocean-900/70 text-white px-3 sm:px-4`}>
+            🐾 <span className="max-[380px]:sr-only">Pets</span>
+          </Link>
         </div>
         <ModeToggle />
       </div>
@@ -151,6 +157,9 @@ export default function HomeHud() {
           <button type="button" onClick={() => { sfx.click(); done() }} className={`${barBtn} !bg-correct-500 !text-ink-900`}>✓ Done</button>
         </div>
       )}
+
+      {/* A pet tapped in Play mode: its card. */}
+      {mode === 'play' && petCard && <PetCard key={petCard} creatureId={petCard} onClose={closePetCard} />}
 
       {/* The shop steps aside while you place, move or fix up an item, and stays
           folded after you place one (so you can see it) until you open it again. */}

@@ -4,6 +4,7 @@ import RoomShell from './RoomShell'
 import TileGrid from './TileGrid'
 import PlacedItems from './PlacedItems'
 import AvatarCreature from './AvatarCreature'
+import HomePets from './HomePets'
 
 export default function HomeWorld() {
   return (
@@ -14,6 +15,7 @@ export default function HomeWorld() {
       <TileGrid />
       <PlacedItems />
       <AvatarCreature />
+      <HomePets />
     </>
   )
 }

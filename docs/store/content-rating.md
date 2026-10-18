@@ -66,7 +66,7 @@ There is no blood, no realistic weapon, no death animation and no injury shown a
 | Question | Answer |
 |---|---|
 | Advertisements | **No.** No ads of any kind. |
-| In-app purchasing | **No.** Coins are earned by playing and spent in the game (hats, home decorations, pet creatures). They can't be bought with real money. |
+| In-app purchasing | **No.** Coins are earned by playing and spent in the game (hats, home decorations); pets hatch and grow from learning. They can't be bought with real money. |
 | Account creation / login | **No** |
 | User-generated content shared with others | **No.** Kids type a name and practice writing, but nothing is posted, shared or sent anywhere. |
 | User-to-user communication (chat, messaging) | **No** |
