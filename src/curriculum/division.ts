@@ -3,7 +3,7 @@ import type { Zone } from './types'
 export const divisionZone: Zone = {
   id: 'division-dunes',
   title: 'Division Dunes',
-  subtitle: 'Division facts ÷2 to ÷10',
+  subtitle: 'Sharing and division facts',
   emoji: '🐪',
   themeColor: 'quest',
   description:

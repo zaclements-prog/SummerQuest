@@ -78,7 +78,7 @@ export default function ZoneDetail() {
           emoji="🗺️"
           title="Zone not found"
           message="We couldn't find that island. It may have drifted off the map!"
-          back={{ label: fromWorld ? 'Back to World' : 'Back to map', to: fromWorld ? '/world' : '/map' }}
+          back={{ label: fromWorld ? 'Back to the World' : 'Back to map', to: fromWorld ? '/world' : '/map' }}
         />
       </div>
     )
@@ -91,7 +91,7 @@ export default function ZoneDetail() {
     <Page width="lg">
       {/* ── Back ──────────────────────────────────────────────────────────── */}
       <div>
-        <BackButton to={fromWorld ? '/world' : '/map'} label={fromWorld ? 'Back to World' : 'Back to map'} />
+        <BackButton to={fromWorld ? '/world' : '/map'} label={fromWorld ? 'Back to the World' : 'Back to map'} />
       </div>
 
       {/* ── Zone header card (themed to the island just tapped) ────────────── */}

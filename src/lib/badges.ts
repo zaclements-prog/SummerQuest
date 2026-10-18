@@ -91,7 +91,7 @@ export function computeBadges(ctx: BadgeCtx): BadgeStatus[] {
       emoji: zb.emoji,
       title: zb.title,
       category: 'zone',
-      description: `Master every stage of ${zone?.title ?? zb.title}.`,
+      description: `Earn a star on every stage of ${zone?.title ?? zb.title}.`,
       earned: zoneMastered(ctx, zb.zoneId, expected),
     }
   })
@@ -151,7 +151,7 @@ export function computeBadges(ctx: BadgeCtx): BadgeStatus[] {
       id: 'grand-champion',
       emoji: '👑',
       title: 'Grand Champion',
-      description: 'Master every zone on the map.',
+      description: 'Earn a star on every stage of every zone.',
       earned: masteredZoneCount(ctx) >= curriculum.zones.length,
     },
   ].map((m) => ({ ...m, category: 'milestone' as const }))

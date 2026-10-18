@@ -84,7 +84,7 @@ export default function WorldPanel({
         </>
       ) : null}
 
-      <p className="text-xs text-ink-500 mt-4">Press Esc or ✕ to keep exploring.</p>
+      <p className="text-xs text-ink-500 mt-4">Tap ✕ (or press Esc) to keep exploring.</p>
     </motion.div>
   )
 }

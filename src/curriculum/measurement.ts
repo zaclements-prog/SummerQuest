@@ -16,7 +16,7 @@ export const measurementZone: Zone = {
       id: 'meas-concept',
       kind: 'concept',
       title: 'Shapes & Sizes',
-      description: 'Find area and perimeter of rectangles.',
+      description: 'Find the area of rectangles.',
       gameId: 'conceptPlay',
       providerConfig: { kind: 'measurement', type: 'area' },
       params: { questionCount: 6 },

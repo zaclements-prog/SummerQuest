@@ -151,7 +151,7 @@ export default function TutorIndex() {
             emoji="📚"
             title="No lessons yet"
             message="New tutor lessons are on their way — check back soon!"
-            cta={{ label: 'Back to World', to: '/world' }}
+            cta={{ label: 'Back to the World', to: '/world' }}
           />
         ) : (
           <motion.div

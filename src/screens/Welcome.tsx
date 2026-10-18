@@ -174,7 +174,7 @@ export default function Welcome() {
         </motion.div>
 
         <motion.p variants={item} className="kid-text text-base text-ink-800">
-          For kids finishing 2nd, 3rd or 4th grade
+          For kids finishing 2nd, 3rd, or 4th grade
         </motion.p>
       </motion.div>
     </div>
