@@ -156,7 +156,13 @@ export default function PetsScreen() {
                   🏠 Stay home
                 </Button>
               ) : (
-                <Button variant="primary" onClick={() => setBuddyPet(id)}>
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    setBuddyPet(id)
+                    sfx.correct()
+                  }}
+                >
                   ⭐ Make buddy
                 </Button>
               )}
@@ -166,7 +172,14 @@ export default function PetsScreen() {
                     ✓ You&apos;re the {name}!
                   </Button>
                 ) : (
-                  <Button variant="success" disabled={!owned.includes(id)} onClick={() => becomeCreature(id)}>
+                  <Button
+                    variant="success"
+                    disabled={!owned.includes(id)}
+                    onClick={() => {
+                      becomeCreature(id)
+                      sfx.victory()
+                    }}
+                  >
                     {petEmoji(id)} Become {name}
                   </Button>
                 ))}

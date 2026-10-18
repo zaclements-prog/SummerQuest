@@ -99,6 +99,19 @@ describe('PetMoments', () => {
     expect(dialog()).not.toBeNull()
   })
 
+  it('on a 3D screen, waits until its view is up', () => {
+    hatchFour()
+    render('/home')
+    tick(4000)
+    expect(dialog()).toBeNull() // still loading the room
+    const main = document.createElement('main')
+    main.appendChild(document.createElement('canvas'))
+    document.body.appendChild(main)
+    tick(700)
+    expect(dialog()).not.toBeNull()
+    main.remove()
+  })
+
   it('nothing waiting, nothing shown', () => {
     render('/world')
     tick(5000)

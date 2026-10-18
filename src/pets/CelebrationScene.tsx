@@ -1,5 +1,6 @@
 import { useLayoutEffect, useMemo, useRef } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
+import type { RootState } from '@react-three/fiber'
 import { MeshBasicMaterial, OctahedronGeometry } from 'three'
 import type { Group, Mesh, PerspectiveCamera } from 'three'
 import { creatureBuilder } from '../home/models/registry'
@@ -106,6 +107,12 @@ function Sparkles({ clock0, swirlFrom, burstAt, height }: { clock0: { current: n
   )
 }
 
+/** Runs `fn` every frame ahead of the scene after it (a frame callback subscribes in mount order). */
+function FirstEachFrame({ fn }: { fn: (state: RootState) => void }) {
+  useFrame(fn)
+  return null
+}
+
 /** Frames the scene for the pet it reveals (a baby is small, a grown-up tall). */
 function Framing({ tall }: { tall: number }) {
   const camera = useThree((s) => s.camera) as PerspectiveCamera
@@ -137,7 +144,7 @@ export default function CelebrationScene({ moment, reduced, onReveal }: { moment
   const oldRef = useRef<Group>(null)
   const newRef = useRef<Group>(null)
 
-  useFrame(({ clock }) => {
+  const frame = ({ clock }: RootState) => {
     if (t0.current === null) t0.current = clock.elapsedTime
     const now = clock.elapsedTime - t0.current
     const t = reduced ? 99 : now
@@ -197,10 +204,12 @@ export default function CelebrationScene({ moment, reduced, onReveal }: { moment
         nw.rotation.y = Math.sin(u * 1.3) * 0.35
       }
     }
-  })
+  }
 
   return (
     <WalkStateContext.Provider value={still}>
+      {/* first, so the egg reads this frame's hatch state (not last frame's) */}
+      <FirstEachFrame fn={frame} />
       <Framing tall={tall} />
       <hemisphereLight args={['#fff6e8', '#e6c9a4', 1.1]} />
       <ambientLight intensity={0.35} />

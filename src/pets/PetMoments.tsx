@@ -25,6 +25,12 @@ function otherDialogOpen(): boolean {
   return document.querySelector('[aria-modal="true"]:not([data-pet-calm])') !== null
 }
 
+/** A 3D screen (World, Home, Pets) still loading: wait until its view is up. */
+function stillLoading(pathname: string): boolean {
+  const is3d = pathname === '/world' || pathname === '/home' || pathname === '/pets'
+  return is3d && document.querySelector('main canvas') === null
+}
+
 /**
  * Pet celebrations, mounted once in the app shell. When a pet's stage (derived
  * from progress) is ahead of the one last celebrated (`petsSeen`), it shows a
@@ -49,17 +55,17 @@ export default function PetMoments() {
   // Leaving the calm screen hides it without marking it seen (it comes back later).
   const visible = calm ? show : null
 
-  // Something to celebrate on a calm screen: after a beat, and once no other dialog is up.
+  // Something to celebrate on a calm screen: after a beat, once its 3D view is up and no other dialog is.
   useEffect(() => {
     if (show || !calm || pending.length === 0) return
     let timer = 0
     const tryOpen = () => {
-      if (otherDialogOpen()) timer = window.setTimeout(tryOpen, 600)
+      if (otherDialogOpen() || stillLoading(pathname)) timer = window.setTimeout(tryOpen, 600)
       else setShow(nextMomentShow(pending))
     }
     timer = window.setTimeout(tryOpen, lessonOpen ? SETTLE_LESSON_MS : SETTLE_MS)
     return () => window.clearTimeout(timer)
-  }, [show, calm, pending, lessonOpen])
+  }, [show, calm, pending, lessonOpen, pathname])
 
   // The lesson-complete card holds its countdown while a celebration is up.
   useEffect(() => {
