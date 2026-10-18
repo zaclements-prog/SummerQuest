@@ -27,15 +27,15 @@ export interface AnchorSet {
 // the creature files) and checked in /home?studio=anchors.
 export const CREATURE_ANCHORS: Record<string, AnchorSet> = {
   fox:      { head: [0, 0.865, 0.02],  face: [0, 0.705, 0.27],  back: [0, 0.43, -0.175], body: [0, 0.47, 0.15],  scale: 1.0 },
-  tiger:    { head: [0, 0.867, 0.02],  face: [0, 0.715, 0.27],  back: [0, 0.43, -0.175], body: [0, 0.47, 0.15],  scale: 1.04 },
+  tiger:    { head: [0, 1.224, 0.02],  face: [0, 1.065, 0.272], back: [0, 0.745, -0.17],  body: [0, 0.8, 0.14],   scale: 1.08 },
   lion:     { head: [0, 0.97, -0.02],  face: [0, 0.72, 0.27],   back: [0, 0.43, -0.175], body: [0, 0.47, 0.15],  scale: 1.0 },
   bear:     { head: [0, 0.867, 0.02],  face: [0, 0.72, 0.27],   back: [0, 0.43, -0.18],  body: [0, 0.47, 0.155], scale: 1.04 },
   panda:    { head: [0, 0.868, 0.02],  face: [0, 0.71, 0.27],   back: [0, 0.43, -0.18],  body: [0, 0.47, 0.155], scale: 1.055 },
-  frog:     { head: [0, 0.8, -0.07],   face: [0, 0.805, 0.21],  back: [0, 0.4, -0.18],   body: [0, 0.43, 0.17],  scale: 1.1 },
+  frog:     { head: [0, 1.217, -0.07], face: [0, 1.24, 0.2],    back: [0, 0.765, -0.167], body: [0, 0.82, 0.14],  scale: 1.15 },
   owl:      { head: [0, 0.874, 0.02],  face: [0, 0.71, 0.28],   back: [0, 0.47, -0.22],  body: [0, 0.47, 0.2],   scale: 1.04 },
   dragonet: { head: [0, 0.864, 0.03],  face: [0, 0.72, 0.28],   back: [0, 0.43, -0.175], body: [0, 0.47, 0.15],  scale: 1.0 },
-  unicorn:  { head: [0, 0.875, -0.02], face: [0, 0.725, 0.27],  back: [0, 0.43, -0.175], body: [0, 0.47, 0.15],  scale: 1.0 },
-  octopus:  { head: [0, 0.8, 0.0],     face: [0, 0.49, 0.285],  back: [0, 0.55, -0.29],  body: [0, 0.28, 0.19],  scale: 1.15 },
+  unicorn:  { head: [0, 1.225, -0.05], face: [0, 1.083, 0.265], back: [0, 0.745, -0.168], body: [0, 0.8, 0.14],  scale: 1.02 },
+  octopus:  { head: [0, 1.187, -0.01], face: [0, 0.82, 0.242],  back: [0, 0.82, -0.266], body: [0, 0.625, 0.15], scale: 1.12 },
   trex:     { head: [0, 0.88, 0.02],   face: [0, 0.795, 0.27],  back: [0, 0.43, -0.205], body: [0, 0.43, 0.17],  scale: 0.98 },
   dragon:   { head: [0, 0.897, 0.03],  face: [0, 0.755, 0.285], back: [0, 0.46, -0.19],  body: [0, 0.49, 0.165], scale: 1.02 },
 }
