@@ -36,7 +36,11 @@ Everything runs locally in the browser; progress is saved in `localStorage`.
   around the water cycle; storm rescue finale), Times Grove (Multiplication Mesa
   — plant the rows × columns array yourself). Same stars/coins/tutor award path
   as the 2D stages. Design notes: `docs/superpowers/specs/2026-10-17-mini-games-fun-pass.md`.
-- **3D Home** — buy furniture and decorate a room; become (and dress up) a creature.
+- **3D Home** — buy furniture and decorate a room; become (and dress up) a creature; your
+  hatched pets toddle around it.
+- **Pets** (`/pets`) — every zone has a pet egg: learning there hatches it and grows it
+  (baby → kid → grown-up); a grown-up joins the creatures you can become, and one buddy pet
+  follows you in the World. Plan: `docs/superpowers/specs/2026-10-18-pets-plan.md`.
 - **3D World** — the game's hub: a storybook toon island with a town, a river and an area
   for every subject, and where the app opens. Walk with WASD/arrows or tap/click
   to walk (touch screens too). Walk up

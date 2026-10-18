@@ -15,23 +15,26 @@ export interface Creature {
   id: string
   emoji: string
   name: string
-  price: number // starter is resolved at runtime by emoji match; listed price applies when buying
 }
 
-/** One per avatar animal. ids are stable slugs; emoji matches AvatarCreate's roster. */
+/**
+ * One per avatar animal. ids are stable slugs; emoji matches AvatarCreate's roster.
+ * Not for sale: the starter matches the emoji picked at sign-up, and every other
+ * one comes from raising its zone's pet (lib/pets) until it's grown up.
+ */
 export const CREATURES: Creature[] = [
-  { id: 'fox',      emoji: '🦊', name: 'Fox',      price: 0 },
-  { id: 'frog',     emoji: '🐸', name: 'Frog',     price: 220 },
-  { id: 'tiger',    emoji: '🐯', name: 'Tiger',    price: 280 },
-  { id: 'owl',      emoji: '🦉', name: 'Owl',      price: 300 },
-  { id: 'bear',     emoji: '🐻', name: 'Bear',     price: 320 },
-  { id: 'lion',     emoji: '🦁', name: 'Lion',     price: 360 },
-  { id: 'panda',    emoji: '🐼', name: 'Panda',    price: 420 },
-  { id: 'octopus',  emoji: '🐙', name: 'Octopus',  price: 480 },
-  { id: 'dragonet', emoji: '🐲', name: 'Dragonet', price: 600 },
-  { id: 'trex',     emoji: '🦖', name: 'T-Rex',    price: 700 },
-  { id: 'unicorn',  emoji: '🦄', name: 'Unicorn',  price: 850 },
-  { id: 'dragon',   emoji: '🐉', name: 'Dragon',   price: 1000 },
+  { id: 'fox',      emoji: '🦊', name: 'Fox' },
+  { id: 'frog',     emoji: '🐸', name: 'Frog' },
+  { id: 'tiger',    emoji: '🐯', name: 'Tiger' },
+  { id: 'owl',      emoji: '🦉', name: 'Owl' },
+  { id: 'bear',     emoji: '🐻', name: 'Bear' },
+  { id: 'lion',     emoji: '🦁', name: 'Lion' },
+  { id: 'panda',    emoji: '🐼', name: 'Panda' },
+  { id: 'octopus',  emoji: '🐙', name: 'Octopus' },
+  { id: 'dragonet', emoji: '🐲', name: 'Dragonet' },
+  { id: 'trex',     emoji: '🦖', name: 'T-Rex' },
+  { id: 'unicorn',  emoji: '🦄', name: 'Unicorn' },
+  { id: 'dragon',   emoji: '🐉', name: 'Dragon' },
 ]
 
 export function creatureForEmoji(emoji: string): Creature | undefined {

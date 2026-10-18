@@ -18,6 +18,7 @@ import { playableStageId } from '../lib/stageLocks'
 import { getZone } from '../curriculum'
 import { useProgress } from '../store/progress'
 import { useWorldUi } from '../world/useWorldUi'
+import { usePetUi } from '../lib/pets/usePetUi'
 import { sfx } from '../lib/sound'
 import { BackButton, ErrorState, Loading } from '../components/ui'
 import { SHORT_SCREEN, WIDE_SHORT, useMediaQuery } from '../components/useViewport'
@@ -120,6 +121,13 @@ export default function TutorScreen() {
   const zoneProgress = useProgress((s) => (lesson ? s.zones[lesson.zoneId] : undefined))
   // Opened from the Schoolhouse / Library in the 3D World? "Back" returns there.
   const fromWorld = useWorldUi((s) => s.enteredFromWorld)
+  const markLessonDone = useProgress((s) => s.markLessonDone)
+  // The lesson-complete card is a calm moment: a pet that just hatched may celebrate over it.
+  useEffect(() => {
+    if (!complete) return
+    usePetUi.getState().setLessonCompleteOpen(true)
+    return () => usePetUi.getState().setLessonCompleteOpen(false)
+  }, [complete])
   // Hooks must run unconditionally, so call useNarration before any early return.
   const { playing, paused, play, pause, resume, stop, replay, clock } = useNarration(lesson?.id ?? '', step?.id ?? '', step?.narration ?? '')
   const scene = lesson && step ? sceneFor(lesson.id, step.id) : undefined
@@ -194,6 +202,8 @@ export default function TutorScreen() {
       stop()
       setPicked(null)
       setComplete(true)
+      // The lesson-complete card is showing: the lesson counts as done (it hatches its zone's pet).
+      markLessonDone(lesson.id)
       sfx.fanfare()
     } else goTo(i + 1)
   }

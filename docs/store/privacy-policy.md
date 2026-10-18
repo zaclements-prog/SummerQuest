@@ -24,12 +24,14 @@ storage on the tablet:
   full name. It is only shown on screen, in the game and the Parent area.
 - **Their avatar:** the animal and color they chose, and the grade level picked when they
   started.
-- **Progress:** stars and best scores for each stage, badges, streaks, and how much learning
-  time they did each day. It also keeps a list of which kinds of questions they got right or
-  wrong, which the game uses to choose what to practice next. The Parent area shows this to
-  you too.
+- **Progress:** stars and best scores for each stage, badges, streaks, which lessons they
+  finished, and how much learning time they did each day. It also keeps a list of which kinds
+  of questions they got right or wrong, which the game uses to choose what to practice next.
+  The Parent area shows this to you too.
+- **Pets:** which pet follows them around the island, and which pet celebrations they've
+  already seen. Pets hatch and grow from learning; they are never bought.
 - **Coins and what they bought with them:** coins are earned by playing. Your child spends
-  them on hats, home decorations and pet creatures. These can't be bought with real money.
+  them on hats and home decorations. These can't be bought with real money.
 - **High scores** in the mini-games.
 - **Settings:** sound on or off, and the graphics setting.
 

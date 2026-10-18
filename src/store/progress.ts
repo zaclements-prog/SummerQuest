@@ -4,10 +4,13 @@ import { SESSION_SECONDS, SESSIONS_PER_DAY, SESSION_BONUS_COINS } from '../lib/d
 import type { Slot } from '../home/models/anchors'
 import { accessoryById } from '../lib/home/accessories'
 import { addDays, localDayKey } from '../lib/dates'
-import { migrateV0toV1, type PersistedProgressV0 } from './migrations'
+import { migrateV0toV1, migrateV2toV3, type PersistedProgressV0 } from './migrations'
 import { recordFactAnswer, type FactStats } from '../lib/adaptive'
 import type { Problem } from '../lib/problem'
 import { isGradeLevel, type GradeLevel } from '../lib/gradeTiers'
+import { adultPets, growthRank, hatchedPets, isPetGrowth, petStages, zoneStarTotals, type PetGrowth } from '../lib/pets/growth'
+import { getZone } from '../curriculum'
+import { petById } from '../lib/pets/catalog'
 
 export interface AvatarChoice {
   emoji: string
@@ -108,10 +111,20 @@ interface ProgressState {
   sessionsRewardedToday: number
   /** Transient: the session # (1 or 2) that just completed, for a one-time celebration. */
   timeSessionJustCompleted: number | null
+  /** Avatars you can play as: the starter, any bought before pets, and every grown-up pet. */
   ownedCreatures: string[]
   activeCreature: string | null
   ownedHomeItems: Record<string, number>
   placedItems: PlacedItem[]
+  /** lessonId → when it was first finished (the lesson-complete card showed). Hatches its zone's pet. */
+  lessonsDone: Record<string, number>
+  /**
+   * creatureId → the pet stage last celebrated. A pet whose derived stage
+   * (lib/pets/growth) is ahead of it has a celebration waiting. Missing = egg.
+   */
+  petsSeen: Record<string, PetGrowth>
+  /** The pet that follows you in the World (null: none). The first pet to hatch becomes it. */
+  buddyPet: string | null
 
   // actions
   setAvatar: (avatar: AvatarChoice) => void
@@ -146,8 +159,32 @@ interface ProgressState {
   placeItem: (itemId: string, gx: number, gz: number, rot: number) => string | null
   moveItem: (uid: string, gx: number, gz: number, rot: number) => void
   removeItem: (uid: string) => void
-  buyCreature: (id: string, price: number) => boolean
   becomeCreature: (id: string) => void
+  /** The lesson-complete card showed: remember the lesson (first time only). */
+  markLessonDone: (lessonId: string) => void
+  /** These pets' growth has been celebrated (a stage never goes backwards). */
+  markPetsSeen: (seen: Record<string, PetGrowth>) => void
+  /** Choose the World buddy (a hatched pet), or null to leave every pet at home. */
+  setBuddyPet: (creatureId: string | null) => void
+}
+
+type PetSlice = Pick<ProgressState, 'zones' | 'lessonsDone' | 'ownedCreatures' | 'buddyPet'>
+
+/**
+ * What changes when progress grows the pets: grown-up pets join the avatars,
+ * and the very first pet to hatch becomes the World buddy (unless one is set).
+ * `before` is the state the change started from.
+ */
+export function petSyncPatch(before: PetSlice, after: PetSlice): Partial<PetSlice> {
+  const stages = petStages(after.zones, after.lessonsDone)
+  const patch: Partial<PetSlice> = {}
+  const newAdults = adultPets(stages).filter((id) => !after.ownedCreatures.includes(id))
+  if (newAdults.length) patch.ownedCreatures = [...after.ownedCreatures, ...newAdults]
+  if (after.buddyPet == null && hatchedPets(petStages(before.zones, before.lessonsDone)).length === 0) {
+    const first = hatchedPets(stages)[0]
+    if (first) patch.buddyPet = first
+  }
+  return patch
 }
 
 const todayKey = () => localDayKey()
@@ -180,6 +217,9 @@ export const useProgress = create<ProgressState>()(
       activeCreature: null,
       ownedHomeItems: {},
       placedItems: [],
+      lessonsDone: {},
+      petsSeen: {},
+      buddyPet: null,
 
       setAvatar: (avatar) => set({ player: avatar }),
 
@@ -215,6 +255,10 @@ export const useProgress = create<ProgressState>()(
           activeCreature: null,
           ownedHomeItems: {},
           placedItems: [],
+          lessonsDone: {},
+          petsSeen: {},
+          buddyPet: null,
+          // (soundEnabled and graphicsQuality are device settings: kept)
         }),
 
       awardStage: (zoneId, stageId, stars, score) => {
@@ -238,7 +282,8 @@ export const useProgress = create<ProgressState>()(
             },
           },
         }
-        set({ zones })
+        const before = get()
+        set({ zones, ...petSyncPatch(before, { ...before, zones }) })
       },
 
       addCoins: (n) => {
@@ -357,16 +402,38 @@ export const useProgress = create<ProgressState>()(
           ownedHomeItems: { ...ownedHomeItems, [item.itemId]: (ownedHomeItems[item.itemId] ?? 0) + 1 },
         })
       },
-      buyCreature: (id, price) => {
-        const { coins, ownedCreatures } = get()
-        if (ownedCreatures.includes(id)) return true
-        if (coins < price) return false
-        set({ coins: coins - price, ownedCreatures: [...ownedCreatures, id] })
-        return true
-      },
       becomeCreature: (id) => {
         if (!get().ownedCreatures.includes(id)) return
         set({ activeCreature: id })
+      },
+
+      markLessonDone: (lessonId) => {
+        const before = get()
+        if (!lessonId || before.lessonsDone[lessonId] != null) return
+        const lessonsDone = { ...before.lessonsDone, [lessonId]: Date.now() }
+        set({ lessonsDone, ...petSyncPatch(before, { ...before, lessonsDone }) })
+      },
+      markPetsSeen: (seen) => {
+        const petsSeen = { ...get().petsSeen }
+        let changed = false
+        for (const [id, stage] of Object.entries(seen)) {
+          if (!petById(id) || !isPetGrowth(stage)) continue
+          if (growthRank(stage) > growthRank(petsSeen[id])) {
+            petsSeen[id] = stage
+            changed = true
+          }
+        }
+        if (changed) set({ petsSeen })
+      },
+      setBuddyPet: (creatureId) => {
+        if (creatureId === null) {
+          set({ buddyPet: null })
+          return
+        }
+        const { zones, lessonsDone } = get()
+        // only a hatched pet can come along
+        if (!petById(creatureId) || petStages(zones, lessonsDone)[creatureId] === 'egg') return
+        set({ buddyPet: creatureId })
       },
 
       recordSession: (rec) => {
@@ -417,10 +484,13 @@ export const useProgress = create<ProgressState>()(
       // v1: local-time day keys + furniture re-fit to the 10×10 room (see migrations.ts).
       // v2: grade tiers — an existing player without a grade becomes grade 4
       //     (matches the pre-grade "3rd → 4th" content). Enforced in `merge` below.
-      version: 2,
+      // v3: pets — lessonsDone, petsSeen (starting at every pet's current stage, so
+      //     nothing is celebrated twice), buddyPet; grown-up pets join ownedCreatures.
+      version: 3,
       migrate: (persisted, version) => {
         let p = (persisted ?? {}) as PersistedProgressV0
         if (version < 1) p = migrateV0toV1(p)
+        if (version < 3) p = migrateV2toV3(p)
         return p as unknown as ProgressState
       },
       // Shallow-merge like the default, but deep-merge equippedAccessories so a save
@@ -448,16 +518,40 @@ export const useProgress = create<ProgressState>()(
             p.factStats && typeof p.factStats === 'object' && !Array.isArray(p.factStats)
               ? p.factStats
               : c.factStats,
+          // Pets: anything malformed falls back to "nothing yet".
+          lessonsDone: cleanLessonsDone(p.lessonsDone),
+          petsSeen: cleanPetsSeen(p.petsSeen),
+          buddyPet: typeof p.buddyPet === 'string' && petById(p.buddyPet) ? p.buddyPet : null,
+          ownedCreatures: Array.isArray(p.ownedCreatures)
+            ? p.ownedCreatures.filter((id): id is string => typeof id === 'string')
+            : c.ownedCreatures,
         }
       },
     },
   ),
 )
 
+function isRecord(v: unknown): v is Record<string, unknown> {
+  return !!v && typeof v === 'object' && !Array.isArray(v)
+}
+function cleanLessonsDone(v: unknown): Record<string, number> {
+  const out: Record<string, number> = {}
+  if (isRecord(v)) for (const [k, at] of Object.entries(v)) if (typeof at === 'number' && Number.isFinite(at)) out[k] = at
+  return out
+}
+function cleanPetsSeen(v: unknown): Record<string, PetGrowth> {
+  const out: Record<string, PetGrowth> = {}
+  if (isRecord(v)) for (const [k, g] of Object.entries(v)) if (petById(k) && isPetGrowth(g)) out[k] = g
+  return out
+}
+
+/** A zone's stars, each stage counted up to its `starsToEarn` (the same count that grows its pet). */
 export function zoneStars(zoneId: string): number {
-  const zone = useProgress.getState().zones[zoneId]
-  if (!zone) return 0
-  return Object.values(zone.stages).reduce((sum, s) => sum + s.stars, 0)
+  const progress = useProgress.getState().zones[zoneId]
+  if (!progress) return 0
+  const zone = getZone(zoneId)
+  if (zone) return zoneStarTotals(zone, progress).earned
+  return Object.values(progress.stages).reduce((sum, s) => sum + s.stars, 0)
 }
 
 export function zoneMastered(zoneId: string, expectedStages: number): boolean {

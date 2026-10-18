@@ -69,13 +69,22 @@ export function useWanderWalk(opts: {
   walk?: WalkState
   /** Walk keys (WASD / arrows) steer it; default true. Off for pets that wander on their own. */
   steer?: boolean
+  /**
+   * Wandering: after reaching each spot, rest for up to this many seconds
+   * (randomized) before setting off again, and start from where it stands
+   * rather than heading for the middle first. Default 0 (the avatar's
+   * non-stop wander). Pets toddle with it.
+   */
+  rest?: number
 }) {
   // `groupRef`: the Group is mutated through the ref's `.current` inside the frame loop.
-  const { group: groupRef, collide, bound, paused, wander = true, walk = walkState, steer = true } = opts
+  const { group: groupRef, collide, bound, paused, wander = true, walk = walkState, steer = true, rest = 0 } = opts
   const tapToWalk = opts.tapToWalk ?? !wander
   const tapOnly = tapToWalk === 'tap'
   const keys = useRef({ w: false, a: false, s: false, d: false })
   const target = useRef(new Vector3())
+  // A resting wanderer starts from where it stands (else its first stop is the middle).
+  const targetFromHere = useRef(rest > 0)
 
   // ── tap-to-walk state (read by the frame loop, written by pointer events) ──
   const tap = useRef({
@@ -325,12 +334,18 @@ export function useWanderWalk(opts: {
         ring?.hide()
       }
     } else if (wander && state.clock.elapsedTime >= lingerUntil.current) {
+      if (targetFromHere.current) {
+        targetFromHere.current = false
+        target.current.set(pos.x, 0, pos.z)
+      }
       if (pos.distanceTo(target.current) < 0.2) {
         target.current.set((Math.random() * 2 - 1) * bound, 0, (Math.random() * 2 - 1) * bound)
+        // a little sit-down before the next stroll
+        if (rest > 0) lingerUntil.current = state.clock.elapsedTime + rest * (0.35 + 0.65 * Math.random())
       }
       const dir = _dir.copy(target.current).sub(pos)
       dir.y = 0
-      if (dir.length() > 0.01) {
+      if (state.clock.elapsedTime >= lingerUntil.current && dir.length() > 0.01) {
         dir.normalize()
         const step = Math.min(1.2 * dt, pos.distanceTo(target.current))
         const moved = walkStep(pos.x, pos.z, dir.x * step, dir.z * step, collide, COLLIDE_RADIUS, bound)

@@ -11,6 +11,8 @@ interface HomeUi {
   /** The shop drawer (decorate mode) is open. It folds away after you place something, so you see it. */
   shopOpen: boolean
   rotation: number
+  /** A pet tapped in play mode: the HUD shows its card. */
+  petCard: string | null
   setMode: (m: HomeMode) => void
   startPlacing: (id: string) => void
   startMoving: (uid: string, itemId: string, rot: number) => void
@@ -18,6 +20,7 @@ interface HomeUi {
   select: (uid: string | null) => void
   setShopOpen: (open: boolean) => void
   rotate: () => void
+  openPetCard: (creatureId: string | null) => void
 }
 export const useHomeUi = create<HomeUi>((set, get) => ({
   mode: 'play',
@@ -27,7 +30,8 @@ export const useHomeUi = create<HomeUi>((set, get) => ({
   selectedUid: null,
   shopOpen: true,
   rotation: 0,
-  setMode: (mode) => set({ mode, placingItemId: null, movingUid: null, movingItemId: null, selectedUid: null, shopOpen: true }),
+  petCard: null,
+  setMode: (mode) => set({ mode, placingItemId: null, movingUid: null, movingItemId: null, selectedUid: null, shopOpen: true, petCard: null }),
   startPlacing: (placingItemId) =>
     set({ placingItemId, movingUid: null, movingItemId: null, selectedUid: null, rotation: 0, mode: 'decorate', shopOpen: false }),
   // Move an already-placed item without removing it: keep its rotation as the starting point.
@@ -37,4 +41,5 @@ export const useHomeUi = create<HomeUi>((set, get) => ({
   select: (selectedUid) => set({ selectedUid, placingItemId: null, movingUid: null, movingItemId: null, shopOpen: false }),
   setShopOpen: (shopOpen) => set({ shopOpen }),
   rotate: () => set({ rotation: (get().rotation + 90) % 360 }),
+  openPetCard: (petCard) => set({ petCard }),
 }))

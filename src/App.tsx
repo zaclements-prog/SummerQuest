@@ -21,14 +21,15 @@ import { Loading } from './components/ui'
 const Router = import.meta.env.VITE_OFFLINE === 'true' ? HashRouter : BrowserRouter
 
 // Heavy routes load on demand, so the first screen appears fast on a tablet:
-// the 3D World and Home (three.js), the stage runner (the 3D mini-games) and
-// the Tutor (its motion-graphic scenes). The single-file build inlines them all.
+// the 3D World and Home (three.js), the stage runner (the 3D mini-games), the
+// Tutor (its motion-graphic scenes) and the Pets page (3D pets). The single-file build inlines them all.
 // A chunk that fails to load lands on the error screen, which can try it again.
 const WorldScreen = lazyWithRetry(() => import('./world/WorldScreen'))
 const HomeScreen = lazyWithRetry(() => import('./screens/HomeScreen'))
 const GameRunner = lazyWithRetry(() => import('./screens/GameRunner'))
 const TutorIndex = lazyWithRetry(() => import('./screens/TutorIndex'))
 const TutorScreen = lazyWithRetry(() => import('./screens/TutorScreen'))
+const PetsScreen = lazyWithRetry(() => import('./screens/PetsScreen'))
 
 /** A lazily loaded route with its friendly loading state. */
 function Lazy({ label, children }: { label: string; children: React.ReactNode }) {
@@ -195,6 +196,16 @@ export default function App() {
               }
             />
             <Route path="/world" element={<RequireAvatar><Lazy label="Loading the world…"><WorldScreen /></Lazy></RequireAvatar>} />
+            <Route
+              path="/pets"
+              element={
+                <RequireAvatar>
+                  <Lazy label="Finding your pets…">
+                    <PetsScreen />
+                  </Lazy>
+                </RequireAvatar>
+              }
+            />
             <Route
               path="/parent"
               element={

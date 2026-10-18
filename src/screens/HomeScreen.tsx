@@ -9,7 +9,7 @@ import { useHomeUi } from '../home/useHomeUi'
 import { useStarterCreature } from '../home/starterCreature'
 import { canvasQuality, useLowGraphics } from '../world/graphicsQuality'
 
-const STUDIO_KINDS: readonly StudioKind[] = ['creatures', 'anchors', 'accgrid', 'furniture', 'accessories', 'growth']
+const STUDIO_KINDS: readonly StudioKind[] = ['creatures', 'anchors', 'accgrid', 'furniture', 'accessories', 'growth', 'eggs']
 
 const HOME_SKY = 'radial-gradient(120% 90% at 50% 105%, #fff3dc 0%, #fde9d6 30%, #d9effa 68%, #b8e1f7 100%)'
 
@@ -29,7 +29,9 @@ export default function HomeScreen() {
           ? [0, 7.5, 13]
           : studio === 'growth'
             ? only?.length === 1 ? [0, 1.5, 4.8] : [0, 8, 14.5]
-            : [0, 13, 18.5])
+            : studio === 'eggs'
+              ? [0, 2.6, 5.2]
+              : [0, 13, 18.5])
 
   useStarterCreature()
   // Same graphics setting as the World (⚙️ there): Fast = no shadows, dpr 1, no toon outlines.

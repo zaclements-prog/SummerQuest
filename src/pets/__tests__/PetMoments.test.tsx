@@ -1,0 +1,107 @@
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
+import { act } from 'react'
+import { createRoot, type Root } from 'react-dom/client'
+import { MemoryRouter } from 'react-router-dom'
+import PetMoments from '../PetMoments'
+import { useProgress } from '../../store/progress'
+import { usePetUi } from '../../lib/pets/usePetUi'
+import { getZone } from '../../curriculum'
+
+// React's act() warns unless this flag is set in non-RTL environments.
+;(globalThis as unknown as { IS_REACT_ACT_ENVIRONMENT: boolean }).IS_REACT_ACT_ENVIRONMENT = true
+
+let container: HTMLDivElement
+let root: Root
+
+function render(path: string) {
+  act(() =>
+    root.render(
+      <MemoryRouter initialEntries={[path]}>
+        <PetMoments />
+      </MemoryRouter>,
+    ),
+  )
+}
+const tick = (ms: number) => act(() => vi.advanceTimersByTime(ms))
+const dialog = () => document.querySelector('[role="dialog"]')
+
+/** Stars in four zones: four pets hatch (more than three → one summary card). */
+function hatchFour() {
+  for (const zoneId of ['multiplication-mesa', 'fraction-falls', 'reading-reef', 'data-delta']) {
+    useProgress.getState().awardStage(zoneId, getZone(zoneId)!.stages[0].id, 1, 5)
+  }
+}
+
+beforeEach(() => {
+  vi.useFakeTimers()
+  useProgress.getState().resetPlayer()
+  useProgress.setState({ player: { emoji: '🦊', color: '#fb923c', name: 'Sam', grade: 3 }, ownedCreatures: ['fox'], activeCreature: 'fox' })
+  usePetUi.setState({ lessonCompleteOpen: false, momentOpen: false })
+  container = document.createElement('div')
+  document.body.appendChild(container)
+  root = createRoot(container)
+})
+
+afterEach(() => {
+  act(() => root.unmount())
+  container.remove()
+  vi.useRealTimers()
+})
+
+describe('PetMoments', () => {
+  it('waits for a calm screen: never mid-game', () => {
+    hatchFour()
+    render('/play/fraction-falls/frac-concept')
+    tick(5000)
+    expect(dialog()).toBeNull()
+    expect(usePetUi.getState().momentOpen).toBe(false)
+  })
+
+  it('more than three waiting: one summary card, and dismissing marks them all seen', () => {
+    hatchFour()
+    render('/map')
+    tick(400)
+    expect(dialog()).toBeNull() // lets the screen settle first
+    tick(1000)
+    expect(dialog()?.getAttribute('aria-label')).toBe('Your pets grew!')
+    expect(container.textContent).toContain('4 pets hatched or grew')
+    expect(usePetUi.getState().momentOpen).toBe(true)
+    const yay = [...container.querySelectorAll('button')].find((b) => b.textContent?.includes('Yay'))!
+    act(() => yay.click())
+    expect(useProgress.getState().petsSeen).toMatchObject({ lion: 'baby', frog: 'baby', octopus: 'baby', fox: 'baby' })
+    tick(3000)
+    expect(dialog()).toBeNull()
+    expect(usePetUi.getState().momentOpen).toBe(false)
+  })
+
+  it('waits for another dialog (a zone celebration) to close first', () => {
+    hatchFour()
+    const other = document.createElement('div')
+    other.setAttribute('aria-modal', 'true')
+    document.body.appendChild(other)
+    render('/zone/fraction-falls')
+    tick(4000)
+    expect(dialog()).toBeNull()
+    other.remove()
+    tick(700)
+    expect(dialog()).not.toBeNull()
+  })
+
+  it("in a lesson, only over its complete card", () => {
+    hatchFour()
+    render('/tutor/fractions')
+    tick(4000)
+    expect(dialog()).toBeNull()
+    act(() => usePetUi.getState().setLessonCompleteOpen(true))
+    tick(1000)
+    expect(dialog()).toBeNull() // gives the card's own fanfare a moment
+    tick(1000)
+    expect(dialog()).not.toBeNull()
+  })
+
+  it('nothing waiting, nothing shown', () => {
+    render('/world')
+    tick(5000)
+    expect(dialog()).toBeNull()
+  })
+})

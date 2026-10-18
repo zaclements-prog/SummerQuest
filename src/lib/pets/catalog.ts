@@ -1,0 +1,48 @@
+import { creatureById } from '../home/catalog'
+
+/**
+ * The twelve zone pets (see docs/superpowers/specs/2026-10-18-pets-plan.md).
+ * Every island zone has one egg; learning in that zone hatches it and grows the
+ * pet (`growth.ts`). A grown-up pet joins the avatars you can play as.
+ *
+ * Listed in the island's zone order (the curriculum's), which is also the order
+ * "Continue your quest" walks, so pets tend to hatch left to right on the Pets page.
+ */
+export interface PetDef {
+  /** The creature it grows into (an id in `CREATURES`, and in the model registry). */
+  creatureId: string
+  /** The zone whose stars grow it. */
+  zoneId: string
+  /** The Tutor lesson that also hatches it (Tower Battlefront has none). */
+  lessonId: string | null
+  /** Its egg's colors: a soft shell and darker spots, picked to suit the zone. */
+  egg: { shell: string; spot: string }
+}
+
+export const PETS: readonly PetDef[] = [
+  { creatureId: 'lion', zoneId: 'multiplication-mesa', lessonId: 'multiplication', egg: { shell: '#ffe594', spot: '#f2a65a' } },
+  { creatureId: 'trex', zoneId: 'division-dunes', lessonId: 'division', egg: { shell: '#f6e3b4', spot: '#c7955f' } },
+  { creatureId: 'frog', zoneId: 'fraction-falls', lessonId: 'fractions', egg: { shell: '#b4ebdc', spot: '#4aa6d6' } },
+  { creatureId: 'unicorn', zoneId: 'place-value-plateau', lessonId: 'placeValue', egg: { shell: '#fcd3e2', spot: '#b79af0' } },
+  { creatureId: 'bear', zoneId: 'measurement-marsh', lessonId: 'measurement', egg: { shell: '#c9e7b8', spot: '#6fbb63' } },
+  { creatureId: 'panda', zoneId: 'geometry-grove', lessonId: 'geometry', egg: { shell: '#ddcdf7', spot: '#8461b6' } },
+  { creatureId: 'fox', zoneId: 'data-delta', lessonId: 'dataGraph', egg: { shell: '#ffd9c7', spot: '#f2766b' } },
+  { creatureId: 'owl', zoneId: 'word-problem-woods', lessonId: 'wordProblem', egg: { shell: '#e9dcc4', spot: '#9a6a46' } },
+  { creatureId: 'octopus', zoneId: 'reading-reef', lessonId: 'reading', egg: { shell: '#ffc9b8', spot: '#f7a1c4' } },
+  { creatureId: 'dragonet', zoneId: 'writing-workshop', lessonId: 'writing', egg: { shell: '#cfe8fb', spot: '#8ab8ff' } },
+  { creatureId: 'tiger', zoneId: 'science-summit', lessonId: 'science', egg: { shell: '#fff0c2', spot: '#f2a65a' } },
+  { creatureId: 'dragon', zoneId: 'tower-battlefront', lessonId: null, egg: { shell: '#ffd0c4', spot: '#c94c42' } },
+]
+
+/** The pet that grows into this creature (every creature is one zone's pet). */
+export function petById(creatureId: string | null | undefined): PetDef | undefined {
+  return creatureId ? PETS.find((p) => p.creatureId === creatureId) : undefined
+}
+
+/** A pet's display name and emoji (from the creature roster). */
+export function petName(creatureId: string): string {
+  return creatureById(creatureId)?.name ?? creatureId
+}
+export function petEmoji(creatureId: string): string {
+  return creatureById(creatureId)?.emoji ?? '🐾'
+}

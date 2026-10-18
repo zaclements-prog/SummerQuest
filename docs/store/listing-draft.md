@@ -67,8 +67,9 @@ the main idea.)
 > to the facts they find tricky.
 >
 > Motivation that isn't for sale
-> Kids earn stars, badges, streaks and coins by learning. Coins buy hats, home decorations
-> and pet creatures for their island home. Coins can never be bought with real money.
+> Kids earn stars, badges, streaks and coins by learning. Coins buy hats and home decorations
+> for their island home, and every island has a pet egg that hatches and grows up as your
+> child learns there. Coins can never be bought with real money.
 >
 > Made for families
 > A daily learning goal of two 15-minute sessions keeps summer practice steady without
@@ -141,7 +142,7 @@ Suggested screenshots, in order (1920 × 1200, a fresh player with some progress
 4. Times Grove or Fraction Forge mid-play.
 5. A quiz stage with a picture question and big answer tiles.
 6. The Writing Workshop with a story prompt and feedback stars.
-7. The island Home decorated with coin-bought furniture and a pet creature.
+7. The island Home decorated with coin-bought furniture, with a few pets toddling around.
 8. The Parent area: progress by zone and learning time. (Take it after passing the grown-up
    check; don't show the check's answer.)
 

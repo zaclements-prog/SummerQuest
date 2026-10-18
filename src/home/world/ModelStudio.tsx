@@ -11,8 +11,10 @@ import CreatureAccessories from './CreatureAccessories'
 import { StudioStage } from './Lights'
 import { TBox, TCyl } from '../../toon/shapes'
 import { PET_STAGES } from '../../lib/pets/types'
+import { PETS } from '../../lib/pets/catalog'
+import { Egg, newEggAnim, setEggAnim } from '../models/egg'
 
-export type StudioKind = 'creatures' | 'furniture' | 'accessories' | 'anchors' | 'accgrid' | 'growth'
+export type StudioKind = 'creatures' | 'furniture' | 'accessories' | 'anchors' | 'accgrid' | 'growth' | 'eggs'
 
 const SLOTS: Slot[] = ['head', 'face', 'back', 'body']
 // One accessory per slot — the standard set used to verify every creature's anchors.
@@ -66,12 +68,14 @@ function AccessoryOn({ creatureId, accessoryId }: { creatureId: string; accessor
  *   /home?studio=furniture    — all furniture in a grid
  *   /home?studio=growth       — every creature as baby, kid and adult beside a height ruler
  *   /home?studio=growth&only=fox,lion — just those creatures (also for creatures / anchors)
+ *   /home?studio=eggs         — the 12 pet eggs, and one egg cracking and opening
  * `cam=x,y,z` and `target=x,y,z` override the camera. Not linked from the UI.
  */
 export default function ModelStudio({ kind, only, target }: { kind: StudioKind; only?: string[]; target?: [number, number, number] }) {
   if (kind === 'accessories') return <AccessoryStand />
   if (kind === 'accgrid') return <AccessoryGrid />
   if (kind === 'growth') return <GrowthStudio only={only} target={target} />
+  if (kind === 'eggs') return <EggStudio target={target} />
 
   const showAccessories = kind === 'anchors'
   const entries =
@@ -200,5 +204,37 @@ function Ruler({ position }: { position: [number, number, number] }) {
         )
       })}
     </group>
+  )
+}
+
+/** The 12 pet eggs in a row of rows, and the lion's egg cracked, then opening (front). */
+function EggStudio({ target }: { target?: [number, number, number] }) {
+  const cracked = useMemo(() => {
+    const a = newEggAnim()
+    setEggAnim(a, 0, 1, 0)
+    return a
+  }, [])
+  const opening = useMemo(() => {
+    const a = newEggAnim()
+    setEggAnim(a, 0, 1, 0.35)
+    return a
+  }, [])
+  const lion = PETS[0]
+  return (
+    <>
+      <OrbitControls makeDefault target={target ?? [0, 0.4, 0]} />
+      <StudioStage size={14} />
+      {PETS.map((p, i) => (
+        <group key={p.creatureId} position={[((i % 6) - 2.5) * 0.75, 0, Math.floor(i / 6) * 0.9 - 1.6]}>
+          <Egg shell={p.egg.shell} spot={p.egg.spot} />
+        </group>
+      ))}
+      <group position={[-0.6, 0, 0.6]} scale={1.6}>
+        <Egg shell={lion.egg.shell} spot={lion.egg.spot} anim={cracked} />
+      </group>
+      <group position={[0.8, 0, 0.6]} scale={1.6}>
+        <Egg shell={lion.egg.shell} spot={lion.egg.spot} anim={opening} />
+      </group>
+    </>
   )
 }

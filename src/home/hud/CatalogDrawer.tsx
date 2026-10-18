@@ -1,12 +1,17 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useProgress } from '../../store/progress'
 import { useHomeUi } from '../useHomeUi'
 import { HOME_ITEMS } from '../../lib/home/catalog'
 import { CREATURES } from '../../lib/home/catalog'
 import { ACCESSORIES } from '../../lib/home/accessories'
+import { usePetStatusMap } from '../../lib/pets/usePets'
+import { nextStepShort, stageLabel } from '../../lib/pets/copy'
 import { sfx } from '../../lib/sound'
 
-type Tab = 'furniture' | 'decor' | 'creatures' | 'style'
+type Tab = 'furniture' | 'decor' | 'animals' | 'style'
+
+const TAB_LABEL: Record<Tab, string> = { furniture: 'Furniture', decor: 'Decor', animals: '🐾 Animals', style: '✨ Style' }
 
 export default function CatalogDrawer({ onHide }: { onHide: () => void }) {
   const [tab, setTab] = useState<Tab>('furniture')
@@ -15,8 +20,8 @@ export default function CatalogDrawer({ onHide }: { onHide: () => void }) {
   const buyHomeItem = useProgress((s) => s.buyHomeItem)
   const ownedCreatures = useProgress((s) => s.ownedCreatures)
   const activeCreature = useProgress((s) => s.activeCreature)
-  const buyCreature = useProgress((s) => s.buyCreature)
   const becomeCreature = useProgress((s) => s.becomeCreature)
+  const pets = usePetStatusMap()
   const ownedAccessories = useProgress((s) => s.ownedAccessories)
   const equippedAccessories = useProgress((s) => s.equippedAccessories)
   const buyAccessory = useProgress((s) => s.buyAccessory)
@@ -37,10 +42,10 @@ export default function CatalogDrawer({ onHide }: { onHide: () => void }) {
     >
       <div className="flex flex-wrap items-center gap-2 short:gap-1.5 mb-2">
         <div className="contents" role="tablist" aria-label="Shop">
-        {(['furniture', 'decor', 'creatures', 'style'] as Tab[]).map((t) => (
+        {(['furniture', 'decor', 'animals', 'style'] as Tab[]).map((t) => (
           <button key={t} type="button" role="tab" aria-selected={tab === t} onClick={() => { sfx.click(); setTab(t) }}
-            className={`kid-text min-h-12 px-3 short:px-2.5 short:text-sm rounded-full text-base capitalize outline-none focus-visible:ring-4 focus-visible:ring-quest-300 ${tab === t ? 'bg-quest-500 text-quest-900' : 'bg-white/15 text-white'}`}>
-            {t === 'style' ? '✨ Style' : t}
+            className={`kid-text min-h-12 px-3 short:px-2.5 short:text-sm rounded-full text-base outline-none focus-visible:ring-4 focus-visible:ring-quest-300 ${tab === t ? 'bg-quest-500 text-quest-900' : 'bg-white/15 text-white'}`}>
+            {TAB_LABEL[t]}
           </button>
         ))}
         </div>
@@ -73,26 +78,35 @@ export default function CatalogDrawer({ onHide }: { onHide: () => void }) {
             )
           })}
         </div>
-      ) : tab === 'creatures' ? (
+      ) : tab === 'animals' ? (
+        // Animals come from raising pets now (no prices): yours to Become, the rest
+        // show how their pet is growing and link to it on the Pets page.
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 short:grid-cols-2 gap-2">
           {CREATURES.map((c) => {
             const isOwned = ownedCreatures.includes(c.id)
             const isActive = activeCreature === c.id
-            const canAfford = coins >= c.price
+            const pet = pets[c.id]
             return (
-              <div key={c.id} className="bg-white text-ocean-900 rounded-2xl p-2 text-center">
-                <div className="text-2xl leading-none">{c.emoji}</div>
+              <div key={c.id} className="bg-white text-ocean-900 rounded-2xl p-2 text-center flex flex-col">
+                <div className={`text-2xl leading-none ${isOwned ? '' : 'opacity-70'}`} aria-hidden="true">{c.emoji}</div>
                 <div className="kid-text text-sm leading-tight my-1">{c.name}</div>
                 {isOwned ? (
-                  <button type="button" onClick={() => { sfx.click(); becomeCreature(c.id) }}
-                    className={`kid-text text-sm w-full min-h-12 px-2 py-1 rounded-full ${isActive ? 'bg-ocean-500 text-white' : 'bg-correct-500 text-white'}`}>
-                    {isActive ? 'Active ✓' : 'Become'}
+                  <button type="button" disabled={isActive} onClick={() => { sfx.click(); becomeCreature(c.id) }}
+                    className={`kid-text text-sm w-full min-h-12 mt-auto px-2 py-1 rounded-full ${isActive ? 'bg-ocean-500 text-white' : 'bg-correct-500 text-white'}`}>
+                    {isActive ? 'You ✓' : 'Become'}
                   </button>
                 ) : (
-                  <button type="button" onClick={() => { if (buyCreature(c.id, c.price)) { sfx.victory(); becomeCreature(c.id) } }} disabled={!canAfford}
-                    className={`kid-text text-sm w-full min-h-12 px-2 py-1 rounded-full ${canAfford ? 'bg-quest-500 text-quest-900' : 'bg-gray-200 text-gray-400'}`}>
-                    🪙 {c.price}
-                  </button>
+                  <>
+                    {pet && (
+                      <div className="kid-text text-sm leading-tight text-ink-700 mb-1.5">
+                        {pet.stage === 'egg' ? '🥚 ' : ''}{stageLabel(pet.stage)} · {nextStepShort(pet)}
+                      </div>
+                    )}
+                    <Link to={`/pets?pet=${c.id}`} onClick={() => sfx.click()}
+                      className="kid-text text-sm w-full min-h-12 mt-auto px-2 py-1 rounded-full bg-quest-500 text-quest-900 inline-flex items-center justify-center outline-none focus-visible:ring-4 focus-visible:ring-quest-300">
+                      🐾 See pet
+                    </Link>
+                  </>
                 )}
               </div>
             )

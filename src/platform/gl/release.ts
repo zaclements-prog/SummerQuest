@@ -53,6 +53,30 @@ export function registerSharedGpuCache(list: () => Iterable<Disposable>): void {
   sharedCaches.add(list)
 }
 
+/**
+ * A canvas is going away while others keep drawing (a small modal canvas over
+ * the World): dispose only what its scene holds that none of the `keep` scenes
+ * use. Disposing is global (every renderer drops its copy), so a shared material
+ * the World still draws must not be touched — the World would recompile and
+ * re-upload it mid-game. Shared caches are released later, with the last canvas.
+ */
+export function releaseUnshared(scene: Object3D, keep: readonly Object3D[]): number {
+  const mine = collectGpuResources(scene)
+  const kept = new Set<Disposable>()
+  for (const k of keep) collectGpuResources(k, kept)
+  let n = 0
+  for (const r of mine) {
+    if (kept.has(r)) continue
+    n++
+    try {
+      r.dispose()
+    } catch {
+      // already released
+    }
+  }
+  return n
+}
+
 /** Dispose (= release from every renderer) a scene's resources plus every shared cache. */
 export function releaseGpuResources(scene: Object3D | null): number {
   const all = scene ? collectGpuResources(scene) : new Set<Disposable>()
