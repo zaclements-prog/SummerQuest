@@ -1,5 +1,5 @@
 import { HOME_ITEMS } from './catalog'
-import { footprintTiles, tileKey, worldToTile, tileToWorld, GRID_SIZE } from './grid'
+import { footprintTiles, tileKey, worldToTile, tileToWorld, GRID_SIZE, TILE } from './grid'
 import type { Tile } from './grid'
 
 /** The fields of a placed item that occupancy needs (structurally the store's PlacedItem). */
@@ -52,6 +52,44 @@ export function avatarBlockedAt(
   const uid = blockers.get(tileKey(t))
   if (uid === undefined) return false
   return blockers.get(tileKey(worldToTile(fromX, fromZ))) !== uid
+}
+
+/**
+ * The blockers as a flat tile grid (0 = free, else a number for the covering
+ * item), for frame loops that test many points every frame (the Home pets):
+ * `gridBlockedAt` reads it without allocating.
+ */
+export function blockerGrid(blockers: ReadonlyMap<string, string>): Int32Array {
+  const grid = new Int32Array(GRID_SIZE * GRID_SIZE)
+  const ids = new Map<string, number>()
+  for (const [k, uid] of blockers) {
+    const [gx, gz] = k.split(',').map(Number)
+    if (!inGrid({ gx, gz })) continue
+    let n = ids.get(uid)
+    if (n === undefined) {
+      n = ids.size + 1
+      ids.set(uid, n)
+    }
+    grid[gz * GRID_SIZE + gx] = n
+  }
+  return grid
+}
+
+const HALF = (GRID_SIZE * TILE) / 2
+const cell = (x: number, z: number) => {
+  const gx = Math.floor((x + HALF) / TILE)
+  const gz = Math.floor((z + HALF) / TILE)
+  return gx < 0 || gz < 0 || gx >= GRID_SIZE || gz >= GRID_SIZE ? -1 : gz * GRID_SIZE + gx
+}
+
+/** `avatarBlockedAt`, on a `blockerGrid` and without allocating. */
+export function gridBlockedAt(grid: Int32Array, x: number, z: number, fromX: number, fromZ: number): boolean {
+  const c = cell(x, z)
+  if (c < 0) return false
+  const n = grid[c]
+  if (n === 0) return false
+  const f = cell(fromX, fromZ)
+  return (f < 0 ? 0 : grid[f]) !== n
 }
 
 /**

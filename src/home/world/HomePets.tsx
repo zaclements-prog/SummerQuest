@@ -8,7 +8,7 @@ import { useHomeUi } from '../useHomeUi'
 import { creatureBuilder } from '../models/registry'
 import { WalkStateContext, newWalkState } from '../models/walkState'
 import { GRID_SIZE, TILE } from '../../lib/home/grid'
-import { avatarBlockedAt, avatarSpawnPoint } from '../../lib/home/occupancy'
+import { avatarSpawnPoint, blockerGrid, gridBlockedAt } from '../../lib/home/occupancy'
 import { useAvatarBlockers } from '../useOccupied'
 import { useWanderWalk } from '../../world/useWanderWalk'
 import { useShownPetStages } from '../../lib/pets/usePets'
@@ -41,16 +41,31 @@ export default function HomePets() {
   const buddy = useProgress((s) => s.buddyPet)
   const active = useProgress((s) => s.activeCreature)
   const ids = useMemo(() => homePetIds(hatchedPets(stages), buddy, active), [stages, buddy, active])
+  // The furniture stops them like it stops you; as a flat grid, so their frame loops never allocate.
+  const blockers = useAvatarBlockers()
+  const grid = useMemo(() => blockerGrid(blockers), [blockers])
   return (
     <>
       {ids.map((id, i) => (
-        <HomePet key={id} creatureId={id} stage={stages[id] as PetStage} index={i} />
+        <HomePet key={id} creatureId={id} stage={stages[id] as PetStage} index={i} blockers={blockers} grid={grid} />
       ))}
     </>
   )
 }
 
-function HomePet({ creatureId, stage, index }: { creatureId: string; stage: PetStage; index: number }) {
+function HomePet({
+  creatureId,
+  stage,
+  index,
+  blockers,
+  grid,
+}: {
+  creatureId: string
+  stage: PetStage
+  index: number
+  blockers: ReadonlyMap<string, string>
+  grid: Int32Array
+}) {
   const group = useRef<Group>(null)
   const inner = useRef<Group>(null)
   const hopAt = useRef(0)
@@ -58,7 +73,6 @@ function HomePet({ creatureId, stage, index }: { creatureId: string; stage: PetS
   // Its own walk signal: the model's limbs read it through the provider below.
   const walk = useMemo(() => newWalkState(), [])
   const b = useMemo(() => ({ Builder: creatureBuilder(creatureId) }), [creatureId])
-  const blockers = useAvatarBlockers()
   // Spread out on a ring around the middle (the avatar stands in the middle), off the furniture.
   const [spawn] = useState(() => {
     const a = (index / 6) * Math.PI * 2 + 0.5
@@ -76,7 +90,7 @@ function HomePet({ creatureId, stage, index }: { creatureId: string; stage: PetS
     wander: true,
     rest: REST_S,
     bound: ROOM_LIMIT,
-    collide: (x, z, fromX, fromZ) => avatarBlockedAt(blockers, x, z, fromX, fromZ),
+    collide: (x, z, fromX, fromZ) => gridBlockedAt(grid, x, z, fromX, fromZ),
     // stand still for a happy hop when tapped
     paused: () => hopAt.current !== 0 && performance.now() - hopAt.current < HOP_MS,
   })

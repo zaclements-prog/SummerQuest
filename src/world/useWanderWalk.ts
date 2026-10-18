@@ -4,7 +4,7 @@ import { useFrame, useThree } from '@react-three/fiber'
 import { Group, Raycaster, Vector2, Vector3 } from 'three'
 import { walkState } from '../home/models/walkState'
 import type { WalkState } from '../home/models/walkState'
-import { walkStep, MAX_WALK_DT } from './collision'
+import { walkStepInto, MAX_WALK_DT } from './collision'
 import { groundHit, isWalkTap, tapWalkFrame, walkKey } from './tapWalk'
 import { createTapMarker } from './tapMarker'
 import type { TapMarker } from './tapMarker'
@@ -19,6 +19,7 @@ const _f = new Vector3()
 const _r = new Vector3()
 const _m = new Vector3()
 const _dir = new Vector3()
+const _moved = { x: 0, z: 0 }
 const _ray = new Raycaster()
 const _ndc = new Vector2()
 
@@ -309,7 +310,7 @@ export function useWanderWalk(opts: {
         _m.normalize()
         const step = WALK_SPEED * dt
         // axis-separated, testing the leading edge so the body stops flush at obstacles
-        const moved = walkStep(pos.x, pos.z, _m.x * step, _m.z * step, collide, COLLIDE_RADIUS, bound)
+        const moved = walkStepInto(_moved, pos.x, pos.z, _m.x * step, _m.z * step, collide, COLLIDE_RADIUS, bound)
         pos.x = moved.x
         pos.z = moved.z
         g.rotation.y = Math.atan2(_m.x, _m.z)
@@ -348,7 +349,7 @@ export function useWanderWalk(opts: {
       if (state.clock.elapsedTime >= lingerUntil.current && dir.length() > 0.01) {
         dir.normalize()
         const step = Math.min(1.2 * dt, pos.distanceTo(target.current))
-        const moved = walkStep(pos.x, pos.z, dir.x * step, dir.z * step, collide, COLLIDE_RADIUS, bound)
+        const moved = walkStepInto(_moved, pos.x, pos.z, dir.x * step, dir.z * step, collide, COLLIDE_RADIUS, bound)
         const movedAny = moved.x !== pos.x || moved.z !== pos.z
         pos.x = moved.x
         pos.z = moved.z

@@ -154,6 +154,16 @@ export function setEggAnim(a: EggAnim, wobble: number, crack: number, open: numb
   a.open = open
 }
 
+/** Draw a half of the crack as far round as it has got (none once the top is off). */
+function showCrack(c: Mesh | null, a: EggAnim) {
+  if (!c) return
+  const geom = c.geometry as BufferGeometry
+  const count = geom.index ? geom.index.count : 0
+  const per = 5 * 6 // radial segments × 6 indices per tubular step
+  c.visible = a.crack > 0.001 && a.open < 0.05
+  geom.setDrawRange(0, Math.ceil((count / per) * Math.min(1, a.crack)) * per)
+}
+
 // ── The model ────────────────────────────────────────────────────────────────
 
 export function Egg({
@@ -191,14 +201,8 @@ export function Egg({
       const w = anim.wobble
       g.rotation.z = Math.sin(t * 15) * 0.2 * w
       g.position.y = Math.abs(Math.sin(t * 15)) * 0.025 * w
-      for (const c of [crackL.current, crackR.current]) {
-        if (!c) continue
-        const geom = c.geometry as BufferGeometry
-        const count = geom.index ? geom.index.count : 0
-        const per = 5 * 6 // radial segments × 6 indices per tubular step
-        c.visible = anim.crack > 0.001 && anim.open < 0.05
-        geom.setDrawRange(0, Math.ceil((count / per) * Math.min(1, anim.crack)) * per)
-      }
+      showCrack(crackL.current, anim)
+      showCrack(crackR.current, anim)
       const o = anim.open
       if (top.current) {
         top.current.visible = o < 0.98
@@ -231,7 +235,7 @@ export function Egg({
               <Spot key={i} t={t} phi={phi} size={s} color={spot} />
             ))}
           </group>
-          {/* the cap pivots on the split's right edge as it flies off */}
+          {/* the top of the shell: it flies up and tumbles off to the side */}
           <group ref={top}>
             <mesh geometry={geo.top} material={shellMat} castShadow>
               <Ink />
