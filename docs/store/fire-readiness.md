@@ -20,7 +20,7 @@ The store-listing documents sit beside it in `docs/store/`.
 | Kid safety / COPPA | ✅ No ads, no analytics, no SDKs, no network. `npm run build:store` compiles out the AI writing feeder and fails on any network use. Parental gate on the Parent area and every grown-up setting. Store build sweep: 70 routes, 0 errors, 0 outside requests. See `privacy-policy.md`. |
 | Store assets | ✅ Icons 512×512 and 114×114 (`assets/`). ✅ Screenshots 1920×1200. ⏳ Listing text: `listing-draft.md`. |
 | Packaging for Fire OS | ✅ Capacitor Android app in `android/` (2026-10-18). Debug APK builds and passes the emulator checks. ⏳ Release signing key (owner). See [Packaging](#packaging). |
-| Real-device check | ⏳ Owner: run on a physical Fire tablet before submitting (see [Before you submit](#before-you-submit)). |
+| Real-device check | ✅ Fire HD 10 (Fire OS 8.3), 2026-10-18. ⏳ Fire 7 / HD 8 still to do (see [Packaging](#packaging)). |
 
 ## What Amazon requires, and where we stand
 
@@ -78,6 +78,14 @@ The toolchain is JDK 21 (`brew install openjdk@21`) and the Android SDK at
 - A cold restart keeps the explorer and progress.
 - Lesson narration plays, and the screen stays on. On Home, both audio streams stop. On return, they resume. Leaving the lesson lets the screen sleep again.
 - Rotating to portrait mid-app re-lays out without restarting the app.
+
+**Real Fire tablet (2026-10-18):** Fire HD 10 (KFTUWI, 1920×1200), Fire OS 8.3.3.8, Amazon WebView 148. Debug APK installed over USB with ADB.
+- Cold start takes 1.4 s and opens full screen in landscape.
+- First run works, and the World's first 3D frame appears within 3 s. The World shows the touch hint ("Tap or hold to walk"), and tap-to-walk works.
+- Back works: with the on-screen keyboard open, Back closes the keyboard and stays on the screen. Map → Back returns to the World.
+- A lesson plays narration and keeps the screen on. On Home, the audio stops. Back in the app, the narration resumes. Leaving the lesson lets the screen sleep again.
+- No crashes in the log. The test explorer was cleared afterwards.
+- Still to check on a **Fire 7 / HD 8**, the slowest targets.
 
 **Still to do (owner):**
 - **Release signing key.** Create it once and keep it safe and out of git:
