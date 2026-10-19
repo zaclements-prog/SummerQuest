@@ -47,6 +47,9 @@ export const CYCLE_SITUATIONS: Situation[] = [
   { prompt: 'Water vapor spreads through the cool upper sky and turns back into tiny drops. Which step is this?', answer: 'condensation', short: '❄️ Vapor meets cold sky' },
   // A22 batch (grade 2-4 science: water cycle, Earth's systems)
   { prompt: 'The bathroom mirror turns fuzzy with tiny drops while Ana takes a warm shower. Which step is this?', answer: 'condensation', short: '🪞 Steam fogs the mirror' },
+  { prompt: 'On a chilly morning, Pablo breathes out and his breath looks like a little white cloud. What step makes that happen?', answer: 'condensation', short: '💨 Breath shows in cold air' },
+  { prompt: 'Steam rises from the pot of soup, and tiny drops form on the cool lid above it. What is that step called?', answer: 'condensation', short: '🍲 Drops on the cool lid' },
+  { prompt: 'Tiny water drops hang low over the meadow on a foggy day. Which step made the fog?', answer: 'condensation', short: '🌁 Fog over the meadow' },
   // ── precipitation ──────────────────────────────────────────────────────────
   { prompt: 'A cloud grows heavy with droplets. The water falls as rain onto the ground. This step is called ___.', answer: 'precipitation', short: '🏋️ The cloud gets heavy' },
   { prompt: 'Thick gray clouds let their droplets fall to the earth as rain or snow. This step is called ___.', answer: 'precipitation', short: '🌫️ Thick gray clouds' },
@@ -54,6 +57,10 @@ export const CYCLE_SITUATIONS: Situation[] = [
   { prompt: 'Snow falls from the sky onto the mountaintops. Which step is this?', answer: 'precipitation', short: '🏔️ Snowy mountain tops' },
   { prompt: 'The droplets in a cloud get heavy. What step brings water back down to the ground?', answer: 'precipitation', short: '⬇️ Heavy drops come down' },
   { prompt: 'Rain pours down from a dark cloud and fills the pond again. Which step is this?', answer: 'precipitation', short: '☔ The pond fills up' },
+  // A22 batch (grade 2-4 science: water cycle, Earth's systems)
+  { prompt: 'The cloud can no longer hold its water, so the drops come tumbling down as rain. What is that step called?', answer: 'precipitation', short: '🌧️ Rain tumbles down' },
+  { prompt: 'Raindrops patter on the tent all night, and the barrel by the porch fills right up. Which step is this?', answer: 'precipitation', short: '⛺ Rain on the tent' },
+  { prompt: 'Soft white flakes drift down on a cold winter day and cover the yard. What is that step called?', answer: 'precipitation', short: '⛄ Yard turns white' },
 ]
 
 const SHORT_BY_PROMPT = new Map(CYCLE_SITUATIONS.map((s) => [s.prompt, s.short]))
