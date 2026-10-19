@@ -56,6 +56,11 @@ export const G2_GEOMETRY: GeoItem[] = [
   { level: 2, question: 'A watermelon slice cut from a round melon is most like which shape?', answer: 'triangle', options: ['triangle', 'circle', 'rectangle'], hint: 'It has 3 sides: one curved crust edge and two cut sides.' },
   { level: 2, question: 'A box has 6 flat faces, and every face is a square. What shape is the box?', answer: 'cube', options: ['sphere', 'cube', 'cone'] },
   { level: 2, question: 'Amir stacks cubes to cover the bottom of a box. The box is 2 cubes long and 2 cubes wide. How many cubes fit on the bottom?', answer: '4', options: ['2', '4', '8'], hint: 'Line them up: 2 cubes in one row, 2 cubes in the next.' },
+  { level: 2, question: 'You cut a round pancake into 2 equal pieces. What is each piece called?', answer: 'a half', options: ['a third', 'a half', 'a fourth'], hint: 'Two equal shares are called halves.' },
+  { level: 2, question: 'A pie is cut into fourths. How many pieces is that?', answer: '4', options: ['2', '3', '4'], hint: 'Fourths come from four equal shares.' },
+  { level: 2, question: 'Ana cuts an orange into 2 equal slices. Bo cuts the same size orange into 4 equal slices. Whose slices are bigger?', answer: "Ana's", options: ["Ana's", "Bo's", 'they are the same size'], hint: 'More slices means each slice is smaller.' },
+  { level: 2, question: 'Which shape has more sides, a pentagon or a hexagon?', answer: 'hexagon', options: ['pentagon', 'hexagon', 'they have the same number of sides'], hint: 'A hexagon has 6 sides and a pentagon has 5.' },
+  { level: 2, question: 'A triangle has 3 corners and a square has 4 corners. How many corners do they have together?', answer: '7', options: ['5', '7', '9'], hint: 'Add the two numbers of corners: 3 + 4.' },
 ]
 
 // ---- Data & graphs, level 2 (2.MD.D.10: single-unit scale, ≤4 categories) ------
