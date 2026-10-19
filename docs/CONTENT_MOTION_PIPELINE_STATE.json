@@ -160,7 +160,9 @@
     {
       "id": "A21",
       "title": "charts L3 +8 (22->30), L4 +6 (24->30)",
-      "status": "pending"
+      "status": "done",
+      "commit": "c9ef0d9..bb4d3e9",
+      "evidence": "dataGraph CHARTS: L3 22->30 (+8, 3.MD.D.3, each new chart carries 1 extra questions[] read — 8 new q-items, 46 total) and L4 24->30 (+6, 4.MD.B, each new chart carries 2 extra questions[] — 12 new q-items, 56 total); solver replay clean on every (chart,q) pair via scripts/audit-charts-l34.mjs; bias audit L3: 46 q-items longest 3 (6.5%, <=30%), shortest 1 (2.2%, <=35%); L4: 56 q-items longest 0 (0%), shortest 1 (1.8%); variety windows clean both levels (fresh themes: kites, ladybugs, puddle jumps, cup stacks, seashells, muffins, block towers, snow forts, trail signs, scarves, compost, beehives, towel rentals, pottery); two solver/self-review fixes pre-commit (Pottery 'three groups TOGETHER' -> named two bars; Compost renumbered off Trail's 54-total); averages whole (54/3=18, 60/3=20); vitest providers 220 passed, npm test 777 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
     },
     {
       "id": "A22",
@@ -406,6 +408,14 @@
       "commits": "a8b04cf: +8 data graphs L3 (14->22, 3.MD.D.3, 16 new q-items via extra questions[]); 8efb066: +7 data graphs L4 (17->24, 4.MD.B, 21 new q-items incl. two whole-number averages); new scripts/audit-charts-l34.mjs (solver+bias+variety audit across dataGraph.ts and l4Enrich.ts); bias L3 longest 3.3%/shortest 0%, L4 longest 0%/shortest 2.6%; variety clean both levels; one solver trap fixed pre-commit (plural labels)",
       "gates": "fast-intermediate/full-final",
       "push": "pushed 1b73833..ba6e819 to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 21,
+      "step": "A21",
+      "result": "done",
+      "tests": "vitest providers 220 passed (fast gate on the intermediate commit); final battery: vitest providers 220 passed, npm test 777 passed, lint clean, tsc -b clean, build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "c9ef0d9: +8 data graphs L3 (22->30, 3.MD.D.3, 8 new q-items via extra questions[]); bb4d3e9: +6 data graphs L4 (24->30, 4.MD.B, 12 new q-items incl. two whole-number averages); audit-charts-l34 clean: L3 bias longest 6.5%/shortest 2.2%, L4 longest 0%/shortest 1.8%; variety clean both levels; two self-review fixes pre-commit (unsolvable 'three groups TOGETHER' question reworded to name two bars; Compost renumbered off Trail's identical 54-total)",
+      "gates": "fast-intermediate/full-final"
     }
   ],
   "notes": "Target counts from handoff A1 table. One step per interval. Owner-approved 2026-10-18: fast gates policy — intermediate commits run vitest providers only; full battery (vitest+npm test+lint+tsc+build:store) runs on the final commit of each step and step is marked done only on full-battery pass. Fails verification twice -> blocked with error, skip to next. All done/blocked: pause cron + final summary in history."
