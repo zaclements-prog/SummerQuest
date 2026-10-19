@@ -179,6 +179,12 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Write a story about a frog band that plays music by the pond. Who shows up to the concert, and what song closes the show?',
       'A friendly scarecrow steps off the farm pole to explore the town on a quiet Sunday. Write a story about what it sees.',
       'You and your neighbor plant a single sunflower seed and race it to see whose grows taller. Write a story about the summer of the sunflowers.',
+      'Write a story about a snail mail carrier who walks slowly but delivers every letter. Who waits eagerly each morning for the mail?',
+      'The moon looks closer than ever tonight, and your ladder seems just long enough. Write a story about your visit up to see it.',
+      'Write a story about a bear cub who learns to fish at the stream with its mom. What trick does the cub finally learn?',
+      'A friendly fog rolls into your town and hides all the street signs. Write a story about how neighbors help each other find the way.',
+      'Write a story about the day you build the world’s tallest block tower and your little sister proudly adds the last piece.',
+      'Your class pet hamster runs an underground marathon across the classroom floor. Write a story about the race and the finish line welcome home.',
     ],
   },
 }
