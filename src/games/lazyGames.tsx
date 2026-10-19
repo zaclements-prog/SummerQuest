@@ -5,7 +5,7 @@ import { Loading } from '../components/ui'
 import { lazyWithRetry } from '../lib/lazyWithRetry'
 
 /**
- * The four 3D mini-games, each loaded on demand (three.js and its scene code
+ * The four 3D mini-games (and the K–1 Listen & Play shell), each loaded on demand (three.js and its scene code
  * stay out of the stage runner until a 3D game is actually played). Same
  * props and default exports as the game modules, so the stage runner only
  * swaps its imports:
@@ -20,6 +20,8 @@ const DivisionArenaGame = lazyWithRetry(() => import('./DivisionArena'))
 const FractionForgeGame = lazyWithRetry(() => import('./FractionForge'))
 const CloudKeeperGame = lazyWithRetry(() => import('./CloudKeeper'))
 const TimesGroveGame = lazyWithRetry(() => import('./TimesGrove'))
+// The K–1 Listen & Play shell (2D, but only K–1 stages need it).
+const ListenPlayGame = lazyWithRetry(() => import('./listenPlay/ListenPlay'))
 
 function Loader({ children }: { children: ReactNode }) {
   return (
@@ -63,6 +65,14 @@ export function TimesGrove(props: GameProps) {
   return (
     <Loader>
       <TimesGroveGame {...props} />
+    </Loader>
+  )
+}
+
+export function ListenPlay(props: GameProps) {
+  return (
+    <Loader>
+      <ListenPlayGame {...props} />
     </Loader>
   )
 }
