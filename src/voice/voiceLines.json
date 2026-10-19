@@ -1,6 +1,1452 @@
 {
   "voice": "higgs-audio-v2-mlx-q8:clone:calm-teacher-v1:k",
   "clips": {
+    "k-math/greatCounting": {
+      "text": "Great counting!",
+      "hash": "e735cf30b4",
+      "kind": "line",
+      "file": "voice/k-math/greatCounting.mp3"
+    },
+    "k-math/letsCount": {
+      "text": "Let's count!",
+      "hash": "6243ee390e",
+      "kind": "line",
+      "file": "voice/k-math/letsCount.mp3"
+    },
+    "k-math/howMany/thing=apples": {
+      "text": "How many apples? Tap the number.",
+      "hash": "425f8fcb49",
+      "kind": "whole",
+      "file": "voice/k-math/howMany/thing=apples.mp3"
+    },
+    "k-math/howMany/thing=stars": {
+      "text": "How many stars? Tap the number.",
+      "hash": "2cfb652999",
+      "kind": "whole",
+      "file": "voice/k-math/howMany/thing=stars.mp3"
+    },
+    "k-math/howMany/thing=fish": {
+      "text": "How many fish? Tap the number.",
+      "hash": "896f965047",
+      "kind": "whole",
+      "file": "voice/k-math/howMany/thing=fish.mp3"
+    },
+    "k-math/howMany/thing=ducks": {
+      "text": "How many ducks? Tap the number.",
+      "hash": "3030a2d42a",
+      "kind": "whole",
+      "file": "voice/k-math/howMany/thing=ducks.mp3"
+    },
+    "k-math/howMany/thing=balls": {
+      "text": "How many balls? Tap the number.",
+      "hash": "6bedd9f49b",
+      "kind": "whole",
+      "file": "voice/k-math/howMany/thing=balls.mp3"
+    },
+    "k-math/howMany/thing=flowers": {
+      "text": "How many flowers? Tap the number.",
+      "hash": "351b47543b",
+      "kind": "whole",
+      "file": "voice/k-math/howMany/thing=flowers.mp3"
+    },
+    "k-math/howMany/thing=bees": {
+      "text": "How many bees? Tap the number.",
+      "hash": "0be8fbc685",
+      "kind": "whole",
+      "file": "voice/k-math/howMany/thing=bees.mp3"
+    },
+    "k-math/howMany/thing=cars": {
+      "text": "How many cars? Tap the number.",
+      "hash": "762e7f591f",
+      "kind": "whole",
+      "file": "voice/k-math/howMany/thing=cars.mp3"
+    },
+    "k-math/howMany/thing=cookies": {
+      "text": "How many cookies? Tap the number.",
+      "hash": "0b544a01b0",
+      "kind": "whole",
+      "file": "voice/k-math/howMany/thing=cookies.mp3"
+    },
+    "k-math/howMany/thing=frogs": {
+      "text": "How many frogs? Tap the number.",
+      "hash": "fb7c247727",
+      "kind": "whole",
+      "file": "voice/k-math/howMany/thing=frogs.mp3"
+    },
+    "k-math/findGroup/n=2,thing=apples": {
+      "text": "Tap the group with two apples.",
+      "hash": "fdad8c31cd",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=2,thing=apples.mp3"
+    },
+    "k-math/findGroup/n=2,thing=stars": {
+      "text": "Tap the group with two stars.",
+      "hash": "85ff0a8336",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=2,thing=stars.mp3"
+    },
+    "k-math/findGroup/n=2,thing=fish": {
+      "text": "Tap the group with two fish.",
+      "hash": "6f5314b695",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=2,thing=fish.mp3"
+    },
+    "k-math/findGroup/n=2,thing=ducks": {
+      "text": "Tap the group with two ducks.",
+      "hash": "5b187b298d",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=2,thing=ducks.mp3"
+    },
+    "k-math/findGroup/n=2,thing=balls": {
+      "text": "Tap the group with two balls.",
+      "hash": "1c13441905",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=2,thing=balls.mp3"
+    },
+    "k-math/findGroup/n=2,thing=flowers": {
+      "text": "Tap the group with two flowers.",
+      "hash": "f75e3be127",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=2,thing=flowers.mp3"
+    },
+    "k-math/findGroup/n=2,thing=bees": {
+      "text": "Tap the group with two bees.",
+      "hash": "3fbe1c1b75",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=2,thing=bees.mp3"
+    },
+    "k-math/findGroup/n=2,thing=cars": {
+      "text": "Tap the group with two cars.",
+      "hash": "ef1dbc94dc",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=2,thing=cars.mp3"
+    },
+    "k-math/findGroup/n=2,thing=cookies": {
+      "text": "Tap the group with two cookies.",
+      "hash": "a8a8e0b00d",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=2,thing=cookies.mp3"
+    },
+    "k-math/findGroup/n=2,thing=frogs": {
+      "text": "Tap the group with two frogs.",
+      "hash": "0d8b4665d7",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=2,thing=frogs.mp3"
+    },
+    "k-math/findGroup/n=3,thing=apples": {
+      "text": "Tap the group with three apples.",
+      "hash": "0c809add5d",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=3,thing=apples.mp3"
+    },
+    "k-math/findGroup/n=3,thing=stars": {
+      "text": "Tap the group with three stars.",
+      "hash": "d73096f760",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=3,thing=stars.mp3"
+    },
+    "k-math/findGroup/n=3,thing=fish": {
+      "text": "Tap the group with three fish.",
+      "hash": "bfd21c1894",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=3,thing=fish.mp3"
+    },
+    "k-math/findGroup/n=3,thing=ducks": {
+      "text": "Tap the group with three ducks.",
+      "hash": "b5a16c82c5",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=3,thing=ducks.mp3"
+    },
+    "k-math/findGroup/n=3,thing=balls": {
+      "text": "Tap the group with three balls.",
+      "hash": "8c48cc3fa9",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=3,thing=balls.mp3"
+    },
+    "k-math/findGroup/n=3,thing=flowers": {
+      "text": "Tap the group with three flowers.",
+      "hash": "db4552c731",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=3,thing=flowers.mp3"
+    },
+    "k-math/findGroup/n=3,thing=bees": {
+      "text": "Tap the group with three bees.",
+      "hash": "fc52d2fb96",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=3,thing=bees.mp3"
+    },
+    "k-math/findGroup/n=3,thing=cars": {
+      "text": "Tap the group with three cars.",
+      "hash": "d6122f67ee",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=3,thing=cars.mp3"
+    },
+    "k-math/findGroup/n=3,thing=cookies": {
+      "text": "Tap the group with three cookies.",
+      "hash": "3dc7fb9579",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=3,thing=cookies.mp3"
+    },
+    "k-math/findGroup/n=3,thing=frogs": {
+      "text": "Tap the group with three frogs.",
+      "hash": "3db4c2c7e0",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=3,thing=frogs.mp3"
+    },
+    "k-math/findGroup/n=4,thing=apples": {
+      "text": "Tap the group with four apples.",
+      "hash": "ae81f63c72",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=4,thing=apples.mp3"
+    },
+    "k-math/findGroup/n=4,thing=stars": {
+      "text": "Tap the group with four stars.",
+      "hash": "8154f9c9f3",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=4,thing=stars.mp3"
+    },
+    "k-math/findGroup/n=4,thing=fish": {
+      "text": "Tap the group with four fish.",
+      "hash": "e1411baf57",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=4,thing=fish.mp3"
+    },
+    "k-math/findGroup/n=4,thing=ducks": {
+      "text": "Tap the group with four ducks.",
+      "hash": "0bf660ec90",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=4,thing=ducks.mp3"
+    },
+    "k-math/findGroup/n=4,thing=balls": {
+      "text": "Tap the group with four balls.",
+      "hash": "a51b3e9dec",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=4,thing=balls.mp3"
+    },
+    "k-math/findGroup/n=4,thing=flowers": {
+      "text": "Tap the group with four flowers.",
+      "hash": "ba06c269bb",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=4,thing=flowers.mp3"
+    },
+    "k-math/findGroup/n=4,thing=bees": {
+      "text": "Tap the group with four bees.",
+      "hash": "96c7207608",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=4,thing=bees.mp3"
+    },
+    "k-math/findGroup/n=4,thing=cars": {
+      "text": "Tap the group with four cars.",
+      "hash": "178940428d",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=4,thing=cars.mp3"
+    },
+    "k-math/findGroup/n=4,thing=cookies": {
+      "text": "Tap the group with four cookies.",
+      "hash": "d7ec5e01e6",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=4,thing=cookies.mp3"
+    },
+    "k-math/findGroup/n=4,thing=frogs": {
+      "text": "Tap the group with four frogs.",
+      "hash": "87a5017cdd",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=4,thing=frogs.mp3"
+    },
+    "k-math/findGroup/n=5,thing=apples": {
+      "text": "Tap the group with five apples.",
+      "hash": "1fe18e3e44",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=5,thing=apples.mp3"
+    },
+    "k-math/findGroup/n=5,thing=stars": {
+      "text": "Tap the group with five stars.",
+      "hash": "d6a3f5b96f",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=5,thing=stars.mp3"
+    },
+    "k-math/findGroup/n=5,thing=fish": {
+      "text": "Tap the group with five fish.",
+      "hash": "fb4951cb60",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=5,thing=fish.mp3"
+    },
+    "k-math/findGroup/n=5,thing=ducks": {
+      "text": "Tap the group with five ducks.",
+      "hash": "e91e06aa35",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=5,thing=ducks.mp3"
+    },
+    "k-math/findGroup/n=5,thing=balls": {
+      "text": "Tap the group with five balls.",
+      "hash": "ea88ec77b6",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=5,thing=balls.mp3"
+    },
+    "k-math/findGroup/n=5,thing=flowers": {
+      "text": "Tap the group with five flowers.",
+      "hash": "4f68643f92",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=5,thing=flowers.mp3"
+    },
+    "k-math/findGroup/n=5,thing=bees": {
+      "text": "Tap the group with five bees.",
+      "hash": "db46bba875",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=5,thing=bees.mp3"
+    },
+    "k-math/findGroup/n=5,thing=cars": {
+      "text": "Tap the group with five cars.",
+      "hash": "db6072c460",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=5,thing=cars.mp3"
+    },
+    "k-math/findGroup/n=5,thing=cookies": {
+      "text": "Tap the group with five cookies.",
+      "hash": "ba882d8aed",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=5,thing=cookies.mp3"
+    },
+    "k-math/findGroup/n=5,thing=frogs": {
+      "text": "Tap the group with five frogs.",
+      "hash": "9f859e8f8f",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=5,thing=frogs.mp3"
+    },
+    "k-math/findGroup/n=6,thing=apples": {
+      "text": "Tap the group with six apples.",
+      "hash": "766106d9c7",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=6,thing=apples.mp3"
+    },
+    "k-math/findGroup/n=6,thing=stars": {
+      "text": "Tap the group with six stars.",
+      "hash": "5a65725093",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=6,thing=stars.mp3"
+    },
+    "k-math/findGroup/n=6,thing=fish": {
+      "text": "Tap the group with six fish.",
+      "hash": "f42d3cfd51",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=6,thing=fish.mp3"
+    },
+    "k-math/findGroup/n=6,thing=ducks": {
+      "text": "Tap the group with six ducks.",
+      "hash": "e994fa4fef",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=6,thing=ducks.mp3"
+    },
+    "k-math/findGroup/n=6,thing=balls": {
+      "text": "Tap the group with six balls.",
+      "hash": "87d2a885d3",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=6,thing=balls.mp3"
+    },
+    "k-math/findGroup/n=6,thing=flowers": {
+      "text": "Tap the group with six flowers.",
+      "hash": "4040b0264d",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=6,thing=flowers.mp3"
+    },
+    "k-math/findGroup/n=6,thing=bees": {
+      "text": "Tap the group with six bees.",
+      "hash": "b2b9e8615c",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=6,thing=bees.mp3"
+    },
+    "k-math/findGroup/n=6,thing=cars": {
+      "text": "Tap the group with six cars.",
+      "hash": "499ce1c8ee",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=6,thing=cars.mp3"
+    },
+    "k-math/findGroup/n=6,thing=cookies": {
+      "text": "Tap the group with six cookies.",
+      "hash": "285d2a1ef5",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=6,thing=cookies.mp3"
+    },
+    "k-math/findGroup/n=6,thing=frogs": {
+      "text": "Tap the group with six frogs.",
+      "hash": "fe71813db3",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=6,thing=frogs.mp3"
+    },
+    "k-math/findGroup/n=7,thing=apples": {
+      "text": "Tap the group with seven apples.",
+      "hash": "86d4f579d3",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=7,thing=apples.mp3"
+    },
+    "k-math/findGroup/n=7,thing=stars": {
+      "text": "Tap the group with seven stars.",
+      "hash": "e9f7a7150e",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=7,thing=stars.mp3"
+    },
+    "k-math/findGroup/n=7,thing=fish": {
+      "text": "Tap the group with seven fish.",
+      "hash": "5726d1b96f",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=7,thing=fish.mp3"
+    },
+    "k-math/findGroup/n=7,thing=ducks": {
+      "text": "Tap the group with seven ducks.",
+      "hash": "a2e30a07d5",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=7,thing=ducks.mp3"
+    },
+    "k-math/findGroup/n=7,thing=balls": {
+      "text": "Tap the group with seven balls.",
+      "hash": "baab7e4acf",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=7,thing=balls.mp3"
+    },
+    "k-math/findGroup/n=7,thing=flowers": {
+      "text": "Tap the group with seven flowers.",
+      "hash": "e5f4d5fb55",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=7,thing=flowers.mp3"
+    },
+    "k-math/findGroup/n=7,thing=bees": {
+      "text": "Tap the group with seven bees.",
+      "hash": "30fbae1a3c",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=7,thing=bees.mp3"
+    },
+    "k-math/findGroup/n=7,thing=cars": {
+      "text": "Tap the group with seven cars.",
+      "hash": "1f6ae05ea0",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=7,thing=cars.mp3"
+    },
+    "k-math/findGroup/n=7,thing=cookies": {
+      "text": "Tap the group with seven cookies.",
+      "hash": "64b69cc7bf",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=7,thing=cookies.mp3"
+    },
+    "k-math/findGroup/n=7,thing=frogs": {
+      "text": "Tap the group with seven frogs.",
+      "hash": "0870953875",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=7,thing=frogs.mp3"
+    },
+    "k-math/findGroup/n=8,thing=apples": {
+      "text": "Tap the group with eight apples.",
+      "hash": "c87ff85c9a",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=8,thing=apples.mp3"
+    },
+    "k-math/findGroup/n=8,thing=stars": {
+      "text": "Tap the group with eight stars.",
+      "hash": "a22d89224c",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=8,thing=stars.mp3"
+    },
+    "k-math/findGroup/n=8,thing=fish": {
+      "text": "Tap the group with eight fish.",
+      "hash": "0658f9b078",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=8,thing=fish.mp3"
+    },
+    "k-math/findGroup/n=8,thing=ducks": {
+      "text": "Tap the group with eight ducks.",
+      "hash": "0383125350",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=8,thing=ducks.mp3"
+    },
+    "k-math/findGroup/n=8,thing=balls": {
+      "text": "Tap the group with eight balls.",
+      "hash": "a4dab5d01a",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=8,thing=balls.mp3"
+    },
+    "k-math/findGroup/n=8,thing=flowers": {
+      "text": "Tap the group with eight flowers.",
+      "hash": "c94c773ac8",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=8,thing=flowers.mp3"
+    },
+    "k-math/findGroup/n=8,thing=bees": {
+      "text": "Tap the group with eight bees.",
+      "hash": "4993f4ff17",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=8,thing=bees.mp3"
+    },
+    "k-math/findGroup/n=8,thing=cars": {
+      "text": "Tap the group with eight cars.",
+      "hash": "e807fb6bfe",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=8,thing=cars.mp3"
+    },
+    "k-math/findGroup/n=8,thing=cookies": {
+      "text": "Tap the group with eight cookies.",
+      "hash": "cd53ea5855",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=8,thing=cookies.mp3"
+    },
+    "k-math/findGroup/n=8,thing=frogs": {
+      "text": "Tap the group with eight frogs.",
+      "hash": "8659a80bff",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=8,thing=frogs.mp3"
+    },
+    "k-math/findGroup/n=9,thing=apples": {
+      "text": "Tap the group with nine apples.",
+      "hash": "797fa2840c",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=9,thing=apples.mp3"
+    },
+    "k-math/findGroup/n=9,thing=stars": {
+      "text": "Tap the group with nine stars.",
+      "hash": "40eda4ad8a",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=9,thing=stars.mp3"
+    },
+    "k-math/findGroup/n=9,thing=fish": {
+      "text": "Tap the group with nine fish.",
+      "hash": "e1f6d84e10",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=9,thing=fish.mp3"
+    },
+    "k-math/findGroup/n=9,thing=ducks": {
+      "text": "Tap the group with nine ducks.",
+      "hash": "a36e5ac6e7",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=9,thing=ducks.mp3"
+    },
+    "k-math/findGroup/n=9,thing=balls": {
+      "text": "Tap the group with nine balls.",
+      "hash": "f074de0c7e",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=9,thing=balls.mp3"
+    },
+    "k-math/findGroup/n=9,thing=flowers": {
+      "text": "Tap the group with nine flowers.",
+      "hash": "39e4e591fc",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=9,thing=flowers.mp3"
+    },
+    "k-math/findGroup/n=9,thing=bees": {
+      "text": "Tap the group with nine bees.",
+      "hash": "520004ee57",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=9,thing=bees.mp3"
+    },
+    "k-math/findGroup/n=9,thing=cars": {
+      "text": "Tap the group with nine cars.",
+      "hash": "4045acddc2",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=9,thing=cars.mp3"
+    },
+    "k-math/findGroup/n=9,thing=cookies": {
+      "text": "Tap the group with nine cookies.",
+      "hash": "186247c62d",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=9,thing=cookies.mp3"
+    },
+    "k-math/findGroup/n=9,thing=frogs": {
+      "text": "Tap the group with nine frogs.",
+      "hash": "903fb2ddc2",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=9,thing=frogs.mp3"
+    },
+    "k-math/findGroup/n=10,thing=apples": {
+      "text": "Tap the group with ten apples.",
+      "hash": "b54f3bd69b",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=10,thing=apples.mp3"
+    },
+    "k-math/findGroup/n=10,thing=stars": {
+      "text": "Tap the group with ten stars.",
+      "hash": "a4a7d601a7",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=10,thing=stars.mp3"
+    },
+    "k-math/findGroup/n=10,thing=fish": {
+      "text": "Tap the group with ten fish.",
+      "hash": "8d2dd3fab1",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=10,thing=fish.mp3"
+    },
+    "k-math/findGroup/n=10,thing=ducks": {
+      "text": "Tap the group with ten ducks.",
+      "hash": "62bb9e90b6",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=10,thing=ducks.mp3"
+    },
+    "k-math/findGroup/n=10,thing=balls": {
+      "text": "Tap the group with ten balls.",
+      "hash": "fa5036fb0c",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=10,thing=balls.mp3"
+    },
+    "k-math/findGroup/n=10,thing=flowers": {
+      "text": "Tap the group with ten flowers.",
+      "hash": "f7f91db994",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=10,thing=flowers.mp3"
+    },
+    "k-math/findGroup/n=10,thing=bees": {
+      "text": "Tap the group with ten bees.",
+      "hash": "73e35a2f66",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=10,thing=bees.mp3"
+    },
+    "k-math/findGroup/n=10,thing=cars": {
+      "text": "Tap the group with ten cars.",
+      "hash": "b2bfa7e1fc",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=10,thing=cars.mp3"
+    },
+    "k-math/findGroup/n=10,thing=cookies": {
+      "text": "Tap the group with ten cookies.",
+      "hash": "a8d071f826",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=10,thing=cookies.mp3"
+    },
+    "k-math/findGroup/n=10,thing=frogs": {
+      "text": "Tap the group with ten frogs.",
+      "hash": "374e3152a2",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=10,thing=frogs.mp3"
+    },
+    "k-math/putInBowl/n=2,thing=apples": {
+      "text": "Put two apples in the bowl.",
+      "hash": "9a67e2b341",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=2,thing=apples.mp3"
+    },
+    "k-math/putInBowl/n=2,thing=stars": {
+      "text": "Put two stars in the bowl.",
+      "hash": "330623f08c",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=2,thing=stars.mp3"
+    },
+    "k-math/putInBowl/n=2,thing=fish": {
+      "text": "Put two fish in the bowl.",
+      "hash": "2e3475ef54",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=2,thing=fish.mp3"
+    },
+    "k-math/putInBowl/n=2,thing=ducks": {
+      "text": "Put two ducks in the bowl.",
+      "hash": "108c417b04",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=2,thing=ducks.mp3"
+    },
+    "k-math/putInBowl/n=2,thing=balls": {
+      "text": "Put two balls in the bowl.",
+      "hash": "82a8ee423d",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=2,thing=balls.mp3"
+    },
+    "k-math/putInBowl/n=2,thing=flowers": {
+      "text": "Put two flowers in the bowl.",
+      "hash": "aef708fc31",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=2,thing=flowers.mp3"
+    },
+    "k-math/putInBowl/n=2,thing=bees": {
+      "text": "Put two bees in the bowl.",
+      "hash": "6b5657544a",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=2,thing=bees.mp3"
+    },
+    "k-math/putInBowl/n=2,thing=cars": {
+      "text": "Put two cars in the bowl.",
+      "hash": "bb7866dadf",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=2,thing=cars.mp3"
+    },
+    "k-math/putInBowl/n=2,thing=cookies": {
+      "text": "Put two cookies in the bowl.",
+      "hash": "f34bd0846a",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=2,thing=cookies.mp3"
+    },
+    "k-math/putInBowl/n=2,thing=frogs": {
+      "text": "Put two frogs in the bowl.",
+      "hash": "af9a9c4638",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=2,thing=frogs.mp3"
+    },
+    "k-math/putInBowl/n=3,thing=apples": {
+      "text": "Put three apples in the bowl.",
+      "hash": "62ff6f150c",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=3,thing=apples.mp3"
+    },
+    "k-math/putInBowl/n=3,thing=stars": {
+      "text": "Put three stars in the bowl.",
+      "hash": "4f59c06798",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=3,thing=stars.mp3"
+    },
+    "k-math/putInBowl/n=3,thing=fish": {
+      "text": "Put three fish in the bowl.",
+      "hash": "c19351ab52",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=3,thing=fish.mp3"
+    },
+    "k-math/putInBowl/n=3,thing=ducks": {
+      "text": "Put three ducks in the bowl.",
+      "hash": "4256a771ee",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=3,thing=ducks.mp3"
+    },
+    "k-math/putInBowl/n=3,thing=balls": {
+      "text": "Put three balls in the bowl.",
+      "hash": "698a23e8c4",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=3,thing=balls.mp3"
+    },
+    "k-math/putInBowl/n=3,thing=flowers": {
+      "text": "Put three flowers in the bowl.",
+      "hash": "ad62215268",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=3,thing=flowers.mp3"
+    },
+    "k-math/putInBowl/n=3,thing=bees": {
+      "text": "Put three bees in the bowl.",
+      "hash": "914911db19",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=3,thing=bees.mp3"
+    },
+    "k-math/putInBowl/n=3,thing=cars": {
+      "text": "Put three cars in the bowl.",
+      "hash": "8630e45f8d",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=3,thing=cars.mp3"
+    },
+    "k-math/putInBowl/n=3,thing=cookies": {
+      "text": "Put three cookies in the bowl.",
+      "hash": "a2b6255367",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=3,thing=cookies.mp3"
+    },
+    "k-math/putInBowl/n=3,thing=frogs": {
+      "text": "Put three frogs in the bowl.",
+      "hash": "64db99495c",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=3,thing=frogs.mp3"
+    },
+    "k-math/putInBowl/n=4,thing=apples": {
+      "text": "Put four apples in the bowl.",
+      "hash": "9b173ca9e5",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=4,thing=apples.mp3"
+    },
+    "k-math/putInBowl/n=4,thing=stars": {
+      "text": "Put four stars in the bowl.",
+      "hash": "fb1715ffcf",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=4,thing=stars.mp3"
+    },
+    "k-math/putInBowl/n=4,thing=fish": {
+      "text": "Put four fish in the bowl.",
+      "hash": "41ae11a3a3",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=4,thing=fish.mp3"
+    },
+    "k-math/putInBowl/n=4,thing=ducks": {
+      "text": "Put four ducks in the bowl.",
+      "hash": "dd51399f47",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=4,thing=ducks.mp3"
+    },
+    "k-math/putInBowl/n=4,thing=balls": {
+      "text": "Put four balls in the bowl.",
+      "hash": "1cf9fa474c",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=4,thing=balls.mp3"
+    },
+    "k-math/putInBowl/n=4,thing=flowers": {
+      "text": "Put four flowers in the bowl.",
+      "hash": "01fae87730",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=4,thing=flowers.mp3"
+    },
+    "k-math/putInBowl/n=4,thing=bees": {
+      "text": "Put four bees in the bowl.",
+      "hash": "9e71180ab2",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=4,thing=bees.mp3"
+    },
+    "k-math/putInBowl/n=4,thing=cars": {
+      "text": "Put four cars in the bowl.",
+      "hash": "71ea00e123",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=4,thing=cars.mp3"
+    },
+    "k-math/putInBowl/n=4,thing=cookies": {
+      "text": "Put four cookies in the bowl.",
+      "hash": "0514b5e5e6",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=4,thing=cookies.mp3"
+    },
+    "k-math/putInBowl/n=4,thing=frogs": {
+      "text": "Put four frogs in the bowl.",
+      "hash": "521f03f27e",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=4,thing=frogs.mp3"
+    },
+    "k-math/putInBowl/n=5,thing=apples": {
+      "text": "Put five apples in the bowl.",
+      "hash": "5786b31cf1",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=5,thing=apples.mp3"
+    },
+    "k-math/putInBowl/n=5,thing=stars": {
+      "text": "Put five stars in the bowl.",
+      "hash": "a39d7ed1aa",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=5,thing=stars.mp3"
+    },
+    "k-math/putInBowl/n=5,thing=fish": {
+      "text": "Put five fish in the bowl.",
+      "hash": "f5cd2390b7",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=5,thing=fish.mp3"
+    },
+    "k-math/putInBowl/n=5,thing=ducks": {
+      "text": "Put five ducks in the bowl.",
+      "hash": "ed3ede125a",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=5,thing=ducks.mp3"
+    },
+    "k-math/putInBowl/n=5,thing=balls": {
+      "text": "Put five balls in the bowl.",
+      "hash": "85a5b6cfb9",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=5,thing=balls.mp3"
+    },
+    "k-math/putInBowl/n=5,thing=flowers": {
+      "text": "Put five flowers in the bowl.",
+      "hash": "05fd853cb1",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=5,thing=flowers.mp3"
+    },
+    "k-math/putInBowl/n=5,thing=bees": {
+      "text": "Put five bees in the bowl.",
+      "hash": "bc3aef3a16",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=5,thing=bees.mp3"
+    },
+    "k-math/putInBowl/n=5,thing=cars": {
+      "text": "Put five cars in the bowl.",
+      "hash": "8d1b70c534",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=5,thing=cars.mp3"
+    },
+    "k-math/putInBowl/n=5,thing=cookies": {
+      "text": "Put five cookies in the bowl.",
+      "hash": "75419e2ca4",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=5,thing=cookies.mp3"
+    },
+    "k-math/putInBowl/n=5,thing=frogs": {
+      "text": "Put five frogs in the bowl.",
+      "hash": "b6729e5e4e",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=5,thing=frogs.mp3"
+    },
+    "k-math/putInBowl/n=6,thing=apples": {
+      "text": "Put six apples in the bowl.",
+      "hash": "29018bdaca",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=6,thing=apples.mp3"
+    },
+    "k-math/putInBowl/n=6,thing=stars": {
+      "text": "Put six stars in the bowl.",
+      "hash": "68c0ab63d2",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=6,thing=stars.mp3"
+    },
+    "k-math/putInBowl/n=6,thing=fish": {
+      "text": "Put six fish in the bowl.",
+      "hash": "cba4af1a65",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=6,thing=fish.mp3"
+    },
+    "k-math/putInBowl/n=6,thing=ducks": {
+      "text": "Put six ducks in the bowl.",
+      "hash": "e982b2772a",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=6,thing=ducks.mp3"
+    },
+    "k-math/putInBowl/n=6,thing=balls": {
+      "text": "Put six balls in the bowl.",
+      "hash": "e4de1f8b38",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=6,thing=balls.mp3"
+    },
+    "k-math/putInBowl/n=6,thing=flowers": {
+      "text": "Put six flowers in the bowl.",
+      "hash": "07a787284f",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=6,thing=flowers.mp3"
+    },
+    "k-math/putInBowl/n=6,thing=bees": {
+      "text": "Put six bees in the bowl.",
+      "hash": "7501dee6d4",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=6,thing=bees.mp3"
+    },
+    "k-math/putInBowl/n=6,thing=cars": {
+      "text": "Put six cars in the bowl.",
+      "hash": "2eda8cc1d0",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=6,thing=cars.mp3"
+    },
+    "k-math/putInBowl/n=6,thing=cookies": {
+      "text": "Put six cookies in the bowl.",
+      "hash": "69bf06203c",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=6,thing=cookies.mp3"
+    },
+    "k-math/putInBowl/n=6,thing=frogs": {
+      "text": "Put six frogs in the bowl.",
+      "hash": "20cd739eb9",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=6,thing=frogs.mp3"
+    },
+    "k-math/putInBowl/n=7,thing=apples": {
+      "text": "Put seven apples in the bowl.",
+      "hash": "7aeab6cb7d",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=7,thing=apples.mp3"
+    },
+    "k-math/putInBowl/n=7,thing=stars": {
+      "text": "Put seven stars in the bowl.",
+      "hash": "1418243241",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=7,thing=stars.mp3"
+    },
+    "k-math/putInBowl/n=7,thing=fish": {
+      "text": "Put seven fish in the bowl.",
+      "hash": "6147a64615",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=7,thing=fish.mp3"
+    },
+    "k-math/putInBowl/n=7,thing=ducks": {
+      "text": "Put seven ducks in the bowl.",
+      "hash": "9fb9b48229",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=7,thing=ducks.mp3"
+    },
+    "k-math/putInBowl/n=7,thing=balls": {
+      "text": "Put seven balls in the bowl.",
+      "hash": "177f9d2f73",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=7,thing=balls.mp3"
+    },
+    "k-math/putInBowl/n=7,thing=flowers": {
+      "text": "Put seven flowers in the bowl.",
+      "hash": "38ec1592d7",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=7,thing=flowers.mp3"
+    },
+    "k-math/putInBowl/n=7,thing=bees": {
+      "text": "Put seven bees in the bowl.",
+      "hash": "216f1b679d",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=7,thing=bees.mp3"
+    },
+    "k-math/putInBowl/n=7,thing=cars": {
+      "text": "Put seven cars in the bowl.",
+      "hash": "4adcd576f1",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=7,thing=cars.mp3"
+    },
+    "k-math/putInBowl/n=7,thing=cookies": {
+      "text": "Put seven cookies in the bowl.",
+      "hash": "ea2a111d4f",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=7,thing=cookies.mp3"
+    },
+    "k-math/putInBowl/n=7,thing=frogs": {
+      "text": "Put seven frogs in the bowl.",
+      "hash": "af129e9a82",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=7,thing=frogs.mp3"
+    },
+    "k-math/putInBowl/n=8,thing=apples": {
+      "text": "Put eight apples in the bowl.",
+      "hash": "ad1177ae9d",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=8,thing=apples.mp3"
+    },
+    "k-math/putInBowl/n=8,thing=stars": {
+      "text": "Put eight stars in the bowl.",
+      "hash": "48c32cba72",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=8,thing=stars.mp3"
+    },
+    "k-math/putInBowl/n=8,thing=fish": {
+      "text": "Put eight fish in the bowl.",
+      "hash": "84bde9765f",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=8,thing=fish.mp3"
+    },
+    "k-math/putInBowl/n=8,thing=ducks": {
+      "text": "Put eight ducks in the bowl.",
+      "hash": "1853e5da8e",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=8,thing=ducks.mp3"
+    },
+    "k-math/putInBowl/n=8,thing=balls": {
+      "text": "Put eight balls in the bowl.",
+      "hash": "f522599fb3",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=8,thing=balls.mp3"
+    },
+    "k-math/putInBowl/n=8,thing=flowers": {
+      "text": "Put eight flowers in the bowl.",
+      "hash": "6e1b69f8dc",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=8,thing=flowers.mp3"
+    },
+    "k-math/putInBowl/n=8,thing=bees": {
+      "text": "Put eight bees in the bowl.",
+      "hash": "4e0e5320c8",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=8,thing=bees.mp3"
+    },
+    "k-math/putInBowl/n=8,thing=cars": {
+      "text": "Put eight cars in the bowl.",
+      "hash": "7327f0291c",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=8,thing=cars.mp3"
+    },
+    "k-math/putInBowl/n=8,thing=cookies": {
+      "text": "Put eight cookies in the bowl.",
+      "hash": "2b1f4813c8",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=8,thing=cookies.mp3"
+    },
+    "k-math/putInBowl/n=8,thing=frogs": {
+      "text": "Put eight frogs in the bowl.",
+      "hash": "c45ee84ac8",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=8,thing=frogs.mp3"
+    },
+    "k-math/putInBowl/n=9,thing=apples": {
+      "text": "Put nine apples in the bowl.",
+      "hash": "f5e262f91b",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=9,thing=apples.mp3"
+    },
+    "k-math/putInBowl/n=9,thing=stars": {
+      "text": "Put nine stars in the bowl.",
+      "hash": "adc056f0b2",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=9,thing=stars.mp3"
+    },
+    "k-math/putInBowl/n=9,thing=fish": {
+      "text": "Put nine fish in the bowl.",
+      "hash": "c428c4ddee",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=9,thing=fish.mp3"
+    },
+    "k-math/putInBowl/n=9,thing=ducks": {
+      "text": "Put nine ducks in the bowl.",
+      "hash": "85e0ffee52",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=9,thing=ducks.mp3"
+    },
+    "k-math/putInBowl/n=9,thing=balls": {
+      "text": "Put nine balls in the bowl.",
+      "hash": "aa8bf282b2",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=9,thing=balls.mp3"
+    },
+    "k-math/putInBowl/n=9,thing=flowers": {
+      "text": "Put nine flowers in the bowl.",
+      "hash": "e01f9021d7",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=9,thing=flowers.mp3"
+    },
+    "k-math/putInBowl/n=9,thing=bees": {
+      "text": "Put nine bees in the bowl.",
+      "hash": "fbd55cb8b6",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=9,thing=bees.mp3"
+    },
+    "k-math/putInBowl/n=9,thing=cars": {
+      "text": "Put nine cars in the bowl.",
+      "hash": "0b5b110a75",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=9,thing=cars.mp3"
+    },
+    "k-math/putInBowl/n=9,thing=cookies": {
+      "text": "Put nine cookies in the bowl.",
+      "hash": "e51c9a74ef",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=9,thing=cookies.mp3"
+    },
+    "k-math/putInBowl/n=9,thing=frogs": {
+      "text": "Put nine frogs in the bowl.",
+      "hash": "d422326de8",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=9,thing=frogs.mp3"
+    },
+    "k-math/putInBowl/n=10,thing=apples": {
+      "text": "Put ten apples in the bowl.",
+      "hash": "2d2ccf5b98",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=10,thing=apples.mp3"
+    },
+    "k-math/putInBowl/n=10,thing=stars": {
+      "text": "Put ten stars in the bowl.",
+      "hash": "1501b660e0",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=10,thing=stars.mp3"
+    },
+    "k-math/putInBowl/n=10,thing=fish": {
+      "text": "Put ten fish in the bowl.",
+      "hash": "11c56a4d84",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=10,thing=fish.mp3"
+    },
+    "k-math/putInBowl/n=10,thing=ducks": {
+      "text": "Put ten ducks in the bowl.",
+      "hash": "d91d9b1908",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=10,thing=ducks.mp3"
+    },
+    "k-math/putInBowl/n=10,thing=balls": {
+      "text": "Put ten balls in the bowl.",
+      "hash": "cbe88388cf",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=10,thing=balls.mp3"
+    },
+    "k-math/putInBowl/n=10,thing=flowers": {
+      "text": "Put ten flowers in the bowl.",
+      "hash": "70bd61dce9",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=10,thing=flowers.mp3"
+    },
+    "k-math/putInBowl/n=10,thing=bees": {
+      "text": "Put ten bees in the bowl.",
+      "hash": "e6d9130f80",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=10,thing=bees.mp3"
+    },
+    "k-math/putInBowl/n=10,thing=cars": {
+      "text": "Put ten cars in the bowl.",
+      "hash": "73179b43fc",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=10,thing=cars.mp3"
+    },
+    "k-math/putInBowl/n=10,thing=cookies": {
+      "text": "Put ten cookies in the bowl.",
+      "hash": "e52f614db5",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=10,thing=cookies.mp3"
+    },
+    "k-math/putInBowl/n=10,thing=frogs": {
+      "text": "Put ten frogs in the bowl.",
+      "hash": "231e5e3fd7",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=10,thing=frogs.mp3"
+    },
+    "listen/countTogether": {
+      "text": "Let's count together.",
+      "hash": "90a955fdcb",
+      "kind": "line",
+      "file": "voice/listen/countTogether.mp3"
+    },
+    "listen/yourTurn": {
+      "text": "Now you try!",
+      "hash": "f2a9a41d22",
+      "kind": "line",
+      "file": "voice/listen/yourTurn.mp3"
+    },
+    "listen/youDidIt": {
+      "text": "You did it!",
+      "hash": "a7cfba6f57",
+      "kind": "line",
+      "file": "voice/listen/youDidIt.mp3"
+    },
+    "listen/thatsRight": {
+      "text": "Yes! That's right!",
+      "hash": "f6343f99ec",
+      "kind": "line",
+      "file": "voice/listen/thatsRight.mp3"
+    },
+    "listen/stars1": {
+      "text": "You got one star! Tap the arrow to keep going.",
+      "hash": "dd4e531761",
+      "kind": "line",
+      "file": "voice/listen/stars1.mp3"
+    },
+    "listen/stars2": {
+      "text": "You got two stars! Tap the arrow to keep going.",
+      "hash": "4a258b4e4a",
+      "kind": "line",
+      "file": "voice/listen/stars2.mp3"
+    },
+    "listen/stars3": {
+      "text": "You got three stars! Tap the arrow to keep going.",
+      "hash": "f805c572ef",
+      "kind": "line",
+      "file": "voice/listen/stars3.mp3"
+    },
+    "listen/tapToCount": {
+      "text": "Tap each one to count it.",
+      "hash": "16ca90dc5b",
+      "kind": "line",
+      "file": "voice/listen/tapToCount.mp3"
+    },
+    "listen/count1": {
+      "text": "One.",
+      "hash": "9a9481b1cd",
+      "kind": "line",
+      "file": "voice/listen/count1.mp3"
+    },
+    "listen/count2": {
+      "text": "One, two.",
+      "hash": "70adfcb39f",
+      "kind": "line",
+      "file": "voice/listen/count2.mp3"
+    },
+    "listen/count3": {
+      "text": "One, two, three.",
+      "hash": "130c35b2ff",
+      "kind": "line",
+      "file": "voice/listen/count3.mp3"
+    },
+    "listen/count4": {
+      "text": "One, two, three, four.",
+      "hash": "9c1988bb33",
+      "kind": "line",
+      "file": "voice/listen/count4.mp3"
+    },
+    "listen/count5": {
+      "text": "One, two, three, four, five.",
+      "hash": "27f5021e67",
+      "kind": "line",
+      "file": "voice/listen/count5.mp3"
+    },
+    "listen/count6": {
+      "text": "One, two, three, four, five, six.",
+      "hash": "853df6ea65",
+      "kind": "line",
+      "file": "voice/listen/count6.mp3"
+    },
+    "listen/count7": {
+      "text": "One, two, three, four, five, six, seven.",
+      "hash": "0519192214",
+      "kind": "line",
+      "file": "voice/listen/count7.mp3"
+    },
+    "listen/count8": {
+      "text": "One, two, three, four, five, six, seven, eight.",
+      "hash": "59d5476d55",
+      "kind": "line",
+      "file": "voice/listen/count8.mp3"
+    },
+    "listen/count9": {
+      "text": "One, two, three, four, five, six, seven, eight, nine.",
+      "hash": "6ae6d1d110",
+      "kind": "line",
+      "file": "voice/listen/count9.mp3"
+    },
+    "listen/count10": {
+      "text": "One, two, three, four, five, six, seven, eight, nine, ten.",
+      "hash": "d71fe823ee",
+      "kind": "line",
+      "file": "voice/listen/count10.mp3"
+    },
+    "listen/count11": {
+      "text": "One, two, three, four, five, six, seven, eight, nine, ten, eleven.",
+      "hash": "8f3ba7067d",
+      "kind": "line",
+      "file": "voice/listen/count11.mp3"
+    },
+    "listen/count12": {
+      "text": "One, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve.",
+      "hash": "1093045d68",
+      "kind": "line",
+      "file": "voice/listen/count12.mp3"
+    },
+    "listen/count13": {
+      "text": "One, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen.",
+      "hash": "442077744e",
+      "kind": "line",
+      "file": "voice/listen/count13.mp3"
+    },
+    "listen/count14": {
+      "text": "One, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen.",
+      "hash": "76c0a50860",
+      "kind": "line",
+      "file": "voice/listen/count14.mp3"
+    },
+    "listen/count15": {
+      "text": "One, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen.",
+      "hash": "da25c590fe",
+      "kind": "line",
+      "file": "voice/listen/count15.mp3"
+    },
+    "listen/count16": {
+      "text": "One, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen.",
+      "hash": "d62022f12c",
+      "kind": "line",
+      "file": "voice/listen/count16.mp3"
+    },
+    "listen/count17": {
+      "text": "One, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen.",
+      "hash": "c545472e36",
+      "kind": "line",
+      "file": "voice/listen/count17.mp3"
+    },
+    "listen/count18": {
+      "text": "One, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen.",
+      "hash": "13fec5565f",
+      "kind": "line",
+      "file": "voice/listen/count18.mp3"
+    },
+    "listen/count19": {
+      "text": "One, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, nineteen.",
+      "hash": "3e2cb47e94",
+      "kind": "line",
+      "file": "voice/listen/count19.mp3"
+    },
+    "listen/count20": {
+      "text": "One, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, nineteen, twenty.",
+      "hash": "b406b2e24a",
+      "kind": "line",
+      "file": "voice/listen/count20.mp3"
+    },
+    "listen/number/n=0": {
+      "text": "zero!",
+      "hash": "ef2a7e9a8e",
+      "kind": "whole",
+      "file": "voice/listen/number/n=0.mp3"
+    },
+    "listen/number/n=1": {
+      "text": "one!",
+      "hash": "e6dd8dd1fe",
+      "kind": "whole",
+      "file": "voice/listen/number/n=1.mp3"
+    },
+    "listen/number/n=2": {
+      "text": "two!",
+      "hash": "b2c9599ed0",
+      "kind": "whole",
+      "file": "voice/listen/number/n=2.mp3"
+    },
+    "listen/number/n=3": {
+      "text": "three!",
+      "hash": "39bd2ae3cb",
+      "kind": "whole",
+      "file": "voice/listen/number/n=3.mp3"
+    },
+    "listen/number/n=4": {
+      "text": "four!",
+      "hash": "ce81798b9f",
+      "kind": "whole",
+      "file": "voice/listen/number/n=4.mp3"
+    },
+    "listen/number/n=5": {
+      "text": "five!",
+      "hash": "8102f56fe0",
+      "kind": "whole",
+      "file": "voice/listen/number/n=5.mp3"
+    },
+    "listen/number/n=6": {
+      "text": "six!",
+      "hash": "29a8a80609",
+      "kind": "whole",
+      "file": "voice/listen/number/n=6.mp3"
+    },
+    "listen/number/n=7": {
+      "text": "seven!",
+      "hash": "b09ccc0ca2",
+      "kind": "whole",
+      "file": "voice/listen/number/n=7.mp3"
+    },
+    "listen/number/n=8": {
+      "text": "eight!",
+      "hash": "b49d24a3c4",
+      "kind": "whole",
+      "file": "voice/listen/number/n=8.mp3"
+    },
+    "listen/number/n=9": {
+      "text": "nine!",
+      "hash": "b0385c4084",
+      "kind": "whole",
+      "file": "voice/listen/number/n=9.mp3"
+    },
+    "listen/number/n=10": {
+      "text": "ten!",
+      "hash": "5617230012",
+      "kind": "whole",
+      "file": "voice/listen/number/n=10.mp3"
+    },
+    "listen/number/n=11": {
+      "text": "eleven!",
+      "hash": "cdd31c20f8",
+      "kind": "whole",
+      "file": "voice/listen/number/n=11.mp3"
+    },
+    "listen/number/n=12": {
+      "text": "twelve!",
+      "hash": "1499299174",
+      "kind": "whole",
+      "file": "voice/listen/number/n=12.mp3"
+    },
+    "listen/number/n=13": {
+      "text": "thirteen!",
+      "hash": "e13ed98ceb",
+      "kind": "whole",
+      "file": "voice/listen/number/n=13.mp3"
+    },
+    "listen/number/n=14": {
+      "text": "fourteen!",
+      "hash": "fe4015b737",
+      "kind": "whole",
+      "file": "voice/listen/number/n=14.mp3"
+    },
+    "listen/number/n=15": {
+      "text": "fifteen!",
+      "hash": "97beadfd21",
+      "kind": "whole",
+      "file": "voice/listen/number/n=15.mp3"
+    },
+    "listen/number/n=16": {
+      "text": "sixteen!",
+      "hash": "84f5f620fb",
+      "kind": "whole",
+      "file": "voice/listen/number/n=16.mp3"
+    },
+    "listen/number/n=17": {
+      "text": "seventeen!",
+      "hash": "38cbb4b4ed",
+      "kind": "whole",
+      "file": "voice/listen/number/n=17.mp3"
+    },
+    "listen/number/n=18": {
+      "text": "eighteen!",
+      "hash": "4d2189c825",
+      "kind": "whole",
+      "file": "voice/listen/number/n=18.mp3"
+    },
+    "listen/number/n=19": {
+      "text": "nineteen!",
+      "hash": "0e72f5d999",
+      "kind": "whole",
+      "file": "voice/listen/number/n=19.mp3"
+    },
+    "listen/number/n=20": {
+      "text": "twenty!",
+      "hash": "1b4f543799",
+      "kind": "whole",
+      "file": "voice/listen/number/n=20.mp3"
+    },
     "ui/tapToStart": {
       "text": "Tap the star to start!",
       "hash": "92f6e6330e",

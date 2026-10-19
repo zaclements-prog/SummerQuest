@@ -62,7 +62,6 @@ export default function GameRunner() {
   const recordSession = useProgress((s) => s.recordSession)
   const zoneProgress = useProgress((s) => s.zones[zoneId])
   // K–1 (or a Listen & Play stage): results and chrome without reading.
-  const grade = useProgress((s) => s.player?.grade)
   const listen = stage?.gameId === 'listenPlay' || (grade !== undefined && isListenMode(grade))
   // Launched from the 3D World? Then leaving the game goes back there.
   const fromWorld = useWorldUi((s) => s.enteredFromWorld)
