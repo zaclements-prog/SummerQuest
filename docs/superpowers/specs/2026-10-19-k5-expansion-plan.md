@@ -93,10 +93,12 @@ Three kinds of speech, all recorded offline in the existing teacher voice. No ne
 3. **Lesson narration.** As today.
 
 **Pipeline changes:**
-- `tts:dump` also writes the voice-line catalogs, with keys `voice/<pack>/<id>`.
-- `render_local.py` renders them, with a gate for short clips: exact word match, since there's no pace check under 3 s.
-- `tts:check` and `tts:prune` learn the new namespace (today they would flag these as orphans).
-- A **coverage test** fails CI if any K–1 screen or provider references a line with no clip.
+- Voice lines have their own scripts, separate from the lessons' `tts:*`:
+  - `voice:dump` writes `src/voice/voiceLines.json`, every clip to record, with keys such as `ui/tapToStart`, `k-math/tapGroupWith/n=7,thing=apples` and `slots/number/7`.
+  - `voice:check` and `voice:prune` work on `public/voice/manifest.json`.
+- `render_local.py --set voice` renders them, with a gate for short clips: an exact word match, since there's no pace check under 3 s.
+- A **coverage test** lists clips that aren't recorded yet. It fails only in strict mode (`VOICE_STRICT=1`), until the first render lands.
+- See `docs/narration-handoff.md` §7.
 
 **Runtime:**
 - `useNarration` grows into a general **voice player**. It plays a line, or a playlist of segments, on the already-unlocked audio element.
