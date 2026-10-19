@@ -140,6 +140,15 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Write a paragraph about a walk in nature. Tell about the animals, plants, and sounds you might meet along the path.',
       'Write a paragraph about making pancakes with a grown-up. What do you mix, what do you flip, and how do they taste?',
       'Keep a weather journal for one imaginary week. Write a paragraph about what the sky did each day that week.',
+      'Write a paragraph about your favorite season. Tell what the weather feels like and what games people play then.',
+      'Imagine your town builds a brand-new playground. Write a paragraph about what you hope it has and why.',
+      'Write a paragraph about a time you learned something new. Tell what was tricky and how you got better.',
+      'Write a paragraph about your family dinner. Who is at the table, what is served, and what do you talk about?',
+      'You find a seashell on the beach that whispers when you hold it to your ear. Write a paragraph about the story it tells.',
+      'Write a paragraph about a pet you know or dream of having. Describe what it looks like and how it says hello.',
+      'Imagine a day when the power goes out at home. Write a paragraph about the fun things your family does by candlelight.',
+      'Write a paragraph about your favorite day of the school week. What classes or games make it the best?',
+      'If animals could talk at the zoo, what do you think they would say about their day? Write a paragraph about it.',
     ],
     // W.2.3 — brief narratives with a beginning, middle, and ending hint.
     story: [
