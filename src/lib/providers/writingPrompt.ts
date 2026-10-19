@@ -108,6 +108,10 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Write a sentence that describes the sound of heavy rain by comparing it to something, like drums on a roof.',
       'Which is better for a family vacation, the beach or the mountains? Write a sentence with your choice and a reason.',
       'Write a sentence explaining why it matters to be kind to someone you do not know yet.',
+      'If your school could add one brand-new subject, what would it be? Write a sentence with your choice and a reason.',
+      'Write a sentence describing how your favorite season feels on your skin, in the air, and in the light.',
+      'Write a sentence that uses the word “curious” to describe a character you invent.',
+      'Do you like working on projects alone or with a partner? Write a sentence with your answer and a reason.',
     ],
     // W.3.2 — inform or explain: develop a topic with facts, steps, or details.
     paragraph: [
@@ -120,6 +124,9 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Write a paragraph about a time when something surprised you. Explain what happened and how it made you feel.',
       'Write a paragraph explaining why trees are important to people and animals. Give at least two details that support your explanation.',
       'Imagine you are a tour guide at a museum of ordinary things, like socks and spoons. Write a paragraph introducing the very best exhibit.',
+      'Write a paragraph persuading a friend to try your favorite hobby. Explain what makes it fun and what a beginner needs to start.',
+      'Write a paragraph about the weather in your town during your favorite season. Describe what the sky looks like, how the air feels, and what people wear.',
+      'You spot a wallet on the sidewalk with money inside. Write a paragraph explaining the honest thing to do next and why honesty matters.',
     ],
     // W.3.3 — narrate real or imagined experiences with details and dialogue.
     story: [
@@ -132,6 +139,9 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'One morning, every sound in your town disappears except the music drifting from an old piano in the town square. Write a story about what happens next.',
       'Write a story about a garden statue that steps off its pedestal at midnight to straighten the flower beds before the family wakes up. What happens on the way back?',
       'Write a story about the day you finally beat your big brother, sister, or grown-up at a board game. Tell what you did differently this time.',
+      'A paper airplane you folded lands on the roof of a house you have never visited. Write a story about the neighbor who answers when you knock on the door.',
+      'Write a story about a brave hamster who must rescue a fallen sunflower seed from the middle of the kitchen floor before the cat wakes up.',
+      'Your family is camping in the backyard when something gentle taps on the tent zipper. Write a story about who or what it is and what you and your family decide to do.',
     ],
   },
   // 2nd grade (handoff A2). Standards: CCSS W.2.1–W.2.3 — short opinion,
