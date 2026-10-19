@@ -38,6 +38,11 @@ export const CYCLE_SITUATIONS: Situation[] = [
   { prompt: 'A puddle on the sidewalk shrinks on a warm afternoon until it is gone. What step took the water away?', answer: 'evaporation', short: '🚶 Sidewalk puddle vanishes' },
   { prompt: 'Grandpa hangs the laundry outside, and the sunny breeze takes the wetness out of the shirts. Which step is this?', answer: 'evaporation', short: '👕 Breeze dries the shirts' },
   { prompt: 'Sunlight warms the swimming pool all day, and some of the water floats up into the sky out of sight. What is that step called?', answer: 'evaporation', short: '🏊 Pool water floats up' },
+  // A23 batch (grade 2-4 science: water cycle, Earth's systems)
+  { prompt: 'Steam floats up out of the hot kettle and disappears into the air above the stove. Which step is this?', answer: 'evaporation', short: '🫖 Steam leaves the kettle' },
+  { prompt: 'The sprinkler wets the driveway, and the hot sun dries it off again before dinner. What step took the water up?', answer: 'evaporation', short: '☀️ Driveway dries off' },
+  { prompt: 'Nina hangs the wet towels on the deck rail after swimming, and the warm wind dries them by dinnertime. Which step is this?', answer: 'evaporation', short: '🧺 Towels dry on the deck' },
+  { prompt: 'At the park, the damp grass dries out completely before lunch. Where did all the water go?', answer: 'evaporation', short: '🌿 Park grass dries' },
   // ── condensation ────────────────────────────────────────────────────────────
   { prompt: 'High in the sky the air is cool, so water vapor turns back into tiny droplets. This step is called ___.', answer: 'condensation', short: '🌬️ Cool air up high' },
   { prompt: 'Tiny droplets of water gather around bits of dust in the sky and form a cloud. This step is called ___.', answer: 'condensation', short: '✨ Droplets gather on dust' },
@@ -50,6 +55,8 @@ export const CYCLE_SITUATIONS: Situation[] = [
   { prompt: 'On a chilly morning, Pablo breathes out and his breath looks like a little white cloud. What step makes that happen?', answer: 'condensation', short: '💨 Breath shows in cold air' },
   { prompt: 'Steam rises from the pot of soup, and tiny drops form on the cool lid above it. What is that step called?', answer: 'condensation', short: '🍲 Drops on the cool lid' },
   { prompt: 'Tiny water drops hang low over the meadow on a foggy day. Which step made the fog?', answer: 'condensation', short: '🌁 Fog over the meadow' },
+  // A23 batch (grade 2-4 science: water cycle, Earth's systems)
+  { prompt: 'On a cold night, tiny water drops form on the inside of the kitchen window. What step left them there?', answer: 'condensation', short: '🪟 Drops on the window' },
   // ── precipitation ──────────────────────────────────────────────────────────
   { prompt: 'A cloud grows heavy with droplets. The water falls as rain onto the ground. This step is called ___.', answer: 'precipitation', short: '🏋️ The cloud gets heavy' },
   { prompt: 'Thick gray clouds let their droplets fall to the earth as rain or snow. This step is called ___.', answer: 'precipitation', short: '🌫️ Thick gray clouds' },
