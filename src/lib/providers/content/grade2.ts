@@ -497,6 +497,72 @@ export const G2_SCIENCE: ReadingItem[] = [
       { question: 'What made the sunny ice melt faster?', answer: 'the warmth of the sun', options: ['the warmth of the sun', 'the cold wind from the north', 'the color of the porch step'], type: 'inference' },
     ],
   },
+  // NGSS 2-PS1.1: floating and sinking are observable properties that sort materials.
+  {
+    title: 'Float or Sink?',
+    level: 2,
+    text: `Why do some things float? Sam fills a big pot with water and sets it on the top step by the creek. He drops in a dry leaf, and it floats right on top. A smooth pebble sinks straight to the bottom. Next come a metal key, a pencil, and a tiny shell. The pencil floats, but the key and the shell sink together. Sam writes down each answer. Some materials float in water, and some sink.`,
+    questions: [
+      { question: 'What happened to the dry leaf?', answer: 'it floated on top of the water', options: ['it sank straight down', 'it floated on top of the water', 'it turned into a boat'], type: 'detail' },
+      { question: 'Which item sinks to the bottom?', answer: 'the key', options: ['the dry leaf', 'the pencil', 'the key'], type: 'detail' },
+      { question: 'This passage is mostly about how…', answer: 'some materials float and others sink', options: ['Sam cleans his hands by the creek', 'some materials float and others sink', 'pencils can write under the water'], type: 'main-idea' },
+    ],
+  },
+  // NGSS 2-LS2.1: plants need light to grow (light is the one thing reaching the sprouts).
+  {
+    title: 'The Reach for Light',
+    level: 2,
+    text: `Ivy tucks two bean seedlings inside a tall cardboard box. A small window is cut into one side, and the seedlings sit far away from it. Only light from that window can reach inside. After a week, Ivy lifts the lid. Both plants have grown long and pale, and every stem bends toward the window! The tiny seedlings reached around the corner to find their light.`,
+    questions: [
+      { question: 'Where did every stem bend?', answer: 'toward the window', options: ['toward the window', 'down into the dirt', 'away from the light'], type: 'detail' },
+      { question: 'What does the word "bend" mean?', answer: 'curve', options: ['curve', 'freeze solid', 'fall apart'], type: 'vocab' },
+      { question: 'What do the bending plants show?', answer: 'they grow toward the light', options: ['they sleep all week inside tall boxes', 'they grow toward the light', 'bean seedlings need cold dark nights'], type: 'main-idea' },
+    ],
+  },
+  // NGSS 2-ESS2.2: slow changes by ice shape the land over many years.
+  {
+    title: 'The Crack That Grew',
+    level: 2,
+    text: `Zoe spots a thin crack in the sidewalk near the corner store. Rain seeps into it, and when cold nights arrive the water freezes into ice. That ice pushes the crack open a tiny bit more. Each spring, Zoe notices the crack is wider than last year. A little weed pokes through and waves in the breeze. Year after year, the crack keeps growing wider.`,
+    questions: [
+      { question: 'What pokes into the crack each winter?', answer: 'ice', options: ['ice', 'sand', 'dirt'], type: 'detail' },
+      { question: 'What happens to the crack over many winters?', answer: 'it keeps growing wider', options: ['it heals up smooth again', 'it keeps growing wider', 'it fills with beach sand'], type: 'detail' },
+      { question: 'This passage shows how the land changes…', answer: 'slowly, little by little', options: ['slowly, little by little', 'all at once in one minute', 'only when kids dig at it'], type: 'main-idea' },
+    ],
+  },
+  // NGSS 2-LS4.1: one habitat is home to animals with different body coverings.
+  {
+    title: 'Fur, Feathers, Scales',
+    level: 2,
+    text: `Look closely at the animals in the pine grove behind Lena's house. A rabbit hops by with soft brown fur and a fluffy white tail. A bird fluffs up its feather coat and lifts into the branches. Under a warm stone, a little lizard gleams with smooth scales. Fur, feathers, and scales are all coverings that keep these animals snug and warm.`,
+    questions: [
+      { question: 'Which animal has feathers?', answer: 'the bird', options: ['the lizard', 'the rabbit', 'the bird'], type: 'detail' },
+      { question: 'What covers the little lizard?', answer: 'smooth scales', options: ['long fur', 'smooth scales', 'fluffy feathers'], type: 'detail' },
+      { question: 'What is this passage mostly about?', answer: 'one habitat that is home to animals with different coverings', options: ['a school where kids study lizards all day', 'one habitat that is home to animals with different coverings', 'why rabbits grow longer tails each year'], type: 'main-idea' },
+    ],
+  },
+  // NGSS 2-LS4.1: a tide pool holds many kinds of animals sharing one small habitat.
+  {
+    title: 'The Tide Pool',
+    level: 2,
+    text: `When the ocean pulls back at low tide, it leaves a small pool behind at the edge of the beach. A whole world lives inside it! A starfish rests under a flat rock, and a hermit crab scuttles between the stones. Purple anemones wave their soft arms, and tiny snails graze on the green film coating the rocks. The tide pool fills up again when the water slides back in.`,
+    questions: [
+      { question: 'Where does the starfish live?', answer: 'under a flat rock', options: ['in a tree by the path', 'in a sandy hole far inland', 'under a flat rock'], type: 'detail' },
+      { question: 'What does the word "graze" mean?', answer: 'nibble', options: ['nibble', 'sleep', 'jump'], type: 'vocab' },
+      { question: 'What is this passage mostly about?', answer: 'a tide pool that is home to many animals', options: ['a long day swimming at the pool', 'a tide pool that is home to many animals', 'how the ocean gets its salty taste'], type: 'main-idea' },
+    ],
+  },
+  // NGSS 2-ESS2.2: moving water carries materials and reshapes the land.
+  {
+    title: 'Where the Salt Went',
+    level: 2,
+    text: `Elena notices white grains dusting the street after a snowy night. The town spread salt on the roads to melt the frozen slush. When the sun comes out, the slush turns to water and trickles toward the storm drain. Elena watches the salty water swirl down and disappear. By the next day, the street looks clean again. Moving water carried the salt far away.`,
+    questions: [
+      { question: 'What were the white grains?', answer: 'salt that keeps roads safe', options: ['flour spilled from a truck', 'salt that keeps roads safe', 'powdered sugar thrown by kids'], type: 'detail' },
+      { question: 'What took the salt away?', answer: 'the slush that melted and ran to the drain', options: ['a street broom', 'the slush that melted and ran to the drain', 'the wind on cold nights'], type: 'detail' },
+      { question: 'What is this passage mostly about?', answer: 'moving water carrying stuff away', options: ['moving water carrying stuff away', 'why snow falls only on city roads', 'how to build a snow fort downtown'], type: 'main-idea' },
+    ],
+  },
   // NGSS 2-PS1.1: materials differ in observable properties; testing reveals which repels water.
   {
     title: 'Keeping It Dry',
