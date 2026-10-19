@@ -267,6 +267,56 @@ export const QUESTIONS: GeoQuestion[] = [
     options: ['8', '6', '7', '10'],
     hint: 'A STOP sign has 8 sides, and it has the same number of corners.',
   },
+  // ---- Level 3 additions: solid parts, shape groups, and equal shares (CCSS 3.G.A.1-2) ----
+  {
+    level: 3,
+    question: 'How many vertices (corners) does a hexagon have?',
+    answer: '6',
+    options: ['6', '5', '8', '12'],
+    hint: 'A hexagon has 6 sides, and corners are where two sides meet.',
+  },
+  {
+    level: 3,
+    question: 'The two flat ends of a cylinder are shaped like ___.',
+    answer: 'circles',
+    options: ['circles', 'squares', 'triangles', 'rectangles'],
+    hint: 'Trace around either end of a can to picture it.',
+  },
+  {
+    level: 3,
+    question: 'A pan of brownies is cut into 8 equal pieces. Each piece is one ___ of the pan.',
+    answer: 'eighth',
+    options: ['eighth', 'seventh', 'sixth', 'half'],
+    hint: 'Count the pieces: there are 8 equal parts in all.',
+  },
+  {
+    level: 3,
+    question: 'Rectangles, squares, rhombuses, and trapezoids all belong to a group called ___.',
+    answer: 'quadrilaterals',
+    options: ['quadrilaterals', 'triangles', 'pentagons', 'circles'],
+    hint: 'Every shape in the group has exactly 4 sides.',
+  },
+  {
+    level: 3,
+    question: 'How many vertices (corners) does a heptagon have?',
+    answer: '7',
+    options: ['7', '6', '8', '14'],
+    hint: 'A heptagon has 7 sides, and it has the same number of corners.',
+  },
+  {
+    level: 3,
+    question: 'Ana cuts an apple into 6 equal pieces. Each piece is one ___ of the apple.',
+    answer: 'sixth',
+    options: ['sixth', 'fifth', 'half', 'third'],
+    hint: 'The whole apple holds 6 equal pieces.',
+  },
+  {
+    level: 3,
+    question: 'A pizza cut into 4 equal parts makes four ___.',
+    answer: 'fourths',
+    options: ['fourths', 'halves', 'thirds', 'eighths'],
+    hint: 'Each part is one of four equal slices.',
+  },
   // ---- Level 4: lines and angles ----
   {
     level: 4,
