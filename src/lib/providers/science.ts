@@ -347,6 +347,270 @@ export const PASSAGES: Passage[] = [
       },
     ],
   },
+  // NGSS 3-LS1-1: frogs have a changing life cycle — eggs, tadpoles with gills,
+  // adults with lungs that lay eggs of their own.
+  {
+    title: 'How a Frog Grows',
+    level: 3,
+    text: `On a warm spring day, Nadia spots jelly-like eggs floating in the pond. A few weeks later, tiny tadpoles hatch from them. Tadpoles live underwater, swim with their tails, and breathe through gills, just like fish. As tadpoles grow, back legs appear, then front legs, and their tails shrink away. By early summer, the tadpoles climb onto a log as small frogs that breathe air with lungs. The frogs will grow up and lay eggs of their own next spring.`,
+    questions: [
+      {
+        question: 'What do tadpoles use to breathe underwater?',
+        answer: 'gills',
+        options: ['gills', 'lungs', 'noses', 'tails'],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, a "tadpole" is:',
+        answer: 'a baby frog that lives in the water',
+        options: [
+          'a baby frog that lives in the water',
+          'a fully grown frog with shiny skin',
+          'a jelly-like egg floating on the pond',
+          'a small fish with a long, curly tail',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'Why can the young frogs climb out onto the log?',
+        answer: 'They had grown lungs to breathe air.',
+        options: [
+          'They had grown lungs to breathe air.',
+          'They wanted to build a nest in the trees.',
+          'They were too big to see underwater.',
+          'Their tails had grown longer and stronger.',
+        ],
+        type: 'inference',
+      },
+    ],
+  },
+  // NGSS 3-LS1-1: plants have offspring in diverse ways — seeds travel by air,
+  // fur, and floating before sprouting in a new place.
+  {
+    title: 'How Seeds Travel',
+    level: 3,
+    text: `A plant cannot walk, but many plants send their seeds on long trips. A dandelion seed wears a puff of white fluff that catches a breeze and floats like a tiny parachute. Some seeds have tiny hooks that grab onto fur and hitch a ride on passing animals. A coconut has a light, tough husk that floats, so ocean currents can carry it for miles. When a seed lands in good soil with enough water and light, it can sprout into a brand-new plant.`,
+    questions: [
+      {
+        question: 'What helps a coconut travel across the ocean?',
+        answer: 'its light, tough husk',
+        options: ['its light, tough husk', 'its long, curly roots', 'its bright yellow flowers', 'its heavy brown seeds'],
+        type: 'detail',
+      },
+      {
+        question: 'What is this passage mostly about?',
+        answer: 'the different ways seeds travel to new places',
+        options: [
+          'the different ways seeds travel to new places',
+          'how coconuts grow on tall palm trees',
+          'what animals like to eat in the wild',
+          'why some plants have fragrant flowers',
+        ],
+        type: 'main-idea',
+      },
+      {
+        question: 'How do the tiny hooks on some seeds help the plant?',
+        answer: 'They grab onto fur and ride along.',
+        options: [
+          'They grab onto fur and ride along.',
+          'They float across the wide ocean.',
+          'They bury the seeds under fallen leaves.',
+          'They help the plant stand up straight.',
+        ],
+        type: 'inference',
+      },
+    ],
+  },
+  // NGSS 3-LS1-1 (LS2.A): bees and flowers depend on each other — pollen carried
+  // between flowers helps plants make seeds.
+  {
+    title: 'Busy Bees, Helpful Flowers',
+    level: 3,
+    text: `Bees and flowers help each other in a busy garden. A honeybee lands on a flower and sips sweet juice called nectar. While it works, yellow dust called pollen sticks to the bee's fuzzy body. When the bee flies to the next flower, some pollen falls off. That pollen helps the flower make seeds, which can grow into new plants. So every time a bee stops for a snack, it also helps a garden grow more flowers, fruits, and vegetables.`,
+    questions: [
+      {
+        question: 'Where does pollen stick while the bee travels between flowers?',
+        answer: "the bee's fuzzy body",
+        options: [
+          "the bee's fuzzy body",
+          "the bee's two thin wings",
+          'the green stem of the flower',
+          'the soft dirt below',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, "pollen" is:',
+        answer: 'the yellow dust that helps flowers make seeds',
+        options: [
+          'the sticky sweet juice a bee sips deep inside a flower',
+          'the yellow dust that helps flowers make seeds',
+          'the fuzzy hair on a honeybee',
+          'the green stem under a flower',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'What would a garden look like if there were no bees at all?',
+        answer: 'There would be fewer flowers, fruits, and vegetables.',
+        options: [
+          'There would be fewer flowers, fruits, and vegetables.',
+          'The garden would grow twice as fast.',
+          'All the soil would turn into sand.',
+          'Every flower would turn blue overnight.',
+        ],
+        type: 'inference',
+      },
+    ],
+  },
+  // NGSS ESS1.B: the day and night cycle happens because Earth rotates once
+  // about every 24 hours, facing each side toward and away from the Sun.
+  {
+    title: 'Day and Night',
+    level: 3,
+    text: `Owen watches the Sun rise in the morning, cross the sky, and set in the evening. Day and night happen because Earth is always spinning, like a giant, slow top. Earth turns all the way around once about every twenty-four hours. The side facing the Sun is having a bright, sunny day, while the side turned away is having a dark night. As Earth keeps spinning, the place where you live moves from sunlight into darkness, and back again.`,
+    questions: [
+      {
+        question: 'About how long does it take Earth to spin around once?',
+        answer: 'about twenty-four hours',
+        options: ['about a minute', 'about an hour', 'about twenty-four hours', 'about two weeks, or fourteen days'],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, to "spin" means:',
+        answer: 'to turn around and around',
+        options: [
+          'to turn around and around',
+          'to stay completely still for hours',
+          'to jump up and down',
+          'to move in a straight line',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'Why does night come to the place where Owen lives?',
+        answer: 'Its side faces away from the Sun.',
+        options: [
+          'Its side faces away from the Sun.',
+          'Its side turns toward the Moon at dusk.',
+          'The Sun hides behind clouds every evening.',
+          'The town stops moving until morning.',
+        ],
+        type: 'inference',
+      },
+    ],
+  },
+  // NGSS 3-ESS2-1: weather is described and tracked with measurements —
+  // thermometer, rain gauge, and wind tools; a forecast uses the records.
+  {
+    title: 'Weather Watchers',
+    level: 3,
+    text: `Aisha keeps a little weather station in her yard. A thermometer measures how hot or cold the air is, and a rain gauge catches rain so she can see how much fell. A set of spinning cups shows how fast the wind is blowing, and a vane points the way the wind is going. Each morning, Aisha writes her readings in a notebook. When she puts the numbers together, she can make a forecast, which is a careful guess about what the weather will do next.`,
+    questions: [
+      {
+        question: 'Which tool measures how hot or cold the air is?',
+        answer: 'a thermometer',
+        options: ['a thermometer', 'a rain gauge', 'a wind vane', 'a measuring cup'],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, a "forecast" is:',
+        answer: 'a careful guess about what weather comes next',
+        options: [
+          'a report about storms far away across the ocean',
+          'a careful guess about what weather comes next',
+          'a record of past weather in a town',
+          'a tool that measures falling rain',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'What is this passage mostly about?',
+        answer: 'tools that help people watch and record the weather',
+        options: [
+          'tools that help people watch and record the weather',
+          'how storms form high above the land',
+          'why Aisha enjoys writing in her notebook',
+          'the best season of the year for playing outside',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
+  // NGSS 3-LS4-3: animals with helpful traits survive better — camouflage lets
+  // a stick insect, a snowshoe hare, and an octopus blend into surroundings.
+  {
+    title: 'Animal Hide-and-Seek',
+    level: 3,
+    text: `Diego spots a green stick resting on a leaf, until the stick starts to walk! A stick insect looks just like a twig, so hungry birds often glance right past it. This trick is called camouflage, and many animals use it. A snowshoe hare wears white fur in the snowy winter and brown fur in the green summer. An octopus can even change its color to match the rocks and sand below it. Hiding in plain sight helps these animals stay safe.`,
+    questions: [
+      {
+        question: 'What is the trick of blending into surroundings called?',
+        answer: 'camouflage',
+        options: ['camouflage', 'migration', 'hibernation', 'communication'],
+        type: 'detail',
+      },
+      {
+        question: "Why does a snowshoe hare's fur change color with the seasons?",
+        answer: 'So it stays hidden in both seasons.',
+        options: [
+          'So it stays hidden in both seasons.',
+          'So it can stay warm when it is cold.',
+          'So birds can spot it more quickly.',
+          'So it looks bigger to other hares.',
+        ],
+        type: 'inference',
+      },
+      {
+        question: 'What is this passage mostly about?',
+        answer: 'how some animals hide using their looks',
+        options: [
+          'how some animals hide using their looks',
+          'how animals hunt for food at night',
+          'where animals live in different habitats',
+          'why animals travel to warm places',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
+  // NGSS LS2.A/LS4.D: coral is an animal made of tiny polyps that build hard
+  // shells; the reef becomes habitat for fish.
+  {
+    title: 'Coral: An Animal or a Rock?',
+    level: 3,
+    text: `Lily looks at a colorful coral reef in the ocean and wonders: is coral a rock, a plant, or an animal? The answer is animal! Each piece of coral is built by tiny creatures called polyps, which are related to jellyfish. A polyp has a soft body and makes a hard shell around itself. Thousands of polyps living close together build the rocky-looking reefs. Coral reefs come in many shapes, from branching fans to rounded hills, and fish love to call them home.`,
+    questions: [
+      {
+        question: 'What kind of living thing is coral?',
+        answer: 'an animal',
+        options: ['an animal', 'a plant', 'a hard gray rock', 'a kind of seaweed'],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, "polyps" are:',
+        answer: 'tiny creatures that build coral shells',
+        options: [
+          'tiny creatures that build coral shells',
+          'large fish that swim near reefs',
+          'the colorful top of a flower',
+          'soft plants that drift in the sea',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'Why do so many fish live near a reef?',
+        answer: 'the reef offers shelter',
+        options: [
+          'the reef offers shelter',
+          'the reef makes the ocean saltier',
+          'the reef supplies food for fish',
+          'the reef keeps water warm all year',
+        ],
+        type: 'inference',
+      },
+    ],
+  },
   {
     title: 'How Plants Make Their Own Food',
     level: 4,
