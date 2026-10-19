@@ -1484,6 +1484,329 @@ export const PASSAGES: Passage[] = [
       },
     ],
   },
+
+  // RL.4.1-4.4: answers stated or clearly implied; one inference per passage where marked;
+  // word counts 85-110; option lengths varied for answerBias.
+  {
+    title: 'The Axolotl',
+    level: 4,
+    text: `The axolotl is a strange little salamander that never seems to grow up. Most salamanders start life in the water, then climb onto land and change their bodies as they mature. An axolotl keeps its feathery gills, its soft body, and its wide smiling mouth its whole life, staying in the water from birth. Axolotls come from the canals near Mexico City, where they are now rare to find in the wild. Their most amazing trick is regrowth: an axolotl can regrow a lost leg, tail, or even part of its heart, and scientists study them hoping to learn how to help people heal.`,
+    questions: [
+      {
+        question: 'What makes the axolotl seem like it never grows up?',
+        answer: 'It keeps its gills its whole life.',
+        options: [
+          'It keeps its gills its whole life.',
+          'It climbs onto land as it matures.',
+          'It can change color like a chameleon.',
+          'It hibernates all winter.',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'What is the main idea of this passage?',
+        answer: 'An unusual salamander stays young and can regrow body parts.',
+        options: [
+          'An unusual salamander stays young and can regrow body parts.',
+          'Salamanders all begin life as eggs in muddy ponds.',
+          'Mexico City is famous for its crowded canals.',
+          'Scientists study animal hearts in laboratories.',
+        ],
+        type: 'main-idea',
+      },
+      {
+        question: 'In the passage, "regrowth" most nearly means:',
+        answer: 'growing back something that was lost',
+        options: [
+          'growing back something that was lost',
+          'developing new body parts never seen before',
+          'growing larger as an animal ages',
+          'changing shape twice',
+        ],
+        type: 'vocab',
+      },
+    ],
+  },
+  {
+    title: 'Seeds on the Move',
+    level: 4,
+    text: `A seed cannot walk, but many seeds travel far from the plant that made them. Some seeds ride the wind. A maple seed has a papery wing that spins like a tiny helicopter, lifting it over fences and rooftops. Other seeds hitch rides on animals. A burr is covered with tiny hooks that cling to fur and clothing, and that clever design even inspired the invention of Velcro. Coconuts take the long route. Their thick husks float, so currents can carry them across warm seas until they wash up on a new shore. Wherever a seed lands, it can take root and grow.`,
+    questions: [
+      {
+        question: 'How does a maple seed travel?',
+        answer: 'It spins down on a papery wing.',
+        options: [
+          'It spins down on a papery wing.',
+          'It floats across the sea in a husk.',
+          'It hooks onto animal fur.',
+          'It is carried underground by ants.',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'Which invention was inspired by the burr?',
+        answer: 'Velcro',
+        options: [
+          'Velcro',
+          'the paper map',
+          'a diving helmet',
+          'a windmill blade',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'What is this passage mostly about?',
+        answer: 'Seeds have many clever ways to travel far.',
+        options: [
+          'Seeds have many clever ways to travel far.',
+          'Coconuts grow best on warm seashores.',
+          'Animals spread every seed in the bush.',
+          'Winds and water carry only seeds of maple trees.',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
+  {
+    title: 'How Maps Began',
+    level: 4,
+    text: `Long before paper maps and satellite pictures, people were already drawing where things were. One of the oldest known maps was pressed into wet clay by Babylonian scribes more than 2,500 years ago. They showed mountains as simple shapes and rivers as long lines. Much later, sailors drew coastlines and harbors so they could find safe routes on the next voyage. For hundreds of years, mapmakers copied one another's charts, fixing mistakes and adding islands they had seen themselves. Each new map made the next journey a little shorter, safer, and more accurate.`,
+    questions: [
+      {
+        question: 'What did the oldest known map use instead of paper?',
+        answer: 'wet clay',
+        options: [
+          'wet clay',
+          'animal skin',
+          'papyrus sheets',
+          'flat stone tablets',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'How did sailors\u2019 drawings help later voyages?',
+        answer: 'They showed safe routes for the next trip.',
+        options: [
+          'They showed safe routes for the next trip.',
+          'They marked where to find fresh water.',
+          'They listed the treasures on each island.',
+          'They warned about storms at sea.',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'In the passage, a "voyage" is:',
+        answer: 'a long journey',
+        options: [
+          'a long journey',
+          'a ship\u2019s supplies',
+          'a dangerous storm',
+          'a list of harbors',
+        ],
+        type: 'vocab',
+      },
+    ],
+  },
+  {
+    title: 'The Night Shift',
+    level: 4,
+    text: `Bats work the night shift. While most birds sleep, bats sweep through the dark hunting for dinner, and a single bat can gobble up thousands of tiny flying insects in one evening. That is why farmers welcome wooden bat boxes near their fields. But how does a bat chase a gnat in total darkness? It sends out high squeals too sharp for human ears to hear, then listens for the faint echoes that bounce back. From those echoes, a bat builds a picture of its world and catches supper almost entirely by ear.`,
+    questions: [
+      {
+        question: 'Why do farmers welcome bat boxes?',
+        answer: 'Bats eat thousands of tiny insects at night.',
+        options: [
+          'Bats eat thousands of tiny insects at night.',
+          'Bats carry seeds to new fields.',
+          'Bats keep snakes away from the barn.',
+          'Bats scare hawks away from the farm.',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'What does a bat use to "see" in the dark?',
+        answer: 'echoes of its own squeals',
+        options: [
+          'echoes of its own squeals',
+          'sounds made by other bats',
+          'the moon and the stars',
+          'its large round eyes',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'In the passage, "echoes" are:',
+        answer: 'sounds that bounce back',
+        options: [
+          'sounds that bounce back',
+          'wing beats in flight',
+          'quiet night noises',
+          'very high squeals',
+        ],
+        type: 'vocab',
+      },
+    ],
+  },
+  {
+    title: 'Sea Otters at Lunch',
+    level: 4,
+    text: `Sea otters float on their backs in the cold Pacific, wrapping themselves in long ribbons of kelp so the current will not carry them away while they nap. They spend much of the day eating, and they do it like tiny chefs. An otter lies on the surface with a flat rock on its chest, then pounds clams, crabs, and mussels against the stone until the shells crack open. This habit makes the sea otter one of the few animals that use tools on purpose. Their thick fur, not body fat, keeps them warm, which is why they tidy their coats so often.`,
+    questions: [
+      {
+        question: 'How does a sea otter keep from drifting while it naps?',
+        answer: 'It wraps itself in ribbons of kelp.',
+        options: [
+          'It wraps itself in ribbons of kelp.',
+          'It holds a rock on its chest.',
+          'It swims in circles all day.',
+          'It hides inside a shell.',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'What makes the sea otter one of the few tool users?',
+        answer: 'It cracks shells with rocks on purpose.',
+        options: [
+          'It cracks shells with rocks on purpose.',
+          'It uses kelp as a blanket at naptime.',
+          'It builds nests out of seaweed.',
+          'It teaches its pups to swim.',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'What is this passage mostly about?',
+        answer: 'How sea otters eat, rest, and stay warm.',
+        options: [
+          'How sea otters eat, rest, and stay warm.',
+          'The rocks that otters collect for shells.',
+          'Where sea otters raise their young pups.',
+          'Why kelp grows in cold coastal water.',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
+  {
+    title: 'The Silk Road',
+    level: 4,
+    text: `The Silk Road was not one road at all. It was a network of paths and sea routes that linked China with lands far to the west, across blazing deserts and high mountains. For more than a thousand years, merchants traveled these routes in caravans, with camels carrying bolts of silk, spices, glass, and gold. The travelers carried more than goods. Along the way they shared music, inventions, and foods, so ideas spread from village to village and town to town. The caravans grew thinner as faster sea ships arrived, but the Silk Road stitched many cultures together long before airplanes made the world feel small.`,
+    questions: [
+      {
+        question: 'Why was the Silk Road not one road?',
+        answer: 'It was many paths and sea routes.',
+        options: [
+          'It was many paths and sea routes.',
+          'It was paved with bolts of silk.',
+          'It ran only through China.',
+          'It was closed to foreign travelers.',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'What can we infer about travel on the Silk Road?',
+        answer: 'Ideas traveled as far as the goods did.',
+        options: [
+          'Silk was the most valuable cargo of all.',
+          'Ideas traveled as far as the goods did.',
+          'Merchants always traveled alone.',
+          'Camels were used only for silk.',
+        ],
+        type: 'inference',
+      },
+      {
+        question: 'In the passage, "caravans" are:',
+        answer: 'groups traveling together',
+        options: [
+          'groups traveling together',
+          'sailing ships from China',
+          'markets along the routes',
+          'maps of desert crossings',
+        ],
+        type: 'vocab',
+      },
+    ],
+  },
+  {
+    title: 'Mail by Pigeon',
+    level: 4,
+    text: `Before telephones, radios, or the internet, some mail traveled by bird. Homing pigeons have an uncanny sense of direction: released far from home, they can fly straight back across hundreds of miles of unfamiliar country. In the 1800s, businesses and news agencies kept flocks of pigeons and sent messages in tiny canisters strapped to a bird\u2019s leg. When a message had to cross a wide stretch of water, a fast pigeon beat the slowest boat every time. Pigeon post flourished for decades until wires and radios finally left the birds resting on their perches.`,
+    questions: [
+      {
+        question: 'How were pigeon messages carried?',
+        answer: 'in tiny canisters on the bird\u2019s leg',
+        options: [
+          'in tiny canisters on the bird\u2019s leg',
+          'inside envelopes tied to wings',
+          'tied to string between towers',
+          'in waterproof boxes on boats',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'Why did pigeon post come to an end?',
+        answer: 'Wires and radios sent messages faster.',
+        options: [
+          'There were too few pigeons left in flocks.',
+          'Wires and radios sent messages faster.',
+          'Canisters were too heavy for pigeons.',
+          'People stopped raising the birds.',
+        ],
+        type: 'inference',
+      },
+      {
+        question: 'How far can a homing pigeon find its way home?',
+        answer: 'hundreds of miles',
+        options: [
+          'hundreds of miles',
+          'about fifty miles',
+          'just over ten miles',
+          'a few miles at most',
+        ],
+        type: 'detail',
+      },
+    ],
+  },
+  {
+    title: 'The Longest Lives',
+    level: 4,
+    text: `Few animals live as long as giant tortoises. On the Gal\u00e1pagos Islands, these heavy, gentle reptiles graze on grasses and climb up to bite the pads of giant cacti, which give them food and nearly all the water they need. During dry stretches, a tortoise simply slows down and waits it out. Scientists know some giant tortoises have passed their hundredth birthday, and a few may reach one hundred and fifty years. A baby tortoise starts out no bigger than a teacup saucer, so its first years are its most dangerous. Once the heavy shell hardens, a long and quiet life lies ahead.`,
+    questions: [
+      {
+        question: 'What does a tortoise do during a dry stretch?',
+        answer: 'It slows down and waits it out.',
+        options: [
+          'It digs deep wells with its claws.',
+          'It slows down and waits it out.',
+          'It buries itself in cool sand.',
+          'It swims to a distant river.',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'What is this passage mostly about?',
+        answer: 'Why giant tortoises live such long lives.',
+        options: [
+          'Where the Gal\u00e1pagos Islands are located.',
+          'How baby tortoises hide from predators.',
+          'What tortoises eat at different ages.',
+          'Why giant tortoises live such long lives.',
+        ],
+        type: 'main-idea',
+      },
+      {
+        question: 'Why is a baby tortoise\u2019s first stretch of years the most dangerous?',
+        answer: 'Its soft shell cannot protect it yet.',
+        options: [
+          'Its soft shell cannot protect it yet.',
+          'Food is scarce for small hatchlings.',
+          'Older tortoises claim all the cactus pads.',
+          'The islands have little fresh water.',
+        ],
+        type: 'inference',
+      },
+    ],
+  },
 ]
 
 export function makeReadingComprehensionProvider(cfg: Config): ProblemProvider {
