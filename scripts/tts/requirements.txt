@@ -1,6 +1,8 @@
-# deps for scripts/tts/render_local.py — install into the qwen3-tts venv:
-#   ~/Projects/contentgen/qwen3-tts/.venv/bin/pip install -r scripts/tts/requirements.txt
-# mlx_audio + torch + soundfile already live in that venv along with the models.
+# deps for scripts/tts/render_local.py — install into either engine venv:
+#   qwen:  ~/Projects/contentgen/qwen3-tts/.venv  (mlx_audio + torch + models present)
+#   higgs: ~/Projects/contentgen/higgs-mlx/.venv   (mlx-audio + torch); models via HF cache:
+#          mlx-community/higgs-audio-v2-3B-mlx-q8 + mlx-community/higgs-audio-v2-tokenizer
+#   ~/Projects/contentgen/higgs-mlx/.venv/bin/pip install -r scripts/tts/requirements.txt
 stable-ts>=2.19
 soundfile>=0.12
 numpy>=1.26

@@ -92,6 +92,12 @@ export default function ParentDashboard() {
           message="Have your child set up their avatar to start their quest — progress and stats will show up here."
           cta={{ label: 'Set up a player', to: '/' }}
         />
+        <p className="text-xs leading-relaxed text-ink-700 px-1 mt-2">
+          Voiceovers created with Higgs Audio&nbsp;2, licensed from Boson AI
+          (based on Meta Llama&nbsp;3), and Qwen3-TTS. Voice assets are
+          pre-rendered in this app — nothing sends audio anywhere. Details:{' '}
+          <code className="text-[10px]">docs/licensing/higgs-v2.md</code>.
+        </p>
       </Page>
     )
   }
@@ -321,6 +327,16 @@ export default function ParentDashboard() {
             </Panel>
           </motion.div>
         )}
+
+        {/* ── Credits & licensing ───────────────────────────────────────── */}
+        <motion.div variants={item}>
+          <p className="text-xs leading-relaxed text-ink-700 px-1">
+            Voiceovers created with Higgs Audio&nbsp;2, licensed from Boson AI
+            (based on Meta Llama&nbsp;3), and Qwen3-TTS. Voice assets are
+            pre-rendered in this app — nothing sends audio anywhere. Details:{' '}
+            <code className="text-[10px]">docs/licensing/higgs-v2.md</code>.
+          </p>
+        </motion.div>
 
         {/* ── Danger zone ───────────────────────────────────────────────── */}
         <motion.div variants={item}>
