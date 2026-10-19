@@ -151,6 +151,10 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Your school cafeteria wants one new dessert on the menu. Write a paragraph describing your idea, what you would name it, and why students would love it.',
       'Write a paragraph about someone in your life who teaches you new things. Explain what they teach you and how they help you learn.',
       'Imagine your town had no cars for a whole day. Write a paragraph explaining how people would get around and what the quiet streets would feel like.',
+      'Write a paragraph about a game you know how to play really well. Explain the rules clearly and tell why it is so much fun.',
+      'Write a paragraph about something you built, like a fort, a model, or a tower. Describe how it came together and what you would do differently next time.',
+      'Write a paragraph explaining why scientists still have so much to discover about the ocean. Describe two things about the sea that remain a mystery.',
+      'Write a paragraph giving advice to a younger version of yourself about starting school. Explain two things you wish you had known on day one.',
     ],
     // W.3.3 — narrate real or imagined experiences with details and dialogue.
     story: [
@@ -178,6 +182,10 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Write a story about the great kite-flying contest where your kite soars higher than any other. Who wins the ribbon, and what happens at the award ceremony?',
       'Write a story about an ant town beneath the sidewalk that hosts a grand summer festival. Describe the tiny parade and the crumbs served at the feast.',
       'Your toy sailboat slips out of the bathtub and turns up floating down the street in a rain stream. Write a story about the rescue mission.',
+      'Grandpa swears a friendly dragon lives behind the hills. Write a story about the evening you spot something gleaming up there and what you discover.',
+      'Write a story about the day you spoke in front of the whole school and your voice squeaked at the very start. How did you finish, and who cheered the loudest?',
+      'Write a story about a mouse librarian who organizes an acorn archive inside a hollow oak tree, while a squirrel keeps reshelving everything in the wrong spots. How do they work it out?',
+      'You set a paper boat adrift in a stream on Saturday morning. Write a story about the surprise you find stuck to its deck when it drifts back a week later.',
     ],
   },
   // 2nd grade (handoff A2). Standards: CCSS W.2.1–W.2.3 — short opinion,
