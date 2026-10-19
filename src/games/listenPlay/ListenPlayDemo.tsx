@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { Suspense, lazy, useEffect, useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { TopBar } from '../../components/ui'
 import { guide, useGuideCaption } from '../../guide/store'
@@ -17,13 +17,15 @@ import { TapToCount } from './TapToCount'
  * Listen & Play kit on its own, with the kindergarten counting provider, until
  * the K–1 stage sets wire it into the curriculum.
  *
- *   ?tab=play|count|drag|pictures|results   (default play)
+ *   ?tab=play|count|drag|pictures|results|marker   (default play)
  *   ?kind=howMany|findGroup                 (default: both, mixed)
  *
  * The voice is still the silent timeline stub, so a caption pill at the bottom
  * shows what the narrator is saying.
  */
-const TABS = ['play', 'count', 'drag', 'pictures', 'results'] as const
+const TABS = ['play', 'count', 'drag', 'pictures', 'results', 'marker'] as const
+// (the 3D tab pulls in three.js: only when opened)
+const MarkerDemo = lazy(() => import('./MarkerDemo'))
 type Tab = (typeof TABS)[number]
 
 export default function ListenPlayDemo() {
@@ -60,6 +62,11 @@ export default function ListenPlayDemo() {
       {tab === 'drag' && <DragTab />}
       {tab === 'pictures' && <PicturesTab />}
       {tab === 'results' && <ListenResultCard stars={2} coins={14} onReplay={() => {}} onNext={() => {}} />}
+      {tab === 'marker' && (
+        <Suspense fallback={null}>
+          <MarkerDemo />
+        </Suspense>
+      )}
       <Caption />
       <Link to="/" className="sr-only">
         home

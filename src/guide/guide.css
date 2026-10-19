@@ -219,6 +219,11 @@
   .gl-pulse {
     display: none;
   }
+  /* a still hand over a row of answers would rest on the middle one, as if
+     choosing it: the ring shows the row instead */
+  .gl-hand[data-mode='sweep'] {
+    visibility: hidden;
+  }
 }
 
 /* the 🔊 button's sound waves breathe while the narrator talks */
