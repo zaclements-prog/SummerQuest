@@ -88,11 +88,10 @@ The toolchain is JDK 21 (`brew install openjdk@21`) and the Android SDK at
 - Still to check on a **Fire 7**, the slowest target. The Fire HD 8 passed: see [Performance](#performance).
 
 **Still to do (owner):**
-- **Release signing key.** Create it once and keep it safe and out of git:
-  `keytool -genkeypair -v -keystore summerquest-release.jks -alias summerquest -keyalg RSA -keysize 2048 -validity 10000`.
-  Then wire it into `android/app/build.gradle` `signingConfigs` through `~/.gradle/gradle.properties`. Amazon re-signs the upload with its own certificate for your account.
+- **Release signing key.** The build is wired (`android/app/build.gradle` reads `SQ_RELEASE_*` from `~/.gradle/gradle.properties`); the key itself is yours to create, once:
+  `bash scripts/new-release-key.sh`. It runs keytool (you type the password), stores the key in `~/.summerquest-keys/` outside the repo, and prints the four `gradle.properties` lines. **Back up the key file and its password.** Then `npm run android:release` builds `app-release.apk`, signed. Without the key the release build comes out unsigned. Verified with a throwaway key: signed, no INTERNET permission. Amazon re-signs the upload with its own certificate for your account.
 - **Version.** Set `versionCode` and `versionName` in `android/app/build.gradle`. They are now 1 and "1.0". Bump `versionCode` on every upload.
-- **App ID.** `com.summerquest.app` is permanent once published. Change it now if you want a different one, in `capacitor.config.ts` and `android/app/build.gradle`.
+- **App ID.** `com.summerquest.app`: confirmed by the owner (2026-10-18). It is permanent once published.
 
 ## Quality passes (2026-10-18)
 
