@@ -16,6 +16,9 @@ The copy below follows them.
 
 ## Entered in the Developer Console (2026-10-18)
 
+**Submitted 2026-10-19.** Console status SUBMITTED; Amazon's estimated date to Appstore is Oct 24 2026, 07:30 AM PDT.
+The submission holds the Higgs-narration APK, the promo video and the Higgs credit in the long description.
+
 - **Step 1:** APK `summerquest-1.0-release.apk` (versionCode 1), signed with the owner's key. **Amazon DRM: No**
   (free app; turn it on in the release that starts charging). On 2026-10-19 it was replaced with
   `summerquest-1.0-release-higgs.apk` (still versionCode 1; built from master with the Higgs Audio v2 lesson narration,
