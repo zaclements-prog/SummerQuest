@@ -41,7 +41,9 @@
     {
       "id": "A4",
       "title": "writing prompts G4: sentence+paragraph+story to 40+ each",
-      "status": "pending"
+      "status": "done",
+      "commit": "84d120a..3279b72",
+      "evidence": "G4 shelf: 29 sentence + 28 paragraph + 28 story authored (W.4.1-W.4.3); poolForKind = 41/40/40; variety audit clean (lunch cluster fixed); answerBias n/a for prompts (no options); 219 passed (vitest providers), 776 passed (npm test)"
     },
     {
       "id": "A5",
@@ -222,6 +224,15 @@
       "tests": "vitest providers 219 passed (full providers suite re-ran on each of the 13 commits); npm test 776 passed; lint, tsc -b, build:store clean on every commit",
       "commits": "13 commits 457ffb1..a9198ed: +92 G3 prompts (29 sentence W.3.1, 30 paragraph W.3.2, 29 story W.3.3); pools 40/40/40; variety pass corrected school/ocean/night/town clusters; added scripts/audit-writing-variety.mjs (window-of-10 audit, now committed; G2 re-audited clean)",
       "push": "push-skipped (one attempt; remote ref unchanged at 6f2bf5f — local commits are source of truth)"
+    },
+    {
+      "interval": 4,
+      "step": "A4",
+      "result": "done",
+      "tests": "vitest providers 219 passed (fast gate on each of the 11 commits); final battery: vitest providers 219 passed, npm test 776 passed, lint clean, tsc -b clean, build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "11 commits 84d120a..3279b72: +94 G4 prompts (29 sentence W.4.1, 28 paragraph W.4.2, 28 story W.4.3); pools 41/40/40; variety audit clean after lunch-cluster fix (midday break, sandwich); one CJK typo caught and fixed pre-commit",
+      "gates": "fast-intermediate/full-final",
+      "push": "pushed 6f2bf5f..3279b72 to origin/content/banks-expansion (one attempt, exit 0)"
     }
   ],
   "notes": "Target counts from handoff A1 table. One step per interval. Owner-approved 2026-10-18: fast gates policy — intermediate commits run vitest providers only; full battery (vitest+npm test+lint+tsc+build:store) runs on the final commit of each step and step is marked done only on full-battery pass. Fails verification twice -> blocked with error, skip to next. All done/blocked: pause cron + final summary in history."
