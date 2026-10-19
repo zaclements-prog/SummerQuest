@@ -249,6 +249,14 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Write a paragraph about how maps and globes show the same world in different ways. Define latitude or longitude in your own words and explain one advantage of each.',
       'Write an informative paragraph about why bridges come in different shapes. Define arch, beam, or suspension in your own words and explain when each shape works best.',
       'Write a paragraph that explains how a thermometer shows how hot or cold something is. Define temperature in your own words and describe how water changes as it gets warmer.',
+      'Write an informative paragraph about how clouds form and why some of them drop rain. Define condensation in your own words and describe what a child sees when a cloud builds up on a summer afternoon.',
+      'Explain why the ocean has tides, using the words high tide and low tide in your own way. Describe what the Moon has to do with the rising and falling water.',
+      'Write a paragraph teaching a reader how to take care of a class pet. Name the animal, explain what it needs each day, and describe one rule that keeps the pet calm and safe.',
+      'Write an informative paragraph about why forests are sometimes called the lungs of the planet. Define carbon dioxide in your own words and explain what trees do with it.',
+      'Explain how a simple machine like a ramp, lever, or pulley makes work easier. Choose one, define it in your own words, and give an everyday example of using it.',
+      'Write a paragraph about how salmon return to the stream where they hatched. Describe what salmon do on the journey and one challenge they face along the way.',
+      'Write an informative paragraph about the difference between weather and climate. Define each word in your own words and give one example that shows how they are not the same thing.',
+      'Write a paragraph explaining how a seed can travel far from the plant it came from. Describe at least two ways seeds move and name one clever seed that uses one of them.',
     ],
     // W.4.3 — narrate real or imagined experiences with actions, thoughts, dialogue, and a reflection.
     story: [
