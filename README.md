@@ -223,7 +223,7 @@ in a row retire a fact from the boost.
 - [x] Touch / tap-to-walk and a graphics-quality setting
 - [x] Motion-graphics lessons synced to narration
 - [x] Mini-games fun pass (construct-the-answer mechanics, run arcs, juice)
-- [ ] Re-render narration with a local Higgs/Qwen voice (`docs/narration-handoff.md`)
+- [x] Re-render narration with a local Higgs/Qwen voice (`docs/narration-handoff.md`)
 - [x] Adaptive difficulty inside a stage (weight the facts a kid misses)
 - [ ] Electron wrapper for a "real" desktop app
 - [ ] Multi-profile (more than one kid per install)
