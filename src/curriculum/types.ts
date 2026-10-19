@@ -14,6 +14,7 @@ export type GameId =
   | 'timesGrove'
   /** K–1 voice-first picture quiz (src/games/listenPlay). */
   | 'listenPlay'
+  | 'critterParade'
 
 export interface Stage {
   id: string

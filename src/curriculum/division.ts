@@ -47,9 +47,9 @@ export const divisionZone: Zone = {
     {
       id: 'div-practice',
       kind: 'practice',
-      title: 'Speed Run',
-      description: 'Drill division facts under the clock.',
-      gameId: 'speedRun',
+      title: 'Critter Parade',
+      description: 'Lead the parade: pick the gate that keeps more friends!',
+      gameId: 'critterParade',
       providerConfig: {
         kind: 'division',
         divisorMin: 2,
@@ -57,7 +57,8 @@ export const divisionZone: Zone = {
         quotientMin: 2,
         quotientMax: 10,
       },
-      params: { timeLimitSec: 60, starThresholds: [8, 13, 18] },
+      // ÷ and − gates (the grade picks the band)
+      params: { ops: 'div' },
       starsToEarn: 3,
     },
     {

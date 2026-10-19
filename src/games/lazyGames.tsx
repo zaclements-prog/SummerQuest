@@ -22,6 +22,7 @@ const CloudKeeperGame = lazyWithRetry(() => import('./CloudKeeper'))
 const TimesGroveGame = lazyWithRetry(() => import('./TimesGrove'))
 // The K–1 Listen & Play shell (2D, but only K–1 stages need it).
 const ListenPlayGame = lazyWithRetry(() => import('./listenPlay/ListenPlay'))
+const CritterParadeGame = lazyWithRetry(() => import('./CritterParade'))
 
 function Loader({ children }: { children: ReactNode }) {
   return (
@@ -73,6 +74,14 @@ export function ListenPlay(props: GameProps) {
   return (
     <Loader>
       <ListenPlayGame {...props} />
+    </Loader>
+  )
+}
+
+export function CritterParade(props: GameProps) {
+  return (
+    <Loader>
+      <CritterParadeGame {...props} />
     </Loader>
   )
 }
