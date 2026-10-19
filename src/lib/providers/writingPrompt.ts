@@ -124,6 +124,7 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Write a sentence persuading your family to plan a game night this week. Give one excellent reason.',
       'What is one important thing every kid should know how to do before turning ten? Write a sentence with your idea and a reason.',
       'Write a sentence describing your favorite place to think or dream, with one detail that makes it feel real.',
+      'Imagine you could shrink down to the size of an ant and explore your backyard. Write a sentence describing the biggest thing you would see.',
     ],
     // W.3.2 — inform or explain: develop a topic with facts, steps, or details.
     paragraph: [
@@ -155,6 +156,8 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Write a paragraph about something you built, like a fort, a model, or a tower. Describe how it came together and what you would do differently next time.',
       'Write a paragraph explaining why scientists still have so much to discover about the ocean. Describe two things about the sea that remain a mystery.',
       'Write a paragraph giving advice to a younger version of yourself about starting school. Explain two things you wish you had known on day one.',
+      'Explain how rain that falls on the hills, fields, and streets of your area all ends up traveling toward a river or the ocean. Use first, next, and finally in your paragraph.',
+      'Write a paragraph about a fun club your school could start, like a nature-walkers club or a puzzle club. Explain what members would do together and why students would want to join.',
     ],
     // W.3.3 — narrate real or imagined experiences with details and dialogue.
     story: [
@@ -186,6 +189,7 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Write a story about the day you spoke in front of the whole school and your voice squeaked at the very start. How did you finish, and who cheered the loudest?',
       'Write a story about a mouse librarian who organizes an acorn archive inside a hollow oak tree, while a squirrel keeps reshelving everything in the wrong spots. How do they work it out?',
       'You set a paper boat adrift in a stream on Saturday morning. Write a story about the surprise you find stuck to its deck when it drifts back a week later.',
+      'Write a story about a friendly crow who collects shiny objects, returns them one by one to their owners around the yard, and earns a reputation as the neighborhood delivery bird.',
     ],
   },
   // 2nd grade (handoff A2). Standards: CCSS W.2.1–W.2.3 — short opinion,
