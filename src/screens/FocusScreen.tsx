@@ -26,9 +26,10 @@ import { playableStageId } from '../lib/stageLocks'
 function FocusRow({ f }: { f: FocusItem }) {
   const zone = getZone(skillMeta(f.skillId).zoneId)
   const zoneProgress = useProgress((s) => s.zones[f.zoneId])
+  const grade = useProgress((s) => s.player?.grade)
   const practiceZone = getZone(f.zoneId)
-  // Practice the recommended stage if it's unlocked, else the first open step.
-  const practiceStage = practiceZone ? playableStageId(practiceZone, f.practiceStageId, zoneProgress) : f.practiceStageId
+  // Practice the recommended stage if it's unlocked, else the first open step (of the grade's stage set).
+  const practiceStage = practiceZone ? playableStageId(practiceZone, f.practiceStageId, zoneProgress, grade) : f.practiceStageId
   const tone = accuracyToneOf(f.accuracy)
 
   // The trickiest spots (red) get a "Trickiest" badge; the ones approaching

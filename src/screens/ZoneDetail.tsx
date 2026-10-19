@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { getZone } from '../curriculum'
+import { getZone, zoneStages } from '../curriculum'
 import { useProgress } from '../store/progress'
 import { sfx } from '../lib/sound'
 import {
@@ -41,6 +41,8 @@ export default function ZoneDetail() {
   const navigate = useNavigate()
   const zone = getZone(zoneId)
   const zoneProgress = useProgress((s) => s.zones[zoneId])
+  // The profile grade picks the zone's stage set (K–1 / 2–4 / 5).
+  const grade = useProgress((s) => s.player?.grade)
   const markZoneMastered = useProgress((s) => s.markZoneMastered)
   const fromWorld = useWorldUi((s) => s.enteredFromWorld)
   const pet = usePetStatuses().find((s) => s.pet.zoneId === zoneId)
@@ -52,9 +54,9 @@ export default function ZoneDetail() {
   // that grow the zone's pet into a grown-up.
   const { earnedStars, totalStars, complete } = useMemo(() => {
     if (!zone) return { earnedStars: 0, totalStars: 0, complete: false }
-    const t = zoneStarTotals(zone, zoneProgress)
+    const t = zoneStarTotals(zone, zoneProgress, grade)
     return { earnedStars: t.earned, totalStars: t.total, complete: t.complete }
-  }, [zone, zoneProgress])
+  }, [zone, zoneProgress, grade])
 
   // ── Zone-complete celebration (once per zone, ever) ──────────────────────────
   // Shown until dismissed; dismissing records ZoneProgress.masteredAt so it never
@@ -88,6 +90,7 @@ export default function ZoneDetail() {
 
   const tone = toneOf(zone.themeColor)
   const t = TONES[tone]
+  const stages = zoneStages(zone, grade)
 
   return (
     <Page width="lg">
@@ -159,10 +162,10 @@ export default function ZoneDetail() {
           className="absolute left-[3.2rem] sm:left-[3.45rem] top-10 bottom-10 border-l-[5px] border-dotted border-line/35"
           aria-hidden="true"
         />
-        {zone.stages.map((stage, idx) => {
+        {stages.map((stage, idx) => {
           const meta = KIND_META[stage.kind] ?? FALLBACK_KIND
           const record = zoneProgress?.stages[stage.id]
-          const locked = !isStageUnlocked(zone, stage.id, zoneProgress)
+          const locked = !isStageUnlocked(zone, stage.id, zoneProgress, grade)
           const earned = record?.stars ?? 0
           const cleared = earned > 0
           const isBoss = stage.kind === 'mastery'
@@ -262,7 +265,7 @@ export default function ZoneDetail() {
         open={celebrateOpen}
         onClose={() => markZoneMastered(zoneId)}
         title={`${zone.title} Complete!`}
-        stars={Math.min(3, zone.stages.length)}
+        stars={Math.min(3, stages.length)}
       >
         <p>You earned all {totalStars} stars on {zone.title}. Amazing work!</p>
       </Celebration>

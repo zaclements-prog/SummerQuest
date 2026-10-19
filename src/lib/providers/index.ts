@@ -9,6 +9,7 @@
  */
 
 import type { ProblemProvider } from '../problem'
+import type { GradeLevel } from '../gradeTiers'
 import { makeMultiplicationProvider } from './multiplication'
 import { makeDivisionProvider } from './division'
 import { makeFractionEquivalenceProvider } from './fractionEquivalence'
@@ -34,11 +35,11 @@ export type ProviderConfig =
   | { kind: 'placeValueIdentify'; maxPlace: 1000 | 10000 | 100000 }
   | { kind: 'wordProblem'; topic: 'addSubtract' | 'multiplication' | 'division' | 'mixed'; source?: 'static' | 'llm' }
   | { kind: 'measurement'; type: 'area' | 'perimeter' | 'time' | 'money' | 'mixed' }
-  | { kind: 'readingComprehension'; level: 2 | 3 | 4; source?: 'static' | 'llm' }
+  | { kind: 'readingComprehension'; level: GradeLevel; source?: 'static' | 'llm' }
   | { kind: 'writingPrompt'; writingKind: 'sentence' | 'paragraph' | 'story'; source?: 'static' | 'llm' }
-  | { kind: 'science'; level: 2 | 3 | 4; source?: 'static' | 'llm' }
-  | { kind: 'geometry'; level: 2 | 3 | 4; source?: 'static' | 'llm' }
-  | { kind: 'dataGraph'; level: 2 | 3 | 4; source?: 'static' | 'llm' }
+  | { kind: 'science'; level: GradeLevel; source?: 'static' | 'llm' }
+  | { kind: 'geometry'; level: GradeLevel; source?: 'static' | 'llm' }
+  | { kind: 'dataGraph'; level: GradeLevel; source?: 'static' | 'llm' }
   | { kind: 'scienceCycle' }
   | { kind: 'multiplicationGrove'; maxFactor?: number }
 

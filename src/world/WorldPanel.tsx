@@ -100,7 +100,8 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 function StageList({ zoneId, onLaunch }: { zoneId: string; onLaunch: (path: string) => void }) {
   const zones = useProgress((s) => s.zones)
-  const rows = zoneStageRows(zoneId, { zones })
+  const grade = useProgress((s) => s.player?.grade)
+  const rows = zoneStageRows(zoneId, { zones, grade })
   return (
     <ul className="flex flex-col gap-2">
       {rows.map((r, i) => (
@@ -155,7 +156,8 @@ function SchoolhouseContent({ onLaunch }: { onLaunch: (path: string) => void }) 
   const attempts = useProgress((s) => s.attempts)
   const sessions = useProgress((s) => s.sessions)
   const dailyDone = useProgress((s) => s.dailyClaimedDate) === todayStr()
-  const focus = focusRows({ zones, attempts, sessions })
+  const grade = useProgress((s) => s.player?.grade)
+  const focus = focusRows({ zones, attempts, sessions, grade })
 
   return (
     <>

@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 import { motion } from 'framer-motion'
 import { useProgress } from '../store/progress'
 import { useSettings } from '../store/settings'
-import { curriculum } from '../curriculum'
+import { curriculum, zoneStages } from '../curriculum'
 import DailyGoalCard from '../components/DailyGoalCard'
 import {
   Card,
@@ -23,14 +23,16 @@ import {
 import { useEntrance } from '../lib/motion'
 import ParentGate from '../components/ParentGate'
 import { removeSavedKeys } from '../platform/web/storage'
-import { GRADE_LABEL, GRADE_LEVELS, type GradeLevel } from '../lib/gradeTiers'
-import { adultPets, hatchedPets, petStages } from '../lib/pets/growth'
+import { GRADE_LABEL, GRADE_SHORT_LABEL, type GradeLevel } from '../lib/gradeTiers'
+import { OFFERED_GRADES } from '../lib/features'
+import { adultPets, hatchedPets, petStages, zoneStarTotals } from '../lib/pets/growth'
 import { PETS } from '../lib/pets/catalog'
 
 export default function ParentDashboard() {
   const { player, coins, zones, stats, resetPlayer, setGrade, lessonsDone } = useProgress()
   // Pets grow from learning: a grown-up one is "raised" (it joins the avatars).
-  const petGrowth = petStages(zones, lessonsDone)
+  const grade = player?.grade
+  const petGrowth = petStages(zones, lessonsDone, grade)
   const petsRaised = adultPets(petGrowth).length
   const petsHatched = hatchedPets(petGrowth).length
   const {
@@ -212,22 +214,12 @@ export default function ParentDashboard() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {curriculum.zones.map((z) => {
                 const progress = zones[z.id]
-                const possible = z.stages.reduce(
-                  (s, st) => s + st.starsToEarn,
+                // The zone's stages for the child's grade (another band's stars are kept, not shown).
+                const { earned, total: possible } = zoneStarTotals(z, progress, grade)
+                const attempts = zoneStages(z, grade).reduce(
+                  (s, st) => s + (progress?.stages[st.id]?.attempts ?? 0),
                   0,
                 )
-                const earned = progress
-                  ? Object.values(progress.stages).reduce(
-                      (s, st) => s + st.stars,
-                      0,
-                    )
-                  : 0
-                const attempts = progress
-                  ? Object.values(progress.stages).reduce(
-                      (s, st) => s + st.attempts,
-                      0,
-                    )
-                  : 0
                 const active = z.available && possible > 0
                 return (
                   <div
@@ -394,8 +386,8 @@ export default function ParentDashboard() {
           This changes how hard {player.name}&apos;s quests are — numbers,
           fractions, and reading passages. Star progress is kept.
         </p>
-        <div role="radiogroup" aria-label="New grade" className="grid grid-cols-3 gap-2 text-left">
-          {GRADE_LEVELS.map((g) => {
+        <div role="radiogroup" aria-label="New grade" className={`grid ${GRADE_PICK_COLS} gap-2 text-left`}>
+          {OFFERED_GRADES.map((g) => {
             const selected = gradePick === g
             return (
               <button
@@ -403,9 +395,10 @@ export default function ParentDashboard() {
                 type="button"
                 role="radio"
                 aria-checked={selected}
+                aria-label={`${GRADE_LABEL[g]}${g === player.grade ? ' (now)' : ''}`}
                 onClick={() => setGradePick(g)}
                 className={[
-                  'min-h-[52px] rounded-2xl kid-text text-base border-[3px] border-line transition-colors',
+                  'min-h-[52px] px-1.5 leading-tight rounded-2xl kid-text text-base border-[3px] border-line transition-colors',
                   'outline-none focus-visible:ring-4 focus-visible:ring-ocean-600/70',
                   selected
                     ? 'bg-quest-400 text-ink-900 shadow-ledge-sm'
@@ -413,7 +406,7 @@ export default function ParentDashboard() {
                   g === player.grade ? 'opacity-60' : '',
                 ].join(' ')}
               >
-                {GRADE_LABEL[g]}
+                {GRADE_PICK_SHORT ? GRADE_SHORT_LABEL[g] : GRADE_LABEL[g]}
                 {g === player.grade ? ' (now)' : ''}
               </button>
             )
@@ -423,6 +416,20 @@ export default function ParentDashboard() {
     </div>
   )
 }
+
+/**
+ * The grade picker keeps one row, so the dialog is no taller than with three
+ * grades: "2nd grade" … for 2nd–4th (as before); with more grades the short
+ * names ("K", "1st" … "5th"), wrapping to rows of three on a phone.
+ */
+const GRADE_PICK_SHORT = OFFERED_GRADES.length > 3
+const GRADE_PICK_COLS = !GRADE_PICK_SHORT
+  ? 'grid-cols-3'
+  : OFFERED_GRADES.length === 4
+    ? 'grid-cols-4'
+    : OFFERED_GRADES.length === 5
+      ? 'grid-cols-3 min-[480px]:grid-cols-5'
+      : 'grid-cols-3 min-[480px]:grid-cols-6'
 
 // ── Inline sub-components ──────────────────────────────────────────────────────
 

@@ -5,7 +5,7 @@ import type { Variants } from 'framer-motion'
 import { allLessons } from '../tutoring/lessons'
 import { useProgress } from '../store/progress'
 import { weeklyFocus } from '../lib/analytics'
-import { getZone } from '../curriculum'
+import { getStage, getZone } from '../curriculum'
 import { sfx } from '../lib/sound'
 import type { Subject } from '../lib/theme'
 import { useEntrance } from '../lib/motion'
@@ -60,6 +60,7 @@ export default function TutorIndex() {
   const sessions = useProgress((s) => s.sessions)
   // Subscribe to zones so progress badges re-render when stars are earned.
   const zonesProgress = useProgress((s) => s.zones)
+  const grade = useProgress((s) => s.player?.grade)
   const reduced = !!useReducedMotion()
 
   const recommended = useMemo(
@@ -75,10 +76,9 @@ export default function TutorIndex() {
       const zoneProg = zonesProgress[l.zoneId]
       const stageRec = zoneProg?.stages[l.practiceStageId]
       const stars = stageRec?.stars ?? 0
-      // Total stars a lesson can show is its practice stage's allotment (fallback 3).
-      const maxStars =
-        getZone(l.zoneId)?.stages.find((s) => s.id === l.practiceStageId)
-          ?.starsToEarn ?? 3
+      // Total stars a lesson can show is its practice stage's allotment (fallback 3),
+      // looked up in the zone's stage set for the child's grade.
+      const maxStars = getStage(l.zoneId, l.practiceStageId, grade)?.starsToEarn ?? 3
       const started = (stageRec?.attempts ?? 0) > 0 || stars > 0
       const chars = l.steps.reduce((n, s) => n + s.narration.length, 0)
       return {
@@ -121,7 +121,7 @@ export default function TutorIndex() {
       area,
       lessons: byArea.get(area)!,
     }))
-  }, [zonesProgress, recommended])
+  }, [zonesProgress, recommended, grade])
 
   const totalLessons = allLessons.length
   const doneCount = useMemo(

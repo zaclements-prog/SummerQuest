@@ -46,7 +46,7 @@ describe('daily streak (local days)', () => {
     const s = useProgress.getState()
     expect(s.stats.streakDays).toBe(1)
     expect(s.stats.bestStreak).toBe(7)
-    const ww = computeBadges(s).find((b) => b.id === 'week-warrior')
+    const ww = computeBadges({ ...s, grade: s.player?.grade }).find((b) => b.id === 'week-warrior')
     expect(ww?.earned).toBe(true)
   })
 

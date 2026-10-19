@@ -50,7 +50,8 @@ export default function PetMoments() {
   const becomeCreature = useProgress((s) => s.becomeCreature)
   const lessonOpen = usePetUi((s) => s.lessonCompleteOpen)
   const calm = !!player && isCalmRoute(pathname, lessonOpen)
-  const pending = useMemo(() => pendingMoments(petStages(zones, lessonsDone), petsSeen), [zones, lessonsDone, petsSeen])
+  const grade = player?.grade
+  const pending = useMemo(() => pendingMoments(petStages(zones, lessonsDone, grade), petsSeen), [zones, lessonsDone, grade, petsSeen])
   const [show, setShow] = useState<MomentShow | null>(null)
   // Leaving the calm screen hides it without marking it seen (it comes back later).
   const visible = calm ? show : null

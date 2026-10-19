@@ -1,5 +1,6 @@
-import { getZone } from '../../curriculum'
+import { getZone, zoneStages } from '../../curriculum'
 import type { Zone } from '../../curriculum'
+import type { GradeLevel } from '../gradeTiers'
 import { PETS } from './catalog'
 import type { PetDef } from './catalog'
 import type { PetStage } from './types'
@@ -16,7 +17,9 @@ import type { PetStage } from './types'
  *
  * `stars` counts each of the zone's stages up to its `starsToEarn` (a stage
  * that over-reports can't finish the zone for another), and `total` is the
- * zone's maximum.
+ * zone's maximum. The stages are the zone's set for the child's grade
+ * (`zoneStages`): a pet grows from its zone's current band, and stars from
+ * another band count again when the child switches back.
  */
 export type PetGrowth = 'egg' | PetStage
 
@@ -53,13 +56,19 @@ export interface ZoneStarTotals {
 }
 
 /**
- * A zone's star totals: each of its stages counts up to its `starsToEarn` (bad
- * values count as none), records of stages the zone no longer has are ignored.
+ * A zone's star totals at a grade: each stage of its set for that grade
+ * (`zoneStages`; null: the default grade) counts up to its `starsToEarn` (bad
+ * values count as none); records of other bands' stages, or of stages the
+ * zone no longer has, are ignored.
  */
-export function zoneStarTotals(zone: Pick<Zone, 'stages'>, progress?: ZoneProgressLike | null): ZoneStarTotals {
+export function zoneStarTotals(
+  zone: Pick<Zone, 'stages' | 'stagesByBand'>,
+  progress: ZoneProgressLike | null | undefined,
+  grade: GradeLevel | null | undefined,
+): ZoneStarTotals {
   let earned = 0
   let total = 0
-  for (const stage of zone.stages) {
+  for (const stage of zoneStages(zone, grade)) {
     const max = Math.max(0, stage.starsToEarn)
     const got = progress?.stages[stage.id]?.stars ?? 0
     earned += Number.isFinite(got) ? Math.min(max, Math.max(0, Math.floor(got))) : 0
@@ -101,17 +110,18 @@ export interface PetStatus {
   next: PetNext | null
 }
 
-type ZoneLookup = (id: string) => Pick<Zone, 'stages'> | undefined
+type ZoneLookup = (id: string) => Pick<Zone, 'stages' | 'stagesByBand'> | undefined
 
-/** One pet's growth, and what it needs next. */
+/** One pet's growth (from its zone's stages for `grade`), and what it needs next. */
 export function petStatus(
   pet: PetDef,
   zones: ZonesLike,
   lessonsDone: LessonsDoneLike,
+  grade: GradeLevel | null | undefined,
   zoneLookup: ZoneLookup = getZone,
 ): PetStatus {
   const zone = zoneLookup(pet.zoneId)
-  const { earned, total } = zone ? zoneStarTotals(zone, zones[pet.zoneId]) : { earned: 0, total: 0 }
+  const { earned, total } = zone ? zoneStarTotals(zone, zones[pet.zoneId], grade) : { earned: 0, total: 0 }
   const lessonDone = !!pet.lessonId && lessonsDone[pet.lessonId] != null
   const stage = growthFromStars(earned, total, lessonDone)
   let next: PetNext | null = null
@@ -121,15 +131,25 @@ export function petStatus(
   return { pet, stage, stars: earned, total, lessonDone, next }
 }
 
-/** Every pet's status, in catalog order. */
-export function petStatuses(zones: ZonesLike, lessonsDone: LessonsDoneLike, zoneLookup: ZoneLookup = getZone): PetStatus[] {
-  return PETS.map((p) => petStatus(p, zones, lessonsDone, zoneLookup))
+/** Every pet's status at a grade, in catalog order. */
+export function petStatuses(
+  zones: ZonesLike,
+  lessonsDone: LessonsDoneLike,
+  grade: GradeLevel | null | undefined,
+  zoneLookup: ZoneLookup = getZone,
+): PetStatus[] {
+  return PETS.map((p) => petStatus(p, zones, lessonsDone, grade, zoneLookup))
 }
 
-/** creatureId → its derived stage, for every pet. */
-export function petStages(zones: ZonesLike, lessonsDone: LessonsDoneLike, zoneLookup: ZoneLookup = getZone): Record<string, PetGrowth> {
+/** creatureId → its derived stage at a grade, for every pet. */
+export function petStages(
+  zones: ZonesLike,
+  lessonsDone: LessonsDoneLike,
+  grade: GradeLevel | null | undefined,
+  zoneLookup: ZoneLookup = getZone,
+): Record<string, PetGrowth> {
   const out: Record<string, PetGrowth> = {}
-  for (const s of petStatuses(zones, lessonsDone, zoneLookup)) out[s.pet.creatureId] = s.stage
+  for (const s of petStatuses(zones, lessonsDone, grade, zoneLookup)) out[s.pet.creatureId] = s.stage
   return out
 }
 

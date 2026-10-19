@@ -34,6 +34,19 @@ describe('grade tiers in the persisted save', () => {
     expect(useProgress.getState().player?.grade).toBe(2)
   })
 
+  it('kindergarten (0) through 5th grade survive rehydration; anything else falls back to 4', async () => {
+    for (const grade of [0, 1, 5]) {
+      seedSave({ player: { emoji: '🐸', color: '#84cc16', name: 'K', grade } })
+      await useProgress.persist.rehydrate()
+      expect(useProgress.getState().player?.grade).toBe(grade)
+    }
+    for (const grade of [6, -1, 2.5]) {
+      seedSave({ player: { emoji: '🐸', color: '#84cc16', name: 'K', grade } })
+      await useProgress.persist.rehydrate()
+      expect(useProgress.getState().player?.grade).toBe(4)
+    }
+  })
+
   it('setGrade updates the player and nothing else', () => {
     useProgress.getState().setAvatar({ emoji: '🐼', color: '#38bdf8', name: 'P', grade: 3 })
     useProgress.getState().addCoins(50)
