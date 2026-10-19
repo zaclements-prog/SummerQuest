@@ -112,6 +112,10 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Write a sentence describing how your favorite season feels on your skin, in the air, and in the light.',
       'Write a sentence that uses the word “curious” to describe a character you invent.',
       'Do you like working on projects alone or with a partner? Write a sentence with your answer and a reason.',
+      'Write a sentence explaining why brushing your teeth every day is worth the effort.',
+      'Imagine floating up close to a cloud. Write a sentence comparing how it looks or feels to something you know.',
+      'What is one thing grown-ups could learn from kids? Write a sentence with your idea and a reason.',
+      'Write a sentence giving directions from your front door to the most fun spot in your neighborhood.',
     ],
     // W.3.2 — inform or explain: develop a topic with facts, steps, or details.
     paragraph: [
@@ -127,6 +131,9 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Write a paragraph persuading a friend to try your favorite hobby. Explain what makes it fun and what a beginner needs to start.',
       'Write a paragraph about the weather in your town during your favorite season. Describe what the sky looks like, how the air feels, and what people wear.',
       'You spot a wallet on the sidewalk with money inside. Write a paragraph explaining the honest thing to do next and why honesty matters.',
+      'Write a paragraph teaching someone a skill you know well, like tying a shoe or skipping rope. Explain the steps in order so a beginner could follow them.',
+      'Write a paragraph about why people celebrate birthdays. Explain which traditions you enjoy most and why they make the day feel special.',
+      'Imagine robots did every chore in your house for a week. Write a paragraph explaining what you would do with all your extra time.',
     ],
     // W.3.3 — narrate real or imagined experiences with details and dialogue.
     story: [
@@ -142,6 +149,9 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'A paper airplane you folded lands on the roof of a house you have never visited. Write a story about the neighbor who answers when you knock on the door.',
       'Write a story about a brave hamster who must rescue a fallen sunflower seed from the middle of the kitchen floor before the cat wakes up.',
       'Your family is camping in the backyard when something gentle taps on the tent zipper. Write a story about who or what it is and what you and your family decide to do.',
+      'Write a story about a snow fort with a secret door that only opens for someone who tells a funny joke. Who gets inside, and what do they find?',
+      'Every night, one star in the sky twinkles in a pattern, like a coded message. Write a story about the night you finally crack the code.',
+      'Write a story about a friendly dog who finds a walking stick and starts escorting neighbors around town. Describe two people who are grateful for the company.',
     ],
   },
   // 2nd grade (handoff A2). Standards: CCSS W.2.1–W.2.3 — short opinion,
