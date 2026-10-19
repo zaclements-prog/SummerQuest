@@ -493,6 +493,77 @@ export const QUESTIONS: GeoQuestion[] = [
     options: ['right', 'acute', 'obtuse', 'straight'],
     hint: 'Think of the corner where a wall meets the floor.',
   },
+  // ---- Level 4 additions: angle vocabulary, turns, and symmetry (CCSS 4.G.A.1-3, 4.MD.C.5) ----
+  {
+    level: 4,
+    question: 'The two rays of an angle meet at a common endpoint called the ___.',
+    answer: 'vertex',
+    options: ['vertex', 'ray', 'line', 'center'],
+    hint: 'It is the point where the angle opens.',
+  },
+  {
+    level: 4,
+    question: 'A ___ is part of a line with one endpoint that goes on forever in one direction.',
+    answer: 'ray',
+    options: ['ray', 'line segment', 'line', 'point'],
+    hint: 'It starts at one point and arrows off in just one direction.',
+  },
+  {
+    level: 4,
+    question: 'A ___ is part of a line with two endpoints.',
+    answer: 'line segment',
+    options: ['line segment', 'ray', 'line', 'point'],
+    hint: 'It is the piece between two points.',
+  },
+  {
+    level: 4,
+    question: 'Which tool do you use to measure the size of an angle?',
+    answer: 'protractor',
+    options: ['protractor', 'ruler', 'clock', 'scale'],
+    hint: 'It has degree marks around its curved edge.',
+  },
+  {
+    level: 4,
+    question: 'A right angle turns through ___ of a full circle.',
+    answer: 'one quarter',
+    options: ['one quarter', 'one half', 'three quarters', 'one third'],
+    hint: 'A full circle is 360°, and a right angle is 90°.',
+  },
+  {
+    level: 4,
+    question: 'An angle that turns through three quarters of a full circle measures ___.',
+    answer: '270°',
+    options: ['270°', '90°', '180°', '360°'],
+    hint: 'Take away a quarter turn from a full turn.',
+  },
+  {
+    level: 4,
+    question: 'Two right angles together make a ___ angle.',
+    answer: 'straight',
+    options: ['straight', 'obtuse', 'acute', 'reflex'],
+    hint: 'Two 90° angles add up to 180°.',
+  },
+  {
+    level: 4,
+    question: 'How many lines of symmetry does a regular hexagon have?',
+    answer: '6',
+    options: ['6', '4', '3', '2'],
+    hint: 'Try folding it through opposite corners and through the middles of opposite sides.',
+  },
+  {
+    level: 4,
+    question: 'Which capital letter has two lines of symmetry: H, F, J, or R?',
+    answer: 'H',
+    options: ['H', 'F', 'J', 'R'],
+    hint: 'One letter matches when folded both across and up-and-down.',
+  },
+  {
+    level: 4,
+    question: 'Two angles that share a vertex and one side, without overlapping, are called ___ angles.',
+    answer: 'adjacent',
+    options: ['adjacent', 'parallel', 'equal', 'right'],
+    hint: 'They sit right next to each other, like books on a shelf.',
+  },
 ]
 
 export function makeGeometryProvider(cfg: Config): ProblemProvider {
