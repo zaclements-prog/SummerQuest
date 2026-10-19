@@ -100,18 +100,28 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Write a sentence giving advice to a new student on their very first day at your school.',
       'If your family could welcome any animal from a shelter, which would you choose? Write a sentence with your choice and a reason.',
       'Write a sentence explaining why practice helps people get better at something they love.',
+      'What is the easiest chore at home, and which one is the hardest? Write a sentence comparing the two.',
+      'Write a sentence that would convince a shy friend to try your favorite food.',
+      'Should kids help plan family activities? Write a sentence with your opinion and one good reason.',
+      'Write a sentence explaining how a tiny seed becomes a tall plant, starting with what happens first.',
     ],
     // W.3.2 — inform or explain: develop a topic with facts, steps, or details.
     paragraph: [
       'Write a paragraph explaining how to make your favorite sandwich. List the steps in exactly the right order.',
       'Should students have more homework or less? Write an opinion paragraph that states your view and gives two reasons.',
       'Write a paragraph about a wild animal you would love to study up close. Describe what it looks like, where it lives, and what it eats.',
+      'Write a paragraph telling how your family celebrates a special day together. Explain what happens first, next, and last.',
+      'Pick a problem at school, like a messy supply shelf or a very long lunch line. Write a paragraph proposing a solution and explaining why it would work.',
+      'Write a paragraph comparing life on a farm to life in a city. Describe two differences and one thing that stays the same.',
     ],
     // W.3.3 — narrate real or imagined experiences with details and dialogue.
     story: [
       'Write a story about a student who finds a mysterious note tucked inside a library book. What does the note say, and where does it lead?',
       'Write a story about the day a honking flock of geese decides to follow you home from school. Include what you say to them and how the day ends.',
       'Your backyard sprinkler starts spraying sparkling water that makes anything it touches grow three times bigger. Write a story about what you decide to water first.',
+      'Write a story about two friends who build a raft out of sticks and leaves and sail it across a puddle they call the ocean. Describe what happens on the voyage.',
+      'Write a story in which shadows come alive at sunset and slip away before bedtime. Tell what your own shadow did last night.',
+      'Write a story about a lost penguin at the airport who is trying to find its way back home. Include at least two lines of dialogue.',
     ],
   },
   // 2nd grade (handoff A2). Standards: CCSS W.2.1–W.2.3 — short opinion,
