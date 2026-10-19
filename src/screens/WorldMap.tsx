@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { curriculum, type Zone } from '../curriculum'
+import { curriculum, zoneStages, type Zone } from '../curriculum'
 import { useProgress, zoneStars } from '../store/progress'
 import { sfx } from '../lib/sound'
 import { computeBadges, type BadgeStatus } from '../lib/badges'
@@ -12,17 +12,19 @@ import { ZONE_SPOTS, toPct } from '../components/map/islandMap'
 import { useWorldUi } from '../world/useWorldUi'
 import { hatchedPets, petStages } from '../lib/pets/growth'
 import { PETS } from '../lib/pets/catalog'
+import type { GradeLevel } from '../lib/gradeTiers'
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-/** Returns the next stage that hasn't been fully starred yet (the "continue" target). */
+/** Returns the next stage (of each zone's set for the grade) that hasn't been fully starred yet (the "continue" target). */
 function findNextTarget(
   zonesProgress: ReturnType<typeof useProgress.getState>['zones'],
+  grade: GradeLevel | null | undefined,
 ): { zoneId: string; stageId?: string } | null {
   for (const zone of curriculum.zones) {
     if (!zone.available) continue
     const progress = zonesProgress[zone.id]
-    for (const stage of zone.stages) {
+    for (const stage of zoneStages(zone, grade)) {
       const earned = progress?.stages[stage.id]?.stars ?? 0
       if (earned < stage.starsToEarn) {
         return { zoneId: zone.id, stageId: stage.id }
@@ -32,7 +34,8 @@ function findNextTarget(
   return null
 }
 
-const maxStarsOf = (zone: Zone) => zone.stages.reduce((s, st) => s + st.starsToEarn, 0)
+const maxStarsOf = (zone: Zone, grade: GradeLevel | null | undefined) =>
+  zoneStages(zone, grade).reduce((s, st) => s + st.starsToEarn, 0)
 
 // Marker sizing in container units: the map box is a CSS size container whose
 // width is 100 world units, so 1cqw === 1 world unit (see islandMap.ts).
@@ -45,14 +48,15 @@ export default function WorldMap() {
   const seenBadges = useProgress((s) => s.seenBadges)
   const markBadgesSeen = useProgress((s) => s.markBadgesSeen)
   const dailyDone = useProgress((s) => s.dailyClaimedDate) === todayStr()
+  const grade = useProgress((s) => s.player?.grade)
 
   const badges = useMemo(
-    () => computeBadges({ zones, stats, totalCoinsEarned }),
-    [zones, stats, totalCoinsEarned],
+    () => computeBadges({ zones, stats, totalCoinsEarned, grade }),
+    [zones, stats, totalCoinsEarned, grade],
   )
   const earned = badges.filter((b) => b.earned)
   const lessonsDone = useProgress((s) => s.lessonsDone)
-  const hatched = useMemo(() => hatchedPets(petStages(zones, lessonsDone)).length, [zones, lessonsDone])
+  const hatched = useMemo(() => hatchedPets(petStages(zones, lessonsDone, grade)).length, [zones, lessonsDone, grade])
 
   // Badges earned since the last time the map was opened (computed once, at mount).
   const [celebrating, setCelebrating] = useState<BadgeStatus[]>(() =>
@@ -69,7 +73,7 @@ export default function WorldMap() {
   useEffect(() => { useWorldUi.getState().setEnteredFromWorld(false) }, [])
 
   // Next-stage deep-link (computed after hooks)
-  const nextTarget = useMemo(() => findNextTarget(zones), [zones])
+  const nextTarget = useMemo(() => findNextTarget(zones, grade), [zones, grade])
   const continueHref = nextTarget ? `/zone/${nextTarget.zoneId}` : null
   const nextZone = nextTarget ? curriculum.zones.find((z) => z.id === nextTarget.zoneId) : undefined
 
@@ -198,11 +202,12 @@ function NavTile({ to, icon, label, tone }: { to: string; icon: string; label: s
 // ── Map marker ────────────────────────────────────────────────────────────────
 
 function ZoneMarker({ zone, isNext }: { zone: Zone; isNext: boolean }) {
+  const grade = useProgress((s) => s.player?.grade)
   const spot = ZONE_SPOTS[zone.id]
   if (!spot) return null
   const tone = TONES[toneOf(zone.themeColor)]
-  const stars = zoneStars(zone.id)
-  const maxStars = maxStarsOf(zone)
+  const stars = zoneStars(zone.id, grade)
+  const maxStars = maxStarsOf(zone, grade)
   const done = maxStars > 0 && stars >= maxStars
 
   const medal = (
@@ -305,8 +310,9 @@ function ZoneMarker({ zone, isNext }: { zone: Zone; isNext: boolean }) {
 // ── Small-screen list row ─────────────────────────────────────────────────────
 
 function ZoneListItem({ zone }: { zone: Zone }) {
-  const stars = zoneStars(zone.id)
-  const maxStars = maxStarsOf(zone)
+  const grade = useProgress((s) => s.player?.grade)
+  const stars = zoneStars(zone.id, grade)
+  const maxStars = maxStarsOf(zone, grade)
   const inner = (
     <>
       <Medallion tone={zone.available ? toneOf(zone.themeColor) : 'cream'} size="sm">

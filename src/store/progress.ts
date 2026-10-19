@@ -9,7 +9,7 @@ import { recordFactAnswer, type FactStats } from '../lib/adaptive'
 import type { Problem } from '../lib/problem'
 import { isGradeLevel, type GradeLevel } from '../lib/gradeTiers'
 import { adultPets, growthRank, hatchedPets, isPetGrowth, petStages, zoneStarTotals, type PetGrowth } from '../lib/pets/growth'
-import { getZone } from '../curriculum'
+import { getZone, zoneStages } from '../curriculum'
 import { petById } from '../lib/pets/catalog'
 
 export interface AvatarChoice {
@@ -168,19 +168,23 @@ interface ProgressState {
   setBuddyPet: (creatureId: string | null) => void
 }
 
-type PetSlice = Pick<ProgressState, 'zones' | 'lessonsDone' | 'ownedCreatures' | 'buddyPet'>
+type PetSlice = Pick<ProgressState, 'zones' | 'lessonsDone' | 'ownedCreatures' | 'buddyPet'> & {
+  /** The grade picks each zone's stage set (and so each pet's growth); missing: the default. */
+  player?: Pick<AvatarChoice, 'grade'> | null
+}
 
 /**
  * What changes when progress grows the pets: grown-up pets join the avatars,
  * and the very first pet to hatch becomes the World buddy (unless one is set).
- * `before` is the state the change started from.
+ * `before` is the state the change started from. Pets grow from the stages of
+ * the child's grade (`zoneStages`); a grown-up pet stays an avatar for good.
  */
-export function petSyncPatch(before: PetSlice, after: PetSlice): Partial<PetSlice> {
-  const stages = petStages(after.zones, after.lessonsDone)
-  const patch: Partial<PetSlice> = {}
+export function petSyncPatch(before: PetSlice, after: PetSlice): Partial<Pick<PetSlice, 'ownedCreatures' | 'buddyPet'>> {
+  const stages = petStages(after.zones, after.lessonsDone, after.player?.grade)
+  const patch: Partial<Pick<PetSlice, 'ownedCreatures' | 'buddyPet'>> = {}
   const newAdults = adultPets(stages).filter((id) => !after.ownedCreatures.includes(id))
   if (newAdults.length) patch.ownedCreatures = [...after.ownedCreatures, ...newAdults]
-  if (after.buddyPet == null && hatchedPets(petStages(before.zones, before.lessonsDone)).length === 0) {
+  if (after.buddyPet == null && hatchedPets(petStages(before.zones, before.lessonsDone, before.player?.grade)).length === 0) {
     const first = hatchedPets(stages)[0]
     if (first) patch.buddyPet = first
   }
@@ -224,8 +228,13 @@ export const useProgress = create<ProgressState>()(
       setAvatar: (avatar) => set({ player: avatar }),
 
       setGrade: (grade) => {
-        const p = get().player
-        if (p) set({ player: { ...p, grade } })
+        const before = get()
+        const p = before.player
+        if (!p) return
+        // Stars are kept per stage id, so nothing is lost: a new band's zones
+        // just read their own stages (and pets grown there join the avatars).
+        const player = { ...p, grade }
+        set({ player, ...petSyncPatch(before, { ...before, player }) })
       },
 
       resetPlayer: () =>
@@ -430,9 +439,9 @@ export const useProgress = create<ProgressState>()(
           set({ buddyPet: null })
           return
         }
-        const { zones, lessonsDone } = get()
+        const { zones, lessonsDone, player } = get()
         // only a hatched pet can come along
-        if (!petById(creatureId) || petStages(zones, lessonsDone)[creatureId] === 'egg') return
+        if (!petById(creatureId) || petStages(zones, lessonsDone, player?.grade)[creatureId] === 'egg') return
         set({ buddyPet: creatureId })
       },
 
@@ -545,20 +554,29 @@ function cleanPetsSeen(v: unknown): Record<string, PetGrowth> {
   return out
 }
 
-/** A zone's stars, each stage counted up to its `starsToEarn` (the same count that grows its pet). */
-export function zoneStars(zoneId: string): number {
+/**
+ * A zone's stars, each stage counted up to its `starsToEarn` (the same count
+ * that grows its pet): the stages of the zone's set for `grade` (default: the
+ * player's grade).
+ */
+export function zoneStars(zoneId: string, grade: GradeLevel | null | undefined = useProgress.getState().player?.grade): number {
   const progress = useProgress.getState().zones[zoneId]
   if (!progress) return 0
   const zone = getZone(zoneId)
-  if (zone) return zoneStarTotals(zone, progress).earned
+  if (zone) return zoneStarTotals(zone, progress, grade).earned
   return Object.values(progress.stages).reduce((sum, s) => sum + s.stars, 0)
 }
 
-export function zoneMastered(zoneId: string, expectedStages: number): boolean {
-  const zone = useProgress.getState().zones[zoneId]
-  if (!zone) return false
-  const cleared = Object.values(zone.stages).filter((s) => s.stars > 0).length
-  return cleared >= expectedStages
+/**
+ * Every stage of the zone's set for `grade` (default: the player's grade) has a
+ * star. Another band's stars don't count here (they count again back in that band).
+ */
+export function zoneMastered(zoneId: string, grade: GradeLevel | null | undefined = useProgress.getState().player?.grade): boolean {
+  const progress = useProgress.getState().zones[zoneId]
+  const zone = getZone(zoneId)
+  if (!progress || !zone) return false
+  const stages = zoneStages(zone, grade)
+  return stages.length > 0 && stages.every((s) => (progress.stages[s.id]?.stars ?? 0) > 0)
 }
 
 /** The child's per-fact record right now — fact providers read it at draw time. */

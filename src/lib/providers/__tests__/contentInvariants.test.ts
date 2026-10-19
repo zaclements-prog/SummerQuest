@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest'
-import { curriculum } from '../../../curriculum'
+import { curriculum, zoneStages } from '../../../curriculum'
+import { GRADE_LEVELS } from '../../gradeTiers'
 import { createProvider, type ProviderConfig } from '..'
 import { SKILLS, skillOf } from '../../../tutoring/skills'
 import type { Problem } from '../../problem'
@@ -15,8 +16,9 @@ import { useProgress } from '../../../store/progress'
 const SAMPLES = 300
 const BAD_TEXT = /NaN|undefined|\[object Object\]|Infinity/
 
+// every band's stage set (K–1, 2–4, 5), each stage once
 const stages = curriculum.zones.flatMap((zone) =>
-  zone.stages
+  [...new Map(GRADE_LEVELS.flatMap((g) => zoneStages(zone, g)).map((s) => [s.id, s])).values()]
     .filter((s) => s.providerConfig.kind !== 'writingPrompt')
     .map((stage) => ({ zone, stage })),
 )

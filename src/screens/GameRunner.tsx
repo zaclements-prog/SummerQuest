@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
-import { getStage, getZone } from '../curriculum'
+import { getStage, getZone, zoneStages } from '../curriculum'
 import { useProgress } from '../store/progress'
 import { effectiveConfigForStage } from '../lib/gradeTiers'
 import { createProvider } from '../lib/providers'
@@ -51,8 +51,10 @@ export interface GameProps {
 export default function GameRunner() {
   const { zoneId = '', stageId = '' } = useParams()
   const navigate = useNavigate()
+  // The profile grade picks the zone's stage set (K–1 / 2–4 / 5) and its difficulty.
+  const grade = useProgress((s) => s.player?.grade)
   const zone = getZone(zoneId)
-  const stage = getStage(zoneId, stageId)
+  const stage = getStage(zoneId, stageId, grade)
   const awardStage = useProgress((s) => s.awardStage)
   const addCoins = useProgress((s) => s.addCoins)
   const recordSession = useProgress((s) => s.recordSession)
@@ -69,12 +71,13 @@ export default function GameRunner() {
     if (!stage) return null
     // Grade tiers: the profile grade scales the stage's difficulty knobs;
     // the stage index picks the bank level for static-bank zones.
-    const stages = getZone(zoneId)?.stages ?? []
+    const z = getZone(zoneId)
+    const stages = z ? zoneStages(z, grade) : []
     const idx = Math.max(stages.findIndex((s) => s.id === stageId), 0)
     return createProvider(
-      effectiveConfigForStage(stage, Math.max(idx, 0), useProgress.getState().player?.grade),
+      effectiveConfigForStage(stage, Math.max(idx, 0), grade),
     )
-  }, [stage, zoneId, stageId])
+  }, [stage, zoneId, stageId, grade])
 
   useEffect(() => {
     if (result && zone && stage && processedResultRef.current !== result) {
@@ -113,7 +116,7 @@ export default function GameRunner() {
 
   // ── Locked stage (deep link / old bookmark) ────────────────────────────────
   // Checked before any result exists: finishing a stage can't re-lock it.
-  if (!result && !isStageUnlocked(zone, stageId, zoneProgress)) {
+  if (!result && !isStageUnlocked(zone, stageId, zoneProgress, grade)) {
     return (
       <div className="flex-1 flex items-center justify-center p-4">
         <ErrorState

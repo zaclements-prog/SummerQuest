@@ -87,7 +87,8 @@ export function migrateV0toV1(p: PersistedProgressV0, now = Date.now()): Persist
  */
 export function migrateV2toV3(p: PersistedProgressV0): PersistedProgressV0 {
   const zones = (p.zones && typeof p.zones === 'object' && !Array.isArray(p.zones) ? p.zones : {}) as ZonesLike
-  const stages = petStages(zones, {})
+  // (a v2 save predates K–5: its stars are 2nd–4th grade stages, the default grade's set)
+  const stages = petStages(zones, {}, null)
   const owned = Array.isArray(p.ownedCreatures) ? p.ownedCreatures.filter((id): id is string => typeof id === 'string') : []
   const petsSeen: Record<string, PetGrowth> = { ...stages }
   const hatched = hatchedPets(stages)
