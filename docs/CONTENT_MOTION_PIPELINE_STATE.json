@@ -118,7 +118,9 @@
     {
       "id": "A15",
       "title": "science.ts L4 +6 (9->15)",
-      "status": "pending"
+      "status": "done",
+      "commit": "59bda8e",
+      "evidence": "science L4 9->15 passages (+6, NGSS 4-LS4-1/4-LS2-1/4-ESS2-2/4-ESS2-1/4-PS4-3/ETS1); bias audit across all 46 q-items: longest-answer 11 (23.9%, <=30%), shortest-answer 8 (17.4%, <=35%); variety windows clean (fresh names Ana/Ravi/Marco, fresh topics fossils, habitat, climate, erosion, reflection, simple machines; 'sun'/'day' window collisions fixed pre-commit by rewording Water Cycle 'the sun'->'sunlight'); new passage word counts 92-104 (L4 spec 85-110); vitest providers 219 passed, npm test 776 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
     },
     {
       "id": "A16",
@@ -340,6 +342,14 @@
       "commits": "c369ff3: +4 science L3 passages (16->20, NGSS 3-LS2-1/LS1.D/ESS1.A/3-LS4-3); bias audit 60 q-items longest 18.3% / shortest 18.3%; variety windows clean after rewording 'home' collision; new passage word counts 87-90; 'Your Five Senses' 68-word flag is pre-existing (predates count rule)",
       "gates": "full-final (single content commit for the step)",
       "push": "pushed 0951dfa..3325de8 to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 15,
+      "step": "A15",
+      "result": "done",
+      "tests": "vitest providers 219 passed; npm test 776 passed; lint clean; tsc -b clean; build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "59bda8e: +6 science L4 passages (9->15, NGSS 4-LS4-1/4-LS2-1/4-ESS2-2/4-ESS2-1/4-PS4-3/ETS1); bias audit 46 q-items longest 23.9% / shortest 17.4%; variety windows clean after rewording 'the sun'->'sunlight' (Water Cycle) and dropping 'day' x3 (climate passage); new passage word counts 92-104",
+      "gates": "full-final (single content commit for the step)"
     }
   ],
   "notes": "Target counts from handoff A1 table. One step per interval. Owner-approved 2026-10-18: fast gates policy — intermediate commits run vitest providers only; full battery (vitest+npm test+lint+tsc+build:store) runs on the final commit of each step and step is marked done only on full-battery pass. Fails verification twice -> blocked with error, skip to next. All done/blocked: pause cron + final summary in history."
