@@ -33,13 +33,20 @@ export const CYCLE_SITUATIONS: Situation[] = [
   { prompt: 'The sun heats a river, and water rises as invisible vapor into the air. This step is called ___.', answer: 'evaporation', short: '🏞️ Sun heats the river' },
   { prompt: 'Rain flows into the river. Then the sun heats the river again. What happens next?', answer: 'evaporation', short: '🔁 Rain, river, sun again' },
   { prompt: 'The sun warms a lake, and invisible water vapor floats up into the sky. Which step is this?', answer: 'evaporation', short: '🏝️ Warm lake, rising air' },
-  // ── condensation ───────────────────────────────────────────────────────────
+  // A22 batch (grade 2-4 science: water cycle, Earth's systems)
+  { prompt: 'The sun warms the wet sand at the beach, and the water rises into the air out of sight. Which step is this?', answer: 'evaporation', short: '🏖️ Sun warms wet sand' },
+  { prompt: 'A puddle on the sidewalk shrinks on a warm afternoon until it is gone. What step took the water away?', answer: 'evaporation', short: '🚶 Sidewalk puddle vanishes' },
+  { prompt: 'Grandpa hangs the laundry outside, and the sunny breeze takes the wetness out of the shirts. Which step is this?', answer: 'evaporation', short: '👕 Breeze dries the shirts' },
+  { prompt: 'Sunlight warms the swimming pool all day, and some of the water floats up into the sky out of sight. What is that step called?', answer: 'evaporation', short: '🏊 Pool water floats up' },
+  // ── condensation ────────────────────────────────────────────────────────────
   { prompt: 'High in the sky the air is cool, so water vapor turns back into tiny droplets. This step is called ___.', answer: 'condensation', short: '🌬️ Cool air up high' },
   { prompt: 'Tiny droplets of water gather around bits of dust in the sky and form a cloud. This step is called ___.', answer: 'condensation', short: '✨ Droplets gather on dust' },
   { prompt: 'Water vapor rises high into the cool sky. What happens to it up there?', answer: 'condensation', short: '⬆️ Vapor rises, air cools' },
   { prompt: 'Dew forms on the cool grass in the early morning. This step is called ___.', answer: 'condensation', short: '🌱 Dew on cool grass' },
   { prompt: 'Water vapor in the air touches a cold glass, and tiny droplets appear on the outside. Which step is this?', answer: 'condensation', short: '🥛 Drops on a cold glass' },
   { prompt: 'Water vapor spreads through the cool upper sky and turns back into tiny drops. Which step is this?', answer: 'condensation', short: '❄️ Vapor meets cold sky' },
+  // A22 batch (grade 2-4 science: water cycle, Earth's systems)
+  { prompt: 'The bathroom mirror turns fuzzy with tiny drops while Ana takes a warm shower. Which step is this?', answer: 'condensation', short: '🪞 Steam fogs the mirror' },
   // ── precipitation ──────────────────────────────────────────────────────────
   { prompt: 'A cloud grows heavy with droplets. The water falls as rain onto the ground. This step is called ___.', answer: 'precipitation', short: '🏋️ The cloud gets heavy' },
   { prompt: 'Thick gray clouds let their droplets fall to the earth as rain or snow. This step is called ___.', answer: 'precipitation', short: '🌫️ Thick gray clouds' },
