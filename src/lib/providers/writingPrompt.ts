@@ -220,6 +220,12 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Should every family take one screen-free day each week? Write your opinion and one reason that kids and grown-ups would both agree with.',
       'Is making a mistake a good way to learn? Write one sentence with your opinion and an example that supports it.',
       'If your community could add one new walking or biking path, where should it go? State your choice and one good reason.',
+      'Should students grade each other’s kind behavior, or should grown-ups only? Write your opinion and one reason in a single sentence.',
+      'Which is more fun to plan, a birthday party or a surprise for no reason at all? Give your choice and one strong reason.',
+      'Is it ever okay to give up on something hard? Write one sentence with your opinion and a reason that shows careful thinking.',
+      'Should classrooms have plants that students take turns caring for? State your view and support it with one good reason.',
+      'If you could swap one school subject for learning to cook, would you? Write your opinion and one reason in an organized sentence.',
+      'Write one sentence giving advice to someone who just moved to a new town. Include one reason your advice helps.',
     ],
     // W.4.2 — inform or explain: develop a topic with facts, definitions, and details.
     paragraph: [
