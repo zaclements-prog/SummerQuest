@@ -116,6 +116,13 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'If you could build anything out of cardboard boxes, what would you make? Write one sentence about it.',
       'Write a sentence about a grown-up who helps you every day. What do you like about them?',
       'What smells wonderful to you, like fresh cookies or rain on warm pavement? Write a sentence about your favorite smell.',
+      'Write a sentence about your favorite holiday. Tell what your family does that day.',
+      'Write a sentence about a farm you have visited or would love to visit. What do you see there?',
+      'What is your favorite thing to do at the beach? Write a sentence about it.',
+      'Write a sentence about something you like to look for in the night sky. What did you find?',
+      'If you could have one magic power for an afternoon, what would you choose? Write a sentence about what you would do.',
+      'Write a sentence about your best friend. What do the two of you like to do together?',
+      'Write a sentence about your favorite breakfast food. What makes it so good?',
     ],
     // W.2.2 — short informative paragraphs naming who, what, and where.
     paragraph: [
