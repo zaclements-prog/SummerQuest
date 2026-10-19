@@ -1197,6 +1197,293 @@ export const PASSAGES: Passage[] = [
       },
     ],
   },
+  // RL.4.1-4.4: answers stated or clearly implied; each passage mixes detail, vocabulary, and a
+  // main-idea or inference question; word counts 85-110.
+  {
+    title: 'Far Apart on the Ice',
+    level: 4,
+    text: `Polar bears roam the frozen waters around the North Pole, while penguins live mostly in the Southern Hemisphere, many near the ice of the South Pole. Earth is so wide that the two animals never meet in the wild, and a photographer must travel to opposite ends of the planet to see each one. Yet bears and penguins share one habit: both stay warm in icy water. A polar bear depends on its thick coat and body fat, while a penguin wears layer upon layer of tightly packed feathers that water cannot soak through.`,
+    questions: [
+      {
+        question: 'Where do polar bears live?',
+        answer: 'around the North Pole',
+        options: [
+          'around the North Pole',
+          'on the ice near the South Pole',
+          'in warm rivers of the Southern Hemisphere',
+          'along the sandy coasts of Africa',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'What must a photographer do to capture both animals in the wild?',
+        answer: 'travel to opposite ends of the planet',
+        options: [
+          'travel to opposite ends of the planet',
+          'visit a city zoo',
+          'ride a boat across a warm lake',
+          'climb one tall mountain twice',
+        ],
+        type: 'inference',
+      },
+      {
+        question: 'In the passage, "roam" most nearly means:',
+        answer: 'wander over a wide area',
+        options: [
+          'wander over a wide area',
+          'dig deep under the ground',
+          'stand perfectly still',
+          'sleep for many days',
+        ],
+        type: 'vocab',
+      },
+    ],
+  },
+  {
+    title: "The Chameleon's Quiet Messages",
+    level: 4,
+    text: `Many people think chameleons change color only to hide, but hiding is not the whole story. A chameleon also shifts its colors to send messages to other chameleons. A bright display can mean stay away from my branch, while dull colors can mean I come in peace. Color changing has one more job: darker skin soaks up more sunlight, so turning dark on a chilly morning helps a chameleon warm up quickly, and turning pale at midday helps it cool down. The lizard is practically wearing its feelings.`,
+    questions: [
+      {
+        question: 'What do dull colors tell another chameleon?',
+        answer: 'I come in peace.',
+        options: ['I come in peace.', 'Stay away from my branch.', 'Follow me to water.'],
+        type: 'detail',
+      },
+      {
+        question: 'In the passage, "display" most nearly means:',
+        answer: 'a show of colors',
+        options: ['a show of colors', 'a secret hiding place', 'a very long tail', 'a sudden loud noise'],
+        type: 'vocab',
+      },
+      {
+        question: 'What is the main idea of this passage?',
+        answer: 'Chameleons change color for more than hiding.',
+        options: [
+          'Chameleons change color for more than hiding.',
+          'Chameleons are the slowest lizards alive.',
+          'Chameleons hide by copying tree bark.',
+          'Chameleons change color to attract flies.',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
+  {
+    title: 'The Tree That Became a Forest',
+    level: 4,
+    text: `The banyan tree of India seems to break its own rules. It is one tree, yet it can spread so wide that it looks like a whole forest. A banyan sends down long ropes from its branches. When these aerial roots reach the ground, they grow thick and strong and become pillars that hold up still more branches. Over hundreds of years, one tree may raise hundreds of pillars. Small birds eat the figs the banyan drops and carry the seeds far away, so new banyans sprout in places the parent tree could never reach.`,
+    questions: [
+      {
+        question: 'What happens when an aerial root reaches the ground?',
+        answer: 'It grows thick and strong.',
+        options: [
+          'It grows thick and strong.',
+          'It dries up and falls away.',
+          'It turns straight into a fig.',
+          'It stops the tree from growing.',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'In the passage, "aerial" most nearly means:',
+        answer: 'in the air',
+        options: ['in the air', 'deep underground', 'under water', 'near the soil'],
+        type: 'vocab',
+      },
+      {
+        question: 'What is this passage mostly about?',
+        answer: 'One banyan can spread wide like many trees.',
+        options: [
+          'One banyan can spread wide like many trees.',
+          'Birds are the best planters of figs.',
+          'India grows more trees than any land.',
+          'Trees grow roots to find water.',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
+  {
+    title: "The Tern's Endless Summer",
+    level: 4,
+    text: `Tiny as it is, the Arctic tern holds the record for the longest journey of any animal. Each year this small gray-and-white bird flies from its nesting grounds in the far north to the chilly waters near Antarctica and back again, covering tens of thousands of kilometers over land and open water. The reason for such a trip is sunshine: by flying between the two poles, the tern enjoys summer twice in one year. Few creatures on Earth travel so far just to follow daylight, and fewer still do it in a body the size of your hand.`,
+    questions: [
+      {
+        question: 'Why does the tern fly between the two poles?',
+        answer: 'to enjoy summer twice in one year',
+        options: [
+          'to enjoy summer twice in one year',
+          'to escape the cold winters of the north',
+          'to find quieter nesting grounds',
+          'to swim in warmer water',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'What can we tell about the Arctic tern from the passage?',
+        answer: 'It is a very strong flyer for its size.',
+        options: [
+          'It is a very strong flyer for its size.',
+          'It is a bird that rarely flies.',
+          'It sleeps through the whole summer.',
+          'It builds its nests under the sea.',
+        ],
+        type: 'inference',
+      },
+      {
+        question: 'What is the main idea of this passage?',
+        answer: 'The Arctic tern makes the longest animal journey.',
+        options: [
+          'The Arctic tern makes the longest animal journey.',
+          'Antarctica is a land of chilly water.',
+          'Gray-and-white birds nest in the far north.',
+          'Antarctica and the North Pole are very far apart.',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
+  {
+    title: 'Why Thunder Rumbles',
+    level: 4,
+    text: `Lightning and thunder are two parts of the same storm. A bolt of lightning is a giant spark of electricity that can heat the air around it to about five times the temperature of the surface of the sun. That air pushes outward so suddenly that it cracks apart with a sharp boom, and the boom echoes and rolls across the air as the sound we call thunder. Light races to your eyes far faster than sound does, so you always see the flash first and hear the rumble a moment later. Counting the seconds in between tells you how far away the storm struck.`,
+    questions: [
+      {
+        question: 'What creates the sound of thunder?',
+        answer: 'air pushing suddenly apart',
+        options: [
+          'air pushing suddenly apart',
+          'clouds bumping together',
+          'heavy rain on leaves',
+          'wind bending the trees',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'If several seconds pass between a flash and a rumble, what can you guess?',
+        answer: 'The storm struck far away.',
+        options: [
+          'The storm struck far away.',
+          'The storm is right beside you.',
+          'The storm ended before it started.',
+          'The sun is coming out now.',
+        ],
+        type: 'inference',
+      },
+      {
+        question: 'In the passage, "bolt" means a:',
+        answer: 'flash of lightning',
+        options: ['flash of lightning', 'pile of gray clouds', 'long roll of thunder', 'heavy raindrop'],
+        type: 'vocab',
+      },
+    ],
+  },
+  {
+    title: 'How Paper Began',
+    level: 4,
+    text: `Almost two thousand years ago, people in China learned to make thin, strong sheets out of everyday scraps: tree bark, old cloth, tough hemp, and even tangled fishing nets. They soaked the scraps in water, pounded them into a soft pulp, and lifted the pulp in fine screens to let the water drain away. The flat mats dried into paper, which was lighter and cheaper to make than the heavy bamboo strips people had written on before. News of the clever craft drifted west along the trade routes, and in time paper mills opened in many lands.`,
+    questions: [
+      {
+        question: 'Which of these went into early Chinese paper?',
+        answer: 'tangled fishing nets',
+        options: ['tangled fishing nets', 'fresh green leaves', 'thin sheets of bright gold', 'crushed white seashells'],
+        type: 'detail',
+      },
+      {
+        question: 'In the passage, "pulp" most nearly means:',
+        answer: 'a soft, wet, mushy mass',
+        options: ['a soft, wet, mushy mass', 'a hard block of dry wood', 'a bright colored paint', 'a tall wooden screen'],
+        type: 'vocab',
+      },
+      {
+        question: 'What is the main idea of this passage?',
+        answer: 'China created paper from simple scraps long ago.',
+        options: [
+          'China created paper from simple scraps long ago.',
+          'Trade routes carried silk and spices west.',
+          'Bamboo strips were too heavy to carry.',
+          'Fishing nets were strong and long lasting.',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
+  {
+    title: 'Earthworms at Work',
+    level: 4,
+    text: `An earthworm spends its whole life tunneling through soil, and careful gardeners have quietly thanked worms for centuries. A worm swallows dirt on purpose, digesting the tiny bits of decayed leaves tucked inside and leaving the rest behind as nutrient-rich castings. Those castings feed the soil like fertilizer. The worm's tunnels do two more good turns: they let air sink down to plant roots, and they guide rainwater deep underground instead of letting it rush away. Remarkably, worms have no eyes; special cells in their skin sense light, which is why a worm hurries below the surface whenever the sun catches it.`,
+    questions: [
+      {
+        question: 'Why are castings good for soil?',
+        answer: 'They feed the soil like fertilizer.',
+        options: [
+          'They feed the soil like fertilizer.',
+          'They make the soil dry.',
+          'They keep the soil cold.',
+          'They change soil into sand.',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'What can we guess about worms from the passage?',
+        answer: 'Bright light bothers them.',
+        options: [
+          'Bright light bothers them.',
+          'They enjoy warm sunlight.',
+          'They can see very clearly.',
+          'They live above ground.',
+        ],
+        type: 'inference',
+      },
+      {
+        question: 'In the passage, "castings" are:',
+        answer: 'what worms leave behind',
+        options: ['what worms leave behind', 'baby worms curled up asleep', 'empty tunnels', 'drops of morning dew'],
+        type: 'vocab',
+      },
+    ],
+  },
+  {
+    title: 'The Bird That Hovers',
+    level: 4,
+    text: `The hummingbird is a tiny acrobat of the air. It can fly backwards, sideways, and even tip upside down for a moment while chasing a flower. Its wings beat about fifty times in a single second, blurring into the soft hum that gives the bird its name. All that flying takes energy, so a hummingbird stops at hundreds of blossoms each day, sipping nectar with a long, fast tongue. When night comes, the tiny bird slows its breathing and cools its body to save energy until sunrise.`,
+    questions: [
+      {
+        question: 'What trick makes the hummingbird unusual among birds?',
+        answer: 'It can fly backwards.',
+        options: [
+          'It can fly backwards.',
+          'It can sleep while floating on water.',
+          'It can run faster than sparrows.',
+          'It can dive below the sea.',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'What is this passage mostly about?',
+        answer: 'A tiny bird with amazing flying skills.',
+        options: [
+          'A tiny bird with amazing flying skills.',
+          'Flowers make sweet nectar for hungry insects.',
+          'Why birds gather in flocks each fall.',
+          'The best blossoms to grow in a yard.',
+        ],
+        type: 'main-idea',
+      },
+      {
+        question: 'In the passage, "blurring" most nearly means:',
+        answer: 'looking too fast to make out',
+        options: [
+          'looking too fast to make out',
+          'standing perfectly still and quiet',
+          'making a loud sound',
+          'changing colors twice',
+        ],
+        type: 'vocab',
+      },
+    ],
+  },
 ]
 
 export function makeReadingComprehensionProvider(cfg: Config): ProblemProvider {
