@@ -54,7 +54,7 @@
     { "id": "B3", "title": "perf rework: science/states scene", "status": "pending" }
   ],
   "history": [
-    { "interval": 1, "step": "A1", "result": "done", "tests": "vitest providers 219 passed; npm test 776 passed; lint, tsc -b, build:store clean" }
+    { "interval": 1, "step": "A1", "result": "done", "tests": "vitest providers 219 passed; npm test 776 passed; lint, tsc -b, build:store clean", "push": "push-skipped (one attempt; remote ref unchanged at 6f2bf5f — local commits are source of truth)" }
   ],
   "notes": "Target counts from handoff A1 table. One step per interval. Fails verification twice across intervals -> status blocked with error, skip to next, surface in status. On all steps done/blocked: pause the cron job and write final summary in history."
 }
