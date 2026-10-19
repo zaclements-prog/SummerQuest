@@ -89,7 +89,7 @@ function CrayonTray({ t, x, y, crayonAt, wiggle = 0 }: { t: number; x: number; y
   const w = innerW + pad * 2
   const h = innerH + pad * 2
   return (
-    <g>
+    <>
       {/* hinged lid, open behind the tray */}
       <path d={`M ${l + 6} ${top + 4} L ${l + 26} ${top - 62} L ${l + w - 26} ${top - 62} L ${l + w - 6} ${top + 4} Z`} fill={M.leaf} stroke={M.ink} strokeWidth={4} strokeLinejoin="round" />
       <text x={x} y={top - 30} fontFamily={M.font} fontWeight={700} fontSize={26} textAnchor="middle" dominantBaseline="central" fill={M.white} letterSpacing={3}>
@@ -116,7 +116,7 @@ function CrayonTray({ t, x, y, crayonAt, wiggle = 0 }: { t: number; x: number; y
           )
         }),
       )}
-    </g>
+    </>
   )
 }
 
@@ -124,7 +124,7 @@ function CrayonTray({ t, x, y, crayonAt, wiggle = 0 }: { t: number; x: number; y
 function StepHead({ t, at, n, text, x, y, color = M.coral }: { t: number; at: number; n: number; text: string; x: number; y: number; color?: string }) {
   const s = popS(t, at - 0.1, 11)
   return (
-    <g>
+    <>
       <Scale s={s} x={x} y={y}>
         <circle cx={x} cy={y} r={22} fill={color} stroke={M.ink} strokeWidth={3.5} />
         <Txt x={x} y={y + 1} size={26} anchor="middle" color={M.white}>
@@ -132,7 +132,7 @@ function StepHead({ t, at, n, text, x, y, color = M.coral }: { t: number; at: nu
         </Txt>
       </Scale>
       <Kinetic t={t} at={at} text={text} x={x + 36} y={y + 2} size={34} anchor="start" />
-    </g>
+    </>
   )
 }
 
@@ -274,7 +274,7 @@ const ARR_W = COLS * ARR.len + (COLS - 1) * ARR.gap
 
 function CrayonRows({ t, rowAt, wiggle = 0, x0 = ARR.x }: { t: number; rowAt: (r: number) => number; wiggle?: number; x0?: number }) {
   return (
-    <g>
+    <>
       {Array.from({ length: ROWS }, (_, r) => {
         const at = rowAt(r)
         const k = ep(t, at, 0.55, ease.outBack)
@@ -292,7 +292,7 @@ function CrayonRows({ t, rowAt, wiggle = 0, x0 = ARR.x }: { t: number; rowAt: (r
           </g>
         )
       })}
-    </g>
+    </>
   )
 }
 

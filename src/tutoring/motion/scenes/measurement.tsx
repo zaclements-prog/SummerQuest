@@ -357,12 +357,12 @@ const perimeter: Scene = ({ t, cue, reduced }: SceneProps) => {
         </Pop>
         {/* the coral trail around the edge */}
         {walkK > 0 && (
-          <g>
+          <>
             {glowAll > 0.01 && <path d={polyD(RECT)} fill="none" stroke={M.gold} strokeWidth={14 + 22 * glowAll} strokeLinejoin="round" opacity={0.6 * glowAll} />}
             <path d={polyD(trail.pts, false)} fill="none" stroke={M.ink} strokeWidth={17} strokeLinecap="round" strokeLinejoin="round" />
             <path d={polyD(trail.pts, false)} fill="none" stroke={M.coral} strokeWidth={11} strokeLinecap="round" strokeLinejoin="round" />
             {walkK >= 1 && idle > 0 && <path d={polyD(RECT)} fill="none" stroke={M.white} strokeWidth={4} strokeDasharray="10 22" strokeDashoffset={dash} opacity={0.75 * idle} />}
-          </g>
+          </>
         )}
         {/* each side lights up as it's named */}
         {RECT.map((a, i) => {
@@ -452,11 +452,11 @@ function Hand({ deg, len, w, color, glow = 0 }: { deg: number; len: number; w: n
   const tip = onClock(deg, len)
   const tail = onClock(deg + 180, Math.min(22, len * 0.2))
   return (
-    <g>
+    <>
       {glow > 0.01 && <line x1={tail[0]} y1={tail[1]} x2={tip[0]} y2={tip[1]} stroke={M.gold} strokeWidth={w + 22 * glow} strokeLinecap="round" opacity={0.55 * glow} />}
       <line x1={tail[0]} y1={tail[1]} x2={tip[0]} y2={tip[1]} stroke={M.ink} strokeWidth={w + 7} strokeLinecap="round" />
       <line x1={tail[0]} y1={tail[1]} x2={tip[0]} y2={tip[1]} stroke={color} strokeWidth={w} strokeLinecap="round" />
-    </g>
+    </>
   )
 }
 

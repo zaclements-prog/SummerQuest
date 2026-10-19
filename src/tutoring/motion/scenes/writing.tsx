@@ -40,7 +40,7 @@ function PartLabel({ t, at, x, text, color, caption, captionAt }: { t: number; a
   const y = PIECE_Y + PIECE_H + 44
   const w = textW(text, 26) + 34
   return (
-    <g>
+    <>
       <Scale s={popS(t, at, 12)} x={x} y={y}>
         <rect x={x - w / 2} y={y - 21} width={w} height={42} rx={21} fill={color} stroke={M.ink} strokeWidth={3} />
         <Txt x={x} y={y + 1} size={26} anchor="middle" color={M.white}>
@@ -48,7 +48,7 @@ function PartLabel({ t, at, x, text, color, caption, captionAt }: { t: number; a
         </Txt>
       </Scale>
       {caption && captionAt !== undefined && <Kinetic t={t} at={captionAt} text={caption} x={x} y={y + 48} size={26} color={M.inkSoft} stroke={M.paper} />}
-    </g>
+    </>
   )
 }
 
@@ -322,7 +322,7 @@ const example: Scene = ({ t, cue }: SceneProps) => {
         })}
         {/* the period: on the line, then into its own piece */}
         {t > dotAt && (
-          <g>
+          <>
             {(() => {
               const s = spring(t, dotAt, { stiffness: 260, damping: 11 })
               // rides along after "fast" into the action piece, then hops into its own piece
@@ -334,7 +334,7 @@ const example: Scene = ({ t, cue }: SceneProps) => {
               const k = pK > 0 ? Math.min(1, pK) : 0
               return <circle cx={x0 + (x1 - x0) * k} cy={y0 + (y1 - y0) * k} r={8 * s + 5 * k} fill={M.ink} />
             })()}
-          </g>
+          </>
         )}
         <Sparkles t={t} at={wAt[0] + 0.1} x={EX_LINE[0].x + 18} y={LINE_Y} r={56} n={7} seed={1} />
         <Sparkles t={t} at={dotAt + 0.05} x={EX_DOT_X + 8} y={LINE_Y + 16} r={46} n={6} seed={4} />
@@ -384,7 +384,7 @@ function Ghost({ t, x, w, tab, socket, color, caption, at }: { t: number; x: num
   const cx = x + w / 2 + (socket ? 12 : 0)
   const k = popS(t, at, 11)
   return (
-    <g>
+    <>
       <path d={puzzlePath(x, PIECE_Y, w, PIECE_H, { tab, socket, r: 20 })} fill={M.white} fillOpacity={0.6} stroke={color} strokeWidth={4.5} strokeDasharray="14 10" strokeLinejoin="round" />
       <Scale s={k} x={cx} y={PIECE_Y + 50}>
         <Txt x={cx} y={PIECE_Y + 50 - 5 * Math.abs(Math.sin(t * 4))} size={56} anchor="middle" color={color}>
@@ -396,7 +396,7 @@ function Ghost({ t, x, w, tab, socket, color, caption, at }: { t: number; x: num
           {caption}
         </Txt>
       </Scale>
-    </g>
+    </>
   )
 }
 
@@ -595,10 +595,10 @@ function EndMark({ x, y: y0, state, scale = 1, color = M.ink }: { x: number; y: 
   const d = `M ${pts[0][0]} ${pts[0][1]} C ${pts[1][0]} ${pts[1][1]} ${pts[2][0]} ${pts[2][1]} ${pts[3][0]} ${pts[3][1]} C ${pts[4][0]} ${pts[4][1]} ${pts[5][0]} ${pts[5][1]} ${pts[6][0]} ${pts[6][1]}`
   const w = 15 * scale * Math.min(1, s * 1.6)
   return (
-    <g>
+    <>
       {w > 0.3 && <path d={d} fill="none" stroke={color} strokeWidth={w} strokeLinecap="round" strokeLinejoin="round" />}
       <circle cx={x} cy={y + 36 * scale} r={(10 + 5 * (1 - Math.min(1, s))) * scale} fill={color} />
-    </g>
+    </>
   )
 }
 

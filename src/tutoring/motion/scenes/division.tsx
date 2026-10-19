@@ -38,7 +38,7 @@ const plateAt = (f: number, k: number): [number, number] => [FX[f] + (k - 1.5) *
 function Table({ t, tableAt = -1, friendsAt = -1, smile = () => 0.6, bounce = () => 0, look = 0 }: { t: number; tableAt?: number; friendsAt?: number; smile?: (f: number) => number; bounce?: (f: number) => number; look?: number }) {
   const rise = (1 - ease.outCubic(progress(t, tableAt, 0.6))) * 180
   return (
-    <g>
+    <>
       {FX.map((x, f) => {
         // friends pop up from behind the table
         const up = spring(t, friendsAt + f * 0.18, { stiffness: 190, damping: 12 })
@@ -58,7 +58,7 @@ function Table({ t, tableAt = -1, friendsAt = -1, smile = () => 0.6, bounce = ()
           </Pop>
         ))}
       </g>
-    </g>
+    </>
   )
 }
 

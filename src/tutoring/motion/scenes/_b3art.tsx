@@ -48,20 +48,20 @@ export function CrayonBox({ x, y, w, h, children, label = true }: { x: number; y
   const frontTop = y - h * 0.5
   const dip = y - h * 0.36
   return (
-    <g>
+    <>
       <rect x={l + 8} y={y - h} width={w - 16} height={h} rx={10} fill={shade(M.gold, 0.35)} stroke={INK} strokeWidth={SW} />
       {children}
       <path d={`M ${l} ${frontTop} Q ${x} ${dip + (dip - frontTop) * 0.6} ${r} ${frontTop} L ${r} ${y - 8} Q ${r} ${y} ${r - 8} ${y} L ${l + 8} ${y} Q ${l} ${y} ${l} ${y - 8} Z`} fill={M.gold} stroke={INK} strokeWidth={SW} strokeLinejoin="round" />
       {label && (
-        <g>
+        <>
           <rect x={l + 18} y={y - h * 0.27} width={w - 36} height={h * 0.17} rx={h * 0.085} fill={M.leaf} stroke={INK} strokeWidth={3} />
           <text x={x} y={y - h * 0.185} fontFamily={M.font} fontWeight={700} fontSize={h * 0.11} textAnchor="middle" dominantBaseline="central" fill={M.white} letterSpacing={2}>
             CRAYONS
           </text>
-        </g>
+        </>
       )}
       <path d={`M ${l + 14} ${frontTop + 14} Q ${l + 14} ${y - 20} ${l + 22} ${y - 14}`} fill="none" stroke="#fff" strokeWidth={5} strokeLinecap="round" opacity={0.55} />
-    </g>
+    </>
   )
 }
 
@@ -78,16 +78,16 @@ export function Frog({ x, y, s = 1, blink = 0, look = 0, crouch = 0, legs = 0, g
   const sy = 1 - crouch * 0.18
   const sx = 1 + crouch * 0.12
   const eye = (ex: number) => (
-    <g>
+    <>
       <circle cx={ex} cy={-52} r={25} fill={G} stroke={INK} strokeWidth={SW} />
       <ellipse cx={ex} cy={-54} rx={17} ry={17 * (1 - blink * 0.92)} fill="#fff" stroke={INK} strokeWidth={2.5} />
       {blink < 0.6 && (
-        <g>
+        <>
           <circle cx={ex + look * 6} cy={-53} r={8.5} fill={INK} />
           <circle cx={ex + look * 6 + 3} cy={-57} r={3} fill="#fff" />
-        </g>
+        </>
       )}
-    </g>
+    </>
   )
   // back legs: folded (legs=0) → stretched out behind/below (legs=1)
   const leg = (side: -1 | 1) => {
@@ -95,12 +95,12 @@ export function Frog({ x, y, s = 1, blink = 0, look = 0, crouch = 0, legs = 0, g
     const fx = side * (64 + legs * 30)
     const fy = 52 + legs * 46
     return (
-      <g>
+      <>
         {glowLegs > 0 && <ellipse cx={hx} cy={30 + legs * 20} rx={46} ry={40 + legs * 18} fill={M.gold} opacity={0.45 * glowLegs} />}
         <path d={`M ${hx - side * 10} 14 Q ${hx + side * 38} ${10 + legs * 10} ${fx} ${fy - 8}`} fill="none" stroke={INK} strokeWidth={30} strokeLinecap="round" />
         <path d={`M ${hx - side * 10} 14 Q ${hx + side * 38} ${10 + legs * 10} ${fx} ${fy - 8}`} fill="none" stroke={GD} strokeWidth={22} strokeLinecap="round" />
         <ellipse cx={fx + side * 6} cy={fy} rx={20} ry={9} fill={GD} stroke={INK} strokeWidth={3} />
-      </g>
+      </>
     )
   }
   return (
@@ -138,10 +138,10 @@ export function Dog({ x, y, s = 1, run = 0, speed = 0, tongue = 0, wag = 0, big 
     const ex = hx + Math.sin(a) * len
     const ey = 22 + Math.cos(a) * len
     return (
-      <g>
+      <>
         <path d={`M ${hx} 14 L ${ex} ${ey}`} stroke={INK} strokeWidth={21} strokeLinecap="round" />
         <path d={`M ${hx} 14 L ${ex} ${ey}`} stroke={back ? shade(C, 0.1) : C} strokeWidth={13} strokeLinecap="round" />
-      </g>
+      </>
     )
   }
   const bob = Math.abs(Math.sin(run)) * 5 * speed
@@ -177,11 +177,11 @@ export function Dog({ x, y, s = 1, run = 0, speed = 0, tongue = 0, wag = 0, big 
 export function Fox({ x, y, s = 1, look = [0, 0], tilt = 0, blink = 0, smile = 1 }: { x: number; y: number; s?: number; look?: [number, number]; tilt?: number; blink?: number; smile?: number }) {
   const O = '#f59a4a'
   const eye = (ex: number) => (
-    <g>
+    <>
       <ellipse cx={ex} cy={-6} rx={11} ry={13 * (1 - 0.9 * blink)} fill="#fff" stroke={INK} strokeWidth={3} />
       {blink < 0.6 && <circle cx={ex + look[0] * 4} cy={-5 + look[1] * 5} r={6} fill={INK} />}
       {blink < 0.6 && <circle cx={ex + look[0] * 4 + 2} cy={-8 + look[1] * 5} r={2} fill="#fff" />}
-    </g>
+    </>
   )
   return (
     <g transform={`translate(${x} ${y}) rotate(${tilt}) scale(${s})`}>
@@ -220,19 +220,19 @@ export function Bug({ x, y, s = 1, flap = 0 }: { x: number; y: number; s?: numbe
 /** A pond with a lily pad, centred on (x, y). */
 export function Pond({ x, y, w = 220, h = 60 }: { x: number; y: number; w?: number; h?: number }) {
   return (
-    <g>
+    <>
       <ellipse cx={x} cy={y} rx={w / 2} ry={h / 2} fill={M.sea} stroke={INK} strokeWidth={SW} />
       <ellipse cx={x - w * 0.12} cy={y - h * 0.1} rx={w * 0.22} ry={h * 0.14} fill="#fff" opacity={0.3} />
       <path d={`M ${x + w * 0.22} ${y + 2} m -26 0 a 26 12 0 1 0 52 0 a 26 12 0 1 0 -52 0`} fill={M.leaf} stroke={INK} strokeWidth={3} />
       <path d={`M ${x + w * 0.22} ${y + 2} L ${x + w * 0.22 + 22} ${y - 6}`} stroke={INK} strokeWidth={3} />
-    </g>
+    </>
   )
 }
 
 /** A smiling sun with slowly turning rays. */
 export function Sun({ x, y, r = 46, spin = 0, glow = 0 }: { x: number; y: number; r?: number; spin?: number; glow?: number }) {
   return (
-    <g>
+    <>
       {glow > 0 && <circle cx={x} cy={y} r={r * (1.5 + glow * 0.5)} fill={M.gold} opacity={0.22 * glow} />}
       <g transform={`rotate(${spin} ${x} ${y})`}>
         {Array.from({ length: 12 }, (_, i) => {
@@ -248,7 +248,7 @@ export function Sun({ x, y, r = 46, spin = 0, glow = 0 }: { x: number; y: number
       <path d={`M ${x - r * 0.3} ${y + r * 0.2} Q ${x} ${y + r * 0.45} ${x + r * 0.3} ${y + r * 0.2}`} fill="none" stroke={INK} strokeWidth={3.5} strokeLinecap="round" />
       <ellipse cx={x - r * 0.52} cy={y + r * 0.18} rx={r * 0.12} ry={r * 0.08} fill={M.coral} opacity={0.6} />
       <ellipse cx={x + r * 0.52} cy={y + r * 0.18} rx={r * 0.12} ry={r * 0.08} fill={M.coral} opacity={0.6} />
-    </g>
+    </>
   )
 }
 
@@ -272,11 +272,11 @@ export function Cloud({ x, y, w = 180, color = M.white, face = false }: { x: num
       ))}
       <ellipse cx={-14} cy={-26} rx={22} ry={9} fill="#fff" opacity={0.5} />
       {face && (
-        <g>
+        <>
           <circle cx={-14} cy={4} r={4.5} fill={INK} />
           <circle cx={22} cy={4} r={4.5} fill={INK} />
           <path d="M -4 14 Q 4 22 12 14" fill="none" stroke={INK} strokeWidth={3.5} strokeLinecap="round" />
-        </g>
+        </>
       )}
     </g>
   )
@@ -317,12 +317,12 @@ export function jarPath(x: number, y: number, w: number, h: number): string {
 export function Jar({ x, y, w, h, children, tintColor = M.sky }: { x: number; y: number; w: number; h: number; children?: ReactNode; tintColor?: string }) {
   const d = jarPath(x, y, w, h)
   return (
-    <g>
+    <>
       <path d={d} fill={tintColor} opacity={0.35} />
       {children}
       <path d={d} fill="none" stroke={INK} strokeWidth={SW} strokeLinejoin="round" />
       <path d={`M ${x - w / 2 + 14} ${y - h + 34} L ${x - w / 2 + 14} ${y - 40}`} stroke="#fff" strokeWidth={7} strokeLinecap="round" opacity={0.7} />
-    </g>
+    </>
   )
 }
 
@@ -333,7 +333,7 @@ export function Pot({ x, y, w, h, water = M.sea, level = 0.7, bubbles = 0, t = 0
   const top = y - h
   const wy = top + h * (1 - level)
   return (
-    <g>
+    <>
       <rect x={l - 24} y={top + 16} width={30} height={14} rx={7} fill={M.inkSoft} stroke={INK} strokeWidth={3} />
       <rect x={r - 6} y={top + 16} width={30} height={14} rx={7} fill={M.inkSoft} stroke={INK} strokeWidth={3} />
       <path d={`M ${l} ${top} L ${r} ${top} L ${r - 6} ${y - 14} Q ${r - 8} ${y} ${r - 22} ${y} L ${l + 22} ${y} Q ${l + 8} ${y} ${l + 6} ${y - 14} Z`} fill="#c9d3e0" stroke={INK} strokeWidth={SW} strokeLinejoin="round" />
@@ -345,7 +345,7 @@ export function Pot({ x, y, w, h, water = M.sea, level = 0.7, bubbles = 0, t = 0
           return <circle key={i} cx={x - w * 0.32 + i * w * 0.16} cy={top - 2 - ph * 10} r={(4 + (i % 2) * 3) * bubbles * (1 - ph)} fill="#fff" stroke={INK} strokeWidth={2} opacity={1 - ph} />
         })}
       <path d={`M ${l + 18} ${top + 22} L ${l + 22} ${y - 18}`} stroke="#fff" strokeWidth={6} strokeLinecap="round" opacity={0.6} />
-    </g>
+    </>
   )
 }
 
@@ -367,7 +367,7 @@ export function Book({ x, y, w, h, cover = M.sea }: { x: number; y: number; w: n
   const r = x + w / 2
   const PAGE = '#fffdf7'
   return (
-    <g>
+    <>
       <path d={`M ${l - 14} ${y + 2} Q ${x - w / 4} ${y - 14} ${x} ${y + 4} Q ${x + w / 4} ${y - 14} ${r + 14} ${y + 2} L ${r + 14} ${y + h + 18} Q ${x + w / 4} ${y + h + 4} ${x} ${y + h + 22} Q ${x - w / 4} ${y + h + 4} ${l - 14} ${y + h + 18} Z`} fill={cover} stroke={INK} strokeWidth={SW} strokeLinejoin="round" />
       {[8, 4].map((o) => (
         <path key={o} d={`M ${l - 4 + o / 2} ${y + h + o} Q ${x - w / 4} ${y + h - 8 + o} ${x} ${y + h + 10 + o / 2} Q ${x + w / 4} ${y + h - 8 + o} ${r + 4 - o / 2} ${y + h + o}`} fill={PAGE} stroke={INK} strokeWidth={2.5} />
@@ -376,7 +376,7 @@ export function Book({ x, y, w, h, cover = M.sea }: { x: number; y: number; w: n
       <path d={`M ${r} ${y + 4} Q ${x + w / 4} ${y - 10} ${x} ${y + 8} L ${x} ${y + h + 10} Q ${x + w / 4} ${y + h - 8} ${r} ${y + h} Z`} fill={PAGE} stroke={INK} strokeWidth={SW} strokeLinejoin="round" />
       <path d={`M ${x - 18} ${y + 10} L ${x - 18} ${y + h + 4}`} stroke={INK} strokeWidth={10} opacity={0.05} />
       <path d={`M ${x + 18} ${y + 10} L ${x + 18} ${y + h + 4}`} stroke={INK} strokeWidth={10} opacity={0.05} />
-    </g>
+    </>
   )
 }
 

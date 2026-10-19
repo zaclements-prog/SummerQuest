@@ -24,7 +24,7 @@ const DIGITS = ['1', '2', '3', '4']
 /** The place-value chart: tinted columns with headers, digit tiles. */
 function Chart({ t, headAt, tileAt, digitAt, dim = () => 0, headerY = 112, tileY = 206, colTop = 76, colBottom = 500 }: { t: number; headAt: (i: number) => number; tileAt: (i: number) => number; digitAt: (i: number) => number; dim?: (i: number) => number; headerY?: number; tileY?: number; colTop?: number; colBottom?: number }) {
   return (
-    <g>
+    <>
       {PLACES.map((p, i) => {
         const x = COL_X[i]
         const h = ease.outCubic(progress(t, headAt(i), 0.5))
@@ -53,7 +53,7 @@ function Chart({ t, headAt, tileAt, digitAt, dim = () => 0, headerY = 112, tileY
           </g>
         )
       })}
-    </g>
+    </>
   )
 }
 
@@ -65,13 +65,13 @@ function Blocks({ t, i, x, y, at }: { t: number; i: number; x: number; y: number
   if (i === 2) for (let k = 0; k < 3; k++) items.push({ el: <Rod x={0} y={0} s={14} />, dx: -42 + k * 30, dy: 2 })
   if (i === 3) for (let k = 0; k < 4; k++) items.push({ el: <UnitCube x={0} y={0} s={26} />, dx: -40 + (k % 2) * 44, dy: 30 + Math.floor(k / 2) * 44 })
   return (
-    <g>
+    <>
       {items.map((it, k) => (
         <Pop key={k} t={t} at={at + k * 0.12} x={x + it.dx + 20} y={y + it.dy + 30} bounce={12}>
           <g transform={`translate(${x + it.dx} ${y + it.dy})`}>{it.el}</g>
         </Pop>
       ))}
-    </g>
+    </>
   )
 }
 
@@ -193,7 +193,7 @@ const regroup: Scene = ({ t, cue }: SceneProps) => {
 
         {/* the ten (rod) — first alone, then shrinking into a row of ten rods */}
         {t >= oneTen + 0.3 && !flatOn && !phase5 && (
-          <g>
+          <>
             {Array.from({ length: 10 }, (_, k) => {
               if (k > 0 && t < tenTens + (k - 1) * 0.06) return null
               const slide = k === 0 ? 1 : ease.outBack(progress(t, tenTens + (k - 1) * 0.06, 0.45))
@@ -207,7 +207,7 @@ const regroup: Scene = ({ t, cue }: SceneProps) => {
                 </g>
               )
             })}
-          </g>
+          </>
         )}
         {/* the bundle band around the ten tens (it tightens as they squeeze) */}
         {t > bandAt && t < oneHundred + 0.5 && (
@@ -236,7 +236,7 @@ const regroup: Scene = ({ t, cue }: SceneProps) => {
 
         {/* phase 5: hundred | ten | one, ×10 each step left */}
         {phase5 && (
-          <g>
+          <>
             <T x={lerp(380, slotX[0] - 85, fin)} y={lerp(140, baseY - 170, fin)} s={lerp(1, s3 / s2, fin)}>
               <Flat x={0} y={0} s={s2} />
             </T>
@@ -272,7 +272,7 @@ const regroup: Scene = ({ t, cue }: SceneProps) => {
               </g>
             ))}
             <Words t={t} at={right} text="×10 each step to the left" x={480} y={482} size={38} colors={[DEEP.coral]} />
-          </g>
+          </>
         )}
         <Twinkle t={t} at={right + 1} x={slotX[0]} y={baseY - 80} r={110} n={4} color={PV.hundreds} />
       </Camera>

@@ -119,10 +119,10 @@ export function RightMark({ v, u1, u2, size = 30, k = 1, color = M.gold, width =
   const b: Pt = [v[0] + (u1[0] + u2[0]) * s, v[1] + (u1[1] + u2[1]) * s]
   const c: Pt = [v[0] + u2[0] * s, v[1] + u2[1] * s]
   return (
-    <g>
+    <>
       <path d={polyD([v, a, b, c])} fill={color} opacity={0.85} />
       <path d={`M ${a[0]} ${a[1]} L ${b[0]} ${b[1]} L ${c[0]} ${c[1]}`} fill="none" stroke={M.ink} strokeWidth={width} strokeLinejoin="round" strokeLinecap="round" />
-    </g>
+    </>
   )
 }
 
@@ -154,14 +154,14 @@ export function Hash({ a, b, k = 1, n = 1, len = 22, color = M.ink }: { a: Pt; b
   const dy = (b[1] - a[1]) / dist(a, b)
   const h = (len / 2) * k
   return (
-    <g>
+    <>
       {Array.from({ length: n }, (_, i) => {
         const o = (i - (n - 1) / 2) * 10
         const cx = m[0] + dx * o
         const cy = m[1] + dy * o
         return <line key={i} x1={cx - dy * h} y1={cy + dx * h} x2={cx + dy * h} y2={cy - dx * h} stroke={color} strokeWidth={5} strokeLinecap="round" />
       })}
-    </g>
+    </>
   )
 }
 
