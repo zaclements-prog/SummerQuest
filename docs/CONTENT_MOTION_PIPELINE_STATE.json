@@ -17,7 +17,7 @@
   ],
   "current_phase": "A",
   "steps": [
-    { "id": "A1", "title": "writingPrompt.ts: byGrade map + code change + tests (>=30 prompts/kind/grade gate)", "status": "pending" },
+    { "id": "A1", "title": "writingPrompt.ts: byGrade map + code change + tests (>=30 prompts/kind/grade gate)", "status": "done", "commit": "ded61cd", "evidence": "byGrade map + poolForKind + grade plumbing + writingPrompts.test.ts; 219 passed (vitest providers), 776 passed (npm test)" },
     { "id": "A2", "title": "writing prompts G2: sentence+paragraph+story to 40+ each (reuse shared pool counts toward per-grade)", "status": "pending" },
     { "id": "A3", "title": "writing prompts G3: sentence+paragraph+story to 40+ each", "status": "pending" },
     { "id": "A4", "title": "writing prompts G4: sentence+paragraph+story to 40+ each", "status": "pending" },
@@ -53,6 +53,8 @@
     { "id": "B2", "title": "perf rework: wordProblem/read scene", "status": "pending" },
     { "id": "B3", "title": "perf rework: science/states scene", "status": "pending" }
   ],
-  "history": [],
+  "history": [
+    { "interval": 1, "step": "A1", "result": "done", "tests": "vitest providers 219 passed; npm test 776 passed; lint, tsc -b, build:store clean" }
+  ],
   "notes": "Target counts from handoff A1 table. One step per interval. Fails verification twice across intervals -> status blocked with error, skip to next, surface in status. On all steps done/blocked: pause the cron job and write final summary in history."
 }
