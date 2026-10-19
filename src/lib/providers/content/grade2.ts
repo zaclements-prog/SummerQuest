@@ -61,6 +61,12 @@ export const G2_GEOMETRY: GeoItem[] = [
   { level: 2, question: 'Ana cuts an orange into 2 equal slices. Bo cuts the same size orange into 4 equal slices. Whose slices are bigger?', answer: "Ana's", options: ["Ana's", "Bo's", 'they are the same size'], hint: 'More slices means each slice is smaller.' },
   { level: 2, question: 'Which shape has more sides, a pentagon or a hexagon?', answer: 'hexagon', options: ['pentagon', 'hexagon', 'they have the same number of sides'], hint: 'A hexagon has 6 sides and a pentagon has 5.' },
   { level: 2, question: 'A triangle has 3 corners and a square has 4 corners. How many corners do they have together?', answer: '7', options: ['5', '7', '9'], hint: 'Add the two numbers of corners: 3 + 4.' },
+  // 2.G.A.1-3 — batch: real-world shapes, cube stacking, and equal shares.
+  { level: 2, question: 'A sheet of notebook paper is most like which shape?', answer: 'rectangle', options: ['rectangle', 'square', 'triangle'], hint: 'It has 4 sides and 4 square corners, with two long sides and two short sides.' },
+  { level: 2, question: 'Nina puts a square tile on the shelf. How many corners does that tile have?', answer: '4', options: ['3', '4', '6'], hint: 'A square has 4 corners, and so does every rectangle.' },
+  { level: 2, question: 'Mr. Ito bakes cornbread and cuts it into 3 equal columns. Into how many equal shares is the cornbread cut?', answer: 'thirds', options: ['halves', 'thirds', 'fourths'], hint: 'Three equal shares are called thirds.' },
+  { level: 2, question: 'Zoe stacks cubes to build a straight tower. If she uses 3 cubes, how many cubes tall is the tower?', answer: '3', options: ['1', '3', '9'], hint: 'Count the cubes from bottom to top.' },
+  { level: 2, question: 'Which shape has more corners, a triangle or a square?', answer: 'square', options: ['triangle', 'square', 'they have the same number of corners'], hint: 'A square has 4 corners and a triangle has 3.' },
 ]
 
 // ---- Data & graphs, level 2 (2.MD.D.10: single-unit scale, ≤4 categories) ------
