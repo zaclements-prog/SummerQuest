@@ -397,6 +397,277 @@ export const PASSAGES: Passage[] = [
       },
     ],
   },
+  // RL.3.1-3.4: detail answers stated in the text; one inference per passage.
+  {
+    title: "Grandpa's Bird Feeder",
+    level: 3,
+    text: `Every morning in January, Grandpa fills the wooden bird feeder outside his kitchen window. He pours sunflower seeds into one side and slices an orange for the birds that like sweet things. On cold days, dozens of chickadees, cardinals, and sparrows arrive within minutes. Grandpa says watching the birds is his favorite part of the day. His granddaughter Nora can name nine kinds of birds just by looking at them.`,
+    questions: [
+      {
+        question: 'What does Grandpa put in the feeder for birds that like sweet things?',
+        answer: 'a sliced orange',
+        options: ['a sliced orange', 'a handful of seeds', 'a cup of water'],
+        type: 'detail',
+      },
+      {
+        question: 'What is the main idea of this passage?',
+        answer: 'Feeding birds brings joy to Grandpa and Nora.',
+        options: [
+          'Feeding birds brings joy to Grandpa and Nora.',
+          'Birds fly away when the weather turns cold.',
+          'Nora wants to build her own bird feeder.',
+          'Chickadees only eat sunflower seeds.',
+        ],
+        type: 'main-idea',
+      },
+      {
+        question: 'What can we tell about Nora from the story?',
+        answer: 'She knows a lot about birds.',
+        options: [
+          'She knows a lot about birds.',
+          'She is afraid of cold mornings.',
+          'She does not like visiting her grandpa.',
+          'She wants to live near a forest.',
+        ],
+        type: 'inference',
+      },
+    ],
+  },
+  {
+    title: 'A Trip to the Planetarium',
+    level: 3,
+    text: `Third grade rode the bus to the planetarium downtown. The big room went dark, and a dome of glowing stars appeared overhead. A guide pointed out the bright red planet Mars and the rings of Saturn. She explained that the stars we see at night are actually very faraway suns. When the lights came back on, the students filled their worksheets with drawings of what they had seen. Diego told everyone it was the coolest field trip ever.`,
+    questions: [
+      {
+        question: 'What did the guide say the stars really are?',
+        answer: 'faraway suns',
+        options: ['faraway suns', 'big balls of fire', 'close neighbors', 'planes in the sky'],
+        type: 'detail',
+      },
+      {
+        question: 'What did the students do when the lights came back on?',
+        answer: 'drew what they had seen',
+        options: ['drew what they had seen', 'took a nap', 'rode the bus home', 'bought snacks'],
+        type: 'detail',
+      },
+      {
+        question: 'What is this passage mostly about?',
+        answer: 'a class visit to a planetarium',
+        options: [
+          'a class visit to a planetarium',
+          'how to drive a city bus',
+          'a homework assignment about Saturn',
+          'learning to read a paper map',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
+  {
+    title: 'The Ant Garden',
+    level: 3,
+    text: `Nadia sat on the porch steps and watched a line of ants marching along the crack in the walkway. Each ant carried a crumb or a seed bigger than its own head. The ants disappeared into a small mound of dirt near the flowerpot. Nadia ran inside to get her magnifying glass. With it, she could see that the mound had many tiny tunnels going down into the ground like an underground city.`,
+    questions: [
+      {
+        question: 'What were the ants carrying?',
+        answer: 'crumbs or seeds',
+        options: ['crumbs or seeds', 'grains of sand', 'pieces of bark', 'drops of water'],
+        type: 'detail',
+      },
+      {
+        question: 'What did Nadia use to look closer at the mound?',
+        answer: 'a magnifying glass',
+        options: ['a magnifying glass', 'a pair of binoculars', 'her camera'],
+        type: 'detail',
+      },
+      {
+        question: 'What can we guess about Nadia from the story?',
+        answer: 'She is curious about nature.',
+        options: [
+          'She is curious about nature.',
+          'She is scared of small insects.',
+          'She does not like sitting outside.',
+          'She wants to dig up the flowerpot.',
+        ],
+        type: 'inference',
+      },
+    ],
+  },
+  {
+    title: "Kenji's Rainy Day",
+    level: 3,
+    text: `Rain pattered against the windows all Saturday, so Kenji could not play soccer outside. He felt bummed until his mom suggested a bake sale for the animal shelter. Kenji mixed, poured, and decorated rows of star cookies while his little sister boxed them up. On Sunday, rain or shine, they set up a small table by the shelter's front gate. By noon, every cookie had sold, and the shelter worker thanked them for helping the cats and dogs.`,
+    questions: [
+      {
+        question: 'Why did Kenji feel bummed at first?',
+        answer: 'The rain kept him from playing soccer.',
+        options: [
+          'The rain kept him from playing soccer.',
+          'His sister ate all the cookies.',
+          'The animal shelter was closed.',
+          'He lost his soccer ball at school.',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'What did Kenji and his sister do on Sunday?',
+        answer: 'sold cookies for the animal shelter',
+        options: [
+          'sold cookies for the animal shelter',
+          'played soccer in the rain',
+          'adopted a cat and a dog',
+          'cleaned up the shelter yard',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'What lesson does this story teach?',
+        answer: 'A rainy day can still help others.',
+        options: [
+          'A rainy day can still help others.',
+          'Cookies are easier to bake than to sell.',
+          'You should always play soccer outside.',
+          'Little sisters are better at boxing things up.',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
+  {
+    title: "The Lighthouse Keeper's Log",
+    level: 3,
+    text: `Mr. Ellis keeps a logbook at the old lighthouse by the bay. Every evening, he writes down the weather, the sunset time, and the ships he watches pass on their way home. Boats trust his tall light on foggy nights. Tourists visit on Saturdays and love hearing stories from the log, like the night a lost ferry followed his beam safely into the harbor. Mr. Ellis says his job is simple: keep the light bright and the book full.`,
+    questions: [
+      {
+        question: 'What does Mr. Ellis write in his logbook every evening?',
+        answer: 'the weather, sunset time, and passing ships',
+        options: [
+          'the weather, sunset time, and passing ships',
+          'the names of every tourist',
+          'the price of boat tickets',
+          'the temperature of the bay water',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'In the passage, the word "beam" means the lighthouse’s:',
+        answer: 'strong light',
+        options: ['strong light', 'tall stairs', 'front door', 'logbook page'],
+        type: 'vocab',
+      },
+      {
+        question: 'Why do boats trust the lighthouse on foggy nights?',
+        answer: 'its tall light guides them home.',
+        options: [
+          'its tall light guides them home.',
+          'it plays loud music for sailors.',
+          'it gives out free maps.',
+          'it is painted bright red.',
+        ],
+        type: 'detail',
+      },
+    ],
+  },
+  {
+    title: 'Lily and the Ladybugs',
+    level: 3,
+    text: `Lily found a swarm of ladybugs on the milkweed by the fence. Some of her friends thought the beetles were pests, but Mrs. Chen at the garden center told her the truth. Ladybugs eat tiny plant bugs called aphids that hurt flowers. Lily set up a little sign that read "Ladybugs at work — please walk around the flowers!" Now her whole street plants milkweed, and the neighborhood garden has the healthiest roses in town.`,
+    questions: [
+      {
+        question: 'What do ladybugs eat that helps the garden?',
+        answer: 'aphids',
+        options: ['aphids', 'rose petals', 'grass seeds', 'drops of honey'],
+        type: 'detail',
+      },
+      {
+        question: 'Why did Lily put up a sign by the flowers?',
+        answer: 'to keep people from stepping on the ladybugs',
+        options: [
+          'to keep people from stepping on the ladybugs',
+          'to sell plants to her neighbors',
+          'to tell the time the garden opens',
+          'to ask friends to bring her more milkweed',
+        ],
+        type: 'inference',
+      },
+      {
+        question: 'What is the main idea of this passage?',
+        answer: 'Learning about nature helps Lily.',
+        options: [
+          'Learning about nature helps Lily.',
+          'Ladybugs only live on milkweed plants.',
+          'Garden centers sell helpful signs.',
+          'Roses grow best next to tall fences.',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
+  {
+    title: 'The Sleepless Owl',
+    level: 3,
+    text: `Most birds sing at sunrise, but owls are different. When the sun goes down, a great horned owl peels its huge eyes open and slips out of its tree hollow to hunt. Its soft feathers let it float through the air without making a sound, and its ears can hear a mouse rustling under the snow. In the daytime, the owl sleeps high on a branch, looking like a bump of old bark. That camouflage keeps it safe while the busy daylight world goes on below.`,
+    questions: [
+      {
+        question: 'When does the great horned owl hunt?',
+        answer: 'at night',
+        options: ['at night', 'at sunrise', 'at lunchtime', 'on rainy mornings'],
+        type: 'detail',
+      },
+      {
+        question: 'Why is the owl able to fly without sound?',
+        answer: 'Its feathers are very soft.',
+        options: [
+          'Its feathers are very soft.',
+          'It flies very high up.',
+          'It waits for the wind to blow.',
+          'Its wings are extra wide.',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'In the passage, the word "camouflage" means colors or shapes that:',
+        answer: 'help an animal hide',
+        options: ['help an animal hide', 'help an animal run faster', 'make loud noises', 'glow in the dark'],
+        type: 'vocab',
+      },
+    ],
+  },
+  {
+    title: "Omar's Library Card",
+    level: 3,
+    text: `On his birthday, Omar got something better than toys: his very own library card with his name printed on it. He signed up at the big branch by the courthouse, where a librarian showed him how to find books by their numbers on the spines. Omar checked out three books that day, one about volcanoes, one about chess, and one about kids who build model rockets. Every week after school, he and his dad walk to the library to trade books in and out.`,
+    questions: [
+      {
+        question: 'How many books did Omar check out on his first day?',
+        answer: 'three',
+        options: ['three', 'five', 'seven', 'ten'],
+        type: 'detail',
+      },
+      {
+        question: 'What did the librarian show Omar?',
+        answer: 'how to find books by their numbers',
+        options: [
+          'how to find books by their numbers',
+          'where the library keeps its map',
+          'how to use the checkout computer',
+          'which books are too old to read',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'What can we tell about Omar from the story?',
+        answer: 'He really likes reading.',
+        options: [
+          'He really likes reading.',
+          'He wants to be a chess champion.',
+          'He dislikes walking to school.',
+          'He borrows books only one time.',
+        ],
+        type: 'inference',
+      },
+    ],
+  },
 
   // ---- Added level 4 passages ----
   {
