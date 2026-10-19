@@ -132,6 +132,14 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Imagine you build a treehouse. Write a paragraph about what is inside it and who you invite up the ladder.',
       'Invent a brand-new flavor of ice cream. Write a paragraph about what is mixed into it and what you would name it.',
       'Write a paragraph about your classroom. Tell what you see when you walk through the door in the morning.',
+      'Write a paragraph about the library. What kinds of books would you fill a whole shelf with, and why?',
+      'Imagine you are caring for a new puppy for a weekend. Write a paragraph about the three things you would do first.',
+      'You start a garden with one small pot. Write a paragraph about what you plant, what you do each day, and what grows.',
+      'You open a lemonade stand on a hot day. Write a paragraph about who comes by, what you serve, and how the day goes.',
+      'Write a paragraph about the coolest place you have ever visited. Tell what you saw there and what you remember best.',
+      'Write a paragraph about a walk in nature. Tell about the animals, plants, and sounds you might meet along the path.',
+      'Write a paragraph about making pancakes with a grown-up. What do you mix, what do you flip, and how do they taste?',
+      'Keep a weather journal for one imaginary week. Write a paragraph about what the sky did each day that week.',
     ],
     // W.2.3 — brief narratives with a beginning, middle, and ending hint.
     story: [
