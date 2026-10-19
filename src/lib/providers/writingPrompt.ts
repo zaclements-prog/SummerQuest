@@ -240,6 +240,15 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Write a paragraph about how a baker turns simple ingredients into bread. Define dough in your own words and explain the steps in the right order.',
       'Write a paragraph that explains why exercise is important for the heart, the muscles, and even the mood. Give one detail for each.',
       'Write an informative paragraph about the water system that brings clean water to your home. Explain where the water comes from and how it travels to a faucet.',
+      'Write a paragraph explaining how bees help the flowers, fruits, and vegetables that people eat. Define pollination in your own words and describe what a bee does as it flies.',
+      'Explain how the four seasons happen as Earth travels around the Sun. Define orbit in your own words and describe what makes summer different from winter.',
+      'Write a paragraph about how a volcano forms. Define magma in your own words and explain what happens when pressure builds under the ground.',
+      'Write an informative paragraph about why sleep helps a growing child. Explain what sleep does for the body, the memory, and the mood.',
+      'Write a paragraph explaining how composting turns food scraps into rich soil. Define compost in your own words and list what belongs in a compost pile.',
+      'Explain how an animal’s fur, feathers, or scales help it survive. Name two animals and describe what each one’s covering does for it.',
+      'Write a paragraph about how maps and globes show the same world in different ways. Define latitude or longitude in your own words and explain one advantage of each.',
+      'Write an informative paragraph about why bridges come in different shapes. Define arch, beam, or suspension in your own words and explain when each shape works best.',
+      'Write a paragraph that explains how a thermometer shows how hot or cold something is. Define temperature in your own words and describe how water changes as it gets warmer.',
     ],
     // W.4.3 — narrate real or imagined experiences with actions, thoughts, dialogue, and a reflection.
     story: [
