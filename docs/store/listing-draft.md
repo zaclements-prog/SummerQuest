@@ -32,6 +32,9 @@ The copy below follows them.
 
 ## Testing instructions (entered in Step 4, 2026-10-19)
 
+This field is **not autosaved**: it only persists when the app is submitted, so leaving the Review & submit
+page empties it. Re-enter it right before clicking Submit App.
+
 > SummerQuest works fully offline: no account, sign-in or internet needed.
 > First launch: tap "Start your quest", type any name, pick a grade (2nd, 3rd or 4th) and tap "Begin adventure!" to reach the 3D island.
 > Tap the ground to walk. "Map" opens the island map. Narrated lessons are under Tutor (tap "Watch"). The hardware Back button goes back a screen and exits the app from the island.
@@ -166,7 +169,7 @@ Required by Amazon for a Fire tablet listing (TODO(owner): confirm in the consol
 | **Small icon** | 114 × 114 px PNG, transparency allowed | The same artwork, simplified so it reads at small size. |
 | **Screenshots** | 3–10 images, **1280 × 800** or **1920 × 1200** (landscape) | All the same size, real app screens, no device frames needed. |
 | Promotional image | Optional, 1024 × 500 landscape | Only if you want one. |
-| Video | Optional | Only if you want one. |
+| Video | Optional; 720-1080 px wide, 16:9 or 4:3, at least 1200 kbps | Uploaded 2026-10-19: the 38.6 s promo, 1080 × 608 at about 2.8 Mbps (`summerquest-promo-1080w.mp4`; source project `~/Projects/_video-runs/2026-Q4/summerquest-promo`). |
 
 Suggested screenshots, in order (1920 × 1200, a fresh player with some progress):
 
