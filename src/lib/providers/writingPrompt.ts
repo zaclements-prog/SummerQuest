@@ -290,6 +290,7 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Write a story about a bright red mitten that falls off a bus and the driver who helps it find its match. Include the missing child’s feelings and a reflection on small rescues.',
       'Write a story about two friends who start a tiny museum of interesting rocks in a shoebox and invite the whole class to visit. Describe the exhibits, include dialogue, and end with a reflection on pride.',
       'Write a story about a child who discovers that a soft two-note whistle calls the neighbor’s dog to the fence every evening. Tell what the child and the dog do together, and close with a reflection on friendship.',
+      'Write a story about the morning a class plants a vegetable garden and the students must guess which seed packet says what before the sprouts appear. Include dialogue, the surprise of the first green leaves, and a reflection on patience.',
     ],
   },
   // 2nd grade (handoff A2). Standards: CCSS W.2.1–W.2.3 — short opinion,
