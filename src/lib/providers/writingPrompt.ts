@@ -104,6 +104,10 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Write a sentence that would convince a shy friend to try your favorite food.',
       'Should kids help plan family activities? Write a sentence with your opinion and one good reason.',
       'Write a sentence explaining how a tiny seed becomes a tall plant, starting with what happens first.',
+      'What rule would you invent if your class designed a brand-new playground game? Write the rule in one clear sentence.',
+      'Write a sentence that describes the sound of heavy rain by comparing it to something, like drums on a roof.',
+      'Which is better for a family vacation, the beach or the mountains? Write a sentence with your choice and a reason.',
+      'Write a sentence explaining why it matters to be kind to someone you do not know yet.',
     ],
     // W.3.2 — inform or explain: develop a topic with facts, steps, or details.
     paragraph: [
@@ -113,6 +117,9 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Write a paragraph telling how your family celebrates a special day together. Explain what happens first, next, and last.',
       'Pick a problem at school, like a messy supply shelf or a very long lunch line. Write a paragraph proposing a solution and explaining why it would work.',
       'Write a paragraph comparing life on a farm to life in a city. Describe two differences and one thing that stays the same.',
+      'Write a paragraph about a time when something surprised you. Explain what happened and how it made you feel.',
+      'Write a paragraph explaining why trees are important to people and animals. Give at least two details that support your explanation.',
+      'Imagine you are a tour guide at a museum of ordinary things, like socks and spoons. Write a paragraph introducing the very best exhibit.',
     ],
     // W.3.3 — narrate real or imagined experiences with details and dialogue.
     story: [
@@ -122,6 +129,9 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Write a story about two friends who build a raft out of sticks and leaves and sail it across a puddle they call the ocean. Describe what happens on the voyage.',
       'Write a story in which shadows come alive at sunset and slip away before bedtime. Tell what your own shadow did last night.',
       'Write a story about a lost penguin at the airport who is trying to find its way back home. Include at least two lines of dialogue.',
+      'One morning, every sound in your town disappears except the music drifting from an old piano in the town square. Write a story about what happens next.',
+      'Write a story about a garden statue that steps off its pedestal at midnight to straighten the flower beds before the family wakes up. What happens on the way back?',
+      'Write a story about the day you finally beat your big brother, sister, or grown-up at a board game. Tell what you did differently this time.',
     ],
   },
   // 2nd grade (handoff A2). Standards: CCSS W.2.1–W.2.3 — short opinion,
