@@ -47,8 +47,8 @@ export const divisionZone: Zone = {
     {
       id: 'div-practice',
       kind: 'practice',
-      title: 'Critter Parade',
-      description: 'Lead the parade: pick the gate that keeps more friends!',
+      title: 'Speed Run',
+      description: 'Drill division facts under the clock.',
       gameId: 'critterParade',
       providerConfig: {
         kind: 'division',

@@ -25,8 +25,8 @@ export const multiplicationZone: Zone = {
     {
       id: 'mult-practice',
       kind: 'practice',
-      title: 'Critter Parade',
-      description: 'Lead the parade: pick the gate that gives you more friends!',
+      title: 'Speed Run',
+      description: 'How many can you solve in 60 seconds?',
       gameId: 'critterParade',
       providerConfig: { kind: 'multiplication', factorMin: 2, factorMax: 10 },
       // × gates (the grade picks the band: dots for K–1, fractions at 4, decimals at 5)
