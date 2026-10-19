@@ -90,7 +90,9 @@
     {
       "id": "A11",
       "title": "G2_SCIENCE +7 (7->14)",
-      "status": "pending"
+      "status": "done",
+      "commit": "76b793d",
+      "evidence": "G2_SCIENCE 7->14 passages (+7, NGSS 2-PS1.1/2-LS2.1/2-LS2.2/2-LS4.1/2-ESS2.2/2-ESS2.3); bias audit across all 42 q-items: longest-answer 12 (28.6%, <=30%), shortest-answer 9 (21.4%, <=35%); variety windows clean (new scripts/audit-g2-science.mjs with widened word-bag; soil/rain/seeds/green cups collisions in older passages reworded pre-commit); new passage word counts 75-90 (L2 spec 60-110); vitest providers 219 passed, npm test 776 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
     },
     {
       "id": "A12",
@@ -296,6 +298,14 @@
       "commits": "c61c99a: +8 readingComprehension L4 passages (17->25, RL.4.1-4.4); bias audit 75 q-items longest 28.0% / shortest 18.7%; variety windows clean (axolotl, seeds, maps, bats, sea otters, Silk Road, pigeon post, tortoises); new passage word counts 93-106",
       "gates": "full-final (single content commit for the step)",
       "push": "pushed 9091b7a..dd0a7e3 to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 11,
+      "step": "A11",
+      "result": "done",
+      "tests": "vitest providers 219 passed; npm test 776 passed; lint clean; tsc -b clean; build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "76b793d: +7 G2_SCIENCE passages (7->14, NGSS 2-PS1.1/2-LS2.1/2-LS2.2/2-LS4.1/2-ESS2.2/2-ESS2.3); bias audit 42 q-items longest 28.6% / shortest 21.4%; variety windows clean after rewording soil/rain/seeds/green collisions across older passages; added scripts/audit-g2-science.mjs (bias + variety + word-count audit for the G2 science shelf)",
+      "gates": "full-final (single content commit for the step)"
     }
   ],
   "notes": "Target counts from handoff A1 table. One step per interval. Owner-approved 2026-10-18: fast gates policy — intermediate commits run vitest providers only; full battery (vitest+npm test+lint+tsc+build:store) runs on the final commit of each step and step is marked done only on full-battery pass. Fails verification twice -> blocked with error, skip to next. All done/blocked: pause cron + final summary in history."
