@@ -67,6 +67,13 @@ export const G2_GEOMETRY: GeoItem[] = [
   { level: 2, question: 'Mr. Ito bakes cornbread and cuts it into 3 equal columns. Into how many equal shares is the cornbread cut?', answer: 'thirds', options: ['halves', 'thirds', 'fourths'], hint: 'Three equal shares are called thirds.' },
   { level: 2, question: 'Zoe stacks cubes to build a straight tower. If she uses 3 cubes, how many cubes tall is the tower?', answer: '3', options: ['1', '3', '9'], hint: 'Count the cubes from bottom to top.' },
   { level: 2, question: 'Which shape has more corners, a triangle or a square?', answer: 'square', options: ['triangle', 'square', 'they have the same number of corners'], hint: 'A square has 4 corners and a triangle has 3.' },
+  // 2.G.A.1-3 — batch: cutting, solids, and arrays of tiles.
+  { level: 2, question: 'Lucy slices a square piece of toast diagonally from corner to corner. What two shapes does she get?', answer: 'two triangles', options: ['two circles', 'two triangles', 'two hexagons'], hint: 'Each piece has 3 sides: two sides from the toast and one cut line.' },
+  { level: 2, question: 'A basketball is most like which shape?', answer: 'sphere', options: ['circle', 'sphere', 'cube'], hint: 'It is round and solid, so you can hold it in your hands.' },
+  { level: 2, question: 'Gus lines up square tiles in 2 rows of 3 to edge his bulletin board. How many tiles does he use?', answer: '6', options: ['5', '6', '8'], hint: 'Count by rows: 3, 6.' },
+  { level: 2, question: 'Lily folds a round paper napkin in half, then in half again. How many equal shares does the folded napkin make?', answer: '4', options: ['2', '4', '8'], hint: 'Halving twice makes 4 equal shares.' },
+  { level: 2, question: 'How many sides do 2 triangles have in all?', answer: '6', options: ['3', '6', '9'], hint: 'Each triangle has 3 sides: 3 + 3 makes 6.' },
+  { level: 2, question: 'One cake is cut into halves. Another cake the same size is cut into fourths. Which share is bigger?', answer: 'one half of the cake', options: ['one half of the cake', 'one fourth of the cake', 'they are the same size'], hint: 'Fewer equal shares make each share bigger.' },
 ]
 
 // ---- Data & graphs, level 2 (2.MD.D.10: single-unit scale, ≤4 categories) ------
