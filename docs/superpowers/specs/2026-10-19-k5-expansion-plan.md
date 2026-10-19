@@ -186,6 +186,16 @@ Grade 5 is mostly content; the K–1 machinery doesn't apply.
 - **Playthrough bot:** run it per band. A K–1 bot answers via the picture options.
 - **A real kindergartner on a Fire tablet.** A short scripted session with the owner's or a friend's 5-year-old after the pilot. Watch where they get stuck.
 
+## Phase 0 contracts (in the code, shared by the parallel work)
+
+- **`src/lib/gradeBand.ts`:** `contentBand(grade)` returns `k1 | g24 | g5`, choosing which stage set a zone uses. `experienceMode(grade)` returns `listen | readHear | own`, choosing how screens talk. `isListenMode(grade)`.
+- **`src/voice/types.ts`:**
+  - `VoiceRef` is `{ line: 'pack/id' }` or `{ template: 'pack/id', slots }`.
+  - Packs are written with `defineVoicePack` in `src/voice/packs/<pack>.ts`; one default export per file, found automatically by `src/voice/registry.ts`.
+  - `VoiceClock` and `VoicePlayback` have the same shape as the lesson narration clock.
+- **`src/voice/useVoice.ts`:** `useVoice(ref, { autoPlay })` returns `{ text, playing, clock, replay, stop }`. It is a silent stub until the voice system lands; the signature stays.
+- **`src/lib/problem.ts`:** `Problem.speech?: VoiceRef` (how the question is said) and `Problem.pictureOptions?: PictureOption[]` (K–1 picture answers, each standing for one of `options`). The `Picture` kinds are numeral, group, ten-frame, shape, letter, word, emoji and clock.
+
 ## Phases
 
 | Phase | What ships | Notes |

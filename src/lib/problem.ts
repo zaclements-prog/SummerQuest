@@ -11,7 +11,36 @@
  * Games render a brief loading state when a problem isn't ready yet.
  */
 
+import type { VoiceRef } from '../voice/types'
+
 export type ProblemAnswer = string | number
+
+/**
+ * A picture answer for the voice-first grades (K–1, "Listen & Play"): what the
+ * child taps instead of reading an option. Rendered by the Listen & Play kit.
+ */
+export type Picture =
+  | { kind: 'numeral'; n: number }
+  /** A group of objects to count (default emoji 🍎). */
+  | { kind: 'group'; count: number; emoji?: string }
+  | { kind: 'tenFrame'; count: number }
+  | {
+      kind: 'shape'
+      shape: 'circle' | 'square' | 'triangle' | 'rectangle' | 'hexagon' | 'oval' | 'star' | 'cube' | 'sphere' | 'cone' | 'cylinder'
+    }
+  | { kind: 'letter'; ch: string }
+  /** A short printed word (grade 1 sight words). */
+  | { kind: 'word'; text: string }
+  | { kind: 'emoji'; emoji: string }
+  | { kind: 'clock'; hour: number; minute: number }
+
+export interface PictureOption {
+  /** The answer this picture stands for: one of the problem's `options`. */
+  value: ProblemAnswer
+  picture: Picture
+  /** Said when the child taps it ("seven!"). */
+  speech?: VoiceRef
+}
 
 export type ProblemVisual =
   | { kind: 'none' }
@@ -66,6 +95,13 @@ export interface Problem {
   factId?: string
   hint?: string
   explanation?: string
+  /** What the narrator says to ask this question (always in K–1; read-aloud in grades 2–5). */
+  speech?: VoiceRef
+  /**
+   * Picture answers for K–1: shown instead of the text `options`, one per option
+   * (each `value` is in `options`, so `answer` checking is unchanged).
+   */
+  pictureOptions?: PictureOption[]
 }
 
 export interface ProblemProvider {
