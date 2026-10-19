@@ -17,7 +17,9 @@ The copy below follows them.
 ## Entered in the Developer Console (2026-10-18)
 
 - **Step 1:** APK `summerquest-1.0-release.apk` (versionCode 1), signed with the owner's key. **Amazon DRM: No**
-  (free app; turn it on in the release that starts charging).
+  (free app; turn it on in the release that starts charging). On 2026-10-19 it was replaced with
+  `summerquest-1.0-release-higgs.apk` (still versionCode 1; built from master with the Higgs Audio v2 lesson narration,
+  45 clips). Use **Replace** on the existing file: adding a second file with the same version code is rejected.
 - **Step 2:** devices are the 12 Fire tablets Amazon pre-selected (2018 onward). Two are tested:
   Fire HD 10 2023 and Fire HD 8 2022.
   - Countries: all.
