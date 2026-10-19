@@ -14,9 +14,48 @@ TODO(owner): check the limits against the live form.
 Amazon's listing rules forbid prices, ALL CAPS, emoji and repeated words in the listing text.
 The copy below follows them.
 
+## Entered in the Developer Console (2026-10-18)
+
+**Submitted 2026-10-19.** Console status SUBMITTED; Amazon's estimated date to Appstore is Oct 24 2026, 07:30 AM PDT.
+The submission holds the Higgs-narration APK, the promo video and the Higgs credit in the long description.
+
+- **Step 1:** APK `summerquest-1.0-release.apk` (versionCode 1), signed with the owner's key. **Amazon DRM: No**
+  (free app; turn it on in the release that starts charging). On 2026-10-19 it was replaced with
+  `summerquest-1.0-release-higgs.apk` (still versionCode 1; built from master with the Higgs Audio v2 lesson narration,
+  45 clips). Use **Replace** on the existing file: adding a second file with the same version code is rejected.
+- **Step 2:** devices are the 12 Fire tablets Amazon pre-selected (2018 onward). Two are tested:
+  Fire HD 10 2023 and Fire HD 8 2022.
+  - Countries: all.
+  - Audience: restricted, 0-12.
+  - Content rating: all None. **Cartoon violence: None**, the owner's call; the honest
+    alternative was "Moderate" (see `content-rating.md`). Academic: Yes. All five "additional" questions: No.
+  - Collects user data: No. Privacy policy URL set.
+- **Step 3:** Free. The short and long descriptions, bullets and keywords below, as entered: plain hyphens (no en
+  dashes), paragraphs on single lines. Icons and the 7 screenshots are dragged in by the owner.
+
+## Testing instructions (entered in Step 4, 2026-10-19)
+
+This field is **not autosaved**: it only persists when the app is submitted, so leaving the Review & submit
+page empties it. Re-enter it right before clicking Submit App.
+
+> SummerQuest works fully offline: no account, sign-in or internet needed.
+> First launch: tap "Start your quest", type any name, pick a grade (2nd, 3rd or 4th) and tap "Begin adventure!" to reach the 3D island.
+> Tap the ground to walk. "Map" opens the island map. Narrated lessons are under Tutor (tap "Watch"). The hardware Back button goes back a screen and exits the app from the island.
+> Grown-up areas (Parent area, reset progress, change grade) are behind a parental gate: it asks for the product of two numbers between 13 and 29 (for example 17 x 23 = 391). Type the answer. Three wrong answers lock it for 30 seconds.
+> Some stages unlock after earning a star on the stage before.
+
+## Higgs Audio credit (lesson narration and promo voice)
+
+The narration (and the promo video's voice) uses Higgs Audio v2. Its license
+(docs/licensing/higgs-v2.md) recommends this sentence in the store description;
+it is appended to the end of the long description:
+
+> Built with Higgs Materials licensed from Boson AI USA, Inc., Copyright Boson AI USA, Inc., All Rights Reserved and Meta Llama 3 licensed under the Meta Llama 3 Community License, Copyright Meta Platforms, Inc., All Rights Reserved, based on Meta Llama 3.
+
 ## App title
 
-Pick one. TODO(owner): choose, and check the name isn't already taken or trademarked.
+**Chosen (2026-10-18): SummerQuest - Summer Learning Island for Kids** (a plain hyphen: the console's title field rejects the en dash).
+Created in the Developer Console on 2026-10-18: SKU `summerquest`, category Education → Learning Subjects: Math, Problem Solving, Reading, Science, Writing; support contact zaclements@gmail.com and the summerquest-site URL. Amazon App ID `amzn1.devportal.mobileapp.2eb7a4e7193f4af781a6e21a073b8200`. TODO(owner): a quick trademark/Appstore search on "SummerQuest" before submitting.
 
 1. **SummerQuest: Math & Reading Adventure**
 2. **SummerQuest – Summer Learning Island for Kids**
@@ -25,19 +64,18 @@ Pick one. TODO(owner): choose, and check the name isn't already taken or tradema
 ## Short description
 
 > SummerQuest keeps young minds sharp over the summer. Kids explore a bright cartoon island and
-> play short math, reading, writing and science games made for children finishing 2nd, 3rd or
-> 4th grade. Spoken lessons with moving pictures explain each new idea, then fun mini-games
+> play short math, reading, writing and science games made for elementary school, starting with
+> grades 2 to 4. Spoken lessons with moving pictures explain each new idea, then fun mini-games
 > practice it: build towers with multiplication, crack crystal golems with division, read
 > along at Reading Reef and write stories in the Writing Workshop. Kids earn coins to decorate
-> their own island home. No ads, no in-app purchases, no accounts, and no internet needed:
-> everything stays on the tablet.
+> their own island home. No accounts and no internet needed: everything stays on the tablet.
 
 (Fire devices show the first 200 characters most prominently. The opening sentence carries
 the main idea.)
 
 ## Long description
 
-> SummerQuest turns summer learning into an island adventure for kids aged 7 to 9.
+> SummerQuest turns summer learning into an island adventure for elementary-school kids.
 >
 > Your child creates an animal explorer and sets out across a cartoon island. Each part of the
 > island is a subject:
@@ -63,13 +101,13 @@ the main idea.)
 > multiplication questions.
 >
 > The right level for your child
-> Pick 2nd, 3rd or 4th grade when you start. Practice adapts as your child plays, coming back
+> Pick your child's grade when you start (2nd, 3rd and 4th grade today). Practice adapts as your child plays, coming back
 > to the facts they find tricky.
 >
-> Motivation that isn't for sale
+> Motivation from learning
 > Kids earn stars, badges, streaks and coins by learning. Coins buy hats and home decorations
 > for their island home, and every island has a pet egg that hatches and grows up as your
-> child learns there. Coins can never be bought with real money.
+> child learns there.
 >
 > Made for families
 > A daily learning goal of two 15-minute sessions keeps summer practice steady without
@@ -77,22 +115,22 @@ the main idea.)
 > accuracy and learning time, and lets you change the grade level or reset progress.
 >
 > Private by design
-> There are no ads, no in-app purchases, no accounts and no tracking. SummerQuest never
-> connects to the internet. Your child's name and progress are stored only on the tablet, and
-> nothing is ever sent to us or anyone else. It works fully offline, on a plane, in the car or
+> There are no accounts and no tracking, and SummerQuest doesn't connect to the internet. Your
+> child's name and progress are stored only on the tablet; nothing is sent to us or anyone
+> else. It works fully offline, on a plane, in the car or
 > at the cabin.
 
 ## Product feature bullets
 
-1. Math, reading, writing and science for kids finishing 2nd, 3rd or 4th grade (ages 7–9)
+1. Math, reading, writing and science for elementary-school kids, starting with grades 2-4
 2. Twelve island zones to explore, each ending in a big challenge round
 3. Narrated lessons with animated pictures explain each new idea before kids practice it
 4. Hands-on mini-games: times-table grove, fraction forge, division golems, tower defense
 5. Adaptive practice brings back the facts your child finds tricky
 6. Writing practice with instant, friendly feedback on sentences, paragraphs and stories
-7. Earn coins, stars and badges to decorate an island home, never with real money
+7. Earn coins, stars and badges by learning to decorate an island home
 8. Daily learning goal of two 15-minute sessions, plus a Parent area behind a grown-ups check
-9. No ads, no in-app purchases, no accounts, no tracking, and nothing leaves the tablet
+9. No accounts, no tracking, and nothing leaves the tablet
 10. Works completely offline
 
 ## Keywords
@@ -100,7 +138,7 @@ the main idea.)
 Comma-separated, for search on Fire devices. Amazon's submission API wants single words, so
 the list sticks to those:
 
-> math, multiplication, division, fractions, reading, writing, spelling, science, learning,
+> math, multiplication, division, fractions, reading, writing, science, learning,
 > educational, kids, children, homework, summer, practice, school, grade2, grade3, grade4,
 > times, tables, geometry, offline, adventure, island
 
@@ -111,16 +149,18 @@ parents actually use.
 
 - **Category:** Education. TODO(owner): pick the closest subcategory offered (for example,
   Kids or Learning). Add a secondary Kids category if the console allows one.
-- **Target age:** 7–9 (designed for kids finishing 2nd–4th grade). The app is directed at
+- **Target age:** elementary school. Today's content covers grades 2–4 (about ages 7–9): pick the
+  console's age bands that match the content now, and widen them as grades are added. The app is directed at
   children under 13, so Amazon's Child-Directed App Policy applies (see `content-rating.md`).
 - **Content rating answers:** `content-rating.md`.
-- **Privacy labels:** `amazon-privacy-labels.md`. **Privacy policy URL:** TODO(owner): host
-  `privacy-policy.md` and paste its URL.
-- **Price:** TODO(owner): free or paid upfront. There are no in-app purchases either way.
-- **Devices:** Fire tablets. TODO(owner): set the minimum Fire OS version for the wrapper.
-  The web build targets Amazon WebView based on Chromium 120 or newer; check which Fire OS
-  versions ship that.
-- **Developer contact shown on the listing:** TODO(owner): email (and website, if any).
+- **Privacy labels:** `amazon-privacy-labels.md`. **Privacy policy URL:** https://zaclements-prog.github.io/summerquest-site/privacy/
+- **Price:** **Free** (owner, 2026-10-18). (The current version has no in-app purchases; if
+  some are added later, the listing, privacy policy and privacy labels must be updated with it.)
+- **Devices:** Fire tablets. The APK's minSdk is 24 (Android 7, Fire OS 6 and later). Tested on
+  Fire OS 8.3 (Fire HD 10 2023, Fire HD 8 2022, Amazon WebView 148). TODO(owner): in device
+  targeting, prefer Fire OS 7 and 8 tablets; older Fire OS 6 devices may ship WebViews too old
+  for the 3D scenes.
+- **Developer contact shown on the listing:** zaclements@gmail.com; website https://zaclements-prog.github.io/summerquest-site/
 
 ## Images and media
 
@@ -132,7 +172,7 @@ Required by Amazon for a Fire tablet listing (TODO(owner): confirm in the consol
 | **Small icon** | 114 × 114 px PNG, transparency allowed | The same artwork, simplified so it reads at small size. |
 | **Screenshots** | 3–10 images, **1280 × 800** or **1920 × 1200** (landscape) | All the same size, real app screens, no device frames needed. |
 | Promotional image | Optional, 1024 × 500 landscape | Only if you want one. |
-| Video | Optional | Only if you want one. |
+| Video | Optional; 720-1080 px wide, 16:9 or 4:3, at least 1200 kbps | Uploaded 2026-10-19: the 38.6 s promo, 1080 × 608 at about 2.8 Mbps (`summerquest-promo-1080w.mp4`; source project `~/Projects/_video-runs/2026-Q4/summerquest-promo`). |
 
 Suggested screenshots, in order (1920 × 1200, a fresh player with some progress):
 

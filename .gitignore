@@ -35,3 +35,7 @@ public/tts/**/*.mp3.hash
 
 # Tablet perf probe output (scripts/fire-perf.mjs)
 perf-results/
+
+# Release signing keys never go in the repo (scripts/new-release-key.sh keeps them in ~/.summerquest-keys)
+*.jks
+*.keystore

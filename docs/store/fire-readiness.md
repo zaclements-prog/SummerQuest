@@ -18,7 +18,7 @@ The store-listing documents sit beside it in `docs/store/`.
 | Production build health | ✅ 70 routes and 0 page errors on the production build. |
 | Low-end performance | ✅ Fire HD 8 (2022): every 3D screen and lesson ~57–60 fps in both orientations. ✅ Fire HD 10: 3D ~58–59 fps; lessons 44–55 fps while narrating (GPU-bound on its bigger screen). ⏳ Fire 7 not yet tested. See [Performance](#performance). |
 | Kid safety / COPPA | ✅ No ads, no analytics, no SDKs, no network. `npm run build:store` compiles out the AI writing feeder and fails on any network use. Parental gate on the Parent area and every grown-up setting. Store build sweep: 70 routes, 0 errors, 0 outside requests. See `privacy-policy.md`. |
-| Store assets | ✅ Icons 512×512 and 114×114 (`assets/`). ✅ Screenshots 1920×1200. ⏳ Listing text: `listing-draft.md`. |
+| Store assets | ✅ Icons 512×512 and 114×114 (`assets/`). ✅ Screenshots: 7 at 1920×1200 in `screenshots/` (World, two lessons, Times Grove, Candy Forge, map, welcome; Pretty graphics, Fire HD 10 page size). ⏳ Listing text: `listing-draft.md`. |
 | Packaging for Fire OS | ✅ Capacitor Android app in `android/` (2026-10-18). Debug APK builds and passes the emulator checks. ⏳ Release signing key (owner). See [Packaging](#packaging). |
 | Real-device check | ✅ Fire HD 10 and ✅ Fire HD 8 (both Fire OS 8.3), 2026-10-18. ⏳ Fire 7 still to do (see [Packaging](#packaging)). |
 
@@ -46,6 +46,8 @@ The store-listing documents sit beside it in `docs/store/`.
   Status: a root error boundary turns a crash or a failed screen load into a friendly "Oops!" screen. Everything goes silent when the app is backgrounded (sound effects, narration, speech), and a lesson's voice and pictures pause together. Back is handled by the Capacitor app (see [Packaging](#packaging)).
 
 ## Packaging
+
+(Amazon stopped accepting new *web* apps on Oct 31, 2024, as its Developer Console notes, so an Android package is the only route.)
 
 **Done: Capacitor Android app** (`capacitor.config.ts`, `android/`, Capacitor 8). Fire
 tablets run it in Amazon WebView (Chromium), and the web app runs unchanged inside it.
@@ -88,11 +90,10 @@ The toolchain is JDK 21 (`brew install openjdk@21`) and the Android SDK at
 - Still to check on a **Fire 7**, the slowest target. The Fire HD 8 passed: see [Performance](#performance).
 
 **Still to do (owner):**
-- **Release signing key.** Create it once and keep it safe and out of git:
-  `keytool -genkeypair -v -keystore summerquest-release.jks -alias summerquest -keyalg RSA -keysize 2048 -validity 10000`.
-  Then wire it into `android/app/build.gradle` `signingConfigs` through `~/.gradle/gradle.properties`. Amazon re-signs the upload with its own certificate for your account.
+- **Release signing key.** The build is wired (`android/app/build.gradle` reads `SQ_RELEASE_*` from `~/.gradle/gradle.properties`); the key itself is yours to create, once:
+  `bash scripts/new-release-key.sh`. It runs keytool (you type the password), stores the key in `~/.summerquest-keys/` outside the repo, and prints the four `gradle.properties` lines. **Back up the key file and its password.** Then `npm run android:release` builds `app-release.apk`, signed. Without the key the release build comes out unsigned. Verified with a throwaway key: signed, no INTERNET permission. Amazon re-signs the upload with its own certificate for your account.
 - **Version.** Set `versionCode` and `versionName` in `android/app/build.gradle`. They are now 1 and "1.0". Bump `versionCode` on every upload.
-- **App ID.** `com.summerquest.app` is permanent once published. Change it now if you want a different one, in `capacitor.config.ts` and `android/app/build.gradle`.
+- **App ID.** `com.summerquest.app`: confirmed by the owner (2026-10-18). It is permanent once published.
 
 ## Quality passes (2026-10-18)
 
@@ -220,7 +221,7 @@ To measure again, connect the tablet over USB, then run `npm run android:apk`, i
   - grade-2 mixed measurement includes perimeter, elapsed time and change from $10;
   - grade-3 equivalent fractions include fifths and tenths;
   - grade-4 "enrichment" includes averages and angle sums.
-- **Privacy policy:** a contact email, an effective date, and a public URL to host it at (Amazon's listing asks for it).
+- ~~**Privacy policy**~~: done. Contact zaclements@gmail.com, effective October 18, 2026, live at https://zaclements-prog.github.io/summerquest-site/privacy/
 - **Name:** check that "SummerQuest" is clear to use as an app title in your market.
 
 ## Before you submit
