@@ -16,7 +16,8 @@ The copy below follows them.
 
 ## App title
 
-**Chosen (2026-10-18): SummerQuest – Summer Learning Island for Kids.** TODO(owner): a quick trademark/Appstore search on "SummerQuest" before submitting.
+**Chosen (2026-10-18): SummerQuest - Summer Learning Island for Kids** (a plain hyphen: the console's title field rejects the en dash).
+Created in the Developer Console on 2026-10-18: SKU `summerquest`, category Education → Learning Subjects: Math, Problem Solving, Reading, Science, Writing; support contact zaclements@gmail.com and the summerquest-site URL. Amazon App ID `amzn1.devportal.mobileapp.2eb7a4e7193f4af781a6e21a073b8200`. TODO(owner): a quick trademark/Appstore search on "SummerQuest" before submitting.
 
 1. **SummerQuest: Math & Reading Adventure**
 2. **SummerQuest – Summer Learning Island for Kids**
