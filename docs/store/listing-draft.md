@@ -14,6 +14,20 @@ TODO(owner): check the limits against the live form.
 Amazon's listing rules forbid prices, ALL CAPS, emoji and repeated words in the listing text.
 The copy below follows them.
 
+## Entered in the Developer Console (2026-10-18)
+
+- **Step 1:** APK `summerquest-1.0-release.apk` (versionCode 1), signed with the owner's key. **Amazon DRM: No**
+  (free app; turn it on in the release that starts charging).
+- **Step 2:** devices are the 12 Fire tablets Amazon pre-selected (2018 onward). Two are tested:
+  Fire HD 10 2023 and Fire HD 8 2022.
+  - Countries: all.
+  - Audience: restricted, 0-12.
+  - Content rating: all None. **Cartoon violence: None**, the owner's call; the honest
+    alternative was "Moderate" (see `content-rating.md`). Academic: Yes. All five "additional" questions: No.
+  - Collects user data: No. Privacy policy URL set.
+- **Step 3:** Free. The short and long descriptions, bullets and keywords below, as entered: plain hyphens (no en
+  dashes), paragraphs on single lines. Icons and the 7 screenshots are dragged in by the owner.
+
 ## App title
 
 **Chosen (2026-10-18): SummerQuest - Summer Learning Island for Kids** (a plain hyphen: the console's title field rejects the en dash).
@@ -26,7 +40,7 @@ Created in the Developer Console on 2026-10-18: SKU `summerquest`, category Educ
 ## Short description
 
 > SummerQuest keeps young minds sharp over the summer. Kids explore a bright cartoon island and
-> play short math, reading, writing and science games for elementary-school kids, starting with
+> play short math, reading, writing and science games made for elementary school, starting with
 > grades 2 to 4. Spoken lessons with moving pictures explain each new idea, then fun mini-games
 > practice it: build towers with multiplication, crack crystal golems with division, read
 > along at Reading Reef and write stories in the Writing Workshop. Kids earn coins to decorate
@@ -84,7 +98,7 @@ the main idea.)
 
 ## Product feature bullets
 
-1. Math, reading, writing and science for elementary-school kids, starting with grades 2–4
+1. Math, reading, writing and science for elementary-school kids, starting with grades 2-4
 2. Twelve island zones to explore, each ending in a big challenge round
 3. Narrated lessons with animated pictures explain each new idea before kids practice it
 4. Hands-on mini-games: times-table grove, fraction forge, division golems, tower defense
@@ -100,7 +114,7 @@ the main idea.)
 Comma-separated, for search on Fire devices. Amazon's submission API wants single words, so
 the list sticks to those:
 
-> math, multiplication, division, fractions, reading, writing, spelling, science, learning,
+> math, multiplication, division, fractions, reading, writing, science, learning,
 > educational, kids, children, homework, summer, practice, school, grade2, grade3, grade4,
 > times, tables, geometry, offline, adventure, island
 
@@ -116,7 +130,7 @@ parents actually use.
   children under 13, so Amazon's Child-Directed App Policy applies (see `content-rating.md`).
 - **Content rating answers:** `content-rating.md`.
 - **Privacy labels:** `amazon-privacy-labels.md`. **Privacy policy URL:** https://zaclements-prog.github.io/summerquest-site/privacy/
-- **Price:** TODO(owner): free or paid upfront. (The current version has no in-app purchases; if
+- **Price:** **Free** (owner, 2026-10-18). (The current version has no in-app purchases; if
   some are added later, the listing, privacy policy and privacy labels must be updated with it.)
 - **Devices:** Fire tablets. The APK's minSdk is 24 (Android 7, Fire OS 6 and later). Tested on
   Fire OS 8.3 (Fire HD 10 2023, Fire HD 8 2022, Amazon WebView 148). TODO(owner): in device

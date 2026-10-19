@@ -22,7 +22,7 @@ bright and friendly.
 
 | Category | Answer | What's in the app |
 |---|---|---|
-| **Cartoon / fantasy violence** | **Mild, infrequent** | See "Cartoon conflict" below. |
+| **Cartoon / fantasy violence** | **Mild, infrequent.** Entered as **None** by the owner (2026-10-18); the console only offers None / Moderate / Strong. | See "Cartoon conflict" below. If Amazon's review questions it, "Moderate" is the honest fallback. |
 | Realistic violence | None | No realistic people, weapons or injuries. |
 | Blood and gore | None | |
 | Fear / horror | None | The "bosses" are friendly cartoon characters shown as big emoji: a goat, an owl, a frog king, a pufferfish, a cactus cyclops, a dragon and a sand worm. |
