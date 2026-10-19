@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { useProgress } from '../store/progress'
 import { DEFAULT_CHARS_PER_SEC, alignWords, timeAtChar, type TimedWord } from '../tutoring/motion/cues'
 import { claimNarrationAudio, controlsNarrationAudio, releaseNarrationAudio } from '../platform/web/audioUnlock'
+import { releaseSpeechChannel, speechChannelHeldByOther, takeSpeechChannel } from './speechChannel'
 
 /**
  * One rendered narration clip (public/tts/manifest.json). `duration` (seconds)
@@ -163,10 +164,19 @@ export function useNarration(lessonId: string, stepId: string, text: string) {
       audio.pause()
     }
     releaseNarrationAudio(audioOwner)
-    window.speechSynthesis?.cancel()
+    // the speech queue is shared with voice lines: leave it alone while one of them speaks
+    if (!speechChannelHeldByOther(audioOwner)) window.speechSynthesis?.cancel()
+    releaseSpeechChannel(audioOwner)
     goVirtual(at)
     setPlaying(false)
     setPaused(false)
+  }
+
+  // One voice at a time (src/lib/speechChannel.ts): a voice line, or another
+  // narration, starting to speak stops this one and the visuals carry on
+  // silently. A narration frozen by pause() stays frozen (it isn't sounding).
+  const interruptNarration = () => {
+    if (!clockRef.current.paused) stop()
   }
 
   /**
@@ -214,6 +224,7 @@ export function useNarration(lessonId: string, stepId: string, text: string) {
         return
       }
       const gen = genRef.current
+      takeSpeechChannel(audioOwner, interruptNarration)
       setPlaying(true)
       audio.play().catch((e: unknown) => {
         if (e instanceof DOMException && e.name === 'AbortError') return
@@ -234,6 +245,7 @@ export function useNarration(lessonId: string, stepId: string, text: string) {
       const gen = ++genRef.current
       const offset = from / s.cps
       s.start = perf() - offset * 1000
+      takeSpeechChannel(audioOwner, interruptNarration)
       speak(text.slice(from), setPlaying, {
         onStart: () => {
           if (gen === genRef.current) clockRef.current.start = perf() - offset * 1000
@@ -286,6 +298,7 @@ export function useNarration(lessonId: string, stepId: string, text: string) {
       backgroundRef.current = 'restart'
       return
     }
+    takeSpeechChannel(audioOwner, interruptNarration)
     startingRef.current = true
     const gen = genRef.current
     const isCurrent = () => gen === genRef.current

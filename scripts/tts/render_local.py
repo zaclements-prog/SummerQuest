@@ -14,7 +14,18 @@ Ref pair: a ~12-15 s reference wav + its EXACT transcript .txt next to it.
 Usage (from the repo root):
   ~/Projects/contentgen/higgs-mlx/.venv/bin/python3 scripts/tts/render_local.py \
       --engine higgs --ref-audio /path/teacher_ref.wav \
-      [--only fractions] [--only fractions/step] [--force]
+      [--only fractions] [--only fractions/step] [--force] [--dry-run]
+
+Voice lines (K-5 screens and games; docs/narration-handoff.md, "Voice lines"):
+  ... render_local.py --set voice --engine higgs --ref-audio /path/teacher_ref.wav \
+      [--only ui] [--only slots/number] [--only k-math/tapGroupWith] \
+      [--slot-frame '{w},'] [--piece-frame '{w}'] [--force] [--dry-run]
+  Reads src/voice/voiceLines.json + src/voice/voiceId.json (run `npm run voice:dump`
+  first), writes public/voice/<key>.mp3 + .words.json and public/voice/manifest.json
+  the same way. Clips of <= 3 words get the short-clip gates (exact canonical words
+  from Whisper, a short-clip duration window); stitched pieces and slot words are
+  trimmed tight so they play back to back. --dry-run prints the work list and loads
+  nothing (no engine, no --ref-audio needed).
 
 Reads  src/tutoring/narration.json + src/tutoring/narrationVoice.json.
 Writes public/tts/<lesson>/<step>.mp3 + .words.json, updates public/tts/manifest.json
@@ -31,11 +42,17 @@ from pathlib import Path
 
 os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 
+import voicelines as vl  # noqa: E402  (pure helpers, next to this file)
+
 REPO = Path(__file__).resolve().parents[2]
 NARR = REPO / "src/tutoring/narration.json"
 VOICEF = REPO / "src/tutoring/narrationVoice.json"
 TTS_DIR = REPO / "public/tts"
 MANIFEST = TTS_DIR / "manifest.json"
+PUBLIC = REPO / "public"
+VOICE_LINES = REPO / "src/voice/voiceLines.json"
+VOICE_ID = REPO / "src/voice/voiceId.json"
+VOICE_MANIFEST = PUBLIC / "voice/manifest.json"
 SAMPLE_RATE = 24000
 WPS_EST = 2.6  # rough words-per-second for teacher pace, for sanity windows
 
@@ -78,6 +95,14 @@ def postprocess(in_wav: Path, out_mp3: Path):
         "-af", ("silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.12,"
                "areverse,silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.25,areverse,"
                "loudnorm=I=-16:TP=-1.5:LRA=11"),
+        "-ac", "1", "-ar", str(SAMPLE_RATE), "-b:a", "56k", str(out_mp3)])
+
+
+def postprocess_voice(in_wav: Path, out_mp3: Path, tight: bool):
+    """postprocess() for voice lines: the same chain, but stitched pieces and
+    slot words keep almost no silence at either end (the player adds the gaps)."""
+    lead, trail = vl.TIGHT_TRIM if tight else vl.NORMAL_TRIM
+    ff(["-i", str(in_wav), "-af", vl.silence_filter(lead, trail),
         "-ac", "1", "-ar", str(SAMPLE_RATE), "-b:a", "56k", str(out_mp3)])
 
 
@@ -184,23 +209,26 @@ def split_sentences(text: str) -> list[str]:
 
 
 def render_verified(engine, aligner, text: str, tmp_dir: Path,
-                   max_attempts: int = 3) -> tuple[Path, float]:
+                   max_attempts: int = 3, say: str | None = None,
+                   post=None) -> tuple[Path, float]:
     """Synthesize, trim/loudnorm, and gate on three checks: duration window,
     independent-ASR word recovery >= 0.94 (catches truncation that forced
     alignment would mask), and spoken pace <= 210 wpm (approved-sample pace).
-    Misses re-render at a hotter temperature; nothing bad ships."""
+    Misses re-render at a hotter temperature; nothing bad ships.
+    (Voice lines: `say` is what the model is given when a frame adds
+    punctuation, `post` their post-processing; lessons pass neither.)"""
     words = len(text.split())
     lo, hi = duration_window(words)
     last = "?"
     for attempt in range(1, max_attempts + 1):
-        raw = engine.take(text, tmp_dir, attempt)
+        raw = engine.take(say or text, tmp_dir, attempt)
         if isinstance(raw, str):
             last = raw
             continue
         out = tmp_dir / "verified.mp3"
         if out.exists():
             out.unlink()
-        postprocess(raw, out)
+        (post or postprocess)(raw, out)
         dur = mp3_duration(out)
         if not (lo <= dur <= hi):
             last = f"duration {dur:.1f}s outside [{lo:.1f},{hi:.1f}]s for {words}w"
@@ -216,6 +244,32 @@ def render_verified(engine, aligner, text: str, tmp_dir: Path,
             continue
         return out, dur
     raise RuntimeError(f"synthesis failed after {max_attempts} attempts ({last})")
+
+
+def render_verified_short(engine, aligner, text: str, tmp_dir: Path, say: str,
+                          tight: bool, max_attempts: int = 5) -> tuple[Path, float]:
+    """The gates for clips of <= 3 words (voice lines: "Great job!", "seven",
+    "Tap the"): a short-clip duration window and Whisper must hear EXACTLY the
+    clip's words in canonical form (voicelines.short_gate). Recovery ratios and
+    pace mean nothing on one or two words, and a wrong word is the whole clip.
+    Every attempt is a fresh draw at the next temperature."""
+    last = "?"
+    for attempt in range(1, max_attempts + 1):
+        raw = engine.take(say, tmp_dir, attempt)
+        if isinstance(raw, str):
+            last = raw
+            continue
+        out = tmp_dir / "verified.mp3"
+        if out.exists():
+            out.unlink()
+        postprocess_voice(raw, out, tight)
+        dur = mp3_duration(out)
+        why = vl.short_gate(text, aligner.transcribe(out), dur)
+        if why:
+            last = why
+            continue
+        return out, dur
+    raise RuntimeError(f"short clip failed after {max_attempts} attempts ({last})")
 
 
 def render_stitched(engine, aligner, text: str, tmp_dir: Path,
@@ -314,6 +368,11 @@ class WordAligner:
             wpm = 0
         return rec, wpm
 
+    def transcribe(self, mp3: Path) -> str:
+        """What Whisper hears, as plain text (the short-clip gate)."""
+        res = self.model.transcribe(str(mp3), word_timestamps=True)
+        return " ".join(w.word.strip() for seg in res.segments for w in seg.words)
+
     def align(self, mp3: Path, text: str):
         res = self.model.align(str(mp3), text)
         words = []
@@ -340,11 +399,25 @@ def main():
                     help="qwen = Qwen3-TTS clone; higgs = Higgs Audio v2 3B MLX clone")
     ap.add_argument("--model", default=None,
                     help="engine model: dir for qwen, HF repo id for higgs")
-    ap.add_argument("--ref-audio", required=True, help="reference wav for cloning (~12-15 s)")
+    ap.add_argument("--ref-audio", default=None,
+                    help="reference wav for cloning (~12-15 s); required unless --dry-run")
     ap.add_argument("--ref-text", default="", help="exact transcript (or a .txt sibling)")
-    ap.add_argument("--only", default=None, help="lessonId, lessonId/stepId, or comma-separated list")
+    ap.add_argument("--only", default=None, help="lessonId, lessonId/stepId, or comma-separated list "
+                    "(--set voice: a clip key, pack, template or slot kind)")
     ap.add_argument("--force", action="store_true")
+    ap.add_argument("--set", choices=["lessons", "voice"], default="lessons",
+                    help="lessons = lesson narration (public/tts); voice = voice lines (public/voice)")
+    ap.add_argument("--dry-run", action="store_true",
+                    help="print the work list and exit (loads no models)")
+    ap.add_argument("--slot-frame", default="{w}",
+                    help="voice set: punctuation around slot words for the model, e.g. '{w},'")
+    ap.add_argument("--piece-frame", default="{w}",
+                    help="voice set: punctuation around carrier pieces that run into a slot, e.g. '{w}...'")
     args = ap.parse_args()
+    if not args.dry_run and not args.ref_audio:
+        ap.error("--ref-audio is required (or use --dry-run)")
+    if args.set == "voice":
+        return voice_main(args)
 
     default_models = {
         "qwen": str(Path.home() / "Projects/contentgen/qwen3-tts/models/Qwen3-TTS-12Hz-1.7B-Base-8bit"),
@@ -364,6 +437,19 @@ def main():
             if only and not any(key == o or lesson_id == o for o in only):
                 continue
             targets.append((key, st["text"]))
+
+    if args.dry_run:
+        todo = 0
+        for key, text in targets:
+            entry = manifest.get(key)
+            ok = bool(not args.force and entry and entry.get("hash") == sha1_10(voice, text)
+                      and (TTS_DIR / f"{key}.mp3").exists() and (TTS_DIR / f"{key}.words.json").exists())
+            todo += 0 if ok else 1
+            print(f"{'ok    ' if ok else 'render'} {key:<32} {len(text.split()):>3}w -> public/tts/{key}.mp3")
+        print(f"dry run (lessons, voice {voice!r}): {todo} to render, {len(targets) - todo} up to date")
+        if not targets:
+            sys.exit("FATAL: nothing matched --only")
+        return
 
     TTS_DIR.mkdir(parents=True, exist_ok=True)
     engine = None
@@ -413,6 +499,100 @@ def main():
 
     print(f"done: {done} rendered, {skipped} up-to-date, {failed} failed")
     if done == 0 and skipped == 0:
+        sys.exit("FATAL: nothing matched --only")
+    if failed:
+        sys.exit(1)
+
+
+def make_engine(args, model: str):
+    if args.engine == "higgs":
+        return HiggsEngine(model, Path(args.ref_audio), args.ref_text)
+    return QwenEngine(Path(model), Path(args.ref_audio), args.ref_text)
+
+
+def voice_main(args):
+    """`--set voice`: render src/voice/voiceLines.json into public/voice.
+    Idempotent and resumable exactly like the lesson set: a clip whose manifest
+    hash matches and whose files exist is skipped; the manifest is rewritten
+    atomically after every clip."""
+    default_models = {
+        "qwen": str(Path.home() / "Projects/contentgen/qwen3-tts/models/Qwen3-TTS-12Hz-1.7B-Base-8bit"),
+        "higgs": "mlx-community/higgs-audio-v2-3B-mlx-q8",
+    }
+    model = args.model or default_models[args.engine]
+    for frame in (args.slot_frame, args.piece_frame):
+        problem = vl.check_frame(frame)
+        if problem:
+            sys.exit(f"FATAL: {problem}")
+    voice = load_json(VOICE_ID)["voice"]
+    catalog = load_json(VOICE_LINES)
+    manifest = load_json(VOICE_MANIFEST, default={})
+    only = args.only.split(",") if args.only else None
+    try:
+        targets = vl.load_targets(catalog, voice, only)
+    except ValueError as e:
+        sys.exit(f"FATAL: {e}")
+    work = vl.work_list(targets, manifest, PUBLIC, args.force)
+
+    if args.dry_run:
+        for t, todo in work:
+            print(vl.describe(t, todo, args.slot_frame, args.piece_frame))
+        n = sum(1 for _, todo in work if todo)
+        short = sum(1 for t, _ in work if vl.is_short(t["text"]))
+        print(f"dry run (voice lines, voice {voice!r}): {n} to render, {len(work) - n} up to date ({short} short-gated)")
+        if not work:
+            sys.exit("FATAL: nothing matched --only")
+        return
+
+    engine = None
+    aligner = None
+    done = skipped = failed = 0
+    tmp_dir = Path(tempfile.mkdtemp(prefix="sq_voice_"))
+    for t, todo in work:
+        key, text = t["key"], t["text"]
+        if not todo:
+            skipped += 1
+            continue
+        if engine is None:
+            engine = make_engine(args, model)
+            aligner = WordAligner()
+        say = vl.prompt_text(t, args.slot_frame, args.piece_frame)
+        tight = vl.tight(t)
+        try:
+            if vl.is_short(text):
+                verified, dur = render_verified_short(engine, aligner, text, tmp_dir, say, tight)
+            else:
+                def post(i, o, tight=tight):
+                    postprocess_voice(i, o, tight)
+                try:
+                    verified, dur = render_verified(engine, aligner, text, tmp_dir, say=say, post=post)
+                except RuntimeError as e:
+                    # the breath-group fallback, as for lessons; whole lines only (a
+                    # stitched piece must stay one tight take)
+                    if args.engine != "higgs" or tight:
+                        raise
+                    print(f"  retry-stitched {key}: {e}", flush=True)
+                    verified, dur = render_stitched(engine, aligner, text, tmp_dir)
+        except RuntimeError as e:
+            print(f"FAILED {key}: {e}", flush=True)
+            failed += 1
+            continue
+        mp3 = PUBLIC / t["file"]
+        wordsf = PUBLIC / vl.words_file(t["file"])
+        mp3.parent.mkdir(parents=True, exist_ok=True)
+        os.replace(verified, mp3)
+        words = aligner.align(mp3, text)
+        atomic_write(wordsf, json.dumps({"words": words}, ensure_ascii=False))
+        manifest[key] = {"file": t["file"], "hash": t["hash"],
+                         "duration": round(dur, 2), "words": vl.words_file(t["file"])}
+        ordered = {k: manifest[k] for k in sorted(manifest)}
+        VOICE_MANIFEST.parent.mkdir(parents=True, exist_ok=True)
+        atomic_write(VOICE_MANIFEST, json.dumps(ordered, indent=2) + "\n")
+        print(f"wrote {key} {dur:.2f}s {len(words)} words")
+        done += 1
+
+    print(f"done: {done} rendered, {skipped} up-to-date, {failed} failed")
+    if not work:
         sys.exit("FATAL: nothing matched --only")
     if failed:
         sys.exit(1)

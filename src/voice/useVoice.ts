@@ -1,60 +1,72 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { DEFAULT_CHARS_PER_SEC } from '../tutoring/motion/cues'
-import { voiceText } from './registry'
-import type { VoiceClock, VoicePlayback, VoiceRef } from './types'
-
-const perf = () => (typeof performance !== 'undefined' ? performance.now() : Date.now())
+import { useEffect, useMemo, useState } from 'react'
+import { useProgress } from '../store/progress'
+import { browserVoiceEnv } from './env'
+import { VoicePlayer } from './player'
+import { planVoice, voiceRefKey } from './playlist'
+import type { VoicePlayback, VoiceRef } from './types'
 
 /**
  * Say a voice line (and give its timeline to anything animating with it).
  *
- * CONTRACT STUB (phase 0): runs the timeline silently, estimated from the text
- * length, so the guide and the Listen & Play screens can be built against the
- * final API. The voice-system work replaces the inside with the recorded clips
- * (played on the gesture-unlocked shared <audio> element, word-timed), stitched
- * templates, and the device-speech fallback — keeping this signature.
+ * Plays the line's recording from public/voice (a fixed line or a `whole`
+ * template is one clip; a `stitch` template is its carrier pieces and slot
+ * values back to back) on the shared, gesture-unlocked <audio> element; falls
+ * back to device speech reading the caption when a recording is missing, and
+ * to a silent estimated timeline when there is no device speech or sound is
+ * off. See src/voice/player.ts.
  *
- * `ref` null = say nothing. A new ref (by value) restarts; `autoPlay: false`
- * waits for `replay()`.
+ * - `ref` null = say nothing. A new ref (by value) interrupts and restarts.
+ * - `autoPlay: false` waits for `replay()`; the clock holds at 0 until then.
+ * - Sound off (the kid's 🔇 setting): the clock still runs, silently.
+ * - The app going to the background freezes the voice and the clock together;
+ *   coming back carries both on from the same moment.
+ * - One voice at a time: this line interrupts any other voice line or lesson
+ *   narration that is speaking, and is interrupted by the next one.
+ * - `stop()` silences it; the clock carries on silently from where it was.
  */
 export function useVoice(ref: VoiceRef | null, opts: { autoPlay?: boolean } = {}): VoicePlayback {
   const autoPlay = opts.autoPlay ?? true
-  const key = ref ? JSON.stringify(ref) : ''
-  const text = useMemo(() => (key ? voiceText(JSON.parse(key) as VoiceRef) : ''), [key])
-  const textRef = useRef(text)
-  const startRef = useRef(perf())
+  const soundEnabled = useProgress((s) => s.soundEnabled)
+  const key = ref ? voiceRefKey(ref) : ''
+  // throws on an unknown line or a bad slot value (a test catches the typo, not a child)
+  const plan = useMemo(() => (key ? planVoice(JSON.parse(key) as VoiceRef) : null), [key])
+  const [player] = useState(() => new VoicePlayer(browserVoiceEnv()))
   const [playing, setPlaying] = useState(false)
 
   useEffect(() => {
-    textRef.current = text
-    startRef.current = perf()
-    if (!text || !autoPlay) return
-    // timers, not a synchronous setState: the effect only schedules the "speaking" window
-    const on = window.setTimeout(() => setPlaying(true), 0)
-    const off = window.setTimeout(() => setPlaying(false), (text.length / DEFAULT_CHARS_PER_SEC) * 1000)
-    return () => {
-      window.clearTimeout(on)
-      window.clearTimeout(off)
-      setPlaying(false)
-    }
-  }, [text, autoPlay])
+    player.setListener(setPlaying)
+    return () => player.setListener(null)
+  }, [player])
 
-  const clock = useMemo<VoiceClock>(() => {
-    const duration = () => Math.max(0.5, textRef.current.length / DEFAULT_CHARS_PER_SEC)
-    return {
-      now: () => (perf() - startRef.current) / 1000,
-      duration,
-      timeAtChar: (i) => (textRef.current.length ? (i / textRef.current.length) * duration() : 0),
+  // Every new line (or sound switched on / off): load it, then say it, or run its
+  // timeline silently. Deferred so the effect doesn't start sound synchronously.
+  useEffect(() => {
+    player.load(plan)
+    if (!plan || !autoPlay) return
+    if (!soundEnabled) {
+      player.runSilent()
+      return () => player.stop()
     }
-  }, [])
+    const t = window.setTimeout(() => void player.play(), 0)
+    return () => {
+      window.clearTimeout(t)
+      player.stop()
+    }
+  }, [player, plan, soundEnabled, autoPlay])
+
+  useEffect(() => {
+    const onVisibility = () => player.onVisibility(document.visibilityState === 'hidden')
+    document.addEventListener('visibilitychange', onVisibility)
+    return () => document.removeEventListener('visibilitychange', onVisibility)
+  }, [player])
+
+  useEffect(() => () => player.dispose(), [player])
 
   return {
-    text,
+    text: plan?.caption ?? '',
     playing,
-    clock,
-    replay: () => {
-      startRef.current = perf()
-    },
-    stop: () => setPlaying(false),
+    clock: player.clock,
+    replay: () => player.replay(soundEnabled),
+    stop: () => player.stop(),
   }
 }

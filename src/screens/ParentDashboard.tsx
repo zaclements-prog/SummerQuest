@@ -27,6 +27,7 @@ import { GRADE_LABEL, GRADE_SHORT_LABEL, type GradeLevel } from '../lib/gradeTie
 import { OFFERED_GRADES } from '../lib/features'
 import { adultPets, hatchedPets, petStages, zoneStarTotals } from '../lib/pets/growth'
 import { PETS } from '../lib/pets/catalog'
+import VoiceCheck from '../voice/VoiceCheck'
 
 export default function ParentDashboard() {
   const { player, coins, zones, stats, resetPlayer, setGrade, lessonsDone } = useProgress()
@@ -94,6 +95,9 @@ export default function ParentDashboard() {
           message="Have your child set up their avatar to start their quest — progress and stats will show up here."
           cta={{ label: 'Set up a player', to: '/' }}
         />
+        <Panel emoji="🔈" title="Voice check" tone="ocean">
+          <VoiceCheck />
+        </Panel>
         <p className="text-xs leading-relaxed text-ink-700 px-1 mt-2">
           Voiceovers created with Higgs Audio&nbsp;2, licensed from Boson AI
           (based on Meta Llama&nbsp;3), and Qwen3-TTS. Voice assets are
@@ -319,6 +323,13 @@ export default function ParentDashboard() {
             </Panel>
           </motion.div>
         )}
+
+        {/* ── Voice check (does this device play the voice?) ─────────────── */}
+        <motion.div variants={item}>
+          <Panel emoji="🔈" title="Voice check" tone="ocean">
+            <VoiceCheck />
+          </Panel>
+        </motion.div>
 
         {/* ── Credits & licensing ───────────────────────────────────────── */}
         <motion.div variants={item}>
