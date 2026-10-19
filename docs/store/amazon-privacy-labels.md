@@ -71,7 +71,11 @@ These depend on the native wrapper for Fire OS, not on the web build:
 - ✅ No SDKs: only Capacitor core, `@capacitor/app` (Back button) and
   `@capacitor-community/keep-awake`. If an SDK is ever added, these answers and the privacy
   policy must change first.
-- ✅ Text-to-speech: all 45 lesson steps have recorded narration, so the device voice fallback
-  isn't used in practice (it would only speak lesson text).
+- ✅ Text-to-speech: all 45 lesson steps have recorded narration. The device voice is only a
+  fallback for a missing recording: it reads on-screen text (lesson text, questions and
+  instructions), never the child's name or anything the child typed, and runs on the tablet
+  (on-device voices preferred; the APK has no `INTERNET` permission). Recorded voice lines for
+  screens and questions (`public/voice`) are pre-rendered and shipped in the app like the
+  lesson clips. If a native text-to-speech plugin is ever added, re-check the SDK answer above.
 - Run `npm run build:store` for every release. Its check fails the build if the bundle
   can reach the network.

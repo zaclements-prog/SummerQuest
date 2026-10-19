@@ -56,9 +56,11 @@ back for you if the app is removed.
 - **No links out of the app.** There are no web pages, other apps or stores to tap through to.
 - **No location, camera, microphone or contacts.** The app doesn't ask for any of them.
 
-Some lessons may not have a recorded voice clip. Then the app can read the lesson text aloud
-with the tablet's own built-in voice. It only reads the lesson text. It never reads your
-child's name or anything your child typed.
+The app speaks lessons and, for younger children, questions and instructions, using recorded
+voice clips included in the app. If a recording is missing, the app can read the words on the screen aloud with
+the tablet's own built-in voice instead: the lesson text, a question, or an instruction such
+as "Tap the star to start!". It never reads your child's name or anything your child typed.
+The built-in voice runs on the tablet, and nothing it reads leaves the device.
 
 ## Grown-ups only
 

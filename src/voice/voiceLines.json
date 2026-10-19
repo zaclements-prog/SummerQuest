@@ -1,0 +1,41 @@
+{
+  "voice": "higgs-audio-v2-mlx-q8:clone:calm-teacher-v1:k",
+  "clips": {
+    "ui/tapToStart": {
+      "text": "Tap the star to start!",
+      "hash": "92f6e6330e",
+      "kind": "line",
+      "file": "voice/ui/tapToStart.mp3"
+    },
+    "ui/sayItAgain": {
+      "text": "Tap the speaker to hear it again.",
+      "hash": "24d0e16867",
+      "kind": "line",
+      "file": "voice/ui/sayItAgain.mp3"
+    },
+    "ui/greatJob": {
+      "text": "Great job!",
+      "hash": "93a8c4186e",
+      "kind": "line",
+      "file": "voice/ui/greatJob.mp3"
+    },
+    "ui/tryAgain": {
+      "text": "Hmm, let's look again.",
+      "hash": "498716e4e3",
+      "kind": "line",
+      "file": "voice/ui/tryAgain.mp3"
+    },
+    "ui/youGotStars": {
+      "text": "You got stars! Tap the arrow to keep going.",
+      "hash": "64611e596b",
+      "kind": "line",
+      "file": "voice/ui/youGotStars.mp3"
+    },
+    "ui/voiceCheck": {
+      "text": "Hello! This is the recorded teacher voice.",
+      "hash": "ccbc4d0433",
+      "kind": "line",
+      "file": "voice/ui/voiceCheck.mp3"
+    }
+  }
+}
