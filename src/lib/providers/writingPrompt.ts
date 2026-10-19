@@ -149,6 +149,11 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Imagine a day when the power goes out at home. Write a paragraph about the fun things your family does by candlelight.',
       'Write a paragraph about your favorite day of the school week. What classes or games make it the best?',
       'If animals could talk at the zoo, what do you think they would say about their day? Write a paragraph about it.',
+      'You plan a camping trip in your backyard. Write a paragraph about what you pack, where you set up the tent, and what you see by the fire.',
+      'Imagine you could teach your class for one day. Write a paragraph about what you would teach and how everyone would practice it.',
+      'Write a paragraph about feeding birds in winter. What do you put out, and which birds come to visit?',
+      'You plan a surprise party for a friend. Write a paragraph about the decorations, the cake, and what everyone shouts when your friend walks in.',
+      'Write a paragraph about the best bike ride you know. Tell what you pass on the way and what makes the ride fun.',
     ],
     // W.2.3 — brief narratives with a beginning, middle, and ending hint.
     story: [
