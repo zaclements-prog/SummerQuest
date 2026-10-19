@@ -116,6 +116,10 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Imagine floating up close to a cloud. Write a sentence comparing how it looks or feels to something you know.',
       'What is one thing grown-ups could learn from kids? Write a sentence with your idea and a reason.',
       'Write a sentence giving directions from your front door to the most fun spot in your neighborhood.',
+      'If a friend felt nervous before a big game, what encouraging words would you share? Write them in one sentence.',
+      'Write a sentence explaining why keeping a promise matters to a friendship.',
+      'If you could borrow one superhero power for an ordinary Tuesday, which would help the most? Write a sentence with your choice and a reason.',
+      'Write a sentence comparing your mornings to your evenings and telling how they differ.',
     ],
     // W.3.2 — inform or explain: develop a topic with facts, steps, or details.
     paragraph: [
@@ -134,6 +138,9 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Write a paragraph teaching someone a skill you know well, like tying a shoe or skipping rope. Explain the steps in order so a beginner could follow them.',
       'Write a paragraph about why people celebrate birthdays. Explain which traditions you enjoy most and why they make the day feel special.',
       'Imagine robots did every chore in your house for a week. Write a paragraph explaining what you would do with all your extra time.',
+      'Write a paragraph comparing two books or movies that you love. Tell how they are alike and how they are different.',
+      'Write a paragraph explaining how a letter you mail travels all the way to a friend who lives far away. Use first, next, then, and finally.',
+      'Write a paragraph about a safe place where animals rest and raise their young. Describe the place and name two animals that might live there.',
     ],
     // W.3.3 — narrate real or imagined experiences with details and dialogue.
     story: [
@@ -152,6 +159,9 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Write a story about a snow fort with a secret door that only opens for someone who tells a funny joke. Who gets inside, and what do they find?',
       'Every night, one star in the sky twinkles in a pattern, like a coded message. Write a story about the night you finally crack the code.',
       'Write a story about a friendly dog who finds a walking stick and starts escorting neighbors around town. Describe two people who are grateful for the company.',
+      'Write a story about a field trip bus that takes a wrong turn and arrives somewhere wonderful instead of the museum. How do the driver and the class make the best of it?',
+      'Write a story about a snail who challenges a bicyclist to a race across the park, where the rules surprise everyone. Who wins, and why?',
+      'Write a story about a lonely lighthouse keeper who befriends a seal that visits each evening to hear a story. What happens on the night the seal does not show up?',
     ],
   },
   // 2nd grade (handoff A2). Standards: CCSS W.2.1–W.2.3 — short opinion,
