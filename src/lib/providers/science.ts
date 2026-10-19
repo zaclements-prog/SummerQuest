@@ -813,7 +813,7 @@ export const PASSAGES: Passage[] = [
   {
     title: 'The Water Cycle',
     level: 4,
-    text: `The water on Earth is always on the move in a journey called the water cycle. When the sun warms a lake or ocean, some water turns into an invisible gas called water vapor and rises into the sky. This step is called evaporation. Higher up, the air is cooler, so the vapor turns back into tiny droplets that gather into clouds. This step is called condensation. When the droplets grow heavy enough, they fall as rain or snow, which is called precipitation. The water then flows into rivers and back to the ocean, and the cycle starts all over again.`,
+    text: `The water on Earth is always on the move in a journey called the water cycle. When sunlight warms a lake or ocean, some water turns into an invisible gas called water vapor and rises into the sky. This step is called evaporation. Higher up, the air is cooler, so the vapor turns back into tiny droplets that gather into clouds. This step is called condensation. When the droplets grow heavy enough, they fall as rain or snow, which is called precipitation. The water then flows into rivers and back to the ocean, and the cycle starts all over again.`,
     questions: [
       {
         question: 'What is it called when water turns into vapor and rises into the sky?',
@@ -1087,6 +1087,248 @@ export const PASSAGES: Passage[] = [
         answer: 'migration',
         options: ['migration', 'metamorphosis', 'condensation', 'orbit'],
         type: 'vocab',
+      },
+    ],
+  },
+  // NGSS 4-LS4-1: fossils are the remains or traces of ancient organisms and
+  // give scientists evidence of past life on Earth.
+  {
+    title: 'Footprints in Stone',
+    level: 4,
+    text: `Ana visits a museum full of fossils, which are the remains or traces of living things from long ago. Some fossils are bones, shells, or teeth that slowly turned to stone. Others are traces, like an animal's footprint pressed into soft mud that hardened over a very long time. Fossils have been found on mountaintops, in dry valleys, and even in frozen places. Scientists study fossils to learn what ancient animals looked like, what they ate, and where they lived. Each fossil is a piece of evidence showing that life on Earth is far older than people are.`,
+    questions: [
+      {
+        question: 'What does the passage say fossils are?',
+        answer: 'the remains or traces of living things from long ago',
+        options: [
+          'the remains or traces of living things from long ago',
+          'a copy of an animal drawn by an early scientist',
+          'rocks that people polish into shiny shapes',
+          'the shadows left behind at sunset',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, "ancient" means:',
+        answer: 'very old',
+        options: ['very old', 'very heavy', 'found deep underground', 'shaped like an animal'],
+        type: 'vocab',
+      },
+      {
+        question: 'Why are fossils helpful to scientists?',
+        answer: 'They show what life was like long before people.',
+        options: [
+          'They help gardeners grow bigger vegetables each season.',
+          'They show what life was like long before people.',
+          'They tell us what the weather will do tomorrow.',
+          'They prove mountains are always covered in snow.',
+        ],
+        type: 'inference',
+      },
+    ],
+  },
+  // NGSS 4-LS2-1: the availability of water, food, and shelter within a
+  // habitat influences the kinds of organisms that live there.
+  {
+    title: 'What a Habitat Provides',
+    level: 4,
+    text: `Ravi learns that an animal's home is called its habitat, and that a habitat gives an animal everything it needs to survive: food, water, shelter, and space to move around. A meadow gives a rabbit grass to eat, water from a stream, and tall grass that hides it from danger. A forest gives a squirrel nuts to store, shade on hot afternoons, and cozy hollow logs to sleep in. Different habitats hold different mixtures of these things, which is why a frog thrives in a pond and a lizard thrives in dry, sandy places.`,
+    questions: [
+      {
+        question: 'What does a habitat give an animal?',
+        answer: 'everything it needs to survive',
+        options: [
+          'only the food it likes to eat',
+          'only a place to sleep at night',
+          'everything it needs to survive',
+          'a warm coat for the winter',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, a “habitat” is:',
+        answer: 'an animal’s natural home',
+        options: [
+          'a group of animals that live together',
+          'an animal’s natural home',
+          'a place where people keep pets',
+          'a zoo built for visitors',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'What is this passage mostly about?',
+        answer: 'different habitats are home to different animals',
+        options: [
+          'how animals store food for the cold winter months',
+          'why a meadow is nicer than a forest',
+          'different habitats are home to different animals',
+          'what rabbits and squirrels like to eat most',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
+  // NGSS 4-ESS2-2: analyze and compare data to describe typical weather and
+  // climate patterns for a region.
+  {
+    title: 'Two Places, Two Climates',
+    level: 4,
+    text: `Weather is what the air feels like right now, and it can change from one hour to the next. Climate is the pattern of weather in a place over many years. The desert has a hot, dry climate, so it stays warm and hardly any water ever falls from the sky. The rainforest has a warm, wet climate, so green plants grow thick and tall all year long. Even when one week feels cool, a place keeps its climate, because climate is the long-term pattern rather than a single morning or afternoon.`,
+    questions: [
+      {
+        question: 'According to the passage, what is climate?',
+        answer: 'the pattern of weather in a place over many years',
+        options: [
+          'the weather outside on one particular morning',
+          'the pattern of weather in a place over many years',
+          'the study of clouds high in the sky',
+          'a report about whether tomorrow will be sunny',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, “pattern” means:',
+        answer: 'the way something repeats over time',
+        options: [
+          'a way to fold a paper napkin',
+          'the way something repeats over time',
+          'a sudden change that surprises everyone',
+          'a line drawn on a map',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'What is this passage mostly about?',
+        answer: 'the difference between weather and climate',
+        options: [
+          'why the desert is the hottest place on Earth',
+          'the difference between weather and climate',
+          'how rain clouds form high above the ocean',
+          'why people like to check the weather in the morning',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
+  // NGSS 4-ESS2-1: Earth's processes (moving water, wind, and ice) shape
+  // Earth's surface slowly over time.
+  {
+    title: 'Slow Work, Shaping the Land',
+    level: 4,
+    text: `Have you ever wondered how valleys are made? Moving water, wind, and ice shape the land slowly, bit by bit. This wearing-away of soil and rock is called erosion. Each time water rushes down a hill in a heavy storm, it carries tiny bits of soil with it. Over many years, that moving water can carve a deep valley into the ground. Wind picks up sand and tumbles it against rocks, smoothing them round. Glaciers are giant rivers of ice that push and scrape the land as they crawl. Erosion works slowly, but it can reshape the whole face of the Earth.`,
+    questions: [
+      {
+        question: 'What is erosion?',
+        answer: 'the wearing-away of land',
+        options: [
+          'the wearing-away of land',
+          'the building of new land at the ocean',
+          'the freezing of lakes in cold weather',
+          'the planting of grass along a road',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, a “glacier” is:',
+        answer: 'a giant river of ice',
+        options: [
+          'a giant river of ice',
+          'a deep valley carved by water',
+          'a storm that brings heavy rain and hail',
+          'a smooth round stone',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'What is this passage mostly about?',
+        answer: 'moving water, wind, and ice slowly shape the land',
+        options: [
+          'how a single storm floods a farm field',
+          'why glaciers melt during warm summers',
+          'moving water, wind, and ice slowly shape the land',
+          'where builders find stone for new houses',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
+  // NGSS 4-PS4-3: light reflects off a mirror; rough surfaces scatter light
+  // in many directions.
+  {
+    title: 'Mirror, Mirror',
+    level: 4,
+    text: `When you look into a mirror, light bounces off the smooth surface and straight back to your eyes. This bouncing of light is called reflection. Smooth, shiny surfaces like mirrors reflect light very well, which is why a mirror shows a clear picture of your face. Rough surfaces, like a brick wall, scatter light in many directions, so they cannot show a reflection. People use reflection in clever tools. A periscope uses two mirrors so a sailor can peek above the water. Doctors also use a shiny mirror to help them see into ears and throats.`,
+    questions: [
+      {
+        question: 'In this passage, “reflection” is:',
+        answer: 'a bouncing of light off a surface',
+        options: [
+          'a bouncing of light off a surface',
+          'a loud sound that comes back to you',
+          'a shadow cast by a tall object',
+          'a tool used for cutting glass',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'Why does a brick wall not show a reflection?',
+        answer: 'It is rough, so it scatters light.',
+        options: [
+          'It is rough, so it scatters light.',
+          'It is too far away from the road.',
+          'It is made of heavy red clay.',
+          'It is covered in dust and dirt.',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'What can we learn about periscopes from this passage?',
+        answer: 'Mirrors inside them bounce light so a sailor can see above the water.',
+        options: [
+          'Mirrors inside them bounce light so a sailor can see above the water.',
+          'They help sailors hear ships far away in the fog.',
+          'They keep sailors warm on cold nights at sea.',
+          'They show sailors the weather to come.',
+        ],
+        type: 'inference',
+      },
+    ],
+  },
+  // NGSS ETS1: simple machines (ramp, lever, wheel and axle) change the push
+  // or pull needed to do work.
+  {
+    title: 'Simple Machines Make Work Easier',
+    level: 4,
+    text: `Marco watches his dad push a heavy barrel up a long ramp instead of lifting it straight up. A simple machine is a tool with few or no moving parts that makes work easier. A ramp, which is called an inclined plane, lets you roll a heavy load upward with less effort. A lever, like a seesaw on the playground, helps you lift a big rock by pushing down on one end. A wheel and axle makes it easy to roll a wagon down the street. Simple machines do not do the work by themselves, but they change the push or pull you need.`,
+    questions: [
+      {
+        question: 'According to the passage, what does a ramp do?',
+        answer: 'It lets you roll a heavy load up with less effort.',
+        options: [
+          'It lets you roll a heavy load up with less effort.',
+          'It makes a heavy load weigh much less than before.',
+          'It turns a heavy barrel into a light one.',
+          'It stops a barrel from rolling back down.',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, an “inclined plane” is:',
+        answer: 'a ramp',
+        options: ['a ramp', 'a wheel and axle', 'a heavy barrel', 'a playground seesaw'],
+        type: 'vocab',
+      },
+      {
+        question: 'What is this passage mostly about?',
+        answer: 'simple machines make hard jobs easier',
+        options: [
+          'how one boy carries boxes across his yard',
+          'simple machines make hard jobs easier',
+          'why playground seesaws are fun to ride after school',
+          'the history of the wheel and axle',
+        ],
+        type: 'main-idea',
       },
     ],
   },
