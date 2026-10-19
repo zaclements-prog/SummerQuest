@@ -131,7 +131,7 @@ export function bakeModel(root: Object3D, opts: BakeOptions = {}): BakedModel {
     _scale.setFromMatrixScale(matrix)
     if (!mesh.geometry.boundingSphere) mesh.geometry.computeBoundingSphere()
     const size = Math.max(_scale.x, _scale.y, _scale.z) * (mesh.geometry.boundingSphere?.radius ?? 1)
-    const seg = size < small ? 5 : size < small * 2.5 ? Math.min(6, maxSeg) : maxSeg
+    const seg = size < small ? Math.min(5, maxSeg) : size < small * 2.5 ? Math.min(6, maxSeg) : maxSeg
     const geometry = fewerSegments(mesh.geometry, seg)
     const color = mat.color.clone()
     const e = mat.emissive ? mat.emissive.clone().multiplyScalar(mat.emissiveIntensity ?? 1) : new Color(0, 0, 0)

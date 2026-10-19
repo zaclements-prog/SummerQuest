@@ -28,6 +28,7 @@ import {
   SEGMENTS,
   SEGMENT_LEN,
   STEER_MAX,
+  crowdCaps,
   speciesOrder,
 } from './CritterParade.layout'
 
@@ -80,6 +81,8 @@ export interface Sim {
 /** Everything the frame loop mutates: the simulation and the four crowds. */
 export interface World {
   sim: Sim
+  /** bodies shown at most (by graphics setting, see `crowdCaps`) */
+  caps: { crowd: number; ghost: number; gang: number }
   followers: Flock
   ghost: Flock
   gangGrumpy: Flock
@@ -116,8 +119,10 @@ export function makeWorld(): World {
       fullCalled: false,
       camOverride: null,
     },
+    caps: crowdCaps(false),
     followers: new Flock(CROWD_MAX + CAGE_MAX, 12),
-    ghost: new Flock(GHOST_MAX, 12),
+    // the ghost parade is one see-through species (the player's own baby): one draw call
+    ghost: new Flock(GHOST_MAX, 1),
     gangGrumpy: new Flock(GANG_MAX, 1),
     gangHappy: new Flock(GANG_MAX, 1),
   }
@@ -357,14 +362,20 @@ export function ParadeScene({
     let ly: number
     let lz: number
     if (fin) {
-      // from the side, level with the rope: our team on the left, the Gang on the right
+      // from the side, level with the rope: our team on the left, the Gang on the right.
+      // A portrait screen is too narrow for that, so there the camera swings round
+      // behind our team: us in front, the rope, and the Gang across it.
       const near = Math.min(crowd, 4)
+      const tall = Math.min(1, Math.max(0, (1.25 - aspect) / 0.5))
       lx = 0
       ly = 0.7
-      lz = ropeZ + s.shift + 0.4
-      tx = (9.5 + near * 0.7) * pull
-      ty = (7.6 + near * 0.6) * pull
-      tz = lz + (2.8 + near * 0.6) * pull
+      lz = ropeZ + s.shift + 0.4 - tall * 1.5
+      const sx = (9.5 + near * 0.7) * pull
+      const sy = (7.6 + near * 0.6) * pull
+      const sz = (2.8 + near * 0.6) * pull
+      tx = sx + (5 + near * 0.5 - sx) * tall
+      ty = sy + (10 + near * 0.8 - sy) * tall
+      tz = lz + sz + (10 + near * 1.4 - sz) * tall
     } else {
       tx = s.leaderX * 0.4
       ty = (CAM.offset[1] + crowd * 0.9) * pull
@@ -442,7 +453,7 @@ export function ParadeScene({
       </group>
       {/* the crowds */}
       <FlockMeshes worldRef={worldRef} which={'followers' satisfies FlockName} cap={CROWD_MAX + CAGE_MAX} species={12} bakes={speciesBakes} material={bodyMat} outlines={!low} />
-      <FlockMeshes worldRef={worldRef} which="ghost" cap={GHOST_MAX} species={12} bakes={speciesBakes} material={ghostMaterial()} outlines={false} shadows={false} renderOrder={5} />
+      <FlockMeshes worldRef={worldRef} which="ghost" cap={GHOST_MAX} species={1} bakes={speciesBakes.slice(0, 1)} material={ghostMaterial()} outlines={false} shadows={false} renderOrder={5} />
       <FlockMeshes worldRef={worldRef} which="gangGrumpy" cap={GANG_MAX} species={1} bakes={[grumpy]} material={bodyMat} outlines={!low} />
       <FlockMeshes worldRef={worldRef} which="gangHappy" cap={GANG_MAX} species={1} bakes={[happy]} material={bodyMat} outlines={!low} />
       {queue}

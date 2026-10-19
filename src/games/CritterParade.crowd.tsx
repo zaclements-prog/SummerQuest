@@ -64,8 +64,11 @@ function BakeOne({ id, outlined, onBaked, children }: { id: string; outlined: bo
     if (done.current || !ref.current) return
     if (++frames.current < 2) return
     done.current = true
-    const baked = bakeModel(ref.current, { maxSegments: 8 })
+    // a 0.6-unit baby seen across a crowd: 6 segments round a head, 5 on the little parts
+    const baked = bakeModel(ref.current, { maxSegments: 6 })
     bakeCache.set(id, { baked, outlined })
+    // dev: headless perf checks read the baked triangle counts
+    if (import.meta.env.DEV) ((window as { __sqBakes?: Record<string, number> }).__sqBakes ??= {})[id] = baked.triangles
     onBaked(id, baked)
   })
   return (

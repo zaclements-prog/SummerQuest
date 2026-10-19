@@ -29,6 +29,15 @@ export const GHOST_MAX = 60
 /** Grumble Gang bodies at most. */
 export const GANG_MAX = 60
 
+/**
+ * Bodies shown by graphics setting: Pretty shows the full crowds; Fast (every
+ * tablet's start) trims them so a big crowd plus the scenery stays near the
+ * ~200k triangles the World already runs at on a Fire HD 8.
+ */
+export function crowdCaps(low: boolean): { crowd: number; ghost: number; gang: number } {
+  return low ? { crowd: 110, ghost: 40, gang: 40 } : { crowd: CROWD_MAX, ghost: GHOST_MAX, gang: GANG_MAX }
+}
+
 /** Baby critters are scaled up a little so a crowd reads on a tablet. */
 export const BABY_SCALE = 1.45
 export const GRUMP_SCALE = 1.05

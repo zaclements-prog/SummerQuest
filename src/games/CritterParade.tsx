@@ -43,7 +43,7 @@ import { WalkHint } from './_runkit/RunHud'
 import { RICH } from './_runkit/juiceExtras'
 import { ParadeScene, makeWorld, type Hooks, type ShownGate, type World } from './CritterParade.scene'
 import { Caption, CountBadge, FinaleReadout, GateButtons, LevelEndCard, LevelPips, RevealChips, type LevelEnd, type Reveal } from './CritterParade.hud'
-import { CAM, CROWD_MAX, GANG_MAX, GATE_COLORS, GHOST_MAX, LANE_X, STEER_MAX, marchSpeed } from './CritterParade.layout'
+import { CAM, GATE_COLORS, LANE_X, STEER_MAX, crowdCaps, marchSpeed } from './CritterParade.layout'
 import type { ThemeKey } from './CritterParade.set'
 
 /**
@@ -149,6 +149,10 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
 
   const worldRef = useRef<World | null>(null)
   if (worldRef.current === null) worldRef.current = makeWorld()
+  // Fast graphics trims the crowds (the badge always shows the true count)
+  useEffect(() => {
+    worldRef.current!.caps = crowdCaps(low)
+  }, [low])
   const runRef = useRef<Run>({ level: null, decisions: [], levelScores: [0, 0, 0], biggest: 0, score: 0, streak: 0, cheer: 0, finished: false, started: false })
 
   const [phase, setPhase] = useState<'intro' | 'march' | 'finale' | 'levelEnd' | 'results'>('intro')
@@ -210,7 +214,7 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
         s.nextAt = null
         s.nextKind = null
         w.gangGrumpy.reset(0, 0, 0)
-        w.gangGrumpy.setShown(Math.min(st.plan.gang, GANG_MAX), 0, -st.plan.finaleAt - 5)
+        w.gangGrumpy.setShown(Math.min(st.plan.gang, w.caps.gang), 0, -st.plan.finaleAt - 5)
         setGangShown(true)
         return
       }
@@ -256,7 +260,7 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
         fullCalled: false,
         baseSpeed: marchSpeed(plan.opSet),
       })
-      w.followers.reset(Math.min(plan.start, CROWD_MAX), 0, 1.5)
+      w.followers.reset(Math.min(plan.start, w.caps.crowd), 0, 1.5)
       w.ghost.clear()
       w.gangGrumpy.clear()
       w.gangHappy.clear()
@@ -335,7 +339,7 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
       const gz = -up.ev.at
       const laneX = side === 'left' ? -LANE_X : LANE_X
       // the crowd becomes its new number: friends pop in through the gate (or wander off for a snack)
-      w.followers.setShown(Math.min(state.count, CROWD_MAX), laneX, gz + 1.2)
+      w.followers.setShown(Math.min(state.count, w.caps.crowd), laneX, gz + 1.2)
       setCount(state.count)
       run.biggest = Math.max(run.biggest, state.count)
       setGates((g) => g.map((x) => (x.at === up.ev.at ? { ...x, picked: side } : x)))
@@ -350,7 +354,7 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
       }
       // the ghost parade on the other lane: what the other gate would have given
       w.ghost.restartGhost()
-      s.ghost = { n: Math.min(other.result, GHOST_MAX), x: -laneX, t: 0, life: d.smart && !d.tie ? 2.4 : 3.6 }
+      s.ghost = { n: Math.min(other.result, w.caps.ghost), x: -laneX, t: 0, life: d.smart && !d.tie ? 2.4 : 3.6 }
       later(400, () => juice.text({ pos: [-laneX, 3.2, gz + 2.5], text: `👻 ${resultText(other.label, other.result)}`, size: 'lg', color: '#e6f3ff' }))
       setReveal({
         got: resultText(picked.label, d.result),
@@ -403,7 +407,8 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
       for (let i = 1; i <= amount; i++) {
         later(i * step, () => {
           const n = start + i
-          worldRef.current!.followers.setShown(Math.min(n, CROWD_MAX), 0, cz)
+          const w = worldRef.current!
+          w.followers.setShown(Math.min(n, w.caps.crowd), 0, cz)
           setCount(n)
           if (i <= 12 || i === amount) juice.text({ pos: [((i % 5) - 2) * 0.5, 2.2, cz + 1], text: String(n), size: i === amount ? 'lg' : 'sm', color: i === amount ? '#ffe58a' : '#ffffff' })
           sfx.pop()
@@ -500,7 +505,7 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
         w.gangHappy.joinTo(0, -s.dist + 3)
         const joined = st.count + st.plan.gang
         later(900, () => {
-          w.followers.setShown(Math.min(joined, CROWD_MAX), 0, -s.dist + 2)
+          w.followers.setShown(Math.min(joined, w.caps.crowd), 0, -s.dist + 2)
           setCount(joined)
           run.biggest = Math.max(run.biggest, joined)
           sfx.combo(6)
