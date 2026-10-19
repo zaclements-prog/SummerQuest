@@ -226,6 +226,8 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Should classrooms have plants that students take turns caring for? State your view and support it with one good reason.',
       'If you could swap one school subject for learning to cook, would you? Write your opinion and one reason in an organized sentence.',
       'Write one sentence giving advice to someone who just moved to a new town. Include one reason your advice helps.',
+      'Should our neighborhood hold a shared yard sale where families sell old toys together? State your opinion and one reason it would help the block.',
+      'Do you think it is better to read a book before watching its movie version? Write your choice and one reason in a single organized sentence.',
     ],
     // W.4.2 — inform or explain: develop a topic with facts, definitions, and details.
     paragraph: [
@@ -270,6 +272,9 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Write a story about a student who accidentally breaks a classroom vase and must decide whether to tell the truth. Show the worry, the hard conversation, and a reflection on what honesty cost and gave.',
       'Write a story about the first day at a new school when everything feels backwards — the wrong hallways, a missing lunch, a silent lunch table — until one small kindness turns the day around. End with a reflection.',
       'Write a story about a grandchild and a grandparent planting a tree together and the surprising thing they discover under it years later. Include dialogue, feelings, and a closing reflection.',
+      'Write a story about a student who forgets the words to their song during the talent show and finds a way to keep going. Show the panic, the clever fix, and a reflection on what the stage taught them.',
+      'Write a story about two friends who find a rowboat of leaves and sail it across a flooded crosswalk after a rainstorm. Include dialogue and end with what the friends learned about turning ordinary things into adventures.',
+      'Write a story about the day a student brings a very noisy lunchbox to school and everyone follows the sound to discover what is inside. Include actions, dialogue, and a reflection about curiosity and manners.',
     ],
   },
   // 2nd grade (handoff A2). Standards: CCSS W.2.1–W.2.3 — short opinion,
