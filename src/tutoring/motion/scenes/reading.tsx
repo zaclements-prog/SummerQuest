@@ -21,7 +21,7 @@ const PASSAGE_LINES = PASSAGE.replace(/\. /g, '.\n')
 /** Passage words laid out on a page, with each word rising in line by line from `at`. */
 function PassageText({ t, at, words, size, color = M.ink, bold = [] as number[] }: { t: number; at: number; words: WBox[]; size: number; color?: string; bold?: number[] }) {
   return (
-    <g>
+    <>
       {words.map((b) => {
         const k = ep(t, at + b.line * 0.12 + b.i * 0.015, 0.45)
         if (k <= 0) return null
@@ -31,7 +31,7 @@ function PassageText({ t, at, words, size, color = M.ink, bold = [] as number[] 
           </Txt>
         )
       })}
-    </g>
+    </>
   )
 }
 
@@ -43,7 +43,7 @@ function FrogPage({ t, at, x, y, s = 1, hop = 0, bugAt, look = 0 }: { t: number;
   const bx = x + 90 + Math.sin(t * 1.3) * 60
   const by = y - 140 + Math.sin(t * 2.6) * 22
   return (
-    <g>
+    <>
       <Scale s={pop} x={x} y={y + 80}>
         <Pond x={x} y={y + 78} w={300} h={62} />
         {[-128, -112, 128].map((dx, i) => (
@@ -59,7 +59,7 @@ function FrogPage({ t, at, x, y, s = 1, hop = 0, bugAt, look = 0 }: { t: number;
           <Bug x={bx} y={by} s={0.8} flap={t * 40} />
         </g>
       )}
-    </g>
+    </>
   )
 }
 
@@ -208,12 +208,12 @@ function Leg({ x, k, color, glow = 0, children }: { x: number; k: number; color:
   const top = TOP_Y + TOP_H
   const h = (FLOOR - top) * k
   return (
-    <g>
+    <>
       {glow > 0 && <rect x={x - LEG_W / 2 - 10} y={FLOOR - h - 6} width={LEG_W + 20} height={h + 12} rx={22} fill={M.gold} opacity={0.45 * glow} />}
       <rect x={x - LEG_W / 2} y={FLOOR - h} width={LEG_W} height={h} rx={16} fill={color} stroke={M.ink} strokeWidth={4} />
       <rect x={x - LEG_W / 2 + 12} y={FLOOR - h + 10} width={12} height={Math.max(0, h - 30)} rx={6} fill="#fff" opacity={0.45} />
       <g opacity={k > 0.85 ? 1 : 0}>{children}</g>
-    </g>
+    </>
   )
 }
 
@@ -296,10 +296,10 @@ const supports: Scene = ({ t, cue }: SceneProps) => {
               {i === 0 && <Pond x={d.x} y={TOP_Y + TOP_H + 64} w={130} h={40} />}
               {i === 1 && <Bug x={d.x} y={TOP_Y + TOP_H + 66 + Math.sin(t * 3) * 6} s={1.5} flap={t * 40} />}
               {i === 2 && (
-                <g>
+                <>
                   <path d={`M ${d.x - 60} ${TOP_Y + TOP_H + 92} Q ${d.x} ${TOP_Y + TOP_H + 10} ${d.x + 56} ${TOP_Y + TOP_H + 88}`} fill="none" stroke={M.ink} strokeWidth={3.5} strokeDasharray="7 8" strokeLinecap="round" />
                   <Frog x={d.x + 2} y={TOP_Y + TOP_H + 48 + Math.sin(t * 3) * 4} s={0.3} legs={0.8} />
-                </g>
+                </>
               )}
             </Leg>
           )
@@ -357,12 +357,12 @@ const Q_PHRASES = ['What do frogs', 'do frogs', 'frogs eat?', 'eat?']
 /** A single storybook page (with a couple of pages peeking out behind it). */
 function Page({ x, y, w, h }: { x: number; y: number; w: number; h: number }) {
   return (
-    <g>
+    <>
       <rect x={x + 12} y={y + 12} width={w} height={h} rx={18} fill="#f3ead8" stroke={M.ink} strokeWidth={3} />
       <rect x={x + 6} y={y + 6} width={w} height={h} rx={18} fill="#fbf5e8" stroke={M.ink} strokeWidth={3} />
       <rect x={x} y={y} width={w} height={h} rx={18} fill="#fffdf7" stroke={M.ink} strokeWidth={4} filter="url(#sq-shadow)" />
       <rect x={x} y={y} width={22} height={h} rx={11} fill={M.sea} opacity={0.35} />
-    </g>
+    </>
   )
 }
 
@@ -493,7 +493,7 @@ const detail: Scene = ({ t, cue }: SceneProps) => {
         <g transform={`translate(${shake} 0)`} opacity={1 - 0.55 * ep(t, memory + 0.6, 0.4)}>
           <ThoughtBubble cx={190} cy={104} w={290} h={150} dots={[[286, 200, 6], [270, 186, 9]]} grow={bubble} />
           {bubble > 0.5 && (
-            <g>
+            <>
               <Scale s={popS(t, guess + 0.1, 12)} x={136} y={104}>
                 <path d="M 102 104 Q 130 76 166 104 Q 130 132 102 104 Z" fill={M.sea} stroke={M.ink} strokeWidth={3.5} strokeLinejoin="round" />
                 <path d="M 166 104 L 184 88 L 184 120 Z" fill={M.sea} stroke={M.ink} strokeWidth={3.5} strokeLinejoin="round" />
@@ -505,7 +505,7 @@ const detail: Scene = ({ t, cue }: SceneProps) => {
               <Txt x={186} y={146} size={24} anchor="middle" color={M.inkSoft}>
                 ? ?
               </Txt>
-            </g>
+            </>
           )}
           <Cross t={t} at={memory} x={136} y={104} s={1.1} />
           <Cross t={t} at={memory + 0.2} x={232} y={100} s={1.1} />

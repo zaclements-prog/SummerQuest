@@ -204,6 +204,14 @@ These rules come from measurements on a real Fire HD 10. Playing lessons were th
    - Run `npm run dev`, open `/tutor/<lessonId>`, tap Watch, and watch it all the way through.
    - Check the end frame: everything readable, nothing overlapping, nothing half-faded.
 7. Check the performance rules (B2) line by line before committing.
+8. **Refactoring an existing scene** (tidying, performance)? Prove it looks identical:
+   ```
+   SCENE_SNAP=<lessonId> SCENE_SNAP_OUT=/tmp/snaps/before npx vitest run sceneSnapshots   # on the old code
+   SCENE_SNAP=<lessonId> SCENE_SNAP_OUT=/tmp/snaps/after  npx vitest run sceneSnapshots   # on the new code
+   node scripts/scene-snapshots.mjs /tmp/snaps/before /tmp/snaps/after --diffs /tmp/snaps/diffs
+   ```
+   This renders every frame, every 0.25 s with the real narration timing, at the tablet's 1.5× density, and compares them pixel by pixel. It must say "All frames pixel-identical", unless the visual change is intended and approved. It needs Playwright with Chromium (`PLAYWRIGHT_MODULE` / `CHROMIUM_PATH`).
+   - Measured lesson: on the tablet, frame cost follows how much of the stage moves and how complex it is, not the element count. A 20% element cut on the science "states" scene gained only ~2 fps. Calm, bounded motion (B2.3) matters more than shaving elements.
 
 ## B4. Visual style
 

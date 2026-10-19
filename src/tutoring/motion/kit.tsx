@@ -37,11 +37,11 @@ export function Defs() {
 /** Warm paper background with a dot grid and soft vignette. */
 export function Paper({ color = M.paper }: { color?: string }) {
   return (
-    <g>
+    <>
       <rect width={W} height={H} fill={color} />
       <rect width={W} height={H} fill="url(#sq-dots)" />
       <rect width={W} height={H} fill="url(#sq-vignette)" />
-    </g>
+    </>
   )
 }
 
@@ -184,10 +184,10 @@ export function Ring({ t, at, x, y, r = 50, color = M.coral, out }: { t: number;
   const p = ((t - at) % 1.2) / 1.2
   const appear = ease.outBack(progress(t, at, 0.4))
   return (
-    <g>
+    <>
       <circle cx={x} cy={y} r={r * appear} fill="none" stroke={color} strokeWidth={5} />
       <circle cx={x} cy={y} r={r * (1 + p * 0.5)} fill="none" stroke={color} strokeWidth={4 * (1 - p)} opacity={1 - p} />
-    </g>
+    </>
   )
 }
 
@@ -202,7 +202,7 @@ export function Arrow({ t, at, from, to, bend = 0.25, color = M.ink, width = 5, 
   const ang = Math.atan2(y1 - my, x1 - mx)
   const head = 16
   return (
-    <g>
+    <>
       <Draw t={t} at={at} dur={dur} d={d} stroke={color} width={width} />
       {k >= 1 && (
         <path
@@ -214,7 +214,7 @@ export function Arrow({ t, at, from, to, bend = 0.25, color = M.ink, width = 5, 
           strokeLinejoin="round"
         />
       )}
-    </g>
+    </>
   )
 }
 
@@ -288,7 +288,7 @@ export function Equation({ t, x, y, size = 64, tokens, gap = 0.22, stroke = M.wh
     anchor,
   )
   return (
-    <g>
+    <>
       {tokens.map((k, i) => {
         const at = k.at ?? -1
         let s = spring(t, at, { stiffness: 260, damping: 14 })
@@ -306,7 +306,7 @@ export function Equation({ t, x, y, size = 64, tokens, gap = 0.22, stroke = M.wh
           </g>
         )
       })}
-    </g>
+    </>
   )
 }
 
@@ -412,7 +412,7 @@ export function Confetti({ t, at, x, y, n = 34, spread = 340, colors = M.set, du
   const tau = t - at
   if (tau <= 0 || tau >= dur) return null
   return (
-    <g>
+    <>
       {Array.from({ length: n }, (_, i) => {
         const r1 = rand(seed * 97 + i)
         const r2 = rand(seed * 131 + i * 7)
@@ -433,7 +433,7 @@ export function Confetti({ t, at, x, y, n = 34, spread = 340, colors = M.set, du
           </g>
         )
       })}
-    </g>
+    </>
   )
 }
 
@@ -441,7 +441,7 @@ export function Confetti({ t, at, x, y, n = 34, spread = 340, colors = M.set, du
 export function Twinkle({ t, at, x, y, r = 90, n = 5, color = M.gold, size = 12 }: { t: number; at: number; x: number; y: number; r?: number; n?: number; color?: string; size?: number }) {
   if (t < at) return null
   return (
-    <g>
+    <>
       {Array.from({ length: n }, (_, i) => {
         const a = (i / n) * Math.PI * 2 + rand(i + 3) * 0.8
         const rr = r * (0.75 + 0.35 * rand(i + 11))
@@ -454,7 +454,7 @@ export function Twinkle({ t, at, x, y, r = 90, n = 5, color = M.gold, size = 12 
           </g>
         )
       })}
-    </g>
+    </>
   )
 }
 
@@ -470,7 +470,7 @@ export function Hop({ t, at, from, to, lift = 70, color = M.ink, dur = 0.55, lab
   const k = ease.inOutCubic(progress(t, at, dur))
   const peakY = (from[1] + 2 * cy + to[1]) / 4
   return (
-    <g>
+    <>
       <path d={d} pathLength={1} fill="none" stroke={color} strokeWidth={width} strokeLinecap="round" strokeDasharray={`${k} 1`} />
       {label && (
         <Pop t={t} at={at + dur * 0.5} x={cx} y={peakY - 24}>
@@ -479,7 +479,7 @@ export function Hop({ t, at, from, to, lift = 70, color = M.ink, dur = 0.55, lab
           </Title>
         </Pop>
       )}
-    </g>
+    </>
   )
 }
 
@@ -494,7 +494,7 @@ export function NumberLine({ t, at, x0, x1, y, min, max, step = 1, labels, major
   const show = new Set(labels ?? vals)
   const big = new Set(major)
   return (
-    <g>
+    <>
       <Draw t={t} at={at} dur={0.6} d={`M ${x0 - 22} ${y} L ${x1 + 22} ${y}`} stroke={color} width={5} />
       {vals.map((v, i) => {
         const x = lineX(v, min, max, x0, x1)
@@ -512,7 +512,7 @@ export function NumberLine({ t, at, x0, x1, y, min, max, step = 1, labels, major
           </g>
         )
       })}
-    </g>
+    </>
   )
 }
 

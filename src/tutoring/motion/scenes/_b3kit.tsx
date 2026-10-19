@@ -114,11 +114,11 @@ export function MarkerRuns({ t, at, boxes, a, b, dur = 0.5, h = 40, color = M.go
   // each line starts when the pen finishes the one before
   const starts = rs.map((_, i) => at + (dur * rs.slice(0, i).reduce((s, r) => s + r.w, 0)) / total)
   return (
-    <g>
+    <>
       {rs.map((r, i) => (
         <Marker key={i} t={t} at={starts[i]} dur={(dur * r.w) / total} x={r.x} y={r.y + 2} w={r.w} h={h} color={color} opacity={opacity} out={out} />
       ))}
-    </g>
+    </>
   )
 }
 
@@ -236,7 +236,7 @@ export function Star4({ x, y, r, color = M.gold, rot = 0, opacity }: { x: number
 export function Sparkles({ t, at, x, y, r = 54, n = 6, size = 13, colors = [M.gold, M.white, M.pink], seed = 0, life = 0.85 }: { t: number; at: number; x: number; y: number; r?: number; n?: number; size?: number; colors?: string[]; seed?: number; life?: number }) {
   if (t < at || t > at + life + 0.3) return null
   return (
-    <g>
+    <>
       {Array.from({ length: n }, (_, i) => {
         const delay = rand(seed * 31 + i) * 0.18
         const k = progress(t, at + delay, life)
@@ -246,7 +246,7 @@ export function Sparkles({ t, at, x, y, r = 54, n = 6, size = 13, colors = [M.go
         const s = size * (0.7 + rand(i * 3 + seed) * 0.6) * Math.sin(Math.PI * Math.min(1, k * 1.25))
         return <Star4 key={i} x={x + Math.cos(a) * dist} y={y + Math.sin(a) * dist} r={Math.max(0, s)} rot={k * 120} color={colors[i % colors.length]} />
       })}
-    </g>
+    </>
   )
 }
 
@@ -350,7 +350,7 @@ export function ThoughtBubble({ cx, cy, w, h, tail, dots: dotList, grow = 1, fil
     </>
   )
   return (
-    <g>
+    <>
       {dots.map(([x, y, r], i) => {
         const ds = clamp(s * 3 - i * 0.6)
         return ds > 0 ? <circle key={i} cx={x} cy={y} r={r * ds} fill={fill} stroke={M.ink} strokeWidth={4} /> : null
@@ -359,7 +359,7 @@ export function ThoughtBubble({ cx, cy, w, h, tail, dots: dotList, grow = 1, fil
         {body(true)}
         {body(false)}
       </g>
-    </g>
+    </>
   )
 }
 
@@ -368,12 +368,12 @@ export function Tag({ x, y, text, size = 24, color = M.gold, ink = M.ink, pad = 
   const w = textW(text, size) + size * pad * 2
   const h = size * 1.6
   return (
-    <g>
+    <>
       <rect x={x - w / 2} y={y - h / 2} width={w} height={h} rx={h / 2} fill={color} stroke={M.ink} strokeWidth={3} />
       <Txt x={x} y={y + 1} size={size} anchor="middle" color={ink}>
         {text}
       </Txt>
-    </g>
+    </>
   )
 }
 
@@ -385,10 +385,10 @@ export function Tick({ t, at, x, y, s = 1, color = M.leaf, width = 8 }: { t: num
 /** A red "nope" cross that draws on. */
 export function Cross({ t, at, x, y, s = 1, color = M.coral, width = 8 }: { t: number; at: number; x: number; y: number; s?: number; color?: string; width?: number }) {
   return (
-    <g>
+    <>
       <Draw t={t} at={at} dur={0.22} d={`M ${x - 16 * s} ${y - 16 * s} L ${x + 16 * s} ${y + 16 * s}`} stroke={color} width={width} />
       <Draw t={t} at={at + 0.18} dur={0.22} d={`M ${x + 16 * s} ${y - 16 * s} L ${x - 16 * s} ${y + 16 * s}`} stroke={color} width={width} />
-    </g>
+    </>
   )
 }
 
@@ -414,7 +414,7 @@ export function FlowArrow({ t, at, dur = 0.7, d, end, endAng, color = M.ink, wid
   const k = progress(t, at, dur)
   if (k <= 0) return null
   return (
-    <g>
+    <>
       {dash ? (
         <g opacity={clamp(k * 3)}>
           <mask id={`fa-${Math.round(end[0])}-${Math.round(end[1])}`}>
@@ -426,6 +426,6 @@ export function FlowArrow({ t, at, dur = 0.7, d, end, endAng, color = M.ink, wid
         <Draw t={t} at={at} dur={dur} d={d} stroke={color} width={width} />
       )}
       {k >= 0.98 && <Head x={end[0]} y={end[1]} ang={endAng} color={color} width={width} size={width * 3.2} />}
-    </g>
+    </>
   )
 }
