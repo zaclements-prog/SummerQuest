@@ -669,6 +669,258 @@ export const PASSAGES: Passage[] = [
     ],
   },
 
+  // RL.3.1-3.4: details stated in the text; one inference per passage; word counts 70-90.
+  {
+    title: "Ellie's First Row",
+    level: 3,
+    text: `Ellie's dad took her rowing on Quiet Lake on a bright Saturday morning. Ellie grabbed the oars, but the little boat spun in circles at first. "Keep your arms steady," her dad called. "Pull on one side, then the other." Ellie counted out loud and tried again and again. After an hour, the boat glided straight toward the far shore. Ellie smiled so wide. She could row all by herself.`,
+    questions: [
+      {
+        question: 'Where did Ellie go rowing on Saturday morning?',
+        answer: 'on Quiet Lake',
+        options: ['on Quiet Lake', 'at the swimming pool', 'on a river downtown', 'at the beach by the pier'],
+        type: 'detail',
+      },
+      {
+        question: 'What can we guess about Ellie from the story?',
+        answer: 'She keeps trying until it works.',
+        options: [
+          'She keeps trying until it works.',
+          'She was cross with her dad.',
+          'She decided boats are boring.',
+          'She wants to learn to fish.',
+        ],
+        type: 'inference',
+      },
+      {
+        question: 'In the story, "glided" most nearly means:',
+        answer: 'moved smoothly',
+        options: ['moved smoothly', 'bounced up and down', 'stopped very suddenly', 'turned over quickly'],
+        type: 'vocab',
+      },
+    ],
+  },
+  {
+    title: 'The Bakery on Maple Street',
+    level: 3,
+    text: `Every Sunday, Theo visits his aunt's bakery on Maple Street. The warm smell of fresh bread drifts down the sidewalk. One morning, his aunt tied on a spare apron and let him help. Theo pressed the soft dough, sprinkled flour on the counter, and shaped dinner rolls into little moons. The baker slid the trays into the big oven. When the rolls came out golden brown, Theo handed the first basket to the neighbor across the street.`,
+    questions: [
+      {
+        question: 'What shape did Theo make the dinner rolls?',
+        answer: 'little moons',
+        options: ['little moons', 'round balls', 'swirls with cinnamon', 'long loaves'],
+        type: 'detail',
+      },
+      {
+        question: 'In the passage, the word "dough" means:',
+        answer: 'the soft mixture before baking',
+        options: [
+          'the soft mixture before baking',
+          'the sweet icing spread over the finished cake',
+          'the hot oven',
+          'a stack of clean plates',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'What is this passage mostly about?',
+        answer: "Theo helping at his aunt's bakery",
+        options: [
+          "Theo helping at his aunt's bakery",
+          'how to ice a birthday cake',
+          'Theo learning to drive a van',
+          'the best sandwich in the city',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
+  {
+    title: 'The Treehouse Sign',
+    level: 3,
+    text: `On the first day of spring break, Ana and her little brother Pip carried boards, rope, and an old ladder into the backyard. Their treehouse had no name, and that bothered Ana. She painted a wide wooden sign in purple letters: "Pip and Ana's Treehouse, Everyone Welcome." They hung the sign on the fence so neighbors could find it. By Saturday afternoon, three friends had already knocked to climb up the ladder.`,
+    questions: [
+      {
+        question: 'What did Ana paint on the wooden sign?',
+        answer: 'the treehouse name',
+        options: ['the treehouse name', 'a map of the yard', 'a row of purple birds', 'the club rules'],
+        type: 'detail',
+      },
+      {
+        question: 'What did the children carry into the backyard?',
+        answer: 'boards, rope, and an old ladder',
+        options: [
+          'boards, rope, and an old ladder',
+          'a hammer and a box of nails',
+          'sand, buckets, and shells',
+          'a basket of tools',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'Why did Ana hang the sign on the fence?',
+        answer: 'so neighbors could find the treehouse',
+        options: [
+          'so neighbors could find the treehouse',
+          'to keep the ladder from tipping over',
+          'to mark the end of the street',
+          'to say the club was closed',
+        ],
+        type: 'inference',
+      },
+    ],
+  },
+  {
+    title: 'Cleanup Day at the Park',
+    level: 3,
+    text: `Owen noticed that the park by the river had candy wrappers and paper cups scattered on the grass. He made colorful posters asking for helpers, and his friend Aisha brought a clipboard to write down names. On cleanup morning, Owen handed out gloves while Aisha filled the big bags. Seven neighbors joined in, and even the mail carrier stopped to help. By lunch, the grass was clean again, the benches were wiped down, and the ducks looked happier too.`,
+    questions: [
+      {
+        question: 'What did Owen notice about the park?',
+        answer: 'trash was scattered on the grass',
+        options: [
+          'trash was scattered on the grass',
+          'the playground slide was too hot to touch',
+          'the fountain was not working',
+          'a new fence had been built',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'What did Aisha bring to write down names?',
+        answer: 'a clipboard',
+        options: ['a clipboard', 'a folding table', 'a big bag of gloves'],
+        type: 'detail',
+      },
+      {
+        question: 'What is the main idea of this passage?',
+        answer: 'Neighbors worked together to clean the park.',
+        options: [
+          'Neighbors worked together to clean the park.',
+          'Owen and Aisha made posters and a list.',
+          'The mail carrier delivers mail every day.',
+          'The park sits beside a wide, slow river.',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
+  {
+    title: "The Snail's Long Nap",
+    level: 3,
+    text: `When the desert gets hot and dry, a desert snail has a clever plan. It climbs onto a rock or a wall and pulls its soft body all the way inside its shell. Then the snail seals the opening with a thin, papery cover that traps moisture inside. The snail sleeps through the dry months this way, safe and slow, until the wet season returns and new green growth appears. Then it wakes up, stretches, and crawls off to eat.`,
+    questions: [
+      {
+        question: 'What does the snail use to seal the opening of its shell?',
+        answer: 'a thin, papery cover',
+        options: ['a thin, papery cover', 'sticky mud', 'a pile of dry leaves'],
+        type: 'detail',
+      },
+      {
+        question: 'Where does the snail climb before it sleeps?',
+        answer: 'onto a rock or a wall',
+        options: ['onto a rock or a wall', 'to the top of a tall tree', 'into a hole in the sand'],
+        type: 'detail',
+      },
+      {
+        question: 'What is this passage mostly about?',
+        answer: 'how a desert snail survives the dry season',
+        options: [
+          'how a desert snail survives the dry season',
+          'why snails carry their shells',
+          'where baby snails find food',
+          'how snails cross busy roads',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
+  {
+    title: 'Why Whales Sing',
+    level: 3,
+    text: `Beneath the ocean's surface, humpback whales sing some of the longest songs in the animal world. A single song can last more than ten minutes, and a whale repeats it over and over for hours. Every whale in the same part of the ocean sings the very same song, yet the song changes a little from year to year. Scientists are still not sure why humpbacks sing. Many think the songs help whales find one another across long, dark stretches of water.`,
+    questions: [
+      {
+        question: 'How long can a single humpback song last?',
+        answer: 'more than ten minutes',
+        options: ['more than ten minutes', 'less than one minute', 'about three seconds', 'all day long'],
+        type: 'detail',
+      },
+      {
+        question: 'What happens to the song from year to year?',
+        answer: 'It changes a little.',
+        options: ['It changes a little.', 'It stays exactly the same.', 'It grows twice as long.'],
+        type: 'detail',
+      },
+      {
+        question: 'What can we guess about the scientists from the passage?',
+        answer: 'They are curious about whale songs.',
+        options: [
+          'They are curious about whale songs.',
+          'They stopped studying whales years ago.',
+          'They believe whales cannot really sing.',
+          'They teach wild whales new songs.',
+        ],
+        type: 'inference',
+      },
+    ],
+  },
+  {
+    title: "Ravi's Cardboard Rocket",
+    level: 3,
+    text: `For the science fair, Ravi built a model rocket out of an oatmeal tube, cardboard fins, and a pointed nose cone. He painted it silver with a red stripe and set it on a post in the backyard to dry. At school, each student launched a bottle rocket filled with water and air. When Ravi counted down, his rocket shot up higher than he expected, trailing a glitter of spray. The whole class cheered, and Ravi's rocket earned a blue ribbon for the neatest design.`,
+    questions: [
+      {
+        question: "What did Ravi use for the rocket's body?",
+        answer: 'an oatmeal tube',
+        options: ['an oatmeal tube', 'a paper towel roll', 'a plastic water bottle', 'a long cardboard box'],
+        type: 'detail',
+      },
+      {
+        question: 'What was the bottle rocket filled with before launch?',
+        answer: 'water and air',
+        options: ['water and air', 'orange soda', 'clean white sand'],
+        type: 'detail',
+      },
+      {
+        question: 'What can we tell about Ravi from the story?',
+        answer: 'He works carefully on his projects.',
+        options: [
+          'He works carefully on his projects.',
+          'He prefers watching to building.',
+          'He forgot all about the fair.',
+          'He lost his rocket in the sky.',
+        ],
+        type: 'inference',
+      },
+    ],
+  },
+  {
+    title: "Marco's Skating Lesson",
+    level: 3,
+    text: `Marco wobbled as soon as he stepped onto the ice rink. His knees bent, his arms floated out wide, and the slick ice felt slippery under his skates. "Look where you want to go, not down," his coach said. Marco fixed his eyes on the bright orange cone across the rink and pushed gently. One lap, then two. By the end of the lesson, Marco glided past the cone without holding the wall even once, and his coach clapped.`,
+    questions: [
+      {
+        question: 'What did the coach tell Marco to look at?',
+        answer: 'where he wanted to go',
+        options: ['where he wanted to go', 'straight down at his skates', 'the clock on the wall'],
+        type: 'detail',
+      },
+      {
+        question: 'In the story, "wobbled" most nearly means:',
+        answer: 'shook unsteadily',
+        options: ['shook unsteadily', 'danced in a circle', 'slid very fast', 'pointed straight ahead'],
+        type: 'vocab',
+      },
+      {
+        question: 'How did Marco feel at the end of the lesson?',
+        answer: 'proud',
+        options: ['proud', 'sleepy and bored', 'cross about the cone'],
+        type: 'inference',
+      },
+    ],
+  },
+
   // ---- Added level 4 passages ----
   {
     title: 'The Octopus Escape Artist',
