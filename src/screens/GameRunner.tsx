@@ -11,7 +11,7 @@ import SpeedRun from '../games/SpeedRun'
 import BossBattle from '../games/BossBattle'
 import TowerDefense from '../games/tower-defense/TowerDefense'
 import WritingPad from '../games/WritingPad'
-import { CloudKeeper, DivisionArena, FractionForge, TimesGrove } from '../games/lazyGames'
+import { CloudKeeper, CritterParade, DivisionArena, FractionForge, TimesGrove } from '../games/lazyGames'
 import { sfx } from '../lib/sound'
 import {
   Card,
@@ -29,7 +29,7 @@ import {
 import { isStageUnlocked } from '../lib/stageLocks'
 import { useWorldUi } from '../world/useWorldUi'
 
-const ARENA_3D = new Set(['divisionArena', 'fractionForge', 'cloudKeeper', 'timesGrove'])
+const ARENA_3D = new Set(['divisionArena', 'fractionForge', 'cloudKeeper', 'timesGrove', 'critterParade'])
 
 export interface GameResult {
   stars: number
@@ -163,6 +163,8 @@ export default function GameRunner() {
         return CloudKeeper
       case 'timesGrove':
         return TimesGrove
+      case 'critterParade':
+        return CritterParade
       case 'writingPad':
         return WritingPad
       default:

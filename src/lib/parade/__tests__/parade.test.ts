@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { seededRng } from '../../random'
+import { voiceText } from '../../../voice/registry'
+import { decide } from '../../gates'
 import { OP_SETS, bestSide, opSetFor, type GatePair, type OpFamily, type Side } from '../../gates'
 import {
   LEVELS,
@@ -18,6 +20,11 @@ import {
   startLevel,
   type LevelPlan,
   type LevelState,
+  afterPick,
+  cageLine,
+  finaleLine,
+  gatePrompt,
+  introLine,
 } from '..'
 
 const SETUPS: [OpFamily, number][] = [
@@ -92,13 +99,19 @@ describe('parade levels', () => {
           const weak = play(plan, (p) => (p.winner === 'tie' ? 'left' : other(bestSide(p))))
           expect(weak.state.count).toBe(plan.weak)
           const w = finaleOutcome(weak.state)
-          if (plan.smart - plan.weak >= 2) {
+          if (plan.smart - plan.weak >= 2 && plan.oneMiss - plan.weak >= 2) {
             expect(w.win).toBe(false)
             losses++
           }
           // the gang sits between the two (when the weak path is the smaller one)
           expect(plan.gang).toBeGreaterThanOrEqual(1)
           expect(plan.gang).toBeLessThan(plan.smart)
+          // a single weak pick, wherever it falls, still wins
+          for (let g = 0; g < plan.gates; g++) {
+            let n = 0
+            const slip = play(plan, (p) => (n++ === g && p.winner !== 'tie' ? other(bestSide(p)) : bestSide(p)))
+            expect(finaleOutcome(slip.state).win).toBe(true)
+          }
         }
       }
     }
@@ -173,10 +186,11 @@ describe('parade levels', () => {
 })
 
 describe('finale, stars, score and hint', () => {
-  it('tunes the Gang between weak and smart play', () => {
-    expect(gangFor(60, 20)).toBe(36)
-    expect(gangFor(10, 9)).toBe(8)
-    expect(gangFor(30, 40)).toBe(24) // weak path ended bigger: both win, smart comfortably
+  it('tunes the Gang just under the worst one-slip finish', () => {
+    expect(gangFor(60, 20, 50)).toBe(48)
+    expect(gangFor(60, 20, 21)).toBe(20) // one slip costs everything: the slip still wins (by 1)
+    expect(gangFor(10, 9, 9)).toBe(8)
+    expect(gangFor(30, 40, 30)).toBe(26) // weak path ended bigger: both win, smart comfortably
     expect(gangFor(2, 2)).toBe(1)
   })
 
@@ -213,5 +227,33 @@ describe('formation', () => {
     const w = Math.max(...pts.map((p) => Math.abs(p.x)))
     const d = Math.max(...pts.map((p) => Math.abs(p.z)))
     expect(d).toBeGreaterThan(w * 1.5)
+  })
+})
+
+describe('voice lines', () => {
+  it('every line the parade says resolves (slots inside the recorded ranges)', () => {
+    const r = seededRng('voice')
+    for (const [family, grade] of SETUPS) {
+      const listen = grade <= 1
+      for (let s = 0; s < 20; s++) {
+        for (const plan of planRun({ family, grade, seed: `voice-${s}` })) {
+          voiceText(introLine('more', listen))
+          voiceText(introLine('keep', listen))
+          const { pairs, cages, state } = play(plan, () => (r() < 0.5 ? 'left' : 'right'))
+          for (const p of pairs) {
+            const ref = gatePrompt(p, listen)
+            expect(voiceText(ref).length).toBeGreaterThan(0)
+            if (listen && p.left.op.kind === 'add' && p.right.op.kind === 'add') expect(ref).toHaveProperty('template', 'parade/plusOrPlus')
+            for (const side of ['left', 'right'] as const) voiceText(afterPick(decide(p, side), listen, s))
+          }
+          for (const c of cages) voiceText(cageLine(c))
+          const f = finaleOutcome(state)
+          voiceText(finaleLine(f.margin, listen))
+        }
+      }
+    }
+    const k1 = startLevel(planLevel({ family: 'mul', grade: 0, seed: 'v' }, 0)).upcoming
+    expect(k1?.kind).toBe('gate')
+    if (k1?.kind === 'gate') expect(voiceText(gatePrompt(k1.pair, true))).toMatch(/^(Plus|Take away) \d+ or (plus|take away) \d+\?$/)
   })
 })

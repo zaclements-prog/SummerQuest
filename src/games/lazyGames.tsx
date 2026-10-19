@@ -20,6 +20,7 @@ const DivisionArenaGame = lazyWithRetry(() => import('./DivisionArena'))
 const FractionForgeGame = lazyWithRetry(() => import('./FractionForge'))
 const CloudKeeperGame = lazyWithRetry(() => import('./CloudKeeper'))
 const TimesGroveGame = lazyWithRetry(() => import('./TimesGrove'))
+const CritterParadeGame = lazyWithRetry(() => import('./CritterParade'))
 
 function Loader({ children }: { children: ReactNode }) {
   return (
@@ -63,6 +64,14 @@ export function TimesGrove(props: GameProps) {
   return (
     <Loader>
       <TimesGroveGame {...props} />
+    </Loader>
+  )
+}
+
+export function CritterParade(props: GameProps) {
+  return (
+    <Loader>
+      <CritterParadeGame {...props} />
     </Loader>
   )
 }

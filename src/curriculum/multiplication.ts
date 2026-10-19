@@ -25,11 +25,12 @@ export const multiplicationZone: Zone = {
     {
       id: 'mult-practice',
       kind: 'practice',
-      title: 'Speed Run',
-      description: 'How many can you solve in 60 seconds?',
-      gameId: 'speedRun',
+      title: 'Critter Parade',
+      description: 'Lead the parade: pick the gate that gives you more friends!',
+      gameId: 'critterParade',
       providerConfig: { kind: 'multiplication', factorMin: 2, factorMax: 10 },
-      params: { timeLimitSec: 60, starThresholds: [10, 15, 20] },
+      // × gates (the grade picks the band: dots for K–1, fractions at 4, decimals at 5)
+      params: { ops: 'mul' },
       starsToEarn: 3,
     },
     {

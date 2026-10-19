@@ -53,9 +53,10 @@ export interface LevelPlan {
   finaleAt: number
   /** Soft ceiling per gate: growth is budgeted over the level. */
   ceilings: number[]
-  /** Final count with every pick smart / every pick weak. */
+  /** Final count with every pick smart / every pick weak / one weak pick at the worst gate. */
   smart: number
   weak: number
+  oneMiss: number
   /** The Grumble Gang's size. */
   gang: number
   /** The count cap for this grade (≤ the set's). */
@@ -142,13 +143,18 @@ export function planLevel(setup: ParadeSetup, level: number): LevelPlan {
     ceilings,
     smart: 0,
     weak: 0,
+    oneMiss: 0,
     gang: 0,
     cap,
     fullAt: fullAt(opSet, cap),
   }
   plan.smart = simulate(plan, 'smart')
   plan.weak = simulate(plan, 'weak')
-  plan.gang = gangFor(plan.smart, plan.weak)
+  // the worst finish with exactly one weak pick (an early miss costs most when × compounds)
+  let oneMiss = plan.smart
+  for (let g = 0; g < plan.gates; g++) oneMiss = Math.min(oneMiss, simulate(plan, (x) => (x === g ? 'weak' : 'smart')))
+  plan.oneMiss = oneMiss
+  plan.gang = gangFor(plan.smart, plan.weak, oneMiss)
   return plan
 }
 
@@ -239,8 +245,11 @@ export function capFor(opSet: OpSetId, grade: number): number {
   return opSet === 'mulAdd' && grade <= 2 ? Math.min(cap, 100) : cap
 }
 
-/** Play the level ahead with every pick smart (or every pick weak); returns the final count. */
-export function simulate(plan: LevelPlan, policy: 'smart' | 'weak'): number {
+/**
+ * Play the level ahead with every pick smart, every pick weak, or a pick per
+ * gate number; returns the final count.
+ */
+export function simulate(plan: LevelPlan, policy: 'smart' | 'weak' | ((gate: number) => 'smart' | 'weak')): number {
   let count = plan.start
   let prev: string | null = null
   for (const ev of plan.events) {
@@ -249,7 +258,8 @@ export function simulate(plan: LevelPlan, policy: 'smart' | 'weak'): number {
       const p = gatePairFor(plan, ev.gate, count, prev)
       const hi = Math.max(p.left.result, p.right.result)
       const lo = Math.min(p.left.result, p.right.result)
-      count = policy === 'smart' ? hi : lo
+      const pick = typeof policy === 'function' ? policy(ev.gate) : policy
+      count = pick === 'smart' ? hi : lo
       prev = p.key
     }
   }
@@ -257,15 +267,17 @@ export function simulate(plan: LevelPlan, policy: 'smart' | 'weak'): number {
 }
 
 /**
- * The Grumble Gang's size: 40 % of the way from the all-weak finish to the
- * all-smart one. Smart play always wins (by construction: the all-smart path
- * IS the level's play when every pick is smart), mostly-weak play falls a
- * little short and the rematch is winnable. Never a fail-by-one tuning: the
- * number is fixed when the level starts and shown on the Gang's banner.
+ * The Grumble Gang's size, fixed when the level starts (never tuned to the
+ * child's play as it happens): just under the worst finish with ONE weak pick.
+ * So every-pick-smart wins comfortably, a single slip still wins, a couple of
+ * slips come close and can lose, and all-weak loses (unless one slip already
+ * costs that much) — and the rematch (the same gates again) is winnable.
  */
-export function gangFor(smart: number, weak: number): number {
-  if (smart - weak >= 2) return Math.min(smart - 1, Math.max(weak + 1, weak + Math.round(0.4 * (smart - weak))))
-  // the weak path ended as big (an early weak pick met kinder gates later): both
-  // ways win, the smart one comfortably
-  return Math.max(1, Math.min(smart - 1, Math.round(smart * 0.8)))
+export function gangFor(smart: number, weak: number, oneMiss: number = smart): number {
+  const top = Math.min(smart, oneMiss)
+  const g = top - Math.max(1, Math.ceil(top * 0.04))
+  // the all-weak path ended as big (an early weak pick met kinder gates later): everyone wins
+  if (weak >= top) return Math.max(1, Math.min(g, Math.round(top * 0.85)))
+  // (when one slip already lands on the all-weak finish, the slip keeps its win)
+  return Math.max(1, g >= weak + 1 ? g : top - 1)
 }
