@@ -210,6 +210,63 @@ export const QUESTIONS: GeoQuestion[] = [
     options: ['3', '2', '6', '9'],
     hint: 'A hexagon has 6 sides and a triangle has 3.',
   },
+  // ---- Level 3 additions: shapes by attributes and solid parts (CCSS 3.G.A.1) ----
+  {
+    level: 3,
+    question: 'How many vertices (corners) does a pentagon have?',
+    answer: '5',
+    options: ['5', '4', '6', '10'],
+    hint: 'A pentagon has 5 sides, and corners are where two sides meet.',
+  },
+  {
+    level: 3,
+    question: 'A rectangle has ___ pairs of parallel sides.',
+    answer: '2',
+    options: ['2', '1', '3', '4'],
+    hint: 'The top and bottom are one pair, and the left and right sides are the other.',
+  },
+  {
+    level: 3,
+    question: 'A square is a special kind of ___.',
+    answer: 'rectangle',
+    options: ['rectangle', 'triangle', 'hexagon', 'circle'],
+    hint: 'A square has 4 sides and 4 right angles, just like a rectangle.',
+  },
+  {
+    level: 3,
+    question: 'Which 3D solid has no flat faces?',
+    answer: 'sphere',
+    options: ['sphere', 'cube', 'cone', 'cylinder'],
+    hint: 'It rolls in every direction and never sits flat.',
+  },
+  {
+    level: 3,
+    question: 'Every flat face of a cube is shaped like a ___.',
+    answer: 'square',
+    options: ['square', 'circle', 'triangle', 'oval'],
+    hint: 'Look at one side of a die: all four edges are the same length.',
+  },
+  {
+    level: 3,
+    question: 'How many sides does a nonagon have?',
+    answer: '9',
+    options: ['9', '8', '7', '10'],
+    hint: '"Non" means nine, like the nine innings in a baseball game.',
+  },
+  {
+    level: 3,
+    question: 'A honeycomb cell, where bees keep their honey, is shaped like a ___.',
+    answer: 'hexagon',
+    options: ['hexagon', 'pentagon', 'octagon', 'square'],
+    hint: 'Count around one cell: it has 6 sides.',
+  },
+  {
+    level: 3,
+    question: 'How many vertices (corners) does an octagon have?',
+    answer: '8',
+    options: ['8', '6', '7', '10'],
+    hint: 'A STOP sign has 8 sides, and it has the same number of corners.',
+  },
   // ---- Level 4: lines and angles ----
   {
     level: 4,
