@@ -88,7 +88,32 @@ export type WritingKind = Config['kind']
  * commit that fills its kinds to the ≥30-per-kind gate (writingPrompts.test.ts).
  * Authored by handoff steps A2 (2nd grade), A3 (3rd), A4 (4th).
  */
-export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<WritingKind, string[]>>> = {}
+export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<WritingKind, string[]>>> = {
+  // 2nd grade (handoff A2). Standards: CCSS W.2.1–W.2.3 — short opinion,
+  // informative, and narrative writing on familiar topics. Concrete tasks,
+  // everyday words, one idea per sentence; these join the shared list for G2.
+  2: {
+    // W.2.1 — one-sentence opinions and details about everyday life.
+    sentence: [
+      'Write a sentence about your favorite game to play at recess. Tell why it is fun.',
+      'What do you like to do at home on a rainy day? Write a sentence about it.',
+      'Write a sentence about a sound you heard this morning. What do you think made that sound?',
+      'If you could choose any animal as a pet, which would you pick? Write one sentence about why.',
+    ],
+    // W.2.2 — short informative paragraphs naming who, what, and where.
+    paragraph: [
+      'Write a paragraph about the best picnic you can imagine. Say who you bring, what you eat, and where you sit.',
+      'Write a paragraph about a place where you love to read. What makes it cozy?',
+      'Write a paragraph about a job you do to help at home. How does your help make things better for your family?',
+    ],
+    // W.2.3 — brief narratives with a beginning, middle, and ending hint.
+    story: [
+      'Write a story about a red balloon that floats away and tries to find its owner. Who does it meet along the way?',
+      'Write a story about the day your class says hello to a new student. What do you do together on the first day?',
+      'Write a story about a puppy who tries swimming at the lake for the first time. How does the day end?',
+    ],
+  },
+}
 
 /** The pool a grade draws for one kind: the shared list plus that grade's shelf. Exported for tests. */
 export function poolForKind(kind: WritingKind, grade: GradeLevel): string[] {
