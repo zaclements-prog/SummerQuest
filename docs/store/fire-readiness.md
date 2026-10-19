@@ -150,6 +150,19 @@ It shows the CPU side only.
 | Candy Forge | 53.4 (33 ms) | **58.7 (17 ms)** | 40 → **53** |
 | Pets | 52.9 (33 ms) | 57 | — → 59 |
 
+**Lessons (motion graphics).** These were the slowest screens. The vector stage was re-rendered and re-rasterized every frame, with live blur filters, and every scene kept moving forever. Measured on the Fire HD 10 in landscape, lesson started with a real tap (`fire-perf.mjs --tap "Watch#n"`); `master` before vs `lesson-perf`:
+
+| Lesson | Playing fps | GPU time per 5 s after the narration | Raster time per 5 s after |
+|---|---|---|---|
+| Multiplication | 35.5 → **47.6** | 4,136 → **1,521 ms** | 1,101 → 270 ms |
+| Division | 46.6 → **50.7** | 3,735 → **1,502 ms** | 1,269 → 301 ms |
+| Fractions | 32.7 → **44.1** | 3,798 → **2,308 ms** | 585 → 213 ms |
+| Place Value | 53.8 → **54.7** | 3,142 → **1,970 ms** | 1,079 → 255 ms |
+
+What changed: on touch devices the stage redraws at a steady 30 fps and holds its last frame 1.5 s after the narration; glows are gradients, not blurs; and stage filters are off. Still open:
+- Drawing the stage at 1× instead of 1.5× (2.25× fewer pixels; check that text stays crisp).
+- Trimming the heaviest scenes (word problems, science: 300+ SVG elements).
+
 What made the difference:
 - **World CPU.** The static batcher kept ~1,800 merged-away meshes in the scene, and three.js walked all ~3,000 objects every frame.
   - Merged leaves are now frozen: no matrix updates.
