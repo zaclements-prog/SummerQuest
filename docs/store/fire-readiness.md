@@ -16,11 +16,11 @@ The store-listing documents sit beside it in `docs/store/`.
 | Fire tablet layouts | ✅ Fire 7, HD 8, HD 10 and Max 11, both orientations, with system bars showing. |
 | Touch / Pencil / rotation | ✅ Tap-to-walk everywhere (World, Home, games). Drags and pinches never misfire. The view survives rotation. |
 | Production build health | ✅ 70 routes and 0 page errors on the production build. |
-| Low-end performance | ✅ / ⚠️ Fire HD 10: every measured 3D screen ~58–59 fps (was ~50). At 3× CPU (≈ Fire 7) World 48 fps, Candy Forge 53, the rest 59–60. See [Performance](#performance). Confirm on a real Fire 7. |
+| Low-end performance | ✅ Fire HD 8 (2022): every 3D screen and lesson ~57–60 fps in both orientations. ✅ Fire HD 10: 3D ~58–59 fps; lessons 44–55 fps while narrating (GPU-bound on its bigger screen). ⏳ Fire 7 not yet tested. See [Performance](#performance). |
 | Kid safety / COPPA | ✅ No ads, no analytics, no SDKs, no network. `npm run build:store` compiles out the AI writing feeder and fails on any network use. Parental gate on the Parent area and every grown-up setting. Store build sweep: 70 routes, 0 errors, 0 outside requests. See `privacy-policy.md`. |
 | Store assets | ✅ Icons 512×512 and 114×114 (`assets/`). ✅ Screenshots 1920×1200. ⏳ Listing text: `listing-draft.md`. |
 | Packaging for Fire OS | ✅ Capacitor Android app in `android/` (2026-10-18). Debug APK builds and passes the emulator checks. ⏳ Release signing key (owner). See [Packaging](#packaging). |
-| Real-device check | ✅ Fire HD 10 (Fire OS 8.3), 2026-10-18. ⏳ Fire 7 / HD 8 still to do (see [Packaging](#packaging)). |
+| Real-device check | ✅ Fire HD 10 and ✅ Fire HD 8 (both Fire OS 8.3), 2026-10-18. ⏳ Fire 7 still to do (see [Packaging](#packaging)). |
 
 ## What Amazon requires, and where we stand
 
@@ -85,7 +85,7 @@ The toolchain is JDK 21 (`brew install openjdk@21`) and the Android SDK at
 - Back works: with the on-screen keyboard open, Back closes the keyboard and stays on the screen. Map → Back returns to the World.
 - A lesson plays narration and keeps the screen on. On Home, the audio stops. Back in the app, the narration resumes. Leaving the lesson lets the screen sleep again.
 - No crashes in the log. The test explorer was cleared afterwards.
-- Still to check on a **Fire 7 / HD 8**, the slowest targets.
+- Still to check on a **Fire 7**, the slowest target. The Fire HD 8 passed: see [Performance](#performance).
 
 **Still to do (owner):**
 - **Release signing key.** Create it once and keep it safe and out of git:
@@ -134,6 +134,30 @@ the Fire 7's quad-core A53). It runs in a software-GL browser here, so 3D number
 - Tablets start in **Fast** graphics and step up to Pretty only if the device proves smooth.
 - Every 3D screen stays under 250 draw calls per frame on Fast.
 - **Watch on a real Fire 7:** the first seconds of the World and the 3D games, while the scenery is merged.
+
+### Fire HD 8 (2022), the low-end check (2026-10-18)
+
+**Device:**
+- KFRAWI: MediaTek MT8169A with six Cortex-A55 cores (no big cores) and a Mali-G52 MC2 GPU (the same GPU as the HD 10).
+- 2 GB RAM; 1280×800 at 1.33× density.
+- Fire OS 8.3.3.8 with Amazon WebView 148.
+
+**Checks:** the debug APK from `master` (after PR #10) passed the smoke test: first run, the World, Map → Back → World, a restart that keeps the explorer, and no crashes. Cold start takes 3.7 s; 1.8 s once warm.
+
+**Measured with `fire-perf.mjs`** at full speed, no throttling. Lessons were started with a real tap, and "after" means after the narration ends.
+
+| Screen | Portrait | Landscape |
+|---|---|---|
+| World | 59.7 fps (110k tris) | 58.6 fps (194k tris) |
+| Home / Pets | 60 / 60 | 60 / 60 |
+| Times Grove / Candy Forge | 60 / 60 | 60 / 60 |
+| Lessons, playing: Multiplication, Division, Fractions, Place Value | 52*–60 | 60, 60, 60, 60 |
+| Lessons, playing: Word Problems, Science | 56, 56 | 58–59, 57–58 (2 repeats) |
+| Lessons, after the narration | 60 | 60 |
+
+\* Multiplication's portrait average includes one 0.8 s pause as the lesson loads; its frames were otherwise steady. One landscape pass had a single slow run each for Word Problems and Science (about 40 fps). Neither repeated in two more runs, most likely background activity on a freshly woken tablet.
+
+**Why the HD 8 beats the HD 10 on lessons:** both have the same GPU, and lessons are limited by redrawing the vector stage. The HD 8's smaller, lower-density screen has about 40% as many pixels to fill. Its slower CPU (all little cores) didn't show up as a limit anywhere. The heavier the screen fill, the more the HD 10 is the device to watch.
 
 ### On a real Fire tablet (2026-10-18)
 
