@@ -442,6 +442,185 @@ export const CHARTS: DataChart[] = [
     options: ['11', '9', '35', '6'],
     hint: 'Blue (23) minus Green (12).',
   },
+  // ---- Level 3, added batch (CCSS 3.MD.D.3: read scaled bar graphs; direct reads, values 2–10) ----
+  {
+    level: 3,
+    title: 'Fireflies at Night',
+    unit: 'fireflies',
+    bars: [
+      { label: 'Porch', value: 6, emoji: '🏡' },
+      { label: 'Meadow', value: 9, emoji: '🌿' },
+      { label: 'Trees', value: 4, emoji: '🌳' },
+    ],
+    question: 'Where were the FEWEST fireflies seen?',
+    answer: 'Trees',
+    options: ['Porch', 'Meadow', 'Trees'],
+    hint: 'Look for the shortest bar.',
+    questions: [
+      {
+        question: 'How many fireflies were seen on the porch?',
+        answer: '6',
+        options: ['6', '7', '9', '4'],
+        hint: 'Read the height of the Porch bar.',
+      },
+    ],
+  },
+  {
+    level: 3,
+    title: 'Paper Cranes Folded',
+    unit: 'cranes',
+    bars: [
+      { label: 'Ada', value: 7 },
+      { label: 'Cal', value: 3 },
+      { label: 'Luna', value: 5 },
+      { label: 'Nico', value: 8 },
+    ],
+    question: 'Who folded the MOST paper cranes?',
+    answer: 'Nico',
+    options: ['Nico', 'Ada', 'Luna', 'Cal'],
+    hint: 'Find the tallest bar.',
+    questions: [
+      {
+        question: 'How many MORE cranes did Nico fold than Cal?',
+        answer: '5',
+        options: ['5', '4', '11', '3'],
+        hint: 'Nico (8) minus Cal (3).',
+      },
+    ],
+  },
+  {
+    level: 3,
+    title: 'Chalk Drawings',
+    unit: 'drawings',
+    bars: [
+      { label: 'Tue', value: 5, emoji: '🎨' },
+      { label: 'Wed', value: 9, emoji: '🎨' },
+      { label: 'Thu', value: 7, emoji: '🎨' },
+    ],
+    question: 'On which day were the MOST chalk drawings made?',
+    answer: 'Wed',
+    options: ['Wed', 'Tue', 'Thu', 'Fri'],
+    hint: 'Look for the tallest bar.',
+    questions: [
+      {
+        question: 'How many chalk drawings were made on Thursday?',
+        answer: '7',
+        options: ['7', '5', '9', '3'],
+        hint: 'Read the height of the Thursday bar.',
+      },
+    ],
+  },
+  {
+    level: 3,
+    title: 'Worms After the Rain',
+    unit: 'worms',
+    bars: [
+      { label: 'Left Bed', value: 5, emoji: '🪱' },
+      { label: 'Middle Bed', value: 8, emoji: '🪱' },
+      { label: 'Right Bed', value: 3, emoji: '🪱' },
+    ],
+    question: 'Which bed had the FEWEST worms?',
+    answer: 'Right Bed',
+    options: ['Right Bed', 'Middle Bed', 'Left Bed'],
+    hint: 'Look for the shortest bar.',
+    questions: [
+      {
+        question: 'How many worms were found in the left bed?',
+        answer: '5',
+        options: ['5', '8', '3', '6'],
+        hint: 'Read the height of the Left Bed bar.',
+      },
+    ],
+  },
+  {
+    level: 3,
+    title: 'Pinecones Gathered',
+    unit: 'pinecones',
+    bars: [
+      { label: 'Bea', value: 4 },
+      { label: 'Hugo', value: 9 },
+      { label: 'Iris', value: 6 },
+    ],
+    question: 'Who gathered the MOST pinecones?',
+    answer: 'Hugo',
+    options: ['Hugo', 'Iris', 'Bea', 'Wes'],
+    hint: 'Find the tallest bar.',
+    questions: [
+      {
+        question: 'How many pinecones did Iris gather?',
+        answer: '6',
+        options: ['6', '4', '9', '5'],
+        hint: 'Read the height of the Iris bar.',
+      },
+    ],
+  },
+  {
+    level: 3,
+    title: 'Mittens in the Lost and Found',
+    unit: 'mittens',
+    bars: [
+      { label: 'Gray', value: 8, emoji: '🧤' },
+      { label: 'Red', value: 6, emoji: '🧤' },
+      { label: 'Blue', value: 3, emoji: '🧤' },
+    ],
+    question: 'Which color has the MOST mittens?',
+    answer: 'Gray',
+    options: ['Gray', 'Red', 'Blue'],
+    hint: 'Look for the tallest bar.',
+    questions: [
+      {
+        question: 'How many MORE gray mittens are there than blue mittens?',
+        answer: '5',
+        options: ['5', '3', '9', '11'],
+        hint: 'Gray (8) minus Blue (3).',
+      },
+    ],
+  },
+  {
+    level: 3,
+    title: 'Vegetables Picked',
+    unit: 'vegetables',
+    bars: [
+      { label: 'Carrots', value: 9 },
+      { label: 'Potatoes', value: 4 },
+      { label: 'Turnips', value: 6 },
+    ],
+    question: 'Which vegetable was picked the MOST?',
+    answer: 'Carrots',
+    options: ['Carrots', 'Potatoes', 'Turnips'],
+    hint: 'Find the tallest bar.',
+    questions: [
+      {
+        question: 'How many more carrots than potatoes were picked?',
+        answer: '5',
+        options: ['5', '4', '13', '6'],
+        hint: 'Carrots (9) minus potatoes (4).',
+      },
+    ],
+  },
+  {
+    level: 3,
+    title: 'Marbles Won',
+    unit: 'marbles',
+    bars: [
+      { label: 'Theo', value: 9 },
+      { label: 'Uma', value: 6 },
+      { label: 'Otto', value: 4 },
+    ],
+    question: 'Who won the MOST marbles?',
+    answer: 'Theo',
+    options: ['Theo', 'Otto', 'Uma', 'Bea'],
+    hint: 'Look for the tallest bar.',
+    questions: [
+      {
+        question: 'How many FEWER marbles did Otto have than Uma?',
+        answer: '2',
+        options: ['2', '4', '10', '3'],
+        hint: 'Uma (6) minus Otto (4).',
+      },
+    ],
+  },
+
 ]
 
 /** Every question a chart carries: the inline primary plus extras, in order. Exported for tests. */
