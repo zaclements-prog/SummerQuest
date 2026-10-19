@@ -1,11 +1,23 @@
+/**
+ * Writing Workshop prompts (static, offline).
+ *
+ * Grade bands (see lib/gradeTiers): a child draws from SHARED_PROMPTS plus their
+ * grade's shelf in WRITING_PROMPTS_BY_GRADE. Handoff A1/A4: adding a grade list
+ * must not change the public API — the provider picks the profile's grade pool
+ * when present and falls back to the shared list with no profile (grade 4, like
+ * the rest of the app). Grade standard per shelf is named in a comment above it.
+ */
 import type { Problem, ProblemProvider } from '../problem'
 import { makeLlmCachedProvider } from '../llm-cache'
 import { useProgress } from '../../store/progress'
+import { DEFAULT_GRADE, isGradeLevel, type GradeLevel } from '../gradeTiers'
 import { randInt, shuffle } from '../random'
 
 interface Config {
   kind: 'sentence' | 'paragraph' | 'story'
   source?: 'static' | 'llm'
+  /** Grade tier; when omitted the provider reads the profile (default 4). */
+  grade?: GradeLevel
 }
 
 const STATIC_PROMPTS: Record<Config['kind'], string[]> = {
@@ -69,9 +81,35 @@ export function makeWritingPromptProvider(cfg: Config): ProblemProvider {
   })
 }
 
+export type WritingKind = Config['kind']
+
+/**
+ * Grade shelves. Empty keys are not allowed: a grade key appears in the same
+ * commit that fills its kinds to the ≥30-per-kind gate (writingPrompts.test.ts).
+ * Authored by handoff steps A2 (2nd grade), A3 (3rd), A4 (4th).
+ */
+export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<WritingKind, string[]>>> = {}
+
+/** The pool a grade draws for one kind: the shared list plus that grade's shelf. Exported for tests. */
+export function poolForKind(kind: WritingKind, grade: GradeLevel): string[] {
+  return [...STATIC_PROMPTS[kind], ...(WRITING_PROMPTS_BY_GRADE[grade]?.[kind] ?? [])]
+}
+
+export { STATIC_PROMPTS }
+
+/**
+ * The pool a child actually draws: the shared list plus their grade's shelf.
+ * Grade comes from the config, else the profile, else the app-wide default (4).
+ */
+function poolFor(cfg: Config): string[] {
+  const raw = cfg.grade ?? useProgress.getState().player?.grade
+  const grade = isGradeLevel(raw) ? raw : DEFAULT_GRADE
+  return poolForKind(cfg.kind, grade)
+}
+
 function makeStaticWritingPromptProvider(cfg: Config): ProblemProvider {
   let serial = 0
-  const pool = STATIC_PROMPTS[cfg.kind]
+  const pool = poolFor(cfg)
   let queue = shuffle(pool)
   return {
     topic: `writing-${cfg.kind}`,
