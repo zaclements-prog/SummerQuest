@@ -172,6 +172,98 @@ export const G2_READING: ReadingItem[] = [
       { question: 'Why did Mama turn clean-up into a race?', answer: 'to make hard work fun', options: ['to make hard work fun', 'because she was in a hurry', 'because Mia asked her to'], type: 'inference' },
     ],
   },
+  // RL.2.1/2.2/2.4 — batch: puppy, sidewalk art, fire station, backyard movie,
+  // desert, lost-and-found, ants, moon, cider.
+  {
+    title: 'Biscuit’s Muddy Day',
+    level: 2,
+    text: `Biscuit the puppy slept in his cozy bed. He woke up hungry. His food bowl sat on the kitchen floor, but it was empty. Biscuit barked once, then twice. His boy Owen heard him and laughed. "Breakfast time already?" Owen filled the bowl with kibble. Biscuit ate every last piece, then licked his nose. After breakfast, he dug a hole in the yard and fell asleep inside it, muddy from ear to tail.`,
+    questions: [
+      { question: 'Who filled Biscuit’s food bowl?', answer: 'Owen', options: ['the mail carrier', 'Owen', 'his sister Mia'], type: 'detail' },
+      { question: 'What is this story mostly about?', answer: 'a hungry puppy who gets breakfast and a nap', options: ['a puppy who learns to fetch a ball', 'a hungry puppy who gets breakfast and a nap', 'a lost dog who finds a new home'], type: 'main-idea' },
+      { question: 'In the story, the word "cozy" means:', answer: 'comfortable', options: ['comfortable', 'very noisy', 'hard and cold'], type: 'vocab' },
+    ],
+  },
+  {
+    title: 'The Chalk Museum',
+    level: 2,
+    text: `Ana and Theo made a museum on the sidewalk. They drew pictures with chalk and lined them up like real exhibits. Ana drew a big blue whale. Theo drew a rocket and a friendly alien. Neighbors walked by in a slow line to see each picture. "Please do not touch the art," Ana said with a grin. At the end of the day, a rain shower washed the museum away. Ana and Theo planned a new show for next week.`,
+    questions: [
+      { question: 'What did Ana draw?', answer: 'a whale', options: ['a rocket', 'a whale', 'a tall castle'], type: 'detail' },
+      { question: 'In the story, an "exhibit" is:', answer: 'one picture on show', options: ['a ticket you buy at the door', 'one picture on show', 'a place to sit and rest'], type: 'vocab' },
+      { question: 'What is this story mostly about?', answer: 'kids sharing their sidewalk art with neighbors', options: ['kids sharing their sidewalk art with neighbors', 'two friends racing chalk rockets down a street', 'a rainy day that ruined one show, and what the kids did next'], type: 'main-idea' },
+    ],
+  },
+  {
+    title: 'A Trip to the Fire Station',
+    level: 2,
+    text: `Ms. Ivy’s class took a field trip to the fire station. A firefighter named Rex showed them a big red engine. "This truck holds water, a long ladder, and heavy tools," he said. The class climbed the steps and sat in the driver’s seat. Rex showed the kids how to fold up their coats and wear a firefighter’s helmet. Before the class left, Rex handed out shiny stickers. Everyone drew a picture of the trip that afternoon.`,
+    questions: [
+      { question: 'Where did the class go on its field trip?', answer: 'the fire station', options: ['the fire station', 'the public library', 'the city park'], type: 'detail' },
+      { question: 'In the story, the word "heavy" means:', answer: 'very weighty', options: ['very colorful', 'very weighty', 'very quick'], type: 'vocab' },
+      { question: 'What is this story mostly about?', answer: 'a class visiting a fire station', options: ['a class visiting a fire station', 'a firefighter who teaches her class to read maps', 'the best way to ride a big red engine'], type: 'main-idea' },
+    ],
+  },
+  {
+    title: 'Backyard Movie Night',
+    level: 2,
+    text: `On Friday, Gia’s family hung a white sheet on the fence. Papa carried out a bowl of buttery popcorn. Mama strung tiny lights along the porch rail. The kids spread quilts on the grass and sat down in a row. The movie was about penguins who slide on the ice. Moths danced around the little lights while the family watched. At the end, Gia’s little brother fell asleep right on his quilt.`,
+    questions: [
+      { question: 'Who brought out the popcorn?', answer: 'Papa', options: ['Papa', 'Gia’s brother', 'the next-door neighbor'], type: 'detail' },
+      { question: 'What happens FIRST in the story?', answer: 'the family hangs a sheet on the fence', options: ['the kids spread quilts on the grass', 'the family hangs a sheet on the fence', 'the brother falls fast asleep'], type: 'detail' },
+      { question: 'The story shows that the family…', answer: 'liked making fun together at home', options: ['liked making fun together at home', 'sold popcorn to the neighbors', 'never watched movies after dark'], type: 'inference' },
+    ],
+  },
+  {
+    title: 'The Saguaro’s Water Trick',
+    level: 2,
+    text: `The saguaro is a giant cactus of the desert. It has tall arms that reach up to the sky. Rain is rare in the desert, so the saguaro keeps water inside its thick stem. When a storm finally comes, the cactus soaks up the rain fast. Its body fills like an accordion and stores the drink for later. A roadrunner jogs past on long legs, hunting grasshoppers in the shade of the saguaro.`,
+    questions: [
+      { question: 'Where does the saguaro keep its water?', answer: 'in its thick stem', options: ['in its long roots', 'in its thick stem', 'inside its sharp spines'], type: 'detail' },
+      { question: 'In the story, the word "rare" means:', answer: 'not happening very often', options: ['tiny and easy to miss', 'not happening very often', 'strange and new'], type: 'vocab' },
+      { question: 'What is this story mostly about?', answer: 'how a desert cactus saves up water', options: ['how a desert cactus saves up water', 'why deserts get storms at night', 'the fast jog of a roadrunner'], type: 'main-idea' },
+    ],
+  },
+  {
+    title: 'The Lost Umbrella',
+    level: 2,
+    text: `A red umbrella sat in the school lost-and-found bin. June spotted it right away — it was hers! She had left it on the bus last Tuesday. June checked with the office before taking it home. Mr. Diaz looked at his list and nodded. "No one else has claimed it," he said. "It has your name inside the fold." June hung the umbrella by the door, glad the office kept careful notes about what kids lost.`,
+    questions: [
+      { question: 'Where did June lose her umbrella?', answer: 'on the bus', options: ['on the bus', 'at the park', 'in the cafeteria'], type: 'detail' },
+      { question: 'What did June do BEFORE she took the umbrella home?', answer: 'checked with the office', options: ['asked her friend Leo', 'checked with the office', 'waited for a rainy day'], type: 'detail' },
+      { question: 'Why was June glad at the end?', answer: 'the office keeps good records', options: ['the office keeps good records', 'her umbrella was brand-new', 'the bus was late again'], type: 'inference' },
+    ],
+  },
+  {
+    title: 'The Ant Farm Jar',
+    level: 2,
+    text: `Ravi watched the ants in his glass jar. The queen ant sat still in the middle of the dirt, laying tiny eggs. Worker ants dug twisting tunnels from top to bottom. They carried crumbs down into the dark and stacked them in a neat pile. One crumb was bigger than an ant, but two ants lifted it together. At night, Ravi covered the jar with a cloth so the ants could rest in the dark.`,
+    questions: [
+      { question: 'What did the worker ants carry?', answer: 'crumbs', options: ['crumbs', 'small stones', 'drops of water'], type: 'detail' },
+      { question: 'How did the ants move the big crumb?', answer: 'two ants lifted it together', options: ['the queen carried it alone', 'two ants lifted it together', 'they pushed it up the glass'], type: 'detail' },
+      { question: 'In the story, the word "carry" means:', answer: 'haul', options: ['haul', 'bury', 'share'], type: 'vocab' },
+    ],
+  },
+  {
+    title: 'The Night the Moon Turned Red',
+    level: 2,
+    text: `One clear spring night, families packed into the town park. They brought lawn chairs and warm blankets to watch the moon. When the total eclipse began, the bright moon slowly turned a deep copper red. It hung there, glowing like a night-light over the trees. The whole crowd cheered and clapped. The red color lasted for more than an hour. On the walk home, kids compared drawings of the rusty moon.`,
+    questions: [
+      { question: 'What color did the moon turn?', answer: 'deep copper red', options: ['deep copper red', 'bright shiny green', 'pale snowy white'], type: 'detail' },
+      { question: 'What did the crowd do as the moon changed?', answer: 'cheer and clap', options: ['go home right away', 'cheer and clap', 'turn on flashlights'], type: 'detail' },
+      { question: 'In the story, the word "lasted" means:', answer: 'went on for a time', options: ['went on for a time', 'slipped right away', 'grew bigger and bigger'], type: 'vocab' },
+    ],
+  },
+  {
+    title: 'Apple Cider Day',
+    level: 2,
+    text: `In October, Priya’s class visited an apple farm. The farmer showed them an old press that squeezes juice from the apples. First, the kids washed the apples in big tubs of water. Then the machine ground the fruit into soft pieces. The press gave the pieces a long, slow squeeze, and sweet juice ran into a bucket. The farmer handed each kid a cool cup. Priya thought the fresh cider was the best drink of fall.`,
+    questions: [
+      { question: 'Who showed the class the press?', answer: 'the farmer', options: ['the farmer', 'Priya’s teacher', 'a friendly tourist'], type: 'detail' },
+      { question: 'What did the kids do BEFORE the apples were ground up?', answer: 'washed them in tubs', options: ['washed them in tubs', 'pressed them slowly', 'drew pictures of cider'], type: 'detail' },
+      { question: 'In the story, a "press" is:', answer: 'a machine that squeezes', options: ['a machine that squeezes', 'a big tub of cold water', 'a basket for picked apples'], type: 'vocab' },
+    ],
+  },
 ]
 
 // ---- Science, level 2 (NGSS 2-PS1 / 2-LS2 / 2-LS4 / 2-ESS2) --------------------
