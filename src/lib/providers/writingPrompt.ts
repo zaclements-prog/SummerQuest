@@ -211,6 +211,15 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Should every student keep a journal of small wins? Write a sentence stating your opinion and one reason that would convince a skeptic.',
       'Which helps a person grow more, trying something new or perfecting something familiar? State your choice and one good reason.',
       'Write one sentence that persuades your town to plant more trees along the streets. Include a reason a store owner would agree with.',
+      'If students could design the perfect recess, what would change? State your opinion and give two reasons in one organized sentence.',
+      'Should kids have a say in what the family cooks for dinner one day each week? Write your opinion and one strong reason.',
+      'Is it better to save your allowance in a jar or spend it right away on something fun? Give your choice and one careful reason in a single sentence.',
+      'Write one sentence that would convince a nervous friend to join the school play. Include a reason why trying feels worth it.',
+      'Do you think homework should be limited to thirty minutes after school? State your view and support it with two reasons.',
+      'Which job matters more to a community, growing food or teaching children? Write your answer and one respectful reason.',
+      'Should every family take one screen-free day each week? Write your opinion and one reason that kids and grown-ups would both agree with.',
+      'Is making a mistake a good way to learn? Write one sentence with your opinion and an example that supports it.',
+      'If your community could add one new walking or biking path, where should it go? State your choice and one good reason.',
     ],
     // W.4.2 — inform or explain: develop a topic with facts, definitions, and details.
     paragraph: [
