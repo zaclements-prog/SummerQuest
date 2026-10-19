@@ -19,7 +19,7 @@
   "steps": [
     { "id": "A1", "title": "writingPrompt.ts: byGrade map + code change + tests (>=30 prompts/kind/grade gate)", "status": "done", "commit": "ded61cd", "evidence": "byGrade map + poolForKind + grade plumbing + writingPrompts.test.ts; 219 passed (vitest providers), 776 passed (npm test)" },
     { "id": "A2", "title": "writing prompts G2: sentence+paragraph+story to 40+ each (reuse shared pool counts toward per-grade)", "status": "done", "commit": "24e86e2..2d3872a", "evidence": "G2 shelf: 28 sentence + 28 paragraph + 28 story authored; poolForKind = 47/40/40; grade gate armed and green; 219 passed (vitest providers), 776 passed (npm test)" },
-    { "id": "A3", "title": "writing prompts G3: sentence+paragraph+story to 40+ each", "status": "pending" },
+    { "id": "A3", "title": "writing prompts G3: sentence+paragraph+story to 40+ each", "status": "done", "commit": "457ffb1..a9198ed", "evidence": "G3 shelf: 29 sentence + 30 paragraph + 29 story authored (W.3.1-W.3.3); poolForKind = 40/40/40; 12 content commits; variety audit clean (scripts/audit-writing-variety.mjs); answerBias n/a for prompts (no options)" },
     { "id": "A4", "title": "writing prompts G4: sentence+paragraph+story to 40+ each", "status": "pending" },
     { "id": "A5", "title": "G2_READING passages +8 (8->16) content/grade2.ts", "status": "pending" },
     { "id": "A6", "title": "G2_READING passages +9 (16->25)", "status": "pending" },
@@ -55,7 +55,8 @@
   ],
   "history": [
     { "interval": 1, "step": "A1", "result": "done", "tests": "vitest providers 219 passed; npm test 776 passed; lint, tsc -b, build:store clean", "push": "push-skipped (one attempt; remote ref unchanged at 6f2bf5f — local commits are source of truth)" },
-    { "interval": 2, "step": "A2", "result": "done", "tests": "vitest providers 219 passed (9 commits re-ran the full providers suite each time); npm test 776 passed; lint, tsc -b, build:store clean on every commit", "commits": "10 content commits 24e86e2..2d3872a, +84 G2 prompts (28 sentence W.2.1, 28 paragraph W.2.2, 28 story W.2.3); pools 47/40/40; variety windows audited clean", "push": "push-skipped (one attempt; timed out at 120s — local commits are source of truth)" }
+    { "interval": 2, "step": "A2", "result": "done", "tests": "vitest providers 219 passed (9 commits re-ran the full providers suite each time); npm test 776 passed; lint, tsc -b, build:store clean on every commit", "commits": "10 content commits 24e86e2..2d3872a, +84 G2 prompts (28 sentence W.2.1, 28 paragraph W.2.2, 28 story W.2.3); pools 47/40/40; variety windows audited clean", "push": "push-skipped (one attempt; timed out at 120s — local commits are source of truth)" },
+    { "interval": 3, "step": "A3", "result": "done", "tests": "vitest providers 219 passed (full providers suite re-ran on each of the 13 commits); npm test 776 passed; lint, tsc -b, build:store clean on every commit", "commits": "13 commits 457ffb1..a9198ed: +92 G3 prompts (29 sentence W.3.1, 30 paragraph W.3.2, 29 story W.3.3); pools 40/40/40; variety pass corrected school/ocean/night/town clusters; added scripts/audit-writing-variety.mjs (window-of-10 audit, now committed; G2 re-audited clean)", "push": "push-skipped (one attempt; remote ref unchanged at 6f2bf5f — local commits are source of truth)" }
   ],
   "notes": "Target counts from handoff A1 table. One step per interval. Fails verification twice across intervals -> status blocked with error, skip to next, surface in status. On all steps done/blocked: pause the cron job and write final summary in history."
 }
