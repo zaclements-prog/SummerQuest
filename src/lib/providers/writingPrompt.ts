@@ -89,6 +89,31 @@ export type WritingKind = Config['kind']
  * Authored by handoff steps A2 (2nd grade), A3 (3rd), A4 (4th).
  */
 export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<WritingKind, string[]>>> = {
+  // 3rd grade (handoff A3). Standards: CCSS W.3.1–W.3.3 — opinion pieces
+  // with reasons, informative/explanatory writing that develops a topic, and
+  // narratives with actions, thoughts, and dialogue. Prompts ask for more
+  // developed thinking than G2: reasons, step order, comparisons, feelings.
+  3: {
+    // W.3.1 — state an opinion or choice and support it with a reason.
+    sentence: [
+      'Do you think recess should be longer or shorter? Write a sentence that shares your opinion and one reason.',
+      'Write a sentence giving advice to a new student on their very first day at your school.',
+      'If your family could welcome any animal from a shelter, which would you choose? Write a sentence with your choice and a reason.',
+      'Write a sentence explaining why practice helps people get better at something they love.',
+    ],
+    // W.3.2 — inform or explain: develop a topic with facts, steps, or details.
+    paragraph: [
+      'Write a paragraph explaining how to make your favorite sandwich. List the steps in exactly the right order.',
+      'Should students have more homework or less? Write an opinion paragraph that states your view and gives two reasons.',
+      'Write a paragraph about a wild animal you would love to study up close. Describe what it looks like, where it lives, and what it eats.',
+    ],
+    // W.3.3 — narrate real or imagined experiences with details and dialogue.
+    story: [
+      'Write a story about a student who finds a mysterious note tucked inside a library book. What does the note say, and where does it lead?',
+      'Write a story about the day a honking flock of geese decides to follow you home from school. Include what you say to them and how the day ends.',
+      'Your backyard sprinkler starts spraying sparkling water that makes anything it touches grow three times bigger. Write a story about what you decide to water first.',
+    ],
+  },
   // 2nd grade (handoff A2). Standards: CCSS W.2.1–W.2.3 — short opinion,
   // informative, and narrative writing on familiar topics. Concrete tasks,
   // everyday words, one idea per sentence; these join the shared list for G2.
