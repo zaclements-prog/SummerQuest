@@ -16,6 +16,9 @@ interface Fact {
 const BASE_DENOM_MIN = 2
 const BASE_DENOM_MAX = 6
 
+/** Largest base denominator whose ×2 still fits maxDenominator (2nd grade's /8 → halves, thirds, fourths). */
+const baseDenomMax = (cfg: Config) => Math.max(BASE_DENOM_MIN, Math.min(BASE_DENOM_MAX, Math.floor(cfg.maxDenominator / 2)))
+
 /** Largest multiplier for a base denominator, so we land at most maxDenominator. */
 const maxMultiplier = (baseDenom: number, cfg: Config) => Math.max(2, Math.floor(cfg.maxDenominator / baseDenom))
 
@@ -31,7 +34,7 @@ export function parseFracEqFactId(id: string, cfg: Config): Fact | null {
   const baseNum = Number(m[1])
   const baseDenom = Number(m[2])
   const mult = Number(m[3]) / baseDenom
-  if (!inRange(baseDenom, BASE_DENOM_MIN, BASE_DENOM_MAX)) return null
+  if (!inRange(baseDenom, BASE_DENOM_MIN, baseDenomMax(cfg))) return null
   if (!inRange(baseNum, 1, baseDenom - 1) || !inRange(mult, 2, maxMultiplier(baseDenom, cfg))) return null
   return { baseNum, baseDenom, mult }
 }
@@ -43,7 +46,7 @@ export function makeFractionEquivalenceProvider(cfg: Config): ProblemProvider {
     parse: (id) => parseFracEqFactId(id, cfg),
     uniform: () => {
       // pick a simple base fraction with denominator 2-6
-      const baseDenom = randInt(BASE_DENOM_MIN, BASE_DENOM_MAX)
+      const baseDenom = randInt(BASE_DENOM_MIN, baseDenomMax(cfg))
       const baseNum = randInt(1, baseDenom - 1)
       return { baseNum, baseDenom, mult: randInt(2, maxMultiplier(baseDenom, cfg)) }
     },

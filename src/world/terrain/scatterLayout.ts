@@ -50,3 +50,22 @@ export function buildScatter(seed = 'island-v1') {
   }
   return { trees, bushes, rocks, flowers, tufts }
 }
+
+/**
+ * Tile size (world units) the island's decor is split into. One instanced mesh per
+ * shape for the whole island can never be frustum-culled (its bounds are the island),
+ * so a tablet drew every tree on every frame. Per tile, only the tiles in view draw.
+ */
+export const SCATTER_TILE = 24
+
+/** Group items into square tiles of `size` by their x/z (tile key → items). */
+export function byTile<T extends { x: number; z: number }>(items: readonly T[], size: number): Map<string, T[]> {
+  const tiles = new Map<string, T[]>()
+  for (const it of items) {
+    const key = `${Math.floor(it.x / size)},${Math.floor(it.z / size)}`
+    let list = tiles.get(key)
+    if (!list) tiles.set(key, (list = []))
+    list.push(it)
+  }
+  return tiles
+}

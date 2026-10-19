@@ -6,8 +6,10 @@ import { sfx } from '../lib/sound'
 import { useProgress } from '../store/progress'
 import { skillOf } from '../tutoring/skills'
 import { Loading, ProgressBar, Pill } from '../components/ui'
-import { QuizProgress, QuestionPrompt, AnswerGrid } from './_shared/QuizUI'
+import { QuizProgress, QuestionPrompt, AnswerGrid, QuizSplit } from './_shared/QuizUI'
 import VisualRenderer from '../components/VisualRenderer'
+import { visualSize } from '../components/visualSize'
+import { SHORT_SCREEN, WIDE_SHORT, useMediaQuery } from '../components/useViewport'
 
 // Visuals the question can't be answered without (a reading passage, a bar graph).
 // Teaching aids like multiplication arrays or fraction bars stay hidden in the boss
@@ -50,6 +52,16 @@ export default function BossBattle({ provider, params, onComplete, meta }: GameP
   const [picked, setPicked] = useState<ProblemAnswer | null>(null)
   const recordAnswer = useProgress((s) => s.recordAnswer)
   const recordAttempt = useProgress((s) => s.recordAttempt)
+  // Phone held sideways: the boss stands on the left, the question on the right.
+  const short = useMediaQuery(SHORT_SCREEN)
+  // Wide, short screens (that phone, or a wide tablet in landscape): two columns.
+  const wide = useMediaQuery(WIDE_SHORT)
+  // A tablet held sideways (960px+ wide, Fire 7 included): boss | question +
+  // picture | answers, so the answers never sit under a tall chart, below the
+  // fold. (Phones keep the answers under the question: three columns would
+  // squeeze long word answers.)
+  const broad = useMediaQuery('(min-width: 960px)')
+  const sideAnswers = wide && broad
 
   useEffect(() => {
     let cancel = false
@@ -143,11 +155,35 @@ export default function BossBattle({ provider, params, onComplete, meta }: GameP
   // Battle escalates as the boss weakens — pulse the arena glow more urgently.
   const bossDefeated = bossHp <= 0
 
+  const question = (
+    <>
+      <QuestionPrompt>{problem.prompt}</QuestionPrompt>
+      {problem.visual && REQUIRED_VISUALS.has(problem.visual.kind) && (
+        <div className="mt-4 short:mt-3 w-full flex justify-center">
+          <VisualRenderer visual={problem.visual} size={visualSize(problem.visual, short, wide)} />
+        </div>
+      )}
+    </>
+  )
+  const answers = (
+    <AnswerGrid options={problem.options} answer={problem.answer} picked={picked} onPick={pick} disabled={state !== 'idle'} />
+  )
+
   return (
-    <div className="flex-1 flex flex-col items-center p-4 overflow-y-auto">
-      <div className="w-full max-w-2xl flex flex-col items-center">
+    <div className="game-surface flex-1 flex flex-col items-center p-4 short:px-3 short:pt-1 overflow-y-auto">
+      <div
+        className={
+          wide
+            ? `w-full grid items-start gap-4 lg:gap-6 roomy:my-auto ${sideAnswers ? 'max-w-6xl' : 'max-w-5xl'} ${short ? 'grid-cols-[minmax(0,15rem)_minmax(0,1fr)]' : sideAnswers ? 'grid-cols-[minmax(0,16rem)_minmax(0,1fr)]' : 'grid-cols-[minmax(0,20rem)_minmax(0,1fr)]'}`
+            : // on a tablet the battle sits in the middle of the screen, not stuck to the top
+              'w-full max-w-2xl roomy:max-w-3xl flex flex-col items-center roomy:my-auto'
+        }
+      >
+        {/* The boss, the hit/hurt cue and your hearts (a pinned left column when sideways) */}
+        <div className={`w-full flex flex-col items-center ${wide ? 'sticky top-1' : ''}`}>
         {/* ── Boss arena ─────────────────────────────────────────────────── */}
         <BossArena
+          compact={short}
           emoji={bossEmoji}
           name={bossName}
           hp={bossHp}
@@ -159,7 +195,8 @@ export default function BossBattle({ provider, params, onComplete, meta }: GameP
         />
 
         {/* ── Attack / damage cue ────────────────────────────────────────── */}
-        <div className="h-12 flex items-center justify-center" aria-hidden="true">
+        {/* (sideways: the cue floats over the bottom of the arena instead of taking a row) */}
+        <div className="h-12 flex items-center justify-center relative z-30 short:h-0 short:-translate-y-6" aria-hidden="true">
           <AnimatePresence>
             {state === 'attacking' && (
               <motion.div
@@ -188,6 +225,9 @@ export default function BossBattle({ provider, params, onComplete, meta }: GameP
 
         {/* ── Player hearts ──────────────────────────────────────────────── */}
         <PlayerHearts current={playerHp} max={maxHearts} hurt={state === 'hurt'} reduced={reduced} />
+        </div>
+
+        <div className="w-full flex flex-col items-center">
 
         {/* ── Question + answers (shared quiz UI) ────────────────────────── */}
         {!isOver && (
@@ -196,26 +236,17 @@ export default function BossBattle({ provider, params, onComplete, meta }: GameP
              prompt mounted until its exit animation finishes — which never
              happens when rAF is paused (backgrounded tab), freezing the
              question. This matches ConceptPlay's robust prompt pattern. */
-          <div key={problem.id} className="mt-4 w-full flex flex-col items-center">
+          <div key={problem.id} className={`${wide ? 'mt-0' : 'mt-4'} w-full flex flex-col items-center`}>
             <QuizProgress current={Math.min(questionsAnswered + 1, questionCount)} total={questionCount} />
 
-            <QuestionPrompt>{problem.prompt}</QuestionPrompt>
-
-            {problem.visual && REQUIRED_VISUALS.has(problem.visual.kind) && (
-              <div className="mt-4 w-full flex justify-center">
-                <VisualRenderer visual={problem.visual} size="md" />
-              </div>
+            {sideAnswers ? (
+              <QuizSplit question={question} answers={answers} />
+            ) : (
+              <>
+                {question}
+                <div className="mt-5 short:mt-3 w-full flex justify-center">{answers}</div>
+              </>
             )}
-
-            <div className="mt-5 w-full flex justify-center">
-              <AnswerGrid
-                options={problem.options}
-                answer={problem.answer}
-                picked={picked}
-                onPick={pick}
-                disabled={state !== 'idle'}
-              />
-            </div>
           </div>
         )}
 
@@ -225,17 +256,18 @@ export default function BossBattle({ provider, params, onComplete, meta }: GameP
             initial={reduced ? { opacity: 0 } : { scale: 0.6, opacity: 0 }}
             animate={reduced ? { opacity: 1 } : { scale: 1, opacity: 1 }}
             transition={{ type: 'spring', stiffness: 260, damping: 20 }}
-            className="mt-6 text-center"
+            className="mt-6 short:mt-10 text-center"
           >
             <div className="kid-text font-bold text-3xl md:text-4xl text-ink-900 bg-paper border-[3px] border-line rounded-full px-8 py-2 shadow-ledge">
               {bossDefeated
                 ? '🏆 Victory!'
                 : playerHp <= 0
-                  ? '💀 You fainted…'
+                  ? '💫 Out of hearts!'
                   : '⏱️ Out of moves!'}
             </div>
           </motion.div>
         )}
+        </div>
       </div>
     </div>
   )
@@ -246,6 +278,7 @@ export default function BossBattle({ provider, params, onComplete, meta }: GameP
 // (monster tone) that drains as the player lands hits. Shakes + flashes on a hit.
 
 function BossArena({
+  compact = false,
   emoji,
   name,
   hp,
@@ -255,6 +288,7 @@ function BossArena({
   state,
   reduced,
 }: {
+  compact?: boolean
   emoji: string
   name: string
   hp: number
@@ -267,7 +301,8 @@ function BossArena({
   return (
     <div
       className={[
-        'relative w-full max-w-md rounded-toon px-6 pt-5 pb-4 overflow-hidden',
+        'relative w-full max-w-md rounded-toon overflow-hidden',
+        compact ? 'px-4 pt-3 pb-3' : 'px-6 pt-5 pb-4',
         'bg-gradient-to-b from-monster-200 to-monster-400 border-[3px] border-line',
         'shadow-[0_5px_0_0_var(--color-monster-600),0_16px_30px_-14px_rgb(58_44_56/0.35)]',
       ].join(' ')}
@@ -278,7 +313,7 @@ function BossArena({
         aria-hidden="true"
       />
       {/* Name plate */}
-      <div className="relative z-20 flex justify-center mb-3">
+      <div className={`relative z-20 flex justify-center ${compact ? 'mb-1' : 'mb-3'}`}>
         <Pill tone="ink" icon="👾" className="text-base px-4">
           {name}
         </Pill>
@@ -301,12 +336,12 @@ function BossArena({
               ? { duration: 0.5 }
               : { duration: 2.4, repeat: defeated ? 0 : Infinity, ease: 'easeInOut' }
           }
-          className="relative z-10 text-8xl md:text-9xl leading-none select-none"
+          className={`relative z-10 leading-none select-none ${compact ? 'text-6xl' : 'text-8xl md:text-9xl'}`}
         >
           {defeated ? '💥' : emoji}
         </motion.div>
         {/* the round stone stage the boss stands on (like the World's NPC stages) */}
-        <div className="-mt-5 w-48 h-10 rounded-[50%] bg-[#e6dfcf] border-[3px] border-line shadow-[inset_0_-6px_0_rgb(58_44_56/0.12)]" />
+        <div className={`${compact ? '-mt-3 w-32 h-7' : '-mt-5 w-48 h-10'} rounded-[50%] bg-[#e6dfcf] border-[3px] border-line shadow-[inset_0_-6px_0_rgb(58_44_56/0.12)]`} />
       </div>
 
       {/* Hit-flash overlay on a successful attack */}
@@ -324,7 +359,7 @@ function BossArena({
       </AnimatePresence>
 
       {/* Boss HP bar (monster tone, drains on correct answers) */}
-      <div className="relative mt-3" aria-label={`Boss health: ${hp} of ${maxHp}`}>
+      <div className={`relative ${compact ? 'mt-2' : 'mt-3'}`} aria-label={`Boss health: ${hp} of ${maxHp}`}>
         <div className="flex items-center justify-between mb-1">
           <span className="kid-text text-base text-ink-900">Boss HP</span>
           <span className="kid-text text-base text-ink-900 tabular-nums">
@@ -354,7 +389,7 @@ function PlayerHearts({
 }) {
   return (
     <div
-      className={['mt-4 flex flex-col items-center', !reduced && hurt ? 'animate-shake' : ''].join(' ')}
+      className={['mt-4 short:mt-3 flex flex-col items-center', !reduced && hurt ? 'animate-shake' : ''].join(' ')}
       role="img"
       aria-label={`Your hearts: ${current} of ${max}`}
     >
@@ -375,7 +410,7 @@ function PlayerHearts({
           </motion.span>
         ))}
       </div>
-      <div className="kid-text text-base text-ink-700 mt-1">Your hearts</div>
+      <div className="kid-text text-base text-ink-700 mt-1 short:hidden">Your hearts</div>
     </div>
   )
 }

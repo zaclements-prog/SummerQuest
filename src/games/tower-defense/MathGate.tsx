@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { nextProblem, type Problem, type ProblemAnswer, type ProblemProvider } from '../../lib/problem'
 import { sfx } from '../../lib/sound'
 import { useProgress } from '../../store/progress'
 import { skillOf } from '../../tutoring/skills'
 import { Card, Button } from '../../components/ui'
-import { QuestionPrompt, AnswerGrid } from '../_shared/QuizUI'
+import { QuestionPrompt, AnswerGrid, QuizSplit } from '../_shared/QuizUI'
+import { WIDE_SHORT, useMediaQuery } from '../../components/useViewport'
 
 /** Mount it when a purchase needs confirming (unmount to close) — it starts fresh each time. */
 interface Props {
@@ -25,6 +26,22 @@ export default function MathGate({ title, provider, onAnswer, onCorrect, onCance
   const recordAnswer = useProgress((s) => s.recordAnswer)
   const recordAttempt = useProgress((s) => s.recordAttempt)
   const reduced = useReducedMotion()
+  // Question beside the answers on wide, short screens: give the card room for both.
+  const wide = useMediaQuery(WIDE_SHORT)
+
+  // Escape cancels, like the Cancel button and a tap outside the card. (The host
+  // re-renders every frame, so read the latest callback through a ref.)
+  const cancelRef = useRef(onCancel)
+  useEffect(() => {
+    cancelRef.current = onCancel
+  }, [onCancel])
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') cancelRef.current()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
 
   // first problem for this purchase
   useEffect(() => {
@@ -68,35 +85,41 @@ export default function MathGate({ title, provider, onAnswer, onCorrect, onCance
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-ink-900/45 backdrop-blur-[3px] flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 bg-ink-900/45 backdrop-blur-[3px] flex items-center justify-center overflow-y-auto overscroll-contain p-4 pt-[calc(1rem+var(--safe-top,env(safe-area-inset-top,0px)))] pb-[calc(1rem+var(--safe-bottom,env(safe-area-inset-bottom,0px)))] short:pt-[calc(0.5rem+var(--safe-top,env(safe-area-inset-top,0px)))] short:pb-[calc(0.5rem+var(--safe-bottom,env(safe-area-inset-bottom,0px)))]"
       onClick={onCancel}
+      role="dialog"
+      aria-modal="true"
+      aria-label={title}
     >
       <motion.div
         initial={reduced ? { opacity: 0 } : { scale: 0.7, y: 30, opacity: 0 }}
         animate={reduced ? { opacity: 1 } : { scale: 1, y: 0, opacity: 1 }}
         transition={{ type: 'spring', damping: 14 }}
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-md"
+        className={`w-full my-auto ${wide ? 'max-w-3xl' : 'max-w-md'}`}
       >
-        <Card tone="quest" accent className="p-6 !shadow-pop">
-          <div className="text-center mb-4">
+        <Card tone="quest" accent className="p-6 short:p-4 !shadow-pop">
+          <div className="text-center mb-4 short:mb-2">
             <div className="kid-text text-sm uppercase tracking-wide text-ink-700">
               Answer correctly to confirm
             </div>
             <div className="kid-text font-bold text-xl text-ink-900 mt-0.5">{title}</div>
           </div>
 
-          <div className="flex flex-col items-center gap-4">
-            <QuestionPrompt>{problem.prompt}</QuestionPrompt>
-
-            <AnswerGrid
-              options={problem.options}
-              answer={problem.answer}
-              picked={picked}
-              onPick={pick}
-              disabled={picked !== null}
-            />
-          </div>
+          <QuizSplit
+            gap="gap-4"
+            center
+            question={<QuestionPrompt>{problem.prompt}</QuestionPrompt>}
+            answers={
+              <AnswerGrid
+                options={problem.options}
+                answer={problem.answer}
+                picked={picked}
+                onPick={pick}
+                disabled={picked !== null}
+              />
+            }
+          />
 
           {wrongCount > 0 && (
             <div className="text-center text-wrong-600 kid-text text-sm mt-3" role="status">
@@ -106,7 +129,7 @@ export default function MathGate({ title, provider, onAnswer, onCorrect, onCance
             </div>
           )}
 
-          <div className="flex justify-center mt-4">
+          <div className="flex justify-center mt-4 short:mt-2">
             <Button variant="ghost" size="md" onClick={onCancel}>
               Cancel
             </Button>

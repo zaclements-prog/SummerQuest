@@ -51,7 +51,7 @@ export default function StarRating({ earned, total, size = 'md' }: StarRatingPro
 
   return (
     <span
-      className="inline-flex items-center gap-0.5 align-middle"
+      className="inline-flex flex-wrap items-center gap-0.5 align-middle max-w-full"
       aria-label={`${earned} of ${total} stars`}
       role="img"
     >

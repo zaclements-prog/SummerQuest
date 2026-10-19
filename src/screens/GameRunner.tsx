@@ -11,10 +11,7 @@ import SpeedRun from '../games/SpeedRun'
 import BossBattle from '../games/BossBattle'
 import TowerDefense from '../games/tower-defense/TowerDefense'
 import WritingPad from '../games/WritingPad'
-import DivisionArena from '../games/DivisionArena'
-import FractionForge from '../games/FractionForge'
-import CloudKeeper from '../games/CloudKeeper'
-import TimesGrove from '../games/TimesGrove'
+import { CloudKeeper, DivisionArena, FractionForge, TimesGrove } from '../games/lazyGames'
 import { sfx } from '../lib/sound'
 import {
   Card,
@@ -257,25 +254,28 @@ function ResultScreen({
   const accTone = accuracyToneOf(accuracy)
 
   return (
-    <div className="flex-1 flex items-center justify-center p-6">
+    <div className="flex-1 flex items-center justify-center p-6 short:p-3">
       <motion.div
         initial={reduced ? { opacity: 0 } : { scale: 0.7, opacity: 0 }}
         animate={reduced ? { opacity: 1 } : { scale: 1, opacity: 1 }}
         transition={{ type: 'spring', stiffness: 260, damping: 18 }}
-        className="w-full max-w-md"
+        className="w-full max-w-md short:max-w-2xl"
       >
-        <Card tone={cardTone} accent className="relative overflow-hidden p-7 sm:p-8 text-center">
+        {/* Phone held sideways: score on the left, stars + buttons on the right,
+            so Play again / Continue are on screen without scrolling. */}
+        <Card tone={cardTone} accent className="relative overflow-hidden p-7 sm:p-8 short:p-5 text-center short:grid short:grid-cols-2 short:items-center short:gap-x-6">
           <div
             className={`absolute inset-x-0 top-0 h-40 bg-gradient-to-b ${won ? 'from-correct-100' : 'from-wrong-100'} to-transparent`}
             aria-hidden="true"
           />
           {won && (
             <div
-              className="absolute left-1/2 top-16 -translate-x-1/2 -translate-y-1/2 w-72 h-72 sunburst pointer-events-none"
+              className="absolute left-1/2 short:left-1/4 top-16 -translate-x-1/2 -translate-y-1/2 w-72 h-72 sunburst pointer-events-none"
               aria-hidden="true"
             />
           )}
-          <div className="relative flex justify-center mb-3">
+          <div className="relative">
+          <div className="relative flex justify-center mb-3 short:mb-2">
             <Medallion tone={won ? 'quest' : 'wrong'} size="xl">
               {emoji}
             </Medallion>
@@ -289,10 +289,13 @@ function ResultScreen({
               {accuracy}%
             </span>
           </p>
+          </div>
+
+          <div className="relative">
 
           {/* Stars — scale with how many were earned (3 of 3 total) */}
           <div
-            className="relative flex justify-center items-end gap-1 my-5"
+            className="relative flex justify-center items-end gap-1 my-5 short:mt-0 short:mb-3"
             role="img"
             aria-label={`${result.stars} of 3 stars earned`}
           >
@@ -308,7 +311,7 @@ function ResultScreen({
           </div>
 
           {/* Rewards */}
-          <div className="relative flex flex-wrap justify-center gap-3 my-4">
+          <div className="relative flex flex-wrap justify-center gap-3 my-4 short:my-3">
             <Pill tone="quest" icon="🪙" className="text-lg px-4 py-1">
               +{coins}
             </Pill>
@@ -318,7 +321,7 @@ function ResultScreen({
           </div>
 
           {/* Actions */}
-          <div className="relative flex flex-col sm:flex-row gap-3 mt-6">
+          <div className="relative flex flex-col sm:flex-row gap-3 mt-6 short:mt-3">
             <Button
               variant={won ? 'ghost' : 'secondary'}
               size="lg"
@@ -335,6 +338,7 @@ function ResultScreen({
             >
               Continue →
             </Button>
+          </div>
           </div>
         </Card>
       </motion.div>

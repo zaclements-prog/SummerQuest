@@ -1,17 +1,116 @@
+import { useRef } from 'react'
+import { useFrame } from '@react-three/fiber'
+import type { Group } from 'three'
 import { TCone, TSphere } from '../../../toon/shapes'
 import { TOON } from '../../../toon/palette'
-import { Arm, Blush, Eye, Ink, Leg, Smile, Wag, faceYaw, onFace } from '../parts'
+import { Arm, Blush, Eye, Ink, Leg, Smile, Staged, Wag, faceYaw, onFace } from '../parts'
+import type { CreatureProps } from '../parts'
+import { useWalkState } from '../walkState'
+
+// One palette for all three ages.
+const ORANGE = '#f7924a'
+const CREAM = '#fff4e2'
+const SOCK = '#6b4434'
+const PINK = '#ffb3ad'
+const BLUSH = '#ff7f97'
 
 // Head ellipsoid (centre + radii): face features and the anchors are measured from it.
 const HC = [0, 0.69, 0.02] as const
 const HR = [0.27, 0.245, 0.25] as const
 
 /**
+ * A baby's nub foot: one round pad under the hip that paddles like a `Leg`
+ * while the baby toddles (no shin: the hip is barely off the floor).
+ */
+function Nub({ x, phase }: { x: number; phase: number }) {
+  const hip = useRef<Group>(null)
+  const walk = useWalkState()
+  useFrame(() => {
+    if (hip.current) hip.current.rotation.x = walk.moving ? Math.sin(walk.t * 9 + phase) * 0.6 : 0
+  })
+  return (
+    <group ref={hip} position={[x, 0.075, 0.01]}>
+      <TSphere position={[0, -0.04, 0.022]} scale={[0.052, 0.036, 0.064]} color={SOCK} segments={12}>
+        <Ink />
+      </TSphere>
+    </group>
+  )
+}
+
+// Baby head and muzzle ellipsoids.
+const BHC = [0, 0.345, 0.02] as const
+const BHR = [0.2, 0.175, 0.18] as const
+const BMC = [0, 0.285, 0.14] as const
+const BMR = [0.09, 0.052, 0.075] as const
+
+/**
+ * Fox kit — a tiny round fox: a huge head with big low eyes, a little cream
+ * muzzle, two soft pointy ears, a bean body on nub feet and a puff of a tail
+ * that already has its white tip.
+ */
+function FoxBaby() {
+  return (
+    <group>
+      <Nub x={-0.065} phase={0} />
+      <Nub x={0.065} phase={Math.PI} />
+
+      <TSphere position={[0, 0.14, 0]} scale={[0.125, 0.12, 0.112]} color={ORANGE} segments={18}>
+        <Ink />
+      </TSphere>
+      <Arm x={-0.11} y={0.19} z={0.03} color={ORANGE} radius={0.036} length={0.035} splay={0.6} pitch={0.5} phase={Math.PI} />
+      <Arm x={0.11} y={0.19} z={0.03} color={ORANGE} radius={0.036} length={0.035} splay={0.6} pitch={0.5} phase={0} />
+
+      {/* puff of a tail, curled up behind */}
+      <Wag position={[0, 0.1, -0.09]} amp={0.4}>
+        <group rotation={[0.9, 0, 0]}>
+          <TSphere position={[0, 0, -0.08]} scale={[0.07, 0.07, 0.1]} color={ORANGE} segments={14}>
+            <Ink />
+          </TSphere>
+          <TSphere position={[0, 0, -0.18]} scale={0.055} color={CREAM} segments={12}>
+            <Ink />
+          </TSphere>
+        </group>
+      </Wag>
+
+      {/* the head, tipped to one side like a curious baby */}
+      <group position={[0, 0.2, 0]} rotation={[0, 0, 0.1]}>
+        <group position={[0, -0.2, 0]}>
+          <TSphere position={[...BHC]} scale={[...BHR]} color={ORANGE} segments={24}>
+            <Ink />
+          </TSphere>
+          <TSphere position={[...BMC]} scale={[...BMR]} color={CREAM} emissive={CREAM} emissiveIntensity={0.15} segments={16}>
+            <Ink />
+          </TSphere>
+          <TSphere position={onFace(BMC, BMR, 0, 0.03, -0.006)} scale={[0.026, 0.02, 0.02]} color={TOON.eye} segments={10} castShadow={false} />
+          <Smile position={onFace(BMC, BMR, 0, -0.012, 0.002)} width={0.022} thickness={0.007} cat pitch={-0.3} />
+
+          {[-1, 1].map((s) => (
+            <group key={s}>
+              <Eye position={onFace(BHC, BHR, s * 0.088, -0.02, -0.012)} size={0.06} yaw={faceYaw(BHC, BHR, s * 0.088, -0.02)} />
+              <Blush position={onFace(BHC, BHR, s * 0.14, -0.065, -0.004)} yaw={faceYaw(BHC, BHR, s * 0.14, -0.065)} size={0.04} color={BLUSH} />
+            </group>
+          ))}
+
+          {/* soft pointy ears */}
+          {[-1, 1].map((s) => (
+            <group key={`ear${s}`} position={[s * 0.105, 0.47, 0.0]} rotation={[-0.08, 0, -s * 0.42]}>
+              <TCone radius={0.075} height={0.15} segments={12} scale={[1, 1, 0.55]} position={[0, 0.045, 0]} color={ORANGE}>
+                <Ink crease />
+              </TCone>
+            </group>
+          ))}
+        </group>
+      </group>
+    </group>
+  )
+}
+
+/**
  * Fox — a chibi plush fox: a big round orange head with a cream muzzle, tall
  * pointy ears with pink insides and dark tips, a cream tummy, dark socks and
  * paws, and a huge fluffy white-tipped tail that wags behind.
  */
-export function Fox() {
+function FoxKid() {
   const orange = '#f7924a'
   const cream = '#fff4e2'
   const sock = '#6b4434'
@@ -72,4 +171,88 @@ export function Fox() {
       ))}
     </group>
   )
+}
+
+// Adult head, snout and torso ellipsoids (the anchors are measured from these).
+const AHC = [0, 1.05, 0.03] as const
+const AHR = [0.275, 0.25, 0.26] as const
+const AMC = [0, 0.965, 0.21] as const
+const AMR = [0.16, 0.09, 0.175] as const
+
+/**
+ * Grown-up fox — tall and slender on long legs in dark socks: a cream chest,
+ * a longer snout (an orange bridge over a cream muzzle), fluffy cream cheeks,
+ * tall ears with pink insides and dark tips, and a big bushy white-tipped tail.
+ */
+function FoxAdult() {
+  return (
+    <group>
+      {/* long legs in dark socks */}
+      <Leg x={-0.105} y={0.46} color={ORANGE} footColor={SOCK} radius={0.068} foot={[0.082, 0.095, 0.115]} swing={0.45} phase={0} />
+      <Leg x={0.105} y={0.46} color={ORANGE} footColor={SOCK} radius={0.068} foot={[0.082, 0.095, 0.115]} swing={0.45} phase={Math.PI} />
+
+      {/* torso + cream chest */}
+      <TSphere position={[0, 0.635, 0]} scale={[0.205, 0.255, 0.18]} color={ORANGE} segments={20}>
+        <Ink />
+      </TSphere>
+      <TSphere position={[0, 0.66, 0.085]} scale={[0.125, 0.21, 0.105]} color={CREAM} emissive={CREAM} emissiveIntensity={0.22} segments={16} castShadow={false} />
+
+      <Arm x={-0.165} y={0.82} z={0.0} color={ORANGE} pawColor={SOCK} radius={0.058} length={0.24} splay={0.22} swing={0.45} phase={Math.PI} />
+      <Arm x={0.165} y={0.82} z={0.0} color={ORANGE} pawColor={SOCK} radius={0.058} length={0.24} splay={0.22} swing={0.45} phase={0} />
+
+      {/* big bushy tail, swept up behind and wagging */}
+      <Wag position={[0, 0.5, -0.13]} amp={0.3}>
+        <group rotation={[0.75, 0, 0]}>
+          <TSphere position={[0, 0, -0.1]} scale={[0.085, 0.085, 0.13]} color={ORANGE} segments={14}>
+            <Ink />
+          </TSphere>
+          <TSphere position={[0, 0.03, -0.31]} scale={[0.16, 0.16, 0.21]} color={ORANGE} segments={18}>
+            <Ink />
+          </TSphere>
+          <TSphere position={[0, 0.05, -0.52]} scale={[0.12, 0.12, 0.13]} color={CREAM} segments={16}>
+            <Ink />
+          </TSphere>
+        </group>
+      </Wag>
+
+      {/* head */}
+      <TSphere position={[...AHC]} scale={[...AHR]} color={ORANGE} segments={24}>
+        <Ink />
+      </TSphere>
+      {/* longer snout: cream below, an orange bridge on top, button nose, cat mouth */}
+      <TSphere position={[...AMC]} scale={[...AMR]} color={CREAM} emissive={CREAM} emissiveIntensity={0.15} segments={18}>
+        <Ink />
+      </TSphere>
+      <TSphere position={[0, 1.02, 0.2]} scale={[0.075, 0.06, 0.165]} color={ORANGE} segments={16} />
+      <TSphere position={onFace(AMC, AMR, 0, 0.035, -0.004)} scale={[0.04, 0.03, 0.03]} color={TOON.eye} segments={10} castShadow={false} />
+      <Smile position={onFace(AMC, AMR, 0, -0.03, 0.002)} width={0.03} cat pitch={-0.3} />
+
+      {[-1, 1].map((s) => (
+        <group key={s}>
+          <Eye position={onFace(AHC, AHR, s * 0.105, 0.035, -0.014)} size={0.057} yaw={faceYaw(AHC, AHR, s * 0.105, 0.035)} />
+          <Blush position={onFace(AHC, AHR, s * 0.185, -0.03, -0.004)} yaw={faceYaw(AHC, AHR, s * 0.185, -0.03)} color={BLUSH} />
+          {/* fluffy cream cheek */}
+          <TSphere position={[s * 0.198, 0.915, 0.09]} rotation={[0, s * 0.5, -s * 0.55]} scale={[0.092, 0.055, 0.075]} color={CREAM} emissive={CREAM} emissiveIntensity={0.15} segments={14}>
+            <Ink />
+          </TSphere>
+        </group>
+      ))}
+
+      {/* tall pointy ears: orange outside, pink inside, dark tips */}
+      {[-1, 1].map((s) => (
+        <group key={`ear${s}`} position={[s * 0.155, 1.24, -0.01]} rotation={[-0.08, 0, -s * 0.36]}>
+          <TCone radius={0.125} height={0.3} segments={14} scale={[1, 1, 0.55]} position={[0, 0.08, 0]} color={ORANGE}>
+            <Ink crease />
+          </TCone>
+          <TCone radius={0.075} height={0.19} segments={12} scale={[1, 1, 0.4]} position={[0, 0.06, 0.04]} color={PINK} castShadow={false} />
+          <TCone radius={0.052} height={0.09} segments={12} scale={[1, 1, 0.6]} position={[0, 0.19, 0.002]} color={SOCK} castShadow={false} />
+        </group>
+      ))}
+    </group>
+  )
+}
+
+/** Fox: baby, kid and adult (see `Staged`). */
+export function Fox({ stage }: CreatureProps) {
+  return <Staged stage={stage} baby={FoxBaby} kid={FoxKid} adult={FoxAdult} />
 }

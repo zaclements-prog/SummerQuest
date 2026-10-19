@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
+import type { ReactNode } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { sfx } from '../../lib/sound'
 import { ConfettiOverlay } from '../_juice/JuiceHud'
-import { UI } from './uiTokens'
+import { SAFE, UI } from './uiTokens'
 
 /**
  * DOM HUD pieces shared by Fraction Forge and Cloud Keeper: the score counter,
@@ -120,8 +121,18 @@ export function SpeechBubble({ face, text, tone = 'plain' }: { face: string; tex
   )
 }
 
+/** How to walk, worded for the device: keys + tap on a computer, just "tap" on a tablet or phone. */
+export function WalkHint({ keys = '⌨️ WASD / 👆 tap to walk', touch = '👆 Tap to walk' }: { keys?: string; touch?: string }) {
+  return (
+    <>
+      <span className="pointer-coarse:hidden">{keys}</span>
+      <span className="hidden pointer-coarse:inline">{touch}</span>
+    </>
+  )
+}
+
 /** The bottom prompt: a few words + icons, plus the walk hint under it. */
-export function PromptPill({ text, tone = 'plain', hint = '⌨️ WASD / 👆 tap to walk' }: { text: string; tone?: 'plain' | 'good' | 'bad'; hint?: string | null }) {
+export function PromptPill({ text, tone = 'plain', hint = <WalkHint /> }: { text: string; tone?: 'plain' | 'good' | 'bad'; hint?: ReactNode | null }) {
   const bg = tone === 'bad' ? UI.wrong : tone === 'good' ? UI.correct : UI.paper
   return (
     <div className="pointer-events-none select-none flex flex-col items-center gap-1.5">
@@ -136,7 +147,7 @@ export function PromptPill({ text, tone = 'plain', hint = '⌨️ WASD / 👆 ta
         {text}
       </motion.div>
       {hint && (
-        <div className="kid-text text-xs sm:text-sm px-2.5 py-0.5 rounded-full" style={{ background: 'rgba(255,250,240,.8)', color: UI.line, border: `2px solid rgba(58,44,56,.35)` }}>
+        <div className="kid-text text-xs sm:text-sm pointer-coarse:text-base px-2.5 py-0.5 pointer-coarse:px-3.5 pointer-coarse:py-1 rounded-full" style={{ background: 'rgba(255,250,240,.8)', color: UI.line, border: `2px solid rgba(58,44,56,.35)` }}>
           {hint}
         </div>
       )}
@@ -161,6 +172,25 @@ export function SoftClock({ frac, icon, label }: { frac: number; icon: string; l
       )}
     </div>
   )
+}
+
+/**
+ * A SoftClock that reads its own value (`read`, every 250 ms). A game keeps its clock in
+ * a ref and renders this: the ticks re-render only the clock. (A clock in the game's
+ * state re-renders its whole 3D scene four times a second, a visible stutter on a
+ * slow tablet.) `icon` may depend on the value.
+ */
+export function TickingSoftClock({ read, icon }: { read: () => number; icon: string | ((frac: number) => string) }) {
+  const [frac, setFrac] = useState(1)
+  const readRef = useRef(read)
+  useEffect(() => {
+    readRef.current = read
+  }, [read])
+  useEffect(() => {
+    const id = window.setInterval(() => setFrac(readRef.current()), 250)
+    return () => window.clearInterval(id)
+  }, [])
+  return <SoftClock frac={frac} icon={typeof icon === 'function' ? icon(frac) : icon} />
 }
 
 export interface ResultLine {
@@ -240,7 +270,7 @@ export function RunResults({
     go.current()
   }
   return (
-    <div className="absolute inset-0 z-40 flex items-center justify-center p-4" style={{ background: 'rgba(58,44,56,.28)' }}>
+    <div className={`absolute inset-0 z-40 flex items-center justify-center ${SAFE.pad}`} style={{ background: 'rgba(58,44,56,.28)' }}>
       <ConfettiOverlay show={counted && (newBest || perfect)} pieces={60} />
       <motion.div
         initial={{ scale: 0.5, opacity: 0, rotate: -4 }}

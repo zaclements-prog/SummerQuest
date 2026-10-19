@@ -283,7 +283,7 @@ export const PASSAGES: Passage[] = [
   {
     title: 'The New Student',
     level: 3,
-    text: `On the first day of school, a new student named Leo sat alone at lunch. He looked nervous and did not know anyone yet. Priya noticed him from across the room. She walked over with her tray and asked if she could sit with him. Soon they were laughing and talking about their favorite games. By the end of the day, Leo had made his very first friend.`,
+    text: `On the first day of school, a new student named Leo sat alone at lunch. He looked nervous and did not know anyone yet. Priya noticed him from across the room. She walked over with her tray and asked if she could sit with him. Soon they were laughing and talking about their favorite games. By the end of the day, Leo had made his first friend at his new school.`,
     questions: [
       {
         question: 'How did Leo feel at the start of lunch?',

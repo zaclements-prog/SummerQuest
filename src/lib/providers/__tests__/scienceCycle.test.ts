@@ -66,6 +66,12 @@ describe('water-cycle situation bank', () => {
       expect(s.prompt.length).toBeGreaterThan(40)
     }
   })
+
+  it('every situation asks the kid something (a question or a blank to fill)', () => {
+    // a bare statement ("Snow falls on the mountains.") over three answer buttons
+    // left 7-year-olds guessing what was being asked
+    for (const s of CYCLE_SITUATIONS) expect(s.prompt, s.prompt).toMatch(/\?$|___\.$/)
+  })
 })
 
 describe('makeScienceCycleProvider', () => {

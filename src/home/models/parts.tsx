@@ -2,14 +2,15 @@
 import { useRef } from 'react'
 import type { ReactNode } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
-import { Outlines } from '@react-three/drei'
 import { TorusGeometry } from 'three'
 import type { ColorRepresentation, Group } from 'three'
 import { TBox, TCapsule, TSphere } from '../../toon/shapes'
 import type { Vec3 } from '../../toon/shapes'
 import { toonMaterial } from '../../toon/materials'
 import { TOON } from '../../toon/palette'
-import { walkState } from './walkState'
+import { useWalkState } from './walkState'
+import { Outline } from '../../toon/outline'
+import type { PetStage } from '../../lib/pets/types'
 
 export type { Vec3 }
 
@@ -20,6 +21,41 @@ export type { Vec3 }
  */
 
 const CADENCE = 9 // walk-cycle speed: matches the avatar's step bob (sin(t * 9))
+
+// ── Growth stages ────────────────────────────────────────────────────────────
+
+/** Props every creature model takes. */
+export interface CreatureProps {
+  /** The growth stage to draw (see `PetStage`); avatars are adults, the default. */
+  stage?: PetStage
+}
+
+/**
+ * Picks a creature's model for its growth stage. A stage without its own model
+ * shows the kid model instead (a baby at 60 % size), so a creature can gain its
+ * baby and adult art one at a time.
+ */
+export function Staged({
+  stage = 'adult',
+  baby: Baby,
+  kid: Kid,
+  adult: Adult,
+}: {
+  stage?: PetStage
+  baby?: () => ReactNode
+  kid: () => ReactNode
+  adult?: () => ReactNode
+}) {
+  if (stage === 'baby') {
+    return Baby ? <Baby /> : (
+      <group scale={0.6}>
+        <Kid />
+      </group>
+    )
+  }
+  if (stage === 'adult' && Adult) return <Adult />
+  return <Kid />
+}
 
 // ── Line work ────────────────────────────────────────────────────────────────
 
@@ -38,7 +74,7 @@ export const INK_PX = 2
  */
 export function Ink({ px = INK_PX, crease = false }: { px?: number; crease?: boolean }) {
   const dpr = useThree((s) => s.viewport.dpr)
-  return <Outlines thickness={px * dpr} color={TOON.outline} angle={crease ? Math.PI : 0} />
+  return <Outline thickness={px * dpr} color={TOON.outline} crease={crease} />
 }
 
 // ── Surface helpers (pure math, used while authoring) ────────────────────────
@@ -259,7 +295,7 @@ export function Smile({
 
 /**
  * A stubby leg that pivots at the hip `(x, y, z)` and swings while the creature
- * walks (reads the shared `walkState`). The leg hangs straight down to the floor
+ * walks (reads the creature's walk state, see `useWalkState`). The leg hangs straight down to the floor
  * (y = 0) and ends in a rounded foot that pokes forward. Give the two legs
  * opposite phases (0 and π).
  */
@@ -289,10 +325,11 @@ export function Leg({
   outline?: boolean
 }) {
   const hip = useRef<Group>(null)
+  const walk = useWalkState()
   useFrame(() => {
     const g = hip.current
     if (!g) return
-    g.rotation.x = walkState.moving ? Math.sin(walkState.t * CADENCE + phase) * swing : 0
+    g.rotation.x = walk.moving ? Math.sin(walk.t * CADENCE + phase) * swing : 0
   })
   const len = Math.max(0.001, y - foot[1] - radius * 0.5)
   return (
@@ -346,10 +383,11 @@ export function Arm({
 }) {
   const side = x >= 0 ? 1 : -1
   const sh = useRef<Group>(null)
+  const walk = useWalkState()
   useFrame(() => {
     const g = sh.current
     if (!g) return
-    g.rotation.x = -pitch + (walkState.moving ? Math.sin(walkState.t * CADENCE + phase) * swing : 0)
+    g.rotation.x = -pitch + (walk.moving ? Math.sin(walk.t * CADENCE + phase) * swing : 0)
   })
   return (
     <group position={[x, y, z]} rotation={[0, 0, side * splay]}>
@@ -389,11 +427,12 @@ export function Wing({
   children: ReactNode
 }) {
   const root = useRef<Group>(null)
+  const walk = useWalkState()
   useFrame(() => {
     const g = root.current
     if (!g) return
-    const speed = walkState.moving ? 14 : 5
-    const f = Math.sin(walkState.t * speed) * flap
+    const speed = walk.moving ? 14 : 5
+    const f = Math.sin(walk.t * speed) * flap
     g.rotation.z = rest[2] + f
   })
   // The left wing is the right one mirrored (scale −1 on x), so the same roll
@@ -428,10 +467,11 @@ export function Wag({
   children: ReactNode
 }) {
   const g = useRef<Group>(null)
+  const walk = useWalkState()
   useFrame(() => {
     const r = g.current
     if (!r) return
-    r.rotation.y = Math.sin(walkState.t * (walkState.moving ? speed * 2.4 : speed)) * amp
+    r.rotation.y = Math.sin(walk.t * (walk.moving ? speed * 2.4 : speed)) * amp
   })
   return (
     <group position={position} rotation={rotation}>
@@ -469,9 +509,10 @@ export function Tentacle({
   const j0 = useRef<Group>(null)
   const j1 = useRef<Group>(null)
   const j2 = useRef<Group>(null)
+  const walk = useWalkState()
   useFrame(() => {
-    const m = walkState.moving
-    const t = walkState.t * (m ? 9 : 2.6) + phase
+    const m = walk.moving
+    const t = walk.t * (m ? 9 : 2.6) + phase
     const a = m ? 0.32 : 0.14
     if (j0.current) j0.current.rotation.x = 0.55 + Math.sin(t) * a
     if (j1.current) j1.current.rotation.x = 0.5 + Math.sin(t - 0.9) * a

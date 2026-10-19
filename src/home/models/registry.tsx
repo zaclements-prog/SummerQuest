@@ -1,5 +1,6 @@
 /* eslint-disable react-refresh/only-export-components -- registry module intentionally co-locates builder components with lookup helpers; not an HMR boundary */
 import type { ReactNode } from 'react'
+import type { CreatureProps } from './parts'
 import { CREATURES, HOME_ITEMS } from '../../lib/home/catalog'
 import { Fox } from './creatures/fox'
 import { Tiger } from './creatures/tiger'
@@ -44,8 +45,10 @@ import { Fishtank } from './furniture/fishtank'
 
 /** A builder is a component that renders the model centred on the floor, facing +z. */
 export type ModelBuilder = () => ReactNode
+/** A creature builder also takes the growth stage to draw (default: adult, as avatars are). */
+export type CreatureBuilder = (props: CreatureProps) => ReactNode
 
-const CREATURE_BUILDERS: Record<string, ModelBuilder> = {
+const CREATURE_BUILDERS: Record<string, CreatureBuilder> = {
   fox: Fox,
   tiger: Tiger,
   lion: Lion,
@@ -99,7 +102,7 @@ function Fallback() {
   )
 }
 
-export function creatureBuilder(id: string | null | undefined): ModelBuilder {
+export function creatureBuilder(id: string | null | undefined): CreatureBuilder {
   return (id && CREATURE_BUILDERS[id]) || Fallback
 }
 export function furnitureBuilder(modelId: string): ModelBuilder {

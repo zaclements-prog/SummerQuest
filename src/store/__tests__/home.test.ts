@@ -39,14 +39,17 @@ describe('home store', () => {
     expect(useProgress.getState().ownedHomeItems['rug']).toBe(1)
   })
 
-  it('buyCreature then becomeCreature; cannot become an unowned creature', () => {
-    expect(useProgress.getState().buyCreature('dragon', 80)).toBe(true)
-    expect(useProgress.getState().coins).toBe(20)
-    expect(useProgress.getState().ownedCreatures).toContain('dragon')
+  it('becomeCreature switches to an owned creature; an unowned one is ignored (and costs nothing)', () => {
+    useProgress.setState({ ownedCreatures: ['fox', 'dragon'] })
     useProgress.getState().becomeCreature('dragon')
     expect(useProgress.getState().activeCreature).toBe('dragon')
     useProgress.getState().becomeCreature('unicorn') // not owned → ignored
     expect(useProgress.getState().activeCreature).toBe('dragon')
+    expect(useProgress.getState().coins).toBe(100)
+  })
+
+  it('creatures are no longer for sale', () => {
+    expect('buyCreature' in useProgress.getState()).toBe(false)
   })
 
   it('resetPlayer clears home state', () => {

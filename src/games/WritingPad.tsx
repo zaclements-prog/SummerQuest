@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import type { GameProps } from '../screens/GameRunner'
 import { nextProblem, type Problem } from '../lib/problem'
@@ -10,6 +10,7 @@ import { sfx } from '../lib/sound'
 import { Card, Button, Medallion, ProgressBar, Pill, StarRating, Loading } from '../components/ui'
 import { useEntrance } from '../lib/motion'
 import { heuristicFeedback } from '../lib/writingGrader'
+import { ROOMY_SCREEN, SHORT_SCREEN, WIDE_SHORT, useCoarsePointer, useKeepAboveKeyboard, useKeyboardInset, useMediaQuery, useVisibleHeight } from '../components/useViewport'
 
 interface Feedback {
   score: number
@@ -28,7 +29,10 @@ export default function WritingPad({ provider, params, onComplete, meta }: GameP
 
   const player = useProgress((s) => s.player)
   const recordAttempt = useProgress((s) => s.recordAttempt)
-  const llmEnabled = useSettings((s) => s.llmEnabled)
+  // The store build (VITE_STORE) has no AI grader: the setting is ignored and
+  // every piece of writing gets the built-in heuristic score.
+  const llmSetting = useSettings((s) => s.llmEnabled)
+  const llmEnabled = import.meta.env.VITE_STORE !== 'true' && llmSetting
   const [idx, setIdx] = useState(0)
   const [problem, setProblem] = useState<Problem | null>(null)
   const [text, setText] = useState('')
@@ -39,6 +43,7 @@ export default function WritingPad({ provider, params, onComplete, meta }: GameP
   const [scores, setScores] = useState<number[]>([])
 
   useEffect(() => {
+    if (import.meta.env.VITE_STORE === 'true') return
     isLLMAvailable().then(setLlmAvailable)
   }, [])
 
@@ -67,7 +72,7 @@ export default function WritingPad({ provider, params, onComplete, meta }: GameP
     setSubmitting(true)
     sfx.click()
 
-    const useAI = llmEnabled && llmAvailable !== false
+    const useAI = import.meta.env.VITE_STORE !== 'true' && llmEnabled && llmAvailable !== false
 
     let fb: Feedback
     if (useAI) {
@@ -197,14 +202,56 @@ function WritingPadView({
 }: WritingPadViewProps) {
   const reduced = useReducedMotion()
   const { container, item } = useEntrance()
-  const rows = kind === 'sentence' ? 3 : kind === 'paragraph' ? 6 : 10
   const enoughWords = wordCount >= minWords
+  // a tablet held upright has height to spare for a bigger writing box
+  const roomy = useMediaQuery(ROOMY_SCREEN)
+  const sideways = useMediaQuery(WIDE_SHORT)
+  const upright = roomy && !sideways
+  // a phone or small tablet held sideways: a shorter box, so it starts above the fold
+  const short = useMediaQuery(SHORT_SCREEN)
+  // The local AI grader runs on a computer; a tablet can't fix it being down, so
+  // kids there just get the basic score without the warning.
+  const touch = useCoarsePointer()
+
+  // On-screen keyboard (iPad / phones): while typing, the word count + Submit
+  // ride on a bar just above the keyboard, and the writing box shrinks to fit
+  // the space that's left, so the words you're typing and the button both stay
+  // in sight.
+  const areaRef = useRef<HTMLTextAreaElement>(null)
+  const [focused, setTyping] = useState(false)
+  // (the box unmounts when feedback shows, without a blur event)
+  const typing = focused && !feedback
+  const keyboard = useKeyboardInset()
+  const visibleH = useVisibleHeight()
+  const docked = typing && keyboard > 0
+  // (until the keyboard takes half the screen)
+  const rows = short
+    ? (kind === 'sentence' ? 2 : kind === 'paragraph' ? 4 : 5)
+    : (kind === 'sentence' ? 3 : kind === 'paragraph' ? 6 : 10) + (upright && !docked ? (kind === 'sentence' ? 1 : 4) : 0)
+  const BAR_H = 76
+  useKeepAboveKeyboard(areaRef, typing, docked ? BAR_H + 8 : 16)
+
+  const actions = (
+    <>
+      <Pill tone={enoughWords ? 'correct' : 'ink'} icon={enoughWords ? '✓' : '✎'}>
+        {wordCount} word{wordCount === 1 ? '' : 's'}
+        {!enoughWords && ` · aim for ~${minWords}`}
+      </Pill>
+      {/* pointerdown is cancelled so the tap doesn't close the keyboard (and move this bar) before it lands */}
+      <div onPointerDown={(e) => e.preventDefault()}>
+        <Button variant="success" onClick={submit} disabled={!canSubmit}>
+          {submitting ? 'Reading…' : 'Submit ✨'}
+        </Button>
+      </div>
+    </>
+  )
 
   return (
     <div className="flex-1 flex flex-col items-center p-4 overflow-y-auto">
+      <div className="w-full flex flex-col items-center roomy:my-auto">
       {/* Progress */}
-      <div className="w-full max-w-2xl mb-3">
-        <div className="kid-text text-base text-ink-700 text-center mb-1.5">
+      <div className="w-full max-w-2xl mb-3 short:mb-1.5">
+        <div className="kid-text text-base text-ink-700 text-center mb-1.5 short:mb-1 short:text-sm">
           Prompt {idx + 1} of {questionCount}
         </div>
         <ProgressBar value={idx + 1} max={questionCount} tone="quest" />
@@ -215,17 +262,17 @@ function WritingPadView({
         variants={container}
         initial="hidden"
         animate="show"
-        className="w-full max-w-2xl flex flex-col items-center gap-3"
+        className="w-full max-w-2xl flex flex-col items-center gap-3 short:gap-2"
       >
         {/* Prompt surface — bright paper, dark ink, high contrast */}
         <motion.div variants={item} className="w-full">
-          <Card tone="quest" accent className="p-5 sm:p-6 !bg-quest-100">
-            <div className="flex items-center gap-2 mb-3">
+          <Card tone="quest" accent className="p-5 sm:p-6 short:p-3 !bg-quest-100">
+            <div className="flex items-center gap-2 mb-3 short:mb-1.5">
               <Pill tone="quest" icon="✍️">
                 {KIND_LABEL[kind]} prompt
               </Pill>
             </div>
-            <p className="kid-text font-bold text-ink-900 text-xl md:text-2xl leading-snug">
+            <p className="kid-text font-bold text-ink-900 text-xl md:text-2xl short:text-lg leading-snug">
               {problem.prompt}
             </p>
           </Card>
@@ -241,8 +288,16 @@ function WritingPadView({
                 </label>
                 <textarea
                   id="writing-input"
+                  ref={areaRef}
+                  inputMode="text"
+                  enterKeyHint="enter"
+                  autoCapitalize="sentences"
+                  autoComplete="off"
                   value={text}
                   onChange={(e) => setText(e.target.value)}
+                  onFocus={() => setTyping(true)}
+                  onBlur={() => setTyping(false)}
+                  style={docked ? { maxHeight: Math.max(96, visibleH - BAR_H - 24) } : undefined}
                   placeholder={`Write your ${kind} here…`}
                   className={[
                     'paper-lines w-full text-ink-900 rounded-[1.25rem] pl-14 pr-4 py-3 resize-none',
@@ -255,23 +310,21 @@ function WritingPadView({
                   rows={rows}
                   disabled={submitting}
                 />
-                <div className="flex items-center justify-between gap-3 mt-3">
-                  <Pill tone={enoughWords ? 'correct' : 'ink'} icon={enoughWords ? '✓' : '✎'}>
-                    {wordCount} word{wordCount === 1 ? '' : 's'}
-                    {!enoughWords && ` · aim for ~${minWords}`}
-                  </Pill>
-                  <Button
-                    variant="success"
-                    onClick={submit}
-                    disabled={!canSubmit}
+                {docked ? (
+                  <div
+                    className="fixed inset-x-0 z-40 flex items-center justify-between gap-3 px-4 bg-paper/95 backdrop-blur border-t-[3px] border-line"
+                    style={{ bottom: keyboard, height: BAR_H }}
                   >
-                    {submitting ? 'Reading…' : 'Submit ✨'}
-                  </Button>
-                </div>
+                    {actions}
+                  </div>
+                ) : (
+                  <div className="flex flex-wrap items-center justify-between gap-3 mt-3">{actions}</div>
+                )}
               </Card>
             </motion.div>
 
-            {!llmEnabled && (
+            {/* (no AI notes at all in the store build: there is no AI to mention) */}
+            {import.meta.env.VITE_STORE !== 'true' && !llmEnabled && (
               <motion.p
                 variants={item}
                 className="text-sm text-ink-700 kid-text max-w-md text-center"
@@ -279,7 +332,7 @@ function WritingPadView({
                 AI feedback is off in settings — you'll still get a score, but for richer feedback turn it on in the Parent dashboard.
               </motion.p>
             )}
-            {llmAvailable === false && llmEnabled && (
+            {import.meta.env.VITE_STORE !== 'true' && llmAvailable === false && llmEnabled && !touch && (
               <motion.p
                 variants={item}
                 className="text-sm text-ink-700 kid-text max-w-md text-center"
@@ -360,6 +413,11 @@ function WritingPadView({
           </motion.div>
         )}
       </AnimatePresence>
+      </div>
+
+      {/* While the keyboard covers the bottom of the page, room to scroll the
+          writing box up above it (the page may be shorter than that). */}
+      {docked && <div aria-hidden="true" className="shrink-0" style={{ height: keyboard + BAR_H }} />}
     </div>
   )
 }

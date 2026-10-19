@@ -27,5 +27,6 @@ describe('lesson motion scenes', () => {
         }
       }
     expect([...badCues]).toEqual([])
-  })
+    // 45 scenes x 5 frames of static rendering: seconds of work on a busy CI runner
+  }, 30_000)
 })

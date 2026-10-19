@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "build:single": "tsc -b && cross-env SINGLEFILE=1 vite build && node scripts/inline-favicon.mjs",
+    "build:store": "tsc -b && cross-env VITE_STORE=true vite build && node scripts/check-store-bundle.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "play": "vite build && vite preview",
@@ -16,9 +17,16 @@
     "tts:dump": "node --import tsx scripts/dump-narration.mjs",
     "tts:prune": "node scripts/prune-tts.mjs",
     "tts:check": "node scripts/check-tts.mjs",
-    "tts:local": "python3 scripts/tts/render_local.py"
+    "tts:local": "python3 scripts/tts/render_local.py",
+    "android:sync": "npm run build:store && cap sync android",
+    "android:apk": "npm run android:sync && cd android && ./gradlew assembleDebug",
+    "android:release": "npm run android:sync && cd android && ./gradlew bundleRelease assembleRelease"
   },
   "dependencies": {
+    "@capacitor-community/keep-awake": "^8.0.1",
+    "@capacitor/android": "^8.5.3",
+    "@capacitor/app": "^8.1.2",
+    "@capacitor/core": "^8.5.3",
     "@fontsource/fredoka": "^5.2.10",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.6.1",
@@ -30,6 +38,7 @@
     "zustand": "^5.0.13"
   },
   "devDependencies": {
+    "@capacitor/cli": "^8.5.3",
     "@eslint/js": "^10.0.1",
     "@tailwindcss/vite": "^4.3.0",
     "@types/node": "^24.12.3",

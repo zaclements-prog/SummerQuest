@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { HOME_ITEMS } from '../catalog'
 import { canPlace, tileKey, tileToWorld, worldToTile, GRID_SIZE } from '../grid'
 import {
-  occupiedTiles, avatarBlockers, avatarBlockedAt, nearestFreeTile, avatarSpawnPoint,
+  occupiedTiles, avatarBlockers, avatarBlockedAt, nearestFreeTile, avatarSpawnPoint, blockerGrid, gridBlockedAt,
 } from '../occupancy'
 import type { PlacedLike } from '../occupancy'
 import { walkStep } from '../../../world/collision'
@@ -113,5 +113,28 @@ describe('spawn', () => {
     for (let gx = 0; gx < GRID_SIZE; gx++) for (let gz = 0; gz < GRID_SIZE; gz++) all.set(tileKey({ gx, gz }), 'x')
     expect(nearestFreeTile(all, { gx: 5, gz: 5 })).toBeNull()
     expect(avatarSpawnPoint(all)).toEqual({ x: 0, z: 0 })
+  })
+})
+
+describe('blockerGrid (the Home pets, allocation-free)', () => {
+  it('answers exactly like avatarBlockedAt, inside, outside and across items', () => {
+    const blockers = avatarBlockers([table, rug, chair, { uid: 'b2', itemId: 'bed', gx: 7, gz: 6, rot: 90 }])
+    const grid = blockerGrid(blockers)
+    // a deterministic sweep of probe points and starting points, off the grid too
+    let checks = 0
+    for (let x = -6; x <= 6; x += 0.37) {
+      for (let z = -6; z <= 6; z += 0.41) {
+        for (const [fx, fz] of [[0, 0], [x - 0.3, z], [x, z + 0.3], [5.5, -5.5], [1.5, 0.2]]) {
+          expect(gridBlockedAt(grid, x, z, fx, fz)).toBe(avatarBlockedAt(blockers, x, z, fx, fz))
+          checks++
+        }
+      }
+    }
+    expect(checks).toBeGreaterThan(3000)
+  })
+
+  it('an empty room blocks nothing', () => {
+    const grid = blockerGrid(new Map())
+    expect(gridBlockedAt(grid, 0, 0, 1, 1)).toBe(false)
   })
 })

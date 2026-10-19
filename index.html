@@ -3,8 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#1d4ed8" />
+    <!-- viewport-fit=cover: draw under notches / the home indicator (the shell pads with env(safe-area-inset-*)).
+         Pinch-zoom stays allowed for accessibility; double-tap zoom is turned off in CSS (touch-action). -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <!-- the cream top bar (--color-paper), so the browser chrome blends into it -->
+    <meta name="theme-color" content="#fffaf0" />
+    <!-- math answers must never turn into phone-number links on iOS -->
+    <meta name="format-detection" content="telephone=no" />
     <title>SummerQuest</title>
   </head>
   <body>

@@ -5,9 +5,11 @@ import { nextProblem, type Problem } from '../lib/problem'
 import { sfx } from '../lib/sound'
 import { useProgress } from '../store/progress'
 import VisualRenderer from '../components/VisualRenderer'
+import { visualSize } from '../components/visualSize'
 import { skillOf } from '../tutoring/skills'
 import { Loading } from '../components/ui'
-import { QuizProgress, QuestionPrompt, AnswerGrid } from './_shared/QuizUI'
+import { QuizProgress, QuestionPrompt, AnswerGrid, QuizSplit } from './_shared/QuizUI'
+import { SHORT_SCREEN, WIDE_SHORT, useMediaQuery } from '../components/useViewport'
 
 /**
  * Generic concept stage. Shows a problem with its visual representation, presents
@@ -25,6 +27,9 @@ export default function ConceptPlay({ provider, params, onComplete, meta }: Game
   const loading = loadedIdx !== idx
   const recordAnswer = useProgress((s) => s.recordAnswer)
   const recordAttempt = useProgress((s) => s.recordAttempt)
+  // Phone held sideways: smaller pictures, question beside the answers.
+  const short = useMediaQuery(SHORT_SCREEN)
+  const wide = useMediaQuery(WIDE_SHORT)
 
   useEffect(() => {
     let cancel = false
@@ -95,44 +100,54 @@ export default function ConceptPlay({ provider, params, onComplete, meta }: Game
     problem.visual.kind !== 'wordProblem'
 
   return (
-    <div className="flex-1 flex flex-col items-center p-4 overflow-y-auto">
+    <div className="game-surface flex-1 flex flex-col items-center p-4 short:px-3 short:pt-1 overflow-y-auto">
+      {/* On a tablet the quiz sits in the middle of the screen (margin-auto centring
+          still scrolls from the top when a long passage doesn't fit). */}
+      <div className="w-full flex flex-col items-center roomy:my-auto">
       <QuizProgress current={idx + 1} total={questionCount} />
 
-      <div key={problem.id} className="w-full flex flex-col items-center">
-        <QuestionPrompt>{problem.prompt}</QuestionPrompt>
-
-        {hasGenuineVisual && (
-          <div className="my-5 flex justify-center">
-            <VisualRenderer visual={problem.visual} size="md" />
-          </div>
-        )}
-
-        <div className={hasGenuineVisual ? 'w-full flex justify-center' : 'mt-6 w-full flex justify-center'}>
-          <AnswerGrid
-            options={problem.options}
-            answer={problem.answer}
-            picked={answered}
-            onPick={pick}
-            disabled={answered !== null}
-          />
-        </div>
+      <QuizSplit
+        key={problem.id}
+        question={
+          <>
+            <QuestionPrompt>{problem.prompt}</QuestionPrompt>
+            {hasGenuineVisual && (
+              <div className="my-5 max-sm:my-3.5 short:my-3 flex justify-center">
+                <VisualRenderer visual={problem.visual} size={visualSize(problem.visual, short, wide)} />
+              </div>
+            )}
+          </>
+        }
+        answers={
+          <>
+            <div className={hasGenuineVisual ? 'w-full flex justify-center' : 'mt-6 short:mt-0 w-full flex justify-center'}>
+              <AnswerGrid
+                options={problem.options}
+                answer={problem.answer}
+                picked={answered}
+                onPick={pick}
+                disabled={answered !== null}
+              />
+            </div>
+            {answered !== null && answered !== problem.answer && problem.hint && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mt-5 short:mt-3 flex items-center gap-3 bg-quest-100 text-ink-900 pl-2 pr-4 py-2 rounded-[1.25rem] border-[3px] border-line shadow-ledge-sm kid-text text-lg max-w-md text-left"
+              >
+                <span
+                  className="grid place-items-center w-10 h-10 shrink-0 rounded-full bg-quest-300 border-2 border-line text-xl"
+                  aria-hidden="true"
+                >
+                  💡
+                </span>
+                {problem.hint}
+              </motion.div>
+            )}
+          </>
+        }
+      />
       </div>
-
-      {answered !== null && answered !== problem.answer && problem.hint && (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mt-5 flex items-center gap-3 bg-quest-100 text-ink-900 pl-2 pr-4 py-2 rounded-[1.25rem] border-[3px] border-line shadow-ledge-sm kid-text text-lg max-w-md text-left"
-        >
-          <span
-            className="grid place-items-center w-10 h-10 shrink-0 rounded-full bg-quest-300 border-2 border-line text-xl"
-            aria-hidden="true"
-          >
-            💡
-          </span>
-          {problem.hint}
-        </motion.div>
-      )}
     </div>
   )
 }

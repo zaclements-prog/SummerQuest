@@ -37,25 +37,19 @@ export default function ConfirmDialog({
 }: ConfirmDialogProps) {
   const cancelRef = useRef<HTMLDivElement>(null)
 
+  // Escape (handled by Modal) and a scrim tap cancel, like the Cancel button.
   useEffect(() => {
     if (!open) return
     const t = setTimeout(() => cancelRef.current?.querySelector('button')?.focus(), 200)
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onCancel()
-    }
-    window.addEventListener('keydown', onKey)
-    return () => {
-      clearTimeout(t)
-      window.removeEventListener('keydown', onKey)
-    }
-  }, [open, onCancel])
+    return () => clearTimeout(t)
+  }, [open])
 
   return (
     <Modal open={open} onClose={onCancel} label={title} role="alertdialog" size="md">
-      <div className="p-6 sm:p-7 text-center">
+      <div className="p-6 sm:p-7 short:p-5 text-center">
         {emoji && (
           <div
-            className="mx-auto mb-3 grid place-items-center w-20 h-20 rounded-full bg-cream-100 border-[3px] border-line text-4xl"
+            className="mx-auto mb-3 grid place-items-center w-20 h-20 short:w-14 short:h-14 short:text-3xl short:mb-2 rounded-full bg-cream-100 border-[3px] border-line text-4xl"
             aria-hidden="true"
           >
             {emoji}
@@ -63,8 +57,8 @@ export default function ConfirmDialog({
         )}
         <h2 className="kid-text font-bold text-2xl text-ink-900 mb-2 leading-tight">{title}</h2>
         {children && <div className="text-ink-700 text-base mb-5">{children}</div>}
-        <div className="flex flex-col-reverse sm:flex-row gap-3 justify-center">
-          <div ref={cancelRef} className="flex sm:flex-1">
+        <div className="flex flex-col-reverse sm:flex-row short:flex-row gap-3 justify-center">
+          <div ref={cancelRef} className="flex sm:flex-1 short:flex-1">
             <Button variant="ghost" size="md" className="flex-1 justify-center" onClick={onCancel}>
               {cancelLabel}
             </Button>
@@ -72,7 +66,7 @@ export default function ConfirmDialog({
           <Button
             variant={confirmVariant}
             size="md"
-            className="justify-center sm:flex-1"
+            className="justify-center sm:flex-1 short:flex-1"
             disabled={confirmDisabled}
             onClick={onConfirm}
           >

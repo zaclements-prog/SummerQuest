@@ -1,5 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { useFrame } from '@react-three/fiber'
+import GLCanvas from '../platform/gl/GLCanvas'
+import { usePageHidden } from '../platform/gl/usePageHidden'
+import StaticBatch from '../toon/StaticBatch'
 import { Group, Vector3 } from 'three'
 import type { RefObject } from 'react'
 import type { GameProps } from '../screens/GameRunner'
@@ -41,6 +44,8 @@ import { loadBest, recordRun } from './_juice/bests'
 import { multLabel } from './_juice/score'
 import { voice } from './_juice/voice'
 import { canvasQuality, useLowGraphics } from '../world/graphicsQuality'
+import { SAFE } from './_runkit/uiTokens'
+import { WalkHint } from './_runkit/RunHud'
 
 /**
  * Times Grove — the array orchard, fun pass (docs/superpowers/specs/
@@ -132,7 +137,10 @@ function needText(t: GroveTask, p: Planted): string {
   return `${t.rows} rows of ${t.cols}!`
 }
 
-export default function TimesGrove({ params, onComplete, meta, paused = false }: GameProps) {
+export default function TimesGrove({ params, onComplete, meta, paused: hostPaused = false }: GameProps) {
+  // A hidden page (app in the background, screen locked) pauses the run like the Quit dialog does.
+  const hidden = usePageHidden()
+  const paused = hostPaused || hidden
   // Graphics setting (Auto / Pretty / Fast): shadows + resolution follow it here too.
   const gfx = canvasQuality(useLowGraphics())
   useStarterCreature()
@@ -442,16 +450,13 @@ export default function TimesGrove({ params, onComplete, meta, paused = false }:
 
   return (
     <div className="flex-1 relative select-none overflow-hidden">
-      <Canvas
+      <GLCanvas
         shadows={gfx.shadows}
         flat
         dpr={gfx.dpr}
         gl={{ antialias: true, powerPreference: 'high-performance', preserveDrawingBuffer: import.meta.env.DEV }}
         camera={{ position: [spawnWorld[0] + CAM_OFFSET[0], CAM_OFFSET[1], spawnWorld[1] + CAM_OFFSET[2]], fov: CAM_FOV, near: 0.3, far: 260 }}
         style={{ position: 'absolute', inset: 0 }}
-        onCreated={({ scene, gl }) => {
-          if (import.meta.env.DEV) Object.assign(window, { __sqScene: scene, __sqGl: gl })
-        }}
       >
         <GameSky shadowBox={9} />
         {view && (
@@ -473,15 +478,15 @@ export default function TimesGrove({ params, onComplete, meta, paused = false }:
             onCommit={commit}
           />
         )}
-      </Canvas>
+      </GLCanvas>
 
       {/* ── HUD ── */}
-      <div className="absolute top-2 left-2 z-10 flex flex-col items-start gap-1.5 pointer-events-none">
+      <div className={`absolute ${SAFE.top2} ${SAFE.left2} z-10 flex flex-col items-start gap-1.5 pointer-events-none`}>
         <ScoreChip score={hud.score} best={best} />
         <StreakMeter streak={hud.streak} />
       </div>
       {task && !results && (
-        <div className="absolute top-2 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5 pointer-events-none">
+        <div className={`absolute ${SAFE.top2} left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5 pointer-events-none`}>
           <div
             key={`${view?.index}:${hud.chip}`}
             className={`kid-text flex items-center gap-2 rounded-2xl px-4 py-1 text-2xl sm:text-3xl text-white shadow-lg whitespace-nowrap chip-pop ${
@@ -496,7 +501,7 @@ export default function TimesGrove({ params, onComplete, meta, paused = false }:
         </div>
       )}
       {task && !results && view?.phase === 'build' && (
-        <div className="absolute top-2 right-2 z-10 pointer-events-none flex items-center gap-1.5 rounded-full bg-[#3a2c38]/70 px-2 py-1" style={{ border: '2px solid rgba(255,255,255,.8)' }} aria-label="bloom clock">
+        <div className={`absolute ${SAFE.top2} ${SAFE.right2} z-10 pointer-events-none flex items-center gap-1.5 rounded-full bg-[#3a2c38]/70 px-2 py-1`} style={{ border: '2px solid rgba(255,255,255,.8)' }} aria-label="bloom clock">
           <span className="text-xl" aria-hidden="true">
             ☀️
           </span>
@@ -512,10 +517,10 @@ export default function TimesGrove({ params, onComplete, meta, paused = false }:
       <Banner text={hud.banner} color={hud.bannerColor} />
 
       {task && !results && live && (
-        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 pointer-events-none flex flex-col items-center gap-1.5">
+        <div className={`absolute ${SAFE.bottom3} left-1/2 -translate-x-1/2 z-10 pointer-events-none flex flex-col items-center gap-1.5`}>
           {view?.index === 0 && view.phase === 'build' && (
             <div key={isCommittable(live) ? 'still' : 'walk'} className="kid-text rounded-2xl bg-[#3a2c38]/80 px-3 py-0.5 text-lg text-white shadow chip-pop whitespace-nowrap">
-              {isCommittable(live) ? '✋ Stand still to plant!' : 'WASD / tap to walk — trees follow you'}
+              {isCommittable(live) ? '✋ Stand still to plant!' : <WalkHint keys="WASD / tap to walk — trees follow you" touch="👆 Tap to walk — trees follow you" />}
             </div>
           )}
           <div className="kid-text flex items-center gap-2 rounded-2xl bg-white/90 px-4 py-1 text-2xl text-[#3a2c38] shadow-lg" style={{ border: '3px solid #3a2c38' }}>
@@ -673,7 +678,7 @@ function GroveScene({
   return (
     <group>
       <group rotation={[0, ISO_YAW, 0]}>
-        <GroveSet />
+        <StaticBatch><GroveSet /></StaticBatch>
         <PlantField shape={shape} mode={mode} bloomed={view.bloomed} spin={view.spin} fruit={view.fruit} />
         {view.task.labels && <FieldLabels shape={shape} />}
         <SeedBag x={SEED_BAG.x} z={SEED_BAG.z} />

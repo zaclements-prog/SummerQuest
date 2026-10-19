@@ -7,7 +7,7 @@ export const dataGraphZone: Zone = {
   emoji: '📊',
   themeColor: 'ocean',
   description:
-    'Explore the Data Delta! Read bar graphs to answer questions — find the most and fewest, then add and compare the bars. Aligned to the grade-level "represent and interpret data" standard.',
+    'Explore the Data Delta! Read bar graphs to answer questions — find the most and fewest, then add and compare the bars.',
   estimatedMinutes: 18,
   available: true,
   position: { x: 37, y: 48 },
@@ -36,7 +36,7 @@ export const dataGraphZone: Zone = {
       id: 'data-mastery',
       kind: 'mastery',
       title: 'The Graph Guru',
-      description: 'Data boss battle (reading and comparing bar graphs).',
+      description: 'Read and compare bar graphs to defeat the Graph Guru!',
       gameId: 'bossBattle',
       providerConfig: { kind: 'dataGraph', level: 4, source: 'static' },
       params: { questionCount: 6, bossEmoji: '📊', bossName: 'The Graph Guru' },

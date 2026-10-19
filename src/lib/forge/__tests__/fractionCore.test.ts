@@ -1,4 +1,8 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
+import { GRADE_LEVELS, GRADE_TIERS } from '../../gradeTiers'
+import { makeFractionEquivalenceProvider } from '../../providers/fractionEquivalence'
+import { seededRng } from '../../random'
+import type { Problem } from '../../problem'
 import {
   FORGE_LIMITS,
   MAX_STACK,
@@ -122,6 +126,21 @@ describe('forgeFactConfig', () => {
     // worst case: the largest target numerator the config can produce
     const maxSlabs = c.maxDenominator - 1
     expect(slabOffsets(maxSlabs, 2.6)).toHaveLength(maxSlabs)
+  })
+  it('every round the forge draws fits the grade, the gauge and the press', () => {
+    // 2nd grade's /8 used to serve 3/5 = ?/10 and 5/6 = ?/12 (fifths and sixths
+    // have no ×2 inside /8)
+    for (const grade of GRADE_LEVELS) {
+      const c = forgeFactConfig(GRADE_TIERS[grade].fracEquivMaxDenom)
+      vi.spyOn(Math, 'random').mockImplementation(seededRng(`forge:${grade}`))
+      const facts = makeFractionEquivalenceProvider(c)
+      for (let i = 0; i < 300; i++) {
+        const r = parseFracEqRound(facts.next() as Problem)
+        expect(r.targetDenom, `G${grade}: ${r.baseNum}/${r.baseDenom} = ?/${r.targetDenom}`).toBeLessThanOrEqual(c.maxDenominator)
+        expect(r.targetNum).toBeLessThanOrEqual(MAX_STACK)
+      }
+      vi.restoreAllMocks()
+    }
   })
 })
 

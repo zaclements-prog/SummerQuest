@@ -11,7 +11,7 @@ interface Config {
 const STATIC_PROMPTS: Record<Config['kind'], string[]> = {
   sentence: [
     'Describe what your favorite snack tastes like — use words that paint a picture.',
-    'Imagine you just discovered a tiny door at the bottom of your backyard. Write what you find inside.',
+    'Imagine you just discovered a tiny door under a tree in your backyard. Write what you find inside.',
     'You woke up one morning and your pet could talk. What is the first thing it says?',
     'Pretend you can fly for one day. Where do you go first?',
     'Describe the weirdest sandwich you can imagine — what is on it?',
@@ -33,7 +33,7 @@ const STATIC_PROMPTS: Record<Config['kind'], string[]> = {
     'You build a treehouse that can travel through time. Write a paragraph about the first place it takes you.',
     'A gentle giant moves into your town and wants to make friends. Write a paragraph about how you help everyone get along.',
     'You find a backpack that gives you any snack you wish for. Write a paragraph about the picnic you pack for your friends.',
-    'Describe your most favorite place in the whole world. What do you see, hear, and smell when you are there?',
+    'Describe your favorite place in the whole world. What do you see, hear, and smell when you are there?',
     'A magic paintbrush lets you paint a doorway to anywhere. Write a paragraph about the place you visit first.',
     'You teach a clever parrot to help out around the house. Write a paragraph about the funny ways it tries to help.',
   ],
@@ -49,7 +49,7 @@ const STATIC_PROMPTS: Record<Config['kind'], string[]> = {
     'You build a time machine out of a cardboard box, and it actually works. Write a story about the day in history you visit.',
     'A friendly sea creature invites you to a party at the bottom of the ocean. Write a story about everything you see along the way.',
     'You find a map that leads to the world’s biggest pillow fort. Write a story about the adventure of finding it with your friends.',
-    'On the first morning of a brand-new made-up holiday, everyone in town wakes up able to talk to animals. Write a story about how the day unfolds.',
+    'On the first morning of a brand-new made-up holiday, everyone in town wakes up able to talk to animals. Write a story about what happens that day.',
   ],
 }
 

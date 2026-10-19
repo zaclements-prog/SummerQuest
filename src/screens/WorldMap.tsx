@@ -10,6 +10,8 @@ import { Button, Celebration, Medallion, TONES, toneOf, type Tone } from '../com
 import IslandArt from '../components/map/IslandArt'
 import { ZONE_SPOTS, toPct } from '../components/map/islandMap'
 import { useWorldUi } from '../world/useWorldUi'
+import { hatchedPets, petStages } from '../lib/pets/growth'
+import { PETS } from '../lib/pets/catalog'
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -49,6 +51,8 @@ export default function WorldMap() {
     [zones, stats, totalCoinsEarned],
   )
   const earned = badges.filter((b) => b.earned)
+  const lessonsDone = useProgress((s) => s.lessonsDone)
+  const hatched = useMemo(() => hatchedPets(petStages(zones, lessonsDone)).length, [zones, lessonsDone])
 
   // Badges earned since the last time the map was opened (computed once, at mount).
   const [celebrating, setCelebrating] = useState<BadgeStatus[]>(() =>
@@ -96,13 +100,14 @@ export default function WorldMap() {
             )}
           </div>
 
-          <nav aria-label="More places" className="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-3 gap-2.5">
+          <nav aria-label="More places" className="grid grid-cols-4 sm:grid-cols-7 lg:grid-cols-4 gap-2.5">
             <NavTile to="/daily" icon="🌟" tone="quest" label={dailyDone ? 'Daily ✓' : 'Daily'} />
             <NavTile to="/tutor" icon="📚" tone="ocean" label="Tutor" />
             <NavTile to="/focus" icon="🎯" tone="island" label="This Week" />
             <NavTile to="/badges" icon="🏅" tone="monster" label={`Badges ${earned.length}/${badges.length}`} />
             <NavTile to="/progress" icon="📈" tone="correct" label="Progress" />
             <NavTile to="/home" icon="🏠" tone="wrong" label="Home" />
+            <NavTile to="/pets" icon="🐾" tone="island" label={`Pets ${hatched}/${PETS.length}`} />
           </nav>
         </div>
 

@@ -1,4 +1,5 @@
 import { toonMaterial } from '../../toon/materials'
+import { shadowMapSize } from '../../world/graphicsQuality'
 
 /**
  * Toon lighting for the Home room: a warm hemisphere fill (sunny ceiling, honey
@@ -17,7 +18,7 @@ export default function Lights({ extent = 9 }: { extent?: number }) {
         intensity={1.55}
         color="#fff1da"
         castShadow
-        shadow-mapSize={[2048, 2048]}
+        shadow-mapSize={[shadowMapSize(), shadowMapSize()]}
         shadow-camera-left={-extent}
         shadow-camera-right={extent}
         shadow-camera-top={extent}

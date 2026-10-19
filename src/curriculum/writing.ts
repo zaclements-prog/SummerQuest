@@ -7,7 +7,7 @@ export const writingZone: Zone = {
   emoji: '✍️',
   themeColor: 'monster',
   description:
-    'Write your own sentences, paragraphs, and stories. An AI tutor reads your work and tells you what you nailed and what to try next time.',
+    'Write your own sentences, paragraphs, and stories. Earn stars and get tips on what you did well and what to try next time.',
   estimatedMinutes: 25,
   available: true,
   position: { x: 37, y: 81 },

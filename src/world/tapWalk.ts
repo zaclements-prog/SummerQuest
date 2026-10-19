@@ -93,3 +93,17 @@ export function walkKey(key: string): 'w' | 'a' | 's' | 'd' | null {
     default: return null
   }
 }
+
+/** How far (CSS px) a press may travel and still count as a tap, by pointer type. */
+export const TAP_SLOP_PX = { mouse: 5, touch: 12, pen: 12 } as const
+
+/**
+ * Tap-only walking (Home, where a one-finger drag orbits the camera): does a
+ * press that travelled `travelPx` before lifting count as a tap? Never while
+ * another finger joined it (a pinch or two-finger pan).
+ */
+export function isWalkTap(travelPx: number, pointerType: string, multiTouch: boolean): boolean {
+  if (multiTouch) return false
+  const slop = pointerType === 'mouse' ? TAP_SLOP_PX.mouse : TAP_SLOP_PX.touch
+  return travelPx <= slop
+}

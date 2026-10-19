@@ -1,11 +1,12 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { Canvas } from '@react-three/fiber'
+import GLCanvas from '../platform/gl/GLCanvas'
 import { useSearchParams } from 'react-router-dom'
 import { Vector3 } from 'three'
 import WorldEnvironment from './terrain/WorldEnvironment'
 import WorldScene from './WorldScene'
 import WorldCameraRig from './WorldCameraRig'
 import WorldAvatar from './WorldAvatar'
+import WorldBuddy from './WorldBuddy'
 import WorldHud from './WorldHud'
 import WorldStudio from './WorldStudio'
 import QualityProbe from './QualityProbe'
@@ -52,15 +53,13 @@ export default function WorldScreen() {
   }, [])
   return (
     <div className="flex-1 relative">
-      <Canvas
+      <GLCanvas
         shadows={gfx.shadows}
         flat
         dpr={gfx.dpr}
         gl={{ antialias: true, powerPreference: 'high-performance' }}
         camera={{ position: [spawn[0] + PLAY_CAMERA_OFFSET[0], PLAY_CAMERA_OFFSET[1], spawn[1] + PLAY_CAMERA_OFFSET[2]], fov: 38, near: 0.3, far: 900 }}
         style={{ position: 'absolute', inset: 0 }}
-        // dev-only: lets headless checks read draw calls / triangles (renderer.info)
-        onCreated={({ gl }) => { if (import.meta.env.DEV) Object.assign(window, { __sqGl: gl }) }}
       >
         {/* sky dome, fog, sun + soft fill, drifting clouds */}
         <WorldEnvironment />
@@ -71,10 +70,11 @@ export default function WorldScreen() {
             <WorldScene posRef={posRef} />
             <WorldCameraRig targetRef={posRef} />
             <WorldAvatar posRef={posRef} spawn={spawn} />
+            <WorldBuddy posRef={posRef} />
             <QualityProbe force={params.has('gfxprobe')} />
           </>
         )}
-      </Canvas>
+      </GLCanvas>
       {!studio && <WorldHud posRef={posRef} />}
     </div>
   )

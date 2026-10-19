@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import type { ThreeEvent } from '@react-three/fiber'
 import { GRID_SIZE, TILE, worldToTile, tileToWorld, footprintTiles, canPlace, tileKey } from '../../lib/home/grid'
 import { useProgress } from '../../store/progress'
@@ -13,7 +13,24 @@ const SIZE = GRID_SIZE * TILE
 // Highlight tiles: soft rounded squares, floating just above the rug (top y≈0.038).
 const HOVER_Y = 0.045
 const FOOT_Y = 0.05
-const COLORS = { hover: '#ffe08a', ok: '#7fe3a6', bad: '#ff8f86' }
+const COLORS = { hover: '#ffe08a', ok: '#7fe3a6', bad: '#ff8f86', selected: '#ffcf4d' }
+
+/** The free spot nearest the middle of the room where `fp` fits (for the first ghost). */
+function firstFreeSpot(occupied: Set<string>, fp: { w: number; d: number }, rot: number) {
+  const c = (GRID_SIZE - 1) / 2
+  let best: { gx: number; gz: number } | null = null
+  let bestD = Infinity
+  for (let gz = 0; gz < GRID_SIZE; gz++)
+    for (let gx = 0; gx < GRID_SIZE; gx++) {
+      if (!canPlace(occupied, fp, gx, gz, rot)) continue
+      const d = (gx - c) ** 2 + (gz - c) ** 2
+      if (d < bestD) {
+        bestD = d
+        best = { gx, gz }
+      }
+    }
+  return best
+}
 
 export default function TileGrid() {
   const [hover, setHover] = useState<{ gx: number; gz: number } | null>(null)
@@ -24,6 +41,9 @@ export default function TileGrid() {
   const movingItemId = useHomeUi((s) => s.movingItemId)
   const rotation = useHomeUi((s) => s.rotation)
   const cancelPlacing = useHomeUi((s) => s.cancelPlacing)
+  const selectedUid = useHomeUi((s) => s.selectedUid)
+  const select = useHomeUi((s) => s.select)
+  const placed = useProgress((s) => s.placedItems)
 
   // The item under the cursor is either a new item from the bag or one being repositioned.
   const activeItemId = placingItemId ?? movingItemId
@@ -39,12 +59,33 @@ export default function TileGrid() {
 
   const onMove = (e: ThreeEvent<PointerEvent>) => setHover(tileAt(e))
 
-  const ok = !!activeItem && !!hover && canPlace(occupied, activeItem.footprint, hover.gx, hover.gz, rotation)
+  // Until the pointer is over the floor (always, on a touch screen: there's no
+  // hover), show the ghost on a free spot near the middle, so you can see what
+  // you're placing and turn it before you tap where it goes.
+  const startSpot = useMemo(
+    () => (activeItem ? firstFreeSpot(occupied, activeItem.footprint, rotation) : null),
+    [activeItem, occupied, rotation],
+  )
+  const spot = hover ?? startSpot
+
+  const ok = !!activeItem && !!spot && canPlace(occupied, activeItem.footprint, spot.gx, spot.gz, rotation)
+
+  // The selected item (decorate mode) gets a gold outline of tiles under it.
+  const selectedTiles = useMemo(() => {
+    const p = selectedUid ? placed.find((x) => x.uid === selectedUid) : null
+    const it = p ? HOME_ITEMS.find((i) => i.id === p.itemId) : null
+    return p && it ? footprintTiles(it.footprint, p.gx, p.gz, p.rot) : []
+  }, [selectedUid, placed])
 
   // Place at the clicked point itself: a still touch tap sends no pointermove, so
   // `hover` may be stale or unset. A drag (camera orbit) that ends here is ignored.
   const onClick = (e: ThreeEvent<MouseEvent>) => {
-    if (!activeItem || isDragClick(e)) return
+    if (isDragClick(e)) return
+    // Tapping the floor lets go of a selected item.
+    if (!activeItem) {
+      if (selectedUid) select(null)
+      return
+    }
     const t = tileAt(e)
     if (!t) return
     setHover(t) // show the tapped spot (red when it doesn't fit)
@@ -68,16 +109,21 @@ export default function TileGrid() {
           <meshBasicMaterial color={COLORS.hover} transparent opacity={0.6} depthWrite={false} />
         </mesh>
       )}
-      {activeItem && hover &&
-        footprintTiles(activeItem.footprint, hover.gx, hover.gz, rotation)
+      {selectedTiles.map((t) => (
+        <mesh key={`sel-${tileKey(t)}`} rotation={[-Math.PI / 2, 0, 0]} position={[tileToWorld(t.gx, t.gz).x, FOOT_Y, tileToWorld(t.gx, t.gz).z]} geometry={fgeo.roundRect(TILE * 0.9, TILE * 0.9, 0.14)}>
+          <meshBasicMaterial color={COLORS.selected} transparent opacity={0.75} depthWrite={false} />
+        </mesh>
+      ))}
+      {activeItem && spot &&
+        footprintTiles(activeItem.footprint, spot.gx, spot.gz, rotation)
           .filter((t) => t.gx >= 0 && t.gz >= 0 && t.gx < GRID_SIZE && t.gz < GRID_SIZE)
           .map((t) => (
           <mesh key={tileKey(t)} rotation={[-Math.PI / 2, 0, 0]} position={[tileToWorld(t.gx, t.gz).x, FOOT_Y, tileToWorld(t.gx, t.gz).z]} geometry={fgeo.roundRect(TILE * 0.9, TILE * 0.9, 0.14)}>
             <meshBasicMaterial color={ok ? COLORS.ok : COLORS.bad} transparent opacity={0.62} depthWrite={false} />
           </mesh>
         ))}
-      {activeItem && hover && (
-        <PlacementPreview item={activeItem} gx={hover.gx} gz={hover.gz} rot={rotation} />
+      {activeItem && spot && (
+        <PlacementPreview item={activeItem} gx={spot.gx} gz={spot.gz} rot={rotation} />
       )}
     </group>
   )

@@ -9,6 +9,7 @@ import {
 } from '../gradeTiers'
 import { curriculum } from '../../curriculum'
 import type { Stage } from '../../curriculum/types'
+import { createProvider } from '../providers'
 import { QUESTIONS as GEO } from '../providers/geometry'
 import { CHARTS } from '../providers/dataGraph'
 import { PASSAGES as READING } from '../providers/readingComprehension'
@@ -60,6 +61,22 @@ describe('effectiveConfig per grade', () => {
   it('leaves writing prompts alone', () => {
     const cfg = { kind: 'writingPrompt', writingKind: 'story' } as const
     expect(effectiveConfig(cfg, 2)).toEqual(cfg)
+  })
+
+  it('keeps grove orders inside the grade for every host (the Daily Challenge too)', async () => {
+    // the Daily Challenge plays a zone's first stage — Times Grove's orders for
+    // Multiplication Mesa — and used to serve 2nd graders 6-row orders
+    for (const g of GRADE_LEVELS) {
+      const maxFactor = g === 2 ? 5 : g === 3 ? 6 : 7
+      const cfg = effectiveConfig({ kind: 'multiplicationGrove' }, g)
+      expect(cfg).toMatchObject({ maxFactor })
+      const provider = createProvider(cfg)
+      for (let i = 0; i < 40; i++) {
+        const p = await provider.next()
+        const v = p.visual?.kind === 'array' ? p.visual : null
+        expect(Math.max(v!.rows, v!.cols)).toBeLessThanOrEqual(maxFactor)
+      }
+    }
   })
 
   it('is total over every stage × grade (never drops a kind)', () => {

@@ -19,6 +19,11 @@ describe('starterCreaturePatch', () => {
       .toEqual({ activeCreature: 'owl' })
   })
 
+  it('still gives the starter to a player who grew a pet up before ever playing as anyone', () => {
+    expect(starterCreaturePatch({ player: { emoji: '🦊' }, ownedCreatures: ['lion'], activeCreature: null }))
+      .toEqual({ ownedCreatures: ['fox', 'lion'], activeCreature: 'fox' })
+  })
+
   it('leaves an existing setup alone, and does nothing without a player', () => {
     expect(starterCreaturePatch({ player: { emoji: '🦊' }, ownedCreatures: ['fox', 'owl'], activeCreature: 'owl' })).toBeNull()
     expect(starterCreaturePatch({ player: null, ownedCreatures: [], activeCreature: null })).toBeNull()

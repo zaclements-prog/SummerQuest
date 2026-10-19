@@ -5,6 +5,7 @@ import { Burst, Confetti, Defs, Paper, Pop, Twinkle, Words } from '../motion/kit
 import { M } from '../motion/palette'
 import { starPath } from '../motion/layout'
 import { ArrowRightIcon, ReplayIcon } from './icons'
+import { usePetUi } from '../../lib/pets/usePetUi'
 
 const VW = 640
 const VH = 330
@@ -20,17 +21,26 @@ export default function LessonComplete({ title, emoji, ideas, onPractice, onRepl
   const [t, setT] = useState(reduced ? 99 : 0)
   const goRef = useRef(onPractice)
   const btnRef = useRef<HTMLButtonElement>(null)
+  // A pet hatching over this card holds the countdown until it's dismissed.
+  const held = usePetUi((s) => s.momentOpen)
+  const heldRef = useRef(held)
   useEffect(() => {
     goRef.current = onPractice
   }, [onPractice])
+  useEffect(() => {
+    heldRef.current = held
+  }, [held])
 
   useEffect(() => {
     btnRef.current?.focus()
-    const start = performance.now()
+    let last = performance.now()
+    let s = 0
     let raf = 0
     let gone = false
     const loop = () => {
-      const s = (performance.now() - start) / 1000
+      const now = performance.now()
+      if (!heldRef.current) s += (now - last) / 1000
+      last = now
       if (!reduced) setT(s)
       if (s >= AUTO_GO && !gone) {
         gone = true
@@ -50,16 +60,18 @@ export default function LessonComplete({ title, emoji, ideas, onPractice, onRepl
   const raysK = ease.outCubic(progress(t, 0.2, 0.6))
 
   return (
-    <motion.div className="fixed inset-0 z-50 flex items-center justify-center p-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} role="dialog" aria-modal="true" aria-label="Lesson complete">
+    <motion.div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto p-4 pt-[calc(1rem+var(--safe-top,env(safe-area-inset-top,0px)))] pb-[calc(1rem+var(--safe-bottom,env(safe-area-inset-bottom,0px)))] short:pt-[calc(0.5rem+var(--safe-top,env(safe-area-inset-top,0px)))] short:pb-[calc(0.5rem+var(--safe-bottom,env(safe-area-inset-bottom,0px)))]" initial={{ opacity: 0 }} animate={{ opacity: 1 }} role="dialog" aria-modal="true" aria-label="Lesson complete" data-pet-calm="">
       <div className="absolute inset-0 backdrop-blur-sm" style={{ background: 'rgba(40,30,40,0.55)' }} aria-hidden="true" />
       <motion.div
-        className="relative w-full max-w-xl overflow-hidden rounded-[32px]"
+        className="relative my-auto w-full max-w-xl overflow-hidden rounded-[32px]"
         style={{ background: M.paper, boxShadow: `0 0 0 3px ${M.ink}, 0 10px 0 0 rgba(58,44,56,0.35)` }}
         initial={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.8, y: 30 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ type: 'spring', stiffness: 240, damping: 20 }}
       >
-        <svg viewBox={`0 0 ${VW} ${VH}`} className="block w-full" aria-hidden="true">
+        {/* On a short screen (a phone held sideways) the picture shrinks to fit
+            the height, so the message and both buttons stay on screen. */}
+        <svg viewBox={`0 0 ${VW} ${VH}`} className="block w-full" style={{ maxHeight: 'calc(100dvh - 190px)' }} aria-hidden="true">
           <Defs />
           <Paper />
           {/* sunburst */}
@@ -107,11 +119,11 @@ export default function LessonComplete({ title, emoji, ideas, onPractice, onRepl
           <Twinkle t={t} at={1.6} x={cx} y={cy} r={120} n={6} color={M.white} size={10} />
           <Words t={t} at={1.1} text="Lesson complete!" x={cx} y={282} size={46} gap={0.12} />
         </svg>
-        <div className="px-5 pb-5 pt-1 text-center">
-          <p className="kid-text text-lg" style={{ color: '#5a4a56' }}>
+        <div className="px-5 pb-5 pt-1 text-center short:pb-3">
+          <p className="kid-text text-lg short:text-base" style={{ color: '#5a4a56' }}>
             You learned {ideas} big ideas in {title}. Now let&apos;s practice!
           </p>
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-3 short:mt-2">
             <button
               type="button"
               onClick={onReplay}

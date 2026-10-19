@@ -406,7 +406,7 @@ export const PASSAGES: Passage[] = [
         type: 'detail',
       },
       {
-        question: 'Why does the water cycle almost never run out of water?',
+        question: 'Why doesn’t the water cycle run out of water?',
         answer: 'The same water is used over and over.',
         options: [
           'The same water is used over and over.',

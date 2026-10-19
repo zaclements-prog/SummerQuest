@@ -273,10 +273,13 @@ export function Drip({
   worried = false,
   tint,
   scale = 1,
+  carryY = 1.75,
 }: {
   form: DropForm
   motion: DripMotion
   avatarRef: RefObject<Group | null>
+  /** height above the avatar's feet a carried drop rides at */
+  carryY?: number
   /** bump to shake "no" */
   shake: number
   worried?: boolean
@@ -324,7 +327,7 @@ export function Drip({
     const bob = Math.sin(clock.elapsedTime * 3) * 0.06
     if (motion.kind === 'head') {
       if (!a) return
-      const want = _want.set(a.position.x - 0.15, a.position.y + 1.75 + bob, a.position.z + 0.05)
+      const want = _want.set(a.position.x - 0.15, a.position.y + carryY + bob, a.position.z + 0.05)
       if (!s.init) {
         m.position.copy(want)
         s.init = true

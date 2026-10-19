@@ -30,7 +30,7 @@ export const readingLesson: Lesson = {
       body: 'Main idea = the tabletop. Details = the legs that hold it up.',
       visual: { kind: 'passage', ...FROG, question: 'Which sentences are details about frogs?' },
       // The wrong options are exactly the details: tests main idea vs. detail.
-      check: { question: 'What is the frog passage mostly about?', options: ['Frogs', 'Ponds', 'Insects', 'Jumping'], answer: 'Frogs', explain: 'Ponds, insects and jumping are details. Every sentence is about frogs, so frogs is the main idea.' },
+      check: { question: 'What is the frog passage mostly about?', options: ['Frogs', 'Ponds', 'Insects', 'Jumping'], answer: 'Frogs', explain: 'Ponds, insects, and jumping are details. Every sentence is about frogs, so frogs are the main idea.' },
     },
     {
       id: 'detail',

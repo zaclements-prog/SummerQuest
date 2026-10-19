@@ -64,9 +64,12 @@ export default function AvatarCreature() {
 
   // Shared WASD + idle-wander movement, blocked by furniture tiles (walls via ROOM_LIMIT);
   // furniture the creature is standing in doesn't trap it. Pauses mid-emote.
+  // In Play mode a tap on the floor walks it there (the touch equivalent of WASD;
+  // taps only, since a one-finger drag orbits the camera).
   useWanderWalk({
     group,
     bound: ROOM_LIMIT,
+    tapToWalk: mode === 'play' ? 'tap' : false,
     paused: () => {
       const e = emoteStart.current
       return e !== 0 && (performance.now() - e) / EMOTE_MS < 1

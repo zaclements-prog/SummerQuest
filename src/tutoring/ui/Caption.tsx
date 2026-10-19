@@ -9,7 +9,7 @@ import { M } from '../motion/palette'
  * reads the same clock as the stage (`clock.timeAtChar` per word), so it
  * follows the real audio, browser speech or the silent estimate alike.
  */
-export default function Caption({ text, clock, className = '' }: { text: string; clock: NarrationClock; className?: string }) {
+export default function Caption({ text, clock, className = '', follow = false }: { text: string; clock: NarrationClock; className?: string; follow?: boolean }) {
   const words = useMemo(() => {
     const out: { w: string; at: number }[] = []
     const re = /\S+/g
@@ -49,6 +49,22 @@ export default function Caption({ text, clock, className = '' }: { text: string;
     return () => cancelAnimationFrame(raf)
   }, [clock, words])
 
+  // `follow`: the caption sits in a small scrolling box (the phone-sideways
+  // lesson player, marked `data-caption-scroll`) — keep the word being spoken
+  // in view as the narration runs.
+  const nowRef = useRef<HTMLSpanElement>(null)
+  useEffect(() => {
+    if (!follow) return
+    const w = nowRef.current
+    const box = w?.closest<HTMLElement>('[data-caption-scroll]')
+    if (!w || !box) return
+    const wb = w.getBoundingClientRect()
+    const bb = box.getBoundingClientRect()
+    if (wb.bottom > bb.bottom - 8 || wb.top < bb.top) {
+      box.scrollTo({ top: box.scrollTop + (wb.top - bb.top) - bb.height / 3, behavior: 'smooth' })
+    }
+  }, [follow, spoken])
+
   return (
     <p className={`kid-text leading-snug ${className}`} style={{ color: M.ink }}>
       {words.map((w, i) => {
@@ -57,6 +73,7 @@ export default function Caption({ text, clock, className = '' }: { text: string;
         return (
           <span key={i}>
             <span
+              ref={now ? nowRef : undefined}
               className="rounded-lg px-[3px] -mx-[3px] transition-[background-color,opacity,color] duration-200 [box-decoration-break:clone]"
               style={{
                 background: now ? M.gold : 'transparent',

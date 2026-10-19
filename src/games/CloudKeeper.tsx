@@ -1,5 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { useFrame } from '@react-three/fiber'
+import GLCanvas from '../platform/gl/GLCanvas'
+import { usePageHidden } from '../platform/gl/usePageHidden'
+import StaticBatch from '../toon/StaticBatch'
 import { Group, Vector3 } from 'three'
 import type { RefObject } from 'react'
 import type { GameProps } from '../screens/GameRunner'
@@ -10,6 +13,7 @@ import { sfx } from '../lib/sound'
 import { TOON } from '../toon/palette'
 import { useWanderWalk } from '../world/useWanderWalk'
 import { creatureBuilder } from '../home/models/registry'
+import { anchorsFor } from '../home/models/anchors'
 import CreatureAccessories from '../home/world/CreatureAccessories'
 import { useStarterCreature } from '../home/starterCreature'
 import { collidesAt } from '../world/collision'
@@ -66,11 +70,12 @@ import { Banner, StreakMeter } from './_juice/JuiceHud'
 import { Backdrop } from './_runkit/Backdrop'
 import { StageCamera } from './_runkit/StageCamera'
 import { HostReact, type HostCue, type HostMood } from './_runkit/HostReact'
-import { PromptPill, RoundPips, RunResults, ScorePill, SoftClock, SpeechBubble } from './_runkit/RunHud'
+import { PromptPill, RoundPips, RunResults, ScorePill, SpeechBubble, TickingSoftClock } from './_runkit/RunHud'
 import { recordRunBest } from './_runkit/bestScore'
 import { useArrowKeys } from './_runkit/useArrowKeys'
 import { JuiceStage, richConfetti } from './_runkit/juiceExtras'
 import { canvasQuality, useLowGraphics } from '../world/graphicsQuality'
+import { SAFE } from './_runkit/uiTokens'
 
 /**
  * Cloud Keeper — the water cycle you GUIDE (3-ESS2-ish: evaporation →
@@ -128,7 +133,10 @@ const HEAD: DripMotion = { kind: 'head' }
 let flightSerial = 0
 const fly = (to: [number, number, number], dur: number, arc = 0.6): DripMotion => ({ kind: 'fly', to, dur, arc, token: ++flightSerial })
 
-export default function CloudKeeper({ params, onComplete, meta, paused = false }: GameProps) {
+export default function CloudKeeper({ params, onComplete, meta, paused: hostPaused = false }: GameProps) {
+  // A hidden page (app in the background, screen locked) pauses the run like the Quit dialog does.
+  const hidden = usePageHidden()
+  const paused = hostPaused || hidden
   // Graphics setting (Auto / Pretty / Fast): shadows + resolution follow it here too.
   const gfx = canvasQuality(useLowGraphics())
   useStarterCreature()
@@ -162,11 +170,10 @@ export default function CloudKeeper({ params, onComplete, meta, paused = false }
   }, [view])
 
   const [cue, setCue] = useState<HostCue>({ mood: 'wave', token: 1 })
-  const [speech, setSpeech] = useState<{ text: string; tone: 'plain' | 'good' | 'bad' } | null>({ text: 'Meet Drip! Guide it round the sky.', tone: 'plain' })
+  const [speech, setSpeech] = useState<{ text: string; tone: 'plain' | 'good' | 'bad' } | null>({ text: 'Meet Drip! Guide it around the sky.', tone: 'plain' })
   const [banner, setBanner] = useState<string | null>('☁️ Cloud Keeper!')
   const [hud, setHud] = useState({ score: 0, streak: 0 })
   const [guide, setGuide] = useState(false)
-  const [stormClock, setStormClock] = useState(1)
   const [flash, setFlash] = useState(0)
   const [results, setResults] = useState<{ score: number; stars: number; bestScore: number; newBest: boolean; perfect: boolean; bestStreak: number; firstTry: number; loops: number; saved: number } | null>(null)
 
@@ -175,6 +182,11 @@ export default function CloudKeeper({ params, onComplete, meta, paused = false }
   const legRef = useRef<{ problem: Problem; tried: boolean; secs: number } | null>(null)
   /** the storm's soft clock (pause-aware seconds) */
   const stormRef = useRef<{ secs: number; done: boolean } | null>(null)
+  // the storm's rainbow clock, read by its HUD bar (see TickingSoftClock)
+  const readStorm = useCallback(() => {
+    const st = stormRef.current
+    return st ? Math.max(0, 1 - st.secs / STORM_SEC) : 1
+  }, [])
   const timers = useRef<number[]>([])
   const finished = useRef(false)
   const started = useRef(false)
@@ -500,7 +512,6 @@ export default function CloudKeeper({ params, onComplete, meta, paused = false }
       const s = stormRef.current
       if (!s || s.done) return
       s.secs += 0.25
-      setStormClock(Math.max(0, 1 - s.secs / STORM_SEC))
     }, 250)
     return () => window.clearInterval(id)
   }, [paused])
@@ -578,16 +589,13 @@ export default function CloudKeeper({ params, onComplete, meta, paused = false }
 
   return (
     <div className="flex-1 relative select-none overflow-hidden">
-      <Canvas
+      <GLCanvas
         shadows={gfx.shadows}
         flat
         dpr={gfx.dpr}
         gl={{ antialias: true, powerPreference: 'high-performance', preserveDrawingBuffer: import.meta.env.DEV }}
         camera={{ position: [0.5, 7, 8], fov: 42, near: 0.3, far: 400 }}
         style={{ position: 'absolute', inset: 0 }}
-        onCreated={({ scene }) => {
-          if (import.meta.env.DEV) Object.assign(window, { __sqScene: scene })
-        }}
       >
         <Backdrop ground={TOON.grass} storm={view.storm ? 1 : 0} />
         <CycleScene
@@ -605,15 +613,15 @@ export default function CloudKeeper({ params, onComplete, meta, paused = false }
         />
         <StageCamera targetRef={posRef} center={[0, 0, -0.7]} offset={[0.3, 6.3, 8.0]} follow={0.2} />
         <JuiceStage />
-      </Canvas>
+      </GLCanvas>
 
       {/* lightning */}
       {flash > 0 && <div key={flash} className="absolute inset-0 pointer-events-none ck-flash" />}
 
-      <div className="absolute top-2 left-2 right-2 flex items-start justify-between gap-2 pointer-events-none">
+      <div className={`absolute ${SAFE.top2} ${SAFE.left2} ${SAFE.right2} flex items-start justify-between gap-2 pointer-events-none`}>
         <div className="flex flex-col items-start gap-1.5">
           <SpeechBubble face="🐧" text={speech?.text ?? null} tone={speech?.tone} />
-          {view.storm && <SoftClock frac={stormClock} icon="🌈" />}
+          {view.storm && <TickingSoftClock read={readStorm} icon="🌈" />}
         </div>
         <div className="pt-1">
           <RoundPips total={plan.length} current={view.segIndex} done={view.phase === 'results' ? plan.length : view.segIndex} />
@@ -627,7 +635,7 @@ export default function CloudKeeper({ params, onComplete, meta, paused = false }
       <Banner text={banner} />
 
       {view.phase !== 'results' && (
-        <div className="absolute bottom-3 inset-x-0 flex justify-center pointer-events-none">
+        <div className={`absolute ${SAFE.bottom3} inset-x-0 flex justify-center pointer-events-none`}>
           <PromptPill text={prompt} tone={promptTone} />
         </div>
       )}
@@ -779,6 +787,8 @@ function CycleScene({
   }, [avatarRef, cloudSpotRef])
 
   const b = useMemo(() => ({ Builder: creatureBuilder(activeCreature) }), [activeCreature])
+  // A carried drop rides clear of the avatar's head (and its horns or ears).
+  const carryY = Math.max(1.75, anchorsFor(activeCreature).head[1] + 0.85)
   const roaming = view.phase === 'roam' && view.carrying !== null
   const carried = view.carrying === null ? null : view.drops[view.carrying]
   const need = carried ? NEXT_PROCESS[carried.form] : null
@@ -788,7 +798,7 @@ function CycleScene({
 
   return (
     <group>
-      <SummitYard />
+      <StaticBatch><SummitYard /></StaticBatch>
       <SunPool level={view.cycle.pond} mode={mode('evaporation')} tag={tag('evaporation')} />
       <ColdCloud level={view.cycle.cloud} mode={mode('condensation')} twist={twist} spotRef={cloudSpotRef} tag={tag('condensation')} storm={view.storm} />
       <RainPeak mode={mode('precipitation')} snowy={twist === 'wind'} tag={tag('precipitation')} />
@@ -805,7 +815,7 @@ function CycleScene({
       {view.drops.map((d, i) =>
         d.visible ? (
           <group key={i}>
-            <Drip form={d.form} motion={d.motion} avatarRef={avatarRef} shake={d.shake} worried={view.storm && i > 0 && view.carrying !== i} tint={i > 0 ? FRIEND_TINTS[d.form] : undefined} scale={i > 0 ? 1.0 : 1.25} />
+            <Drip form={d.form} motion={d.motion} avatarRef={avatarRef} carryY={carryY} shake={d.shake} worried={view.storm && i > 0 && view.carrying !== i} tint={i > 0 ? FRIEND_TINTS[d.form] : undefined} scale={i > 0 ? 1.0 : 1.25} />
             {view.storm && i > 0 && view.carrying !== i && !d.saved && (
               <group position={[FRIEND_SPOTS[i - 1][0], 0.6, FRIEND_SPOTS[i - 1][1]]}>
                 <HelpBubble />

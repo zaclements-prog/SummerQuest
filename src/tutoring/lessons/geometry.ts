@@ -12,7 +12,7 @@ export const geometryLesson: Lesson = {
     {
       id: 'shapes',
       narration: 'Shapes get their names from their sides and their corners. A square is special because it has four sides that are all the same length, and it has four corners.',
-      body: 'A square: 4 equal sides, 4 corners.',
+      body: 'A square: 4 equal sides, 4 square corners.',
       visual: { kind: 'shape', type: 'square', width: 3, height: 3 },
     },
     {

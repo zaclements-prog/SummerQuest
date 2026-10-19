@@ -1,6 +1,8 @@
 import { HOME_ITEMS } from '../lib/home/catalog'
 import { canPlace, footprintTiles, tileKey } from '../lib/home/grid'
 import { localDayKey } from '../lib/dates'
+import { adultPets, growthRank, hatchedPets, petStages } from '../lib/pets/growth'
+import type { PetGrowth, ZonesLike } from '../lib/pets/growth'
 
 /** Shape of the persisted fields the migrations touch (kept loose: old saves vary). */
 export interface PersistedProgressV0 {
@@ -10,6 +12,9 @@ export interface PersistedProgressV0 {
   sessions?: { at: number; kind: string }[]
   placedItems?: { uid: string; itemId: string; gx: number; gz: number; rot: number }[]
   ownedHomeItems?: Record<string, number>
+  zones?: unknown
+  ownedCreatures?: unknown
+  activeCreature?: unknown
   [k: string]: unknown
 }
 
@@ -68,4 +73,33 @@ export function migrateV0toV1(p: PersistedProgressV0, now = Date.now()): Persist
     out.ownedHomeItems = r.ownedHomeItems
   }
   return out
+}
+
+/**
+ * v2 → v3: pets. Every pet's stage is derived from the zones' stars (and
+ * finished lessons, none recorded before v3), so:
+ * - `lessonsDone` starts empty;
+ * - `petsSeen` starts at each pet's current stage, so a player with lots of
+ *   progress isn't met by a dozen celebrations at once;
+ * - grown-up pets join `ownedCreatures` (kept, like `activeCreature`);
+ * - a player whose pets have already hatched gets a World buddy: the most
+ *   grown one (ties: catalog order), preferring one they aren't playing as.
+ */
+export function migrateV2toV3(p: PersistedProgressV0): PersistedProgressV0 {
+  const zones = (p.zones && typeof p.zones === 'object' && !Array.isArray(p.zones) ? p.zones : {}) as ZonesLike
+  const stages = petStages(zones, {})
+  const owned = Array.isArray(p.ownedCreatures) ? p.ownedCreatures.filter((id): id is string => typeof id === 'string') : []
+  const petsSeen: Record<string, PetGrowth> = { ...stages }
+  const hatched = hatchedPets(stages)
+  const active = typeof p.activeCreature === 'string' ? p.activeCreature : null
+  // most grown first; a stable sort keeps catalog order among equals
+  const byGrowth = [...hatched].sort((a, b) => growthRank(stages[b]) - growthRank(stages[a]))
+  const buddyPet = byGrowth.find((id) => id !== active) ?? byGrowth[0] ?? null
+  return {
+    ...p,
+    lessonsDone: {},
+    petsSeen,
+    buddyPet,
+    ownedCreatures: [...owned, ...adultPets(stages).filter((id) => !owned.includes(id))],
+  }
 }

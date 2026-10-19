@@ -7,7 +7,7 @@ export const wordProblemZone: Zone = {
   emoji: '🌲',
   themeColor: 'island',
   description:
-    'Word problems are math hiding inside stories. Read carefully, figure out what to do, then solve. Problems are templated for now — switching to AI-generated stories themed around your avatar is a future upgrade.',
+    'Word problems are math hiding inside stories. Read carefully, figure out what to do, then solve.',
   estimatedMinutes: 20,
   available: true,
   position: { x: 13, y: 48 },

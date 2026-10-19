@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { groundHit, tapWalkFrame, walkKey, TAP_ARRIVE, TAP_STUCK_SECONDS } from '../tapWalk'
+import { groundHit, isWalkTap, tapWalkFrame, walkKey, TAP_ARRIVE, TAP_SLOP_PX, TAP_STUCK_SECONDS } from '../tapWalk'
 import { collidesAt, insideFootprint } from '../collision'
 import type { Collider } from '../worldLayout'
 import { areaById, insideDoorSpot, worldColliders } from '../worldLayout'
@@ -131,5 +131,24 @@ describe('House return spot', () => {
     expect(insideFootprint({ cx: house.worldPos[0], cz: house.worldPos[1], w: house.size!, d: house.size! }, x, z, 0.1)).toBe(true)
     expect(Math.abs(z - house.door!.pos[1])).toBeLessThanOrEqual(1.2)
     expect(collidesAt(worldColliders(), x, z, R)).toBe(false)
+  })
+})
+
+describe('isWalkTap (tap-only walking)', () => {
+  it('a still press is a tap for every pointer type', () => {
+    for (const t of ['mouse', 'touch', 'pen']) expect(isWalkTap(0, t, false)).toBe(true)
+  })
+  it('fingers and pencils may wobble more than a mouse', () => {
+    expect(isWalkTap(TAP_SLOP_PX.touch, 'touch', false)).toBe(true)
+    expect(isWalkTap(TAP_SLOP_PX.pen, 'pen', false)).toBe(true)
+    expect(isWalkTap(TAP_SLOP_PX.mouse + 1, 'mouse', false)).toBe(false)
+    expect(isWalkTap(TAP_SLOP_PX.mouse + 1, 'touch', false)).toBe(true)
+  })
+  it('a drag (camera orbit) is not a tap', () => {
+    expect(isWalkTap(40, 'touch', false)).toBe(false)
+    expect(isWalkTap(40, 'mouse', false)).toBe(false)
+  })
+  it('a press that became a pinch is never a tap', () => {
+    expect(isWalkTap(0, 'touch', true)).toBe(false)
   })
 })
