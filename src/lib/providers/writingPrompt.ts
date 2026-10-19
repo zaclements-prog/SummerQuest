@@ -148,6 +148,9 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Should students be allowed to pick their own seats in class? Write a paragraph with your opinion and two strong reasons.',
       'Write a paragraph explaining the journey of a raindrop from a cloud down to a river and out to the sea. Use the words first, next, and finally.',
       'Write a paragraph about the trickiest rule you ever followed. Explain what the rule was and why following it turned out to be the right choice.',
+      'Your school cafeteria wants one new dessert on the menu. Write a paragraph describing your idea, what you would name it, and why students would love it.',
+      'Write a paragraph about someone in your life who teaches you new things. Explain what they teach you and how they help you learn.',
+      'Imagine your town had no cars for a whole day. Write a paragraph explaining how people would get around and what the quiet streets would feel like.',
     ],
     // W.3.3 — narrate real or imagined experiences with details and dialogue.
     story: [
@@ -172,6 +175,9 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Write a story about the morning your classroom beanstalk stretches so tall it touches the ceiling overnight. What do you and your classmates do before the teacher arrives?',
       'Write a story about a pair of magic mittens that leave animal paw prints in the snow wherever the wearer walks. What adventure do the prints lead to?',
       'In the future, a cheerful robot delivers the mail but is still learning to wave hello like a neighbor. Write a story about the silly mistake it makes and how the town helps.',
+      'Write a story about the great kite-flying contest where your kite soars higher than any other. Who wins the ribbon, and what happens at the award ceremony?',
+      'Write a story about an ant town beneath the sidewalk that hosts a grand summer festival. Describe the tiny parade and the crumbs served at the feast.',
+      'Your toy sailboat slips out of the bathtub and turns up floating down the street in a rain stream. Write a story about the rescue mission.',
     ],
   },
   // 2nd grade (handoff A2). Standards: CCSS W.2.1–W.2.3 — short opinion,
