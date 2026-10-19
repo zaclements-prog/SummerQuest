@@ -611,6 +611,164 @@ export const PASSAGES: Passage[] = [
       },
     ],
   },
+  // NGSS 3-LS2-1: some animals live in groups because group life helps them
+  // survive — fish schools, bird flocks, and wolf packs.
+  {
+    title: 'Why Animals Stay in Groups',
+    level: 3,
+    text: `Sam watches the fish at the pond and notices they swim side by side in a tight school. Many animals live together in groups because group life helps them survive. Fish swim close together so a hunter cannot easily pick one out. Flocks of birds take turns resting while the others keep watch for danger. Wolves hunt as a pack to catch food that would be too quick for one wolf alone. Living together also keeps young animals warm and safe, with more eyes and ears on guard.`,
+    questions: [
+      {
+        question: 'Why do fish swim close together in a school?',
+        answer: 'So a hunter cannot easily pick one out.',
+        options: [
+          'Because fish enjoy warm water.',
+          'So a hunter cannot easily pick one out.',
+          'Because swimming close together makes them faster.',
+          'So fish can rest at the same time.',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, "survive" means:',
+        answer: 'to stay alive',
+        options: [
+          'to stay alive',
+          'to travel a long way',
+          'to change color by season',
+          'to sleep through the whole winter',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'What is this passage mostly about?',
+        answer: 'why living in groups helps animals stay safe',
+        options: [
+          'what wolves eat when hunting for food alone',
+          'why living in groups helps animals stay safe',
+          'how birds build their nests high in the trees',
+          'where young animals find water on hot days',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
+  // NGSS LS1.D: some animals migrate, or travel far, when the seasons change;
+  // the V formation helps geese save energy on the long flight.
+  {
+    title: 'The Long Flight South',
+    level: 3,
+    text: `Every autumn, flocks of geese lift off from northern lakes and fly a long way south. They migrate, or travel far, because winter brings cold weather and little food. Down south the ponds stay open, and fields of grain feed the birds through the season. Geese fly in a shape like the letter V. This formation helps each bird save energy, and the birds take turns at the front, where flying is hardest. When spring warms their home lakes again, the geese head back north to raise their families.`,
+    questions: [
+      {
+        question: 'Why do the geese migrate before winter?',
+        answer: 'Because winter brings cold and little food.',
+        options: [
+          'Because the ponds down south freeze solid.',
+          'Because winter brings cold and little food.',
+          'Because they must practice flying in a V shape.',
+          'To visit other flocks far to the south.',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, "migrate" means:',
+        answer: 'to travel far away for a season',
+        options: [
+          'to fly in wide circles over a lake',
+          'to travel far away for a season',
+          'to hide from hunters in the tall reeds',
+          'to rest during the long cold winter',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'Why do geese take turns flying at the front of the V?',
+        answer: 'Sharing the hardest spot saves energy for everyone.',
+        options: [
+          'Bigger wings block the wind for smaller birds.',
+          'Sharing the hardest spot saves energy for everyone.',
+          'The last bird needs to watch for hawks and eagles.',
+          'A single leader must always guide the flock.',
+        ],
+        type: 'inference',
+      },
+    ],
+  },
+  // NGSS ESS1.A: the Sun is a star; it looks bigger than the other stars
+  // because it is much closer to Earth.
+  {
+    title: 'Our Nearest Star',
+    level: 3,
+    text: `Kenji calls the Sun the brightest light in the daytime sky. His teacher has a surprise for him: the Sun is a star! Stars are enormous balls of glowing gas. The Sun looks much bigger than the other stars only because it is so much closer to Earth. The tiny points that twinkle after sunset are stars too, each one enormous, but they are so distant that they seem small and dim. The Sun gives Earth the light and warmth that help plants, animals, and people thrive.`,
+    questions: [
+      {
+        question: 'According to the passage, what is the Sun?',
+        answer: 'a star',
+        options: ['a planet', 'a star', 'a glowing cloud', 'the Moon'],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, "enormous" means:',
+        answer: 'extremely large',
+        options: ['extremely large', 'very cold', 'soft like a cloud', 'moving very quickly'],
+        type: 'vocab',
+      },
+      {
+        question: 'Why do distant stars look small when they are really enormous?',
+        answer: 'Because they are much farther away from Earth.',
+        options: [
+          'Because they burn with a cooler flame.',
+          'Because they are much farther away from Earth.',
+          'Because clouds cover them most of the year.',
+          'Because they shine only while the Moon is out.',
+        ],
+        type: 'inference',
+      },
+    ],
+  },
+  // NGSS 3-LS4-3: helpful body-part traits — webbed feet, thick fur and
+  // blubber, a fat-storing hump — suit animals to where they live.
+  {
+    title: 'Special Feet and Warm Coats',
+    level: 3,
+    text: `Priya learns that many animals have body parts suited to where they live. A duck has wide, webbed feet that push through the water like paddles. A polar bear wears thick fur and a layer of fat called blubber, which keeps it toasty in the frozen Arctic. A camel stores fat in its hump, so it can go a long time between meals in the dry desert. Each body part gives an animal an edge where it lives. These helpful traits give animals a better chance to survive and thrive.`,
+    questions: [
+      {
+        question: "What do a duck's wide, webbed feet do?",
+        answer: 'They push through water like paddles.',
+        options: [
+          'They help it run on soft sand.',
+          'They push through water like paddles.',
+          'They keep the duck warm in cold weather.',
+          'They dig deep holes for hiding.',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, "blubber" is:',
+        answer: 'a warm layer of fat',
+        options: [
+          'a wide webbed foot',
+          'a hard shell on a turtle',
+          'a warm layer of fat',
+          'a warm coat of fluffy fur',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'What is this passage mostly about?',
+        answer: 'how body parts help animals live where they live',
+        options: [
+          'what polar bears eat during the long cold winter months',
+          'how a young animal learns from its family',
+          'how animals travel to places with mild weather',
+          'how body parts help animals live where they live',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
   {
     title: 'How Plants Make Their Own Food',
     level: 4,
