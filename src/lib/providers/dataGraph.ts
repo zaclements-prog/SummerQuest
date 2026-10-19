@@ -620,6 +620,183 @@ export const CHARTS: DataChart[] = [
       },
     ],
   },
+  // ---- Level 3, second added batch (CCSS 3.MD.D.3: read bar graphs; direct reads and one-step differences, values 2–10) ----
+  {
+    level: 3,
+    title: 'Kite Flying Contest',
+    unit: 'kites',
+    bars: [
+      { label: 'Kai', value: 7, emoji: '🪁' },
+      { label: 'Mia', value: 4, emoji: '🪁' },
+      { label: 'Eli', value: 9, emoji: '🪁' },
+    ],
+    question: 'Who flew the MOST kites?',
+    answer: 'Eli',
+    options: ['Eli', 'Kai', 'Mia'],
+    hint: 'Find the tallest bar.',
+    questions: [
+      {
+        question: 'How many FEWER kites did Kai fly than Eli?',
+        answer: '2',
+        options: ['2', '10', '4'],
+        hint: 'Eli (9) minus Kai (7).',
+      },
+    ],
+  },
+  {
+    level: 3,
+    title: 'Ladybugs on Leaves',
+    unit: 'ladybugs',
+    bars: [
+      { label: 'Big Leaf', value: 6, emoji: '🍃' },
+      { label: 'Round Leaf', value: 9, emoji: '🍃' },
+      { label: 'Small Leaf', value: 3, emoji: '🍃' },
+    ],
+    question: 'Which leaf had the FEWEST ladybugs?',
+    answer: 'Small Leaf',
+    options: ['Small Leaf', 'Round Leaf', 'Big Leaf'],
+    hint: 'Look for the shortest bar.',
+    questions: [
+      {
+        question: 'How many ladybugs were on the big leaf?',
+        answer: '6',
+        options: ['6', '3', '9'],
+        hint: 'Read the height of the Big Leaf bar.',
+      },
+    ],
+  },
+  {
+    level: 3,
+    title: 'Puddle Jumps',
+    unit: 'jumps',
+    bars: [
+      { label: 'Nia', value: 8 },
+      { label: 'Gus', value: 5 },
+      { label: 'Tess', value: 10 },
+    ],
+    question: 'Who made the MOST puddle jumps?',
+    answer: 'Tess',
+    options: ['Tess', 'Nia', 'Gus'],
+    hint: 'Look for the tallest bar.',
+    questions: [
+      {
+        question: 'How many MORE jumps did Nia make than Gus?',
+        answer: '3',
+        options: ['3', '5', '8'],
+        hint: 'Nia (8) minus Gus (5).',
+      },
+    ],
+  },
+  {
+    level: 3,
+    title: 'Cup Stacks',
+    unit: 'cups',
+    bars: [
+      { label: 'Sol', value: 6 },
+      { label: 'Ivo', value: 4 },
+      { label: 'Zane', value: 8 },
+    ],
+    question: 'Who stacked the MOST cups?',
+    answer: 'Zane',
+    options: ['Zane', 'Sol', 'Ivo'],
+    hint: 'Find the tallest bar.',
+    questions: [
+      {
+        question: 'How many cups did Sol and Ivo stack TOGETHER?',
+        answer: '10',
+        options: ['10', '11', '9'],
+        hint: 'Add Sol (6) and Ivo (4).',
+      },
+    ],
+  },
+  {
+    level: 3,
+    title: 'Seashell Buckets',
+    unit: 'seashells',
+    bars: [
+      { label: 'Wren', value: 7 },
+      { label: 'Cody', value: 5 },
+      { label: 'Pia', value: 9 },
+    ],
+    question: 'Who found the MOST seashells?',
+    answer: 'Pia',
+    options: ['Pia', 'Wren', 'Cody'],
+    hint: 'Look for the tallest bar.',
+    questions: [
+      {
+        question: 'How many seashells did Cody find?',
+        answer: '5',
+        options: ['5', '7', '9'],
+        hint: 'Read the height of the Cody bar.',
+      },
+    ],
+  },
+  {
+    level: 3,
+    title: 'Muffin Trays',
+    unit: 'muffins',
+    bars: [
+      { label: 'Apple', value: 7, emoji: '🧁' },
+      { label: 'Banana', value: 9, emoji: '🧁' },
+      { label: 'Cherry', value: 5, emoji: '🧁' },
+    ],
+    question: 'Which tray baked the MOST muffins?',
+    answer: 'Banana',
+    options: ['Apple', 'Banana', 'Cherry', 'Plum'],
+    hint: 'Find the tallest bar.',
+    questions: [
+      {
+        question: 'How many muffins were on the cherry tray?',
+        answer: '5',
+        options: ['5', '7', '9'],
+        hint: 'Read the height of the Cherry bar.',
+      },
+    ],
+  },
+  {
+    level: 3,
+    title: 'Block Towers',
+    unit: 'blocks',
+    bars: [
+      { label: 'Omar', value: 6 },
+      { label: 'Leo', value: 9 },
+      { label: 'Cleo', value: 3 },
+    ],
+    question: 'Who built the tallest tower?',
+    answer: 'Leo',
+    options: ['Leo', 'Omar', 'Cleo', 'Ada'],
+    hint: 'Look for the tallest bar.',
+    questions: [
+      {
+        question: 'How many blocks did Omar and Cleo stack TOGETHER?',
+        answer: '9',
+        options: ['9', '8', '10', '6'],
+        hint: 'Add Omar (6) and Cleo (3).',
+      },
+    ],
+  },
+  {
+    level: 3,
+    title: 'Snow Forts',
+    unit: 'snow blocks',
+    bars: [
+      { label: 'Ruby', value: 9 },
+      { label: 'Tara', value: 7 },
+      { label: 'Noor', value: 4 },
+    ],
+    question: 'Who stacked the MOST snow blocks?',
+    answer: 'Ruby',
+    options: ['Ruby', 'Tara', 'Noor', 'Bea'],
+    hint: 'Find the tallest bar.',
+    questions: [
+      {
+        question: 'How many FEWER snow blocks did Noor stack than Ruby?',
+        answer: '5',
+        options: ['5', '4', '9', '13'],
+        hint: 'Ruby (9) minus Noor (4).',
+      },
+    ],
+  },
   // ---- Level 4, added batch (CCSS 4.MD.B: multi-step reads from bar graphs; sums, differences, whole-number averages) ----
   {
     level: 4,
