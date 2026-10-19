@@ -196,6 +196,11 @@ Grade 5 is mostly content; the K–1 machinery doesn't apply.
 | **3. Grade 5** | Providers, banks, lessons, game tiers | Can run in parallel with phase 2. |
 | **4. Store update** | New title (e.g. "SummerQuest: Learning Games K–5"), keywords, K and grade-5 screenshots, a rating re-check for 5-year-olds, a privacy-policy line about the device voice reading questions | A new versionCode. Testing instructions re-entered. |
 
+**The games track** (`2026-10-19-trending-games-plan.md`) runs alongside these phases:
+- the gate engine and Critter Parade for grades 2–4 during phase 0, since they don't need the voice system;
+- the K–1 Parade in phase 1;
+- grade-5 gates in phase 3.
+
 ## Owner decisions
 
 1. **Zone structure:** grade-band stage sets inside today's 12 zones (recommended), or separate K–1 zones on the island.
