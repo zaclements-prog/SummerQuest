@@ -28,6 +28,8 @@ interface DataChart {
   answer: string
   options: string[]
   hint?: string
+  /** Extra questions read off the same bars (optional; the primary is inline). */
+  questions?: { question: string; answer: string; options: string[]; hint?: string }[]
 }
 
 /** Exported for content tests (grade-tier coverage; see lib/__tests__/gradeTiers.test.ts). */
@@ -442,6 +444,11 @@ export const CHARTS: DataChart[] = [
   },
 ]
 
+/** Every question a chart carries: the inline primary plus extras, in order. Exported for tests. */
+export function chartQuestions(c: DataChart): { question: string; answer: string; options: string[]; hint?: string }[] {
+  return [{ question: c.question, answer: c.answer, options: c.options, hint: c.hint }, ...(c.questions ?? [])]
+}
+
 export function makeDataGraphProvider(cfg: Config): ProblemProvider {
   const staticProvider = makeStaticDataGraphProvider(cfg)
   if (cfg.source !== 'llm') return staticProvider
@@ -461,7 +468,10 @@ export function makeDataGraphProvider(cfg: Config): ProblemProvider {
 function makeStaticDataGraphProvider(cfg: Config): ProblemProvider {
   let serial = 0
   const level = pickLevel(cfg.level, CHARTS.map((c) => c.level))
-  const pool = CHARTS.filter((c) => c.level === level)
+  // Deal (chart, question) pairs: every chart plays its inline question plus any extras.
+  const pool = CHARTS.filter((c) => c.level === level).flatMap((c) =>
+    chartQuestions(c).map((q) => ({ chart: c, q })),
+  )
   function reshuffle() {
     const order = [...pool]
     for (let i = order.length - 1; i > 0; i--) {
@@ -475,16 +485,16 @@ function makeStaticDataGraphProvider(cfg: Config): ProblemProvider {
     topic: 'data',
     next(): Problem {
       if (queue.length === 0) queue = reshuffle()
-      const c = queue.shift()!
+      const { chart: c, q } = queue.shift()!
       return {
         id: `data-${serial++}`,
-        prompt: c.question,
-        options: shuffle(c.options),
-        answer: c.answer,
+        prompt: q.question,
+        options: shuffle(q.options),
+        answer: q.answer,
         visual: { kind: 'barGraph', title: c.title, unit: c.unit, bars: c.bars },
         topic: 'data',
         difficulty: cfg.level,
-        hint: c.hint,
+        hint: q.hint,
         skill: { id: 'data-graphs', label: 'reading graphs' },
       }
     },

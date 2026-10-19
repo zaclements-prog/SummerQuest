@@ -8,6 +8,7 @@ import { makeDivisionProvider } from '../division'
 import { makeFractionEquivalenceProvider } from '../fractionEquivalence'
 import { makeMultiplicationGroveProvider } from '../multiplicationGrove'
 import { makeScienceCycleProvider } from '../scienceCycle'
+import { CHARTS, chartQuestions } from '../dataGraph'
 import { arenaFactConfig, warmFactConfig } from '../../arena/divisionCore'
 import { forgeFactConfig } from '../../forge/fractionCore'
 import { groveMaxFactor } from '../../grove/groveCore'
@@ -504,5 +505,19 @@ describe('bar-graph solver', () => {
   it('refuses questions it cannot read instead of guessing', () => {
     expect(solveGraph('What is the weather like?', bars).error).toBeDefined()
     expect(solveGraph('Which day was best?', [{ label: 'A', value: 2 }, { label: 'B', value: 2 }]).error).toBeDefined()
+  })
+  it('answers every question of every chart in the bank, keyed to its own bars', () => {
+    // charts may carry an inline question plus `questions` extras (see dataGraph.ts);
+    // the solver must read ALL of them against the chart's own bars, key included.
+    let checked = 0
+    for (const c of CHARTS) {
+      for (const q of chartQuestions(c)) {
+        const solved = solveGraph(q.question, c.bars)
+        expect(solved.error, `${c.title} (L${c.level}): "${q.question}" — ${solved.error ?? ''}`).toBeUndefined()
+        expect(solved.answer, `${c.title} (L${c.level}): "${q.question}"`).toBe(q.answer)
+        checked++
+      }
+    }
+    expect(checked).toBeGreaterThanOrEqual(CHARTS.length)
   })
 })

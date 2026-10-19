@@ -53,6 +53,14 @@ export const G2_GEOMETRY: GeoItem[] = [
 
 // ---- Data & graphs, level 2 (2.MD.D.10: single-unit scale, ≤4 categories) ------
 
+/** One question keyed to a chart: the primary one inline, or an extra in `questions`. */
+export interface ChartQuestion {
+  question: string
+  answer: string
+  options: string[]
+  hint?: string
+}
+
 export interface ChartItem {
   level: number
   title: string
@@ -62,6 +70,8 @@ export interface ChartItem {
   answer: string
   options: string[]
   hint?: string
+  /** Extra questions read off the same bars; the provider deals (chart, question) pairs. */
+  questions?: ChartQuestion[]
 }
 
 export const G2_CHARTS: ChartItem[] = [
