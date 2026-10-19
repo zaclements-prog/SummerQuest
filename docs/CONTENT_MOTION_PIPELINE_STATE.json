@@ -83,7 +83,9 @@
     {
       "id": "A10",
       "title": "reading L4 +8 (17->25) — l4Enrich or provider",
-      "status": "pending"
+      "status": "done",
+      "commit": "c61c99a",
+      "evidence": "readingComprehension L4 17->25 passages (+8, RL.4.1-4.4, written into the provider PASSAGES); bias audit across all 75 q-items: longest-answer 21 (28.0%, <=30%), shortest-answer 14 (18.7%, <=35%); variety windows clean (fresh topics: axolotl, seeds, maps, bats, sea otters, Silk Road, pigeon post, tortoises — no name/setting word >2x in any window of 10); new passage word counts 93-106 (L4 spec 85-110); vitest providers 219 passed, npm test 776 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
     },
     {
       "id": "A11",
@@ -285,6 +287,14 @@
       "commits": "3cb2e7a: +8 readingComprehension L4 passages (9->17, RL.4.1-4.4); bias audit 51 q-items longest 25.5% / shortest 21.6%; variety windows clean (fresh topics, no word >2x per window of 10); new passage word counts 87-105",
       "gates": "full-final (single content commit for the step)",
       "push": "pushed bf54127..9091b7a to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 10,
+      "step": "A10",
+      "result": "done",
+      "tests": "vitest providers 219 passed; npm test 776 passed; lint clean; tsc -b clean; build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "c61c99a: +8 readingComprehension L4 passages (17->25, RL.4.1-4.4); bias audit 75 q-items longest 28.0% / shortest 18.7%; variety windows clean (axolotl, seeds, maps, bats, sea otters, Silk Road, pigeon post, tortoises); new passage word counts 93-106",
+      "gates": "full-final (single content commit for the step)"
     }
   ],
   "notes": "Target counts from handoff A1 table. One step per interval. Owner-approved 2026-10-18: fast gates policy — intermediate commits run vitest providers only; full battery (vitest+npm test+lint+tsc+build:store) runs on the final commit of each step and step is marked done only on full-battery pass. Fails verification twice -> blocked with error, skip to next. All done/blocked: pause cron + final summary in history."
