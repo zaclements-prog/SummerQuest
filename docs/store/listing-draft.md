@@ -28,6 +28,22 @@ The copy below follows them.
 - **Step 3:** Free. The short and long descriptions, bullets and keywords below, as entered: plain hyphens (no en
   dashes), paragraphs on single lines. Icons and the 7 screenshots are dragged in by the owner.
 
+## Testing instructions (entered in Step 4, 2026-10-19)
+
+> SummerQuest works fully offline: no account, sign-in or internet needed.
+> First launch: tap "Start your quest", type any name, pick a grade (2nd, 3rd or 4th) and tap "Begin adventure!" to reach the 3D island.
+> Tap the ground to walk. "Map" opens the island map. Narrated lessons are under Tutor (tap "Watch"). The hardware Back button goes back a screen and exits the app from the island.
+> Grown-up areas (Parent area, reset progress, change grade) are behind a parental gate: it asks for the product of two numbers between 13 and 29 (for example 17 x 23 = 391). Type the answer. Three wrong answers lock it for 30 seconds.
+> Some stages unlock after earning a star on the stage before.
+
+## Higgs Audio credit (lesson narration and promo voice)
+
+The narration (and the promo video's voice) uses Higgs Audio v2. Its license
+(docs/licensing/higgs-v2.md) recommends this sentence in the store description;
+it is appended to the end of the long description:
+
+> Built with Higgs Materials licensed from Boson AI USA, Inc., Copyright Boson AI USA, Inc., All Rights Reserved and Meta Llama 3 licensed under the Meta Llama 3 Community License, Copyright Meta Platforms, Inc., All Rights Reserved, based on Meta Llama 3.
+
 ## App title
 
 **Chosen (2026-10-18): SummerQuest - Summer Learning Island for Kids** (a plain hyphen: the console's title field rejects the en dash).
