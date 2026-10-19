@@ -1332,6 +1332,205 @@ export const PASSAGES: Passage[] = [
       },
     ],
   },
+  // NGSS 4-PS4-1: waves typically transfer energy without transferring matter.
+  {
+    title: 'Waves Across the Pool',
+    level: 4,
+    text: `Ellie watches ripples spread across the swimming pool after her friend jumps in. A wave is a moving disturbance that carries energy from place to place. Waves do not carry the water itself very far. You can see this by watching a floating leaf. When a wave slides under the leaf, the leaf bobs up and down, then settles almost exactly where it started. The energy keeps traveling, while the water mostly stays behind. Ocean waves work the same way. Moving air passes its energy to the surface of the sea, and that energy travels outward until it rolls gently onto the shore.`,
+    questions: [
+      {
+        question: 'What does a wave carry across the water?',
+        answer: 'energy',
+        options: ['energy', 'the water itself', 'sand from the bottom', 'leaves floating on top'],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, “ripples” are:',
+        answer: 'small waves that spread outward',
+        options: [
+          'large stones resting under the water',
+          'small waves that spread outward',
+          'a kind of swimming stroke',
+          'fish darting just below the surface',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'Why does the floating leaf end up almost where it started?',
+        answer: 'The water only bobs in place while the wave carries energy past it.',
+        options: [
+          'The water only bobs in place while the wave carries energy past it.',
+          'The leaf is too heavy for any wave to ever move it.',
+          'The wind pulls every floating leaf back to the same spot.',
+          'The pool water is stuck together and cannot move at all.',
+        ],
+        type: 'inference',
+      },
+    ],
+  },
+  // Grade 4 light and shadows: light travels in straight lines, so a blocked path
+  // makes a shadow, and the shadow's length follows the Sun's position in the sky.
+  {
+    title: 'Shadows Across the Day',
+    level: 4,
+    text: `Kenji notices his shadow on the sidewalk all day long. A shadow appears when an object blocks light, because light travels in straight lines and cannot bend around the object. In the early morning, the Sun hangs low, so Kenji’s shadow stretches out long behind him. Around midday, the Sun climbs high overhead, and his shadow shrinks to a short blob at his feet. In the late afternoon, the shadow grows long again on the other side. A shadow always falls opposite the Sun, and its changing length shows how the Sun moves across the sky.`,
+    questions: [
+      {
+        question: 'What makes a shadow appear?',
+        answer: 'An object blocks the light.',
+        options: [
+          'An object blocks the light.',
+          'A mirror reflects the sunlight away.',
+          'An object grows warm in the sunlight.',
+          'The light is too dim to see clearly.',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, “opposite” means:',
+        answer: 'on the other side',
+        options: ['on the other side', 'very far away', 'right up close', 'hidden underneath something'],
+        type: 'vocab',
+      },
+      {
+        question: 'What is this passage mostly about?',
+        answer: 'how a shadow changes as the Sun moves across the sky',
+        options: [
+          'how shadows are painted on city sidewalks',
+          'how a shadow changes as the Sun moves across the sky',
+          'why some objects have no color at all',
+          'why children like to play outside until dark',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
+  // NGSS 4-ESS3-1: natural resources supply the materials people use; some are
+  // renewable and some are not.
+  {
+    title: 'Earth’s Natural Resources',
+    level: 4,
+    text: `Nadia learns that everything people use comes from materials the Earth provides, called natural resources. Some resources are renewable because nature replaces them within a short time. Sunlight and moving water are renewable, and they keep arriving day after day. Trees are renewable too, since new trees can be planted where old ones grew. Other resources are nonrenewable. Coal, oil, and natural gas formed very slowly from the remains of ancient plants and animals over millions of years. Once people use them up, those fuels are gone for good. Saving energy and choosing renewable resources when possible help these gifts of the Earth last longer.`,
+    questions: [
+      {
+        question: 'In this passage, “renewable” means:',
+        answer: 'nature replaces it within a short time',
+        options: [
+          'it is something people must buy from stores',
+          'nature replaces it within a short time',
+          'it can only be found deep underground',
+          'it was invented not long ago',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'Which resources are renewable, according to the passage?',
+        answer: 'sunlight and moving water',
+        options: [
+          'coal, oil, and other fuels from long ago',
+          'sunlight and moving water',
+          'rocks people dig up',
+          'metals and shiny gems',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'What is this passage mostly about?',
+        answer: 'the difference between renewable and nonrenewable resources',
+        options: [
+          'why saving energy at home is a good habit',
+          'the difference between renewable and nonrenewable resources',
+          'how ancient animals became fossils',
+          'where people look for new supplies of oil',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
+  // Grade 4 Earth science (supports 4-ESS2-2): instruments measure temperature,
+  // wind speed and direction, and rainfall.
+  {
+    title: 'Tools That Measure the Weather',
+    level: 4,
+    text: `Priya’s family keeps a small weather station in their backyard. Different tools measure different parts of the weather. A thermometer tells the temperature, how warm or cool the air is, and is read in degrees. An anemometer has little cups that spin in the wind; the faster the cups spin, the faster the wind is blowing. A wind vane swings around to point the direction the wind is coming from. A rain gauge collects rain so the family can measure how much fell. Together, these tools turn a patch of backyard into a serious science corner.`,
+    questions: [
+      {
+        question: 'What does an anemometer measure?',
+        answer: 'how fast the wind is blowing',
+        options: [
+          'how fast the wind is blowing',
+          'how much rain fell during a storm',
+          'which direction the wind comes from',
+          'how warm or cool the air is',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, a “weather station” is:',
+        answer: 'a small set of tools that watches the weather',
+        options: [
+          'a shop that sells warm coats',
+          'a place where weather forecasts are filmed on TV',
+          'a small set of tools that watches the weather',
+          'a big storm heading toward a town',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'What is this passage mostly about?',
+        answer: 'weather tools that measure different parts of the weather',
+        options: [
+          'everything a family needs to know before a big storm arrives',
+          'weather tools that measure different parts of the weather',
+          'why thunderstorms happen near the ocean',
+          'how to read a thermometer at home',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
+  // Grade 4 energy: electricity flows through a complete, closed circuit; a switch
+  // opens or closes the path.
+  {
+    title: 'Inside a Flashlight',
+    level: 4,
+    text: `Omar takes apart an old flashlight to see how it works. Inside, he finds a battery, a tiny light bulb, and a slide switch. Electricity flows through a complete circle of wire called a circuit. When Omar slides the switch on, the circuit is closed, and electricity runs from the battery to the bulb, making it glow. When he slides it off, the circuit opens, the flow stops, and the light goes dark. A fuse can open a circuit on purpose to cut off the flow of electricity and keep homes safe.`,
+    questions: [
+      {
+        question: 'What makes the flashlight’s bulb glow?',
+        answer: 'electricity reaches the bulb',
+        options: [
+          'the battery grows warmer and heavier',
+          'electricity reaches the bulb',
+          'the bulb is bigger than the switch',
+          'the switch is painted shiny silver',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, a “circuit” is:',
+        answer: 'a complete circle that electricity flows through',
+        options: [
+          'a tool that measures how strong the wind is',
+          'a complete circle that electricity flows through',
+          'a kind of lamp found in old houses',
+          'a circle of roads that cars follow around a town',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'Why does the light go dark when Omar slides the switch off?',
+        answer: 'The circuit opens and the electricity stops.',
+        options: [
+          'The battery runs out of power at that exact moment.',
+          'The circuit opens and the electricity stops.',
+          'The bulb slowly cools down after glowing for hours.',
+          'The glass covering over the bulb gets dusty.',
+        ],
+        type: 'inference',
+      },
+    ],
+  },
 ]
 
 export function makeScienceProvider(cfg: Config): ProblemProvider {
