@@ -539,5 +539,19 @@ export function Glow({ t, at, x, y, r = 80, color = M.gold, out, breathe = true 
   if (out !== undefined) k *= 1 - progress(t, out, 0.4)
   if (k <= 0.001) return null
   const b = breathe ? 1 + 0.05 * Math.sin((t - at) * 2.4) : 1
-  return <circle cx={x} cy={y} r={r * k * b} fill={color} opacity={0.35 * k} filter="url(#sq-glow)" />
+  // A soft-edged gradient disc, not a blur filter: a blur on something that breathes is
+  // re-blurred every frame, the costliest thing on a tablet's lesson stage.
+  const id = `sq-glow-${color.replace(/[^a-z0-9]/gi, '')}`
+  return (
+    <>
+      <defs>
+        <radialGradient id={id}>
+          <stop offset="0.7" stopColor={color} />
+          <stop offset="1" stopColor={color} stopOpacity="0" />
+        </radialGradient>
+      </defs>
+      {/* (+8: the old blur's soft edge reached about this far past the disc) */}
+      <circle cx={x} cy={y} r={r * k * b + 8} fill={`url(#${id})`} opacity={0.35 * k} />
+    </>
+  )
 }
