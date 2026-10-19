@@ -120,6 +120,10 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Write a sentence explaining why keeping a promise matters to a friendship.',
       'If you could borrow one superhero power for an ordinary Tuesday, which would help the most? Write a sentence with your choice and a reason.',
       'Write a sentence comparing your mornings to your evenings and telling how they differ.',
+      'If your favorite animal could have any job in the world, what would it be? Write a sentence with your idea and a reason.',
+      'Write a sentence persuading your family to plan a game night this week. Give one excellent reason.',
+      'What is one important thing every kid should know how to do before turning ten? Write a sentence with your idea and a reason.',
+      'Write a sentence describing your favorite place to think or dream, with one detail that makes it feel real.',
     ],
     // W.3.2 — inform or explain: develop a topic with facts, steps, or details.
     paragraph: [
@@ -141,6 +145,9 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Write a paragraph comparing two books or movies that you love. Tell how they are alike and how they are different.',
       'Write a paragraph explaining how a letter you mail travels all the way to a friend who lives far away. Use first, next, then, and finally.',
       'Write a paragraph about a safe place where animals rest and raise their young. Describe the place and name two animals that might live there.',
+      'Should students be allowed to pick their own seats in class? Write a paragraph with your opinion and two strong reasons.',
+      'Write a paragraph explaining the journey of a raindrop from a cloud down to a river and out to the sea. Use the words first, next, and finally.',
+      'Write a paragraph about the trickiest rule you ever followed. Explain what the rule was and why following it turned out to be the right choice.',
     ],
     // W.3.3 — narrate real or imagined experiences with details and dialogue.
     story: [
@@ -162,6 +169,9 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Write a story about a field trip bus that takes a wrong turn and arrives somewhere wonderful instead of the museum. How do the driver and the class make the best of it?',
       'Write a story about a snail who challenges a bicyclist to a race across the park, where the rules surprise everyone. Who wins, and why?',
       'Write a story about a lonely lighthouse keeper who befriends a seal that visits each evening to hear a story. What happens on the night the seal does not show up?',
+      'Write a story about the morning your classroom beanstalk stretches so tall it touches the ceiling overnight. What do you and your classmates do before the teacher arrives?',
+      'Write a story about a pair of magic mittens that leave animal paw prints in the snow wherever the wearer walks. What adventure do the prints lead to?',
+      'In the future, a cheerful robot delivers the mail but is still learning to wave hello like a neighbor. Write a story about the silly mistake it makes and how the town helps.',
     ],
   },
   // 2nd grade (handoff A2). Standards: CCSS W.2.1–W.2.3 — short opinion,
