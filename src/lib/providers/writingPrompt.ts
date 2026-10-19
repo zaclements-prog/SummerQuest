@@ -106,6 +106,16 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Write a sentence about your favorite book. Tell why you like it so much.',
       'If your class could take a field trip anywhere, where would you want to go? Write a sentence about it.',
       'You have a whole sidewalk and a box of bright chalk. Write a sentence about the picture you would draw.',
+      'What is the best thing about a sunny morning? Write a sentence about it.',
+      'Write a sentence about your favorite animal at the zoo. Tell one thing it does that makes you smile.',
+      'Write a sentence about the coziest spot in your home. Why do you like to sit there?',
+      'If you could grow any vegetable in a garden, which would you plant? Write one sentence about it.',
+      'Write a sentence about a song that makes you want to dance. When do you like to listen to it?',
+      'What would you do outside if it snowed after school? Write a sentence about it.',
+      'Write a sentence about a story you would share with a friend. Tell why it is good.',
+      'If you could build anything out of cardboard boxes, what would you make? Write one sentence about it.',
+      'Write a sentence about a grown-up who helps you every day. What do you like about them?',
+      'What smells wonderful to you, like fresh cookies or rain on warm pavement? Write a sentence about your favorite smell.',
     ],
     // W.2.2 — short informative paragraphs naming who, what, and where.
     paragraph: [
