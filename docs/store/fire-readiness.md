@@ -219,7 +219,7 @@ To measure again, connect the tablet over USB, then run `npm run android:apk`, i
   - grade-2 mixed measurement includes perimeter, elapsed time and change from $10;
   - grade-3 equivalent fractions include fifths and tenths;
   - grade-4 "enrichment" includes averages and angle sums.
-- **Privacy policy:** a contact email, an effective date, and a public URL to host it at (Amazon's listing asks for it).
+- ~~**Privacy policy**~~: done. Contact zaclements@gmail.com, effective October 18, 2026, live at https://zaclements-prog.github.io/summerquest-site/privacy/
 - **Name:** check that "SummerQuest" is clear to use as an app title in your market.
 
 ## Before you submit

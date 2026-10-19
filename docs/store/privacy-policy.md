@@ -1,11 +1,9 @@
 # SummerQuest privacy policy
 
-**Effective date:** TODO(owner): the date this policy goes live (for example, the day the app is published).
+**Effective date:** October 18, 2026
 
-**Who we are:** SummerQuest is made by TODO(owner): your name or company name. You can reach us
-at TODO(owner): a contact email you check, and by post at TODO(owner): a mailing address. (US
-children's privacy law, COPPA, asks apps for children to list a name, an address and a way to
-get in touch.)
+**Who we are:** SummerQuest is made by an independent developer. You can reach us by email at
+zaclements@gmail.com.
 
 ## The short version
 
@@ -99,4 +97,4 @@ effective date at the top. An app update will never quietly start collecting dat
 
 ## Questions
 
-Email TODO(owner): contact email. We're happy to explain anything in this policy.
+Email zaclements@gmail.com. We're happy to explain anything in this policy.

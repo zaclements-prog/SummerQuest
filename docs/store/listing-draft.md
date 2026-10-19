@@ -16,7 +16,7 @@ The copy below follows them.
 
 ## App title
 
-Pick one. TODO(owner): choose, and check the name isn't already taken or trademarked.
+**Chosen (2026-10-18): SummerQuest – Summer Learning Island for Kids.** TODO(owner): a quick trademark/Appstore search on "SummerQuest" before submitting.
 
 1. **SummerQuest: Math & Reading Adventure**
 2. **SummerQuest – Summer Learning Island for Kids**
@@ -114,13 +114,13 @@ parents actually use.
 - **Target age:** 7–9 (designed for kids finishing 2nd–4th grade). The app is directed at
   children under 13, so Amazon's Child-Directed App Policy applies (see `content-rating.md`).
 - **Content rating answers:** `content-rating.md`.
-- **Privacy labels:** `amazon-privacy-labels.md`. **Privacy policy URL:** TODO(owner): host
-  `privacy-policy.md` and paste its URL.
+- **Privacy labels:** `amazon-privacy-labels.md`. **Privacy policy URL:** https://zaclements-prog.github.io/summerquest-site/privacy/
 - **Price:** TODO(owner): free or paid upfront. There are no in-app purchases either way.
-- **Devices:** Fire tablets. TODO(owner): set the minimum Fire OS version for the wrapper.
-  The web build targets Amazon WebView based on Chromium 120 or newer; check which Fire OS
-  versions ship that.
-- **Developer contact shown on the listing:** TODO(owner): email (and website, if any).
+- **Devices:** Fire tablets. The APK's minSdk is 24 (Android 7, Fire OS 6 and later). Tested on
+  Fire OS 8.3 (Fire HD 10 2023, Fire HD 8 2022, Amazon WebView 148). TODO(owner): in device
+  targeting, prefer Fire OS 7 and 8 tablets; older Fire OS 6 devices may ship WebViews too old
+  for the 3D scenes.
+- **Developer contact shown on the listing:** zaclements@gmail.com; website https://zaclements-prog.github.io/summerquest-site/
 
 ## Images and media
 
