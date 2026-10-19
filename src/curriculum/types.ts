@@ -12,6 +12,8 @@ export type GameId =
   | 'fractionForge'
   | 'cloudKeeper'
   | 'timesGrove'
+  /** K–1 voice-first picture quiz (src/games/listenPlay). */
+  | 'listenPlay'
 
 export interface Stage {
   id: string

@@ -11,7 +11,9 @@ import SpeedRun from '../games/SpeedRun'
 import BossBattle from '../games/BossBattle'
 import TowerDefense from '../games/tower-defense/TowerDefense'
 import WritingPad from '../games/WritingPad'
-import { CloudKeeper, DivisionArena, FractionForge, TimesGrove } from '../games/lazyGames'
+import { CloudKeeper, DivisionArena, FractionForge, ListenPlay, TimesGrove } from '../games/lazyGames'
+import { ListenResultCard } from '../games/listenPlay/ListenResultCard'
+import { isListenMode } from '../lib/gradeBand'
 import { sfx } from '../lib/sound'
 import {
   Card,
@@ -59,6 +61,9 @@ export default function GameRunner() {
   const addCoins = useProgress((s) => s.addCoins)
   const recordSession = useProgress((s) => s.recordSession)
   const zoneProgress = useProgress((s) => s.zones[zoneId])
+  // K–1 (or a Listen & Play stage): results and chrome without reading.
+  const grade = useProgress((s) => s.player?.grade)
+  const listen = stage?.gameId === 'listenPlay' || (grade !== undefined && isListenMode(grade))
   // Launched from the 3D World? Then leaving the game goes back there.
   const fromWorld = useWorldUi((s) => s.enteredFromWorld)
   const exitPath = fromWorld ? '/world' : `/zone/${zoneId}`
@@ -132,6 +137,20 @@ export default function GameRunner() {
   // ── Result screen ───────────────────────────────────────────────────────────
   if (result) {
     const coinReward = result.correct * 2 + result.stars * 5
+    if (listen) {
+      return (
+        <ListenResultCard
+          stars={result.stars}
+          coins={coinReward}
+          onNext={() => navigate(exitPath)}
+          onReplay={() => {
+            processedResultRef.current = null
+            setConfirmQuit(false)
+            setResult(null)
+          }}
+        />
+      )
+    }
     return (
       <ResultScreen
         result={result}
@@ -168,6 +187,8 @@ export default function GameRunner() {
         return TimesGrove
       case 'writingPad':
         return WritingPad
+      case 'listenPlay':
+        return ListenPlay
       default:
         return null
     }
@@ -194,7 +215,7 @@ export default function GameRunner() {
   return (
     <div className={`flex-1 flex flex-col ${arena3d ? 'bg-[#d9effa]' : ''}`}>
       {/* ── Host top bar ──────────────────────────────────────────────────── */}
-      <TopBar back={{ label: 'Quit', onClick: () => setConfirmQuit(true) }} icon={zone.emoji} title={stage.title} />
+      <TopBar back={{ label: 'Quit', onClick: () => setConfirmQuit(true) }} icon={zone.emoji} title={listen ? '' : stage.title} />
 
       <Game
         provider={provider}
