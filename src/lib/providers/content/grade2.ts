@@ -374,9 +374,9 @@ export const G2_SCIENCE: ReadingItem[] = [
   {
     title: 'The Sunshine Test',
     level: 2,
-    text: `Two friends grow bean seeds in two cups. Both cups get the same soil and the same water. But one cup sits on a sunny windowsill, and the other lives in a dark closet. After a week, the windowsill bean has a green sprout. The closet bean is pale and floppy. The test shows that plants need sunlight to grow strong and green.`,
+    text: `Two friends grow bean plants in two pots. Both pots get the same soil and the same water. But one pot sits on a sunny windowsill, and the other lives in a dark closet. After a week, the windowsill bean has a green sprout. The closet bean is pale and floppy. The test shows that plants need sunlight to grow strong and green.`,
     questions: [
-      { question: 'What was the ONE difference between the two cups?', answer: 'sunlight', options: ['the kind of soil in each cup', 'sunlight', 'the amount of water'], type: 'detail' },
+      { question: 'What was the ONE difference between the two pots?', answer: 'sunlight', options: ['the kind of soil in each pot', 'sunlight', 'the amount of water'], type: 'detail' },
       { question: 'How did the closet bean look?', answer: 'pale and floppy', options: ['tall, thick, and green', 'pale and floppy', 'curly and purple'], type: 'detail' },
       { question: 'This test shows plants need…', answer: 'sunlight to grow strong and green', options: ['sunlight to grow strong and green', 'music and loud dancing every morning', 'sandy soil only'], type: 'main-idea' },
     ],
@@ -384,10 +384,10 @@ export const G2_SCIENCE: ReadingItem[] = [
   {
     title: 'The Seed Taxi',
     level: 2,
-    text: `An acorn cannot walk anywhere, but it travels far anyway. A squirrel finds the acorn and buries it in the ground for winter. Sometimes the squirrel forgets exactly where! That forgotten acorn gets sunlight, rain, and safe soil — and it grows into an oak tree. Animals like squirrels and birds are seed taxis. They carry seeds to new places and plant gardens without trying.`,
+    text: `An acorn cannot walk anywhere, but it travels far anyway. A squirrel finds the acorn and buries it in the ground for winter. Sometimes the squirrel forgets exactly where! That forgotten acorn sits in the sun, safe under soft soil — and it grows into an oak tree. Animals like squirrels and birds are seed taxis. They carry seeds to new places and grow whole new trees without trying.`,
     questions: [
       { question: 'Who buries the acorn?', answer: 'a squirrel', options: ['a squirrel', 'a honeybee', 'a child'], type: 'detail' },
-      { question: 'Why do forgotten acorns often grow?', answer: 'they land in good soil with sun and rain', options: ['they land in good soil with sun and rain', 'the squirrel comes back every week to water them', 'they grow in bare rock'], type: 'inference' },
+      { question: 'Why do forgotten acorns often grow?', answer: 'it rests in soft soil with sunshine', options: ['it rests in soft soil with sunshine', 'the squirrel comes back every week to water it', 'it grows on a bare rock'], type: 'inference' },
       { question: 'Animals are called "seed taxis" because they…', answer: 'carry seeds away to brand-new places', options: ['carry seeds away to brand-new places', 'eat every single seed they can ever find', 'sing to the seeds'], type: 'detail' },
     ],
   },
@@ -429,6 +429,83 @@ export const G2_SCIENCE: ReadingItem[] = [
       { question: 'What problem did the park have?', answer: 'its sandy beach kept washing away', options: ['its sandy beach kept washing away', 'there were far too many turtles visiting', 'the fence was too tall'], type: 'detail' },
       { question: 'How does the beach grass help?', answer: 'its deep roots grab the sand', options: ['its deep roots grab the sand', 'it scares the wild waves far away', 'it blows new sand up'], type: 'detail' },
       { question: 'What should a scientist do before picking a fix?', answer: 'test each option and measure the results', options: ['test each option and measure the results', 'pick the shiniest one very fast', 'guess with your eyes closed'], type: 'main-idea' },
+    ],
+  },
+  // NGSS 2-PS1.1: some materials dissolve in water, others do not (observable).
+  {
+    title: 'Stir and See',
+    level: 2,
+    text: `Can a material hide inside water? Maya fills three jars with clean water. She stirs sugar into the first jar, and the sugar disappears! It dissolves in the water. She stirs salt into the second jar, and that disappears too. Sand goes into the third jar, but it just sinks to the bottom and stays there. The sugar and the salt are still inside their jars. You can taste them, and you can dry the water off to find them again. Some materials dissolve in water, and some do not.`,
+    questions: [
+      { question: 'What happens to the sugar in the water?', answer: 'it dissolves and disappears', options: ['it sinks straight to the bottom', 'it dissolves and disappears', 'the water turns it into sand'], type: 'detail' },
+      { question: 'What stays at the bottom of its jar?', answer: 'the sand', options: ['the sugar', 'the salt', 'the sand'], type: 'detail' },
+      { question: 'This test shows that…', answer: 'water can hide some materials, but not all', options: ['only sugar can hide inside a glass of water', 'water can hide some materials, but not all', 'every material in the world dissolves in water'], type: 'main-idea' },
+    ],
+  },
+  // NGSS 2-LS2.1: plants need water to grow (fair test: water is the one difference).
+  {
+    title: 'The Watering Can Test',
+    level: 2,
+    text: `Diego plants a marigold seed in each of two identical cups. Both cups sit in the warm sunshine, and both are filled with the same dark dirt. Diego waters one cup a little every day. He gives the other cup no water at all. In a week, the watered cup pushes up green sprouts. The dry cup stays empty, with not a single leaf. Diego writes down what he saw beside each cup. His test shows that a seed needs water to sprout and grow strong.`,
+    questions: [
+      { question: 'What was the ONE difference between the two cups?', answer: 'the daily watering', options: ['the kind of dirt in each cup', 'the daily watering', 'where the cups sat in the sun'], type: 'detail' },
+      { question: 'How did the dry cup look after a week?', answer: 'empty, with not a single leaf', options: ['empty, with not a single leaf', 'tall, green, and bushy', 'full of blooming marigolds'], type: 'detail' },
+      { question: 'Diego’s test shows that a seed needs…', answer: 'water to sprout and grow', options: ['bright lights shining all through the night', 'water to sprout and grow', 'soft music played every morning'], type: 'main-idea' },
+    ],
+  },
+  // NGSS 2-LS2.2: animals carry seeds to new places (burdock hooks on fur).
+  {
+    title: 'Sticky Seeds',
+    level: 2,
+    text: `Burdock plants make seeds with tiny hooks on them. When a dog trots through the meadow, the hooks grab onto its fur and ride along for miles. Far from home, the seeds shake loose and fall to the ground. New burdock plants grow up in that spot, just like their parents. Without legs or wings, they still travel a long way. Hitching a ride on an animal’s fur is one clever way seeds go exploring.`,
+    questions: [
+      { question: 'What helps burdock seeds grab onto fur?', answer: 'tiny hooks', options: ['tiny hooks', 'long roots', 'bright petals'], type: 'detail' },
+      { question: 'Why do new burdock plants grow far from the old ones?', answer: 'animals carry the seeds there', options: ['the old plants throw their seeds far away', 'animals carry the seeds there', 'the seeds grow legs and walk off'], type: 'inference' },
+      { question: 'This story is mostly about…', answer: 'seeds that hitch rides on animal fur', options: ['a dog who loves to run through the meadow', 'how to plant flowers at home', 'seeds that hitch rides on animal fur'], type: 'main-idea' },
+    ],
+  },
+  // NGSS 2-LS4.1: many different living things can make their home in one habitat.
+  {
+    title: 'The Old Fallen Log',
+    level: 2,
+    text: `An old tree falls in the forest and slowly becomes part of the ground. But a fallen log is not dead — it is a whole neighborhood! Pill bugs roll up under its damp bark. Earthworms chew through the soft wood. Bright moss grows on top, and tiny mushrooms pop out after a shower. Beetles lay their eggs inside the log, and a hungry mouse visits to hunt for snacks. One old log gives a home to many different living things.`,
+    questions: [
+      { question: 'What grows on top of the fallen log?', answer: 'bright moss', options: ['tall pine trees', 'bright moss', 'yellow daisies'], type: 'detail' },
+      { question: 'Who chews through the soft wood?', answer: 'earthworms', options: ['earthworms', 'honeybees', 'bluebirds'], type: 'detail' },
+      { question: 'What is this passage mostly about?', answer: 'one fallen log that is home to many living things', options: ['a forest where only mushrooms can grow', 'one fallen log that is home to many living things', 'why tall trees grow faster than small ones'], type: 'main-idea' },
+    ],
+  },
+  // NGSS 2-ESS2.2: moving water shapes and changes land (rain cuts grooves in a field).
+  {
+    title: 'Rain Lines in the Field',
+    level: 2,
+    text: `After a heavy rain, Zoe walks out to the big dirt field behind her school. Tiny streams of water run down the slope, carving thin lines in the soft ground. Each line is a little valley being made. When the rain stops, the streams dry up, but the grooves stay. A little water moved a little dirt, and the shape of the field changed. Rain shapes the land the same way every time it pours on a hill.`,
+    questions: [
+      { question: 'What carved thin lines in the soft ground?', answer: 'tiny streams of rainwater', options: ['tiny streams of rainwater', 'the school buses driving past', 'kids digging with sticks'], type: 'detail' },
+      { question: 'The grooves that stay after the rain show that…', answer: 'water changed the shape of the ground', options: ['the field grew bigger overnight', 'water changed the shape of the ground', 'the dirt turned into new rocks'], type: 'inference' },
+      { question: 'This passage is mostly about how…', answer: 'rain shapes the land', options: ['rain helps flowers bloom in the spring', 'rain shapes new fields of tall green grass', 'rain shapes the land'], type: 'main-idea' },
+    ],
+  },
+  // NGSS 2-ESS2.3: solid water (ice) becomes liquid water when it warms.
+  {
+    title: 'The Icy Race',
+    level: 2,
+    text: `On a cold morning, two ice cubes sit side by side on the porch step. One cube waits in the bright sunshine. The other stays in the cool shadow of the wall. By lunchtime, the sunny cube has shrunk down to a small puddle of water. The shaded cube is still mostly ice! The warmth of the sun changed solid ice into liquid water. The shady spot stayed too cool for that change to happen fast.`,
+    questions: [
+      { question: 'Which ice cube melted first?', answer: 'the one in the sunshine', options: ['the one in the shade', 'the one in the sunshine', 'they both melted at the same time'], type: 'detail' },
+      { question: 'What did the sunny ice cube become?', answer: 'liquid water in a small puddle', options: ['liquid water in a small puddle', 'a pile of white salt', 'a block of hard snow'], type: 'detail' },
+      { question: 'What made the sunny ice melt faster?', answer: 'the warmth of the sun', options: ['the warmth of the sun', 'the cold wind from the north', 'the color of the porch step'], type: 'inference' },
+    ],
+  },
+  // NGSS 2-PS1.1: materials differ in observable properties; testing reveals which repels water.
+  {
+    title: 'Keeping It Dry',
+    level: 2,
+    text: `Kim wants paper that will keep a sandwich dry on a rainy picnic. She tests three kinds of paper with drops of water. A drop sinks right into thin tissue paper and makes a wet spot. A drop soaks into notebook paper after a few minutes. But a drop sits on top of wax paper like a shiny bead and never soaks in. Kim picks wax paper for her sandwich. Testing each kind side by side showed her which one really keeps water out.`,
+    questions: [
+      { question: 'Which paper soaks up water the fastest?', answer: 'the thin tissue paper', options: ['the wax paper', 'the notebook paper', 'the thin tissue paper'], type: 'detail' },
+      { question: 'How does water act on wax paper?', answer: 'it sits on top like a shiny bead', options: ['it sinks in right away', 'it sits on top like a shiny bead', 'it turns the paper bright red'], type: 'detail' },
+      { question: 'How did Kim find the best paper?', answer: 'by testing each kind side by side', options: ['by picking the prettiest sheet', 'by asking a friend to choose for her', 'by testing each kind side by side'], type: 'main-idea' },
     ],
   },
 ]
