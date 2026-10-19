@@ -1,0 +1,13 @@
+NOTICE
+SummerQuest
+
+Boson Higgs Audio 2 is licensed under the Boson Higgs Audio 2 Community
+License Agreement, Copyright Boson AI USA, Inc., All Rights Reserved.
+See docs/licensing/higgs-audio-v2-LICENSE.txt.
+
+Higgs Audio v2 is based on Meta Llama 3, licensed under the Meta Llama 3
+Community License, Copyright Meta Platforms, Inc., All Rights Reserved.
+
+Lesson narration audio assets in public/tts/ were synthesized offline with
+Higgs Audio v2 (MLX) cloning a synthetic voice designed with Qwen3-TTS
+(Apache-2.0). The models themselves are not distributed with this software.

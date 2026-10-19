@@ -177,6 +177,36 @@ Example with ffmpeg:
 
 ---
 
+## 4bis. Per-clip quality gates (the standard, enforced by `render_local.py`)
+
+Every take must pass all three checks before it is written; misses are re-rendered
+as fresh sampling draws (this MLX port has no seed control; bad draws are common and
+retry convergence is the fix). If a whole paragraph fails 3 gated attempts, the
+renderer falls back to **breath-group rendering**: sentences of ≥10 words or containing
+a colon-enum are split at comma/colon (short inputs almost never skip words), each
+group is gated, then stitched with 280 ms pauses and the whole clip re-verified.
+
+1. **Duration window** — raw mp3 length within `[words/5.0 s, words·(2.4/2.6)+2 s]`;
+   the cap catches v2's missing-stop-token runaways.
+2. **Content integrity** — independent Whisper transcription recovers ≥ 94% of the
+   script's words. Comparison is done in *canonical numeric form* (`scripts/tts/textnorm.py`):
+   scripts spell numbers out ("four plus three equals fourteen"), Whisper hears
+   digits/symbols ("4+3=14") — raw token diffs report fake truncations on math lines.
+   Scoring takes the better of token-level and character-level match, so Whisper's
+   boundary quirks ("short hand" → "shorthand") don't count as missing words.
+3. **Pace** — spoken words-per-minute from the word span (first word start → last
+   word end) ≤ 210 wpm, the pace of the owner-approved samples (~160–190 wpm).
+   Trailing padding can't hide a rushed read. Word-span timing is only trusted
+   for ≥3 s of speech; shorter clips/sentences are pace-exempt (timing noise).
+
+Audit any rendered set at any time with `npm run tts:audit` (re-transcribes every
+manifest clip and flags anything violating the standard). Stitched clips carry a
+0.90 whole-clip bar instead of 0.94: every unit already passed 0.94 individually,
+and re-transcribing the seams adds Whisper noise; 0.90 still catches any dropped
+unit at these clip sizes.
+
+---
+
 ## 5. Acceptance checklist
 
 - [ ] One voice id in `narrationVoice.json`, used for every clip.

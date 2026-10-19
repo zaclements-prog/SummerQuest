@@ -18,6 +18,7 @@
     "tts:prune": "node scripts/prune-tts.mjs",
     "tts:check": "node scripts/check-tts.mjs",
     "tts:local": "python3 scripts/tts/render_local.py",
+    "tts:audit": "python3 scripts/tts/recheck_all.py",
     "android:sync": "npm run build:store && cap sync android",
     "android:apk": "npm run android:sync && cd android && ./gradlew assembleDebug",
     "android:release": "npm run android:sync && cd android && ./gradlew bundleRelease assembleRelease"
