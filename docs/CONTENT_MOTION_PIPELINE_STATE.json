@@ -17,46 +17,212 @@
   ],
   "current_phase": "A",
   "steps": [
-    { "id": "A1", "title": "writingPrompt.ts: byGrade map + code change + tests (>=30 prompts/kind/grade gate)", "status": "done", "commit": "ded61cd", "evidence": "byGrade map + poolForKind + grade plumbing + writingPrompts.test.ts; 219 passed (vitest providers), 776 passed (npm test)" },
-    { "id": "A2", "title": "writing prompts G2: sentence+paragraph+story to 40+ each (reuse shared pool counts toward per-grade)", "status": "done", "commit": "24e86e2..2d3872a", "evidence": "G2 shelf: 28 sentence + 28 paragraph + 28 story authored; poolForKind = 47/40/40; grade gate armed and green; 219 passed (vitest providers), 776 passed (npm test)" },
-    { "id": "A3", "title": "writing prompts G3: sentence+paragraph+story to 40+ each", "status": "done", "commit": "457ffb1..a9198ed", "evidence": "G3 shelf: 29 sentence + 30 paragraph + 29 story authored (W.3.1-W.3.3); poolForKind = 40/40/40; 12 content commits; variety audit clean (scripts/audit-writing-variety.mjs); answerBias n/a for prompts (no options)" },
-    { "id": "A4", "title": "writing prompts G4: sentence+paragraph+story to 40+ each", "status": "pending" },
-    { "id": "A5", "title": "G2_READING passages +8 (8->16) content/grade2.ts", "status": "pending" },
-    { "id": "A6", "title": "G2_READING passages +9 (16->25)", "status": "pending" },
-    { "id": "A7", "title": "readingComprehension L3 +8 (9->17)", "status": "pending" },
-    { "id": "A8", "title": "readingComprehension L3 +8 (17->25)", "status": "pending" },
-    { "id": "A9", "title": "readingComprehension L4 +8 (9->17)", "status": "pending" },
-    { "id": "A10", "title": "reading L4 +8 (17->25) — l4Enrich or provider", "status": "pending" },
-    { "id": "A11", "title": "G2_SCIENCE +7 (7->14)", "status": "pending" },
-    { "id": "A12", "title": "G2_SCIENCE +6 (14->20)", "status": "pending" },
-    { "id": "A13", "title": "science.ts L3 +7 (9->16)", "status": "pending" },
-    { "id": "A14", "title": "science.ts L3 +4 (16->20)", "status": "pending" },
-    { "id": "A15", "title": "science.ts L4 +6 (9->15)", "status": "pending" },
-    { "id": "A16", "title": "science L4 +5 (15->20)", "status": "pending" },
-    { "id": "A17", "title": "dataGraph code: questions[] per chart (keep question working) + solver test update", "status": "pending" },
-    { "id": "A18", "title": "G2_CHARTS +10 (10->20)", "status": "pending" },
-    { "id": "A19", "title": "G2_CHARTS +10 (20->30)", "status": "pending" },
-    { "id": "A20", "title": "charts L3 +8 (14->22), L4 +7 (17->24) extra questions per existing charts", "status": "pending" },
-    { "id": "A21", "title": "charts L3 +8 (22->30), L4 +6 (24->30)", "status": "pending" },
-    { "id": "A22", "title": "CYCLE_SITUATIONS +11 (18->29)", "status": "pending" },
-    { "id": "A23", "title": "CYCLE_SITUATIONS +11 (29->40)", "status": "pending" },
-    { "id": "A24", "title": "geometry L2 +11 (18->29)", "status": "pending" },
-    { "id": "A25", "title": "geometry L2 +11 (29->40)", "status": "pending" },
-    { "id": "A26", "title": "geometry L3 +8 (25->33)", "status": "pending" },
-    { "id": "A27", "title": "geometry L3 +7 (33->40)", "status": "pending" },
-    { "id": "A28", "title": "geometry L4 +10 (30->40)", "status": "pending" },
-    { "id": "A29", "title": "fraction equivalence G2 generator widen within 2.G.A.3", "status": "pending" },
-    { "id": "A30", "title": "GROVE_ORDERS G2 15->30 (factors <=5)", "status": "pending" },
-    { "id": "A31", "title": "wordProblem skeletons double (add/sub 8->16 each)", "status": "pending" },
-    { "id": "A32", "title": "wordProblem skeletons double (mul/div 12->24 each)", "status": "pending" },
-    { "id": "B1", "title": "perf rework: wordProblem/plan scene under ~150 elements", "status": "pending" },
-    { "id": "B2", "title": "perf rework: wordProblem/read scene", "status": "pending" },
-    { "id": "B3", "title": "perf rework: science/states scene", "status": "pending" }
+    {
+      "id": "A1",
+      "title": "writingPrompt.ts: byGrade map + code change + tests (>=30 prompts/kind/grade gate)",
+      "status": "done",
+      "commit": "ded61cd",
+      "evidence": "byGrade map + poolForKind + grade plumbing + writingPrompts.test.ts; 219 passed (vitest providers), 776 passed (npm test)"
+    },
+    {
+      "id": "A2",
+      "title": "writing prompts G2: sentence+paragraph+story to 40+ each (reuse shared pool counts toward per-grade)",
+      "status": "done",
+      "commit": "24e86e2..2d3872a",
+      "evidence": "G2 shelf: 28 sentence + 28 paragraph + 28 story authored; poolForKind = 47/40/40; grade gate armed and green; 219 passed (vitest providers), 776 passed (npm test)"
+    },
+    {
+      "id": "A3",
+      "title": "writing prompts G3: sentence+paragraph+story to 40+ each",
+      "status": "done",
+      "commit": "457ffb1..a9198ed",
+      "evidence": "G3 shelf: 29 sentence + 30 paragraph + 29 story authored (W.3.1-W.3.3); poolForKind = 40/40/40; 12 content commits; variety audit clean (scripts/audit-writing-variety.mjs); answerBias n/a for prompts (no options)"
+    },
+    {
+      "id": "A4",
+      "title": "writing prompts G4: sentence+paragraph+story to 40+ each",
+      "status": "pending"
+    },
+    {
+      "id": "A5",
+      "title": "G2_READING passages +8 (8->16) content/grade2.ts",
+      "status": "pending"
+    },
+    {
+      "id": "A6",
+      "title": "G2_READING passages +9 (16->25)",
+      "status": "pending"
+    },
+    {
+      "id": "A7",
+      "title": "readingComprehension L3 +8 (9->17)",
+      "status": "pending"
+    },
+    {
+      "id": "A8",
+      "title": "readingComprehension L3 +8 (17->25)",
+      "status": "pending"
+    },
+    {
+      "id": "A9",
+      "title": "readingComprehension L4 +8 (9->17)",
+      "status": "pending"
+    },
+    {
+      "id": "A10",
+      "title": "reading L4 +8 (17->25) — l4Enrich or provider",
+      "status": "pending"
+    },
+    {
+      "id": "A11",
+      "title": "G2_SCIENCE +7 (7->14)",
+      "status": "pending"
+    },
+    {
+      "id": "A12",
+      "title": "G2_SCIENCE +6 (14->20)",
+      "status": "pending"
+    },
+    {
+      "id": "A13",
+      "title": "science.ts L3 +7 (9->16)",
+      "status": "pending"
+    },
+    {
+      "id": "A14",
+      "title": "science.ts L3 +4 (16->20)",
+      "status": "pending"
+    },
+    {
+      "id": "A15",
+      "title": "science.ts L4 +6 (9->15)",
+      "status": "pending"
+    },
+    {
+      "id": "A16",
+      "title": "science L4 +5 (15->20)",
+      "status": "pending"
+    },
+    {
+      "id": "A17",
+      "title": "dataGraph code: questions[] per chart (keep question working) + solver test update",
+      "status": "pending"
+    },
+    {
+      "id": "A18",
+      "title": "G2_CHARTS +10 (10->20)",
+      "status": "pending"
+    },
+    {
+      "id": "A19",
+      "title": "G2_CHARTS +10 (20->30)",
+      "status": "pending"
+    },
+    {
+      "id": "A20",
+      "title": "charts L3 +8 (14->22), L4 +7 (17->24) extra questions per existing charts",
+      "status": "pending"
+    },
+    {
+      "id": "A21",
+      "title": "charts L3 +8 (22->30), L4 +6 (24->30)",
+      "status": "pending"
+    },
+    {
+      "id": "A22",
+      "title": "CYCLE_SITUATIONS +11 (18->29)",
+      "status": "pending"
+    },
+    {
+      "id": "A23",
+      "title": "CYCLE_SITUATIONS +11 (29->40)",
+      "status": "pending"
+    },
+    {
+      "id": "A24",
+      "title": "geometry L2 +11 (18->29)",
+      "status": "pending"
+    },
+    {
+      "id": "A25",
+      "title": "geometry L2 +11 (29->40)",
+      "status": "pending"
+    },
+    {
+      "id": "A26",
+      "title": "geometry L3 +8 (25->33)",
+      "status": "pending"
+    },
+    {
+      "id": "A27",
+      "title": "geometry L3 +7 (33->40)",
+      "status": "pending"
+    },
+    {
+      "id": "A28",
+      "title": "geometry L4 +10 (30->40)",
+      "status": "pending"
+    },
+    {
+      "id": "A29",
+      "title": "fraction equivalence G2 generator widen within 2.G.A.3",
+      "status": "pending"
+    },
+    {
+      "id": "A30",
+      "title": "GROVE_ORDERS G2 15->30 (factors <=5)",
+      "status": "pending"
+    },
+    {
+      "id": "A31",
+      "title": "wordProblem skeletons double (add/sub 8->16 each)",
+      "status": "pending"
+    },
+    {
+      "id": "A32",
+      "title": "wordProblem skeletons double (mul/div 12->24 each)",
+      "status": "pending"
+    },
+    {
+      "id": "B1",
+      "title": "perf rework: wordProblem/plan scene under ~150 elements",
+      "status": "pending"
+    },
+    {
+      "id": "B2",
+      "title": "perf rework: wordProblem/read scene",
+      "status": "pending"
+    },
+    {
+      "id": "B3",
+      "title": "perf rework: science/states scene",
+      "status": "pending"
+    }
   ],
   "history": [
-    { "interval": 1, "step": "A1", "result": "done", "tests": "vitest providers 219 passed; npm test 776 passed; lint, tsc -b, build:store clean", "push": "push-skipped (one attempt; remote ref unchanged at 6f2bf5f — local commits are source of truth)" },
-    { "interval": 2, "step": "A2", "result": "done", "tests": "vitest providers 219 passed (9 commits re-ran the full providers suite each time); npm test 776 passed; lint, tsc -b, build:store clean on every commit", "commits": "10 content commits 24e86e2..2d3872a, +84 G2 prompts (28 sentence W.2.1, 28 paragraph W.2.2, 28 story W.2.3); pools 47/40/40; variety windows audited clean", "push": "push-skipped (one attempt; timed out at 120s — local commits are source of truth)" },
-    { "interval": 3, "step": "A3", "result": "done", "tests": "vitest providers 219 passed (full providers suite re-ran on each of the 13 commits); npm test 776 passed; lint, tsc -b, build:store clean on every commit", "commits": "13 commits 457ffb1..a9198ed: +92 G3 prompts (29 sentence W.3.1, 30 paragraph W.3.2, 29 story W.3.3); pools 40/40/40; variety pass corrected school/ocean/night/town clusters; added scripts/audit-writing-variety.mjs (window-of-10 audit, now committed; G2 re-audited clean)", "push": "push-skipped (one attempt; remote ref unchanged at 6f2bf5f — local commits are source of truth)" }
+    {
+      "interval": 1,
+      "step": "A1",
+      "result": "done",
+      "tests": "vitest providers 219 passed; npm test 776 passed; lint, tsc -b, build:store clean",
+      "push": "push-skipped (one attempt; remote ref unchanged at 6f2bf5f — local commits are source of truth)"
+    },
+    {
+      "interval": 2,
+      "step": "A2",
+      "result": "done",
+      "tests": "vitest providers 219 passed (9 commits re-ran the full providers suite each time); npm test 776 passed; lint, tsc -b, build:store clean on every commit",
+      "commits": "10 content commits 24e86e2..2d3872a, +84 G2 prompts (28 sentence W.2.1, 28 paragraph W.2.2, 28 story W.2.3); pools 47/40/40; variety windows audited clean",
+      "push": "push-skipped (one attempt; timed out at 120s — local commits are source of truth)"
+    },
+    {
+      "interval": 3,
+      "step": "A3",
+      "result": "done",
+      "tests": "vitest providers 219 passed (full providers suite re-ran on each of the 13 commits); npm test 776 passed; lint, tsc -b, build:store clean on every commit",
+      "commits": "13 commits 457ffb1..a9198ed: +92 G3 prompts (29 sentence W.3.1, 30 paragraph W.3.2, 29 story W.3.3); pools 40/40/40; variety pass corrected school/ocean/night/town clusters; added scripts/audit-writing-variety.mjs (window-of-10 audit, now committed; G2 re-audited clean)",
+      "push": "push-skipped (one attempt; remote ref unchanged at 6f2bf5f — local commits are source of truth)"
+    }
   ],
-  "notes": "Target counts from handoff A1 table. One step per interval. Fails verification twice across intervals -> status blocked with error, skip to next, surface in status. On all steps done/blocked: pause the cron job and write final summary in history."
+  "notes": "Target counts from handoff A1 table. One step per interval. Owner-approved 2026-10-18: fast gates policy — intermediate commits run vitest providers only; full battery (vitest+npm test+lint+tsc+build:store) runs on the final commit of each step and step is marked done only on full-battery pass. Fails verification twice -> blocked with error, skip to next. All done/blocked: pause cron + final summary in history."
 }
