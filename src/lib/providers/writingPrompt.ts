@@ -99,12 +99,22 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'What do you like to do at home on a rainy day? Write a sentence about it.',
       'Write a sentence about a sound you heard this morning. What do you think made that sound?',
       'If you could choose any animal as a pet, which would you pick? Write one sentence about why.',
+      'Write a sentence about the yummiest fruit you have ever eaten. What did it taste like?',
+      'What season do you like best? Write a sentence about why you like it.',
+      'Write a sentence about something kind a friend did for you. How did it make you feel?',
+      'What is the best game to play at a birthday party? Write a sentence about why it is fun.',
+      'Write a sentence about your favorite book. Tell why you like it so much.',
+      'If your class could take a field trip anywhere, where would you want to go? Write a sentence about it.',
+      'You have a whole sidewalk and a box of bright chalk. Write a sentence about the picture you would draw.',
     ],
     // W.2.2 — short informative paragraphs naming who, what, and where.
     paragraph: [
       'Write a paragraph about the best picnic you can imagine. Say who you bring, what you eat, and where you sit.',
       'Write a paragraph about a place where you love to read. What makes it cozy?',
       'Write a paragraph about a job you do to help at home. How does your help make things better for your family?',
+      'Imagine you build a treehouse. Write a paragraph about what is inside it and who you invite up the ladder.',
+      'Invent a brand-new flavor of ice cream. Write a paragraph about what is mixed into it and what you would name it.',
+      'Write a paragraph about your classroom. Tell what you see when you walk through the door in the morning.',
     ],
     // W.2.3 — brief narratives with a beginning, middle, and ending hint.
     story: [
