@@ -195,7 +195,9 @@
     {
       "id": "A26",
       "title": "geometry L3 +8 (25->33)",
-      "status": "pending"
+      "status": "done",
+      "commit": "c8adb82",
+      "evidence": "geometry L3 25->33 items (+8, CCSS 3.G.A.1: pentagon corners, rectangle parallel pairs, square-as-rectangle, sphere-no-flat-faces, cube-square-faces, nonagon sides, honeycomb hexagon, octagon corners); bias audit across all 33 L3 items: longest-answer 7 (21.2%, <=30%), shortest-answer 1 (3.0%, <=35%); variety windows clean (no watch-list word >2x in any window of 10; new scripts/audit-geometry-l3.mjs membership+bias+variety audit); vitest providers 220 passed, npm test 777 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
     },
     {
       "id": "A27",
@@ -461,6 +463,14 @@
       "commits": "bc8acce: +5 geometry L2 (notebook paper, tile corners, cornbread thirds, cube tower, corner compare); bc2291b: +6 geometry L2 (toast triangles, basketball sphere, tile rows, napkin folds, triangle sides, half-vs-fourth) — bank 29->40, the A1 target; audit-geometry-l2 clean: bias longest 15.0%/shortest 15.0%, variety windows (one 'box' x3 collision reworded to 'tile' pre-commit); audit watch-list widened with new setting words",
       "gates": "fast-intermediate/full-final",
       "push": "pushed eb88ea4..d1e1b4c to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 26,
+      "step": "A26",
+      "result": "done",
+      "tests": "final battery (single content commit for the step): vitest providers 220 passed, npm test 777 passed, lint clean, tsc -b clean, build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "c8adb82: +8 geometry L3 (25->33, CCSS 3.G.A.1 — pentagon corners, rectangle parallel pairs, square-as-rectangle, sphere no flat faces, cube square faces, nonagon, honeycomb hexagon, octagon corners); audit-geometry-l3 clean: bias longest 21.2%/shortest 3.0%, variety windows clean",
+      "gates": "full-final (single content commit for the step)"
     }
   ],
   "notes": "Target counts from handoff A1 table. One step per interval. Owner-approved 2026-10-18: fast gates policy — intermediate commits run vitest providers only; full battery (vitest+npm test+lint+tsc+build:store) runs on the final commit of each step and step is marked done only on full-battery pass. Fails verification twice -> blocked with error, skip to next. All done/blocked: pause cron + final summary in history."
