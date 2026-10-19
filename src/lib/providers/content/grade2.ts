@@ -49,6 +49,13 @@ export const G2_GEOMETRY: GeoItem[] = [
   { level: 2, question: 'You cut a circle into 4 equal pieces. What is one piece called?', answer: 'a fourth', options: ['a third', 'a half', 'a fourth'], hint: 'Four equal shares make fourths.' },
   { level: 2, question: 'What shape is each flat face of a cube?', answer: 'square', options: ['circle', 'square', 'triangle'], hint: 'Look at a die or a toy block: every face has 4 equal sides.' },
   { level: 2, question: 'A table shaped like a hexagon seats 1 kid on each side. How many kids can sit around it?', answer: '6', options: ['4', '6', '8'], hint: 'One seat per side, six sides.' },
+  // 2.G.A.1-3 — batch: real-world shapes, cube stacking, and equal shares.
+  { level: 2, question: 'How many corners does a hexagon have?', answer: '6', options: ['5', '6', '7'], hint: 'Count the points where two sides meet.' },
+  { level: 2, question: 'The cover of a storybook is most like which shape?', answer: 'rectangle', options: ['circle', 'rectangle', 'triangle'], hint: 'It has 4 sides and 4 square corners.' },
+  { level: 2, question: 'The face of a round wall clock is most like which shape?', answer: 'circle', options: ['square', 'circle', 'triangle'], hint: 'It is perfectly round, with no corners.' },
+  { level: 2, question: 'A watermelon slice cut from a round melon is most like which shape?', answer: 'triangle', options: ['triangle', 'circle', 'rectangle'], hint: 'It has 3 sides: one curved crust edge and two cut sides.' },
+  { level: 2, question: 'A box has 6 flat faces, and every face is a square. What shape is the box?', answer: 'cube', options: ['sphere', 'cube', 'cone'] },
+  { level: 2, question: 'Amir stacks cubes to cover the bottom of a box. The box is 2 cubes long and 2 cubes wide. How many cubes fit on the bottom?', answer: '4', options: ['2', '4', '8'], hint: 'Line them up: 2 cubes in one row, 2 cubes in the next.' },
 ]
 
 // ---- Data & graphs, level 2 (2.MD.D.10: single-unit scale, ≤4 categories) ------
