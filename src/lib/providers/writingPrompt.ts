@@ -192,6 +192,31 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Write a story about a friendly crow who collects shiny objects, returns them one by one to their owners around the yard, and earns a reputation as the backyard delivery bird.',
     ],
   },
+  // 4th grade (handoff A4). Standards: CCSS W.4.1–W.4.3 — opinion pieces with
+  // a clear position and organized reasons, informative/explanatory writing that
+  // develops a topic with facts, definitions, and details, and narratives with
+  // actions, thoughts, dialogue, and a reflection. More structure than G3:
+  // two or more reasons, defined terms, and closing reflections.
+  4: {
+    // W.4.1 — state a clear opinion or choice and support it with reasons.
+    sentence: [
+      'Which is better for a young reader, a funny book or an adventure book? State your choice and give two reasons in one organized sentence.',
+      'Should children help with family chores like cooking, folding laundry, or setting the table? Give your opinion and one strong reason in a single sentence.',
+      'If your class adopted one new kindness rule for a week, which rule would you invent? Write your opinion and your best reason in one clear sentence.',
+    ],
+    // W.4.2 — inform or explain: develop a topic with facts, definitions, and details.
+    paragraph: [
+      'Explain why the Moon seems to change shape during the month. Define the word phase in your own words and describe two facts about what you see in the night sky.',
+      'Write an explanatory paragraph about an animal that wakes up when the sun goes down, like an owl. Include what it eats, where it rests, and one special feature that helps it at night.',
+      'Write a paragraph that teaches a reader what a habitat is. Define the word clearly, name two habitats, and explain what every habitat must provide to the animals living there.',
+    ],
+    // W.4.3 — narrate real or imagined experiences with actions, thoughts, dialogue, and a reflection.
+    story: [
+      'Write a story about a child who loses a favorite hat on a windy day and searches for it. Include actions, thoughts, at least two lines of dialogue, and end with how the character felt afterward.',
+      'Write a story about two friends who disagree about which game to play and work it out. Show each friend’s feelings, include dialogue, and finish with a reflection on what they learned.',
+      'Write a story about a brave puppy who is afraid of the bathtub but must rescue a floating toy. Describe what the puppy thinks and feels, add one line of dialogue, and end with a reflection about courage.',
+    ],
+  },
   // 2nd grade (handoff A2). Standards: CCSS W.2.1–W.2.3 — short opinion,
   // informative, and narrative writing on familiar topics. Concrete tasks,
   // everyday words, one idea per sentence; these join the shared list for G2.
