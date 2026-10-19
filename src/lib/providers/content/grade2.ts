@@ -264,6 +264,98 @@ export const G2_READING: ReadingItem[] = [
       { question: 'In the story, a "press" is:', answer: 'a machine that squeezes', options: ['a machine that squeezes', 'a big tub of cold water', 'a basket for picked apples'], type: 'vocab' },
     ],
   },
+  // RL.2.1/2.2/2.4 — batch: broken crayon, paper boat, bean sprout, snail,
+  // sandcastle picnic, cloud shapes, field-day flags, first snowman, drum practice.
+  {
+    title: 'Diego’s Broken Crayon',
+    level: 2,
+    text: `Diego’s favorite crayon was red. One morning it fell on the floor and snapped in two. Diego’s lip began to tremble. Ms. Rosa knelt beside him. “Broken crayons still draw,” she said, and handed him the short stub. Diego drew a bright red apple with it. The apple looked perfect. That afternoon, Diego taped three stubs together and made a brand-new crayon of his own. It was his favorite color: orange.`,
+    questions: [
+      { question: 'Who told Diego that broken crayons still draw?', answer: 'Ms. Rosa', options: ['his mom', 'Ms. Rosa', 'the principal'], type: 'detail' },
+      { question: 'The story shows that Diego…', answer: 'found a way to fix his problem', options: ['found a way to fix his problem', 'lost interest in drawing pictures', 'forgot all about his red crayon'], type: 'inference' },
+      { question: 'In the story, “snapped” means:', answer: 'broke suddenly', options: ['broke suddenly', 'rolled far away', 'melted in the sun'], type: 'vocab' },
+    ],
+  },
+  {
+    title: 'Kenji’s Paper Boat',
+    level: 2,
+    text: `Kenji folded a paper boat at the kitchen table. The boat had a pointy bow and a flat bottom. He carried it carefully to the bathtub and set it on the water. The boat bobbed up and down. Kenji blew on it softly, and it sailed across the tub like a tiny ship. A wet corner dipped, but the boat did not sink. When the water finally tipped it over, Kenji fished it out and hung it on a line to dry.`,
+    questions: [
+      { question: 'Where did Kenji set his boat?', answer: 'in the bathtub', options: ['on the kitchen table', 'in the bathtub', 'in the fish bowl'], type: 'detail' },
+      { question: 'What made the boat sail across the tub?', answer: 'Kenji blew on it softly', options: ['Kenji blew on it softly', 'the water moved by itself', 'his sister pushed the boat'], type: 'detail' },
+      { question: 'What is this story mostly about?', answer: 'a paper boat that floats in the tub', options: ['a paper boat that floats in the tub', 'Kenji learning to sail a real ship', 'a bathtub that leaks on the floor'], type: 'main-idea' },
+    ],
+  },
+  {
+    title: 'Aisha’s Seed Cup',
+    level: 2,
+    text: `Aisha planted a bean seed in a small cup of dirt. She set the cup on the sunny windowsill and gave it one spoon of water each day. For three days, nothing happened. Aisha was about to give up. On the fourth morning, a tiny green loop pushed up through the soil. By Friday, two little leaves had opened like hands. Aisha wrote her name on a stick and set it in the cup. This plant would be hers to watch all summer.`,
+    questions: [
+      { question: 'Where did Aisha keep her cup?', answer: 'on the windowsill', options: ['under her bed', 'on the windowsill', 'inside the fridge'], type: 'detail' },
+      { question: 'How much water did the seed get each day?', answer: 'one spoon of water', options: ['one spoon of water', 'two cups of water', 'a whole watering can'], type: 'detail' },
+      { question: 'In the story, to “give up” means:', answer: 'stop trying', options: ['stop trying', 'start again', 'ask for help'], type: 'vocab' },
+    ],
+  },
+  {
+    title: 'The Patient Snail',
+    level: 2,
+    text: `A snail crossed the patio wall one slow afternoon. Maya crouched down to watch it. The snail left a shiny silver trail behind its soft body. It stopped at a crumb of toast, tasted it, and moved on. Maya almost picked it up, but she remembered that snails like shade and quiet. Instead, she followed the snail to a cool patch of ferns, where it tucked itself under a leaf. Maya waved goodbye. The snail had somewhere to be, even if it was in no hurry.`,
+    questions: [
+      { question: 'What did the snail leave behind?', answer: 'a shiny silver trail', options: ['a shiny silver trail', 'a line of tiny eggs', 'a wet sand pile'], type: 'detail' },
+      { question: 'The story shows that Maya…', answer: 'treated the snail gently', options: ['treated the snail gently', 'knew snails could bite her', 'wanted to name the snail'], type: 'inference' },
+      { question: 'What is this story mostly about?', answer: 'a slow snail and a careful girl', options: ['a slow snail and a careful girl', 'how snails find their food at night', 'the best way to grow a fern garden'], type: 'main-idea' },
+    ],
+  },
+  {
+    title: 'The Sandcastle Picnic',
+    level: 2,
+    text: `Lily’s family spread a checkered blanket on the warm sand at the beach. First they built a sandcastle with four towers and a deep moat. Lily pressed shells into the walls and stuck a tiny flag on top. Then Mama unpacked sandwiches, cut fruit, and cold lemonade. The tide crept in and licked the moat, but the castle stood strong. After lunch, everyone dug for clams in the wet sand. By afternoon, Lily had a full bucket to carry home to Grandmother.`,
+    questions: [
+      { question: 'What did Lily put on top of the castle?', answer: 'a tiny flag', options: ['a tiny flag', 'a big red shell', 'her baby sister'], type: 'detail' },
+      { question: 'What did the tide do?', answer: 'reached the moat but not the castle', options: ['rained on the sandwiches', 'reached the moat but not the castle', 'washed the flag away'], type: 'detail' },
+      { question: 'What is this story mostly about?', answer: 'a beach day with a sandcastle and lunch', options: ['a beach day with a sandcastle and lunch', 'learning to swim in the cold ocean', 'how to catch fish on a boat'], type: 'main-idea' },
+    ],
+  },
+  {
+    title: 'Cloud Shapes on the Hill',
+    level: 2,
+    text: `On Sunday, Owen and his dad lay on the grassy hill behind Grandma’s house and watched the clouds. “That one looks like a rabbit,” said Owen. His dad shook his head. “To me, it is a whale with a tiny tail.” They watched the same cloud turn slowly into both animals. Later, a gray cloud shaped like a boat brought a soft rain, and they ran home laughing. On Monday, Owen drew the whale, the rabbit, and the rain boat for his class.`,
+    questions: [
+      { question: 'What animal did Owen see first?', answer: 'a rabbit', options: ['a rabbit', 'a whale', 'a big horse'], type: 'detail' },
+      { question: 'The story shows that Owen and his dad…', answer: 'enjoyed using their imaginations', options: ['enjoyed using their imaginations', 'thought the clouds were boring', 'had never visited the hill before'], type: 'inference' },
+      { question: 'What is this story mostly about?', answer: 'a game of cloud shapes', options: ['a game of cloud shapes', 'why clouds move so fast', 'a rainy drive home'], type: 'main-idea' },
+    ],
+  },
+  {
+    title: 'The Field-Day Flags',
+    level: 2,
+    text: `The school gym filled with color for Field Day. Every class carried a flag it had made itself. Sam’s class held a blue flag with one white star and a sailing ship. Nina’s class waved a striped flag of orange and gold. The flags marched in a big circle while the band played its loudest song. After the parade, Ms. Rosa hung every flag high on the gym wall. All week, the kids hunted for their own artwork and counted the stars.`,
+    questions: [
+      { question: 'Which class carried the orange-and-gold flag?', answer: 'Nina’s class', options: ['Sam’s class', 'Nina’s class', 'the school band'], type: 'detail' },
+      { question: 'Where were the flags hung after the parade?', answer: 'on the gym wall', options: ['on the gym wall', 'in the cafeteria', 'outside the front gate'], type: 'detail' },
+      { question: 'What is this story mostly about?', answer: 'the school’s flag parade on Field Day', options: ['the school’s flag parade on Field Day', 'the loudest band song of the year', 'how to hang art on a wall'], type: 'main-idea' },
+    ],
+  },
+  {
+    title: 'Maya’s First Snowman',
+    level: 2,
+    text: `The first snow of winter blanketed Maya’s yard. She pulled on her mittens, her scarf, and her tallest boots. Maya rolled a small snowball, then bigger, and bigger still. The two snowballs made a plump snowman with a carrot nose pointed right at the sky. Maya gave him a hat and two stick arms. When she went inside, the snowman stood guard over the bird feeder all night. By morning he had shrunk a little, but the birds left seeds on his hat.`,
+    questions: [
+      { question: 'What was the snowman’s nose?', answer: 'a carrot', options: ['a carrot', 'an apple', 'a round stone'], type: 'detail' },
+      { question: 'In the story, “guard” means:', answer: 'watch over', options: ['watch over', 'dance near', 'run from'], type: 'vocab' },
+      { question: 'What is this story mostly about?', answer: 'a snowman built after the first snow', options: ['a snowman built after the first snow', 'the birds that visit a feeder', 'the best boots for snowy days'], type: 'main-idea' },
+    ],
+  },
+  {
+    title: 'Leo Learns the Drum',
+    level: 2,
+    text: `Leo got a small drum for his birthday. He banged it loudly all afternoon, and the windows rattled. His dad sat down beside him. “Try a quiet beat,” he said, “then a loud one.” Leo played soft, soft, loud. His mom clapped along. Soon Leo could play three songs, from a slow march to a happy jig. On Saturday, he played the drums in the park for his friends. They sang along, and Leo kept every beat just right.`,
+    questions: [
+      { question: 'What did Dad tell Leo to try first?', answer: 'a quiet beat', options: ['a quiet beat', 'a faster song', 'a long drum roll'], type: 'detail' },
+      { question: 'When did Leo play for his friends?', answer: 'on Saturday', options: ['on Saturday', 'at bedtime', 'after lunch'], type: 'detail' },
+      { question: 'What is this story mostly about?', answer: 'practicing the drums at home', options: ['the loudest noise in the whole house', 'practicing the drums at home', 'a birthday gift for Leo'], type: 'main-idea' },
+    ],
+  },
 ]
 
 // ---- Science, level 2 (NGSS 2-PS1 / 2-LS2 / 2-LS4 / 2-ESS2) --------------------
