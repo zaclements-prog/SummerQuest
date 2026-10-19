@@ -154,10 +154,10 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Imagine your neighborhood had no cars for a whole day. Write a paragraph explaining how people would get around and what the quiet streets would feel like.',
       'Write a paragraph about a game you know how to play really well. Explain the rules clearly and tell why it is so much fun.',
       'Write a paragraph about something you built, like a fort, a model, or a tower. Describe how it came together and what you would do differently next time.',
-      'Write a paragraph explaining why scientists still have so much to discover about the ocean. Describe two things about the sea that remain a mystery.',
-      'Write a paragraph giving advice to a younger version of yourself about starting school. Explain two things you wish you had known on day one.',
+      'Write a paragraph explaining why scientists still have so much to discover about the ocean. Describe two ocean mysteries that stay unsolved.',
+      'Write a paragraph giving advice to a younger version of yourself about starting first grade. Explain two things you wish you had known on day one.',
       'Explain how rain that falls on the hills, fields, and streets of your area all ends up traveling toward a river or the ocean. Use first, next, and finally in your paragraph.',
-      'Write a paragraph about a fun club your school could start, like a nature-walkers club or a puzzle club. Explain what members would do together and why students would want to join.',
+      'Write a paragraph about a fun club your class could start, like a nature-walkers club or a puzzle club. Explain what members would do together and why students would want to join.',
     ],
     // W.3.3 — narrate real or imagined experiences with details and dialogue.
     story: [
@@ -175,7 +175,7 @@ export const WRITING_PROMPTS_BY_GRADE: Partial<Record<GradeLevel, Record<Writing
       'Your family is camping in the backyard when something gentle taps on the tent zipper. Write a story about who or what it is and what you and your family decide to do.',
       'Write a story about a snow fort with a secret door that only opens for someone who tells a funny joke. Who gets inside at recess, and what do they find?',
       'Every evening, one star in the sky twinkles in a pattern, like a coded message. Write a bedtime story about the afternoon you finally crack the code.',
-      'Write a story about a friendly dog who finds a walking stick and starts escorting neighbors around town. Describe two people who are grateful for the company.',
+      'Write a story about a friendly dog who finds a walking stick and starts escorting neighbors around the block. Describe two people who are grateful for the company.',
       'Write a story about a field trip bus that takes a wrong turn and arrives somewhere wonderful instead of the museum. How do the driver and the class make the best of it?',
       'Write a story about a snail who challenges a bicyclist to a race across the park, where the rules surprise everyone. Who wins, and why?',
       'Write a story about a lonely lighthouse keeper who befriends a seal that visits each evening to hear a story. What happens on the night the seal does not show up?',
