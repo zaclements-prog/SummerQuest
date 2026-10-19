@@ -25,19 +25,18 @@ The copy below follows them.
 ## Short description
 
 > SummerQuest keeps young minds sharp over the summer. Kids explore a bright cartoon island and
-> play short math, reading, writing and science games made for children finishing 2nd, 3rd or
-> 4th grade. Spoken lessons with moving pictures explain each new idea, then fun mini-games
+> play short math, reading, writing and science games for elementary-school kids, starting with
+> grades 2 to 4. Spoken lessons with moving pictures explain each new idea, then fun mini-games
 > practice it: build towers with multiplication, crack crystal golems with division, read
 > along at Reading Reef and write stories in the Writing Workshop. Kids earn coins to decorate
-> their own island home. No ads, no in-app purchases, no accounts, and no internet needed:
-> everything stays on the tablet.
+> their own island home. No accounts and no internet needed: everything stays on the tablet.
 
 (Fire devices show the first 200 characters most prominently. The opening sentence carries
 the main idea.)
 
 ## Long description
 
-> SummerQuest turns summer learning into an island adventure for kids aged 7 to 9.
+> SummerQuest turns summer learning into an island adventure for elementary-school kids.
 >
 > Your child creates an animal explorer and sets out across a cartoon island. Each part of the
 > island is a subject:
@@ -63,13 +62,13 @@ the main idea.)
 > multiplication questions.
 >
 > The right level for your child
-> Pick 2nd, 3rd or 4th grade when you start. Practice adapts as your child plays, coming back
+> Pick your child's grade when you start (2nd, 3rd and 4th grade today). Practice adapts as your child plays, coming back
 > to the facts they find tricky.
 >
-> Motivation that isn't for sale
+> Motivation from learning
 > Kids earn stars, badges, streaks and coins by learning. Coins buy hats and home decorations
 > for their island home, and every island has a pet egg that hatches and grows up as your
-> child learns there. Coins can never be bought with real money.
+> child learns there.
 >
 > Made for families
 > A daily learning goal of two 15-minute sessions keeps summer practice steady without
@@ -77,22 +76,22 @@ the main idea.)
 > accuracy and learning time, and lets you change the grade level or reset progress.
 >
 > Private by design
-> There are no ads, no in-app purchases, no accounts and no tracking. SummerQuest never
-> connects to the internet. Your child's name and progress are stored only on the tablet, and
-> nothing is ever sent to us or anyone else. It works fully offline, on a plane, in the car or
+> There are no accounts and no tracking, and SummerQuest doesn't connect to the internet. Your
+> child's name and progress are stored only on the tablet; nothing is sent to us or anyone
+> else. It works fully offline, on a plane, in the car or
 > at the cabin.
 
 ## Product feature bullets
 
-1. Math, reading, writing and science for kids finishing 2nd, 3rd or 4th grade (ages 7–9)
+1. Math, reading, writing and science for elementary-school kids, starting with grades 2–4
 2. Twelve island zones to explore, each ending in a big challenge round
 3. Narrated lessons with animated pictures explain each new idea before kids practice it
 4. Hands-on mini-games: times-table grove, fraction forge, division golems, tower defense
 5. Adaptive practice brings back the facts your child finds tricky
 6. Writing practice with instant, friendly feedback on sentences, paragraphs and stories
-7. Earn coins, stars and badges to decorate an island home, never with real money
+7. Earn coins, stars and badges by learning to decorate an island home
 8. Daily learning goal of two 15-minute sessions, plus a Parent area behind a grown-ups check
-9. No ads, no in-app purchases, no accounts, no tracking, and nothing leaves the tablet
+9. No accounts, no tracking, and nothing leaves the tablet
 10. Works completely offline
 
 ## Keywords
@@ -111,11 +110,13 @@ parents actually use.
 
 - **Category:** Education. TODO(owner): pick the closest subcategory offered (for example,
   Kids or Learning). Add a secondary Kids category if the console allows one.
-- **Target age:** 7–9 (designed for kids finishing 2nd–4th grade). The app is directed at
+- **Target age:** elementary school. Today's content covers grades 2–4 (about ages 7–9): pick the
+  console's age bands that match the content now, and widen them as grades are added. The app is directed at
   children under 13, so Amazon's Child-Directed App Policy applies (see `content-rating.md`).
 - **Content rating answers:** `content-rating.md`.
 - **Privacy labels:** `amazon-privacy-labels.md`. **Privacy policy URL:** https://zaclements-prog.github.io/summerquest-site/privacy/
-- **Price:** TODO(owner): free or paid upfront. There are no in-app purchases either way.
+- **Price:** TODO(owner): free or paid upfront. (The current version has no in-app purchases; if
+  some are added later, the listing, privacy policy and privacy labels must be updated with it.)
 - **Devices:** Fire tablets. The APK's minSdk is 24 (Android 7, Fire OS 6 and later). Tested on
   Fire OS 8.3 (Fire HD 10 2023, Fire HD 8 2022, Amazon WebView 148). TODO(owner): in device
   targeting, prefer Fire OS 7 and 8 tablets; older Fire OS 6 devices may ship WebViews too old

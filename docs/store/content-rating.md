@@ -13,8 +13,8 @@ deliberately honest about the game's mild cartoon conflict.
 
 ## About the app
 
-SummerQuest is a summer learning game for children aged **7–9** (kids finishing 2nd, 3rd or
-4th grade). Kids walk a cartoon island and play short math, reading, writing and science
+SummerQuest is a summer learning game for **elementary-school** children. Today's content
+covers grades 2–4 (about ages 7–9). Kids walk a cartoon island and play short math, reading, writing and science
 games. There are also narrated lessons with animated pictures. Everything is cartoon-styled,
 bright and friendly.
 
@@ -65,7 +65,7 @@ There is no blood, no realistic weapon, no death animation and no injury shown a
 
 | Question | Answer |
 |---|---|
-| Advertisements | **No.** No ads of any kind. |
+| Advertisements | **No** (current version). Update this answer if ads are ever added. |
 | In-app purchasing | **No.** Coins are earned by playing and spent in the game (hats, home decorations); pets hatch and grow from learning. They can't be bought with real money. |
 | Account creation / login | **No** |
 | User-generated content shared with others | **No.** Kids type a name and practice writing, but nothing is posted, shared or sent anywhere. |
@@ -78,9 +78,11 @@ There is no blood, no realistic weapon, no death animation and no injury shown a
 
 ## Audience
 
-- **Target age:** 7–9. TODO(owner): choose the matching age band(s) in the console.
+- **Target age:** elementary school; today's content is grades 2–4 (about 7–9). TODO(owner): choose
+  the console's age band(s) matching the current content, and widen them as grades are added.
 - **Directed at children under 13:** **Yes.** Amazon's Child-Directed App Policy applies:
-  - no ads and no behavioral advertising;
+  - no interest-based (behavioral) advertising; any ads added later must follow Amazon's
+    child-directed ad rules (none today);
   - only child-suitable SDKs (there are none at all);
   - COPPA compliance (nothing is collected);
   - a parental gate in front of grown-up areas.

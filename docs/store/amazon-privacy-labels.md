@@ -58,7 +58,7 @@ crash-reporting or social SDKs. Its only libraries are open-source code bundled 
   grown-up check), or by uninstalling the app or clearing its data.
 - **Data encrypted in transit:** not applicable, because no data is transmitted.
 - **Child-directed / COPPA (Target Your App → audience):** yes, this app is directed at
-  children under 13 (ages 7–9). See `content-rating.md`.
+  children under 13 (elementary school; today's content covers grades 2–4). See `content-rating.md`.
 
 ## Before you submit: keep these answers true
 
