@@ -167,7 +167,9 @@
     {
       "id": "A22",
       "title": "CYCLE_SITUATIONS +11 (18->29)",
-      "status": "pending"
+      "status": "done",
+      "commit": "20283b5..0b9af55",
+      "evidence": "CYCLE_SITUATIONS 18->29 situations (+11, water cycle; per-process 10/10/9 — balanced across evaporation/condensation/precipitation); answers are always the three existing process words so answerBias n/a (options identical every item); prompts leak-free (never contain their own answer word), every prompt ends in ? or ___, captions 6-28 chars leak-free; variety windows clean (new scripts/audit-cycle-situations.mjs: names+settings watch-list, none >2x in any window of 10); fresh settings: beach sand, sidewalk, laundry line, pool, bathroom mirror, chilly breath, soup pot lid, foggy meadow, camping tent, snowy yard; vitest providers 220 passed, npm test 777 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
     },
     {
       "id": "A23",
@@ -417,6 +419,14 @@
       "commits": "c9ef0d9: +8 data graphs L3 (22->30, 3.MD.D.3, 8 new q-items via extra questions[]); bb4d3e9: +6 data graphs L4 (24->30, 4.MD.B, 12 new q-items incl. two whole-number averages); audit-charts-l34 clean: L3 bias longest 6.5%/shortest 2.2%, L4 longest 0%/shortest 1.8%; variety clean both levels; two self-review fixes pre-commit (unsolvable 'three groups TOGETHER' question reworded to name two bars; Compost renumbered off Trail's identical 54-total)",
       "gates": "fast-intermediate/full-final",
       "push": "pushed 4071af0..3636074 to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 22,
+      "step": "A22",
+      "result": "done",
+      "tests": "vitest providers 220 passed (fast gate on the intermediate commit); final battery: vitest providers 220 passed, npm test 777 passed, lint clean, tsc -b clean, build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "20283b5: +5 CYCLE_SITUATIONS (evaporation x4, condensation x1); 0b9af55: +6 CYCLE_SITUATIONS (condensation x3, precipitation x3) — bank 18->29, per-process 10/10/9; audit clean: leak-free, captions leak-free, asks-something, variety windows (names/settings none >2x per window of 10); three caption/emoji dupes and one snow-word collision fixed pre-commit; added scripts/audit-cycle-situations.mjs (leak+balance+variety audit for the Cloud Keeper bank, reusable for A23)",
+      "gates": "fast-intermediate/full-final"
     }
   ],
   "notes": "Target counts from handoff A1 table. One step per interval. Owner-approved 2026-10-18: fast gates policy — intermediate commits run vitest providers only; full battery (vitest+npm test+lint+tsc+build:store) runs on the final commit of each step and step is marked done only on full-battery pass. Fails verification twice -> blocked with error, skip to next. All done/blocked: pause cron + final summary in history."
