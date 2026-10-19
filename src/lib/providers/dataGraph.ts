@@ -999,6 +999,175 @@ export const CHARTS: DataChart[] = [
       },
     ],
   },
+  // ---- Level 4, second added batch (CCSS 4.MD.B: multi-step reads from bar graphs; sums, differences, whole-number averages) ----
+  {
+    level: 4,
+    title: 'Trail Signs Found',
+    unit: 'signs',
+    bars: [
+      { label: 'Sat', value: 18, emoji: '🪧' },
+      { label: 'Sun', value: 24, emoji: '🪧' },
+      { label: 'Mon', value: 12, emoji: '🪧' },
+    ],
+    question: 'How many MORE signs were found on Sunday than on Monday?',
+    answer: '12',
+    options: ['12', '11', '36', '6'],
+    hint: 'Sunday (24) minus Monday (12).',
+    questions: [
+      {
+        question: 'How many signs were found on Saturday and Sunday TOGETHER?',
+        answer: '42',
+        options: ['42', '48', '36', '44'],
+        hint: 'Add Saturday (18) and Sunday (24).',
+      },
+      {
+        question: 'What is the average number of signs found each day?',
+        answer: '18',
+        options: ['18', '16', '20', '22'],
+        hint: 'Add all three bars (54), then divide by 3.',
+      },
+    ],
+  },
+  {
+    level: 4,
+    title: 'Knitted Scarves',
+    unit: 'scarves',
+    bars: [
+      { label: 'Ivy', value: 26, emoji: '🧣' },
+      { label: 'Nate', value: 19, emoji: '🧣' },
+      { label: 'Luca', value: 31, emoji: '🧣' },
+    ],
+    question: 'Who knitted the MOST scarves?',
+    answer: 'Luca',
+    options: ['Luca', 'Ivy', 'Nate'],
+    hint: 'Find the tallest bar.',
+    questions: [
+      {
+        question: 'How many MORE scarves did Luca knit than Nate?',
+        answer: '12',
+        options: ['12', '7', '50', '19'],
+        hint: 'Luca (31) minus Nate (19).',
+      },
+      {
+        question: 'How many scarves did Ivy and Nate knit TOGETHER?',
+        answer: '45',
+        options: ['45', '44', '55', '42'],
+        hint: 'Add Ivy (26) and Nate (19).',
+      },
+    ],
+  },
+  {
+    level: 4,
+    title: 'Compost Buckets',
+    unit: 'buckets',
+    bars: [
+      { label: 'Mon', value: 16, emoji: '🪣' },
+      { label: 'Tue', value: 24, emoji: '🪣' },
+      { label: 'Wed', value: 20, emoji: '🪣' },
+    ],
+    question: 'How many FEWER compost buckets were filled on Monday than on Tuesday?',
+    answer: '8',
+    options: ['8', '4', '40', '16'],
+    hint: 'Tuesday (24) minus Monday (16).',
+    questions: [
+      {
+        question: 'How many compost buckets were filled IN TOTAL?',
+        answer: '60',
+        options: ['60', '68', '52', '56'],
+        hint: 'Add all three bars: 16 + 24 + 20.',
+      },
+      {
+        question: 'What is the average number of buckets filled each day?',
+        answer: '20',
+        options: ['20', '22', '18', '24'],
+        hint: 'Add all three bars (60), then divide by 3.',
+      },
+    ],
+  },
+  {
+    level: 4,
+    title: 'Beehive Families',
+    unit: 'bees',
+    bars: [
+      { label: 'South Field', value: 240, emoji: '🐝' },
+      { label: 'North Field', value: 310, emoji: '🐝' },
+      { label: 'Creek Side', value: 270, emoji: '🐝' },
+    ],
+    question: 'Which hive had the MOST bees?',
+    answer: 'North Field',
+    options: ['North Field', 'Creek Side', 'South Field'],
+    hint: 'Look for the tallest bar.',
+    questions: [
+      {
+        question: 'How many MORE bees were in North Field than in South Field?',
+        answer: '70',
+        options: ['70', '80', '50', '60'],
+        hint: 'North Field (310) minus South Field (240).',
+      },
+      {
+        question: 'How many bees were counted across all THREE hives?',
+        answer: '820',
+        options: ['820', '810', '790', '830'],
+        hint: 'Add all three bars: 240 + 310 + 270.',
+      },
+    ],
+  },
+  {
+    level: 4,
+    title: 'Beach Towel Rentals',
+    unit: 'towels',
+    bars: [
+      { label: 'Sat', value: 27, emoji: '🏖️' },
+      { label: 'Sun', value: 35, emoji: '🏖️' },
+      { label: 'Mon', value: 18, emoji: '🏖️' },
+    ],
+    question: 'How many MORE towels were rented on Sunday than on Saturday?',
+    answer: '8',
+    options: ['8', '9', '17', '62'],
+    hint: 'Sunday (35) minus Saturday (27).',
+    questions: [
+      {
+        question: 'How many towels were rented IN TOTAL?',
+        answer: '80',
+        options: ['80', '85', '70', '90'],
+        hint: 'Add all three bars: 27 + 35 + 18.',
+      },
+      {
+        question: 'How many FEWER towels were rented on Monday than on Saturday?',
+        answer: '9',
+        options: ['9', '8', '10', '45'],
+        hint: 'Saturday (27) minus Monday (18).',
+      },
+    ],
+  },
+  {
+    level: 4,
+    title: 'Pottery Class Bowls',
+    unit: 'bowls',
+    bars: [
+      { label: 'Clay Club', value: 21, emoji: '🏺' },
+      { label: 'Glaze Group', value: 28, emoji: '🏺' },
+      { label: 'Kiln Crew', value: 35, emoji: '🏺' },
+    ],
+    question: 'Which group made the FEWEST bowls?',
+    answer: 'Clay Club',
+    options: ['Clay Club', 'Kiln Crew', 'Glaze Group'],
+    hint: 'Look for the shortest bar.',
+    questions: [
+      {
+        question: 'How many MORE bowls did Kiln Crew make than Clay Club?',
+        answer: '14',
+        options: ['14', '7', '56', '21'],
+        hint: 'Kiln Crew (35) minus Clay Club (21).',
+      },
+      {
+        question: 'How many bowls did the Clay Club and Glaze Group make TOGETHER?',
+        answer: '49',
+        options: ['49', '56', '42', '63'],
+        hint: 'Add Clay Club (21) and Glaze Group (28).',
+      },
+    ],
+  },
 ]
 
 /** Every question a chart carries: the inline primary plus extras, in order. Exported for tests. */
