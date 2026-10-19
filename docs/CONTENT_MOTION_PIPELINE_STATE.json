@@ -338,7 +338,8 @@
       "result": "done",
       "tests": "vitest providers 219 passed; npm test 776 passed; lint clean; tsc -b clean; build:store ✓ 83 files, all fetches same-origin/known loaders",
       "commits": "c369ff3: +4 science L3 passages (16->20, NGSS 3-LS2-1/LS1.D/ESS1.A/3-LS4-3); bias audit 60 q-items longest 18.3% / shortest 18.3%; variety windows clean after rewording 'home' collision; new passage word counts 87-90; 'Your Five Senses' 68-word flag is pre-existing (predates count rule)",
-      "gates": "full-final (single content commit for the step)"
+      "gates": "full-final (single content commit for the step)",
+      "push": "pushed 0951dfa..3325de8 to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
     }
   ],
   "notes": "Target counts from handoff A1 table. One step per interval. Owner-approved 2026-10-18: fast gates policy — intermediate commits run vitest providers only; full battery (vitest+npm test+lint+tsc+build:store) runs on the final commit of each step and step is marked done only on full-battery pass. Fails verification twice -> blocked with error, skip to next. All done/blocked: pause cron + final summary in history."
