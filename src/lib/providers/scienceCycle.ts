@@ -57,6 +57,8 @@ export const CYCLE_SITUATIONS: Situation[] = [
   { prompt: 'Tiny water drops hang low over the meadow on a foggy day. Which step made the fog?', answer: 'condensation', short: '🌁 Fog over the meadow' },
   // A23 batch (grade 2-4 science: water cycle, Earth's systems)
   { prompt: 'On a cold night, tiny water drops form on the inside of the kitchen window. What step left them there?', answer: 'condensation', short: '🪟 Drops on the window' },
+  { prompt: 'Zoe takes her cold water bottle out of the fridge, and tiny drops bead up on the outside of it. Which step is this?', answer: 'condensation', short: '🥤 Drops on the bottle' },
+  { prompt: 'Diego walks in from the cold, and his glasses turn foggy the moment he steps into the warm house. What step is that?', answer: 'condensation', short: '👓 Foggy glasses' },
   // ── precipitation ──────────────────────────────────────────────────────────
   { prompt: 'A cloud grows heavy with droplets. The water falls as rain onto the ground. This step is called ___.', answer: 'precipitation', short: '🏋️ The cloud gets heavy' },
   { prompt: 'Thick gray clouds let their droplets fall to the earth as rain or snow. This step is called ___.', answer: 'precipitation', short: '🌫️ Thick gray clouds' },
@@ -68,6 +70,11 @@ export const CYCLE_SITUATIONS: Situation[] = [
   { prompt: 'The cloud can no longer hold its water, so the drops come tumbling down as rain. What is that step called?', answer: 'precipitation', short: '🌧️ Rain tumbles down' },
   { prompt: 'Raindrops patter on the tent all night, and the barrel by the porch fills right up. Which step is this?', answer: 'precipitation', short: '⛺ Rain on the tent' },
   { prompt: 'Soft white flakes drift down on a cold winter day and cover the yard. What is that step called?', answer: 'precipitation', short: '⛄ Yard turns white' },
+  // A23 batch (grade 2-4 science: water cycle, Earth's systems)
+  { prompt: 'Dark clouds hang over the baseball game, and rain starts to patter on the caps and umbrellas in the stands. Which step is this?', answer: 'precipitation', short: '⚾ Rain at the ball game' },
+  { prompt: 'Ivy watches the first snowflakes of the year settle on the fence and the mailbox. What is that step called?', answer: 'precipitation', short: '📬 Snow on the fence' },
+  { prompt: 'The sky turns dark gray after lunch, and fat raindrops begin to splash on the pavement below. Which step is this?', answer: 'precipitation', short: '🌧️ Rain splashes down' },
+  { prompt: 'Hail stones clatter onto the greenhouse roof as a summer storm passes over the farm. Which step is this?', answer: 'precipitation', short: '🌩️ Hail on the roof' },
 ]
 
 const SHORT_BY_PROMPT = new Map(CYCLE_SITUATIONS.map((s) => [s.prompt, s.short]))
