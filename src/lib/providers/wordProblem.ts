@@ -194,6 +194,64 @@ const TEMPLATES_SUB: Array<{
       hint: `Take ${b} away from ${a}.`,
     }),
   },
+  // CCSS 2.OA.A.1 — one-step "take from" stories within 100, fresh skeletons
+  // so kids meet new stories, not just new numbers. Names/settings rotate.
+  {
+    build: (a, b) => ({
+      prompt: `A birdhouse held ${a} robins. At bedtime, ${b} flew off to roost. How many robins are left in the birdhouse?`,
+      answer: a - b,
+      hint: `Take ${b} away from ${a}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Diego had ${a} marbles in a pouch and lost ${b} in the grass. How many marbles does he have now?`,
+      answer: a - b,
+      hint: `Take ${b} away from ${a}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `A tray of ${a} cookies cooled on the counter. Sam ate ${b} of them. How many cookies are left?`,
+      answer: a - b,
+      hint: `Take ${b} away from ${a}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Priya painted ${a} eggs for the spring fair and sold ${b} of them. How many paintings does she have left?`,
+      answer: a - b,
+      hint: `Take ${b} away from ${a}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `The library cart held ${a} books. A helper shelved ${b} of them. How many books are still on the cart?`,
+      answer: a - b,
+      hint: `Take ${b} away from ${a}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Nia saved ${a} seashells in a shoebox and gave ${b} to her cousin. How many seashells does she keep?`,
+      answer: a - b,
+      hint: `Take ${b} away from ${a}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `A tray held ${a} popsicles on a hot day, and ${b} melted. How many popsicles are left?`,
+      answer: a - b,
+      hint: `Take ${b} away from ${a}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Owen built ${a} blocks tall and pulled out ${b} blocks. How many blocks are left in the tower?`,
+      answer: a - b,
+      hint: `Take ${b} away from ${a}.`,
+    }),
+  },
 ]
 
 const TEMPLATES_MULT: Array<{
