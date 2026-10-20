@@ -72,14 +72,15 @@ export function LetterTile({ ch, s = 160, color = STICKER.coral, k = 1 }: { ch: 
         transform={Math.abs(k - 1) > 0.002 ? `scale(${k})` : undefined}
         x={0}
         y={-s * 0.02}
+        // (600 with a thin outline: the letter's holes stay open — a heavy B reads as a blob)
         fontFamily={M.font}
-        fontWeight={700}
+        fontWeight={600}
         fontSize={s * 0.72}
         textAnchor="middle"
         dominantBaseline="central"
         fill={color}
         stroke={M.ink}
-        strokeWidth={Math.min(8, s * 0.036)}
+        strokeWidth={Math.min(5, s * 0.022)}
         strokeLinejoin="round"
         paintOrder="stroke fill"
       >

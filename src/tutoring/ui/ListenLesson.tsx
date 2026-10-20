@@ -352,7 +352,8 @@ export default function ListenLesson({ lesson }: { lesson: Lesson }) {
             {caption}
           </div>
           {checkPanel('column')}
-          <div className="flex shrink-0 flex-col items-center justify-end gap-4 pb-1 short:gap-3">
+          {/* (↺ up top: the guide's hand comes down onto ▶ from above) */}
+          <div className="flex shrink-0 flex-col items-center justify-between gap-4 pb-1 pt-1 short:gap-3">
             {replayBtn}
             {nextBtn}
           </div>
