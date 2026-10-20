@@ -385,6 +385,48 @@ const TEMPLATES_MULT: Array<{
       hint: `${a} boxes × ${b} marigolds`,
     }),
   },
+  {
+    build: (a, b) => ({
+      prompt: `Felix bakes ${a} muffin tins, and each tin holds ${b} muffins. How many muffins does he bake in all?`,
+      answer: a * b,
+      hint: `${a} tins × ${b} muffins`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `The librarian orders ${a} cartons with ${b} picture books in each carton. How many picture books arrive in all?`,
+      answer: a * b,
+      hint: `${a} cartons × ${b} books`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Lucy sets out ${a} pots of basil, and each pot holds ${b} plants. How many basil plants does she set out in all?`,
+      answer: a * b,
+      hint: `${a} pots × ${b} plants`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Omar strings ${a} lights across the porch, and each strand holds ${b} bulbs. How many bulbs does he string in all?`,
+      answer: a * b,
+      hint: `${a} strands × ${b} bulbs`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Elena sews ${a} quilts with ${b} patches in each quilt. How many patches does she sew in all?`,
+      answer: a * b,
+      hint: `${a} quilts × ${b} patches`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `A hay wagon pulls ${a} carts, and each cart holds ${b} pumpkins. How many pumpkins are there in all?`,
+      answer: a * b,
+      hint: `${a} carts × ${b} pumpkins`,
+    }),
+  },
 ]
 
 const TEMPLATES_DIV: Array<{
