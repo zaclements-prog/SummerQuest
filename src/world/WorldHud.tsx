@@ -160,7 +160,7 @@ export default function WorldHud({ posRef }: { posRef: RefObject<Vector3> }) {
           <GraphicsToggle />
         </div>
       </div>
-      {listen && activeNpc && !panel && <ListenVisit npc={activeNpc} title={npcTitle(activeNpc, grade)} sleeping={npcSleeping(activeNpc, grade)} onPress={open} />}
+      {listen && activeNpc && !panel && <ListenVisit key={activeNpc.areaId} title={npcTitle(activeNpc, grade)} sleeping={npcSleeping(activeNpc, grade)} onPress={open} />}
       {!listen && activeNpc && !panel && (
         <button
           onClick={open}
@@ -188,9 +188,9 @@ export default function WorldHud({ posRef }: { posRef: RefObject<Vector3> }) {
  * K–1: the big button by a gateway. Open: a big star ("Tap a star to play!").
  * Sleeping: a dimmed 💤 that says "This place is still sleeping."
  */
-function ListenVisit({ npc, title, sleeping, onPress }: { npc: ActiveNpc; title: string; sleeping: boolean; onPress: () => void }) {
+function ListenVisit({ title, sleeping, onPress }: { title: string; sleeping: boolean; onPress: () => void }) {
   return (
-    <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1" key={npc.areaId}>
+    <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1">
       <div className="relative">
         <button
           type="button"
