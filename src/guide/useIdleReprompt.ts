@@ -8,7 +8,9 @@ export const IDLE_REPROMPT_MS = 8000
  * "Did you hear me?": after `delayMs` with no touch (and nothing being said),
  * say the screen's line once more, gently (no dimming), then stop nagging.
  * Fires at most once per `key` (pass the question's id); any touch or key
- * restarts the wait, and the wait only counts while the narrator is quiet.
+ * restarts the wait (so does a finger moving while it's down, or lifting:
+ * a child tracing slowly is never interrupted), and the wait only counts
+ * while the narrator is quiet.
  *
  * Default action: `guide.replay({ gentle: true })`.
  */
@@ -52,7 +54,13 @@ export function useIdleReprompt({
       if (sp) clearTimeout(timer)
       else arm()
     })
+    // a finger still down and moving (tracing a letter, slowly) is a touch too, and so is lifting it
+    const moved = (e: PointerEvent) => {
+      if (e.buttons) arm()
+    }
     window.addEventListener('pointerdown', arm, true)
+    window.addEventListener('pointermove', moved, true)
+    window.addEventListener('pointerup', arm, true)
     window.addEventListener('keydown', arm, true)
     arm()
     return () => {
@@ -60,6 +68,8 @@ export function useIdleReprompt({
       clearTimeout(timer)
       unsub()
       window.removeEventListener('pointerdown', arm, true)
+      window.removeEventListener('pointermove', moved, true)
+      window.removeEventListener('pointerup', arm, true)
       window.removeEventListener('keydown', arm, true)
     }
   }, [key, enabled, delayMs])

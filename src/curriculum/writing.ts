@@ -43,4 +43,51 @@ export const writingZone: Zone = {
       starsToEarn: 3,
     },
   ],
+  stagesByBand: {
+    // K "Writing Workshop" (no K title of its own): trace with a finger in ball-and-stick
+    // manuscript, from warm-up strokes to numerals to capital letters, then tell a story
+    // in order. Titles and descriptions are said aloud.
+    k1: [
+      {
+        id: 'k-trace-1',
+        kind: 'concept',
+        title: 'Warm-up lines',
+        description: 'Trace the lines and curves with your finger.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kTrace', mode: 'warmup' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-trace-2',
+        kind: 'practice',
+        title: 'Trace numbers',
+        description: 'Start at the green dot and trace the numbers.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kTrace', mode: 'numbers' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-trace-3',
+        kind: 'practice',
+        title: 'Trace big letters',
+        description: 'Trace big letters, one line at a time.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kTrace', mode: 'letters' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-story-1',
+        kind: 'mastery',
+        title: 'Story order',
+        description: 'Listen to the story. Then tap first, next, last.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kStories' },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+    ],
+  },
 }

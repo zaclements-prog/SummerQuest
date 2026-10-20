@@ -4,6 +4,7 @@ import { K_COUNT_THINGS } from '../../voice/packs/k-math'
 import type { VoiceRef } from '../../voice/types'
 import { randInt, shuffle } from '../random'
 import { makeKindPicker, makePositionGuard, pickOne } from './kShared'
+import { traceQuestion } from './kTrace'
 
 /**
  * Kindergarten counting and comparing, voice-first, for the Listen & Play
@@ -23,6 +24,10 @@ import { makeKindPicker, makePositionGuard, pickOne } from './kShared'
  * per card, its own picture where it has one, the guide's cues and how the
  * walkthrough helps after a wrong pick (count the group, count both groups,
  * count up to the bigger number).
+ *
+ * `traceLast` (Count with me): the round's last question is "You counted 6!
+ * Now trace a 6.", a trace of the numeral the question before it counted
+ * (that one stays within 1–9, so there is always one numeral to trace).
  */
 
 export type KCountingKind = 'howMany' | 'findGroup'
@@ -58,6 +63,12 @@ export interface KCountingConfig {
   kinds?: KCountingItem[]
   /** Answer cards per counting question: 2 or 3 (default 3). Comparisons always show two. */
   choices?: 2 | 3
+  /**
+   * The round's length (the stage's question count): its last question is a
+   * trace of the number just counted (the `trace` activity). Rounds repeat
+   * (question 2 × traceLast is a trace too); `reset()` starts a round.
+   */
+  traceLast?: number
 }
 
 const MODE_KINDS: Record<'count' | 'compare', KCountingItem[]> = {
@@ -92,6 +103,9 @@ export function makeKCountingProvider(cfg: KCountingConfig = {}): Omit<ProblemPr
   const max = Math.max(min + 1, Math.min(K_COUNT_MAX, cfg.max ?? 10))
   const kinds = cfg.kinds?.length ? cfg.kinds : MODE_KINDS[cfg.mode ?? 'count']
   const choices = cfg.choices ?? 3
+  const traceLast = cfg.traceLast && cfg.traceLast >= 2 ? Math.floor(cfg.traceLast) : 0
+  /** Questions asked this round (for `traceLast`). */
+  let asked = 0
   let serial = 0
   let lastN = -1
   let lastThing = ''
@@ -122,12 +136,12 @@ export function makeKCountingProvider(cfg: KCountingConfig = {}): Omit<ProblemPr
     difficulty: n,
   })
 
-  function count(kind: KCountingKind): ListenProblem {
+  function count(kind: KCountingKind, hiCap = max): ListenProblem {
     const thing = pickThing()
     const emoji = K_THING_EMOJI[thing]
     // "find the group" needs a plural ("2 apples" and up)
     const lo = kind === 'findGroup' ? Math.max(2, min) : min
-    const n = pickN(lo, max)
+    const n = pickN(lo, Math.max(lo, Math.min(max, hiCap)))
     // past ten, a group card is crowded: two cards, not three
     const cards = kind === 'findGroup' && n > 10 ? 2 : choices
     const options = places.arrange([n, ...countDistractors(n, kind === 'findGroup' ? Math.max(1, min) : min, max, cards - 1)], n)
@@ -258,6 +272,7 @@ export function makeKCountingProvider(cfg: KCountingConfig = {}): Omit<ProblemPr
     topic: 'kCounting',
     reset() {
       serial = 0
+      asked = 0
       lastN = -1
       lastThing = ''
       lastSig = ''
@@ -266,10 +281,25 @@ export function makeKCountingProvider(cfg: KCountingConfig = {}): Omit<ProblemPr
       places.reset()
     },
     next(): ListenProblem {
+      asked++
+      if (traceLast && asked % traceLast === 0) {
+        // "You counted 6! Now trace a 6." (the number the last question counted)
+        const n = Number.isInteger(lastN) && lastN >= 1 && lastN <= 9 ? lastN : randInt(1, 9)
+        return traceQuestion('digit', String(n), {
+          id: `kcount-${serial++}`,
+          topic: 'kCounting',
+          subtopic: 'trace',
+          speech: { line: `k-trace/counted-${n}` },
+          skill: { id: 'k-count', label: 'counting to 20' },
+          praise: COUNT_PRAISE,
+        })
+      }
+      // (the question before a trace counts to 9 at most: one numeral to trace)
+      const cap = traceLast && asked % traceLast === traceLast - 1 ? 9 : max
       // never the same question twice in a row
       for (let tries = 0; ; tries++) {
         const kind = picker.next()
-        const p = kind === 'howMany' || kind === 'findGroup' ? count(kind) : compare(kind)
+        const p = kind === 'howMany' || kind === 'findGroup' ? count(kind, cap) : compare(kind)
         const sig = `${p.prompt}|${JSON.stringify(p.pair ?? p.pictureOptions?.map((o) => o.value))}`
         if (sig !== lastSig || tries >= 8) {
           lastSig = sig

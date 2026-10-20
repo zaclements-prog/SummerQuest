@@ -64,6 +64,11 @@ const STAGE_PICTURE: Record<string, string> = {
   'k-letters-1': '🔤',
   'k-letters-2': 'Aa',
   'k-letters-3': '🐝',
+  // Writing Workshop
+  'k-trace-1': '✏️',
+  'k-trace-2': '🔢',
+  'k-trace-3': '🔤',
+  'k-story-1': '📖',
 }
 const KIND_PICTURE: Record<Stage['kind'], string> = { concept: '💡', practice: '⚡', mastery: '🏆' }
 

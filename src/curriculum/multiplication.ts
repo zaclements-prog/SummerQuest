@@ -55,7 +55,8 @@ export const multiplicationZone: Zone = {
         title: 'Count with me',
         description: 'Count the things, then tap the number.',
         gameId: 'listenPlay',
-        providerConfig: { kind: 'kCounting', mode: 'count', min: 1, max: 10 },
+        // the last of the 5: "You counted 6! Now trace a 6." (Writing Workshop's trace activity)
+        providerConfig: { kind: 'kCounting', mode: 'count', min: 1, max: 10, traceLast: 5 },
         params: { questionCount: 5 },
         starsToEarn: 3,
       },

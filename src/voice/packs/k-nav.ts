@@ -80,5 +80,13 @@ export default defineVoicePack({
     'stage-k-letters-1': 'Find the letter!',
     'stage-k-letters-2': 'Big and little letters!',
     'stage-k-letters-3': 'First sounds!',
+
+    // ── Writing Workshop (K literacy, phase 1b): its name, welcome and stage buttons ──
+    'name-writing-workshop': 'Writing Workshop!',
+    'welcome-writing-workshop': 'Writing Workshop! Tap a star to play!',
+    'stage-k-trace-1': 'Warm-up lines!',
+    'stage-k-trace-2': 'Trace numbers!',
+    'stage-k-trace-3': 'Trace big letters!',
+    'stage-k-story-1': 'Story order!',
   },
 })

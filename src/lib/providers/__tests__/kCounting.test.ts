@@ -4,6 +4,7 @@ import { K_COUNT_THINGS } from '../../../voice/packs/k-math'
 import { voiceText } from '../../../voice/registry'
 import { seededRng } from '../../random'
 import { phraseIndex } from '../../../tutoring/motion/cues'
+import type { TraceSpec } from '../../trace/spec'
 
 afterEach(() => vi.restoreAllMocks())
 
@@ -148,5 +149,45 @@ describe('kindergarten comparing (K.CC.6–7)', () => {
       expect(q.walkthrough).toBe('countUp')
       expect(q.picture).toBeUndefined() // the numerals take the stage
     }
+  })
+})
+
+describe('Count with me: the round ends with a trace (traceLast)', () => {
+  it('every fifth question traces the number the one before it counted (1–9); the others are as before', () => {
+    vi.spyOn(Math, 'random').mockImplementation(seededRng('kcount-trace'))
+    const p = makeKCountingProvider({ mode: 'count', min: 1, max: 10, traceLast: 5 })
+    const qs = Array.from({ length: 60 }, () => p.next())
+    qs.forEach((q, i) => {
+      if ((i + 1) % 5 !== 0) {
+        expect(q.activity, `item ${i + 1}`).toBeUndefined()
+        expect(q.options).toHaveLength(3)
+        return
+      }
+      const before = qs[i - 1]
+      const n = before.answer as number
+      expect(n).toBeGreaterThanOrEqual(1)
+      expect(n).toBeLessThanOrEqual(9)
+      const a = q.activity as TraceSpec
+      expect(a).toMatchObject({ kind: 'trace', glyph: 'digit', id: String(n) })
+      expect(q.answer).toBe(String(n))
+      expect(q.speech).toEqual({ line: `k-trace/counted-${n}` })
+      expect(voiceText(q.speech!)).toMatch(/^You counted \w+! Now trace an? \w+\.$/)
+      expect(q.skill?.id).toBe('k-count')
+    })
+  })
+
+  it('reset() starts the round again (a replay ends with its trace too)', () => {
+    vi.spyOn(Math, 'random').mockImplementation(seededRng('kcount-trace-reset'))
+    const p = makeKCountingProvider({ mode: 'count', traceLast: 5 })
+    for (let i = 0; i < 3; i++) p.next()
+    p.reset?.()
+    const round = Array.from({ length: 5 }, () => p.next())
+    expect(round.map((q) => !!q.activity)).toEqual([false, false, false, false, true])
+  })
+
+  it('without traceLast nothing changes: no trace, ever', () => {
+    vi.spyOn(Math, 'random').mockImplementation(seededRng('kcount-no-trace'))
+    const p = makeKCountingProvider({ mode: 'count' })
+    for (let i = 0; i < 50; i++) expect(p.next().activity).toBeUndefined()
   })
 })

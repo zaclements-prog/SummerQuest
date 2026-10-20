@@ -9,6 +9,8 @@ import { computeBadges } from '../../lib/badges'
 import { pickTodaysChallenge } from '../../lib/daily'
 import { localDayKey } from '../../lib/dates'
 import { zoneStageRows } from '../../world/hubContent'
+import { isZoneSleeping } from '../../lib/listenNav'
+import { TRACE_ROUND } from '../../lib/providers/kTrace'
 import { useProgress, zoneMastered, zoneStars } from '../../store/progress'
 
 /*
@@ -218,6 +220,8 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
     'multiplication-mesa': ['k-count-1', 'k-count-parade', 'k-count-3'],
     'geometry-grove': ['k-shapes-1', 'k-shapes-2', 'k-shapes-3'],
     'reading-reef': ['k-letters-1', 'k-letters-2', 'k-letters-3'],
+    // (K literacy, phase 1b: Writing Workshop wakes up as the fourth K zone)
+    'writing-workshop': ['k-trace-1', 'k-trace-2', 'k-trace-3', 'k-story-1'],
   }
   const K1_TITLES: Record<string, string> = {
     'multiplication-mesa': 'Counting Mesa',
@@ -225,7 +229,7 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
     'reading-reef': 'Letter Reef',
   }
 
-  it('kindergarten and 1st grade see the nine K–1 stages; 2nd–5th grade still see today’s', () => {
+  it('kindergarten and 1st grade see the K–1 stages; 2nd–5th grade still see today’s', () => {
     for (const zone of curriculum.zones) {
       for (const g of [0, 1] as const) {
         const ids = zoneStages(zone, g).map((s) => s.id)
@@ -238,12 +242,13 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
     expect(getZone('multiplication-mesa')!.stages.map((s) => s.id)).toEqual(['mult-concept', 'mult-practice', 'mult-mastery'])
     expect(getZone('geometry-grove')!.stages.map((s) => s.id)).toEqual(['geo-shapes', 'geo-angles', 'geo-mastery'])
     expect(getZone('reading-reef')!.stages.map((s) => s.id)).toEqual(['read-3rd', 'read-4th', 'read-mastery'])
+    expect(getZone('writing-workshop')!.stages.map((s) => s.id)).toEqual(['write-sentence', 'write-paragraph', 'write-story'])
     for (const ids of Object.values(K1_IDS)) for (const id of ids) expect(getStage(Object.keys(K1_IDS).find((z) => K1_IDS[z] === ids)!, id, 3)).toBeUndefined()
   })
 
   it('every K–1 stage is a voice-first game of 5–6 items with 3 stars, the parade with K–1 gates', () => {
     const all = Object.keys(K1_IDS).flatMap((z) => zoneStages(getZone(z)!, 0))
-    expect(new Set(all.map((s) => s.id)).size).toBe(9)
+    expect(new Set(all.map((s) => s.id)).size).toBe(Object.values(K1_IDS).flat().length)
     for (const s of all) {
       expect(s.starsToEarn, s.id).toBe(3)
       expect(s.title.length, s.id).toBeGreaterThan(0)
@@ -259,15 +264,42 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
       expect(s.params?.questionCount, s.id).toBeGreaterThanOrEqual(5)
       expect(s.params?.questionCount, s.id).toBeLessThanOrEqual(6)
     }
-    expect(all.map((s) => s.providerConfig.kind)).toEqual(['kCounting', 'kCounting', 'kCounting', 'kShapes', 'kShapes', 'kShapes', 'kLetters', 'kLetters', 'kLetters'])
+    expect(all.map((s) => s.providerConfig.kind)).toEqual([
+      ...['kCounting', 'kCounting', 'kCounting', 'kShapes', 'kShapes', 'kShapes', 'kLetters', 'kLetters', 'kLetters'],
+      ...['kTrace', 'kTrace', 'kTrace', 'kStories'],
+    ])
     // the counting stages climb: count to 10, count on to 20 (the parade), then compare
     expect(all.slice(0, 3).map((s) => s.providerConfig)).toMatchObject([
       { mode: 'count', max: 10 },
       { mode: 'count', max: 20 },
       { mode: 'compare', max: 10 },
     ])
+    // Count with me ends with a trace of the number just counted: its round is the stage's length
+    const count1 = zoneStages(mesa, 0)[0]
+    expect(count1.providerConfig).toMatchObject({ kind: 'kCounting', traceLast: count1.params?.questionCount })
     // the stage kinds the contract names
     expect(zoneStages(mesa, 0).map((s) => s.kind)).toEqual(['concept', 'practice', 'mastery'])
+  })
+
+  it('Writing Workshop (K literacy contract): trace lines, numbers, big letters, then story order, a round per stage', () => {
+    const ww = zoneStages(getZone('writing-workshop')!, 0)
+    expect(ww.map((s) => [s.id, s.title])).toEqual([
+      ['k-trace-1', 'Warm-up lines'],
+      ['k-trace-2', 'Trace numbers'],
+      ['k-trace-3', 'Trace big letters'],
+      ['k-story-1', 'Story order'],
+    ])
+    expect(ww.slice(0, 3).map((s) => s.providerConfig)).toEqual([
+      { kind: 'kTrace', mode: 'warmup' },
+      { kind: 'kTrace', mode: 'numbers' },
+      { kind: 'kTrace', mode: 'letters' },
+    ])
+    // a trace stage plays one dealt round (lines, then slants, then curves: lib/providers/kTrace)
+    for (const s of ww.slice(0, 3)) expect(s.params?.questionCount, s.id).toBe(TRACE_ROUND)
+    expect(ww.map((s) => s.kind)).toEqual(['concept', 'practice', 'practice', 'mastery'])
+    // and it's no longer sleeping for K–1; it keeps its own name
+    expect(isZoneSleeping(getZone('writing-workshop')!, 0)).toBe(false)
+    expect(zoneTitle(getZone('writing-workshop')!, 0)).toBe('Writing Workshop')
   })
 
   it('names the three zones for K–1 only (zoneTitle)', () => {

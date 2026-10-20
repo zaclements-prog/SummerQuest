@@ -227,6 +227,8 @@ export function effectiveConfig(
     case 'kCounting':
     case 'kShapes':
     case 'kLetters':
+    case 'kTrace':
+    case 'kStories':
       return config
   }
 }

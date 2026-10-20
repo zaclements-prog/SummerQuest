@@ -2,6 +2,7 @@ import { defineVoicePack } from '../types'
 import { kCountingLesson } from '../../tutoring/lessons/kCounting'
 import { kShapesLesson } from '../../tutoring/lessons/kShapes'
 import { kLettersLesson } from '../../tutoring/lessons/kLetters'
+import { kTracingLesson } from '../../tutoring/lessons/kTracing'
 import { K_LESSON_PACK } from '../../tutoring/lessons/k1Voice'
 
 /**
@@ -14,7 +15,7 @@ import { K_LESSON_PACK } from '../../tutoring/lessons/k1Voice'
  * - the lesson-complete line.
  */
 const asked: Record<string, string> = {}
-for (const lesson of [kCountingLesson, kShapesLesson, kLettersLesson]) {
+for (const lesson of [kCountingLesson, kShapesLesson, kLettersLesson, kTracingLesson]) {
   for (const step of lesson.steps) {
     const ref = step.check?.speech
     if (ref && 'line' in ref && ref.line.startsWith(`${K_LESSON_PACK}/`)) asked[ref.line.slice(K_LESSON_PACK.length + 1)] = step.check!.question
@@ -38,6 +39,10 @@ export default defineVoicePack({
     banana: 'Banana!',
     fish: 'Fish!',
     apple: 'Apple!',
+    // tracing: which way an arrow goes (the dots' colours are k-nav's)
+    up: 'Up!',
+    across: 'Across!',
+    down: 'Down!',
     // the lesson picker: the hand glides over the pictures
     pickLesson: 'Pick a lesson to watch. Tap a picture!',
     // the end of a lesson: the hand points at the big ▶

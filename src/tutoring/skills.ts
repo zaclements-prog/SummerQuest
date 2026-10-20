@@ -56,6 +56,11 @@ export const SKILLS: Record<string, SkillMeta> = {
   'k-letters-names':  { label: 'letter names', zoneId: 'reading-reef', lessonId: 'kLetters', practiceStageId: 'k-letters-1' },
   'k-letters-case':   { label: 'big and little letters', zoneId: 'reading-reef', lessonId: 'kLetters', practiceStageId: 'k-letters-2' },
   'k-letters-sounds': { label: 'first sounds', zoneId: 'reading-reef', lessonId: 'kLetters', practiceStageId: 'k-letters-3' },
+  // Writing Workshop (K literacy; lesson kTracing)
+  'k-trace-lines':   { label: 'tracing lines and curves', zoneId: 'writing-workshop', lessonId: 'kTracing', practiceStageId: 'k-trace-1' },
+  'k-trace-numbers': { label: 'writing numbers', zoneId: 'writing-workshop', lessonId: 'kTracing', practiceStageId: 'k-trace-2' },
+  'k-trace-letters': { label: 'writing capital letters', zoneId: 'writing-workshop', lessonId: 'kTracing', practiceStageId: 'k-trace-3' },
+  'k-story-order':   { label: 'telling a story in order', zoneId: 'writing-workshop', lessonId: 'kTracing', practiceStageId: 'k-story-1' },
 }
 
 export interface Skill { id: string; label: string }

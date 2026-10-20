@@ -28,6 +28,8 @@ import { makeMultiplicationGroveProvider } from './multiplicationGrove'
 import { makeKCountingProvider, type KCountingConfig } from './kCounting'
 import { makeKShapesProvider, type KShapesConfig } from './kShapes'
 import { makeKLettersProvider, type KLettersConfig } from './kLetters'
+import { makeKTraceProvider, type KTraceConfig } from './kTrace'
+import { makeKStoriesProvider } from './kStories'
 
 export type ProviderConfig =
   | { kind: 'multiplication'; factorMin: number; factorMax: number }
@@ -52,6 +54,10 @@ export type ProviderConfig =
   | ({ kind: 'kShapes' } & KShapesConfig)
   /** Letter Reef: letter names, big and little letters, first sounds. */
   | ({ kind: 'kLetters' } & KLettersConfig)
+  /** Writing Workshop: trace warm-up strokes, numerals and capital letters (the `trace` activity). */
+  | ({ kind: 'kTrace' } & KTraceConfig)
+  /** Writing Workshop: a three-picture story, then first, next, last (the `order` activity). */
+  | { kind: 'kStories' }
 
 export function createProvider(config: ProviderConfig): ProblemProvider {
   switch (config.kind) {
@@ -91,5 +97,9 @@ export function createProvider(config: ProviderConfig): ProblemProvider {
       return makeKShapesProvider(config)
     case 'kLetters':
       return makeKLettersProvider(config)
+    case 'kTrace':
+      return makeKTraceProvider(config)
+    case 'kStories':
+      return makeKStoriesProvider()
   }
 }
