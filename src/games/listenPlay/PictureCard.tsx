@@ -18,6 +18,7 @@ import './listenPlay.css'
 
 const INK = M.ink
 const FONT = M.font
+const LETTER_FONT = M.letters
 /**
  * Emoji draw from the colour emoji font first: a desktop's text font may hold
  * a black-and-white copy of a few (a monkey face), and it would win otherwise.
@@ -511,7 +512,7 @@ function LetterArt({ ch, className }: { ch: string; className: string }) {
       <text
         x={50}
         y={49}
-        fontFamily={FONT}
+        fontFamily={LETTER_FONT}
         fontWeight={700}
         fontSize={ch.length > 1 ? 44 : /[a-z]/.test(ch) ? 74 : 62}
         textAnchor="middle"
@@ -532,7 +533,7 @@ function WordArt({ text, className }: { text: string; className: string }) {
   const size = Math.min(52, 150 / Math.max(1, text.length) + 12)
   return (
     <svg viewBox="0 0 140 100" className={className} aria-hidden="true">
-      <text x={70} y={52} fontFamily={FONT} fontWeight={700} fontSize={size} textAnchor="middle" dominantBaseline="central" fill={INK}>
+      <text x={70} y={52} fontFamily={LETTER_FONT} fontWeight={700} fontSize={size} textAnchor="middle" dominantBaseline="central" fill={INK}>
         {text}
       </text>
     </svg>

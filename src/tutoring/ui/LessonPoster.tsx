@@ -224,7 +224,7 @@ const POSTERS: Record<string, { bg: string; motif: () => ReactNode }> = {
           <g key={l.ch} transform={`translate(${l.x} ${128 - l.s / 2})`}>
             <rect x={-l.s / 2} y={-l.s / 2 + 4} width={l.s} height={l.s} rx={l.s * 0.22} fill="#ecc28f" stroke={M.ink} strokeWidth={3} />
             <rect x={-l.s / 2} y={-l.s / 2} width={l.s} height={l.s * 0.97} rx={l.s * 0.22} fill="#fdf3dc" stroke={M.ink} strokeWidth={3} />
-            <text y={-1} fontFamily={M.font} fontWeight={600} fontSize={l.s * 0.7} textAnchor="middle" dominantBaseline="central" fill={l.c} stroke={M.ink} strokeWidth={l.s * 0.025} paintOrder="stroke fill">
+            <text y={-1} fontFamily={M.letters} fontWeight={700} fontSize={l.s * 0.7} textAnchor="middle" dominantBaseline="central" fill={l.c} stroke={M.ink} strokeWidth={l.s * 0.025} paintOrder="stroke fill">
               {l.ch}
             </text>
           </g>

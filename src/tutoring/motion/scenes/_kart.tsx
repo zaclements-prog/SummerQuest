@@ -72,9 +72,9 @@ export function LetterTile({ ch, s = 160, color = STICKER.coral, k = 1 }: { ch: 
         transform={Math.abs(k - 1) > 0.002 ? `scale(${k})` : undefined}
         x={0}
         y={-s * 0.02}
-        // (600 with a thin outline: the letter's holes stay open — a heavy B reads as a blob)
-        fontFamily={M.font}
-        fontWeight={600}
+        // (Andika, the beginning-reader font, with a thin outline: the letter's holes stay open)
+        fontFamily={M.letters}
+        fontWeight={700}
         fontSize={s * 0.72}
         textAnchor="middle"
         dominantBaseline="central"
