@@ -78,11 +78,23 @@ function expectInRange(config: ProviderConfig, p: Problem) {
       break
     }
     case 'fractionEquivalence': {
-      const [n, d, target] = nums(/^(\d+)\/(\d+) = \?\/(\d+)$/)
+      const m = p.prompt.match(/^(\d+)\/(\d+) = ([?\d]+)\/([?\d]+)$/)
+      if (!m) break
+      const n = Number(m[1])
+      const d = Number(m[2])
       between(d, 2, 6)
       between(n, 1, d - 1)
-      between(target, 2 * d, Math.max(config.maxDenominator, 2 * d))
-      expect(target % d).toBe(0)
+      if (m[3] === '?') {
+        const target = Number(m[4])
+        between(target, 2, Math.max(config.maxDenominator, 2 * d))
+        expect((n * target) % d).toBe(0)
+      } else {
+        // blank bottom — the answer denominator must satisfy the equality and fit the stage
+        const c = Number(m[3])
+        const a = Number(p.answer)
+        between(a, 2, Math.max(config.maxDenominator, 2))
+        expect(c * d).toBe(a * n)
+      }
       break
     }
     case 'fractionCompare': {
@@ -173,6 +185,27 @@ describe('specific generators', () => {
     for (const roundTo of [10, 100, 1000] as const) {
       const [p] = await sample({ kind: 'placeValueRounding', maxPlace: 10000, roundTo }, 1)
       expect(p.hint).toContain(`${want[roundTo]} digit`)
+    }
+  })
+
+  it('grade-2 fraction equivalence serves a 20+ fact shelf in all four blank shapes', async () => {
+    // the /8 shelf was 8 facts (blank-top × only); blank-bottom and divide-down
+    // shapes widen it within 2.G.A.3 (halves, thirds, fourths + their doubles)
+    const facts = new Map<string, string>()
+    for (const p of await sample({ kind: 'fractionEquivalence', maxDenominator: 8 }, 4000)) facts.set(p.factId!, p.prompt)
+    expect(facts.size).toBeGreaterThanOrEqual(20)
+    const shapeOf = (prompt: string) => {
+      const m = /^(\d+)\/(\d+) = ([?\d]+)\/([?\d]+)$/.exec(prompt)!
+      const d = Number(m[2])
+      if (m[3] === '?') return Number(m[4]) > d ? 'top-up' : 'top-down'
+      const a = Number(m[3]) * d / Number(m[1])
+      return a > d ? 'bottom-up' : 'bottom-down'
+    }
+    const shapes = new Set([...facts.values()].map(shapeOf))
+    expect([...shapes].sort()).toEqual(['bottom-down', 'bottom-up', 'top-down', 'top-up'])
+    // nothing above an eighth escapes the band
+    for (const prompt of facts.values()) {
+      for (const denom of prompt.matchAll(/\/(\d+)/g)) expect(Number(denom[1])).toBeLessThanOrEqual(8)
     }
   })
 })

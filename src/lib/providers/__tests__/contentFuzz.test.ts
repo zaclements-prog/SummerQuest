@@ -217,15 +217,56 @@ function answerProblems(config: ProviderConfig, grade: GradeLevel, p: Problem): 
       break
     }
     case 'fractionEquivalence': {
-      const m = match(/^(\d+)\/(\d+) = \?\/(\d+)$/)
+      const m = match(/^(\d+)\/(\d+) = ([?\d]+)\/([?\d]+)$/)
       if (!m) break
-      const [n, d, target] = [Number(m[1]), Number(m[2]), Number(m[3])]
+      const [n, d] = [Number(m[1]), Number(m[2])]
       inRange('numerator', n, 1, d - 1)
-      if (target % d !== 0 || target <= d) errs.push(`${target} is not a bigger multiple of ${d}`)
-      inRange('target denominator', target, 4, config.maxDenominator)
-      expectAnswer((n * target) / d)
-      if (p.visual?.kind !== 'fraction' || p.visual.numerator !== n || p.visual.denominator !== d) errs.push(`fraction visual doesn't show ${n}/${d}`)
-      if (p.hint !== `Multiply top and bottom by ${target / d}.`) errs.push(`hint names the wrong multiplier: "${p.hint}"`)
+      const visualOk = p.visual?.kind === 'fraction' && p.visual.numerator === n && p.visual.denominator === d
+      if (!visualOk) errs.push(`fraction visual doesn't show ${n}/${d}`)
+      if ((m[3] === '?') === (m[4] === '?')) {
+        errs.push(`exactly one side must be blank: "${p.prompt}"`)
+        break
+      }
+      if (m[3] === '?') {
+        // blank top: answer = n·k where the shown denominators set the scale
+        const shown = Number(m[4])
+        const a = Number(p.answer)
+        if (!Number.isInteger(a) || !Number.isFinite(a)) {
+          errs.push(`answer ${p.answer} isn't a whole number`)
+          break
+        }
+        if (shown === d) errs.push(`blank side equals the base: "${p.prompt}"`)
+        if (shown > d) {
+          inRange('target denominator', shown, 4, config.maxDenominator)
+          if (shown % d !== 0) errs.push(`${shown} is not a bigger multiple of ${d}`)
+          expectAnswer((n * shown) / d)
+          if (p.hint !== `Multiply top and bottom by ${shown / d}.`) errs.push(`hint names the wrong multiplier: "${p.hint}"`)
+        } else {
+          inRange('target denominator', shown, 2, config.maxDenominator)
+          if (d % shown !== 0) errs.push(`${d} isn't divisible by ${shown}: "${p.prompt}"`)
+          expectAnswer((n * shown) / d)
+          if (p.hint !== `Divide top and bottom by ${d / shown}.`) errs.push(`hint names the wrong divisor: "${p.hint}"`)
+        }
+      } else {
+        // blank bottom: a = c·d/n must hold exactly and keep both fractions proper
+        const c = Number(m[3])
+        const a = Number(p.answer)
+        if (!Number.isInteger(a) || !Number.isFinite(a)) {
+          errs.push(`answer ${p.answer} isn't a whole denominator`)
+          break
+        }
+        inRange('answer denominator', a, 2, config.maxDenominator)
+        if (c * d !== a * n) errs.push(`${n}/${d} = ${c}/${a} is not a true equivalence`)
+        if (c === n) errs.push(`blank side just repeats the top: "${p.prompt}"`)
+        if (c >= a) errs.push(`shown fraction ${c}/${a} is not proper`)
+        if (a > d) {
+          if (!Number.isInteger(a / d) || p.hint !== `Multiply top and bottom by ${a / d}.`) errs.push(`hint doesn't name the multiplier: "${p.hint}"`)
+        } else if (a < d) {
+          if (!Number.isInteger(n / c) || p.hint !== `Divide top and bottom by ${n / c}.`) errs.push(`hint doesn't name the divisor: "${p.hint}"`)
+        } else {
+          errs.push(`blank side equals the base: "${p.prompt}"`)
+        }
+      }
       break
     }
     case 'fractionCompare': {
