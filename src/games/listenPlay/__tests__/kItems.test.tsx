@@ -156,6 +156,8 @@ describe('kindergarten items in Listen & Play', () => {
     const q: ListenProblem = { ...makeKCountingProvider({ kinds: ['more'] }).next() }
     mount(only(q))
     await advance(100)
+    // both groups draw their things the same size (one frame): the bigger group never looks smaller
+    expect(new Set(cards().map((c) => c.querySelector('svg')!.getAttribute('viewBox'))).size).toBe(1)
     const wrong = q.options.findIndex((o) => o !== q.answer)
     act(() => cards()[wrong].click())
     await advance(16000)
@@ -182,6 +184,7 @@ describe('kindergarten items in Listen & Play', () => {
       if (!line) await advance(250)
     }
     expect(line!.marks.map((m) => [m.target, m.cue])).toEqual([
+      [['lp-card-0', 'lp-card-1'], undefined],
       ['lp-card-0', 'four'],
       ['lp-card-1', 'seven'],
     ])

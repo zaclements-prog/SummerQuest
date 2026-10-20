@@ -18,6 +18,11 @@ import './listenPlay.css'
 
 const INK = M.ink
 const FONT = M.font
+/**
+ * Emoji draw from the colour emoji font first: a desktop's text font may hold
+ * a black-and-white copy of a few (a monkey face), and it would win otherwise.
+ */
+const EMOJI_FONT = "'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif"
 /** Sticker colours for numerals, letters and shapes (pastel fill, ink outline). */
 const FILLS = ['#f2766b', '#ffcf4d', '#74d3bd', '#8ab8ff', '#b79af0', '#f7a1c4', '#8edb7c', '#ff9f80'] as const
 const fillFor = (n: number) => FILLS[((n % FILLS.length) + FILLS.length) % FILLS.length]
@@ -35,17 +40,22 @@ export interface PictureArtProps {
   aspect?: number
   /** Group pictures: a number badge on each counted object (default on; small cards show one count instead). */
   badges?: boolean
+  /**
+   * Group pictures shown side by side: the shared frame (`sharedFrame`), so
+   * every group draws its objects the same size.
+   */
+  frame?: { cols: number; rows: number }
   className?: string
 }
 
 /** The drawing alone, filling its box (aspect kept, centred). */
-export function PictureArt({ picture, marks, onObjectTap, aspect = 4 / 3, badges = true, className = '' }: PictureArtProps) {
+export function PictureArt({ picture, marks, onObjectTap, aspect = 4 / 3, badges = true, frame, className = '' }: PictureArtProps) {
   const cls = `block w-full h-full ${className}`
   switch (picture.kind) {
     case 'numeral':
       return <NumeralArt n={picture.n} className={cls} />
     case 'group':
-      return <GroupArt count={picture.count} emoji={picture.emoji ?? '🍎'} marks={marks} onObjectTap={onObjectTap} aspect={aspect} badges={badges} className={cls} />
+      return <GroupArt count={picture.count} emoji={picture.emoji ?? '🍎'} marks={marks} onObjectTap={onObjectTap} aspect={aspect} badges={badges} frame={frame} className={cls} />
     case 'tenFrame':
       return <TenFrameArt count={picture.count} className={cls} />
     case 'shape':
@@ -57,7 +67,7 @@ export function PictureArt({ picture, marks, onObjectTap, aspect = 4 / 3, badges
     case 'emoji':
       return (
         <svg viewBox="0 0 100 100" className={cls} aria-hidden="true">
-          <text x={50} y={53} fontSize={74} textAnchor="middle" dominantBaseline="central">
+          <text x={50} y={53} fontSize={74} fontFamily={EMOJI_FONT} textAnchor="middle" dominantBaseline="central">
             {picture.emoji}
           </text>
         </svg>
@@ -89,6 +99,7 @@ export function PictureCard({
   tint = 0,
   guideId,
   marks,
+  frame,
   disabled = false,
   className = '',
   children,
@@ -103,6 +114,8 @@ export function PictureCard({
   /** `data-guide` id, so the guide can point at this card. */
   guideId?: string
   marks?: GroupMarks
+  /** A group shown beside other groups: their shared frame (`sharedFrame`), so all draw the same size. */
+  frame?: { cols: number; rows: number }
   disabled?: boolean
   className?: string
   /** Extra overlay (a dev marker, a badge). */
@@ -130,7 +143,7 @@ export function PictureCard({
       ].join(' ')}
     >
       <span className="lp-card-art absolute inset-[9%] pointer-events-none">
-        <PictureArt picture={picture} marks={marks} aspect={1} badges={false} />
+        <PictureArt picture={picture} marks={marks} aspect={1} badges={false} frame={frame} />
       </span>
       {counted > 0 && (
         // the running count, big enough to read whatever the group's size
@@ -191,11 +204,34 @@ function NumeralArt({ n, className }: { n: number; className: string }) {
 
 const CELL = 100
 
-function GroupArt({ count, emoji, marks, onObjectTap, aspect, badges, className }: { count: number; emoji: string; marks?: GroupMarks; onObjectTap?: (i: number) => void; aspect: number; badges: boolean; className: string }) {
+function GroupArt({
+  count,
+  emoji,
+  marks,
+  onObjectTap,
+  aspect,
+  badges,
+  frame,
+  className,
+}: {
+  count: number
+  emoji: string
+  marks?: GroupMarks
+  onObjectTap?: (i: number) => void
+  aspect: number
+  badges: boolean
+  frame?: { cols: number; rows: number }
+  className: string
+}) {
   const L = groupLayout(count, aspect)
+  // in a shared frame, the group sits centred in a box sized for the biggest group shown with it
+  const cols = Math.max(L.cols, frame?.cols ?? 0)
+  const rows = Math.max(L.rows, frame?.rows ?? 0)
   const pad = 4
-  const w = L.cols * CELL + pad * 2
-  const h = L.rows * CELL + pad * 2
+  const ox = pad + ((cols - L.cols) / 2) * CELL
+  const oy = pad + ((rows - L.rows) / 2) * CELL
+  const w = cols * CELL + pad * 2
+  const h = rows * CELL + pad * 2
   const tap = (i: number) => onObjectTap?.(i)
   const key = (e: KeyboardEvent, i: number) => {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -208,7 +244,7 @@ function GroupArt({ count, emoji, marks, onObjectTap, aspect, badges, className 
       {L.cells.map((c, i) => {
         const n = marks?.[i]
         return (
-          <g key={i} transform={`translate(${pad + c.x * CELL} ${pad + c.y * CELL})`}>
+          <g key={i} transform={`translate(${ox + c.x * CELL} ${oy + c.y * CELL})`}>
             <g
               className="lp-obj"
               data-obj={i}
@@ -224,7 +260,7 @@ function GroupArt({ count, emoji, marks, onObjectTap, aspect, badges, className 
               <rect x={-CELL / 2} y={-CELL / 2} width={CELL} height={CELL} fill="transparent" />
               <circle className="lp-obj-halo" r={46} />
               <g className="lp-obj-body">
-                <text y={5} fontSize={80} textAnchor="middle" dominantBaseline="central">
+                <text y={5} fontSize={80} fontFamily={EMOJI_FONT} textAnchor="middle" dominantBaseline="central">
                   {emoji}
                 </text>
               </g>
@@ -390,7 +426,7 @@ function ShapeArt({
 
 /**
  * A shape's sides as countable things: a counted side glows, its first corner
- * gets a dot and a number badge sits just inside it. With `onSideTap`, each
+ * gets a dot and a number badge sits on the side. With `onSideTap`, each
  * side is a fat (invisible) tap target, so a child can count them by touch.
  */
 function ShapeSides({ corners, marks, onSideTap }: { corners: Point[]; marks?: GroupMarks; onSideTap?: (i: number) => void }) {
@@ -404,10 +440,12 @@ function ShapeSides({ corners, marks, onSideTap }: { corners: Point[]; marks?: G
         const num = marks?.[i]
         const mx = (a[0] + b[0]) / 2
         const my = (a[1] + b[1]) / 2
+        // the badge sits on its own side (a hair inside, and never off the picture),
+        // so the numbers never bunch up in the middle
         const d = Math.hypot(cx - mx, cy - my) || 1
-        const pull = Math.min(13, d * 0.6)
-        const bx = mx + ((cx - mx) / d) * pull
-        const by = my + ((cy - my) / d) * pull
+        const pull = Math.min(2.5, d * 0.2)
+        const bx = Math.min(89, Math.max(11, mx + ((cx - mx) / d) * pull))
+        const by = Math.min(89, Math.max(11, my + ((cy - my) / d) * pull))
         const key = (e: KeyboardEvent) => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault()
@@ -462,7 +500,7 @@ function starPoints(ro: number, ri: number, cx = 50, cy = 53): string {
  * One colour for every letter: a big B and its little b never share a colour
  * the other letters don't, so "find the little b" is matched by shape, not colour.
  */
-const LETTER_FILL = FILLS[0]
+const LETTER_FILL = FILLS[3]
 
 function LetterArt({ ch, className }: { ch: string; className: string }) {
   return (
@@ -475,7 +513,7 @@ function LetterArt({ ch, className }: { ch: string; className: string }) {
         y={49}
         fontFamily={FONT}
         fontWeight={700}
-        fontSize={ch.length > 1 ? 44 : 62}
+        fontSize={ch.length > 1 ? 44 : /[a-z]/.test(ch) ? 74 : 62}
         textAnchor="middle"
         dominantBaseline="central"
         fill={LETTER_FILL}

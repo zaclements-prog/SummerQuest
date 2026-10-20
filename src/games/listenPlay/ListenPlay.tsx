@@ -14,6 +14,7 @@ import { useIdleReprompt } from '../../guide/useIdleReprompt'
 import { ToonStar } from '../../components/ui'
 import { PictureArt, PictureCard, type CardState, type GroupMarks } from './PictureCard'
 import { pictureLabel } from './pictureLabel'
+import { sharedFrame } from './groupLayout'
 import {
   LP_PICTURE,
   cardsFor,
@@ -157,6 +158,11 @@ export default function ListenPlay({ provider, params, onComplete, meta, paused 
   const panel = problem ? hasPicturePanel(problem) : false
   // a pair stacks on a landscape screen (its panel is tall) and sits side by side upright
   const landscape = useMediaQuery('(orientation: landscape)')
+  const pairAspect = landscape ? 1.8 : 0.7
+  // groups shown together draw their objects the same size: the bigger group never looks smaller
+  const groupCounts = (pics: readonly Picture[]) => (pics.every((p) => p.kind === 'group') ? pics.map((p) => (p.kind === 'group' ? p.count : 0)) : [])
+  const cardFrame = sharedFrame(groupCounts(cards.map((c) => c.picture)), 1)
+  const pairFrame = problem?.pair ? sharedFrame(groupCounts(problem.pair), pairAspect) : undefined
 
   // ── the next question ──
   useEffect(() => {
@@ -300,6 +306,7 @@ export default function ListenPlay({ provider, params, onComplete, meta, paused 
         tint={i}
         state={cardState(i)}
         marks={marksAt(i)}
+        frame={cardFrame}
         disabled={!interactive}
         onPick={() => pick(i)}
         className={className}
@@ -339,7 +346,7 @@ export default function ListenPlay({ provider, params, onComplete, meta, paused 
                   return (
                     <div key={k} data-guide={lpPair(k)} className="relative flex-1 min-w-0 min-h-0 rounded-[1.5rem] border-[3px] border-dashed border-line/25 bg-paper/60">
                       <div className="absolute inset-[5%] grid place-items-center">
-                        <PictureArt picture={pic} marks={m} aspect={landscape ? 1.8 : 0.7} onObjectTap={tapToCount(pic, where)} />
+                        <PictureArt picture={pic} marks={m} aspect={pairAspect} frame={pairFrame} onObjectTap={tapToCount(pic, where)} />
                       </div>
                       {counted > 0 && <CountBubble n={counted} />}
                     </div>
@@ -378,7 +385,7 @@ export default function ListenPlay({ provider, params, onComplete, meta, paused 
                 c.value === problem.answer,
                 i,
                 // upright: two to a row (a third below, centred); sideways: one row, as big as the height allows
-                'basis-[42%] landscape:basis-0 landscape:flex-1 max-w-72 landscape:max-w-[min(18rem,62vh)] roomy:max-w-80 landscape:roomy:max-w-[min(20rem,58vh)]',
+                'basis-[46%] landscape:basis-0 landscape:flex-1 max-w-72 landscape:max-w-[min(18rem,62vh)] roomy:max-w-80 landscape:roomy:max-w-[min(20rem,58vh)]',
               ),
             )}
           </div>

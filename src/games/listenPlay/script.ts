@@ -192,15 +192,12 @@ export function countUpSteps(cards: PictureOption[], open: number[]): GuideStep[
     .sort((a, b) => a.n - b.n)
   if (!nums.length) return []
   const top = nums[nums.length - 1].n
+  const all = nums.map((x) => lpCard(x.i))
   return [
-    { voice: { line: 'listen/countTogether' }, target: nums.map((x) => lpCard(x.i)), hand: false, pad: 12 },
-    ...nums.map((x, k): GuideStep => ({
-      ...(k === 0 ? { voice: { line: `listen/count${top}` }, pause: 0.6 } : {}),
-      target: lpCard(x.i),
-      cue: numberWord(x.n),
-      hand: false,
-      pad: 12,
-    })),
+    { voice: { line: 'listen/countTogether' }, target: all, hand: false, pad: 12 },
+    // the numerals stay lit as the count starts; each one alone as its number is said
+    { voice: { line: `listen/count${top}` }, pause: 0.6, target: all, hand: false, pad: 12 },
+    ...nums.map((x): GuideStep => ({ target: lpCard(x.i), cue: numberWord(x.n), hand: false, pad: 12 })),
   ]
 }
 

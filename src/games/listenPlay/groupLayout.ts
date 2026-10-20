@@ -36,6 +36,18 @@ export function cellSize(L: Pick<GroupLayout, 'cols' | 'rows'>, aspect: number):
   return Math.min(aspect / L.cols, 1 / L.rows)
 }
 
+/**
+ * One frame for several groups shown together (the cards of "Which group has
+ * more?"): big enough for each group's own layout, so every group draws its
+ * objects the same size and the bigger group never looks smaller (or the
+ * other way round). Undefined for fewer than two groups.
+ */
+export function sharedFrame(counts: readonly number[], aspect = 2): { cols: number; rows: number } | undefined {
+  if (counts.length < 2) return undefined
+  const ls = counts.map((n) => groupLayout(n, aspect))
+  return { cols: Math.max(...ls.map((l) => l.cols)), rows: Math.max(...ls.map((l) => l.rows)) }
+}
+
 export function groupLayout(n: number, aspect = 2): GroupLayout {
   const count = Math.max(0, Math.floor(n))
   switch (count) {
