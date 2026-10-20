@@ -7,8 +7,8 @@ describe('coach practice routing', () => {
   // A weak skill's "Practice" button must open a stage that actually drills it.
   for (const [skillId, meta] of Object.entries(SKILLS)) {
     it(`${skillId} → ${meta.zoneId}/${meta.practiceStageId} drills ${skillId}`, async () => {
-      // (the coach's practice stages are the 2nd–4th grade set)
-      const stage = getStage(meta.zoneId, meta.practiceStageId, 3)
+      // (a skill's practice stage is in its own band's set: 2nd–4th grade, or K–1 for the k-* skills)
+      const stage = getStage(meta.zoneId, meta.practiceStageId, 3) ?? getStage(meta.zoneId, meta.practiceStageId, 0)
       expect(stage).toBeDefined()
       const provider = createProvider(stage!.providerConfig)
       const seen = new Set<string>()

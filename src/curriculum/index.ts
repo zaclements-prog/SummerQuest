@@ -56,6 +56,15 @@ export function zoneStages(zone: Pick<Zone, 'stages' | 'stagesByBand'>, grade: G
   return set && set.length > 0 ? set : zone.stages
 }
 
+/**
+ * A zone's name at a grade: its band's own name when it has one (K–1 plays
+ * Multiplication Mesa as "Counting Mesa"), else `zone.title`. A missing grade
+ * counts as DEFAULT_GRADE.
+ */
+export function zoneTitle(zone: Pick<Zone, 'title' | 'titleByBand'>, grade: GradeLevel | null | undefined): string {
+  return zone.titleByBand?.[contentBand(grade ?? DEFAULT_GRADE)] ?? zone.title
+}
+
 /** A stage of the zone's set for this grade (another band's stage isn't found). */
 export function getStage(zoneId: string, stageId: string, grade: GradeLevel | null | undefined) {
   const zone = getZone(zoneId)

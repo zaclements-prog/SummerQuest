@@ -3,6 +3,7 @@ import type { KeyboardEvent, ReactNode } from 'react'
 import type { Picture } from '../../lib/problem'
 import { M } from '../../tutoring/motion/palette'
 import { groupLayout } from './groupLayout'
+import { shapeCorners, type Point, type ShapeName } from './shapeGeometry'
 import { pictureLabel } from './pictureLabel'
 import './listenPlay.css'
 
@@ -26,9 +27,9 @@ export type GroupMarks = Readonly<Record<number, number>>
 
 export interface PictureArtProps {
   picture: Picture
-  /** Group pictures: counted objects (each keeps its number badge). */
+  /** Group pictures: counted objects (each keeps its number badge). Shapes: counted sides. */
   marks?: GroupMarks
-  /** Group pictures: each object becomes a tap target (tap-to-count). */
+  /** Group pictures: each object becomes a tap target (tap-to-count). Shapes: each side. */
   onObjectTap?: (index: number) => void
   /** The box's width ÷ height, so a group picks rows that draw it biggest (default 4:3). */
   aspect?: number
@@ -48,7 +49,7 @@ export function PictureArt({ picture, marks, onObjectTap, aspect = 4 / 3, badges
     case 'tenFrame':
       return <TenFrameArt count={picture.count} className={cls} />
     case 'shape':
-      return <ShapeArt shape={picture.shape} className={cls} />
+      return <ShapeArt shape={picture.shape} color={picture.color} turn={picture.turn} marks={marks} onSideTap={onObjectTap} className={cls} />
     case 'letter':
       return <LetterArt ch={picture.ch} className={cls} />
     case 'word':
@@ -276,87 +277,177 @@ function TenFrameArt({ count, className }: { count: number; className: string })
   )
 }
 
-function ShapeArt({ shape, className }: { shape: Extract<Picture, { kind: 'shape' }>['shape']; className: string }) {
+/** A colour mixed toward white (`f` > 0) or black (`f` < 0), for a solid's light and dark faces. */
+function shade(hex: string, f: number): string {
+  const n = parseInt(hex.slice(1), 16)
+  const mix = (c: number) => Math.round(f >= 0 ? c + (255 - c) * f : c * (1 + f))
+  const [r, g, b] = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(mix)
+  return `#${((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1)}`
+}
+
+/** Each shape's own sticker colour, unless the picture asks for another. */
+const SHAPE_FILL: Record<ShapeName, number> = {
+  circle: 0,
+  square: 3,
+  triangle: 1,
+  rectangle: 2,
+  hexagon: 4,
+  oval: 7,
+  star: 1,
+  cube: 3,
+  sphere: 0,
+  cone: 1,
+  cylinder: 2,
+}
+
+function ShapeArt({
+  shape,
+  color,
+  turn = 0,
+  marks,
+  onSideTap,
+  className,
+}: {
+  shape: ShapeName
+  color?: number
+  turn?: number
+  marks?: GroupMarks
+  onSideTap?: (i: number) => void
+  className: string
+}) {
   const gid = useId().replace(/:/g, '')
+  const fill = fillFor(color ?? SHAPE_FILL[shape])
   const stroke = { stroke: INK, strokeWidth: 4, strokeLinejoin: 'round' as const }
+  const corners = shapeCorners(shape, turn)
+  const spin = turn ? `rotate(${turn} 50 50)` : undefined
   let body: ReactNode
-  switch (shape) {
-    case 'circle':
-      body = <circle cx={50} cy={50} r={36} fill={FILLS[0]} {...stroke} />
-      break
-    case 'square':
-      body = <rect x={16} y={16} width={68} height={68} rx={5} fill={FILLS[3]} {...stroke} />
-      break
-    case 'triangle':
-      body = <polygon points="50,12 90,84 10,84" fill={FILLS[1]} {...stroke} />
-      break
-    case 'rectangle':
-      body = <rect x={8} y={27} width={84} height={46} rx={5} fill={FILLS[2]} {...stroke} />
-      break
-    case 'hexagon':
-      body = <polygon points={poly(6, 39, -Math.PI / 2 + Math.PI / 6)} fill={FILLS[4]} {...stroke} />
-      break
-    case 'oval':
-      body = <ellipse cx={50} cy={50} rx={40} ry={26} fill={FILLS[7]} {...stroke} />
-      break
-    case 'star':
-      body = <polygon points={starPoints(40, 17)} fill={FILLS[1]} {...stroke} />
-      break
-    case 'cube':
-      body = (
-        <>
-          <polygon points="20,36 36,20 82,20 66,36" fill="#c9e0ff" {...stroke} />
-          <polygon points="66,36 82,20 82,66 66,82" fill="#5f8fd9" {...stroke} />
-          <rect x={20} y={36} width={46} height={46} fill={FILLS[3]} {...stroke} />
-        </>
-      )
-      break
-    case 'sphere':
-      body = (
-        <>
-          <defs>
-            <radialGradient id={`${gid}-s`} cx="38%" cy="34%" r="70%">
-              <stop offset="0" stopColor="#ffd2c7" />
-              <stop offset="0.55" stopColor={FILLS[0]} />
-              <stop offset="1" stopColor="#c94c42" />
-            </radialGradient>
-          </defs>
-          <circle cx={50} cy={50} r={36} fill={`url(#${gid}-s)`} {...stroke} />
-          <ellipse cx={39} cy={36} rx={9} ry={6} fill="#fff" opacity={0.7} />
-        </>
-      )
-      break
-    case 'cone':
-      body = (
-        <>
-          <ellipse cx={50} cy={78} rx={30} ry={9} fill="#d8901f" {...stroke} />
-          <path d="M20 78 L50 12 L80 78 A30 9 0 0 1 20 78 Z" fill={FILLS[1]} {...stroke} />
-          <path d="M44 30 L34 62" stroke="#fff6cf" strokeWidth={5} strokeLinecap="round" opacity={0.8} />
-        </>
-      )
-      break
-    case 'cylinder':
-      body = (
-        <>
-          <path d="M22 24 L22 76 A28 9 0 0 0 78 76 L78 24" fill={FILLS[2]} {...stroke} />
-          <ellipse cx={50} cy={24} rx={28} ry={9} fill="#c6f1e4" {...stroke} />
-          <path d="M31 38 L31 70" stroke="#fffaf0" strokeWidth={5} strokeLinecap="round" opacity={0.7} />
-        </>
-      )
-      break
+  if (corners) {
+    body = <polygon points={corners.map((p) => p.join(',')).join(' ')} fill={fill} {...stroke} />
+  } else {
+    switch (shape) {
+      case 'circle':
+        body = <circle cx={50} cy={50} r={36} fill={fill} {...stroke} />
+        break
+      case 'oval':
+        body = <ellipse cx={50} cy={50} rx={40} ry={26} fill={fill} transform={spin} {...stroke} />
+        break
+      case 'star':
+        body = <polygon points={starPoints(40, 17)} fill={fill} transform={spin} {...stroke} />
+        break
+      case 'cube':
+        body = (
+          <>
+            <polygon points="20,36 36,20 82,20 66,36" fill={shade(fill, 0.55)} {...stroke} />
+            <polygon points="66,36 82,20 82,66 66,82" fill={shade(fill, -0.3)} {...stroke} />
+            <rect x={20} y={36} width={46} height={46} fill={fill} {...stroke} />
+          </>
+        )
+        break
+      case 'sphere':
+        body = (
+          <>
+            <defs>
+              <radialGradient id={`${gid}-s`} cx="38%" cy="34%" r="70%">
+                <stop offset="0" stopColor={shade(fill, 0.6)} />
+                <stop offset="0.55" stopColor={fill} />
+                <stop offset="1" stopColor={shade(fill, -0.3)} />
+              </radialGradient>
+            </defs>
+            <circle cx={50} cy={50} r={36} fill={`url(#${gid}-s)`} {...stroke} />
+            <ellipse cx={39} cy={36} rx={9} ry={6} fill="#fff" opacity={0.7} />
+          </>
+        )
+        break
+      case 'cone':
+        body = (
+          <>
+            <ellipse cx={50} cy={78} rx={30} ry={9} fill={shade(fill, -0.3)} {...stroke} />
+            <path d="M20 78 L50 12 L80 78 A30 9 0 0 1 20 78 Z" fill={fill} {...stroke} />
+            <path d="M44 30 L34 62" stroke={shade(fill, 0.7)} strokeWidth={5} strokeLinecap="round" opacity={0.8} />
+          </>
+        )
+        break
+      case 'cylinder':
+        body = (
+          <>
+            <path d="M22 24 L22 76 A28 9 0 0 0 78 76 L78 24" fill={fill} {...stroke} />
+            <ellipse cx={50} cy={24} rx={28} ry={9} fill={shade(fill, 0.5)} {...stroke} />
+            <path d="M31 38 L31 70" stroke={shade(fill, 0.8)} strokeWidth={5} strokeLinecap="round" opacity={0.7} />
+          </>
+        )
+        break
+      default:
+        body = null
+    }
   }
   return (
-    <svg viewBox="0 0 100 100" className={className} aria-hidden="true">
+    <svg viewBox="0 0 100 100" className={className} aria-hidden={onSideTap ? undefined : true} role={onSideTap ? 'group' : undefined}>
       {body}
+      {corners && (marks || onSideTap) && <ShapeSides corners={corners} marks={marks} onSideTap={onSideTap} />}
     </svg>
   )
 }
 
-function poly(n: number, r: number, a0: number, cx = 50, cy = 50): string {
-  return Array.from({ length: n }, (_, i) => {
-    const a = a0 + (i / n) * Math.PI * 2
-    return `${(cx + Math.cos(a) * r).toFixed(1)},${(cy + Math.sin(a) * r).toFixed(1)}`
-  }).join(' ')
+/**
+ * A shape's sides as countable things: a counted side glows, its first corner
+ * gets a dot and a number badge sits just inside it. With `onSideTap`, each
+ * side is a fat (invisible) tap target, so a child can count them by touch.
+ */
+function ShapeSides({ corners, marks, onSideTap }: { corners: Point[]; marks?: GroupMarks; onSideTap?: (i: number) => void }) {
+  const n = corners.length
+  const cx = corners.reduce((s, p) => s + p[0], 0) / n
+  const cy = corners.reduce((s, p) => s + p[1], 0) / n
+  return (
+    <>
+      {corners.map((a, i) => {
+        const b = corners[(i + 1) % n]
+        const num = marks?.[i]
+        const mx = (a[0] + b[0]) / 2
+        const my = (a[1] + b[1]) / 2
+        const d = Math.hypot(cx - mx, cy - my) || 1
+        const pull = Math.min(13, d * 0.6)
+        const bx = mx + ((cx - mx) / d) * pull
+        const by = my + ((cy - my) / d) * pull
+        const key = (e: KeyboardEvent) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault()
+            onSideTap?.(i)
+          }
+        }
+        return (
+          <g
+            key={i}
+            className="lp-side"
+            data-obj={i}
+            data-marked={num !== undefined ? '' : undefined}
+            role={onSideTap ? 'button' : undefined}
+            tabIndex={onSideTap ? 0 : undefined}
+            aria-label={onSideTap ? (num !== undefined ? String(num) : 'count') : undefined}
+            onClick={onSideTap ? () => onSideTap(i) : undefined}
+            onKeyDown={onSideTap ? key : undefined}
+            style={onSideTap ? { cursor: 'pointer' } : undefined}
+          >
+            {onSideTap && <line x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} stroke="transparent" strokeWidth={22} strokeLinecap="round" />}
+            {num !== undefined && (
+              <>
+                <line x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} stroke="#ffb703" strokeWidth={11} strokeLinecap="round" opacity={0.9} />
+                <line x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} stroke={INK} strokeWidth={4} strokeLinecap="round" />
+                <circle cx={a[0]} cy={a[1]} r={4.5} fill={INK} />
+                <g transform={`translate(${bx.toFixed(1)} ${by.toFixed(1)})`}>
+                  <g className="lp-badge">
+                    <circle r={9.5} fill="#ffcf4d" stroke={INK} strokeWidth={2.5} />
+                    <text y={0.8} fontFamily={FONT} fontWeight={700} fontSize={12.5} textAnchor="middle" dominantBaseline="central" fill={INK}>
+                      {num}
+                    </text>
+                  </g>
+                </g>
+              </>
+            )}
+          </g>
+        )
+      })}
+    </>
+  )
 }
 
 function starPoints(ro: number, ri: number, cx = 50, cy = 53): string {
@@ -367,10 +458,16 @@ function starPoints(ro: number, ri: number, cx = 50, cy = 53): string {
   }).join(' ')
 }
 
+/**
+ * One colour for every letter: a big B and its little b never share a colour
+ * the other letters don't, so "find the little b" is matched by shape, not colour.
+ */
+const LETTER_FILL = FILLS[0]
+
 function LetterArt({ ch, className }: { ch: string; className: string }) {
-  const code = ch.toLowerCase().charCodeAt(0) - 97
   return (
-    <svg viewBox="0 0 100 100" className={className} aria-hidden="true">
+    // (data-glyph: the letter IS the picture, so the text budget doesn't count it as a word to read)
+    <svg viewBox="0 0 100 100" className={className} aria-hidden="true" data-glyph="">
       <rect x={9} y={11} width={82} height={82} rx={18} fill="#ecc28f" stroke={INK} strokeWidth={4} />
       <rect x={9} y={7} width={82} height={80} rx={18} fill="#fdf3dc" stroke={INK} strokeWidth={4} />
       <text
@@ -381,7 +478,7 @@ function LetterArt({ ch, className }: { ch: string; className: string }) {
         fontSize={ch.length > 1 ? 44 : 62}
         textAnchor="middle"
         dominantBaseline="central"
-        fill={fillFor(code)}
+        fill={LETTER_FILL}
         stroke={INK}
         strokeWidth={5}
         strokeLinejoin="round"

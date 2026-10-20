@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useReducer, useRef } from 'react'
+import type { Picture } from '../../lib/problem'
+import { useMediaQuery } from '../../components/useViewport'
 import type { GameProps } from '../../screens/GameRunner'
 import { nextProblem } from '../../lib/problem'
 import { sfx } from '../../lib/sound'
@@ -10,9 +12,24 @@ import { COUNT_MAX } from '../../voice/packs/listen'
 import { SayAgainButton } from '../../guide/SayAgainButton'
 import { useIdleReprompt } from '../../guide/useIdleReprompt'
 import { ToonStar } from '../../components/ui'
-import { PictureArt, PictureCard, type CardState } from './PictureCard'
+import { PictureArt, PictureCard, type CardState, type GroupMarks } from './PictureCard'
 import { pictureLabel } from './pictureLabel'
-import { LP_PICTURE, PRAISE, cardsFor, countAlongSteps, listenStars, lpCard, questionPicture, questionSteps, walkthroughGroup } from './script'
+import {
+  LP_PICTURE,
+  cardsFor,
+  countable,
+  countUpSteps,
+  hasPicturePanel,
+  listenStars,
+  lpCard,
+  lpPair,
+  praiseFor,
+  questionPicture,
+  questionSteps,
+  walkthroughCounts,
+  walkthroughSteps,
+  type Where,
+} from './script'
 import type { ListenProblem } from './types'
 import './listenPlay.css'
 
@@ -25,19 +42,23 @@ import './listenPlay.css'
  *  2. the guide lights the picture, then the answer cards, on cue;
  *  3. tapping a card says its label ("seven!");
  *  4. right → a happy pop and "Great job!", on to the next;
- *  5. not yet → "Hmm, let's look again", a walkthrough (a group is counted
- *     aloud, each object lighting up as its number is said), then try again
- *     with the tried card resting aside.
+ *  5. not yet → "Hmm, let's look again", a word about the tried card if the
+ *     question has one ("Cat starts with C."), a walkthrough (a group, both
+ *     groups or a shape's sides counted aloud, each lighting up as its number
+ *     is said; numerals counted up to), then try again with the tried card
+ *     resting aside.
  *
  * No timers, no failing out, 5 items (3–6 via `params.questionCount`), 2–3
  * big cards, no words on screen. 🔊 top-left says it again; 8 s with no touch
- * says it once more, gently. Group pictures can be tapped to count them.
+ * says it once more, gently. Group pictures (and a shape's sides) can be
+ * tapped to count them. A question with no picture of its own gives the
+ * cards the whole stage.
  *
  * Stars count first-try answers and are never 0.
  */
 
 type Phase = 'loading' | 'ask' | 'judge' | 'praise' | 'oops' | 'done'
-type Where = 'picture' | number
+type Marks = Readonly<Record<string, GroupMarks>>
 
 interface State {
   idx: number
@@ -53,8 +74,8 @@ interface State {
   firstTryCorrect: number
   /** Per item: answered right first time? (the progress dots) */
   results: (boolean | null)[]
-  /** Counted objects: which group, and the number each got. */
-  marks: { where: Where; marks: Record<number, number> } | null
+  /** Counted objects, per group (`String(where)`): the number each got. */
+  marks: Marks
 }
 
 type Action =
@@ -70,7 +91,7 @@ function reducer(s: State, a: Action): State {
   switch (a.type) {
     case 'load':
       if (a.idx !== s.idx) return s
-      return { ...s, problem: a.problem, phase: 'ask', token: s.token + 1, picked: null, tried: [], firstTry: null, marks: null }
+      return { ...s, problem: a.problem, phase: 'ask', token: s.token + 1, picked: null, tried: [], firstTry: null, marks: {} }
     case 'pick': {
       if (s.phase !== 'ask') return s
       const first = s.firstTry === null
@@ -97,12 +118,13 @@ function reducer(s: State, a: Action): State {
       if (s.idx + 1 >= a.total) return { ...s, phase: 'done', token: s.token + 1 }
       return { ...s, idx: s.idx + 1, phase: 'loading', token: s.token + 1 }
     case 'mark': {
-      const cur = s.marks && s.marks.where === a.where ? s.marks.marks : {}
+      const key = String(a.where)
+      const cur = s.marks[key] ?? {}
       if (cur[a.obj] !== undefined) return s
-      return { ...s, marks: { where: a.where, marks: { ...cur, [a.obj]: a.n } } }
+      return { ...s, marks: { ...s.marks, [key]: { ...cur, [a.obj]: a.n } } }
     }
     case 'clearMarks':
-      return { ...s, marks: null }
+      return { ...s, marks: {} }
   }
 }
 
@@ -120,7 +142,7 @@ export default function ListenPlay({ provider, params, onComplete, meta, paused 
     firstTry: null,
     firstTryCorrect: 0,
     results: Array.from({ length: total }, () => null),
-    marks: null,
+    marks: {},
   })
   const recordAnswer = useProgress((st) => st.recordAnswer)
   const recordAttempt = useProgress((st) => st.recordAttempt)
@@ -132,6 +154,9 @@ export default function ListenPlay({ provider, params, onComplete, meta, paused 
   const problem = s.problem
   const cards = useMemo(() => (problem ? cardsFor(problem) : []), [problem])
   const picture = problem ? questionPicture(problem) : null
+  const panel = problem ? hasPicturePanel(problem) : false
+  // a pair stacks on a landscape screen (its panel is tall) and sits side by side upright
+  const landscape = useMediaQuery('(orientation: landscape)')
 
   // ── the next question ──
   useEffect(() => {
@@ -166,7 +191,7 @@ export default function ListenPlay({ provider, params, onComplete, meta, paused 
         }
         case 'praise': {
           sfx.correct()
-          await guide.say(PRAISE[idx % PRAISE.length])
+          await guide.say(praiseFor(problem, idx))
           if (!live) return
           await wait(500)
           if (!live) return
@@ -179,16 +204,24 @@ export default function ListenPlay({ provider, params, onComplete, meta, paused 
         case 'oops': {
           await guide.say({ line: 'ui/tryAgain' })
           if (!live || picked === null) return
-          const group = walkthroughGroup(problem, cards, picked)
-          if (group) {
-            dispatch({ type: 'clearMarks' })
-            const where = group.where
-            await guide.sequence(
-              countAlongSteps(group.count, group.target, (i) => {
+          // a word about the card that was tapped ("Cat starts with C.")
+          const note = problem.notes?.[picked]
+          if (note) {
+            await guide.show({ voice: note, target: lpCard(picked), hand: false, pad: 12 }, { repeatable: false })
+            if (!live) return
+          }
+          const open = cards.map((_, i) => i).filter((i) => !tried.includes(i))
+          const plan = walkthroughCounts(problem, cards, picked, open)
+          const steps = plan.length
+            ? walkthroughSteps(plan, (where, i) => {
                 if (live) dispatch({ type: 'mark', where, obj: i, n: i + 1 })
-              }),
-              { repeatable: false },
-            )
+              })
+            : problem.walkthrough === 'countUp'
+              ? countUpSteps(cards, open)
+              : []
+          if (steps.length) {
+            dispatch({ type: 'clearMarks' })
+            await guide.sequence(steps, { repeatable: false })
             if (!live) return
           }
           await guide.say({ line: 'listen/yourTurn' })
@@ -230,7 +263,7 @@ export default function ListenPlay({ provider, params, onComplete, meta, paused 
 
   function countObject(where: Where, obj: number) {
     if (phase !== 'ask' || paused) return
-    const cur = s.marks && s.marks.where === where ? s.marks.marks : {}
+    const cur = s.marks[String(where)] ?? {}
     if (cur[obj] !== undefined) {
       sfx.tick()
       return
@@ -253,7 +286,28 @@ export default function ListenPlay({ provider, params, onComplete, meta, paused 
   }
 
   const interactive = phase === 'ask' && !paused
-  const pictureMarks = s.marks?.where === 'picture' ? s.marks.marks : undefined
+  const marksAt = (where: Where): GroupMarks | undefined => s.marks[String(where)]
+  /** A picture the child can count by tapping: a group's objects, a shape's sides. */
+  const tapToCount = (pic: Picture, where: Where) => (interactive && countable(pic) ? (i: number) => countObject(where, i) : undefined)
+
+  function renderCard(pic: Picture, right: boolean, i: number, className: string) {
+    return (
+      <PictureCard
+        key={`${problem?.id}-${i}`}
+        guideId={lpCard(i)}
+        picture={pic}
+        label={pictureLabel(pic)}
+        tint={i}
+        state={cardState(i)}
+        marks={marksAt(i)}
+        disabled={!interactive}
+        onPick={() => pick(i)}
+        className={className}
+      >
+        {import.meta.env.DEV && right && <span data-correct="" hidden />}
+      </PictureCard>
+    )
+  }
 
   return (
     // Nothing in here has a height of its own (pictures are placed absolutely), so
@@ -266,7 +320,7 @@ export default function ListenPlay({ provider, params, onComplete, meta, paused 
         <div className="w-[72px] roomy:w-20 shrink-0 short:hidden" aria-hidden="true" />
       </div>
 
-      {problem && (
+      {problem && panel && (
         // upright: picture over cards, centred; sideways: side by side
         <div className="lp-stage flex-1 min-h-0 min-w-0 flex flex-col justify-center gap-5 roomy:gap-7 landscape:grid landscape:grid-rows-1 landscape:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)] landscape:items-center landscape:gap-4 short:gap-3 landscape:roomy:gap-6">
           {/* the question's picture */}
@@ -275,45 +329,71 @@ export default function ListenPlay({ provider, params, onComplete, meta, paused 
             data-guide={LP_PICTURE}
             className="lp-picture-panel relative w-full h-[min(44vh,30rem)] landscape:h-full landscape:max-h-[34rem] min-h-40 shrink self-center bg-paper border-[3px] border-line rounded-[2rem] shadow-card overflow-hidden"
           >
-            <div className="absolute inset-[4%] grid place-items-center">
-              {picture ? (
-                <PictureArt
-                  picture={picture}
-                  marks={pictureMarks}
-                  onObjectTap={picture.kind === 'group' && interactive ? (i) => countObject('picture', i) : undefined}
-                />
-              ) : problem.visual && problem.visual.kind !== 'none' ? (
-                <VisualRenderer visual={problem.visual} size="md" />
-              ) : (
-                <span className="text-7xl" aria-hidden="true">
-                  👂
-                </span>
-              )}
-            </div>
+            {problem.pair ? (
+              // two groups to compare: side by side upright, one above the other sideways
+              <div className="absolute inset-[3%] flex flex-row landscape:flex-col gap-[3%]">
+                {problem.pair.map((pic, k) => {
+                  const where: Where = k === 0 ? 'pair0' : 'pair1'
+                  const m = marksAt(where)
+                  const counted = m ? Object.keys(m).length : 0
+                  return (
+                    <div key={k} data-guide={lpPair(k)} className="relative flex-1 min-w-0 min-h-0 rounded-[1.5rem] border-[3px] border-dashed border-line/25 bg-paper/60">
+                      <div className="absolute inset-[5%] grid place-items-center">
+                        <PictureArt picture={pic} marks={m} aspect={landscape ? 1.8 : 0.7} onObjectTap={tapToCount(pic, where)} />
+                      </div>
+                      {counted > 0 && <CountBubble n={counted} />}
+                    </div>
+                  )
+                })}
+              </div>
+            ) : (
+              <div className="absolute inset-[4%] grid place-items-center">
+                {picture ? (
+                  <PictureArt picture={picture} marks={marksAt('picture')} onObjectTap={tapToCount(picture, 'picture')} />
+                ) : (
+                  problem.visual && <VisualRenderer visual={problem.visual} size="md" />
+                )}
+              </div>
+            )}
           </div>
 
           {/* the answers */}
           <div className="shrink-0 flex items-center justify-center gap-4 short:gap-3 roomy:gap-6 px-1 pb-1" role="group" aria-label="answers">
-            {cards.map((c, i) => (
-              <PictureCard
-                key={`${problem.id}-${i}`}
-                guideId={lpCard(i)}
-                picture={c.picture}
-                label={pictureLabel(c.picture)}
-                tint={i}
-                state={cardState(i)}
-                marks={s.marks?.where === i ? s.marks.marks : undefined}
-                disabled={!interactive}
-                onPick={() => pick(i)}
-                className={`flex-1 ${cards.length <= 2 ? 'max-w-60 roomy:max-w-64' : 'max-w-52 roomy:max-w-60'}`}
-              >
-                {import.meta.env.DEV && c.value === problem.answer && <span data-correct="" hidden />}
-              </PictureCard>
-            ))}
+            {cards.map((c, i) => renderCard(c.picture, c.value === problem.answer, i, `flex-1 ${cards.length <= 2 ? 'max-w-60 roomy:max-w-64' : 'max-w-52 roomy:max-w-60'}`))}
+          </div>
+        </div>
+      )}
+
+      {problem && !panel && (
+        // nothing to show but the answers ("Tap the triangle."): they take the stage, big
+        <div className="lp-stage flex-1 min-h-0 min-w-0 flex items-center justify-center">
+          <div
+            className="w-full flex flex-wrap landscape:flex-nowrap items-center justify-center gap-5 short:gap-4 roomy:gap-8 px-2 pb-2"
+            role="group"
+            aria-label="answers"
+          >
+            {cards.map((c, i) =>
+              renderCard(
+                c.picture,
+                c.value === problem.answer,
+                i,
+                // upright: two to a row (a third below, centred); sideways: one row, as big as the height allows
+                'basis-[42%] landscape:basis-0 landscape:flex-1 max-w-72 landscape:max-w-[min(18rem,62vh)] roomy:max-w-80 landscape:roomy:max-w-[min(20rem,58vh)]',
+              ),
+            )}
           </div>
         </div>
       )}
     </div>
+  )
+}
+
+/** The running count of a group being counted, big enough to read whatever the group's size. */
+function CountBubble({ n }: { n: number }) {
+  return (
+    <span key={n} className="lp-count-bubble absolute top-1 left-1 grid place-items-center w-12 h-12 rounded-full bg-quest-400 border-[3px] border-line shadow-ledge-sm kid-text font-bold text-2xl text-ink-900" aria-hidden="true">
+      {n}
+    </span>
   )
 }
 

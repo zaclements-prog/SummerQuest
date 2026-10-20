@@ -1,6 +1,1050 @@
 {
   "voice": "higgs-audio-v2-mlx-q8:clone:calm-teacher-v1:k",
   "clips": {
+    "k-letters/youKnowLetters": {
+      "text": "You know your letters!",
+      "hash": "6057d01aa6",
+      "kind": "line",
+      "file": "voice/k-letters/youKnowLetters.mp3"
+    },
+    "k-letters/greatListening": {
+      "text": "Great listening!",
+      "hash": "234e3f40b0",
+      "kind": "line",
+      "file": "voice/k-letters/greatListening.mp3"
+    },
+    "k-letters/starts_ball": {
+      "text": "Ball starts with B.",
+      "hash": "7607f9f104",
+      "kind": "line",
+      "file": "voice/k-letters/starts_ball.mp3"
+    },
+    "k-letters/starts_bee": {
+      "text": "Bee starts with B.",
+      "hash": "de7290d336",
+      "kind": "line",
+      "file": "voice/k-letters/starts_bee.mp3"
+    },
+    "k-letters/starts_bus": {
+      "text": "Bus starts with B.",
+      "hash": "6e7ef6a6fe",
+      "kind": "line",
+      "file": "voice/k-letters/starts_bus.mp3"
+    },
+    "k-letters/starts_cat": {
+      "text": "Cat starts with C.",
+      "hash": "9e719066f8",
+      "kind": "line",
+      "file": "voice/k-letters/starts_cat.mp3"
+    },
+    "k-letters/starts_car": {
+      "text": "Car starts with C.",
+      "hash": "7595078965",
+      "kind": "line",
+      "file": "voice/k-letters/starts_car.mp3"
+    },
+    "k-letters/starts_cake": {
+      "text": "Cake starts with C.",
+      "hash": "ee85c182d8",
+      "kind": "line",
+      "file": "voice/k-letters/starts_cake.mp3"
+    },
+    "k-letters/starts_dog": {
+      "text": "Dog starts with D.",
+      "hash": "d2238dd31e",
+      "kind": "line",
+      "file": "voice/k-letters/starts_dog.mp3"
+    },
+    "k-letters/starts_duck": {
+      "text": "Duck starts with D.",
+      "hash": "e101fac886",
+      "kind": "line",
+      "file": "voice/k-letters/starts_duck.mp3"
+    },
+    "k-letters/starts_door": {
+      "text": "Door starts with D.",
+      "hash": "83320836ce",
+      "kind": "line",
+      "file": "voice/k-letters/starts_door.mp3"
+    },
+    "k-letters/starts_fish": {
+      "text": "Fish starts with F.",
+      "hash": "8dd1956579",
+      "kind": "line",
+      "file": "voice/k-letters/starts_fish.mp3"
+    },
+    "k-letters/starts_frog": {
+      "text": "Frog starts with F.",
+      "hash": "79f48eb7ef",
+      "kind": "line",
+      "file": "voice/k-letters/starts_frog.mp3"
+    },
+    "k-letters/starts_fox": {
+      "text": "Fox starts with F.",
+      "hash": "baa5b75cde",
+      "kind": "line",
+      "file": "voice/k-letters/starts_fox.mp3"
+    },
+    "k-letters/starts_goat": {
+      "text": "Goat starts with G.",
+      "hash": "7f0a1a5fb0",
+      "kind": "line",
+      "file": "voice/k-letters/starts_goat.mp3"
+    },
+    "k-letters/starts_grapes": {
+      "text": "Grapes starts with G.",
+      "hash": "3dc03f522d",
+      "kind": "line",
+      "file": "voice/k-letters/starts_grapes.mp3"
+    },
+    "k-letters/starts_guitar": {
+      "text": "Guitar starts with G.",
+      "hash": "0ca812378f",
+      "kind": "line",
+      "file": "voice/k-letters/starts_guitar.mp3"
+    },
+    "k-letters/starts_horse": {
+      "text": "Horse starts with H.",
+      "hash": "c472299991",
+      "kind": "line",
+      "file": "voice/k-letters/starts_horse.mp3"
+    },
+    "k-letters/starts_house": {
+      "text": "House starts with H.",
+      "hash": "0f49d35dc3",
+      "kind": "line",
+      "file": "voice/k-letters/starts_house.mp3"
+    },
+    "k-letters/starts_hat": {
+      "text": "Hat starts with H.",
+      "hash": "1d63102713",
+      "kind": "line",
+      "file": "voice/k-letters/starts_hat.mp3"
+    },
+    "k-letters/starts_lion": {
+      "text": "Lion starts with L.",
+      "hash": "790557d5e6",
+      "kind": "line",
+      "file": "voice/k-letters/starts_lion.mp3"
+    },
+    "k-letters/starts_lemon": {
+      "text": "Lemon starts with L.",
+      "hash": "fbeeaddd8c",
+      "kind": "line",
+      "file": "voice/k-letters/starts_lemon.mp3"
+    },
+    "k-letters/starts_leaf": {
+      "text": "Leaf starts with L.",
+      "hash": "e462904e59",
+      "kind": "line",
+      "file": "voice/k-letters/starts_leaf.mp3"
+    },
+    "k-letters/starts_moon": {
+      "text": "Moon starts with M.",
+      "hash": "f884f73d8f",
+      "kind": "line",
+      "file": "voice/k-letters/starts_moon.mp3"
+    },
+    "k-letters/starts_monkey": {
+      "text": "Monkey starts with M.",
+      "hash": "caab08ac3f",
+      "kind": "line",
+      "file": "voice/k-letters/starts_monkey.mp3"
+    },
+    "k-letters/starts_mouse": {
+      "text": "Mouse starts with M.",
+      "hash": "681ca9920e",
+      "kind": "line",
+      "file": "voice/k-letters/starts_mouse.mp3"
+    },
+    "k-letters/starts_pig": {
+      "text": "Pig starts with P.",
+      "hash": "f61617345e",
+      "kind": "line",
+      "file": "voice/k-letters/starts_pig.mp3"
+    },
+    "k-letters/starts_pizza": {
+      "text": "Pizza starts with P.",
+      "hash": "9db4ee2c1d",
+      "kind": "line",
+      "file": "voice/k-letters/starts_pizza.mp3"
+    },
+    "k-letters/starts_penguin": {
+      "text": "Penguin starts with P.",
+      "hash": "e105e5a7de",
+      "kind": "line",
+      "file": "voice/k-letters/starts_penguin.mp3"
+    },
+    "k-letters/starts_rainbow": {
+      "text": "Rainbow starts with R.",
+      "hash": "33fdf458fb",
+      "kind": "line",
+      "file": "voice/k-letters/starts_rainbow.mp3"
+    },
+    "k-letters/starts_robot": {
+      "text": "Robot starts with R.",
+      "hash": "fce58298aa",
+      "kind": "line",
+      "file": "voice/k-letters/starts_robot.mp3"
+    },
+    "k-letters/starts_rocket": {
+      "text": "Rocket starts with R.",
+      "hash": "f847485fce",
+      "kind": "line",
+      "file": "voice/k-letters/starts_rocket.mp3"
+    },
+    "k-letters/starts_sun": {
+      "text": "Sun starts with S.",
+      "hash": "824d560736",
+      "kind": "line",
+      "file": "voice/k-letters/starts_sun.mp3"
+    },
+    "k-letters/starts_snake": {
+      "text": "Snake starts with S.",
+      "hash": "a173627cc8",
+      "kind": "line",
+      "file": "voice/k-letters/starts_snake.mp3"
+    },
+    "k-letters/starts_star": {
+      "text": "Star starts with S.",
+      "hash": "8d53ed56fe",
+      "kind": "line",
+      "file": "voice/k-letters/starts_star.mp3"
+    },
+    "k-letters/starts_tiger": {
+      "text": "Tiger starts with T.",
+      "hash": "b2e9cbc7ef",
+      "kind": "line",
+      "file": "voice/k-letters/starts_tiger.mp3"
+    },
+    "k-letters/starts_tree": {
+      "text": "Tree starts with T.",
+      "hash": "8587facac2",
+      "kind": "line",
+      "file": "voice/k-letters/starts_tree.mp3"
+    },
+    "k-letters/starts_train": {
+      "text": "Train starts with T.",
+      "hash": "6ae13167ce",
+      "kind": "line",
+      "file": "voice/k-letters/starts_train.mp3"
+    },
+    "k-letters/starts_apple": {
+      "text": "Apple starts with A.",
+      "hash": "bb4a2f5852",
+      "kind": "line",
+      "file": "voice/k-letters/starts_apple.mp3"
+    },
+    "k-letters/starts_ant": {
+      "text": "Ant starts with A.",
+      "hash": "e807913839",
+      "kind": "line",
+      "file": "voice/k-letters/starts_ant.mp3"
+    },
+    "k-letters/starts_octopus": {
+      "text": "Octopus starts with O.",
+      "hash": "f4b4bb3c30",
+      "kind": "line",
+      "file": "voice/k-letters/starts_octopus.mp3"
+    },
+    "k-letters/starts_orange": {
+      "text": "Orange starts with O.",
+      "hash": "4656c309c9",
+      "kind": "line",
+      "file": "voice/k-letters/starts_orange.mp3"
+    },
+    "k-letters/tapLetter/letter=a": {
+      "text": "Tap the letter A.",
+      "hash": "67c52c130e",
+      "kind": "whole",
+      "file": "voice/k-letters/tapLetter/letter=a.mp3"
+    },
+    "k-letters/tapLetter/letter=b": {
+      "text": "Tap the letter B.",
+      "hash": "448d7bd209",
+      "kind": "whole",
+      "file": "voice/k-letters/tapLetter/letter=b.mp3"
+    },
+    "k-letters/tapLetter/letter=c": {
+      "text": "Tap the letter C.",
+      "hash": "75289917be",
+      "kind": "whole",
+      "file": "voice/k-letters/tapLetter/letter=c.mp3"
+    },
+    "k-letters/tapLetter/letter=d": {
+      "text": "Tap the letter D.",
+      "hash": "0ad1865536",
+      "kind": "whole",
+      "file": "voice/k-letters/tapLetter/letter=d.mp3"
+    },
+    "k-letters/tapLetter/letter=e": {
+      "text": "Tap the letter E.",
+      "hash": "180f8a5aeb",
+      "kind": "whole",
+      "file": "voice/k-letters/tapLetter/letter=e.mp3"
+    },
+    "k-letters/tapLetter/letter=f": {
+      "text": "Tap the letter F.",
+      "hash": "ff352add8a",
+      "kind": "whole",
+      "file": "voice/k-letters/tapLetter/letter=f.mp3"
+    },
+    "k-letters/tapLetter/letter=g": {
+      "text": "Tap the letter G.",
+      "hash": "6e85e75cf9",
+      "kind": "whole",
+      "file": "voice/k-letters/tapLetter/letter=g.mp3"
+    },
+    "k-letters/tapLetter/letter=h": {
+      "text": "Tap the letter H.",
+      "hash": "c4b16ace81",
+      "kind": "whole",
+      "file": "voice/k-letters/tapLetter/letter=h.mp3"
+    },
+    "k-letters/tapLetter/letter=i": {
+      "text": "Tap the letter I.",
+      "hash": "6479a4cb97",
+      "kind": "whole",
+      "file": "voice/k-letters/tapLetter/letter=i.mp3"
+    },
+    "k-letters/tapLetter/letter=j": {
+      "text": "Tap the letter J.",
+      "hash": "c4455702be",
+      "kind": "whole",
+      "file": "voice/k-letters/tapLetter/letter=j.mp3"
+    },
+    "k-letters/tapLetter/letter=k": {
+      "text": "Tap the letter K.",
+      "hash": "dc01762501",
+      "kind": "whole",
+      "file": "voice/k-letters/tapLetter/letter=k.mp3"
+    },
+    "k-letters/tapLetter/letter=l": {
+      "text": "Tap the letter L.",
+      "hash": "cd93e22956",
+      "kind": "whole",
+      "file": "voice/k-letters/tapLetter/letter=l.mp3"
+    },
+    "k-letters/tapLetter/letter=m": {
+      "text": "Tap the letter M.",
+      "hash": "2f0137f8ca",
+      "kind": "whole",
+      "file": "voice/k-letters/tapLetter/letter=m.mp3"
+    },
+    "k-letters/tapLetter/letter=n": {
+      "text": "Tap the letter N.",
+      "hash": "677709d13e",
+      "kind": "whole",
+      "file": "voice/k-letters/tapLetter/letter=n.mp3"
+    },
+    "k-letters/tapLetter/letter=o": {
+      "text": "Tap the letter O.",
+      "hash": "18ea091170",
+      "kind": "whole",
+      "file": "voice/k-letters/tapLetter/letter=o.mp3"
+    },
+    "k-letters/tapLetter/letter=p": {
+      "text": "Tap the letter P.",
+      "hash": "2efffe1cb2",
+      "kind": "whole",
+      "file": "voice/k-letters/tapLetter/letter=p.mp3"
+    },
+    "k-letters/tapLetter/letter=q": {
+      "text": "Tap the letter Q.",
+      "hash": "a0d97a25c4",
+      "kind": "whole",
+      "file": "voice/k-letters/tapLetter/letter=q.mp3"
+    },
+    "k-letters/tapLetter/letter=r": {
+      "text": "Tap the letter R.",
+      "hash": "19bac8bf82",
+      "kind": "whole",
+      "file": "voice/k-letters/tapLetter/letter=r.mp3"
+    },
+    "k-letters/tapLetter/letter=s": {
+      "text": "Tap the letter S.",
+      "hash": "2bac67e806",
+      "kind": "whole",
+      "file": "voice/k-letters/tapLetter/letter=s.mp3"
+    },
+    "k-letters/tapLetter/letter=t": {
+      "text": "Tap the letter T.",
+      "hash": "62f50a8ccd",
+      "kind": "whole",
+      "file": "voice/k-letters/tapLetter/letter=t.mp3"
+    },
+    "k-letters/tapLetter/letter=u": {
+      "text": "Tap the letter U.",
+      "hash": "1e5b65430a",
+      "kind": "whole",
+      "file": "voice/k-letters/tapLetter/letter=u.mp3"
+    },
+    "k-letters/tapLetter/letter=v": {
+      "text": "Tap the letter V.",
+      "hash": "31d41e719f",
+      "kind": "whole",
+      "file": "voice/k-letters/tapLetter/letter=v.mp3"
+    },
+    "k-letters/tapLetter/letter=w": {
+      "text": "Tap the letter W.",
+      "hash": "d96dc060ff",
+      "kind": "whole",
+      "file": "voice/k-letters/tapLetter/letter=w.mp3"
+    },
+    "k-letters/tapLetter/letter=x": {
+      "text": "Tap the letter X.",
+      "hash": "a2acca0bf1",
+      "kind": "whole",
+      "file": "voice/k-letters/tapLetter/letter=x.mp3"
+    },
+    "k-letters/tapLetter/letter=y": {
+      "text": "Tap the letter Y.",
+      "hash": "b05f514ba0",
+      "kind": "whole",
+      "file": "voice/k-letters/tapLetter/letter=y.mp3"
+    },
+    "k-letters/tapLetter/letter=z": {
+      "text": "Tap the letter Z.",
+      "hash": "18e73a4ad7",
+      "kind": "whole",
+      "file": "voice/k-letters/tapLetter/letter=z.mp3"
+    },
+    "k-letters/findLittle/letter=a": {
+      "text": "Find the little a.",
+      "hash": "7c7a61577f",
+      "kind": "whole",
+      "file": "voice/k-letters/findLittle/letter=a.mp3"
+    },
+    "k-letters/findLittle/letter=b": {
+      "text": "Find the little b.",
+      "hash": "039806bc2d",
+      "kind": "whole",
+      "file": "voice/k-letters/findLittle/letter=b.mp3"
+    },
+    "k-letters/findLittle/letter=c": {
+      "text": "Find the little c.",
+      "hash": "9b935ad736",
+      "kind": "whole",
+      "file": "voice/k-letters/findLittle/letter=c.mp3"
+    },
+    "k-letters/findLittle/letter=d": {
+      "text": "Find the little d.",
+      "hash": "917e4e4f6f",
+      "kind": "whole",
+      "file": "voice/k-letters/findLittle/letter=d.mp3"
+    },
+    "k-letters/findLittle/letter=e": {
+      "text": "Find the little e.",
+      "hash": "a6ff593692",
+      "kind": "whole",
+      "file": "voice/k-letters/findLittle/letter=e.mp3"
+    },
+    "k-letters/findLittle/letter=f": {
+      "text": "Find the little f.",
+      "hash": "d6f4713135",
+      "kind": "whole",
+      "file": "voice/k-letters/findLittle/letter=f.mp3"
+    },
+    "k-letters/findLittle/letter=g": {
+      "text": "Find the little g.",
+      "hash": "534c61dd60",
+      "kind": "whole",
+      "file": "voice/k-letters/findLittle/letter=g.mp3"
+    },
+    "k-letters/findLittle/letter=h": {
+      "text": "Find the little h.",
+      "hash": "a1080a2d94",
+      "kind": "whole",
+      "file": "voice/k-letters/findLittle/letter=h.mp3"
+    },
+    "k-letters/findLittle/letter=i": {
+      "text": "Find the little i.",
+      "hash": "50dde42171",
+      "kind": "whole",
+      "file": "voice/k-letters/findLittle/letter=i.mp3"
+    },
+    "k-letters/findLittle/letter=j": {
+      "text": "Find the little j.",
+      "hash": "3fd165c8ed",
+      "kind": "whole",
+      "file": "voice/k-letters/findLittle/letter=j.mp3"
+    },
+    "k-letters/findLittle/letter=k": {
+      "text": "Find the little k.",
+      "hash": "a336e50270",
+      "kind": "whole",
+      "file": "voice/k-letters/findLittle/letter=k.mp3"
+    },
+    "k-letters/findLittle/letter=l": {
+      "text": "Find the little l.",
+      "hash": "0a579ec921",
+      "kind": "whole",
+      "file": "voice/k-letters/findLittle/letter=l.mp3"
+    },
+    "k-letters/findLittle/letter=m": {
+      "text": "Find the little m.",
+      "hash": "972c1b3354",
+      "kind": "whole",
+      "file": "voice/k-letters/findLittle/letter=m.mp3"
+    },
+    "k-letters/findLittle/letter=n": {
+      "text": "Find the little n.",
+      "hash": "ac24de6529",
+      "kind": "whole",
+      "file": "voice/k-letters/findLittle/letter=n.mp3"
+    },
+    "k-letters/findLittle/letter=o": {
+      "text": "Find the little o.",
+      "hash": "da7d67ebc9",
+      "kind": "whole",
+      "file": "voice/k-letters/findLittle/letter=o.mp3"
+    },
+    "k-letters/findLittle/letter=p": {
+      "text": "Find the little p.",
+      "hash": "277a25e912",
+      "kind": "whole",
+      "file": "voice/k-letters/findLittle/letter=p.mp3"
+    },
+    "k-letters/findLittle/letter=q": {
+      "text": "Find the little q.",
+      "hash": "9b5b5aba70",
+      "kind": "whole",
+      "file": "voice/k-letters/findLittle/letter=q.mp3"
+    },
+    "k-letters/findLittle/letter=r": {
+      "text": "Find the little r.",
+      "hash": "693edd6782",
+      "kind": "whole",
+      "file": "voice/k-letters/findLittle/letter=r.mp3"
+    },
+    "k-letters/findLittle/letter=s": {
+      "text": "Find the little s.",
+      "hash": "6d76ed9bc2",
+      "kind": "whole",
+      "file": "voice/k-letters/findLittle/letter=s.mp3"
+    },
+    "k-letters/findLittle/letter=t": {
+      "text": "Find the little t.",
+      "hash": "3553590968",
+      "kind": "whole",
+      "file": "voice/k-letters/findLittle/letter=t.mp3"
+    },
+    "k-letters/findLittle/letter=u": {
+      "text": "Find the little u.",
+      "hash": "8b667792bf",
+      "kind": "whole",
+      "file": "voice/k-letters/findLittle/letter=u.mp3"
+    },
+    "k-letters/findLittle/letter=v": {
+      "text": "Find the little v.",
+      "hash": "426aa90275",
+      "kind": "whole",
+      "file": "voice/k-letters/findLittle/letter=v.mp3"
+    },
+    "k-letters/findLittle/letter=w": {
+      "text": "Find the little w.",
+      "hash": "653b515ea7",
+      "kind": "whole",
+      "file": "voice/k-letters/findLittle/letter=w.mp3"
+    },
+    "k-letters/findLittle/letter=x": {
+      "text": "Find the little x.",
+      "hash": "11f31dcdef",
+      "kind": "whole",
+      "file": "voice/k-letters/findLittle/letter=x.mp3"
+    },
+    "k-letters/findLittle/letter=y": {
+      "text": "Find the little y.",
+      "hash": "fdf1eefd59",
+      "kind": "whole",
+      "file": "voice/k-letters/findLittle/letter=y.mp3"
+    },
+    "k-letters/findLittle/letter=z": {
+      "text": "Find the little z.",
+      "hash": "2294e64d9d",
+      "kind": "whole",
+      "file": "voice/k-letters/findLittle/letter=z.mp3"
+    },
+    "k-letters/letter/letter=a": {
+      "text": "A!",
+      "hash": "3a470cc6f9",
+      "kind": "whole",
+      "file": "voice/k-letters/letter/letter=a.mp3"
+    },
+    "k-letters/letter/letter=b": {
+      "text": "B!",
+      "hash": "a45c29132c",
+      "kind": "whole",
+      "file": "voice/k-letters/letter/letter=b.mp3"
+    },
+    "k-letters/letter/letter=c": {
+      "text": "C!",
+      "hash": "e5a648385b",
+      "kind": "whole",
+      "file": "voice/k-letters/letter/letter=c.mp3"
+    },
+    "k-letters/letter/letter=d": {
+      "text": "D!",
+      "hash": "21625622b0",
+      "kind": "whole",
+      "file": "voice/k-letters/letter/letter=d.mp3"
+    },
+    "k-letters/letter/letter=e": {
+      "text": "E!",
+      "hash": "4a9b04a1de",
+      "kind": "whole",
+      "file": "voice/k-letters/letter/letter=e.mp3"
+    },
+    "k-letters/letter/letter=f": {
+      "text": "F!",
+      "hash": "89ea223640",
+      "kind": "whole",
+      "file": "voice/k-letters/letter/letter=f.mp3"
+    },
+    "k-letters/letter/letter=g": {
+      "text": "G!",
+      "hash": "8875b9b8b9",
+      "kind": "whole",
+      "file": "voice/k-letters/letter/letter=g.mp3"
+    },
+    "k-letters/letter/letter=h": {
+      "text": "H!",
+      "hash": "17ec96e189",
+      "kind": "whole",
+      "file": "voice/k-letters/letter/letter=h.mp3"
+    },
+    "k-letters/letter/letter=i": {
+      "text": "I!",
+      "hash": "fe58cab9d6",
+      "kind": "whole",
+      "file": "voice/k-letters/letter/letter=i.mp3"
+    },
+    "k-letters/letter/letter=j": {
+      "text": "J!",
+      "hash": "f1938d1507",
+      "kind": "whole",
+      "file": "voice/k-letters/letter/letter=j.mp3"
+    },
+    "k-letters/letter/letter=k": {
+      "text": "K!",
+      "hash": "eb23a4593a",
+      "kind": "whole",
+      "file": "voice/k-letters/letter/letter=k.mp3"
+    },
+    "k-letters/letter/letter=l": {
+      "text": "L!",
+      "hash": "5acfe64b9c",
+      "kind": "whole",
+      "file": "voice/k-letters/letter/letter=l.mp3"
+    },
+    "k-letters/letter/letter=m": {
+      "text": "M!",
+      "hash": "d22843ec4d",
+      "kind": "whole",
+      "file": "voice/k-letters/letter/letter=m.mp3"
+    },
+    "k-letters/letter/letter=n": {
+      "text": "N!",
+      "hash": "707dce7e2d",
+      "kind": "whole",
+      "file": "voice/k-letters/letter/letter=n.mp3"
+    },
+    "k-letters/letter/letter=o": {
+      "text": "O!",
+      "hash": "c738e64df8",
+      "kind": "whole",
+      "file": "voice/k-letters/letter/letter=o.mp3"
+    },
+    "k-letters/letter/letter=p": {
+      "text": "P!",
+      "hash": "ab45bfc321",
+      "kind": "whole",
+      "file": "voice/k-letters/letter/letter=p.mp3"
+    },
+    "k-letters/letter/letter=q": {
+      "text": "Q!",
+      "hash": "3813633ace",
+      "kind": "whole",
+      "file": "voice/k-letters/letter/letter=q.mp3"
+    },
+    "k-letters/letter/letter=r": {
+      "text": "R!",
+      "hash": "a89420ee0c",
+      "kind": "whole",
+      "file": "voice/k-letters/letter/letter=r.mp3"
+    },
+    "k-letters/letter/letter=s": {
+      "text": "S!",
+      "hash": "a11e8fcf40",
+      "kind": "whole",
+      "file": "voice/k-letters/letter/letter=s.mp3"
+    },
+    "k-letters/letter/letter=t": {
+      "text": "T!",
+      "hash": "4bcca27b61",
+      "kind": "whole",
+      "file": "voice/k-letters/letter/letter=t.mp3"
+    },
+    "k-letters/letter/letter=u": {
+      "text": "U!",
+      "hash": "04e115729f",
+      "kind": "whole",
+      "file": "voice/k-letters/letter/letter=u.mp3"
+    },
+    "k-letters/letter/letter=v": {
+      "text": "V!",
+      "hash": "0b72830628",
+      "kind": "whole",
+      "file": "voice/k-letters/letter/letter=v.mp3"
+    },
+    "k-letters/letter/letter=w": {
+      "text": "W!",
+      "hash": "2c56d40f60",
+      "kind": "whole",
+      "file": "voice/k-letters/letter/letter=w.mp3"
+    },
+    "k-letters/letter/letter=x": {
+      "text": "X!",
+      "hash": "71a934f767",
+      "kind": "whole",
+      "file": "voice/k-letters/letter/letter=x.mp3"
+    },
+    "k-letters/letter/letter=y": {
+      "text": "Y!",
+      "hash": "52aabaa027",
+      "kind": "whole",
+      "file": "voice/k-letters/letter/letter=y.mp3"
+    },
+    "k-letters/letter/letter=z": {
+      "text": "Z!",
+      "hash": "6e42bde27c",
+      "kind": "whole",
+      "file": "voice/k-letters/letter/letter=z.mp3"
+    },
+    "k-letters/startsWith/letter=a": {
+      "text": "Which one starts with A?",
+      "hash": "1751c8fe12",
+      "kind": "whole",
+      "file": "voice/k-letters/startsWith/letter=a.mp3"
+    },
+    "k-letters/startsWith/letter=b": {
+      "text": "Which one starts with B?",
+      "hash": "9a1a9f8c50",
+      "kind": "whole",
+      "file": "voice/k-letters/startsWith/letter=b.mp3"
+    },
+    "k-letters/startsWith/letter=c": {
+      "text": "Which one starts with C?",
+      "hash": "4fd58f42f2",
+      "kind": "whole",
+      "file": "voice/k-letters/startsWith/letter=c.mp3"
+    },
+    "k-letters/startsWith/letter=d": {
+      "text": "Which one starts with D?",
+      "hash": "c3176819e5",
+      "kind": "whole",
+      "file": "voice/k-letters/startsWith/letter=d.mp3"
+    },
+    "k-letters/startsWith/letter=f": {
+      "text": "Which one starts with F?",
+      "hash": "a970ab7876",
+      "kind": "whole",
+      "file": "voice/k-letters/startsWith/letter=f.mp3"
+    },
+    "k-letters/startsWith/letter=g": {
+      "text": "Which one starts with G?",
+      "hash": "82bdda8582",
+      "kind": "whole",
+      "file": "voice/k-letters/startsWith/letter=g.mp3"
+    },
+    "k-letters/startsWith/letter=h": {
+      "text": "Which one starts with H?",
+      "hash": "b22be46800",
+      "kind": "whole",
+      "file": "voice/k-letters/startsWith/letter=h.mp3"
+    },
+    "k-letters/startsWith/letter=l": {
+      "text": "Which one starts with L?",
+      "hash": "235713ccd0",
+      "kind": "whole",
+      "file": "voice/k-letters/startsWith/letter=l.mp3"
+    },
+    "k-letters/startsWith/letter=m": {
+      "text": "Which one starts with M?",
+      "hash": "e9061ad748",
+      "kind": "whole",
+      "file": "voice/k-letters/startsWith/letter=m.mp3"
+    },
+    "k-letters/startsWith/letter=o": {
+      "text": "Which one starts with O?",
+      "hash": "166f03ff44",
+      "kind": "whole",
+      "file": "voice/k-letters/startsWith/letter=o.mp3"
+    },
+    "k-letters/startsWith/letter=p": {
+      "text": "Which one starts with P?",
+      "hash": "d42b8ab123",
+      "kind": "whole",
+      "file": "voice/k-letters/startsWith/letter=p.mp3"
+    },
+    "k-letters/startsWith/letter=r": {
+      "text": "Which one starts with R?",
+      "hash": "8eb025b3ff",
+      "kind": "whole",
+      "file": "voice/k-letters/startsWith/letter=r.mp3"
+    },
+    "k-letters/startsWith/letter=s": {
+      "text": "Which one starts with S?",
+      "hash": "9cc26a85cc",
+      "kind": "whole",
+      "file": "voice/k-letters/startsWith/letter=s.mp3"
+    },
+    "k-letters/startsWith/letter=t": {
+      "text": "Which one starts with T?",
+      "hash": "428394f3aa",
+      "kind": "whole",
+      "file": "voice/k-letters/startsWith/letter=t.mp3"
+    },
+    "k-letters/word/word=ball": {
+      "text": "ball!",
+      "hash": "f847ba8d6a",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=ball.mp3"
+    },
+    "k-letters/word/word=bee": {
+      "text": "bee!",
+      "hash": "9148515553",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=bee.mp3"
+    },
+    "k-letters/word/word=bus": {
+      "text": "bus!",
+      "hash": "f645e0af64",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=bus.mp3"
+    },
+    "k-letters/word/word=cat": {
+      "text": "cat!",
+      "hash": "0d21dbe2ef",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=cat.mp3"
+    },
+    "k-letters/word/word=car": {
+      "text": "car!",
+      "hash": "faeb44cfdb",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=car.mp3"
+    },
+    "k-letters/word/word=cake": {
+      "text": "cake!",
+      "hash": "26e6f29b9c",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=cake.mp3"
+    },
+    "k-letters/word/word=dog": {
+      "text": "dog!",
+      "hash": "d468ea0b54",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=dog.mp3"
+    },
+    "k-letters/word/word=duck": {
+      "text": "duck!",
+      "hash": "824e8b813d",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=duck.mp3"
+    },
+    "k-letters/word/word=door": {
+      "text": "door!",
+      "hash": "8a8c2220ea",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=door.mp3"
+    },
+    "k-letters/word/word=fish": {
+      "text": "fish!",
+      "hash": "b2e39ac0d5",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=fish.mp3"
+    },
+    "k-letters/word/word=frog": {
+      "text": "frog!",
+      "hash": "e0c6ca893b",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=frog.mp3"
+    },
+    "k-letters/word/word=fox": {
+      "text": "fox!",
+      "hash": "dd90c98e36",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=fox.mp3"
+    },
+    "k-letters/word/word=goat": {
+      "text": "goat!",
+      "hash": "8364942ffa",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=goat.mp3"
+    },
+    "k-letters/word/word=grapes": {
+      "text": "grapes!",
+      "hash": "e58e1acdaa",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=grapes.mp3"
+    },
+    "k-letters/word/word=guitar": {
+      "text": "guitar!",
+      "hash": "a7ba5046b9",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=guitar.mp3"
+    },
+    "k-letters/word/word=horse": {
+      "text": "horse!",
+      "hash": "5b058181d9",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=horse.mp3"
+    },
+    "k-letters/word/word=house": {
+      "text": "house!",
+      "hash": "48f5daa62f",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=house.mp3"
+    },
+    "k-letters/word/word=hat": {
+      "text": "hat!",
+      "hash": "76c05dde4d",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=hat.mp3"
+    },
+    "k-letters/word/word=lion": {
+      "text": "lion!",
+      "hash": "088f43752b",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=lion.mp3"
+    },
+    "k-letters/word/word=lemon": {
+      "text": "lemon!",
+      "hash": "39b238b6c7",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=lemon.mp3"
+    },
+    "k-letters/word/word=leaf": {
+      "text": "leaf!",
+      "hash": "173157c846",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=leaf.mp3"
+    },
+    "k-letters/word/word=moon": {
+      "text": "moon!",
+      "hash": "bfdf1c55f5",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=moon.mp3"
+    },
+    "k-letters/word/word=monkey": {
+      "text": "monkey!",
+      "hash": "142f82d486",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=monkey.mp3"
+    },
+    "k-letters/word/word=mouse": {
+      "text": "mouse!",
+      "hash": "2c3e4c8da7",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=mouse.mp3"
+    },
+    "k-letters/word/word=pig": {
+      "text": "pig!",
+      "hash": "4376dea583",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=pig.mp3"
+    },
+    "k-letters/word/word=pizza": {
+      "text": "pizza!",
+      "hash": "53eaa34aff",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=pizza.mp3"
+    },
+    "k-letters/word/word=penguin": {
+      "text": "penguin!",
+      "hash": "f8d9b57bb4",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=penguin.mp3"
+    },
+    "k-letters/word/word=rainbow": {
+      "text": "rainbow!",
+      "hash": "955a5c6ee2",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=rainbow.mp3"
+    },
+    "k-letters/word/word=robot": {
+      "text": "robot!",
+      "hash": "32b4d7b7ae",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=robot.mp3"
+    },
+    "k-letters/word/word=rocket": {
+      "text": "rocket!",
+      "hash": "76a7fd4f1c",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=rocket.mp3"
+    },
+    "k-letters/word/word=sun": {
+      "text": "sun!",
+      "hash": "8fcd7349b0",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=sun.mp3"
+    },
+    "k-letters/word/word=snake": {
+      "text": "snake!",
+      "hash": "bb4531eab0",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=snake.mp3"
+    },
+    "k-letters/word/word=star": {
+      "text": "star!",
+      "hash": "0007e6fa0e",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=star.mp3"
+    },
+    "k-letters/word/word=tiger": {
+      "text": "tiger!",
+      "hash": "37c4ab1643",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=tiger.mp3"
+    },
+    "k-letters/word/word=tree": {
+      "text": "tree!",
+      "hash": "53dc0913b9",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=tree.mp3"
+    },
+    "k-letters/word/word=train": {
+      "text": "train!",
+      "hash": "b497dc5728",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=train.mp3"
+    },
+    "k-letters/word/word=apple": {
+      "text": "apple!",
+      "hash": "12490fd501",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=apple.mp3"
+    },
+    "k-letters/word/word=ant": {
+      "text": "ant!",
+      "hash": "9bde80ff5b",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=ant.mp3"
+    },
+    "k-letters/word/word=octopus": {
+      "text": "octopus!",
+      "hash": "0998c8f970",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=octopus.mp3"
+    },
+    "k-letters/word/word=orange": {
+      "text": "orange!",
+      "hash": "278ded0041",
+      "kind": "whole",
+      "file": "voice/k-letters/word/word=orange.mp3"
+    },
     "k-math/greatCounting": {
       "text": "Great counting!",
       "hash": "e735cf30b4",
@@ -12,6 +1056,54 @@
       "hash": "6243ee390e",
       "kind": "line",
       "file": "voice/k-math/letsCount.mp3"
+    },
+    "k-math/whichMore": {
+      "text": "Which group has more?",
+      "hash": "d9f41ebfa7",
+      "kind": "line",
+      "file": "voice/k-math/whichMore.mp3"
+    },
+    "k-math/whichFewer": {
+      "text": "Which group has fewer?",
+      "hash": "63de15434c",
+      "kind": "line",
+      "file": "voice/k-math/whichFewer.mp3"
+    },
+    "k-math/areSame": {
+      "text": "Are they the same? Tap yes or no.",
+      "hash": "e038623533",
+      "kind": "line",
+      "file": "voice/k-math/areSame.mp3"
+    },
+    "k-math/whichBigger": {
+      "text": "Which number is bigger?",
+      "hash": "a1b2d6849a",
+      "kind": "line",
+      "file": "voice/k-math/whichBigger.mp3"
+    },
+    "k-math/yes": {
+      "text": "Yes!",
+      "hash": "396e4dc472",
+      "kind": "line",
+      "file": "voice/k-math/yes.mp3"
+    },
+    "k-math/no": {
+      "text": "No!",
+      "hash": "eccd923897",
+      "kind": "line",
+      "file": "voice/k-math/no.mp3"
+    },
+    "k-math/youKnowNumbers": {
+      "text": "You know your numbers!",
+      "hash": "b2758ca81e",
+      "kind": "line",
+      "file": "voice/k-math/youKnowNumbers.mp3"
+    },
+    "k-math/sharpEyes": {
+      "text": "Sharp eyes!",
+      "hash": "e26c537a55",
+      "kind": "line",
+      "file": "voice/k-math/sharpEyes.mp3"
     },
     "k-math/howMany/thing=apples": {
       "text": "How many apples? Tap the number.",
@@ -613,6 +1705,606 @@
       "kind": "whole",
       "file": "voice/k-math/findGroup/n=10,thing=frogs.mp3"
     },
+    "k-math/findGroup/n=11,thing=apples": {
+      "text": "Tap the group with eleven apples.",
+      "hash": "44e72adfaf",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=11,thing=apples.mp3"
+    },
+    "k-math/findGroup/n=11,thing=stars": {
+      "text": "Tap the group with eleven stars.",
+      "hash": "3ca104ccda",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=11,thing=stars.mp3"
+    },
+    "k-math/findGroup/n=11,thing=fish": {
+      "text": "Tap the group with eleven fish.",
+      "hash": "a74c1da2ce",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=11,thing=fish.mp3"
+    },
+    "k-math/findGroup/n=11,thing=ducks": {
+      "text": "Tap the group with eleven ducks.",
+      "hash": "57fd9f57b6",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=11,thing=ducks.mp3"
+    },
+    "k-math/findGroup/n=11,thing=balls": {
+      "text": "Tap the group with eleven balls.",
+      "hash": "d6d8417b65",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=11,thing=balls.mp3"
+    },
+    "k-math/findGroup/n=11,thing=flowers": {
+      "text": "Tap the group with eleven flowers.",
+      "hash": "5da42b6501",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=11,thing=flowers.mp3"
+    },
+    "k-math/findGroup/n=11,thing=bees": {
+      "text": "Tap the group with eleven bees.",
+      "hash": "b96d69de9b",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=11,thing=bees.mp3"
+    },
+    "k-math/findGroup/n=11,thing=cars": {
+      "text": "Tap the group with eleven cars.",
+      "hash": "d49c73d22b",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=11,thing=cars.mp3"
+    },
+    "k-math/findGroup/n=11,thing=cookies": {
+      "text": "Tap the group with eleven cookies.",
+      "hash": "3a0a3a4fb7",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=11,thing=cookies.mp3"
+    },
+    "k-math/findGroup/n=11,thing=frogs": {
+      "text": "Tap the group with eleven frogs.",
+      "hash": "045366aca2",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=11,thing=frogs.mp3"
+    },
+    "k-math/findGroup/n=12,thing=apples": {
+      "text": "Tap the group with twelve apples.",
+      "hash": "3885bf24d6",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=12,thing=apples.mp3"
+    },
+    "k-math/findGroup/n=12,thing=stars": {
+      "text": "Tap the group with twelve stars.",
+      "hash": "b1bcc01773",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=12,thing=stars.mp3"
+    },
+    "k-math/findGroup/n=12,thing=fish": {
+      "text": "Tap the group with twelve fish.",
+      "hash": "e6eae534d8",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=12,thing=fish.mp3"
+    },
+    "k-math/findGroup/n=12,thing=ducks": {
+      "text": "Tap the group with twelve ducks.",
+      "hash": "923d106da7",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=12,thing=ducks.mp3"
+    },
+    "k-math/findGroup/n=12,thing=balls": {
+      "text": "Tap the group with twelve balls.",
+      "hash": "3413cf3d20",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=12,thing=balls.mp3"
+    },
+    "k-math/findGroup/n=12,thing=flowers": {
+      "text": "Tap the group with twelve flowers.",
+      "hash": "0d769a0cd6",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=12,thing=flowers.mp3"
+    },
+    "k-math/findGroup/n=12,thing=bees": {
+      "text": "Tap the group with twelve bees.",
+      "hash": "3dbd838f74",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=12,thing=bees.mp3"
+    },
+    "k-math/findGroup/n=12,thing=cars": {
+      "text": "Tap the group with twelve cars.",
+      "hash": "72896fdcf3",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=12,thing=cars.mp3"
+    },
+    "k-math/findGroup/n=12,thing=cookies": {
+      "text": "Tap the group with twelve cookies.",
+      "hash": "8e07e56e29",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=12,thing=cookies.mp3"
+    },
+    "k-math/findGroup/n=12,thing=frogs": {
+      "text": "Tap the group with twelve frogs.",
+      "hash": "0788e37814",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=12,thing=frogs.mp3"
+    },
+    "k-math/findGroup/n=13,thing=apples": {
+      "text": "Tap the group with thirteen apples.",
+      "hash": "7b3d913560",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=13,thing=apples.mp3"
+    },
+    "k-math/findGroup/n=13,thing=stars": {
+      "text": "Tap the group with thirteen stars.",
+      "hash": "2a794a1b35",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=13,thing=stars.mp3"
+    },
+    "k-math/findGroup/n=13,thing=fish": {
+      "text": "Tap the group with thirteen fish.",
+      "hash": "4dfe20b1ef",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=13,thing=fish.mp3"
+    },
+    "k-math/findGroup/n=13,thing=ducks": {
+      "text": "Tap the group with thirteen ducks.",
+      "hash": "eebf58fdca",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=13,thing=ducks.mp3"
+    },
+    "k-math/findGroup/n=13,thing=balls": {
+      "text": "Tap the group with thirteen balls.",
+      "hash": "afb54b94c8",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=13,thing=balls.mp3"
+    },
+    "k-math/findGroup/n=13,thing=flowers": {
+      "text": "Tap the group with thirteen flowers.",
+      "hash": "dad8ada8ac",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=13,thing=flowers.mp3"
+    },
+    "k-math/findGroup/n=13,thing=bees": {
+      "text": "Tap the group with thirteen bees.",
+      "hash": "df615748d6",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=13,thing=bees.mp3"
+    },
+    "k-math/findGroup/n=13,thing=cars": {
+      "text": "Tap the group with thirteen cars.",
+      "hash": "480a502a73",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=13,thing=cars.mp3"
+    },
+    "k-math/findGroup/n=13,thing=cookies": {
+      "text": "Tap the group with thirteen cookies.",
+      "hash": "e26f85c7af",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=13,thing=cookies.mp3"
+    },
+    "k-math/findGroup/n=13,thing=frogs": {
+      "text": "Tap the group with thirteen frogs.",
+      "hash": "9ebd8582c2",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=13,thing=frogs.mp3"
+    },
+    "k-math/findGroup/n=14,thing=apples": {
+      "text": "Tap the group with fourteen apples.",
+      "hash": "d352be8f9d",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=14,thing=apples.mp3"
+    },
+    "k-math/findGroup/n=14,thing=stars": {
+      "text": "Tap the group with fourteen stars.",
+      "hash": "608a68086f",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=14,thing=stars.mp3"
+    },
+    "k-math/findGroup/n=14,thing=fish": {
+      "text": "Tap the group with fourteen fish.",
+      "hash": "dbbdf152f9",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=14,thing=fish.mp3"
+    },
+    "k-math/findGroup/n=14,thing=ducks": {
+      "text": "Tap the group with fourteen ducks.",
+      "hash": "2492dea478",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=14,thing=ducks.mp3"
+    },
+    "k-math/findGroup/n=14,thing=balls": {
+      "text": "Tap the group with fourteen balls.",
+      "hash": "a22f59fc2a",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=14,thing=balls.mp3"
+    },
+    "k-math/findGroup/n=14,thing=flowers": {
+      "text": "Tap the group with fourteen flowers.",
+      "hash": "5e7e72d9ff",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=14,thing=flowers.mp3"
+    },
+    "k-math/findGroup/n=14,thing=bees": {
+      "text": "Tap the group with fourteen bees.",
+      "hash": "05885bae2e",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=14,thing=bees.mp3"
+    },
+    "k-math/findGroup/n=14,thing=cars": {
+      "text": "Tap the group with fourteen cars.",
+      "hash": "2699440d60",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=14,thing=cars.mp3"
+    },
+    "k-math/findGroup/n=14,thing=cookies": {
+      "text": "Tap the group with fourteen cookies.",
+      "hash": "d4b7bf09cc",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=14,thing=cookies.mp3"
+    },
+    "k-math/findGroup/n=14,thing=frogs": {
+      "text": "Tap the group with fourteen frogs.",
+      "hash": "58fd1bb79d",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=14,thing=frogs.mp3"
+    },
+    "k-math/findGroup/n=15,thing=apples": {
+      "text": "Tap the group with fifteen apples.",
+      "hash": "ab3cf04892",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=15,thing=apples.mp3"
+    },
+    "k-math/findGroup/n=15,thing=stars": {
+      "text": "Tap the group with fifteen stars.",
+      "hash": "9a5fa0f7d4",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=15,thing=stars.mp3"
+    },
+    "k-math/findGroup/n=15,thing=fish": {
+      "text": "Tap the group with fifteen fish.",
+      "hash": "9185c3d45d",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=15,thing=fish.mp3"
+    },
+    "k-math/findGroup/n=15,thing=ducks": {
+      "text": "Tap the group with fifteen ducks.",
+      "hash": "9b86deac22",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=15,thing=ducks.mp3"
+    },
+    "k-math/findGroup/n=15,thing=balls": {
+      "text": "Tap the group with fifteen balls.",
+      "hash": "d5738a0743",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=15,thing=balls.mp3"
+    },
+    "k-math/findGroup/n=15,thing=flowers": {
+      "text": "Tap the group with fifteen flowers.",
+      "hash": "4a1b5f7663",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=15,thing=flowers.mp3"
+    },
+    "k-math/findGroup/n=15,thing=bees": {
+      "text": "Tap the group with fifteen bees.",
+      "hash": "45b03aef75",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=15,thing=bees.mp3"
+    },
+    "k-math/findGroup/n=15,thing=cars": {
+      "text": "Tap the group with fifteen cars.",
+      "hash": "bfddbf814f",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=15,thing=cars.mp3"
+    },
+    "k-math/findGroup/n=15,thing=cookies": {
+      "text": "Tap the group with fifteen cookies.",
+      "hash": "1ec48ccee5",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=15,thing=cookies.mp3"
+    },
+    "k-math/findGroup/n=15,thing=frogs": {
+      "text": "Tap the group with fifteen frogs.",
+      "hash": "4ab85a0456",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=15,thing=frogs.mp3"
+    },
+    "k-math/findGroup/n=16,thing=apples": {
+      "text": "Tap the group with sixteen apples.",
+      "hash": "ff21cabd68",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=16,thing=apples.mp3"
+    },
+    "k-math/findGroup/n=16,thing=stars": {
+      "text": "Tap the group with sixteen stars.",
+      "hash": "f6d3d8e44e",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=16,thing=stars.mp3"
+    },
+    "k-math/findGroup/n=16,thing=fish": {
+      "text": "Tap the group with sixteen fish.",
+      "hash": "fac391e056",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=16,thing=fish.mp3"
+    },
+    "k-math/findGroup/n=16,thing=ducks": {
+      "text": "Tap the group with sixteen ducks.",
+      "hash": "5ef5a50324",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=16,thing=ducks.mp3"
+    },
+    "k-math/findGroup/n=16,thing=balls": {
+      "text": "Tap the group with sixteen balls.",
+      "hash": "aa3a5ba20f",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=16,thing=balls.mp3"
+    },
+    "k-math/findGroup/n=16,thing=flowers": {
+      "text": "Tap the group with sixteen flowers.",
+      "hash": "46f46a797c",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=16,thing=flowers.mp3"
+    },
+    "k-math/findGroup/n=16,thing=bees": {
+      "text": "Tap the group with sixteen bees.",
+      "hash": "7c5806adea",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=16,thing=bees.mp3"
+    },
+    "k-math/findGroup/n=16,thing=cars": {
+      "text": "Tap the group with sixteen cars.",
+      "hash": "c60dd85541",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=16,thing=cars.mp3"
+    },
+    "k-math/findGroup/n=16,thing=cookies": {
+      "text": "Tap the group with sixteen cookies.",
+      "hash": "cff5912c1a",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=16,thing=cookies.mp3"
+    },
+    "k-math/findGroup/n=16,thing=frogs": {
+      "text": "Tap the group with sixteen frogs.",
+      "hash": "a99c954195",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=16,thing=frogs.mp3"
+    },
+    "k-math/findGroup/n=17,thing=apples": {
+      "text": "Tap the group with seventeen apples.",
+      "hash": "683a366a15",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=17,thing=apples.mp3"
+    },
+    "k-math/findGroup/n=17,thing=stars": {
+      "text": "Tap the group with seventeen stars.",
+      "hash": "03e20da779",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=17,thing=stars.mp3"
+    },
+    "k-math/findGroup/n=17,thing=fish": {
+      "text": "Tap the group with seventeen fish.",
+      "hash": "7874b36899",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=17,thing=fish.mp3"
+    },
+    "k-math/findGroup/n=17,thing=ducks": {
+      "text": "Tap the group with seventeen ducks.",
+      "hash": "dc5693b54b",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=17,thing=ducks.mp3"
+    },
+    "k-math/findGroup/n=17,thing=balls": {
+      "text": "Tap the group with seventeen balls.",
+      "hash": "95a5ff0332",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=17,thing=balls.mp3"
+    },
+    "k-math/findGroup/n=17,thing=flowers": {
+      "text": "Tap the group with seventeen flowers.",
+      "hash": "48355f4564",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=17,thing=flowers.mp3"
+    },
+    "k-math/findGroup/n=17,thing=bees": {
+      "text": "Tap the group with seventeen bees.",
+      "hash": "6335c82328",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=17,thing=bees.mp3"
+    },
+    "k-math/findGroup/n=17,thing=cars": {
+      "text": "Tap the group with seventeen cars.",
+      "hash": "0ea2f53540",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=17,thing=cars.mp3"
+    },
+    "k-math/findGroup/n=17,thing=cookies": {
+      "text": "Tap the group with seventeen cookies.",
+      "hash": "aa387b9c76",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=17,thing=cookies.mp3"
+    },
+    "k-math/findGroup/n=17,thing=frogs": {
+      "text": "Tap the group with seventeen frogs.",
+      "hash": "928534cfc6",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=17,thing=frogs.mp3"
+    },
+    "k-math/findGroup/n=18,thing=apples": {
+      "text": "Tap the group with eighteen apples.",
+      "hash": "c771e13e53",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=18,thing=apples.mp3"
+    },
+    "k-math/findGroup/n=18,thing=stars": {
+      "text": "Tap the group with eighteen stars.",
+      "hash": "46fd5cf6a5",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=18,thing=stars.mp3"
+    },
+    "k-math/findGroup/n=18,thing=fish": {
+      "text": "Tap the group with eighteen fish.",
+      "hash": "aeac6ed1ae",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=18,thing=fish.mp3"
+    },
+    "k-math/findGroup/n=18,thing=ducks": {
+      "text": "Tap the group with eighteen ducks.",
+      "hash": "25c7ba1b02",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=18,thing=ducks.mp3"
+    },
+    "k-math/findGroup/n=18,thing=balls": {
+      "text": "Tap the group with eighteen balls.",
+      "hash": "4772c1248c",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=18,thing=balls.mp3"
+    },
+    "k-math/findGroup/n=18,thing=flowers": {
+      "text": "Tap the group with eighteen flowers.",
+      "hash": "b69d2a485e",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=18,thing=flowers.mp3"
+    },
+    "k-math/findGroup/n=18,thing=bees": {
+      "text": "Tap the group with eighteen bees.",
+      "hash": "231c7c7d1a",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=18,thing=bees.mp3"
+    },
+    "k-math/findGroup/n=18,thing=cars": {
+      "text": "Tap the group with eighteen cars.",
+      "hash": "7cd354dfe7",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=18,thing=cars.mp3"
+    },
+    "k-math/findGroup/n=18,thing=cookies": {
+      "text": "Tap the group with eighteen cookies.",
+      "hash": "27a5c9a55c",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=18,thing=cookies.mp3"
+    },
+    "k-math/findGroup/n=18,thing=frogs": {
+      "text": "Tap the group with eighteen frogs.",
+      "hash": "3d44827e65",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=18,thing=frogs.mp3"
+    },
+    "k-math/findGroup/n=19,thing=apples": {
+      "text": "Tap the group with nineteen apples.",
+      "hash": "228f534a12",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=19,thing=apples.mp3"
+    },
+    "k-math/findGroup/n=19,thing=stars": {
+      "text": "Tap the group with nineteen stars.",
+      "hash": "85e54a16a3",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=19,thing=stars.mp3"
+    },
+    "k-math/findGroup/n=19,thing=fish": {
+      "text": "Tap the group with nineteen fish.",
+      "hash": "a9722edd5c",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=19,thing=fish.mp3"
+    },
+    "k-math/findGroup/n=19,thing=ducks": {
+      "text": "Tap the group with nineteen ducks.",
+      "hash": "3f9a8300cf",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=19,thing=ducks.mp3"
+    },
+    "k-math/findGroup/n=19,thing=balls": {
+      "text": "Tap the group with nineteen balls.",
+      "hash": "3fdd7c47c6",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=19,thing=balls.mp3"
+    },
+    "k-math/findGroup/n=19,thing=flowers": {
+      "text": "Tap the group with nineteen flowers.",
+      "hash": "4f9ec5b318",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=19,thing=flowers.mp3"
+    },
+    "k-math/findGroup/n=19,thing=bees": {
+      "text": "Tap the group with nineteen bees.",
+      "hash": "e561cde80a",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=19,thing=bees.mp3"
+    },
+    "k-math/findGroup/n=19,thing=cars": {
+      "text": "Tap the group with nineteen cars.",
+      "hash": "140695cfd7",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=19,thing=cars.mp3"
+    },
+    "k-math/findGroup/n=19,thing=cookies": {
+      "text": "Tap the group with nineteen cookies.",
+      "hash": "7204e3d3bc",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=19,thing=cookies.mp3"
+    },
+    "k-math/findGroup/n=19,thing=frogs": {
+      "text": "Tap the group with nineteen frogs.",
+      "hash": "4c1ade73bf",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=19,thing=frogs.mp3"
+    },
+    "k-math/findGroup/n=20,thing=apples": {
+      "text": "Tap the group with twenty apples.",
+      "hash": "e00b20c1f6",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=20,thing=apples.mp3"
+    },
+    "k-math/findGroup/n=20,thing=stars": {
+      "text": "Tap the group with twenty stars.",
+      "hash": "a88e04b42d",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=20,thing=stars.mp3"
+    },
+    "k-math/findGroup/n=20,thing=fish": {
+      "text": "Tap the group with twenty fish.",
+      "hash": "1b7c6d0781",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=20,thing=fish.mp3"
+    },
+    "k-math/findGroup/n=20,thing=ducks": {
+      "text": "Tap the group with twenty ducks.",
+      "hash": "fc6e80b6d6",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=20,thing=ducks.mp3"
+    },
+    "k-math/findGroup/n=20,thing=balls": {
+      "text": "Tap the group with twenty balls.",
+      "hash": "fd17b8405e",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=20,thing=balls.mp3"
+    },
+    "k-math/findGroup/n=20,thing=flowers": {
+      "text": "Tap the group with twenty flowers.",
+      "hash": "75699e3466",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=20,thing=flowers.mp3"
+    },
+    "k-math/findGroup/n=20,thing=bees": {
+      "text": "Tap the group with twenty bees.",
+      "hash": "3e847dd2be",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=20,thing=bees.mp3"
+    },
+    "k-math/findGroup/n=20,thing=cars": {
+      "text": "Tap the group with twenty cars.",
+      "hash": "3180dcb4d4",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=20,thing=cars.mp3"
+    },
+    "k-math/findGroup/n=20,thing=cookies": {
+      "text": "Tap the group with twenty cookies.",
+      "hash": "c7abe73535",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=20,thing=cookies.mp3"
+    },
+    "k-math/findGroup/n=20,thing=frogs": {
+      "text": "Tap the group with twenty frogs.",
+      "hash": "22db08b121",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=20,thing=frogs.mp3"
+    },
     "k-math/putInBowl/n=2,thing=apples": {
       "text": "Put two apples in the bowl.",
       "hash": "9a67e2b341",
@@ -1153,11 +2845,257 @@
       "kind": "whole",
       "file": "voice/k-math/putInBowl/n=10,thing=frogs.mp3"
     },
+    "k-shapes/tapFlat": {
+      "text": "Tap the shape that is flat.",
+      "hash": "258bcaf552",
+      "kind": "line",
+      "file": "voice/k-shapes/tapFlat.mp3"
+    },
+    "k-shapes/tapSolid": {
+      "text": "Tap the shape that is solid.",
+      "hash": "c94d02641b",
+      "kind": "line",
+      "file": "voice/k-shapes/tapSolid.mp3"
+    },
+    "k-shapes/sides3": {
+      "text": "Tap the shape with three sides.",
+      "hash": "7900168c66",
+      "kind": "line",
+      "file": "voice/k-shapes/sides3.mp3"
+    },
+    "k-shapes/sides4": {
+      "text": "Tap the shape with four sides.",
+      "hash": "d7dff86684",
+      "kind": "line",
+      "file": "voice/k-shapes/sides4.mp3"
+    },
+    "k-shapes/sides6": {
+      "text": "Tap the shape with six sides.",
+      "hash": "2fc2767b6a",
+      "kind": "line",
+      "file": "voice/k-shapes/sides6.mp3"
+    },
+    "k-shapes/noCorners": {
+      "text": "Tap the shape with no corners.",
+      "hash": "2c6c1f1c42",
+      "kind": "line",
+      "file": "voice/k-shapes/noCorners.mp3"
+    },
+    "k-shapes/youKnowShapes": {
+      "text": "You know your shapes!",
+      "hash": "91f647d6dd",
+      "kind": "line",
+      "file": "voice/k-shapes/youKnowShapes.mp3"
+    },
+    "k-shapes/shapeSpotter": {
+      "text": "Super shape spotting!",
+      "hash": "752abbda95",
+      "kind": "line",
+      "file": "voice/k-shapes/shapeSpotter.mp3"
+    },
+    "k-shapes/tapShape/shape=circle": {
+      "text": "Tap the circle.",
+      "hash": "e8fddcb3c3",
+      "kind": "whole",
+      "file": "voice/k-shapes/tapShape/shape=circle.mp3"
+    },
+    "k-shapes/tapShape/shape=square": {
+      "text": "Tap the square.",
+      "hash": "82cbc87fa2",
+      "kind": "whole",
+      "file": "voice/k-shapes/tapShape/shape=square.mp3"
+    },
+    "k-shapes/tapShape/shape=triangle": {
+      "text": "Tap the triangle.",
+      "hash": "2a266af3c2",
+      "kind": "whole",
+      "file": "voice/k-shapes/tapShape/shape=triangle.mp3"
+    },
+    "k-shapes/tapShape/shape=rectangle": {
+      "text": "Tap the rectangle.",
+      "hash": "e1f79b23f4",
+      "kind": "whole",
+      "file": "voice/k-shapes/tapShape/shape=rectangle.mp3"
+    },
+    "k-shapes/tapShape/shape=hexagon": {
+      "text": "Tap the hexagon.",
+      "hash": "25155ccd94",
+      "kind": "whole",
+      "file": "voice/k-shapes/tapShape/shape=hexagon.mp3"
+    },
+    "k-shapes/tapShape/shape=cube": {
+      "text": "Tap the cube.",
+      "hash": "c1ef2fc8bb",
+      "kind": "whole",
+      "file": "voice/k-shapes/tapShape/shape=cube.mp3"
+    },
+    "k-shapes/tapShape/shape=sphere": {
+      "text": "Tap the sphere.",
+      "hash": "f9c4781615",
+      "kind": "whole",
+      "file": "voice/k-shapes/tapShape/shape=sphere.mp3"
+    },
+    "k-shapes/tapShape/shape=cone": {
+      "text": "Tap the cone.",
+      "hash": "cf68735c73",
+      "kind": "whole",
+      "file": "voice/k-shapes/tapShape/shape=cone.mp3"
+    },
+    "k-shapes/tapShape/shape=cylinder": {
+      "text": "Tap the cylinder.",
+      "hash": "286daf28e4",
+      "kind": "whole",
+      "file": "voice/k-shapes/tapShape/shape=cylinder.mp3"
+    },
+    "k-shapes/label/shape=circle": {
+      "text": "circle!",
+      "hash": "f45c15e61f",
+      "kind": "whole",
+      "file": "voice/k-shapes/label/shape=circle.mp3"
+    },
+    "k-shapes/label/shape=square": {
+      "text": "square!",
+      "hash": "6ec90d9643",
+      "kind": "whole",
+      "file": "voice/k-shapes/label/shape=square.mp3"
+    },
+    "k-shapes/label/shape=triangle": {
+      "text": "triangle!",
+      "hash": "d65b5f65be",
+      "kind": "whole",
+      "file": "voice/k-shapes/label/shape=triangle.mp3"
+    },
+    "k-shapes/label/shape=rectangle": {
+      "text": "rectangle!",
+      "hash": "ddc0fe6ed0",
+      "kind": "whole",
+      "file": "voice/k-shapes/label/shape=rectangle.mp3"
+    },
+    "k-shapes/label/shape=hexagon": {
+      "text": "hexagon!",
+      "hash": "bacc3dc9e2",
+      "kind": "whole",
+      "file": "voice/k-shapes/label/shape=hexagon.mp3"
+    },
+    "k-shapes/label/shape=cube": {
+      "text": "cube!",
+      "hash": "0f02e71514",
+      "kind": "whole",
+      "file": "voice/k-shapes/label/shape=cube.mp3"
+    },
+    "k-shapes/label/shape=sphere": {
+      "text": "sphere!",
+      "hash": "0d5128e53f",
+      "kind": "whole",
+      "file": "voice/k-shapes/label/shape=sphere.mp3"
+    },
+    "k-shapes/label/shape=cone": {
+      "text": "cone!",
+      "hash": "fa0a6f811c",
+      "kind": "whole",
+      "file": "voice/k-shapes/label/shape=cone.mp3"
+    },
+    "k-shapes/label/shape=cylinder": {
+      "text": "cylinder!",
+      "hash": "69d10f8397",
+      "kind": "whole",
+      "file": "voice/k-shapes/label/shape=cylinder.mp3"
+    },
+    "k-shapes/howManySides/shape=triangle": {
+      "text": "How many sides does the triangle have?",
+      "hash": "f4bb41ef11",
+      "kind": "whole",
+      "file": "voice/k-shapes/howManySides/shape=triangle.mp3"
+    },
+    "k-shapes/howManySides/shape=square": {
+      "text": "How many sides does the square have?",
+      "hash": "2d1ae70ba5",
+      "kind": "whole",
+      "file": "voice/k-shapes/howManySides/shape=square.mp3"
+    },
+    "k-shapes/howManySides/shape=rectangle": {
+      "text": "How many sides does the rectangle have?",
+      "hash": "1f0309c058",
+      "kind": "whole",
+      "file": "voice/k-shapes/howManySides/shape=rectangle.mp3"
+    },
+    "k-shapes/howManySides/shape=hexagon": {
+      "text": "How many sides does the hexagon have?",
+      "hash": "4be3ac0909",
+      "kind": "whole",
+      "file": "voice/k-shapes/howManySides/shape=hexagon.mp3"
+    },
+    "k-shapes/isFlat/shape=circle": {
+      "text": "A circle is flat.",
+      "hash": "8791cae94f",
+      "kind": "whole",
+      "file": "voice/k-shapes/isFlat/shape=circle.mp3"
+    },
+    "k-shapes/isFlat/shape=square": {
+      "text": "A square is flat.",
+      "hash": "282d8db367",
+      "kind": "whole",
+      "file": "voice/k-shapes/isFlat/shape=square.mp3"
+    },
+    "k-shapes/isFlat/shape=triangle": {
+      "text": "A triangle is flat.",
+      "hash": "1be5d227fb",
+      "kind": "whole",
+      "file": "voice/k-shapes/isFlat/shape=triangle.mp3"
+    },
+    "k-shapes/isFlat/shape=rectangle": {
+      "text": "A rectangle is flat.",
+      "hash": "18c9830c12",
+      "kind": "whole",
+      "file": "voice/k-shapes/isFlat/shape=rectangle.mp3"
+    },
+    "k-shapes/isFlat/shape=hexagon": {
+      "text": "A hexagon is flat.",
+      "hash": "87845bc760",
+      "kind": "whole",
+      "file": "voice/k-shapes/isFlat/shape=hexagon.mp3"
+    },
+    "k-shapes/isSolid/shape=cube": {
+      "text": "A cube is solid.",
+      "hash": "49a8451450",
+      "kind": "whole",
+      "file": "voice/k-shapes/isSolid/shape=cube.mp3"
+    },
+    "k-shapes/isSolid/shape=sphere": {
+      "text": "A sphere is solid.",
+      "hash": "00f42eb62f",
+      "kind": "whole",
+      "file": "voice/k-shapes/isSolid/shape=sphere.mp3"
+    },
+    "k-shapes/isSolid/shape=cone": {
+      "text": "A cone is solid.",
+      "hash": "83a54c4e0a",
+      "kind": "whole",
+      "file": "voice/k-shapes/isSolid/shape=cone.mp3"
+    },
+    "k-shapes/isSolid/shape=cylinder": {
+      "text": "A cylinder is solid.",
+      "hash": "5adf941330",
+      "kind": "whole",
+      "file": "voice/k-shapes/isSolid/shape=cylinder.mp3"
+    },
     "listen/countTogether": {
       "text": "Let's count together.",
       "hash": "90a955fdcb",
       "kind": "line",
       "file": "voice/listen/countTogether.mp3"
+    },
+    "listen/countEach": {
+      "text": "Let's count each group.",
+      "hash": "68da855585",
+      "kind": "line",
+      "file": "voice/listen/countEach.mp3"
+    },
+    "listen/countSides": {
+      "text": "Let's count the sides.",
+      "hash": "fa5ab0e283",
+      "kind": "line",
+      "file": "voice/listen/countSides.mp3"
     },
     "listen/yourTurn": {
       "text": "Now you try!",
