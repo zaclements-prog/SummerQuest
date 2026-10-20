@@ -373,7 +373,7 @@ const TEMPLATES_MULT: Array<{
   },
   {
     build: (a, b) => ({
-      prompt: `There are ${a} cubbies in the hallway, and each cubby holds ${b} hats. How many hats are there in all?`,
+      prompt: `There are ${a} cubbies in the hallway, and each cubby fits ${b} hats. How many hats are there in all?`,
       answer: a * b,
       hint: `${a} cubbies × ${b} hats`,
     }),
@@ -387,7 +387,7 @@ const TEMPLATES_MULT: Array<{
   },
   {
     build: (a, b) => ({
-      prompt: `Felix bakes ${a} muffin tins, and each tin holds ${b} muffins. How many muffins does he bake in all?`,
+      prompt: `Felix fills ${a} muffin tins with ${b} muffins in each tin. How many muffins does he bake in all?`,
       answer: a * b,
       hint: `${a} tins × ${b} muffins`,
     }),
@@ -401,7 +401,7 @@ const TEMPLATES_MULT: Array<{
   },
   {
     build: (a, b) => ({
-      prompt: `Lucy sets out ${a} pots of basil, and each pot holds ${b} plants. How many basil plants does she set out in all?`,
+      prompt: `Lucy sets out ${a} pots of basil with ${b} plants in each pot. How many basil plants does she set out in all?`,
       answer: a * b,
       hint: `${a} pots × ${b} plants`,
     }),
@@ -422,7 +422,7 @@ const TEMPLATES_MULT: Array<{
   },
   {
     build: (a, b) => ({
-      prompt: `A hay wagon pulls ${a} carts, and each cart holds ${b} pumpkins. How many pumpkins are there in all?`,
+      prompt: `A hay wagon pulls ${a} carts with ${b} pumpkins stacked in each cart. How many pumpkins are there in all?`,
       answer: a * b,
       hint: `${a} carts × ${b} pumpkins`,
     }),
@@ -558,6 +558,48 @@ const TEMPLATES_DIV: Array<{
       prompt: `The gym class has ${dividend} children who split into teams of ${divisor} for parachute games. How many teams are there?`,
       answer: dividend / divisor,
       hint: `How many groups of ${divisor} fit into ${dividend}?`,
+    }),
+  },
+  {
+    build: (dividend, divisor) => ({
+      prompt: `Mr. Hale sets ${dividend} chairs in ${divisor} equal rows for the recital. How many chairs go in each row?`,
+      answer: dividend / divisor,
+      hint: `Split ${dividend} into ${divisor} equal rows.`,
+    }),
+  },
+  {
+    build: (dividend, divisor) => ({
+      prompt: `The animal shelter hands out ${dividend} treats equally to ${divisor} dogs. How many treats does each dog get?`,
+      answer: dividend / divisor,
+      hint: `Split ${dividend} into ${divisor} equal shares.`,
+    }),
+  },
+  {
+    build: (dividend, divisor) => ({
+      prompt: `Wren ties ${dividend} ribbons into bunches of ${divisor} for the bake sale. How many bunches can she tie?`,
+      answer: dividend / divisor,
+      hint: `How many groups of ${divisor} fit into ${dividend}?`,
+    }),
+  },
+  {
+    build: (dividend, divisor) => ({
+      prompt: `Nia sorts ${dividend} seashells into ${divisor} equal bags for her collection. How many seashells go in each bag?`,
+      answer: dividend / divisor,
+      hint: `Split ${dividend} into ${divisor} equal bags.`,
+    }),
+  },
+  {
+    build: (dividend, divisor) => ({
+      prompt: `The soccer club packs ${dividend} uniforms evenly into ${divisor} kit bags. How many uniforms go in each kit bag?`,
+      answer: dividend / divisor,
+      hint: `Split ${dividend} into ${divisor} equal kit bags.`,
+    }),
+  },
+  {
+    build: (dividend, divisor) => ({
+      prompt: `Grandpa shares ${dividend} garden stakes equally among ${divisor} flower beds. How many stakes go on each bed?`,
+      answer: dividend / divisor,
+      hint: `Split ${dividend} into ${divisor} equal beds.`,
     }),
   },
 ]
