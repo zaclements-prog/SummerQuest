@@ -11,7 +11,8 @@ import type { GameResult } from '../../../screens/GameRunner'
 import type { ProblemProvider } from '../../../lib/problem'
 import ListenPlay from '../ListenPlay'
 import { ListenResultCard } from '../ListenResultCard'
-import type { ListenProblem } from '../types'
+import { LISTEN_ACTIVITIES } from '../activities'
+import type { ListenActivityProps, ListenProblem } from '../types'
 
 ;(globalThis as unknown as { IS_REACT_ACT_ENVIRONMENT: boolean }).IS_REACT_ACT_ENVIRONMENT = true
 
@@ -172,6 +173,67 @@ describe('Listen & Play', () => {
     mount({ topic: 't', next: () => q }, () => {})
     await advance(50)
     expect(cards().map((c) => c.getAttribute('aria-label'))).toEqual(['3', '4'])
+  })
+})
+
+describe('Listen & Play activities (a question answered by doing, not by a card)', () => {
+  // a stand-in activity: two buttons, "right" and "wrong"; its help is counted
+  let helped = 0
+  const seen: { misses: number; active: boolean }[] = []
+  function FakeActivity({ active, misses, onAttempt, registerHelp }: ListenActivityProps) {
+    seen.push({ misses, active })
+    registerHelp(async () => {
+      helped++
+    })
+    return (
+      <>
+        <button data-fake="right" onClick={() => active && onAttempt(true)} />
+        <button data-fake="wrong" onClick={() => active && onAttempt(false)} />
+      </>
+    )
+  }
+  const q = (i: number): ListenProblem => ({ id: `a${i}`, prompt: '', options: [], answer: 'done', topic: 't', speech: { line: 'ui/tapToStart' }, activity: { kind: 'fake' } })
+  const fake = (which: 'right' | 'wrong') => container.querySelector<HTMLButtonElement>(`[data-fake="${which}"]`)!
+
+  beforeEach(() => {
+    helped = 0
+    seen.length = 0
+    LISTEN_ACTIVITIES.fake = { Component: FakeActivity }
+  })
+  afterEach(() => {
+    delete LISTEN_ACTIVITIES.fake
+  })
+
+  it('takes the stage instead of cards; asks with the activity lit; a miss runs its help, then another try', async () => {
+    let result: GameResult | null = null
+    let n = 0
+    mount({ topic: 't', next: () => q(n++) }, (r) => (result = r), 3)
+    await advance(50)
+    expect(cards()).toHaveLength(0)
+    expect(container.querySelector('[data-guide="lp-activity"]')?.getAttribute('data-activity')).toBe('fake')
+    const run = getGuideSnapshot().run!
+    expect(run.lines[0].text).toBe('Tap the star to start!')
+    expect(run.lines[0].marks.map((m) => m.target)).toEqual(['lp-activity'])
+
+    await advance(3000)
+    act(() => fake('wrong').click())
+    await advance(1000)
+    expect(getGuideSnapshot().run?.lines[0].text).toBe("Hmm, let's look again.")
+    await advance(4000)
+    expect(helped).toBe(1)
+    expect(container.querySelector('[data-phase]')!.getAttribute('data-phase')).toBe('ask')
+    expect(seen.at(-1)).toEqual({ misses: 1, active: true })
+
+    act(() => fake('right').click())
+    await advance(3000)
+    for (let i = 0; i < 2; i++) {
+      await advance(3000)
+      act(() => fake('right').click())
+      await advance(3000)
+    }
+    // first-try answers count, as with cards
+    expect(result).toEqual({ stars: 2, score: 20, correct: 2, total: 3 })
+    expect(useProgress.getState().stats.problemsAnswered).toBe(3)
   })
 })
 

@@ -3,6 +3,7 @@ import type { Zone } from './types'
 export const geometryZone: Zone = {
   id: 'geometry-grove',
   title: 'Geometry Grove',
+  titleByBand: { k1: 'Shape Grove' },
   subtitle: 'Shapes, lines & angles',
   emoji: '🔷',
   themeColor: 'island',
@@ -43,4 +44,40 @@ export const geometryZone: Zone = {
       starsToEarn: 3,
     },
   ],
+  stagesByBand: {
+    // K–1 "Shape Grove" (K.G.2–4): name flat shapes → flat or solid → a shape
+    // hunt (turned shapes, sides, corners). Titles and descriptions are said aloud.
+    k1: [
+      {
+        id: 'k-shapes-1',
+        kind: 'concept',
+        title: 'Name that shape',
+        description: 'Find the circle, the square and the triangle!',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kShapes', mode: 'name2d' },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-shapes-2',
+        kind: 'practice',
+        title: 'Flat or solid',
+        description: 'Flat like a circle, or solid like a ball?',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kShapes', mode: 'flatSolid' },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-shapes-3',
+        kind: 'mastery',
+        title: 'Shape hunt',
+        description: 'Count the sides and find every shape!',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kShapes', mode: 'hunt' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+    ],
+  },
 }

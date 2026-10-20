@@ -32,6 +32,13 @@ async function sample(config: Parameters<typeof createProvider>[0], n = SAMPLES)
 
 function expectWellFormed(p: Problem) {
   const where = `${p.prompt} | options ${JSON.stringify(p.options)} | answer ${JSON.stringify(p.answer)}`
+  // a K–1 question answered by an activity (trace, story order): no buttons, but a clean prompt and a coach skill
+  if ((p as { activity?: unknown }).activity) {
+    expect(p.answer, where).toBeTruthy()
+    expect(BAD_TEXT.test(`${p.prompt} ${p.answer}`), where).toBe(false)
+    expect(SKILLS[skillOf(p).id], `unregistered skill for ${where}`).toBeDefined()
+    return
+  }
   expect(p.options.length, where).toBeGreaterThanOrEqual(2)
   expect(p.options.filter((o) => o === p.answer).length, where).toBe(1)
   expect(new Set(p.options.map(String)).size, where).toBe(p.options.length)

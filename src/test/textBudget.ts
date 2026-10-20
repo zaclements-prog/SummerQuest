@@ -9,7 +9,10 @@ import { expect } from 'vitest'
  * - not inside `.sr-only`, `[hidden]`, `display: none` / `visibility: hidden`
  *   (inline), `<title>`/`<desc>`/`<script>`/`<style>`/`<template>`;
  * - a "word" has a letter in it: numerals ("7", "+12"), emoji and symbols are
- *   free (pictures and numbers are the K–1 vocabulary).
+ *   free (pictures and numbers are the K–1 vocabulary);
+ * - a letter drawn as a picture (`[data-glyph]`: the B on a letter tile in
+ *   "Tap the letter B") is what the child is learning to recognise, not a
+ *   word to read, so it is free too.
  *
  *   render(<ListenPlay … />)
  *   expectTextBudget(container, 2)   // K: about 0–2 words
@@ -21,6 +24,7 @@ function hiddenEl(el: Element): boolean {
   if (SKIP_TAGS.has(el.tagName.toUpperCase())) return true
   if (el.hasAttribute('hidden')) return true
   if (el.classList.contains('sr-only')) return true
+  if (el.hasAttribute('data-glyph')) return true
   const style = (el as HTMLElement).style
   if (style && (style.display === 'none' || style.visibility === 'hidden')) return true
   return false

@@ -13,14 +13,18 @@ export function SayAgainButton({
   disabled = false,
   className = '',
   label = 'Say it again',
+  speaking: speakingProp,
 }: {
   /** Instead of replaying the guide's last line. */
   onPress?: () => void
   disabled?: boolean
   className?: string
   label?: string
+  /** The waves move while this is true (default: while the guide talks); e.g. a lesson's narration. */
+  speaking?: boolean
 }) {
-  const speaking = useGuideSpeaking()
+  const guideSpeaking = useGuideSpeaking()
+  const speaking = speakingProp ?? guideSpeaking
   return (
     <button
       type="button"

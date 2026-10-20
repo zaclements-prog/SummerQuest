@@ -200,5 +200,95 @@
       "stepId": "plants",
       "text": "Plants make their own food! Leaves catch sunlight, roots soak up water, and leaves take in a gas called carbon dioxide. Using the sun’s energy, the plant turns them into sugar, and gives off the oxygen we breathe. That’s photosynthesis!"
     }
+  ],
+  "kCounting": [
+    {
+      "stepId": "touch",
+      "text": "Let's count the apples. Touch each apple one time. One. Two. Three. Four."
+    },
+    {
+      "stepId": "last",
+      "text": "The last number tells how many. We stopped at four. So there are four apples!"
+    },
+    {
+      "stepId": "fish",
+      "text": "Your turn! Here come some fish. Count them with your finger."
+    },
+    {
+      "stepId": "three",
+      "text": "This is the number three. Three is one, two, three. Let's find three!"
+    }
+  ],
+  "kShapes": [
+    {
+      "stepId": "triangle",
+      "text": "This is a triangle. It has three straight sides. And three pointy corners!"
+    },
+    {
+      "stepId": "square",
+      "text": "This is a square. It has four sides, all the same size. And four corners!"
+    },
+    {
+      "stepId": "circle",
+      "text": "This is a circle. It goes round and round. No sides, and no corners!"
+    },
+    {
+      "stepId": "solid",
+      "text": "Some shapes are flat, like a square on paper. Some shapes are solid, like a box. This solid shape is a cube!"
+    }
+  ],
+  "kLetters": [
+    {
+      "stepId": "names",
+      "text": "Letters have names! Here is the letter A. Here is B. And here is C."
+    },
+    {
+      "stepId": "bigLittle",
+      "text": "Letters come big and little. This is big B. This is little b. They are both B!"
+    },
+    {
+      "stepId": "sounds",
+      "text": "Listen to how these words start. Ball. Bear. Bus. They all start with B!"
+    },
+    {
+      "stepId": "yourTurn",
+      "text": "Your turn! Listen to the start of each word. Does it start like ball?"
+    }
+  ],
+  "kRhymes": [
+    {
+      "stepId": "rhyme",
+      "text": "Listen to the end of each word. Cat. Hat. Bat. They sound the same at the end. They rhyme!"
+    },
+    {
+      "stepId": "moon",
+      "text": "Moon and spoon rhyme, too. Moon, spoon! Now you find a rhyme."
+    },
+    {
+      "stepId": "parts",
+      "text": "Words have parts. Let's clap them! Ti… ger. Tiger has two claps!"
+    },
+    {
+      "stepId": "yourTurn",
+      "text": "Your turn! Clap the parts of banana. Ba… na… na!"
+    }
+  ],
+  "kTracing": [
+    {
+      "stepId": "dot",
+      "text": "Let's trace! Find the green dot. That is where we start."
+    },
+    {
+      "stepId": "lineL",
+      "text": "Follow the arrow. Big line down. Then a little line across. That's L!"
+    },
+    {
+      "stepId": "aroundO",
+      "text": "Now O. Start at the green dot. Go around like a C. Keep going, all the way around. That's O!"
+    },
+    {
+      "stepId": "yourTurn",
+      "text": "Your turn! Start at the dot, and follow the arrow. You can do it!"
+    }
   ]
 }

@@ -44,6 +44,27 @@ export const SKILLS: Record<string, SkillMeta> = {
   // science-summit (practice-kind stages are science-cycle and science-4th)
   'sci-explore': { label: 'science', zoneId: 'science-summit', lessonId: 'science', practiceStageId: 'science-4th' },
   'sci-water-cycle': { label: 'the water cycle', zoneId: 'science-summit', lessonId: 'science', practiceStageId: 'science-cycle' },
+  // ── K–1 (the `k1` stage sets; lessons kCounting / kShapes / kLetters) ──
+  // Counting Mesa
+  'k-count':   { label: 'counting to 20', zoneId: 'multiplication-mesa', lessonId: 'kCounting', practiceStageId: 'k-count-1' },
+  'k-compare': { label: 'more, fewer and the same', zoneId: 'multiplication-mesa', lessonId: 'kCounting', practiceStageId: 'k-count-3' },
+  // Shape Grove
+  'k-shapes-2d':    { label: 'naming flat shapes', zoneId: 'geometry-grove', lessonId: 'kShapes', practiceStageId: 'k-shapes-1' },
+  'k-shapes-3d':    { label: 'flat and solid shapes', zoneId: 'geometry-grove', lessonId: 'kShapes', practiceStageId: 'k-shapes-2' },
+  'k-shapes-sides': { label: 'sides and corners', zoneId: 'geometry-grove', lessonId: 'kShapes', practiceStageId: 'k-shapes-3' },
+  // Letter Reef
+  'k-letters-names':  { label: 'letter names', zoneId: 'reading-reef', lessonId: 'kLetters', practiceStageId: 'k-letters-1' },
+  'k-letters-case':   { label: 'big and little letters', zoneId: 'reading-reef', lessonId: 'kLetters', practiceStageId: 'k-letters-2' },
+  'k-letters-sounds': { label: 'first sounds', zoneId: 'reading-reef', lessonId: 'kLetters', practiceStageId: 'k-letters-3' },
+  'k-rhymes':         { label: 'rhyming words', zoneId: 'reading-reef', lessonId: 'kRhymes', practiceStageId: 'k-rhyme-1' },
+  'k-syllables':      { label: 'word parts', zoneId: 'reading-reef', lessonId: 'kRhymes', practiceStageId: 'k-syllables-1' },
+  'k-blending':       { label: 'putting sounds together', zoneId: 'reading-reef', lessonId: 'kLetters', practiceStageId: 'k-blend-1' },
+  'k-sight-words':    { label: 'sight words', zoneId: 'reading-reef', lessonId: 'kLetters', practiceStageId: 'k-sight-1' },
+  // Writing Workshop (K literacy; lesson kTracing)
+  'k-trace-lines':   { label: 'tracing lines and curves', zoneId: 'writing-workshop', lessonId: 'kTracing', practiceStageId: 'k-trace-1' },
+  'k-trace-numbers': { label: 'writing numbers', zoneId: 'writing-workshop', lessonId: 'kTracing', practiceStageId: 'k-trace-2' },
+  'k-trace-letters': { label: 'writing capital letters', zoneId: 'writing-workshop', lessonId: 'kTracing', practiceStageId: 'k-trace-3' },
+  'k-story-order':   { label: 'telling a story in order', zoneId: 'writing-workshop', lessonId: 'kTracing', practiceStageId: 'k-story-1' },
 }
 
 export interface Skill { id: string; label: string }

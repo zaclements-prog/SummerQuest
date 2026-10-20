@@ -1,7 +1,7 @@
 // @vitest-environment node
 // (node env: jsdom's `crypto` has no `subtle`, Node's Web Crypto does.)
 import { describe, it, expect } from 'vitest'
-import { allLessons } from '../lessons'
+import { everyLesson } from '../lessons'
 import narrationJson from '../narration.json'
 import manifestJson from '../../../public/tts/manifest.json'
 import voiceJson from '../narrationVoice.json'
@@ -32,12 +32,12 @@ async function clipHash(text: string): Promise<string> {
 /** What scripts/dump-narration.mjs would write for the current lessons. */
 function dumpedNarration(): Narration {
   const out: Narration = {}
-  for (const l of allLessons) out[l.id] = l.steps.map((s) => ({ stepId: s.id, text: s.narration }))
+  for (const l of everyLesson) out[l.id] = l.steps.map((s) => ({ stepId: s.id, text: s.narration }))
   return out
 }
 
 const currentText = new Map<string, string>()
-for (const l of allLessons) for (const s of l.steps) currentText.set(`${l.id}/${s.id}`, s.narration)
+for (const l of everyLesson) for (const s of l.steps) currentText.set(`${l.id}/${s.id}`, s.narration)
 
 describe('narration sync', () => {
   it('narration.json matches the lessons (run `npm run tts` after editing narration)', () => {
@@ -45,7 +45,7 @@ describe('narration sync', () => {
   })
 
   it('lesson step ids are unique within each lesson (they key the audio clips)', () => {
-    for (const l of allLessons) {
+    for (const l of everyLesson) {
       const ids = l.steps.map((s) => s.id)
       expect(new Set(ids).size, `duplicate step id in ${l.id}`).toBe(ids.length)
     }

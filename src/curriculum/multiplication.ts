@@ -3,6 +3,7 @@ import type { Zone } from './types'
 export const multiplicationZone: Zone = {
   id: 'multiplication-mesa',
   title: 'Multiplication Mesa',
+  titleByBand: { k1: 'Counting Mesa' },
   subtitle: 'Times tables',
   emoji: '🏜️',
   themeColor: 'quest',
@@ -44,4 +45,43 @@ export const multiplicationZone: Zone = {
       starsToEarn: 3,
     },
   ],
+  stagesByBand: {
+    // K–1 "Counting Mesa" (K.CC): count to 10 → count on to 20 in the parade →
+    // compare groups and numerals to 10. Titles and descriptions are said aloud.
+    k1: [
+      {
+        id: 'k-count-1',
+        kind: 'concept',
+        title: 'Count with me',
+        description: 'Count the things, then tap the number.',
+        gameId: 'listenPlay',
+        // the last of the 5: "You counted 6! Now trace a 6." (Writing Workshop's trace activity)
+        providerConfig: { kind: 'kCounting', mode: 'count', min: 1, max: 10, traceLast: 5 },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-count-parade',
+        kind: 'practice',
+        title: 'Critter Parade',
+        description: 'Tap the gate that gives you more friends!',
+        gameId: 'critterParade',
+        // (the parade counts on to 20; its own questions — the provider only names the topic)
+        providerConfig: { kind: 'kCounting', mode: 'count', min: 1, max: 20 },
+        // K–1 gates: the grade's band picks the dots + and − set (lib/gates opSetFor), spoken, no clock
+        params: { ops: 'add' },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-count-3',
+        kind: 'mastery',
+        title: 'More or fewer',
+        description: 'Which group has more? Which number is bigger?',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kCounting', mode: 'compare', min: 1, max: 10 },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+    ],
+  },
 }

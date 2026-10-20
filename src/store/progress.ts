@@ -125,6 +125,8 @@ interface ProgressState {
   petsSeen: Record<string, PetGrowth>
   /** The pet that follows you in the World (null: none). The first pet to hatch becomes it. */
   buddyPet: string | null
+  /** K–1 guided tours already given (e.g. 'world'): each plays once, then 🔊 brings it back. */
+  toursSeen: string[]
 
   // actions
   setAvatar: (avatar: AvatarChoice) => void
@@ -166,25 +168,29 @@ interface ProgressState {
   markPetsSeen: (seen: Record<string, PetGrowth>) => void
   /** Choose the World buddy (a hatched pet), or null to leave every pet at home. */
   setBuddyPet: (creatureId: string | null) => void
+  /** A K–1 guided tour has been given (it doesn't play by itself again). */
+  markTourSeen: (id: string) => void
 }
 
 type PetSlice = Pick<ProgressState, 'zones' | 'lessonsDone' | 'ownedCreatures' | 'buddyPet'> & {
-  /** The grade picks each zone's stage set (and so each pet's growth); missing: the default. */
+  /** The child's grade (it no longer changes a pet's stage: kept for callers that pass a whole state). */
   player?: Pick<AvatarChoice, 'grade'> | null
 }
 
 /**
  * What changes when progress grows the pets: grown-up pets join the avatars,
  * and the very first pet to hatch becomes the World buddy (unless one is set).
- * `before` is the state the change started from. Pets grow from the stages of
- * the child's grade (`zoneStages`); a grown-up pet stays an avatar for good.
+ * `before` is the state the change started from. A pet's stage is the best it
+ * reaches in any of its zone's bands (lib/pets/growth), so new stars or a
+ * finished lesson (2–4 or K–1) can grow it, and a grade change never shrinks
+ * it; a grown-up pet stays an avatar for good.
  */
 export function petSyncPatch(before: PetSlice, after: PetSlice): Partial<Pick<PetSlice, 'ownedCreatures' | 'buddyPet'>> {
-  const stages = petStages(after.zones, after.lessonsDone, after.player?.grade)
+  const stages = petStages(after.zones, after.lessonsDone, null)
   const patch: Partial<Pick<PetSlice, 'ownedCreatures' | 'buddyPet'>> = {}
   const newAdults = adultPets(stages).filter((id) => !after.ownedCreatures.includes(id))
   if (newAdults.length) patch.ownedCreatures = [...after.ownedCreatures, ...newAdults]
-  if (after.buddyPet == null && hatchedPets(petStages(before.zones, before.lessonsDone, before.player?.grade)).length === 0) {
+  if (after.buddyPet == null && hatchedPets(petStages(before.zones, before.lessonsDone, null)).length === 0) {
     const first = hatchedPets(stages)[0]
     if (first) patch.buddyPet = first
   }
@@ -224,6 +230,7 @@ export const useProgress = create<ProgressState>()(
       lessonsDone: {},
       petsSeen: {},
       buddyPet: null,
+      toursSeen: [],
 
       setAvatar: (avatar) => set({ player: avatar }),
 
@@ -232,7 +239,7 @@ export const useProgress = create<ProgressState>()(
         const p = before.player
         if (!p) return
         // Stars are kept per stage id, so nothing is lost: a new band's zones
-        // just read their own stages (and pets grown there join the avatars).
+        // just read their own stages. Pets and badges keep their best band.
         const player = { ...p, grade }
         set({ player, ...petSyncPatch(before, { ...before, player }) })
       },
@@ -267,6 +274,7 @@ export const useProgress = create<ProgressState>()(
           lessonsDone: {},
           petsSeen: {},
           buddyPet: null,
+          toursSeen: [],
           // (soundEnabled and graphicsQuality are device settings: kept)
         }),
 
@@ -444,6 +452,10 @@ export const useProgress = create<ProgressState>()(
         if (!petById(creatureId) || petStages(zones, lessonsDone, player?.grade)[creatureId] === 'egg') return
         set({ buddyPet: creatureId })
       },
+      markTourSeen: (id) => {
+        if (!id || get().toursSeen.includes(id)) return
+        set({ toursSeen: [...get().toursSeen, id] })
+      },
 
       recordSession: (rec) => {
         const at = rec.at ?? Date.now()
@@ -534,6 +546,8 @@ export const useProgress = create<ProgressState>()(
           ownedCreatures: Array.isArray(p.ownedCreatures)
             ? p.ownedCreatures.filter((id): id is string => typeof id === 'string')
             : c.ownedCreatures,
+          // K–1 tours: saves from before them (or a bad value) have seen none.
+          toursSeen: Array.isArray(p.toursSeen) ? p.toursSeen.filter((id): id is string => typeof id === 'string') : c.toursSeen,
         }
       },
     },

@@ -1,5 +1,6 @@
-import { curriculum, zoneStages } from '../curriculum'
+import { curriculum } from '../curriculum'
 import type { GradeLevel } from './gradeTiers'
+import { zoneStageSets } from './pets/growth'
 
 /**
  * Badge / achievement catalog. Every badge is DERIVED from progress the game
@@ -31,9 +32,10 @@ export interface BadgeCtx {
   /** Cumulative coins ever earned (monotonic) so a "collector" badge can't be un-earned by spending. */
   totalCoinsEarned: number
   /**
-   * The child's grade (`player.grade`): zone badges ask for every stage of the
-   * zone's set for this grade (`zoneStages`). Star / stage milestones count
-   * every band's stars.
+   * The child's grade (`player.grade`). Badges are the same at every grade: a
+   * zone badge is earned by a star on every stage of ANY of the zone's stage
+   * sets (2–4, or K–1 / 5 once authored), so changing grade never takes one
+   * away; star / stage milestones count every band's stars.
    */
   grade: GradeLevel | null | undefined
 }
@@ -58,13 +60,12 @@ function clearedStages(zone?: { stages: Record<string, { stars: number }> }): nu
   return Object.values(zone.stages).filter((s) => s.stars > 0).length
 }
 
-/** A star on every stage of the zone's set for the child's grade (another band's stars don't count). */
+/** A star on every stage of one of the zone's stage sets (any band: like a pet, a badge never shrinks). */
 function zoneMastered(ctx: BadgeCtx, zoneId: string): boolean {
   const zone = curriculum.zones.find((z) => z.id === zoneId)
   if (!zone) return false
-  const stages = zoneStages(zone, ctx.grade)
   const progress = ctx.zones[zoneId]
-  return stages.length > 0 && stages.every((s) => (progress?.stages[s.id]?.stars ?? 0) > 0)
+  return zoneStageSets(zone).some((stages) => stages.length > 0 && stages.every((s) => (progress?.stages[s.id]?.stars ?? 0) > 0))
 }
 
 function totalStars(ctx: BadgeCtx): number {

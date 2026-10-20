@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
-import { curriculum, getStage, getZone, zoneStages, type Stage } from '..'
+import { curriculum, getStage, getZone, zoneStages, zoneTitle, type Stage } from '..'
 import { GRADE_LEVELS } from '../../lib/gradeTiers'
 import { isStageUnlocked, playableStageId } from '../../lib/stageLocks'
 import { petStatus, zoneStarTotals } from '../../lib/pets/growth'
@@ -9,13 +9,19 @@ import { computeBadges } from '../../lib/badges'
 import { pickTodaysChallenge } from '../../lib/daily'
 import { localDayKey } from '../../lib/dates'
 import { zoneStageRows } from '../../world/hubContent'
+import { isZoneSleeping } from '../../lib/listenNav'
+import { TRACE_ROUND } from '../../lib/providers/kTrace'
 import { useProgress, zoneMastered, zoneStars } from '../../store/progress'
+import { createProvider } from '../../lib/providers'
+import type { ListenProblem } from '../../games/listenPlay/types'
 
 /*
  * Band-aware stage sets: a zone plays `stagesByBand.k1` at K–1 and
  * `stagesByBand.g5` at 5th grade once they're authored, and its 2nd–4th grade
  * `stages` otherwise. Every reader goes through `zoneStages(zone, grade)`.
- * None is authored yet, so these tests hang a fake set on a real zone.
+ * Most of these tests hang a fake set on a real zone (Multiplication Mesa's
+ * own K–1 set is put aside meanwhile); the last block checks the real K–1
+ * pilot sets.
  */
 
 const ZONE = 'multiplication-mesa'
@@ -39,14 +45,19 @@ const progressOf = (stars: Record<string, number>) => ({
 })
 const allG24 = (n: number) => Object.fromEntries(G24.map((s) => [s.id, n]))
 
-afterEach(() => {
+// Multiplication Mesa's real band sets, put back after each test that swaps in a fake one
+const MESA_BANDS = mesa.stagesByBand
+beforeEach(() => {
   delete mesa.stagesByBand
+})
+afterEach(() => {
+  mesa.stagesByBand = MESA_BANDS
 })
 
 describe('zoneStages', () => {
   it('falls back to the 2nd–4th grade stages while a band has no set (every zone, every grade)', () => {
     for (const zone of curriculum.zones) {
-      for (const g of GRADE_LEVELS) expect(zoneStages(zone, g)).toBe(zone.stages)
+      for (const g of GRADE_LEVELS) if (!zone.stagesByBand?.k1 || g >= 2) expect(zoneStages(zone, g)).toBe(zone.stages)
       expect(zoneStages(zone, null)).toBe(zone.stages)
       expect(zoneStages(zone, undefined)).toBe(zone.stages)
     }
@@ -94,7 +105,7 @@ describe('readers follow the current band', () => {
     expect(playableStageId(mesa, G24[1].id, progressOf({ [G24[0].id]: 2 }), 3)).toBe(G24[1].id)
   })
 
-  it('zone star totals, the pet and zone mastery use the current band', () => {
+  it('zone star totals use the current band; a pet keeps its best band', () => {
     mesa.stagesByBand = { k1: K1 }
     const lion = petById('lion')!
     const zones = { [ZONE]: progressOf(allG24(3)) }
@@ -102,18 +113,20 @@ describe('readers follow the current band', () => {
     expect(zoneStarTotals(mesa, zones[ZONE], 3)).toEqual({ earned: 9, total: 9, complete: true })
     expect(zoneStarTotals(mesa, zones[ZONE], 0)).toEqual({ earned: 0, total: 6, complete: false })
     expect(petStatus(lion, zones, {}, 3).stage).toBe('adult')
-    expect(petStatus(lion, zones, {}, 0)).toMatchObject({ stage: 'egg', stars: 0, total: 6 })
+    // grown up in 2–4 stays grown up at K (its K stars still count from 0)
+    expect(petStatus(lion, zones, {}, 0)).toMatchObject({ stage: 'adult', stars: 0, total: 6, next: null })
 
-    // K's own stars grow the pet at K (5 of 6 make a kid, all 6 a grown-up)
-    const withK = { [ZONE]: progressOf({ ...allG24(3), 'count-k-1': 3, 'count-k-2': 2 }) }
-    expect(petStatus(lion, withK, {}, 0)).toMatchObject({ stage: 'kid', stars: 5 })
-    withK[ZONE].stages['count-k-2'].stars = 3
-    expect(petStatus(lion, withK, {}, 1).stage).toBe('adult')
+    // K's own stars grow the pet at K too (5 of 6 make a kid, all 6 a grown-up)
+    const kOnly = { [ZONE]: progressOf({ 'count-k-1': 3, 'count-k-2': 2 }) }
+    expect(petStatus(lion, kOnly, {}, 0)).toMatchObject({ stage: 'kid', stars: 5 })
+    expect(petStatus(lion, kOnly, {}, 3)).toMatchObject({ stage: 'kid', stars: 0, next: { stage: 'adult', more: 9 } })
+    kOnly[ZONE].stages['count-k-2'].stars = 3
+    expect(petStatus(lion, kOnly, {}, 1).stage).toBe('adult')
     // …and never leak into the 2–4 totals
     expect(zoneStarTotals(mesa, progressOf({ 'count-k-1': 3, 'count-k-2': 3 }), 3).earned).toBe(0)
   })
 
-  it('zone badges ask for every stage of the current band; star milestones count every band', () => {
+  it('a zone badge takes every stage of any one band (it never goes away on a grade change); star milestones count every band', () => {
     mesa.stagesByBand = { k1: K1 }
     const ctx = (grade: 0 | 3, stars: Record<string, number>) => ({
       zones: { [ZONE]: progressOf(stars) },
@@ -123,24 +136,29 @@ describe('readers follow the current band', () => {
     })
     const badge = (c: ReturnType<typeof ctx>, id: string) => computeBadges(c).find((b) => b.id === id)!.earned
     expect(badge(ctx(3, allG24(1)), 'zone-multiplication-mesa')).toBe(true)
-    expect(badge(ctx(0, allG24(1)), 'zone-multiplication-mesa')).toBe(false)
+    expect(badge(ctx(0, allG24(1)), 'zone-multiplication-mesa')).toBe(true)
     expect(badge(ctx(0, { 'count-k-1': 1, 'count-k-2': 1 }), 'zone-multiplication-mesa')).toBe(true)
-    expect(badge(ctx(3, { 'count-k-1': 1, 'count-k-2': 1 }), 'zone-multiplication-mesa')).toBe(false)
+    expect(badge(ctx(3, { 'count-k-1': 1, 'count-k-2': 1 }), 'zone-multiplication-mesa')).toBe(true)
+    // half of each band is neither (bands never add up)
+    expect(badge(ctx(0, { [G24[0].id]: 1, [G24[1].id]: 1, 'count-k-1': 1 }), 'zone-multiplication-mesa')).toBe(false)
     // "Perfect!" (3 stars on any stage) still counts a star earned in another band
     expect(badge(ctx(0, { [G24[0].id]: 3 }), 'perfect')).toBe(true)
   })
 
   it('the Daily Challenge and the World panel use the band’s set', () => {
     mesa.stagesByBand = { k1: K1 }
-    // a day whose challenge is this zone (the zone pick is the same at every grade)
-    let day = ''
-    for (let d = 0; d < 366 && !day; d++) {
-      const key = localDayKey(new Date(2026, 0, 1 + d))
-      if (pickTodaysChallenge(0, key).zone.id === ZONE) day = key
+    // a day whose challenge is this zone, at this grade (K–1 picks from fewer zones)
+    const dayFor = (grade: 0 | 3) => {
+      for (let d = 0; d < 366; d++) {
+        const key = localDayKey(new Date(2026, 0, 1 + d))
+        if (pickTodaysChallenge(grade, key).zone.id === ZONE) return key
+      }
+      return ''
     }
-    expect(day).not.toBe('')
-    expect(K1).toContain(pickTodaysChallenge(0, day).stage)
-    expect(pickTodaysChallenge(3, day).stage).toBe(G24[0])
+    expect(dayFor(0)).not.toBe('')
+    expect(dayFor(3)).not.toBe('')
+    expect(K1).toContain(pickTodaysChallenge(0, dayFor(0)).stage)
+    expect(pickTodaysChallenge(3, dayFor(3)).stage).toBe(G24[0])
 
     const k = zoneStageRows(ZONE, { zones: {}, grade: 0 })
     expect(k.map((r) => [r.stageId, r.locked])).toEqual([['count-k-1', false], ['count-k-2', true]])
@@ -191,5 +209,145 @@ describe('changing grade', () => {
       expect(zoneStars(ZONE)).toBe(6)
       expect(zoneMastered(ZONE)).toBe(true)
     }
+  })
+})
+
+describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
+  // (the top-level beforeEach puts Multiplication Mesa's set aside: bring it back)
+  beforeEach(() => {
+    mesa.stagesByBand = MESA_BANDS
+  })
+
+  const K1_IDS: Record<string, string[]> = {
+    'multiplication-mesa': ['k-count-1', 'k-count-parade', 'k-count-3'],
+    'geometry-grove': ['k-shapes-1', 'k-shapes-2', 'k-shapes-3'],
+    // the pilot's three letter stages, with the literacy stages between them (phase-1b contract)
+    'reading-reef': ['k-letters-1', 'k-rhyme-1', 'k-letters-2', 'k-syllables-1', 'k-letters-3', 'k-rhyme-2', 'k-blend-1', 'k-sight-1'],
+    // (K literacy, phase 1b: Writing Workshop wakes up as the fourth K zone)
+    'writing-workshop': ['k-trace-1', 'k-trace-2', 'k-trace-3', 'k-story-1'],
+  }
+  const K1_TITLES: Record<string, string> = {
+    'multiplication-mesa': 'Counting Mesa',
+    'geometry-grove': 'Shape Grove',
+    'reading-reef': 'Letter Reef',
+  }
+
+  it('kindergarten and 1st grade see the K–1 stage sets; 2nd–5th grade still see today’s', () => {
+    for (const zone of curriculum.zones) {
+      for (const g of [0, 1] as const) {
+        const ids = zoneStages(zone, g).map((s) => s.id)
+        // (zones without a K–1 set fall back to their 2–4 stages; the World shows them as still sleeping)
+        expect(ids, `${zone.id} at grade ${g}`).toEqual(K1_IDS[zone.id] ?? zone.stages.map((s) => s.id))
+      }
+      for (const g of [2, 3, 4, 5] as const) expect(zoneStages(zone, g)).toBe(zone.stages)
+    }
+    // today's 2–4 stage ids, unchanged
+    expect(getZone('multiplication-mesa')!.stages.map((s) => s.id)).toEqual(['mult-concept', 'mult-practice', 'mult-mastery'])
+    expect(getZone('geometry-grove')!.stages.map((s) => s.id)).toEqual(['geo-shapes', 'geo-angles', 'geo-mastery'])
+    expect(getZone('reading-reef')!.stages.map((s) => s.id)).toEqual(['read-3rd', 'read-4th', 'read-mastery'])
+    expect(getZone('writing-workshop')!.stages.map((s) => s.id)).toEqual(['write-sentence', 'write-paragraph', 'write-story'])
+    for (const ids of Object.values(K1_IDS)) for (const id of ids) expect(getStage(Object.keys(K1_IDS).find((z) => K1_IDS[z] === ids)!, id, 3)).toBeUndefined()
+  })
+
+  it('every K–1 stage is a voice-first game of 5–6 items with 3 stars, the parade with K–1 gates', () => {
+    const all = Object.keys(K1_IDS).flatMap((z) => zoneStages(getZone(z)!, 0))
+    expect(new Set(all.map((s) => s.id)).size).toBe(Object.values(K1_IDS).flat().length)
+    for (const s of all) {
+      expect(s.starsToEarn, s.id).toBe(3)
+      expect(s.title.length, s.id).toBeGreaterThan(0)
+      // titles and descriptions are said aloud: short, plain sentences
+      expect(s.description.split(' ').length, s.id).toBeLessThanOrEqual(10)
+      expect(s.description, s.id).toMatch(/[.!?]$/)
+      if (s.id === 'k-count-parade') {
+        expect(s.gameId).toBe('critterParade')
+        expect(s.params?.ops).not.toBe('div')
+        continue
+      }
+      expect(s.gameId, s.id).toBe('listenPlay')
+      expect(s.params?.questionCount, s.id).toBeGreaterThanOrEqual(5)
+      expect(s.params?.questionCount, s.id).toBeLessThanOrEqual(6)
+    }
+    expect(all.map((s) => s.providerConfig.kind)).toEqual([
+      ...['kCounting', 'kCounting', 'kCounting', 'kShapes', 'kShapes', 'kShapes'],
+      ...['kLetters', 'kLiteracy', 'kLetters', 'kLiteracy', 'kLetters', 'kLiteracy', 'kLiteracy', 'kLiteracy'],
+      ...['kTrace', 'kTrace', 'kTrace', 'kStories'],
+    ])
+    // the counting stages climb: count to 10, count on to 20 (the parade), then compare
+    expect(all.slice(0, 3).map((s) => s.providerConfig)).toMatchObject([
+      { mode: 'count', max: 10 },
+      { mode: 'count', max: 20 },
+      { mode: 'compare', max: 10 },
+    ])
+    // Count with me ends with a trace of the number just counted: its round is the stage's length
+    const count1 = zoneStages(mesa, 0)[0]
+    expect(count1.providerConfig).toMatchObject({ kind: 'kCounting', traceLast: count1.params?.questionCount })
+    // the stage kinds the contract names
+    expect(zoneStages(mesa, 0).map((s) => s.kind)).toEqual(['concept', 'practice', 'mastery'])
+  })
+
+  it('Letter Reef’s literacy stages: the phase-1b titles, kinds and question kinds, in unlock order', () => {
+    const reef = getZone('reading-reef')!
+    const set = zoneStages(reef, 0)
+    expect(set.map((s) => [s.id, s.title])).toEqual([
+      ['k-letters-1', 'Find the letter'],
+      ['k-rhyme-1', 'Rhyme time'],
+      ['k-letters-2', 'Big and little letters'],
+      ['k-syllables-1', 'Clap the parts'],
+      ['k-letters-3', 'First sounds'],
+      ['k-rhyme-2', 'Finish the rhyme'],
+      ['k-blend-1', 'Sound it out'],
+      ['k-sight-1', 'Word hunt'],
+    ])
+    // the pilot's three letter stages, exactly as they were
+    expect(set.filter((s) => s.id.startsWith('k-letters-')).map((s) => [s.kind, s.providerConfig])).toEqual([
+      ['concept', { kind: 'kLetters', mode: 'findUpper' }],
+      ['practice', { kind: 'kLetters', mode: 'matchCase', confusablesAfter: 3 }],
+      ['mastery', { kind: 'kLetters', mode: 'firstSound' }],
+    ])
+    const at = (id: string) => set.find((s) => s.id === id)!
+    // rhymes, word parts and blending are practice; the sight words close the reef
+    for (const id of ['k-rhyme-1', 'k-syllables-1', 'k-rhyme-2', 'k-blend-1']) expect(at(id).kind, id).toBe('practice')
+    expect(at('k-sight-1').kind).toBe('mastery')
+    expect(set.slice(1).filter((s) => !s.id.startsWith('k-letters-')).map((s) => (s.providerConfig as { mode?: string }).mode)).toEqual(['rhyme', 'syllables', 'finishRhyme', 'blend', 'sight'])
+    // each unlocks after the one before it
+    const stars = (ids: string[]) => ({ stages: Object.fromEntries(ids.map((id) => [id, { stars: 1 }])) })
+    set.forEach((s, i) => {
+      expect(isStageUnlocked(reef, s.id, stars(set.slice(0, i).map((x) => x.id)), 0), s.id).toBe(true)
+      if (i > 0) expect(isStageUnlocked(reef, s.id, stars(set.slice(0, i - 1).map((x) => x.id)), 0), s.id).toBe(false)
+    })
+    // "Clap the parts" is answered with the drum, not cards
+    const drum = createProvider(at('k-syllables-1').providerConfig).next() as ListenProblem
+    expect(drum.activity?.kind).toBe('drum')
+    expect(drum.pictureOptions).toBeUndefined()
+  })
+
+  it('Writing Workshop (K literacy contract): trace lines, numbers, big letters, then story order, a round per stage', () => {
+    const ww = zoneStages(getZone('writing-workshop')!, 0)
+    expect(ww.map((s) => [s.id, s.title])).toEqual([
+      ['k-trace-1', 'Warm-up lines'],
+      ['k-trace-2', 'Trace numbers'],
+      ['k-trace-3', 'Trace big letters'],
+      ['k-story-1', 'Story order'],
+    ])
+    expect(ww.slice(0, 3).map((s) => s.providerConfig)).toEqual([
+      { kind: 'kTrace', mode: 'warmup' },
+      { kind: 'kTrace', mode: 'numbers' },
+      { kind: 'kTrace', mode: 'letters' },
+    ])
+    // a trace stage plays one dealt round (lines, then slants, then curves: lib/providers/kTrace)
+    for (const s of ww.slice(0, 3)) expect(s.params?.questionCount, s.id).toBe(TRACE_ROUND)
+    expect(ww.map((s) => s.kind)).toEqual(['concept', 'practice', 'practice', 'mastery'])
+    // and it's no longer sleeping for K–1; it keeps its own name
+    expect(isZoneSleeping(getZone('writing-workshop')!, 0)).toBe(false)
+    expect(zoneTitle(getZone('writing-workshop')!, 0)).toBe('Writing Workshop')
+  })
+
+  it('names the three zones for K–1 only (zoneTitle)', () => {
+    for (const zone of curriculum.zones) {
+      for (const g of [0, 1] as const) expect(zoneTitle(zone, g)).toBe(K1_TITLES[zone.id] ?? zone.title)
+      for (const g of [2, 3, 4, 5] as const) expect(zoneTitle(zone, g)).toBe(zone.title)
+      expect(zoneTitle(zone, null)).toBe(zone.title)
+    }
+    expect(['multiplication-mesa', 'geometry-grove', 'reading-reef'].map((id) => getZone(id)!.title)).toEqual(['Multiplication Mesa', 'Geometry Grove', 'Reading Reef'])
   })
 })

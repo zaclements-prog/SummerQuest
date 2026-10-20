@@ -3,6 +3,7 @@ import type { Zone } from './types'
 export const readingZone: Zone = {
   id: 'reading-reef',
   title: 'Reading Reef',
+  titleByBand: { k1: 'Letter Reef' },
   subtitle: 'Comprehension passages',
   emoji: '🐠',
   themeColor: 'ocean',
@@ -43,4 +44,94 @@ export const readingZone: Zone = {
       starsToEarn: 3,
     },
   ],
+  stagesByBand: {
+    // K–1 "Letter Reef" (RF.K.1d, RF.K.2–3, RF.K.3c), in unlock order: letter
+    // names → rhymes → big and little letters (look-alikes like b and d from
+    // the fourth item) → clapping word parts (the drum) → first sounds →
+    // finishing nursery rhymes → blending sounds (stretchy ones first) → sight
+    // words. Letter and sound stages take turns, so no two in a row teach the
+    // same thing. Titles and descriptions are said aloud.
+    k1: [
+      {
+        id: 'k-letters-1',
+        kind: 'concept',
+        title: 'Find the letter',
+        description: 'Listen, then tap the letter you hear.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kLetters', mode: 'findUpper' },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-rhyme-1',
+        kind: 'practice',
+        title: 'Rhyme time',
+        description: 'Find the picture that rhymes.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kLiteracy', mode: 'rhyme', closeAfter: 3 },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-letters-2',
+        kind: 'practice',
+        title: 'Big and little letters',
+        description: 'Match each big letter to its little letter.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kLetters', mode: 'matchCase', confusablesAfter: 3 },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-syllables-1',
+        kind: 'practice',
+        title: 'Clap the parts',
+        description: 'Tap the drum for each part of a word.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kLiteracy', mode: 'syllables' },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-letters-3',
+        kind: 'mastery',
+        title: 'First sounds',
+        description: 'Which picture starts with the letter?',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kLetters', mode: 'firstSound' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-rhyme-2',
+        kind: 'practice',
+        title: 'Finish the rhyme',
+        description: 'Tap the picture that finishes the rhyme.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kLiteracy', mode: 'finishRhyme' },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-blend-1',
+        kind: 'practice',
+        title: 'Sound it out',
+        description: 'Put the sounds together. Which word is it?',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kLiteracy', mode: 'blend', stopsAfter: 3, closeAfter: 4 },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-sight-1',
+        kind: 'mastery',
+        title: 'Word hunt',
+        description: 'Listen, then find the word.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kLiteracy', mode: 'sight', closeAfter: 3 },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+    ],
+  },
 }

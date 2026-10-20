@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, useReducedMotion } from 'framer-motion'
@@ -9,6 +9,11 @@ import { sfx } from '../lib/sound'
 import { Card, Button, BackButton } from '../components/ui'
 import { useEntrance } from '../lib/motion'
 import { useKeepAboveKeyboard, useKeyboardInset } from '../components/useViewport'
+import { isListenMode } from '../lib/gradeBand'
+import { creatureForEmoji } from '../lib/home/catalog'
+import { guide } from '../guide/store'
+import { SayAgainButton } from '../guide/SayAgainButton'
+import type { VoiceRef } from '../voice/types'
 
 // A selectable toon tile: outlined paper that lifts on hover and sinks when
 // pressed; the chosen one turns sunny with a check badge.
@@ -41,13 +46,31 @@ function SectionLabel({ id, children, htmlFor }: { id?: string; htmlFor?: string
 
 const EMOJIS = ['🦊', '🐯', '🦁', '🐻', '🐼', '🐸', '🦉', '🐲', '🦄', '🐙', '🦖', '🐉']
 const COLORS = [
-  { name: 'Sunset', value: '#fb923c' },
-  { name: 'Berry', value: '#ec4899' },
-  { name: 'Lime', value: '#84cc16' },
-  { name: 'Sky', value: '#38bdf8' },
-  { name: 'Grape', value: '#a855f7' },
-  { name: 'Coral', value: '#f43f5e' },
+  { name: 'Sunset', value: '#fb923c', say: 'orange' },
+  { name: 'Berry', value: '#ec4899', say: 'pink' },
+  { name: 'Lime', value: '#84cc16', say: 'green' },
+  { name: 'Sky', value: '#38bdf8', say: 'blue' },
+  { name: 'Grape', value: '#a855f7', say: 'purple' },
+  { name: 'Coral', value: '#f43f5e', say: 'red' },
 ]
+
+/**
+ * K–1 (voice-first) first run: the voice walks the child through picking an
+ * animal and a color, then points at the big Begin button. A grown-up may type
+ * a name; left empty, the explorer is named after the animal. The voice never
+ * says the name (the privacy policy), only the animal and the color.
+ */
+const PICK_ANIMAL: VoiceRef = { line: 'k-nav/pickAnimal' }
+const PICK_COLOR: VoiceRef = { line: 'k-nav/pickColor' }
+const TAP_BEGIN: VoiceRef = { line: 'k-nav/tapBegin' }
+const animalLine = (emoji: string): VoiceRef | null => {
+  const id = creatureForEmoji(emoji)?.id
+  return id ? { line: `k-nav/animal-${id}` } : null
+}
+/** An empty name in K–1 becomes the animal's ("Fox"). */
+function defaultExplorerName(emoji: string): string {
+  return creatureForEmoji(emoji)?.name ?? 'Explorer'
+}
 
 /** What each grade practices (one line under its big "K" / "2nd" label). */
 const GRADE_BLURB: Record<GradeLevel, string> = {
@@ -99,8 +122,47 @@ export default function AvatarCreate() {
   const keyboard = useKeyboardInset()
   useKeepAboveKeyboard(nameRowRef, typing)
 
-  const canStart = name.trim().length > 0 && grade !== null
+  // K–1: the name is optional (a grown-up may type it), and the voice guides the picks.
+  const listen = grade !== null && isListenMode(grade)
+  const animalName = defaultExplorerName(emoji)
+  const canStart = grade !== null && (listen || name.trim().length > 0)
   const colorName = COLORS.find((c) => c.value === color)?.name ?? ''
+  // (K–1) a color has been tapped: after the next animal, go straight to Begin
+  const colorTapped = useRef(false)
+
+  /** Bring a guide target into view, then say the line and point at it. */
+  function guideTo(voice: VoiceRef, target: string, cue?: string) {
+    document.querySelector(`[data-guide="${target}"]`)?.scrollIntoView?.({ behavior: reduced ? 'auto' : 'smooth', block: 'center' })
+    void guide.show({ voice, target, cue })
+  }
+
+  // A grown-up picked K or 1st: the voice takes the child through the rest.
+  useEffect(() => {
+    if (!listen) return
+    colorTapped.current = false
+    guideTo(PICK_ANIMAL, 'avatar-animals', 'animal')
+    return () => guide.clear({ forget: true })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [listen])
+
+  async function pickAnimal(e: string) {
+    sfx.click()
+    setEmoji(e)
+    if (!listen) return
+    const said = animalLine(e)
+    if (said && !(await guide.say(said))) return
+    if (colorTapped.current) guideTo(TAP_BEGIN, 'avatar-begin', 'button')
+    else guideTo(PICK_COLOR, 'avatar-colors', 'color')
+  }
+
+  async function pickColor(c: (typeof COLORS)[number]) {
+    sfx.click()
+    setColor(c.value)
+    if (!listen) return
+    colorTapped.current = true
+    if (!(await guide.say({ line: `k-nav/color-${c.say}` }))) return
+    guideTo(TAP_BEGIN, 'avatar-begin', 'button')
+  }
 
   function start() {
     if (!canStart) {
@@ -118,7 +180,7 @@ export default function AvatarCreate() {
       return
     }
     sfx.victory()
-    setAvatar({ emoji, color, name: name.trim(), grade: grade! })
+    setAvatar({ emoji, color, name: name.trim() || animalName, grade: grade! })
     navigate('/world')
   }
 
@@ -144,6 +206,7 @@ export default function AvatarCreate() {
         {/* ── Back + title ──────────────────────────────────────────────── */}
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
           <BackButton to="/" label="Back" />
+          {listen && <SayAgainButton />}
           <h1 className="kid-text font-bold text-3xl sm:text-4xl flex-1 text-sky">
             Create your explorer
           </h1>
@@ -175,7 +238,7 @@ export default function AvatarCreate() {
                   className="kid-text font-bold text-2xl text-ink-900 min-h-[2.75rem] max-w-full truncate bg-paper border-[3px] border-line rounded-full px-5 py-0.5 shadow-ledge-sm"
                   aria-live="polite"
                 >
-                  {name.trim() || 'Your name here'}
+                  {name.trim() || (listen ? animalName : 'Your name here')}
                 </p>
                 <Button variant="secondary" size="md" onClick={surprise}>
                   Surprise me 🎲
@@ -194,6 +257,7 @@ export default function AvatarCreate() {
                 <div
                   role="radiogroup"
                   aria-labelledby="char-label"
+                  data-guide="avatar-animals"
                   className="grid grid-cols-4 sm:grid-cols-6 gap-3"
                 >
                   {EMOJIS.map((e) => {
@@ -205,10 +269,7 @@ export default function AvatarCreate() {
                         role="radio"
                         aria-checked={selected}
                         aria-label={`Character ${e}`}
-                        onClick={() => {
-                          sfx.click()
-                          setEmoji(e)
-                        }}
+                        onClick={() => void pickAnimal(e)}
                         className={[
                           tileBase,
                           'min-h-[56px] aspect-square text-[clamp(2.1rem,5.4vw,3.1rem)] flex items-center justify-center',
@@ -232,6 +293,7 @@ export default function AvatarCreate() {
                 <div
                   role="radiogroup"
                   aria-labelledby="color-label"
+                  data-guide="avatar-colors"
                   className="grid grid-cols-6 gap-1.5 min-[400px]:gap-3"
                 >
                   {COLORS.map((c) => {
@@ -243,13 +305,12 @@ export default function AvatarCreate() {
                         role="radio"
                         aria-checked={selected}
                         aria-label={c.name}
-                        onClick={() => {
-                          sfx.click()
-                          setColor(c.value)
-                        }}
+                        onClick={() => void pickColor(c)}
                         className={[
                           tileBase,
-                          'min-h-[52px] h-14 rounded-full flex items-center justify-center',
+                          // (K–1: a finger-sized 64px)
+                          listen ? 'min-h-16 h-16' : 'min-h-[52px] h-14',
+                          'rounded-full flex items-center justify-center',
                           selected ? 'shadow-ledge ring-4 ring-paper ring-inset' : 'shadow-ledge hover:-translate-y-0.5',
                         ].join(' ')}
                         style={{ background: c.value }}
@@ -263,7 +324,15 @@ export default function AvatarCreate() {
 
               {/* Name input */}
               <div>
-                <SectionLabel htmlFor="explorer-name">What's your name?</SectionLabel>
+                <SectionLabel htmlFor="explorer-name">
+                  {listen ? (
+                    <>
+                      Name <span className="text-ink-700 text-lg font-semibold">— grown-ups, if you like</span>
+                    </>
+                  ) : (
+                    "What's your name?"
+                  )}
+                </SectionLabel>
                 <form onSubmit={submitName} className="scroll-mt-4">
                   <div ref={nameRowRef} className="flex gap-2 sm:gap-3">
                     <input
@@ -280,7 +349,7 @@ export default function AvatarCreate() {
                       onChange={(e) => setName(e.target.value.slice(0, 20))}
                       onFocus={() => setTyping(true)}
                       onBlur={() => setTyping(false)}
-                      placeholder="Type your name"
+                      placeholder={listen ? animalName : 'Type your name'}
                       maxLength={20}
                       className={[
                         'min-w-0 flex-1 px-5 py-3 max-sm:px-4 max-sm:text-xl min-h-[60px] rounded-[1.25rem] text-2xl kid-text',
@@ -357,6 +426,7 @@ export default function AvatarCreate() {
               <Button
                 variant="success"
                 size="lg"
+                guide="avatar-begin"
                 onClick={start}
                 className={`!text-2xl !px-10 !min-h-[64px] ${!canStart ? 'opacity-70' : ''}`}
               >

@@ -12,6 +12,10 @@ import CatalogDrawer from './CatalogDrawer'
 import ControlsHelp from './ControlsHelp'
 import PetCard from './PetCard'
 import { sfx } from '../../lib/sound'
+import { listenGrade } from '../../lib/listenNav'
+import { useListenIntro } from '../../components/listen/useListenIntro'
+import { SayAgainButton } from '../../guide/SayAgainButton'
+import { ListenIconButton } from '../../components/listen/ListenIconButton'
 
 // HUD chrome: dark translucent bubbles with white text, sized for fingers (48px).
 export const hudBtn =
@@ -36,6 +40,9 @@ export default function HomeHud() {
   const navigate = useNavigate()
   const petCard = useHomeUi((s) => s.petCard)
   const closePetCard = useCallback(() => useHomeUi.getState().openPetCard(null), [])
+  // K–1: picture buttons, and the voice says what this place is (first visit; 🔊 again)
+  const listen = listenGrade(useProgress((s) => s.player?.grade))
+  const explain = useListenIntro('home', { voice: { line: 'k-nav/homeHelp' }, target: 'home-back', cue: 'arrow' }, listen)
 
   // The item tapped in decorate mode (gone if it was put away meanwhile).
   const sel = selectedUid && mode === 'decorate' ? placed.find((p) => p.uid === selectedUid) ?? null : null
@@ -53,10 +60,13 @@ export default function HomeHud() {
 
   // This room is your House in the World: "Back" walks you out into the World,
   // standing just inside the House door.
-  const back = () => {
-    sfx.click()
+  const goBack = () => {
     useWorldUi.getState().setReturnSpot(insideDoorSpot('house'))
     navigate('/world')
+  }
+  const back = () => {
+    sfx.click()
+    goBack()
   }
 
   // Turn the selected item a quarter turn where it stands (the next way round that fits).
@@ -123,6 +133,13 @@ export default function HomeHud() {
   return (
     <div className="absolute inset-0 pointer-events-none">
       <div className="absolute top-[calc(0.5rem+var(--safe-top,env(safe-area-inset-top,0px)))] left-[calc(0.5rem+var(--safe-left,env(safe-area-inset-left,0px)))] right-[calc(0.5rem+var(--safe-right,env(safe-area-inset-right,0px)))] flex items-start justify-between gap-2">
+        {listen ? (
+          <div className="pointer-events-auto flex items-center gap-2" data-listen-hud="">
+            <ListenIconButton icon="←" label="Back to the World" onClick={goBack} guide="home-back" tone="sun" />
+            <SayAgainButton onPress={explain} label="What do I do here?" />
+            <ListenIconButton icon="🐾" label="My pets" to="/pets" />
+          </div>
+        ) : (
         <div className="flex items-center gap-2">
           <button type="button" onClick={back} title="Back to the World" className={`${hudBtn} bg-ocean-900/70 text-white px-3 sm:px-4`}>← Back</button>
           <ControlsHelp />
@@ -130,6 +147,7 @@ export default function HomeHud() {
             🐾 <span className="max-[380px]:sr-only">Pets</span>
           </Link>
         </div>
+        )}
         <ModeToggle />
       </div>
 

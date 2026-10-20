@@ -6,6 +6,8 @@ interface BackButtonProps {
   to?: string
   label?: string
   onClick?: () => void
+  /** Just the ← (K–1, who don't read yet): the label is only for screen readers. */
+  iconOnly?: boolean
 }
 
 const backClasses = [
@@ -28,8 +30,10 @@ function Arrow() {
   )
 }
 
-export function BackButton({ to, label = 'Back', onClick }: BackButtonProps) {
+export function BackButton({ to, label = 'Back', onClick, iconOnly = false }: BackButtonProps) {
   const navigate = useNavigate()
+  const classes = iconOnly ? backClasses.replace('pl-2 pr-4', 'px-2') : backClasses
+  const text = iconOnly ? <span className="sr-only">{label}</span> : <span>{label}</span>
 
   function handleClick() {
     sfx.click()
@@ -49,18 +53,18 @@ export function BackButton({ to, label = 'Back', onClick }: BackButtonProps) {
           onClick?.()
         }}
       >
-        <Link to={to} className={backClasses}>
+        <Link to={to} className={classes}>
           <Arrow />
-          <span>{label}</span>
+          {text}
         </Link>
       </div>
     )
   }
 
   return (
-    <button type="button" onClick={handleClick} className={backClasses}>
+    <button type="button" onClick={handleClick} className={classes}>
       <Arrow />
-      <span>{label}</span>
+      {text}
     </button>
   )
 }

@@ -1,0 +1,155 @@
+/*
+ * The drum activity's stage: picture, drum, claps and the buttons. Upright:
+ * one column (picture over the drum, claps, then ↩ ⟲ ✓). Sideways: the picture
+ * and the drum side by side, the claps under the drum and the buttons in a
+ * column on the right. Each picture cell is a size container, so its square
+ * is as big as the cell allows either way.
+ */
+.lp-drum {
+  display: grid;
+  grid-template-areas: 'pic' 'drum' 'marks' 'ctl';
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 0.8fr) minmax(0, 1fr) auto auto;
+  gap: 0.75rem;
+  padding: 0.25rem 0.25rem 0.5rem;
+}
+
+@media (orientation: landscape) {
+  .lp-drum {
+    grid-template-areas: 'pic drum ctl' 'pic marks ctl';
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr) auto;
+    grid-template-rows: minmax(0, 1fr) auto;
+    column-gap: 1rem;
+    row-gap: 0.5rem;
+  }
+  .lp-drum-controls {
+    flex-direction: column;
+  }
+}
+
+.lp-drum-cell {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  container-type: size;
+  display: grid;
+  place-items: center;
+}
+
+.lp-drum-square {
+  display: block;
+  width: min(100cqw, 100cqh);
+  aspect-ratio: 1;
+}
+
+.lp-drum-small {
+  width: 4rem;
+  height: 4rem;
+  font-size: 2rem;
+}
+
+.lp-drum-check {
+  width: 5.5rem;
+  height: 5.5rem;
+  font-size: 3rem;
+}
+
+@media (min-width: 700px) and (min-height: 640px) {
+  .lp-drum-small {
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+  .lp-drum-check {
+    width: 6.5rem;
+    height: 6.5rem;
+  }
+}
+
+/* a hit: the drum squashes and springs back, a ring spreads from the skin */
+.lp-drum-bounce {
+  animation: lp-drum-bounce 0.28s ease-out;
+  transform-origin: 50% 70%;
+}
+
+@keyframes lp-drum-bounce {
+  0% {
+    transform: scale(1, 1);
+  }
+  30% {
+    transform: scale(1.04, 0.9);
+  }
+  70% {
+    transform: scale(0.98, 1.03);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+.lp-drum-ripple {
+  position: absolute;
+  left: 15%;
+  right: 15%;
+  top: 20%;
+  height: 26%;
+  border-radius: 50%;
+  border: 4px solid #ffcf4d;
+  opacity: 0;
+  pointer-events: none;
+  animation: lp-drum-ripple 0.5s ease-out;
+}
+
+@keyframes lp-drum-ripple {
+  0% {
+    transform: scale(0.7);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+
+/* a new clap pops in; after a miss they wobble (let's look again) */
+.lp-clap {
+  animation: lp-clap-in 0.25s ease-out;
+}
+
+[data-state='look'] > .lp-clap {
+  animation: lp-clap-look 0.6s ease-in-out 2;
+}
+
+@keyframes lp-clap-in {
+  0% {
+    transform: scale(0.3);
+  }
+  70% {
+    transform: scale(1.12);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes lp-clap-look {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(-10deg);
+  }
+  75% {
+    transform: rotate(10deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-drum-bounce,
+  .lp-drum-ripple,
+  .lp-clap,
+  [data-state='look'] > .lp-clap {
+    animation: none;
+  }
+}

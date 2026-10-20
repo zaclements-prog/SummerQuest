@@ -7,6 +7,9 @@ import { petEmoji, petName } from '../lib/pets/catalog'
 import { momentText } from '../lib/pets/copy'
 import type { PetMoment } from '../lib/pets/growth'
 import CelebrationScene from './CelebrationScene'
+import { useProgress } from '../store/progress'
+import { listenGrade } from '../lib/listenNav'
+import { guide } from '../guide/store'
 
 /**
  * One pet celebration (a hatch, or a pet growing up), loaded on demand: a small
@@ -39,6 +42,20 @@ export default function PetMomentCard({
     if (revealed) btnRef.current?.querySelector('button')?.focus()
   }, [revealed])
 
+  // K–1: the news is said out loud once the pet is out, the hand on the big button
+  const listen = listenGrade(useProgress((s) => s.player?.grade))
+  useEffect(() => {
+    if (!listen) return
+    // (whatever the screen behind was pointing at is hidden now)
+    if (!revealed) {
+      guide.clear()
+      return
+    }
+    const line = moment.to === 'adult' ? 'k-nav/petGrownUp' : moment.from === 'egg' ? 'k-nav/petHatched' : 'k-nav/petGrew'
+    void guide.show({ voice: { line }, target: 'pet-moment-ok', dim: false })
+    return () => guide.clear({ forget: true })
+  }, [listen, revealed, moment.to, moment.from])
+
   // Before the reveal a stray tap on the scrim (or Esc) doesn't skip the moment.
   const close = revealed ? onDone : undefined
   const waiting = moment.from === 'egg' ? 'Your egg is hatching…' : `${name} is growing…`
@@ -61,7 +78,7 @@ export default function PetMomentCard({
           <div ref={btnRef} className={`mt-3 short:mt-2 flex flex-wrap justify-center gap-2.5 transition-opacity duration-300 ${revealed ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
             {adult ? (
               <>
-                <Button variant="success" size="lg" disabled={!revealed} onClick={() => onBecome(moment.creatureId)}>
+                <Button variant="success" size="lg" guide="pet-moment-ok" disabled={!revealed} onClick={() => onBecome(moment.creatureId)}>
                   <span aria-hidden="true">{petEmoji(moment.creatureId)}</span> Become {name}
                 </Button>
                 <Button variant="ghost" size="lg" disabled={!revealed} onClick={onDone}>
@@ -69,7 +86,7 @@ export default function PetMomentCard({
                 </Button>
               </>
             ) : (
-              <Button variant="primary" size="lg" className="min-w-[10rem]" disabled={!revealed} onClick={onDone}>
+              <Button variant="primary" size="lg" className="min-w-[10rem]" guide="pet-moment-ok" disabled={!revealed} onClick={onDone}>
                 Yay! 🎉
               </Button>
             )}

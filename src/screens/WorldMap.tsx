@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { curriculum, zoneStages, type Zone } from '../curriculum'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { curriculum, zoneStages, zoneTitle, type Zone } from '../curriculum'
 import { useProgress, zoneStars } from '../store/progress'
 import { sfx } from '../lib/sound'
 import { computeBadges, type BadgeStatus } from '../lib/badges'
@@ -13,6 +13,12 @@ import { useWorldUi } from '../world/useWorldUi'
 import { hatchedPets, petStages } from '../lib/pets/growth'
 import { PETS } from '../lib/pets/catalog'
 import type { GradeLevel } from '../lib/gradeTiers'
+import { isZoneSleeping, listenGrade, SLEEPING_LINE, zoneNameVoice } from '../lib/listenNav'
+import { guide } from '../guide/store'
+import { SayAgainButton } from '../guide/SayAgainButton'
+import { ListenIconButton } from '../components/listen/ListenIconButton'
+import { SleepingBadge } from '../components/listen/ListenSleeping'
+import '../components/listen/listen.css'
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -22,7 +28,8 @@ function findNextTarget(
   grade: GradeLevel | null | undefined,
 ): { zoneId: string; stageId?: string } | null {
   for (const zone of curriculum.zones) {
-    if (!zone.available) continue
+    // (K–1: a sleeping place has nothing to play yet)
+    if (!zone.available || isZoneSleeping(zone, grade)) continue
     const progress = zonesProgress[zone.id]
     for (const stage of zoneStages(zone, grade)) {
       const earned = progress?.stages[stage.id]?.stars ?? 0
@@ -77,12 +84,39 @@ export default function WorldMap() {
   const continueHref = nextTarget ? `/zone/${nextTarget.zoneId}` : null
   const nextZone = nextTarget ? curriculum.zones.find((z) => z.id === nextTarget.zoneId) : undefined
 
+  // K–1 (voice-first): the open places stand out, sleeping ones doze; a tap says the name.
+  const listen = listenGrade(grade)
+  const nextZoneId = nextTarget?.zoneId ?? null
+  const explainMap = () => void guide.show({ voice: { line: 'k-nav/mapHelp' }, target: nextZoneId ? `map-${nextZoneId}` : null, cue: 'bright' })
+  const explainRef = useRef(explainMap)
+  useEffect(() => {
+    explainRef.current = explainMap
+  })
+  useEffect(() => {
+    if (!listen) return
+    // (after the badge celebration, if one is up)
+    if (celebrating.length > 0) return
+    const t = window.setTimeout(() => explainRef.current(), 400)
+    return () => {
+      window.clearTimeout(t)
+      guide.clear({ forget: true })
+    }
+  }, [listen, celebrating.length])
+
   return (
     <div className="flex-1 flex flex-col px-4 pt-5 pb-8 sm:px-6">
       {/* One column on tablets (actions → map → daily goal); on wide screens the
           actions and goal sit in a side column and the map fills the right. */}
       <div className="w-full max-w-[90rem] mx-auto grid gap-5 lg:gap-x-6 lg:grid-cols-[21rem_minmax(0,1fr)] xl:grid-cols-[23rem_minmax(0,1fr)] lg:grid-rows-[auto_1fr] items-start">
-        {/* ── Title, the way back to the World, quick links ──────────────── */}
+        {listen ? (
+          // K–1: pictures only — the World, 🔊, pets and home
+          <div className="flex flex-wrap items-center gap-3 lg:col-start-1 lg:row-start-1" data-listen-map="">
+            <ListenIconButton icon="🌍" label="Back to the World" to="/world" tone="sun" size="lg" />
+            <SayAgainButton onPress={explainMap} label="What do I do here?" />
+            <ListenIconButton icon="🐾" label="Pets" to="/pets" />
+            <ListenIconButton icon="🏠" label="Home" to="/home" />
+          </div>
+        ) : (
         <div className="flex flex-col gap-4 lg:col-start-1 lg:row-start-1">
           <div>
             <h1 className="kid-text font-bold text-4xl sm:text-5xl text-sky leading-none">
@@ -114,6 +148,7 @@ export default function WorldMap() {
             <NavTile to="/pets" icon="🐾" tone="island" label={`Pets ${hatched}/${PETS.length}`} />
           </nav>
         </div>
+        )}
 
         {/* ── The illustrated island ─────────────────────────────────────── */}
         <section
@@ -124,13 +159,18 @@ export default function WorldMap() {
             <div className="relative rounded-[2rem] border-[3px] border-line bg-ocean-400 shadow-card overflow-hidden">
               <div className="relative w-full @container" style={{ aspectRatio: '100 / 90' }}>
                 <IslandArt />
-                {curriculum.zones.map((zone) => (
-                  <ZoneMarker key={zone.id} zone={zone} isNext={zone.id === nextTarget?.zoneId} />
-                ))}
+                {curriculum.zones.map((zone) =>
+                  listen ? (
+                    <ListenZoneMarker key={zone.id} zone={zone} isNext={zone.id === nextTarget?.zoneId} />
+                  ) : (
+                    <ZoneMarker key={zone.id} zone={zone} isNext={zone.id === nextTarget?.zoneId} />
+                  ),
+                )}
               </div>
             </div>
 
             {/* Small screens: the markers get too tiny to label, so list the places too. */}
+            {!listen && (
             <ul className="sm:hidden mt-4 grid grid-cols-2 gap-2.5">
               {curriculum.zones.map((zone) => (
                 <li key={zone.id}>
@@ -138,6 +178,7 @@ export default function WorldMap() {
                 </li>
               ))}
             </ul>
+            )}
             {nextZone && (
               <p className="sr-only">Next up: {nextZone.title}</p>
             )}
@@ -145,6 +186,7 @@ export default function WorldMap() {
         </section>
 
         {/* ── Today's goal ───────────────────────────────────────────────── */}
+        {!listen && (
         <div className="flex flex-col gap-3 lg:col-start-1 lg:row-start-2">
           <DailyGoalCard />
           <p className="kid-text text-center lg:text-left text-ink-700 text-sm">
@@ -153,6 +195,7 @@ export default function WorldMap() {
               : 'Explore every island to earn badges and level up!'}
           </p>
         </div>
+        )}
       </div>
 
       {/* ── Badge celebration overlay ──────────────────────────────────── */}
@@ -302,6 +345,85 @@ function ZoneMarker({ zone, isNext }: { zone: Zone; isNext: boolean }) {
           {medal}
           {label}
         </div>
+      )}
+    </div>
+  )
+}
+
+// ── K–1 map marker ────────────────────────────────────────────────────────────
+
+/** K–1 marker sizes: an open place is big and glows; a sleeping one is small (its tap area stays 64px). */
+const MEDAL_OPEN = 'clamp(64px, 12.5cqw, 112px)'
+const MEDAL_SLEEP = 'clamp(40px, 6.6cqw, 60px)'
+
+/**
+ * A place on the K–1 map. Open (it has K–1 games): big, glowing, its K–1
+ * name under it; a tap says the name ("Counting Mesa!") and goes there.
+ * Sleeping: small, dimmed, dozing; a tap says "This place is still sleeping.
+ * Come back soon!" and goes nowhere.
+ */
+function ListenZoneMarker({ zone, isNext }: { zone: Zone; isNext: boolean }) {
+  const navigate = useNavigate()
+  const grade = useProgress((s) => s.player?.grade)
+  const spot = ZONE_SPOTS[zone.id]
+  const going = useRef(false)
+  if (!spot) return null
+  const sleeping = !zone.available || isZoneSleeping(zone, grade)
+  const tone = TONES[toneOf(zone.themeColor)]
+  const title = zoneTitle(zone, grade)
+  const size = sleeping ? MEDAL_SLEEP : MEDAL_OPEN
+  const stars = zoneStars(zone.id, grade)
+  const maxStars = maxStarsOf(zone, grade)
+
+  async function tap() {
+    if (going.current) return
+    if (sleeping) {
+      sfx.tick()
+      void guide.say(SLEEPING_LINE)
+      return
+    }
+    sfx.enter()
+    const name = zoneNameVoice(zone.id)
+    if (name && !(await guide.say(name))) return // another tap took over
+    going.current = true
+    navigate(`/zone/${zone.id}`)
+  }
+
+  return (
+    <div className="absolute -translate-x-1/2 flex flex-col items-center" style={{ ...toPct(spot), marginTop: `calc(${size} / -2)` }}>
+      <button
+        type="button"
+        onClick={() => void tap()}
+        data-guide={`map-${zone.id}`}
+        data-sleeping={sleeping ? '' : undefined}
+        aria-label={sleeping ? `${title}: still sleeping, coming soon` : `${title}: ${stars} of ${maxStars} stars`}
+        className="group relative grid place-items-center min-w-16 min-h-16 outline-none rounded-full focus-visible:ring-4 focus-visible:ring-paper"
+      >
+        <span className="relative block" style={{ width: size, height: size }}>
+          {!sleeping && <span className={`absolute -inset-[12%] rounded-full border-[5px] border-quest-300 ${isNext ? 'sq-open-glow' : 'opacity-70'}`} aria-hidden="true" />}
+          <span className="absolute left-[8%] right-[8%] -bottom-[10%] h-[24%] rounded-[50%] bg-line/25" aria-hidden="true" />
+          <span
+            className={[
+              'absolute inset-0 rounded-full border-[3px] border-line grid place-items-center shadow-ledge',
+              sleeping ? 'grayscale-[0.75] opacity-60' : 'transition-[translate] duration-100 group-active:translate-y-[3px]',
+            ].join(' ')}
+            style={{ background: sleeping ? '#e6dfcf' : `radial-gradient(circle at 50% 42%, #fffaf0 0 54%, ${tone.hex} 55% 100%)` }}
+          >
+            <span className="relative leading-none" style={{ fontSize: `calc(${size} * 0.52)` }} aria-hidden="true">
+              {zone.emoji}
+            </span>
+          </span>
+          {sleeping && <SleepingBadge className="absolute -top-[30%] -right-[45%] text-[clamp(14px,2.6cqw,24px)]" />}
+        </span>
+      </button>
+      {!sleeping && (
+        <span
+          className={`mt-[0.6cqw] whitespace-nowrap text-center kid-text leading-snug text-ink-900 rounded-full border-2 border-line px-[0.8cqw] shadow-ledge-sm ${isNext ? 'bg-quest-200' : 'bg-paper'}`}
+          style={{ fontSize: 'clamp(12px, 2.1cqw, 19px)' }}
+          aria-hidden="true"
+        >
+          {title}
+        </span>
       )}
     </div>
   )

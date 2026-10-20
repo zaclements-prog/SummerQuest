@@ -222,6 +222,15 @@ export function effectiveConfig(
     case 'writingPrompt':
     case 'scienceCycle':
       return config
+    // K–1 stage sets carry their own ranges (stage to stage); kindergarten and
+    // 1st grade play them as written.
+    case 'kCounting':
+    case 'kShapes':
+    case 'kLetters':
+    case 'kLiteracy':
+    case 'kTrace':
+    case 'kStories':
+      return config
   }
 }
 

@@ -172,6 +172,83 @@ const POSTERS: Record<string, { bg: string; motif: () => ReactNode }> = {
       </g>
     ),
   },
+  // ── kindergarten (band k1): pictures and numerals / letters only ──
+  kCounting: {
+    bg: '#ffe0dc',
+    motif: () => (
+      <g>
+        {[0, 1, 2, 3].map((i) => (
+          <Apple key={i} x={78 + i * 50} y={92} r={20} color="#f2766b" />
+        ))}
+        {[0, 1, 2, 3].map((i) => (
+          <g key={`n${i}`}>
+            <circle cx={78 + i * 50} cy={130} r={11} fill={M.gold} stroke={M.ink} strokeWidth={2.5} />
+            <text x={78 + i * 50} y={131} fontFamily={M.font} fontWeight={700} fontSize={14} textAnchor="middle" dominantBaseline="middle" fill={M.ink}>
+              {i + 1}
+            </text>
+          </g>
+        ))}
+        <circle cx={272} cy={58} r={30} fill={M.gold} stroke={M.ink} strokeWidth={3.5} />
+        <text x={272} y={60} fontFamily={M.font} fontWeight={700} fontSize={38} textAnchor="middle" dominantBaseline="middle" fill={M.ink}>
+          4
+        </text>
+      </g>
+    ),
+  },
+  kShapes: {
+    bg: '#efe6ff',
+    motif: () => (
+      <g strokeLinejoin="round">
+        <path d="M 52 120 L 92 44 L 132 120 Z" fill="#ffcf4d" stroke={M.ink} strokeWidth={3.5} />
+        <rect x={146} y={62} width={58} height={58} rx={3} fill="#8ab8ff" stroke={M.ink} strokeWidth={3.5} />
+        <circle cx={248} cy={92} r={29} fill="#f2766b" stroke={M.ink} strokeWidth={3.5} />
+        {[
+          [92, 44],
+          [132, 120],
+          [52, 120],
+        ].map(([x, y], i) => (
+          <circle key={i} cx={x} cy={y} r={6} fill={M.coral} stroke={M.ink} strokeWidth={2.5} />
+        ))}
+      </g>
+    ),
+  },
+  kLetters: {
+    bg: '#dff3f8',
+    motif: () => (
+      <g>
+        {[
+          { ch: 'A', x: 98, s: 70, c: '#f2766b' },
+          { ch: 'B', x: 182, s: 70, c: '#ffcf4d' },
+          { ch: 'b', x: 254, s: 50, c: '#ffcf4d' },
+        ].map((l) => (
+          <g key={l.ch} transform={`translate(${l.x} ${128 - l.s / 2})`}>
+            <rect x={-l.s / 2} y={-l.s / 2 + 4} width={l.s} height={l.s} rx={l.s * 0.22} fill="#ecc28f" stroke={M.ink} strokeWidth={3} />
+            <rect x={-l.s / 2} y={-l.s / 2} width={l.s} height={l.s * 0.97} rx={l.s * 0.22} fill="#fdf3dc" stroke={M.ink} strokeWidth={3} />
+            <text y={-1} fontFamily={M.letters} fontWeight={700} fontSize={l.s * 0.7} textAnchor="middle" dominantBaseline="central" fill={l.c} stroke={M.ink} strokeWidth={l.s * 0.025} paintOrder="stroke fill">
+              {l.ch}
+            </text>
+          </g>
+        ))}
+      </g>
+    ),
+  },
+  kTracing: {
+    bg: '#e4f1ff',
+    motif: () => (
+      <g strokeLinecap="round" strokeLinejoin="round" fill="none">
+        {/* an L on handwriting lines, half traced in crayon, its green dot and an arrow */}
+        <line x1={70} x2={250} y1={40} y2={40} stroke="#a9cdea" strokeWidth={2.5} />
+        <line x1={70} x2={250} y1={82} y2={82} stroke="#a9cdea" strokeWidth={2.5} strokeDasharray="8 6" />
+        <line x1={70} x2={250} y1={124} y2={124} stroke="#7fb0da" strokeWidth={3} />
+        <path d="M 130 40 L 130 124 L 190 124" stroke="#dccbb0" strokeWidth={22} />
+        <path d="M 130 40 L 130 124 L 190 124" stroke="#f5ecdd" strokeWidth={17} />
+        <path d="M 130 40 L 130 112" stroke="#3f6fd1" strokeWidth={12} />
+        <circle cx={130} cy={40} r={8} fill="#36c35a" stroke={M.ink} strokeWidth={2.5} />
+        <path d="M 154 64 L 154 92 M 145 82 L 154 94 L 163 82" stroke="#ff8a3d" strokeWidth={6} />
+        <circle cx={226} cy={70} r={17} fill="none" stroke="#dccbb0" strokeWidth={10} />
+      </g>
+    ),
+  },
 }
 
 /**

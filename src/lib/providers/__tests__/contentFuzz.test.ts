@@ -12,6 +12,11 @@ import { arenaFactConfig, warmFactConfig } from '../../arena/divisionCore'
 import { forgeFactConfig } from '../../forge/fractionCore'
 import { groveMaxFactor } from '../../grove/groveCore'
 import { PROCESSES } from '../../cycle/cycleCore'
+import type { ListenProblem } from '../../../games/listenPlay/types'
+import { isSolidShape, shapeSides } from '../../../games/listenPlay/shapeGeometry'
+import { glyph } from '../../trace/glyphs'
+import { isTraceSpec } from '../../trace/spec'
+import { isOrderSpec, STORY_PICTURES } from '../kStories'
 
 /**
  * Generator fuzz suite: every stage in the curriculum, at every grade tier, plus
@@ -362,6 +367,142 @@ function answerProblems(config: ProviderConfig, grade: GradeLevel, p: Problem): 
     case 'geometry':
     case 'writingPrompt':
       break
+    case 'kCounting':
+    case 'kShapes':
+    case 'kLetters':
+      // (Count with me's last question is a trace: answered by the activity, not a card)
+      errs.push(...((p as ListenProblem).activity ? activityProblems(p as ListenProblem) : kAnswerProblems(config, p as ListenProblem)))
+      break
+    case 'kTrace':
+    case 'kStories':
+      errs.push(...activityProblems(p as ListenProblem))
+      break
+  }
+  return errs
+}
+
+// ── K–1 activities (answered by doing: tracing, story order) ─────────────────
+
+function activityProblems(p: ListenProblem): string[] {
+  const a = p.activity
+  if (isTraceSpec(a)) {
+    let g: ReturnType<typeof glyph>
+    try {
+      g = glyph(a.glyph, a.id)
+    } catch {
+      return [`no ${a.glyph} glyph "${a.id}" to trace`]
+    }
+    const errs = g.strokes.length ? [] : ['a glyph with no strokes']
+    if (p.answer !== a.id) errs.push(`answer ${JSON.stringify(p.answer)} isn't the glyph ${a.id}`)
+    return errs
+  }
+  if (isOrderSpec(a)) {
+    const errs: string[] = []
+    if (STORY_PICTURES[a.story]?.join('') !== a.pictures.join('')) errs.push(`story ${a.story} shows the wrong pictures`)
+    if ([...a.mixed].sort().join('') !== '012' || a.mixed.join('') === '012') errs.push(`mixed ${JSON.stringify(a.mixed)} isn't a real mix-up`)
+    if (p.answer !== a.pictures.join('')) errs.push('answer isn\'t the story order')
+    return errs
+  }
+  return [`unknown activity ${JSON.stringify(a)}`]
+}
+
+// ── K–1 (Listen & Play): the answer, worked out from the pictures ────────────
+
+function kAnswerProblems(config: Extract<ProviderConfig, { kind: 'kCounting' | 'kShapes' | 'kLetters' }>, p: ListenProblem): string[] {
+  const errs: string[] = []
+  const cards = p.pictureOptions ?? []
+  if (cards.length !== p.options.length || cards.some((c, i) => c.value !== p.options[i])) return ['picture cards don\'t match the options']
+  const want = (a: unknown) => {
+    if (p.answer !== a) errs.push(`answer is ${JSON.stringify(p.answer)}, the pictures say ${JSON.stringify(a)}`)
+  }
+  const count = (pic: unknown) => ((pic as { kind?: string; count?: number })?.kind === 'group' ? (pic as { count: number }).count : NaN)
+  const numeral = (pic: unknown) => ((pic as { kind?: string; n?: number })?.kind === 'numeral' ? (pic as { n: number }).n : NaN)
+  const shape = (pic: unknown) => ((pic as { kind?: string })?.kind === 'shape' ? (pic as { shape: Parameters<typeof shapeSides>[0] }).shape : null)
+  const only = <T,>(xs: T[], what: string): T | undefined => {
+    if (xs.length !== 1) errs.push(`${xs.length} cards are ${what}`)
+    return xs[0]
+  }
+  switch (config.kind) {
+    case 'kCounting': {
+      const lo = config.min ?? 1
+      const hi = config.max ?? 10
+      const inRange = (n: number) => {
+        if (!(n >= lo && n <= hi)) errs.push(`count ${n} outside [${lo}, ${hi}]`)
+      }
+      switch (p.subtopic) {
+        case 'howMany':
+          want(count(p.picture))
+          inRange(count(p.picture))
+          break
+        case 'findGroup':
+          want(numeral(p.picture))
+          only(cards.filter((c) => count(c.picture) === numeral(p.picture)), `a group of ${numeral(p.picture)}`)
+          inRange(numeral(p.picture))
+          break
+        case 'more':
+        case 'fewer': {
+          const ns = cards.map((c) => count(c.picture))
+          want(p.subtopic === 'more' ? Math.max(...ns) : Math.min(...ns))
+          if (ns[0] === ns[1]) errs.push('both groups are the same size')
+          ns.forEach((n) => inRange(n))
+          break
+        }
+        case 'same': {
+          const [a, b] = (p.pair ?? []).map(count)
+          want(a === b ? 'yes' : 'no')
+          ;[a, b].forEach((n) => inRange(n))
+          break
+        }
+        case 'bigger':
+          want(Math.max(...cards.map((c) => numeral(c.picture))))
+          break
+        default:
+          errs.push(`unknown counting question ${p.subtopic}`)
+      }
+      break
+    }
+    case 'kShapes': {
+      const shapes = cards.map((c) => shape(c.picture))
+      const named = /^Tap the (\w+)\.$/.exec(p.prompt)?.[1]
+      switch (p.subtopic) {
+        case 'name':
+        case 'nameSolid':
+          want(only(shapes.filter((s) => s === named), `a ${named}`))
+          if (named === 'rectangle' && shapes.includes('square')) errs.push('a square beside "Tap the rectangle"')
+          break
+        case 'flat':
+        case 'solid':
+          want(only(shapes.filter((s) => s && isSolidShape(s) === (p.subtopic === 'solid')), p.subtopic))
+          break
+        case 'withSides': {
+          const n = { three: 3, four: 4, six: 6 }[/with (\w+) sides/.exec(p.prompt)?.[1] ?? ''] ?? NaN
+          want(only(shapes.filter((s) => s && shapeSides(s) === n), `${n}-sided`))
+          break
+        }
+        case 'noCorners':
+          want(only(shapes.filter((s) => s && !shapeSides(s) && !isSolidShape(s)), 'without corners'))
+          break
+        case 'howManySides':
+          want(shapeSides(shape(p.picture) ?? 'circle'))
+          break
+        default:
+          errs.push(`unknown shape question ${p.subtopic}`)
+      }
+      break
+    }
+    case 'kLetters': {
+      const shown = cards.map((c) => (c.picture.kind === 'letter' ? c.picture.ch : c.picture.kind === 'emoji' ? String(c.value) : ''))
+      if (p.prompt.startsWith('Tap the letter ')) want(only(shown.filter((c) => c === p.prompt.slice(15, 16)), 'that letter'))
+      else if (p.prompt.startsWith('Find the little ')) {
+        const l = p.prompt.slice(16, 17)
+        if (p.picture?.kind !== 'letter' || p.picture.ch !== l.toUpperCase()) errs.push(`the big letter shown isn't ${l.toUpperCase()}`)
+        want(only(shown.filter((c) => c === l), `a little ${l}`))
+      } else {
+        const L = /starts with ([A-Z])\?$/.exec(p.prompt)?.[1] ?? '?'
+        want(only(shown.filter((w) => w[0]?.toUpperCase() === L), `a word starting with ${L}`))
+      }
+      break
+    }
   }
   return errs
 }
@@ -442,9 +583,10 @@ async function fuzz(c: Case): Promise<string[]> {
   vi.spyOn(Math, 'random').mockImplementation(seededRng(`content-fuzz:${c.label}`))
   const provider = c.make()
   const failures: string[] = []
-  const mc = c.config.kind !== 'writingPrompt'
   for (let i = 0; i < DRAWS && failures.length < 12; i++) {
     const p = c.draw ? await c.draw(provider, i) : await nextProblem(provider)
+    // (a question answered by an activity has no options to choose from)
+    const mc = c.config.kind !== 'writingPrompt' && !(p as ListenProblem).activity
     const errs = [...genericProblems(p, mc), ...answerProblems(c.config, c.grade, p)]
     for (const e of errs) failures.push(`${e}\n    ↳ ${p.prompt} | ${JSON.stringify(p.options)} → ${JSON.stringify(p.answer)}`)
   }

@@ -24,6 +24,13 @@ export const M = {
   /** A friendly sequence for "one of each" sets (pieces, groups, bars). */
   set: [TOON.flowerRed, TOON.gold, TOON.mint, TOON.flowerBlue, TOON.lilac, TOON.flowerPink, TOON.leaf, TOON.coral],
   font: "'Fredoka', ui-rounded, system-ui, sans-serif",
+  /**
+   * Letters and words a child is learning to read (K–1): Andika, designed for
+   * beginning readers (one-storey a and g, a serifed I next to a tailed l).
+   * Fredoka's heavy weights also draw B's middle bar as an overlapping piece
+   * that renders as a gap.
+   */
+  letters: "'Andika', 'Fredoka', ui-rounded, system-ui, sans-serif",
 } as const
 
 /** Stage size (SVG viewBox). Scenes draw in these units. */

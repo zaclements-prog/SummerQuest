@@ -1,0 +1,108 @@
+/*
+ * Listen & Play activities (src/games/listenPlay/activities): tracing and
+ * story order. Transform / opacity animations only, so they run on the
+ * compositor on a low-end tablet.
+ */
+
+/* ── trace ──────────────────────────────────────────────────────────────── */
+/* the drawing takes every touch as ink: no scrolling, no zoom, no long-press menu */
+.trace-pad {
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  cursor: crosshair;
+}
+
+/* the green dot breathes */
+.trace-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: trace-pulse 1.5s ease-out infinite;
+}
+
+.trace-arrow {
+  animation: trace-arrow 1.5s ease-in-out infinite;
+}
+
+/* a stroke that wasn't right fades away (never red) */
+.trace-ink-fade {
+  animation: trace-fade 0.8s ease-in forwards;
+}
+
+/* the whole glyph done: a happy pop */
+.trace-card[data-done] {
+  animation: lp-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.trace-spark {
+  font-size: 34px;
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
+  line-height: 40px;
+}
+.trace-sticker {
+  animation: lp-pop-in 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes trace-pulse {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.75;
+  }
+  100% {
+    transform: scale(2.1);
+    opacity: 0;
+  }
+}
+
+@keyframes trace-arrow {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+@keyframes trace-fade {
+  0% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ── story order ─────────────────────────────────────────────────────────── */
+.story-pic {
+  transition:
+    transform 0.6s cubic-bezier(0.3, 0.8, 0.25, 1),
+    opacity 0.3s ease,
+    filter 0.3s ease;
+}
+.story-pic[data-state='placed'] {
+  cursor: default;
+}
+.story-pic[data-state='look'] {
+  animation: lp-wobble 0.5s ease-in-out;
+}
+.story-slot[data-filled] {
+  animation: lp-pop-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trace-pulse,
+  .trace-arrow,
+  .trace-card[data-done],
+  .trace-sticker,
+  .story-pic[data-state='look'],
+  .story-slot[data-filled] {
+    animation: none !important;
+  }
+  .story-pic {
+    transition: none;
+  }
+}

@@ -27,6 +27,8 @@ import { zoneStarTotals } from '../lib/pets/growth'
 import { usePetStatuses } from '../lib/pets/usePets'
 import { petEmoji } from '../lib/pets/catalog'
 import { zonePetLine } from '../lib/pets/copy'
+import { listenGrade } from '../lib/listenNav'
+import ListenZoneDetail from './ListenZoneDetail'
 
 // ── Stage-kind presentation ───────────────────────────────────────────────────
 const KIND_META: Record<string, { label: string; icon: string; tone: Tone }> = {
@@ -85,6 +87,21 @@ export default function ZoneDetail() {
           back={{ label: fromWorld ? 'Back to the World' : 'Back to map', to: fromWorld ? '/world' : '/map' }}
         />
       </div>
+    )
+  }
+
+  // K–1: big picture buttons and a voice instead of paragraphs
+  if (listenGrade(grade)) {
+    return (
+      <ListenZoneDetail
+        zone={zone}
+        fromWorld={fromWorld}
+        pet={pet}
+        earned={earnedStars}
+        total={totalStars}
+        celebrateOpen={celebrateOpen}
+        onCelebrated={() => markZoneMastered(zoneId)}
+      />
     )
   }
 

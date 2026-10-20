@@ -11,3 +11,7 @@ Community License, Copyright Meta Platforms, Inc., All Rights Reserved.
 Lesson narration audio assets in public/tts/ were synthesized offline with
 Higgs Audio v2 (MLX) cloning a synthetic voice designed with Qwen3-TTS
 (Apache-2.0). The models themselves are not distributed with this software.
+
+The Andika font (letters for beginning readers, src: @fontsource/andika) is
+Copyright SIL International, licensed under the SIL Open Font License 1.1.
+See docs/licensing/andika-OFL.txt.

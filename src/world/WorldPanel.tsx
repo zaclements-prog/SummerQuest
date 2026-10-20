@@ -6,6 +6,8 @@ import { todayStr } from '../lib/daily'
 import { Button, Pill, StarRating } from '../components/ui'
 import type { ActiveNpc } from './useWorldUi'
 import { focusRows, lessonRows, zoneStageRows } from './hubContent'
+import { listenGrade } from '../lib/listenNav'
+import ListenWorldPanel from './ListenWorldPanel'
 
 const KIND_ICON = { concept: '💡', practice: '⚡', mastery: '👹' } as const
 
@@ -26,6 +28,7 @@ export default function WorldPanel({
   onClose: () => void
 }) {
   const reduced = useReducedMotion()
+  const listen = listenGrade(useProgress((s) => s.player?.grade))
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
@@ -33,6 +36,9 @@ export default function WorldPanel({
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [onClose])
+
+  // K–1: pictures and a voice instead of lists to read
+  if (listen) return <ListenWorldPanel npc={npc} onLaunch={onLaunch} onClose={onClose} />
 
   const zone = npc.zoneId ? getZone(npc.zoneId) : undefined
   const title = npc.hub ? npc.label : (zone?.title ?? npc.label)
@@ -67,7 +73,7 @@ export default function WorldPanel({
             <StageList zoneId="reading-reef" onLaunch={onLaunch} />
           </Section>
           <Section title="📖 Lessons">
-            <LessonList only={['reading', 'writing']} onLaunch={onLaunch} />
+            <LessonList only={['reading-reef', 'writing-workshop']} onLaunch={onLaunch} />
           </Section>
         </>
       ) : npc.zoneId ? (
@@ -132,7 +138,8 @@ function StageList({ zoneId, onLaunch }: { zoneId: string; onLaunch: (path: stri
 function LessonList({ only, onLaunch }: { only?: string[]; onLaunch: (path: string) => void }) {
   const attempts = useProgress((s) => s.attempts)
   const sessions = useProgress((s) => s.sessions)
-  const rows = lessonRows({ attempts, sessions }, only)
+  const grade = useProgress((s) => s.player?.grade)
+  const rows = lessonRows({ attempts, sessions, grade }, only)
   return (
     <div className="grid grid-cols-2 gap-2">
       {rows.map((l) => (
