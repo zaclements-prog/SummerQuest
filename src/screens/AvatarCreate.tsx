@@ -132,7 +132,7 @@ export default function AvatarCreate() {
 
   /** Bring a guide target into view, then say the line and point at it. */
   function guideTo(voice: VoiceRef, target: string, cue?: string) {
-    document.querySelector(`[data-guide="${target}"]`)?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' })
+    document.querySelector(`[data-guide="${target}"]`)?.scrollIntoView?.({ behavior: reduced ? 'auto' : 'smooth', block: 'center' })
     void guide.show({ voice, target, cue })
   }
 
