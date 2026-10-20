@@ -1,3 +1,5 @@
+import type { ComponentType } from 'react'
+import type { GuideStep } from '../../guide/store'
 import type { Picture, Problem } from '../../lib/problem'
 import type { VoiceRef } from '../../voice/types'
 
@@ -61,4 +63,58 @@ export interface ListenProblem extends Problem {
   notes?: readonly (VoiceRef | null)[]
   /** Praise for this question, taking turns with the kit's own. */
   praise?: readonly VoiceRef[]
+  /**
+   * Answered by doing something instead of tapping a card: tracing a letter,
+   * tapping a drum once per part of a word, putting a story in order. The
+   * activity (registered by `kind` in ./activities) takes the whole stage;
+   * the shell still asks the question, keeps the 🔊, the progress dots, the
+   * stars, the praise and the "let's look again". `pictureOptions` and
+   * `options` are then unused (`answer` is still what the activity checks).
+   */
+  activity?: ListenActivitySpec
+}
+
+/** Which activity, plus whatever that activity needs (each activity narrows it). */
+export interface ListenActivitySpec {
+  kind: string
+}
+
+/** What the shell is doing (the same phases the cards follow). */
+export type ListenPhase = 'loading' | 'ask' | 'judge' | 'praise' | 'oops' | 'done'
+
+/**
+ * What an activity component gets from the shell. It draws the whole stage
+ * (inside a box with the `lp-activity` guide id) and reports each finished
+ * try with `onAttempt`; right → praise and on to the next question, not yet →
+ * "Hmm, let's look again", then the activity's help (see `registerHelp`),
+ * then "Your turn!" and `misses` goes up by one.
+ */
+export interface ListenActivityProps<S extends ListenActivitySpec = ListenActivitySpec> {
+  problem: ListenProblem
+  spec: S
+  phase: ListenPhase
+  /** The child can act now: the question has been put (phase 'ask') and no dialog is open. */
+  active: boolean
+  /** Tries on this question that weren't right yet (0 on the first): help more as it grows. */
+  misses: number
+  /** One finished try. Ignored unless `active`. */
+  onAttempt(correct: boolean): void
+  /**
+   * The help the shell runs after "let's look again" (a hand tracing the
+   * stroke, the drum tapped once per part as the voice says them): an async
+   * function that resolves when it is done (or `null` for none). The latest
+   * registered one is used.
+   */
+  registerHelp(help: (() => Promise<void>) | null): void
+}
+
+/** An activity: its component, and (optionally) how the question is put. */
+export interface ListenActivityDef<S extends ListenActivitySpec = ListenActivitySpec> {
+  Component: ComponentType<ListenActivityProps<S>>
+  /**
+   * What the narrator says and points at as the question is asked. Default:
+   * the question's `speech`, lighting the activity's area. Guide ids inside
+   * the activity are the activity's own (`data-guide`).
+   */
+  askSteps?(problem: ListenProblem, spec: S): GuideStep[]
 }

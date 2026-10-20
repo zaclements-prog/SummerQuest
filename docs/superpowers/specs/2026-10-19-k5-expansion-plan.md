@@ -221,6 +221,64 @@ Fixed ids shared by the parallel work. Owner decision: build the pilot now, reco
   - Any of a zone's lessons hatches its pet (`lessonIds`).
   - Growth takes the best stage across the zone's bands, so switching grade never shrinks a pet.
 
+## Kindergarten literacy (phase 1b) contract
+
+Owner request (2026-10-20): rhyming, finishing nursery rhymes, clapping syllables, blending sounds, sight words, tracing, and story order, all for kindergarten. Writing Workshop wakes up as the fourth K zone. Handwriting style: **ball-and-stick** (upright manuscript, matching the Andika letters). The voice is recorded later, as in the pilot.
+
+**Letter Reef (`reading-reef`), the `k1` set in unlock order:**
+
+| # | `id` | Title | What the child does |
+|---|---|---|---|
+| 1 | `k-letters-1` | Find the letter | (pilot) |
+| 2 | `k-rhyme-1` | Rhyme time | "Which one rhymes with cat?": three pictures |
+| 3 | `k-letters-2` | Big and little letters | (pilot) |
+| 4 | `k-syllables-1` | Clap the parts | tap the drum once for each part of a word ("ti-ger"), then ✓ (`drum` activity) |
+| 5 | `k-letters-3` | First sounds | (pilot) |
+| 6 | `k-rhyme-2` | Finish the rhyme | a traditional nursery rhyme stops before its rhyming word; tap the picture that finishes it |
+| 7 | `k-blend-1` | Sound it out | "mmm… oon": tap the picture of the word |
+| 8 | `k-sight-1` | Word hunt | "Find the word *see*": three word cards (the only printed words a K child sees, in Andika) |
+
+**Writing Workshop (`writing-workshop`), the `k1` set:**
+
+| # | `id` | Title | What the child does |
+|---|---|---|---|
+| 1 | `k-trace-1` | Warm-up lines | trace lines and curves: down, across, slant, circle, zig-zag (`trace` activity) |
+| 2 | `k-trace-2` | Trace numbers | 0–9 |
+| 3 | `k-trace-3` | Trace big letters | A–Z, by stroke family: straight lines, then slants, then curves |
+| 4 | `k-story-1` | Story order | hear a three-picture story, then tap the pictures first, next, last (`order` activity) |
+
+- **Counting Mesa bonus:** `k-count-1`'s last question asks the child to trace the number they just counted.
+
+**Lessons (`band: 'k1'`):**
+- `kRhymes`: Letter Reef (rhymes and word parts); its practice stage is `k-rhyme-1`.
+- `kTracing`: Writing Workshop (start at the green dot, follow the arrow); practice `k-trace-1`.
+- **Pets:** the octopus also hatches from `kRhymes`, and the dragonet from `kTracing`.
+
+**Listen & Play activities** (`ListenProblem.activity`, registered in `src/games/listenPlay/activities/index.ts`):
+- An activity takes the whole stage and reports each finished try with `onAttempt(correct)`.
+- The shell still:
+  - asks the question (`askSteps`, by default the line with the activity lit);
+  - keeps the 🔊 and the progress dots;
+  - counts first-try stars;
+  - praises a right answer;
+  - after a miss, says "let's look again", runs the activity's help (`registerHelp`), says "Your turn!", and raises `misses` by one.
+- The three activities are `drum`, `trace` and `order`.
+
+**Rules:**
+- **Voice packs:**
+  - Letter Reef work: `k-rhymes`, `k-sounds`, `k-words`.
+  - Writing Workshop work: `k-trace`, `k-stories`.
+  - Every stage and the Writing Workshop name and welcome also get `k-nav` lines.
+- **Nursery rhymes:** traditional and long out of copyright, quoted as tradition has them.
+- **Blending:** the sounds are written as the recording script reads them. Stretchable sounds come first (m, s, f, l, n, r, sh). Every phonics line is flagged for the owner's listening pass.
+- **No microphone:** the child always picks or does; they never say an answer.
+- **Pictures:** emoji every Android tablet draws (Unicode 9 or older), as in the pilot's picture words.
+- **Tracing:**
+  - forgiving: start near the green dot, stay roughly on the path, cover most of it, in stroke order;
+  - after a stroke goes wrong twice, the hand shows it;
+  - never a timer, and never failing out.
+- **Store build:** unchanged. K stays behind `VITE_K1`.
+
 ## Phases
 
 | Phase | What ships | Notes |

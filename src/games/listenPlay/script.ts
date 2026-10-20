@@ -5,7 +5,7 @@ import { COUNT_MAX } from '../../voice/packs/listen'
 import { voiceText } from '../../voice/registry'
 import type { VoiceRef } from '../../voice/types'
 import { shapeSides } from './shapeGeometry'
-import type { ListenProblem, ListenTarget } from './types'
+import type { ListenActivityDef, ListenProblem, ListenTarget } from './types'
 
 /**
  * What the Listen & Play guide says and points at, as plain data (the shell
@@ -13,8 +13,10 @@ import type { ListenProblem, ListenTarget } from './types'
  *   lp-picture   the question's picture panel
  *   lp-pair-<k>  half k of a two-picture panel (a `pair`)
  *   lp-card-<i>  answer card i
+ *   lp-activity  the stage of a question answered by an activity (`ListenProblem.activity`)
  */
 export const LP_PICTURE = 'lp-picture'
+export const LP_ACTIVITY = 'lp-activity'
 export const lpCard = (i: number) => `lp-card-${i}`
 export const lpPair = (k: number) => `lp-pair-${k}`
 
@@ -97,6 +99,12 @@ export function questionSteps(p: ListenProblem, openCards: number[]): GuideStep[
     if (named.length) steps.push({ voice: null, target: openCards.length === 1 ? lpCard(openCards[0]) : openCards.map(lpCard), hand: openCards.length === 1 ? 'tap' : 'sweep', pad: 12 })
   }
   return steps
+}
+
+/** Asking an activity's question: its own steps, else the line with the activity's area lit. */
+export function activityAskSteps(p: ListenProblem, def: ListenActivityDef | null): GuideStep[] {
+  const steps = def?.askSteps && p.activity ? def.askSteps(p, p.activity) : []
+  return steps.length ? steps : [{ voice: p.speech ?? null, target: LP_ACTIVITY, hand: false, pad: 6 }]
 }
 
 function safeText(ref: VoiceRef): string {

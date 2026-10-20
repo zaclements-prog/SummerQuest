@@ -15,8 +15,11 @@ import { ToonStar } from '../../components/ui'
 import { PictureArt, PictureCard, type CardState, type GroupMarks } from './PictureCard'
 import { pictureLabel } from './pictureLabel'
 import { sharedFrame } from './groupLayout'
+import { activityDef } from './activities'
 import {
+  LP_ACTIVITY,
   LP_PICTURE,
+  activityAskSteps,
   cardsFor,
   countable,
   countUpSteps,
@@ -31,7 +34,7 @@ import {
   walkthroughSteps,
   type Where,
 } from './script'
-import type { ListenProblem } from './types'
+import type { ListenPhase, ListenProblem } from './types'
 import './listenPlay.css'
 
 /**
@@ -56,9 +59,14 @@ import './listenPlay.css'
  * cards the whole stage.
  *
  * Stars count first-try answers and are never 0.
+ *
+ * A question with an `activity` (trace a letter, tap a drum, put a story in
+ * order) shows that activity instead of cards (see ./activities): it reports
+ * each try, and after a miss its own help runs between "let's look again" and
+ * "Your turn!".
  */
 
-type Phase = 'loading' | 'ask' | 'judge' | 'praise' | 'oops' | 'done'
+type Phase = ListenPhase
 type Marks = Readonly<Record<string, GroupMarks>>
 
 interface State {
@@ -70,6 +78,8 @@ interface State {
   picked: number | null
   /** Cards tried (not right) on this item: they rest aside. */
   tried: number[]
+  /** Tries on this item that weren't right (cards or an activity). */
+  misses: number
   /** First pick of this item was right (null until the first pick). */
   firstTry: boolean | null
   firstTryCorrect: number
@@ -82,6 +92,7 @@ interface State {
 type Action =
   | { type: 'load'; idx: number; problem: ListenProblem }
   | { type: 'pick'; card: number; correct: boolean }
+  | { type: 'attempt'; correct: boolean }
   | { type: 'judged'; correct: boolean }
   | { type: 'retry' }
   | { type: 'next'; total: number }
@@ -92,7 +103,7 @@ function reducer(s: State, a: Action): State {
   switch (a.type) {
     case 'load':
       if (a.idx !== s.idx) return s
-      return { ...s, problem: a.problem, phase: 'ask', token: s.token + 1, picked: null, tried: [], firstTry: null, marks: {} }
+      return { ...s, problem: a.problem, phase: 'ask', token: s.token + 1, picked: null, tried: [], misses: 0, firstTry: null, marks: {} }
     case 'pick': {
       if (s.phase !== 'ask') return s
       const first = s.firstTry === null
@@ -108,12 +119,28 @@ function reducer(s: State, a: Action): State {
         results,
       }
     }
+    case 'attempt': {
+      // an activity's try: judged by the activity itself, so straight to praise or "let's look again"
+      if (s.phase !== 'ask') return s
+      const first = s.firstTry === null
+      const results = [...s.results]
+      if (first) results[s.idx] = a.correct
+      return {
+        ...s,
+        phase: a.correct ? 'praise' : 'oops',
+        token: s.token + 1,
+        firstTry: first ? a.correct : s.firstTry,
+        firstTryCorrect: s.firstTryCorrect + (first && a.correct ? 1 : 0),
+        results,
+      }
+    }
     case 'judged':
       if (s.phase !== 'judge') return s
       return { ...s, phase: a.correct ? 'praise' : 'oops', token: s.token + 1 }
     case 'retry':
-      if (s.phase !== 'oops' || s.picked === null) return s
-      return { ...s, phase: 'ask', token: s.token + 1, tried: [...s.tried, s.picked], picked: null }
+      if (s.phase !== 'oops') return s
+      if (s.picked === null) return s.problem?.activity ? { ...s, phase: 'ask', token: s.token + 1, misses: s.misses + 1 } : s
+      return { ...s, phase: 'ask', token: s.token + 1, tried: [...s.tried, s.picked], misses: s.misses + 1, picked: null }
     case 'next':
       if (s.phase !== 'praise') return s
       if (s.idx + 1 >= a.total) return { ...s, phase: 'done', token: s.token + 1 }
@@ -140,6 +167,7 @@ export default function ListenPlay({ provider, params, onComplete, meta, paused 
     token: 0,
     picked: null,
     tried: [],
+    misses: 0,
     firstTry: null,
     firstTryCorrect: 0,
     results: Array.from({ length: total }, () => null),
@@ -153,7 +181,10 @@ export default function ListenPlay({ provider, params, onComplete, meta, paused 
   })
 
   const problem = s.problem
-  const cards = useMemo(() => (problem ? cardsFor(problem) : []), [problem])
+  const activity = problem ? activityDef(problem.activity) : null
+  // the activity's help after a miss (it registers it; the 'oops' script runs it)
+  const helpRef = useRef<(() => Promise<void>) | null>(null)
+  const cards = useMemo(() => (problem && !problem.activity ? cardsFor(problem) : []), [problem])
   const picture = problem ? questionPicture(problem) : null
   const panel = problem ? hasPicturePanel(problem) : false
   // a pair stacks on a landscape screen (its panel is tall) and sits side by side upright
@@ -183,6 +214,10 @@ export default function ListenPlay({ provider, params, onComplete, meta, paused 
     const run = async () => {
       switch (phase) {
         case 'ask': {
+          if (problem.activity) {
+            await guide.sequence(activityAskSteps(problem, activityDef(problem.activity)))
+            return
+          }
           const open = cards.map((_, i) => i).filter((i) => !tried.includes(i))
           await guide.sequence(questionSteps(problem, open))
           return
@@ -209,7 +244,16 @@ export default function ListenPlay({ provider, params, onComplete, meta, paused 
         }
         case 'oops': {
           await guide.say({ line: 'ui/tryAgain' })
-          if (!live || picked === null) return
+          if (!live) return
+          if (problem.activity) {
+            const help = helpRef.current
+            if (help) await help()
+            if (!live) return
+            await guide.say({ line: 'listen/yourTurn' })
+            if (live) dispatch({ type: 'retry' })
+            return
+          }
+          if (picked === null) return
           // a word about the card that was tapped ("Cat starts with C.")
           const note = problem.notes?.[picked]
           if (note) {
@@ -265,6 +309,18 @@ export default function ListenPlay({ provider, params, onComplete, meta, paused 
     }
     sfx.pop()
     dispatch({ type: 'pick', card, correct })
+  }
+
+  function attempt(correct: boolean) {
+    if (phase !== 'ask' || !problem || paused) return
+    if (s.firstTry === null) {
+      recordAnswer(correct, problem)
+      if (meta) {
+        const sk = skillOf(problem)
+        recordAttempt({ zoneId: meta.zoneId, topic: provider.topic, skillId: sk.id, skillLabel: sk.label, correct })
+      }
+    }
+    dispatch({ type: 'attempt', correct })
   }
 
   function countObject(where: Where, obj: number) {
@@ -327,7 +383,24 @@ export default function ListenPlay({ provider, params, onComplete, meta, paused 
         <div className="w-[72px] roomy:w-20 shrink-0 short:hidden" aria-hidden="true" />
       </div>
 
-      {problem && panel && (
+      {problem && activity && problem.activity && (
+        // an activity takes the whole stage (trace, drum, story order)
+        <div key={`act-${problem.id}`} data-guide={LP_ACTIVITY} data-activity={problem.activity.kind} className="lp-stage relative flex-1 min-h-0 min-w-0 flex">
+          <activity.Component
+            problem={problem}
+            spec={problem.activity}
+            phase={phase}
+            active={interactive}
+            misses={s.misses}
+            onAttempt={attempt}
+            registerHelp={(h) => {
+              helpRef.current = h
+            }}
+          />
+        </div>
+      )}
+
+      {problem && !problem.activity && panel && (
         // upright: picture over cards, centred; sideways: side by side
         <div className="lp-stage flex-1 min-h-0 min-w-0 flex flex-col justify-center gap-5 roomy:gap-7 landscape:grid landscape:grid-rows-1 landscape:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)] landscape:items-center landscape:gap-4 short:gap-3 landscape:roomy:gap-6">
           {/* the question's picture */}
@@ -371,7 +444,7 @@ export default function ListenPlay({ provider, params, onComplete, meta, paused 
         </div>
       )}
 
-      {problem && !panel && (
+      {problem && !problem.activity && !panel && (
         // nothing to show but the answers ("Tap the triangle."): they take the stage, big
         <div className="lp-stage flex-1 min-h-0 min-w-0 flex items-center justify-center">
           <div
