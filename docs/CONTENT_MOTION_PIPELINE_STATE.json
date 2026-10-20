@@ -15,7 +15,7 @@
     "commit format: Content: +N <bank> L<level> (<theme words>) — ledger committed together with content",
     "motion (if touched): no filters, motion ends within 1-2s of cue, ~150 elements, Paper bg, deterministic rand(i), reduced handled"
   ],
-  "current_phase": "A",
+  "current_phase": "complete",
   "steps": [
     {
       "id": "A1",
@@ -258,7 +258,9 @@
     {
       "id": "B3",
       "title": "perf rework: science/states scene",
-      "status": "pending"
+      "status": "done",
+      "commit": "3dd93d2",
+      "evidence": "science/states peak 195 -> 118 SVG elements (budget 150) measured by scripts/audit-scene-elements.mjs over the real narration timeline (public/tts/science/states.words.json, dur 12.68s); Ball gains hl flag — highlight shine dropped on the dense particle fields (25 solid + 36 liquid + 16 gas particles; the ink outline carries the toon look, same rationale as B2.2 filter removal); perpetual sine motions bounded per B2.3: solid in-place jiggle -> windowed ramp peaking in the 'keeps its own shape' beat, liquid slosh + surface bob -> ramp to zero after the jar re-packs, gas zip -> sin-window settling at 'fill all the space'; two perpetual Twinkles -> one finite Sparkles flash at done; every beat preserved: block drop + dashed outline trace, beaker tilt + pour stream + 6->10 re-pack morph, gas puff + lid + spread, labels/captions/ticks; vitest src/tutoring 43 passed, npm test 783 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
     }
   ],
   "history": [
@@ -560,6 +562,15 @@
       "commits": "1cd1547: wordProblem/read perf rework — peak SVG elements 247 -> 115 (budget 150), 0 filter frames (was 151); 24-crayon tray relaid as per-row CrayonRun silhouettes whose n grows as columns land (per-row drop/spring and stagger preserved), perpetual fox blink loop -> two bounded blinks (B2.3), three perpetual Twinkles -> one finite Sparkles flash at done, ThoughtBubble sq-shadow filter removed (B2.2; ink outline carries the toon look, same treatment as B1's IndexCard); scene audit script repaired: tsx now self-bootstraps TSX_TSCONFIG_PATH=tsconfig.app.json because the root solution tsconfig has no compilerOptions (classic JSX runtime -> 'React is not defined'); plan re-verified ok at 125; note for B3 planning: wordProblem/solve measures 222 peak with 359 filter frames (not a listed step — consider whether the plan's scope covers it or it needs its own step)",
       "gates": "full-final (single scene commit for the step)",
       "push": "pushed 7accef5..20ed99b to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 35,
+      "step": "B3",
+      "result": "done",
+      "tests": "final battery (single scene commit for the step): vitest src/tutoring 43 passed, npm test 783 passed, lint clean, tsc -b clean, build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "3dd93d2: science/states perf rework — peak SVG elements 195 -> 118 (budget 150), measured by audit-scene-elements.mjs over the real narration timeline; Ball gains hl flag (shine dots dropped on the 77-particle fields, ink outline carries the toon look); three perpetual sine loops bounded per B2.3 (solid jiggle windowed to the 'keeps its own shape' beat, liquid slosh/surface bob ramp to zero after re-pack, gas zip settles at 'fill all the space'); two perpetual Twinkles -> one finite Sparkles flash at done; every beat preserved (block drop + dashed trace, beaker pour + 6->10 morph, gas puff + lid + spread)",
+      "gates": "full-final (single scene commit for the step)",
+      "note": "ALL STEPS COMPLETE — every A1..A32 and B1..B3 step is done, none blocked. current_phase set to complete; cron job paused. Whole plan landed on content/banks-expansion; local commits are source of truth where pushes were skipped."
     }
   ],
   "notes": "Target counts from handoff A1 table. One step per interval. Owner-approved 2026-10-18: fast gates policy — intermediate commits run vitest providers only; full battery (vitest+npm test+lint+tsc+build:store) runs on the final commit of each step and step is marked done only on full-battery pass. Fails verification twice -> blocked with error, skip to next. All done/blocked: pause cron + final summary in history."
