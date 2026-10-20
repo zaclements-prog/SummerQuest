@@ -75,6 +75,64 @@ const TEMPLATES_ADD: Array<{
       hint: `Add ${a} and ${b}.`,
     }),
   },
+  // CCSS 2.OA.A.1 — one-step "add to" stories within 100, fresh skeletons
+  // so kids meet new stories, not just new numbers. Names/settings rotate.
+  {
+    build: (a, b) => ({
+      prompt: `Priya made ${a} friendship bracelets at camp and ${b} more for her friends at home. How many bracelets did she make in all?`,
+      answer: a + b,
+      hint: `Add ${a} and ${b}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Kenji's garden grew ${a} sunflowers, and ${b} more bloomed after the rain. How many sunflowers are there now?`,
+      answer: a + b,
+      hint: `Add ${a} and ${b}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Aisha picked ${a} blueberries, and her grandpa picked ${b} more. How many blueberries did they pick in all?`,
+      answer: a + b,
+      hint: `Add ${a} and ${b}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Nadia stacked ${a} logs by the woodshed, and ${b} more arrived by truck. How many logs are there now?`,
+      answer: a + b,
+      hint: `Add ${a} and ${b}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Cole spotted ${a} fireflies in the meadow and ${b} more near the porch. How many fireflies did he see in all?`,
+      answer: a + b,
+      hint: `Add ${a} and ${b}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Wren's class collected ${a} soup cans on Monday and ${b} more by Friday. How many cans did the class collect in all?`,
+      answer: a + b,
+      hint: `Add ${a} and ${b}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Hana knitted ${a} scarves for the winter fair and ${b} more over the weekend. How many scarves did she knit in all?`,
+      answer: a + b,
+      hint: `Add ${a} and ${b}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Milo walked ${a} dogs on his morning route and ${b} more after lunch. How many dogs did he walk in all?`,
+      answer: a + b,
+      hint: `Add ${a} and ${b}.`,
+    }),
+  },
 ]
 
 const TEMPLATES_SUB: Array<{
