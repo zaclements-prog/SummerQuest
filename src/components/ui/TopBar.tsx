@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 import { BackButton } from './PageHeader'
 
 interface TopBarProps {
-  back: { label: string; to?: string; onClick?: () => void }
+  back: { label: string; to?: string; onClick?: () => void; iconOnly?: boolean }
   title: ReactNode
   /** An emoji shown in a token at the start of the title plate. */
   icon?: string
@@ -17,7 +17,7 @@ export default function TopBar({ back, title, icon, right }: TopBarProps) {
   return (
     <div className="px-3 sm:px-4 pt-3 pb-2 short:pt-1.5 short:pb-1 grid grid-cols-[1fr_auto_1fr] items-center gap-2 sm:gap-3">
       <div className="justify-self-start">
-        <BackButton to={back.to} label={back.label} onClick={back.onClick} />
+        <BackButton to={back.to} label={back.label} onClick={back.onClick} iconOnly={back.iconOnly} />
       </div>
       <h1
         className={[

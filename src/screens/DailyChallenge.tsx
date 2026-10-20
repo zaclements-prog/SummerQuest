@@ -95,7 +95,7 @@ export default function DailyChallenge() {
   if (alreadyClaimed && !result && listen) {
     return (
       <Screen>
-        <TopBar back={{ to: exitPath, label: 'Back' }} icon="🌟" title="" />
+        <TopBar back={{ to: exitPath, label: 'Back', iconOnly: true }} icon="🌟" title="" />
         <div className="flex-1 flex flex-col items-center justify-center p-4 gap-6">
           <Medallion tone="quest" size="xl">🌟</Medallion>
           <Button variant="primary" size="lg" to={exitPath} aria-label={exitLabel} className="min-w-24 min-h-20 text-4xl justify-center">
@@ -135,7 +135,7 @@ export default function DailyChallenge() {
     if (listen) {
       return (
         <Screen>
-          <TopBar back={{ to: exitPath, label: 'Back' }} icon="🌟" title="" />
+          <TopBar back={{ to: exitPath, label: 'Back', iconOnly: true }} icon="🌟" title="" />
           <div className="flex-1 flex items-center justify-center p-4">
             <ListenResultCard stars={res.stars} coins={reward} onReplay={() => navigate(exitPath)} onNext={() => navigate(exitPath)} />
           </div>
@@ -228,7 +228,7 @@ export default function DailyChallenge() {
   if (listen) {
     return (
       <Screen>
-        <TopBar back={{ to: exitPath, label: 'Quit' }} icon="🌟" title="" />
+        <TopBar back={{ to: exitPath, label: 'Quit', iconOnly: true }} icon="🌟" title="" />
         <ListenPlay
           key={`daily-${attempt}`}
           provider={provider}

@@ -217,7 +217,7 @@ export default function GameRunner() {
   return (
     <div className={`flex-1 flex flex-col ${arena3d ? 'bg-[#d9effa]' : ''}`}>
       {/* ── Host top bar ──────────────────────────────────────────────────── */}
-      <TopBar back={{ label: 'Quit', onClick: () => setConfirmQuit(true) }} icon={zone.emoji} title={listen ? '' : stage.title} />
+      <TopBar back={{ label: 'Quit', onClick: () => setConfirmQuit(true), iconOnly: listen }} icon={zone.emoji} title={listen ? '' : stage.title} />
 
       <Game
         provider={provider}
