@@ -13,6 +13,7 @@ import { writingScenes } from './writing'
 import { kCountingScenes } from './kCounting'
 import { kLettersScenes } from './kLetters'
 import { kShapesScenes } from './kShapes'
+import { kRhymesScenes } from './kRhymes'
 
 /**
  * Motion graphics by lesson → step id. A step without a scene falls back to
@@ -35,6 +36,7 @@ const SCENES: Record<string, Record<string, Scene>> = {
   kCounting: kCountingScenes,
   kShapes: kShapesScenes,
   kLetters: kLettersScenes,
+  kRhymes: kRhymesScenes,
 }
 
 export function sceneFor(lessonId: string, stepId: string): Scene | undefined {

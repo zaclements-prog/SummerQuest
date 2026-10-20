@@ -238,7 +238,7 @@ describe('the lesson picker', () => {
     mount('/tutor')
     await advance(900)
     const links = [...container.querySelectorAll<HTMLAnchorElement>('a[data-guide^="lesson-pick-"]')]
-    expect(links.map((a) => a.getAttribute('href'))).toEqual(['/tutor/kCounting', '/tutor/kShapes', '/tutor/kLetters'])
+    expect(links.map((a) => a.getAttribute('href'))).toEqual(['/tutor/kCounting', '/tutor/kShapes', '/tutor/kLetters', '/tutor/kRhymes'])
     // no words: the letters lesson's picture shows letter tiles, and that's all
     for (const w of visibleWords(container)) expect(w).toMatch(/^[A-Za-z]$/)
     const pictures = container.cloneNode(true) as HTMLElement

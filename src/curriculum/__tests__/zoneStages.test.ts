@@ -10,6 +10,8 @@ import { pickTodaysChallenge } from '../../lib/daily'
 import { localDayKey } from '../../lib/dates'
 import { zoneStageRows } from '../../world/hubContent'
 import { useProgress, zoneMastered, zoneStars } from '../../store/progress'
+import { createProvider } from '../../lib/providers'
+import type { ListenProblem } from '../../games/listenPlay/types'
 
 /*
  * Band-aware stage sets: a zone plays `stagesByBand.k1` at K–1 and
@@ -217,7 +219,8 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
   const K1_IDS: Record<string, string[]> = {
     'multiplication-mesa': ['k-count-1', 'k-count-parade', 'k-count-3'],
     'geometry-grove': ['k-shapes-1', 'k-shapes-2', 'k-shapes-3'],
-    'reading-reef': ['k-letters-1', 'k-letters-2', 'k-letters-3'],
+    // the pilot's three letter stages, with the literacy stages between them (phase-1b contract)
+    'reading-reef': ['k-letters-1', 'k-rhyme-1', 'k-letters-2', 'k-syllables-1', 'k-letters-3', 'k-rhyme-2', 'k-blend-1', 'k-sight-1'],
   }
   const K1_TITLES: Record<string, string> = {
     'multiplication-mesa': 'Counting Mesa',
@@ -225,7 +228,7 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
     'reading-reef': 'Letter Reef',
   }
 
-  it('kindergarten and 1st grade see the nine K–1 stages; 2nd–5th grade still see today’s', () => {
+  it('kindergarten and 1st grade see the K–1 stage sets; 2nd–5th grade still see today’s', () => {
     for (const zone of curriculum.zones) {
       for (const g of [0, 1] as const) {
         const ids = zoneStages(zone, g).map((s) => s.id)
@@ -243,7 +246,7 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
 
   it('every K–1 stage is a voice-first game of 5–6 items with 3 stars, the parade with K–1 gates', () => {
     const all = Object.keys(K1_IDS).flatMap((z) => zoneStages(getZone(z)!, 0))
-    expect(new Set(all.map((s) => s.id)).size).toBe(9)
+    expect(new Set(all.map((s) => s.id)).size).toBe(Object.values(K1_IDS).flat().length)
     for (const s of all) {
       expect(s.starsToEarn, s.id).toBe(3)
       expect(s.title.length, s.id).toBeGreaterThan(0)
@@ -259,7 +262,8 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
       expect(s.params?.questionCount, s.id).toBeGreaterThanOrEqual(5)
       expect(s.params?.questionCount, s.id).toBeLessThanOrEqual(6)
     }
-    expect(all.map((s) => s.providerConfig.kind)).toEqual(['kCounting', 'kCounting', 'kCounting', 'kShapes', 'kShapes', 'kShapes', 'kLetters', 'kLetters', 'kLetters'])
+    expect(all.slice(0, 6).map((s) => s.providerConfig.kind)).toEqual(['kCounting', 'kCounting', 'kCounting', 'kShapes', 'kShapes', 'kShapes'])
+    expect(zoneStages(getZone('reading-reef')!, 0).map((s) => s.providerConfig.kind)).toEqual(['kLetters', 'kLiteracy', 'kLetters', 'kLiteracy', 'kLetters', 'kLiteracy', 'kLiteracy', 'kLiteracy'])
     // the counting stages climb: count to 10, count on to 20 (the parade), then compare
     expect(all.slice(0, 3).map((s) => s.providerConfig)).toMatchObject([
       { mode: 'count', max: 10 },
@@ -268,6 +272,42 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
     ])
     // the stage kinds the contract names
     expect(zoneStages(mesa, 0).map((s) => s.kind)).toEqual(['concept', 'practice', 'mastery'])
+  })
+
+  it('Letter Reef’s literacy stages: the phase-1b titles, kinds and question kinds, in unlock order', () => {
+    const reef = getZone('reading-reef')!
+    const set = zoneStages(reef, 0)
+    expect(set.map((s) => [s.id, s.title])).toEqual([
+      ['k-letters-1', 'Find the letter'],
+      ['k-rhyme-1', 'Rhyme time'],
+      ['k-letters-2', 'Big and little letters'],
+      ['k-syllables-1', 'Clap the parts'],
+      ['k-letters-3', 'First sounds'],
+      ['k-rhyme-2', 'Finish the rhyme'],
+      ['k-blend-1', 'Sound it out'],
+      ['k-sight-1', 'Word hunt'],
+    ])
+    // the pilot's three letter stages, exactly as they were
+    expect(set.filter((s) => s.id.startsWith('k-letters-')).map((s) => [s.kind, s.providerConfig])).toEqual([
+      ['concept', { kind: 'kLetters', mode: 'findUpper' }],
+      ['practice', { kind: 'kLetters', mode: 'matchCase', confusablesAfter: 3 }],
+      ['mastery', { kind: 'kLetters', mode: 'firstSound' }],
+    ])
+    const at = (id: string) => set.find((s) => s.id === id)!
+    // rhymes, word parts and blending are practice; the sight words close the reef
+    for (const id of ['k-rhyme-1', 'k-syllables-1', 'k-rhyme-2', 'k-blend-1']) expect(at(id).kind, id).toBe('practice')
+    expect(at('k-sight-1').kind).toBe('mastery')
+    expect(set.slice(1).filter((s) => !s.id.startsWith('k-letters-')).map((s) => (s.providerConfig as { mode?: string }).mode)).toEqual(['rhyme', 'syllables', 'finishRhyme', 'blend', 'sight'])
+    // each unlocks after the one before it
+    const stars = (ids: string[]) => ({ stages: Object.fromEntries(ids.map((id) => [id, { stars: 1 }])) })
+    set.forEach((s, i) => {
+      expect(isStageUnlocked(reef, s.id, stars(set.slice(0, i).map((x) => x.id)), 0), s.id).toBe(true)
+      if (i > 0) expect(isStageUnlocked(reef, s.id, stars(set.slice(0, i - 1).map((x) => x.id)), 0), s.id).toBe(false)
+    })
+    // "Clap the parts" is answered with the drum, not cards
+    const drum = createProvider(at('k-syllables-1').providerConfig).next() as ListenProblem
+    expect(drum.activity?.kind).toBe('drum')
+    expect(drum.pictureOptions).toBeUndefined()
   })
 
   it('names the three zones for K–1 only (zoneTitle)', () => {

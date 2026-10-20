@@ -80,5 +80,10 @@ export default defineVoicePack({
     'stage-k-letters-1': 'Find the letter!',
     'stage-k-letters-2': 'Big and little letters!',
     'stage-k-letters-3': 'First sounds!',
+    'stage-k-rhyme-1': 'Rhyme time!',
+    'stage-k-syllables-1': 'Clap the parts!',
+    'stage-k-rhyme-2': 'Finish the rhyme!',
+    'stage-k-blend-1': 'Sound it out!',
+    'stage-k-sight-1': 'Word hunt!',
   },
 })

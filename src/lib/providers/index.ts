@@ -28,6 +28,7 @@ import { makeMultiplicationGroveProvider } from './multiplicationGrove'
 import { makeKCountingProvider, type KCountingConfig } from './kCounting'
 import { makeKShapesProvider, type KShapesConfig } from './kShapes'
 import { makeKLettersProvider, type KLettersConfig } from './kLetters'
+import { makeKLiteracyProvider, type KLiteracyConfig } from './kLiteracy'
 
 export type ProviderConfig =
   | { kind: 'multiplication'; factorMin: number; factorMax: number }
@@ -52,6 +53,8 @@ export type ProviderConfig =
   | ({ kind: 'kShapes' } & KShapesConfig)
   /** Letter Reef: letter names, big and little letters, first sounds. */
   | ({ kind: 'kLetters' } & KLettersConfig)
+  /** Letter Reef: rhymes, word parts (the drum), blending sounds, sight words. */
+  | ({ kind: 'kLiteracy' } & KLiteracyConfig)
 
 export function createProvider(config: ProviderConfig): ProblemProvider {
   switch (config.kind) {
@@ -91,5 +94,7 @@ export function createProvider(config: ProviderConfig): ProblemProvider {
       return makeKShapesProvider(config)
     case 'kLetters':
       return makeKLettersProvider(config)
+    case 'kLiteracy':
+      return makeKLiteracyProvider(config)
   }
 }
