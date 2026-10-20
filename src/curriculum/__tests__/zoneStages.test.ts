@@ -139,15 +139,18 @@ describe('readers follow the current band', () => {
 
   it('the Daily Challenge and the World panel use the band’s set', () => {
     mesa.stagesByBand = { k1: K1 }
-    // a day whose challenge is this zone (the zone pick is the same at every grade)
-    let day = ''
-    for (let d = 0; d < 366 && !day; d++) {
-      const key = localDayKey(new Date(2026, 0, 1 + d))
-      if (pickTodaysChallenge(0, key).zone.id === ZONE) day = key
+    // a day whose challenge is this zone, at this grade (K–1 picks from fewer zones)
+    const dayFor = (grade: 0 | 3) => {
+      for (let d = 0; d < 366; d++) {
+        const key = localDayKey(new Date(2026, 0, 1 + d))
+        if (pickTodaysChallenge(grade, key).zone.id === ZONE) return key
+      }
+      return ''
     }
-    expect(day).not.toBe('')
-    expect(K1).toContain(pickTodaysChallenge(0, day).stage)
-    expect(pickTodaysChallenge(3, day).stage).toBe(G24[0])
+    expect(dayFor(0)).not.toBe('')
+    expect(dayFor(3)).not.toBe('')
+    expect(K1).toContain(pickTodaysChallenge(0, dayFor(0)).stage)
+    expect(pickTodaysChallenge(3, dayFor(3)).stage).toBe(G24[0])
 
     const k = zoneStageRows(ZONE, { zones: {}, grade: 0 })
     expect(k.map((r) => [r.stageId, r.locked])).toEqual([['count-k-1', false], ['count-k-2', true]])

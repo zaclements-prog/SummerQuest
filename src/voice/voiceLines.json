@@ -6546,6 +6546,12 @@
       "hash": "ccbc4d0433",
       "kind": "line",
       "file": "voice/ui/voiceCheck.mp3"
+    },
+    "ui/dailyDone": {
+      "text": "You did today's challenge! Come back tomorrow for a new one.",
+      "hash": "5ad14536d4",
+      "kind": "line",
+      "file": "voice/ui/dailyDone.mp3"
     }
   }
 }

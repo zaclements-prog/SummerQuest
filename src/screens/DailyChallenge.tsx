@@ -1,7 +1,11 @@
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { createProvider } from '../lib/providers'
-import { effectiveConfigForStage } from '../lib/gradeTiers'
+import { DEFAULT_GRADE, effectiveConfigForStage } from '../lib/gradeTiers'
+import { isListenMode } from '../lib/gradeBand'
+import { ListenPlay } from '../games/lazyGames'
+import { ListenResultCard } from '../games/listenPlay/ListenResultCard'
+import { useVoice } from '../voice/useVoice'
 import { useProgress } from '../store/progress'
 import { zoneStages } from '../curriculum'
 import ConceptPlay from '../games/ConceptPlay'
@@ -60,8 +64,47 @@ export default function DailyChallenge() {
   const alreadyClaimed = claimedDate === todayStr()
   const tone = toneOf(zone.themeColor)
   const { container, item } = useEntrance()
+  // K–1 (voice-first): the questions play in Listen & Play, and nothing needs reading.
+  const listen = isListenMode(grade ?? DEFAULT_GRADE) || stage.gameId === 'listenPlay'
+  useVoice(listen && alreadyClaimed && !result ? { line: 'ui/dailyDone' } : null)
+
+  const finish = (res: GameResult) => {
+    const reward = DAILY_BONUS + res.correct * 2
+    addCoins(reward)
+    claimDaily()
+    recordSession({
+      zoneId: zone.id,
+      zoneTitle: zone.title,
+      zoneEmoji: zone.emoji,
+      stageId: stage.id,
+      stageTitle: `Daily Challenge · ${zone.title}`,
+      kind: 'daily',
+      correct: res.correct,
+      total: res.total,
+      stars: res.stars,
+      score: res.score,
+    })
+    if (res.stars >= 2 && !listen) {
+      sfx.victory()
+      setCelebrationOpen(true)
+    }
+    setResult({ res, reward })
+  }
 
   // ── Already finished today ─────────────────────────────────────────────────
+  if (alreadyClaimed && !result && listen) {
+    return (
+      <Screen>
+        <TopBar back={{ to: exitPath, label: 'Back' }} icon="🌟" title="" />
+        <div className="flex-1 flex flex-col items-center justify-center p-4 gap-6">
+          <Medallion tone="quest" size="xl">🌟</Medallion>
+          <Button variant="primary" size="lg" to={exitPath} aria-label={exitLabel} className="min-w-24 min-h-20 text-4xl justify-center">
+            ←
+          </Button>
+        </div>
+      </Screen>
+    )
+  }
   if (alreadyClaimed && !result) {
     return (
       <Screen>
@@ -89,6 +132,16 @@ export default function DailyChallenge() {
   if (result) {
     const { res, reward } = result
     const great = res.stars >= 2
+    if (listen) {
+      return (
+        <Screen>
+          <TopBar back={{ to: exitPath, label: 'Back' }} icon="🌟" title="" />
+          <div className="flex-1 flex items-center justify-center p-4">
+            <ListenResultCard stars={res.stars} coins={reward} onReplay={() => navigate(exitPath)} onNext={() => navigate(exitPath)} />
+          </div>
+        </Screen>
+      )
+    }
 
     return (
       <Screen>
@@ -172,6 +225,21 @@ export default function DailyChallenge() {
   const provider = providerResult.provider
 
   // ── Active challenge ───────────────────────────────────────────────────────
+  if (listen) {
+    return (
+      <Screen>
+        <TopBar back={{ to: exitPath, label: 'Quit' }} icon="🌟" title="" />
+        <ListenPlay
+          key={`daily-${attempt}`}
+          provider={provider}
+          params={{ questionCount: DAILY_QUESTION_COUNT }}
+          meta={{ zoneId: zone.id, stageId: stage.id }}
+          onComplete={finish}
+          onExit={() => navigate(exitPath)}
+        />
+      </Screen>
+    )
+  }
   return (
     <Screen>
       <Header exitPath={exitPath} />
@@ -211,28 +279,7 @@ export default function DailyChallenge() {
         params={{ questionCount: DAILY_QUESTION_COUNT }}
         // meta lets each answer feed the weekly-focus coach, like a regular stage.
         meta={{ zoneId: zone.id, stageId: stage.id }}
-        onComplete={(res) => {
-          const reward = DAILY_BONUS + res.correct * 2
-          addCoins(reward)
-          claimDaily()
-          recordSession({
-            zoneId: zone.id,
-            zoneTitle: zone.title,
-            zoneEmoji: zone.emoji,
-            stageId: stage.id,
-            stageTitle: `Daily Challenge · ${zone.title}`,
-            kind: 'daily',
-            correct: res.correct,
-            total: res.total,
-            stars: res.stars,
-            score: res.score,
-          })
-          if (res.stars >= 2) {
-            sfx.victory()
-            setCelebrationOpen(true)
-          }
-          setResult({ res, reward })
-        }}
+        onComplete={finish}
         onExit={() => navigate(exitPath)}
       />
     </Screen>
