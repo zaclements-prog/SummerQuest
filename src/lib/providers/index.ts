@@ -29,6 +29,8 @@ import { makeKCountingProvider, type KCountingConfig } from './kCounting'
 import { makeKShapesProvider, type KShapesConfig } from './kShapes'
 import { makeKLettersProvider, type KLettersConfig } from './kLetters'
 import { makeKLiteracyProvider, type KLiteracyConfig } from './kLiteracy'
+import { makeKTraceProvider, type KTraceConfig } from './kTrace'
+import { makeKStoriesProvider } from './kStories'
 
 export type ProviderConfig =
   | { kind: 'multiplication'; factorMin: number; factorMax: number }
@@ -55,6 +57,10 @@ export type ProviderConfig =
   | ({ kind: 'kLetters' } & KLettersConfig)
   /** Letter Reef: rhymes, word parts (the drum), blending sounds, sight words. */
   | ({ kind: 'kLiteracy' } & KLiteracyConfig)
+  /** Writing Workshop: trace warm-up strokes, numerals and capital letters (the `trace` activity). */
+  | ({ kind: 'kTrace' } & KTraceConfig)
+  /** Writing Workshop: a three-picture story, then first, next, last (the `order` activity). */
+  | { kind: 'kStories' }
 
 export function createProvider(config: ProviderConfig): ProblemProvider {
   switch (config.kind) {
@@ -96,5 +102,9 @@ export function createProvider(config: ProviderConfig): ProblemProvider {
       return makeKLettersProvider(config)
     case 'kLiteracy':
       return makeKLiteracyProvider(config)
+    case 'kTrace':
+      return makeKTraceProvider(config)
+    case 'kStories':
+      return makeKStoriesProvider()
   }
 }

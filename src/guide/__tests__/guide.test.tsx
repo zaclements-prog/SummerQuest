@@ -199,6 +199,24 @@ describe('idle re-prompt', () => {
     expect(onIdle).toHaveBeenCalledTimes(2)
   })
 
+  it('a finger moving while it is down (a child tracing slowly) is a touch; a hovering mouse is not', async () => {
+    const onIdle = vi.fn()
+    act(() => root.render(<><GuideLayer /><Idle k="trace" onIdle={onIdle} /></>))
+    await advance(5000)
+    for (let i = 0; i < 8; i++) {
+      window.dispatchEvent(new MouseEvent('pointermove', { buttons: 1 }))
+      await advance(1000)
+    }
+    window.dispatchEvent(new MouseEvent('pointerup'))
+    await advance(7000)
+    expect(onIdle).not.toHaveBeenCalled()
+    for (let i = 0; i < 3; i++) {
+      window.dispatchEvent(new MouseEvent('pointermove', { buttons: 0 }))
+      await advance(500)
+    }
+    expect(onIdle).toHaveBeenCalledTimes(1)
+  })
+
   it('does not count while the narrator is talking', async () => {
     const onIdle = vi.fn()
     act(() => root.render(<><GuideLayer /><Idle k="q" onIdle={onIdle} /></>))

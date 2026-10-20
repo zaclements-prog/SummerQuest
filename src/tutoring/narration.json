@@ -272,5 +272,23 @@
       "stepId": "yourTurn",
       "text": "Your turn! Clap the parts of banana. Ba… na… na!"
     }
+  ],
+  "kTracing": [
+    {
+      "stepId": "dot",
+      "text": "Let's trace! Find the green dot. That is where we start."
+    },
+    {
+      "stepId": "lineL",
+      "text": "Follow the arrow. Big line down. Then a little line across. That's L!"
+    },
+    {
+      "stepId": "aroundO",
+      "text": "Now O. Start at the green dot. Go around like a C. Keep going, all the way around. That's O!"
+    },
+    {
+      "stepId": "yourTurn",
+      "text": "Your turn! Start at the dot, and follow the arrow. You can do it!"
+    }
   ]
 }

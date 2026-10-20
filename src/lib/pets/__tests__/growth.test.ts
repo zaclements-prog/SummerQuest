@@ -49,7 +49,7 @@ describe('pet catalog', () => {
       ['bear', 'measurement-marsh', ['measurement']],
       ['fox', 'data-delta', ['dataGraph']],
       ['unicorn', 'place-value-plateau', ['placeValue']],
-      ['dragonet', 'writing-workshop', ['writing']],
+      ['dragonet', 'writing-workshop', ['writing', 'kTracing']],
       ['tiger', 'science-summit', ['science']],
       ['dragon', 'tower-battlefront', []],
     ]

@@ -37,6 +37,18 @@
       "kind": "line",
       "file": "voice/k-lessons/kRhymes-yourTurn.mp3"
     },
+    "k-lessons/kTracing-dot": {
+      "text": "Where do you start? Tap the green dot.",
+      "hash": "2bcac6a2d8",
+      "kind": "line",
+      "file": "voice/k-lessons/kTracing-dot.mp3"
+    },
+    "k-lessons/kTracing-lineL": {
+      "text": "Which arrow goes down? Tap it.",
+      "hash": "7588f0c925",
+      "kind": "line",
+      "file": "voice/k-lessons/kTracing-lineL.mp3"
+    },
     "k-lessons/triangle": {
       "text": "Triangle!",
       "hash": "da7385986c",
@@ -108,6 +120,24 @@
       "hash": "b3139966ff",
       "kind": "line",
       "file": "voice/k-lessons/car.mp3"
+    },
+    "k-lessons/up": {
+      "text": "Up!",
+      "hash": "a8616f9851",
+      "kind": "line",
+      "file": "voice/k-lessons/up.mp3"
+    },
+    "k-lessons/across": {
+      "text": "Across!",
+      "hash": "100b0800f5",
+      "kind": "line",
+      "file": "voice/k-lessons/across.mp3"
+    },
+    "k-lessons/down": {
+      "text": "Down!",
+      "hash": "be50e88c3b",
+      "kind": "line",
+      "file": "voice/k-lessons/down.mp3"
     },
     "k-lessons/pickLesson": {
       "text": "Pick a lesson to watch. Tap a picture!",
@@ -3307,6 +3337,42 @@
       "kind": "line",
       "file": "voice/k-nav/stage-k-sight-1.mp3"
     },
+    "k-nav/name-writing-workshop": {
+      "text": "Writing Workshop!",
+      "hash": "360e645dd1",
+      "kind": "line",
+      "file": "voice/k-nav/name-writing-workshop.mp3"
+    },
+    "k-nav/welcome-writing-workshop": {
+      "text": "Writing Workshop! Tap a star to play!",
+      "hash": "64c902e625",
+      "kind": "line",
+      "file": "voice/k-nav/welcome-writing-workshop.mp3"
+    },
+    "k-nav/stage-k-trace-1": {
+      "text": "Warm-up lines!",
+      "hash": "9734962b82",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-trace-1.mp3"
+    },
+    "k-nav/stage-k-trace-2": {
+      "text": "Trace numbers!",
+      "hash": "4a7a9b6ce2",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-trace-2.mp3"
+    },
+    "k-nav/stage-k-trace-3": {
+      "text": "Trace big letters!",
+      "hash": "d0e9d41c77",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-trace-3.mp3"
+    },
+    "k-nav/stage-k-story-1": {
+      "text": "Story order!",
+      "hash": "da7764c06c",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-story-1.mp3"
+    },
     "k-rhymes/youHearRhyme": {
       "text": "You can hear the rhyme!",
       "hash": "bf6b701bbe",
@@ -5454,6 +5520,816 @@
       "hash": "6285e6c022",
       "kind": "whole",
       "file": "voice/k-sounds/drumWord/word=violin.mp3"
+    },
+    "k-stories/listen": {
+      "text": "Listen to the story!",
+      "hash": "e1c5f3609d",
+      "kind": "line",
+      "file": "voice/k-stories/listen.mp3"
+    },
+    "k-stories/tapInOrder": {
+      "text": "Now tap the pictures in order: first, next, last!",
+      "hash": "a2a0517633",
+      "kind": "line",
+      "file": "voice/k-stories/tapInOrder.mp3"
+    },
+    "k-stories/whatFirst": {
+      "text": "What comes first? Tap it!",
+      "hash": "6cc4a5f986",
+      "kind": "line",
+      "file": "voice/k-stories/whatFirst.mp3"
+    },
+    "k-stories/whatNext": {
+      "text": "What comes next? Tap it!",
+      "hash": "1dfec8be76",
+      "kind": "line",
+      "file": "voice/k-stories/whatNext.mp3"
+    },
+    "k-stories/whatLast": {
+      "text": "What comes last? Tap it!",
+      "hash": "35d19aaa92",
+      "kind": "line",
+      "file": "voice/k-stories/whatLast.mp3"
+    },
+    "k-stories/slotFirst": {
+      "text": "First!",
+      "hash": "564d9021b8",
+      "kind": "line",
+      "file": "voice/k-stories/slotFirst.mp3"
+    },
+    "k-stories/slotNext": {
+      "text": "Next!",
+      "hash": "1e2f42be56",
+      "kind": "line",
+      "file": "voice/k-stories/slotNext.mp3"
+    },
+    "k-stories/slotLast": {
+      "text": "Last!",
+      "hash": "0ba77eef69",
+      "kind": "line",
+      "file": "voice/k-stories/slotLast.mp3"
+    },
+    "k-stories/youKnowStory": {
+      "text": "You know the story!",
+      "hash": "36ca71e6a4",
+      "kind": "line",
+      "file": "voice/k-stories/youKnowStory.mp3"
+    },
+    "k-stories/greatRemembering": {
+      "text": "Great remembering!",
+      "hash": "df045d85a8",
+      "kind": "line",
+      "file": "voice/k-stories/greatRemembering.mp3"
+    },
+    "k-stories/egg-1": {
+      "text": "First, there is an egg.",
+      "hash": "0e90e21011",
+      "kind": "line",
+      "file": "voice/k-stories/egg-1.mp3"
+    },
+    "k-stories/egg-2": {
+      "text": "Next, a chick hatches out!",
+      "hash": "c47feec700",
+      "kind": "line",
+      "file": "voice/k-stories/egg-2.mp3"
+    },
+    "k-stories/egg-3": {
+      "text": "Last, the chick grows into a hen.",
+      "hash": "195a56c91d",
+      "kind": "line",
+      "file": "voice/k-stories/egg-3.mp3"
+    },
+    "k-stories/flower-1": {
+      "text": "First, a tiny sprout pops up.",
+      "hash": "8b27977758",
+      "kind": "line",
+      "file": "voice/k-stories/flower-1.mp3"
+    },
+    "k-stories/flower-2": {
+      "text": "Next, it grows big green leaves.",
+      "hash": "e62983aec7",
+      "kind": "line",
+      "file": "voice/k-stories/flower-2.mp3"
+    },
+    "k-stories/flower-3": {
+      "text": "Last, a sunflower blooms!",
+      "hash": "e96a9d81fc",
+      "kind": "line",
+      "file": "voice/k-stories/flower-3.mp3"
+    },
+    "k-stories/butterfly-1": {
+      "text": "First, there is a little caterpillar.",
+      "hash": "567ca70c79",
+      "kind": "line",
+      "file": "voice/k-stories/butterfly-1.mp3"
+    },
+    "k-stories/butterfly-2": {
+      "text": "Next, it eats and eats the leaves.",
+      "hash": "4851675e36",
+      "kind": "line",
+      "file": "voice/k-stories/butterfly-2.mp3"
+    },
+    "k-stories/butterfly-3": {
+      "text": "Last, it turns into a butterfly!",
+      "hash": "c2edba732b",
+      "kind": "line",
+      "file": "voice/k-stories/butterfly-3.mp3"
+    },
+    "k-stories/snowman-1": {
+      "text": "First, the snow falls.",
+      "hash": "bc162790fd",
+      "kind": "line",
+      "file": "voice/k-stories/snowman-1.mp3"
+    },
+    "k-stories/snowman-2": {
+      "text": "Next, we build a snowman.",
+      "hash": "978025bb12",
+      "kind": "line",
+      "file": "voice/k-stories/snowman-2.mp3"
+    },
+    "k-stories/snowman-3": {
+      "text": "Last, the sun melts it into water.",
+      "hash": "ec50d81e4b",
+      "kind": "line",
+      "file": "voice/k-stories/snowman-3.mp3"
+    },
+    "k-stories/bedtime-1": {
+      "text": "First, take a warm bath.",
+      "hash": "492347e812",
+      "kind": "line",
+      "file": "voice/k-stories/bedtime-1.mp3"
+    },
+    "k-stories/bedtime-2": {
+      "text": "Next, read a story.",
+      "hash": "e72c0296c9",
+      "kind": "line",
+      "file": "voice/k-stories/bedtime-2.mp3"
+    },
+    "k-stories/bedtime-3": {
+      "text": "Last, go to sleep.",
+      "hash": "ee3e48f967",
+      "kind": "line",
+      "file": "voice/k-stories/bedtime-3.mp3"
+    },
+    "k-stories/pizza-1": {
+      "text": "First, spread the tomato sauce.",
+      "hash": "4e38f4f64a",
+      "kind": "line",
+      "file": "voice/k-stories/pizza-1.mp3"
+    },
+    "k-stories/pizza-2": {
+      "text": "Next, sprinkle on the cheese.",
+      "hash": "9d986bd8a8",
+      "kind": "line",
+      "file": "voice/k-stories/pizza-2.mp3"
+    },
+    "k-stories/pizza-3": {
+      "text": "Last, bake a yummy pizza!",
+      "hash": "ca27607f62",
+      "kind": "line",
+      "file": "voice/k-stories/pizza-3.mp3"
+    },
+    "k-stories/rainbow-1": {
+      "text": "First, the clouds roll in.",
+      "hash": "8ba99e8a38",
+      "kind": "line",
+      "file": "voice/k-stories/rainbow-1.mp3"
+    },
+    "k-stories/rainbow-2": {
+      "text": "Next, the rain comes down.",
+      "hash": "1857e4f12d",
+      "kind": "line",
+      "file": "voice/k-stories/rainbow-2.mp3"
+    },
+    "k-stories/rainbow-3": {
+      "text": "Last, a rainbow shines!",
+      "hash": "6b5d88bbd0",
+      "kind": "line",
+      "file": "voice/k-stories/rainbow-3.mp3"
+    },
+    "k-stories/apple-1": {
+      "text": "First, the tree has pink flowers.",
+      "hash": "b4aa8ddf9e",
+      "kind": "line",
+      "file": "voice/k-stories/apple-1.mp3"
+    },
+    "k-stories/apple-2": {
+      "text": "Next, a little green apple grows.",
+      "hash": "4d89b87996",
+      "kind": "line",
+      "file": "voice/k-stories/apple-2.mp3"
+    },
+    "k-stories/apple-3": {
+      "text": "Last, the apple turns red!",
+      "hash": "871ecfb4b8",
+      "kind": "line",
+      "file": "voice/k-stories/apple-3.mp3"
+    },
+    "k-stories/day-1": {
+      "text": "First, the sun comes up.",
+      "hash": "8104e2b6c0",
+      "kind": "line",
+      "file": "voice/k-stories/day-1.mp3"
+    },
+    "k-stories/day-2": {
+      "text": "Next, the sun shines all day.",
+      "hash": "d6b2bb709c",
+      "kind": "line",
+      "file": "voice/k-stories/day-2.mp3"
+    },
+    "k-stories/day-3": {
+      "text": "Last, the moon comes out at night.",
+      "hash": "a21867c607",
+      "kind": "line",
+      "file": "voice/k-stories/day-3.mp3"
+    },
+    "k-stories/growUp-1": {
+      "text": "First, a tiny baby.",
+      "hash": "8aa5cf62d1",
+      "kind": "line",
+      "file": "voice/k-stories/growUp-1.mp3"
+    },
+    "k-stories/growUp-2": {
+      "text": "Next, a big kid.",
+      "hash": "c12e3dd31b",
+      "kind": "line",
+      "file": "voice/k-stories/growUp-2.mp3"
+    },
+    "k-stories/growUp-3": {
+      "text": "Last, a grown-up!",
+      "hash": "64589dcbd2",
+      "kind": "line",
+      "file": "voice/k-stories/growUp-3.mp3"
+    },
+    "k-stories/tree-1": {
+      "text": "First, plant a little nut.",
+      "hash": "829195e941",
+      "kind": "line",
+      "file": "voice/k-stories/tree-1.mp3"
+    },
+    "k-stories/tree-2": {
+      "text": "Next, a sprout pops up.",
+      "hash": "8a662ae9ea",
+      "kind": "line",
+      "file": "voice/k-stories/tree-2.mp3"
+    },
+    "k-stories/tree-3": {
+      "text": "Last, it grows into a big tree!",
+      "hash": "09e62610a3",
+      "kind": "line",
+      "file": "voice/k-stories/tree-3.mp3"
+    },
+    "k-stories/mail-1": {
+      "text": "First, write a letter.",
+      "hash": "232d86de19",
+      "kind": "line",
+      "file": "voice/k-stories/mail-1.mp3"
+    },
+    "k-stories/mail-2": {
+      "text": "Next, put it in an envelope.",
+      "hash": "2e17f10f1a",
+      "kind": "line",
+      "file": "voice/k-stories/mail-2.mp3"
+    },
+    "k-stories/mail-3": {
+      "text": "Last, drop it in the mailbox!",
+      "hash": "a9e5acad53",
+      "kind": "line",
+      "file": "voice/k-stories/mail-3.mp3"
+    },
+    "k-stories/popcorn-1": {
+      "text": "First, get some corn.",
+      "hash": "4c23c013f4",
+      "kind": "line",
+      "file": "voice/k-stories/popcorn-1.mp3"
+    },
+    "k-stories/popcorn-2": {
+      "text": "Next, heat it up.",
+      "hash": "287d566b7a",
+      "kind": "line",
+      "file": "voice/k-stories/popcorn-2.mp3"
+    },
+    "k-stories/popcorn-3": {
+      "text": "Last, pop, pop, popcorn!",
+      "hash": "ee840719a6",
+      "kind": "line",
+      "file": "voice/k-stories/popcorn-3.mp3"
+    },
+    "k-trace/warm-down": {
+      "text": "Let's trace a big line down!",
+      "hash": "4dd88ccf6b",
+      "kind": "line",
+      "file": "voice/k-trace/warm-down.mp3"
+    },
+    "k-trace/warm-across": {
+      "text": "Let's trace a line across!",
+      "hash": "862b912ce6",
+      "kind": "line",
+      "file": "voice/k-trace/warm-across.mp3"
+    },
+    "k-trace/warm-slant": {
+      "text": "Let's trace a slant line!",
+      "hash": "4a69a75047",
+      "kind": "line",
+      "file": "voice/k-trace/warm-slant.mp3"
+    },
+    "k-trace/warm-circle": {
+      "text": "Let's trace a circle!",
+      "hash": "39706f98d1",
+      "kind": "line",
+      "file": "voice/k-trace/warm-circle.mp3"
+    },
+    "k-trace/warm-curve": {
+      "text": "Let's trace a curve!",
+      "hash": "1abbbfbc78",
+      "kind": "line",
+      "file": "voice/k-trace/warm-curve.mp3"
+    },
+    "k-trace/warm-zigzag": {
+      "text": "Let's trace a zig-zag!",
+      "hash": "ed15ef5f64",
+      "kind": "line",
+      "file": "voice/k-trace/warm-zigzag.mp3"
+    },
+    "k-trace/warm-wave": {
+      "text": "Let's trace a wave!",
+      "hash": "ac36ab7ee8",
+      "kind": "line",
+      "file": "voice/k-trace/warm-wave.mp3"
+    },
+    "k-trace/digit-0": {
+      "text": "Let's trace a zero!",
+      "hash": "3a13e44682",
+      "kind": "line",
+      "file": "voice/k-trace/digit-0.mp3"
+    },
+    "k-trace/digit-1": {
+      "text": "Let's trace an one!",
+      "hash": "949f360ac5",
+      "kind": "line",
+      "file": "voice/k-trace/digit-1.mp3"
+    },
+    "k-trace/digit-2": {
+      "text": "Let's trace a two!",
+      "hash": "8f4d4b0165",
+      "kind": "line",
+      "file": "voice/k-trace/digit-2.mp3"
+    },
+    "k-trace/digit-3": {
+      "text": "Let's trace a three!",
+      "hash": "8fb15438cb",
+      "kind": "line",
+      "file": "voice/k-trace/digit-3.mp3"
+    },
+    "k-trace/digit-4": {
+      "text": "Let's trace a four!",
+      "hash": "851fd06f9d",
+      "kind": "line",
+      "file": "voice/k-trace/digit-4.mp3"
+    },
+    "k-trace/digit-5": {
+      "text": "Let's trace a five!",
+      "hash": "02c95dac59",
+      "kind": "line",
+      "file": "voice/k-trace/digit-5.mp3"
+    },
+    "k-trace/digit-6": {
+      "text": "Let's trace a six!",
+      "hash": "94b9e8368d",
+      "kind": "line",
+      "file": "voice/k-trace/digit-6.mp3"
+    },
+    "k-trace/digit-7": {
+      "text": "Let's trace a seven!",
+      "hash": "4aaa3006e7",
+      "kind": "line",
+      "file": "voice/k-trace/digit-7.mp3"
+    },
+    "k-trace/digit-8": {
+      "text": "Let's trace an eight!",
+      "hash": "2c32220eae",
+      "kind": "line",
+      "file": "voice/k-trace/digit-8.mp3"
+    },
+    "k-trace/digit-9": {
+      "text": "Let's trace a nine!",
+      "hash": "41121d134b",
+      "kind": "line",
+      "file": "voice/k-trace/digit-9.mp3"
+    },
+    "k-trace/counted-1": {
+      "text": "You counted one! Now trace an one.",
+      "hash": "a81f8a2e3f",
+      "kind": "line",
+      "file": "voice/k-trace/counted-1.mp3"
+    },
+    "k-trace/counted-2": {
+      "text": "You counted two! Now trace a two.",
+      "hash": "f103aeec0c",
+      "kind": "line",
+      "file": "voice/k-trace/counted-2.mp3"
+    },
+    "k-trace/counted-3": {
+      "text": "You counted three! Now trace a three.",
+      "hash": "2e35b4ab4f",
+      "kind": "line",
+      "file": "voice/k-trace/counted-3.mp3"
+    },
+    "k-trace/counted-4": {
+      "text": "You counted four! Now trace a four.",
+      "hash": "69adee5e01",
+      "kind": "line",
+      "file": "voice/k-trace/counted-4.mp3"
+    },
+    "k-trace/counted-5": {
+      "text": "You counted five! Now trace a five.",
+      "hash": "5988338e4f",
+      "kind": "line",
+      "file": "voice/k-trace/counted-5.mp3"
+    },
+    "k-trace/counted-6": {
+      "text": "You counted six! Now trace a six.",
+      "hash": "4327407452",
+      "kind": "line",
+      "file": "voice/k-trace/counted-6.mp3"
+    },
+    "k-trace/counted-7": {
+      "text": "You counted seven! Now trace a seven.",
+      "hash": "753e2a6af3",
+      "kind": "line",
+      "file": "voice/k-trace/counted-7.mp3"
+    },
+    "k-trace/counted-8": {
+      "text": "You counted eight! Now trace an eight.",
+      "hash": "b188484fda",
+      "kind": "line",
+      "file": "voice/k-trace/counted-8.mp3"
+    },
+    "k-trace/counted-9": {
+      "text": "You counted nine! Now trace a nine.",
+      "hash": "13a06192de",
+      "kind": "line",
+      "file": "voice/k-trace/counted-9.mp3"
+    },
+    "k-trace/say-bigDown": {
+      "text": "Start at the top. Big line down.",
+      "hash": "cbbd5f6ede",
+      "kind": "line",
+      "file": "voice/k-trace/say-bigDown.mp3"
+    },
+    "k-trace/say-littleDown": {
+      "text": "Little line down.",
+      "hash": "196fcb1237",
+      "kind": "line",
+      "file": "voice/k-trace/say-littleDown.mp3"
+    },
+    "k-trace/say-bigAcross": {
+      "text": "Big line across.",
+      "hash": "1d9ebb86e2",
+      "kind": "line",
+      "file": "voice/k-trace/say-bigAcross.mp3"
+    },
+    "k-trace/say-littleAcross": {
+      "text": "Little line across.",
+      "hash": "875098f1a2",
+      "kind": "line",
+      "file": "voice/k-trace/say-littleAcross.mp3"
+    },
+    "k-trace/say-slantDown": {
+      "text": "Slant down.",
+      "hash": "ffb593cbb6",
+      "kind": "line",
+      "file": "voice/k-trace/say-slantDown.mp3"
+    },
+    "k-trace/say-slantDownUp": {
+      "text": "Slant down, then slant up.",
+      "hash": "a26233af77",
+      "kind": "line",
+      "file": "voice/k-trace/say-slantDownUp.mp3"
+    },
+    "k-trace/say-slantInOut": {
+      "text": "Slant in, then slant out.",
+      "hash": "3b41e618b1",
+      "kind": "line",
+      "file": "voice/k-trace/say-slantInOut.mp3"
+    },
+    "k-trace/say-slantOut": {
+      "text": "Slant out.",
+      "hash": "76d1ffbe1b",
+      "kind": "line",
+      "file": "voice/k-trace/say-slantOut.mp3"
+    },
+    "k-trace/say-downUpDownUp": {
+      "text": "Slant down, up, down, up!",
+      "hash": "f362e6595b",
+      "kind": "line",
+      "file": "voice/k-trace/say-downUpDownUp.mp3"
+    },
+    "k-trace/say-acrossSlantAcross": {
+      "text": "Across, slant down, across.",
+      "hash": "892a6cc39f",
+      "kind": "line",
+      "file": "voice/k-trace/say-acrossSlantAcross.mp3"
+    },
+    "k-trace/say-aroundC": {
+      "text": "Around like a C.",
+      "hash": "dc2ebd7404",
+      "kind": "line",
+      "file": "voice/k-trace/say-aroundC.mp3"
+    },
+    "k-trace/say-aroundO": {
+      "text": "Around like a C. Keep going, all the way around!",
+      "hash": "74bd3e974f",
+      "kind": "line",
+      "file": "voice/k-trace/say-aroundO.mp3"
+    },
+    "k-trace/say-bumpTop": {
+      "text": "Back to the top. Around for a bump.",
+      "hash": "7926718662",
+      "kind": "line",
+      "file": "voice/k-trace/say-bumpTop.mp3"
+    },
+    "k-trace/say-bumpBottom": {
+      "text": "Around for another bump.",
+      "hash": "aa437498b3",
+      "kind": "line",
+      "file": "voice/k-trace/say-bumpBottom.mp3"
+    },
+    "k-trace/say-bigCurve": {
+      "text": "Back to the top. Big curve around.",
+      "hash": "bdfc645bfe",
+      "kind": "line",
+      "file": "voice/k-trace/say-bigCurve.mp3"
+    },
+    "k-trace/say-hook": {
+      "text": "Line down, then hook around.",
+      "hash": "8491933d8d",
+      "kind": "line",
+      "file": "voice/k-trace/say-hook.mp3"
+    },
+    "k-trace/say-downAroundUp": {
+      "text": "Line down, around, and up.",
+      "hash": "c40e7b7732",
+      "kind": "line",
+      "file": "voice/k-trace/say-downAroundUp.mp3"
+    },
+    "k-trace/say-snake": {
+      "text": "Curve around, then curve back, like a snake.",
+      "hash": "ecb6ebae54",
+      "kind": "line",
+      "file": "voice/k-trace/say-snake.mp3"
+    },
+    "k-trace/say-tail": {
+      "text": "Little slant for the tail.",
+      "hash": "6753c2bbf6",
+      "kind": "line",
+      "file": "voice/k-trace/say-tail.mp3"
+    },
+    "k-trace/say-zigzag": {
+      "text": "Zig, zag, zig, zag!",
+      "hash": "580bbfccd3",
+      "kind": "line",
+      "file": "voice/k-trace/say-zigzag.mp3"
+    },
+    "k-trace/say-wave": {
+      "text": "Up and down, like a wave.",
+      "hash": "b43bfc7cc4",
+      "kind": "line",
+      "file": "voice/k-trace/say-wave.mp3"
+    },
+    "k-trace/say-two": {
+      "text": "Around, slant down, then across.",
+      "hash": "3bb553de89",
+      "kind": "line",
+      "file": "voice/k-trace/say-two.mp3"
+    },
+    "k-trace/say-three": {
+      "text": "Around and in. Around again.",
+      "hash": "4acfeaec76",
+      "kind": "line",
+      "file": "voice/k-trace/say-three.mp3"
+    },
+    "k-trace/say-downAcross": {
+      "text": "Line down, then across.",
+      "hash": "ce164f9dbb",
+      "kind": "line",
+      "file": "voice/k-trace/say-downAcross.mp3"
+    },
+    "k-trace/say-fiveBelly": {
+      "text": "Line down, then around for a big belly.",
+      "hash": "170c8f3270",
+      "kind": "line",
+      "file": "voice/k-trace/say-fiveBelly.mp3"
+    },
+    "k-trace/say-six": {
+      "text": "Curve down, and around.",
+      "hash": "b1b3b178ef",
+      "kind": "line",
+      "file": "voice/k-trace/say-six.mp3"
+    },
+    "k-trace/say-seven": {
+      "text": "Line across, then slant down.",
+      "hash": "7f0d46cf1a",
+      "kind": "line",
+      "file": "voice/k-trace/say-seven.mp3"
+    },
+    "k-trace/say-eight": {
+      "text": "Like an S, then back up to the top.",
+      "hash": "e0f8ad3b87",
+      "kind": "line",
+      "file": "voice/k-trace/say-eight.mp3"
+    },
+    "k-trace/say-nine": {
+      "text": "Around like a C, then line down.",
+      "hash": "724e2e7857",
+      "kind": "line",
+      "file": "voice/k-trace/say-nine.mp3"
+    },
+    "k-trace/hintStart": {
+      "text": "Start at the green dot.",
+      "hash": "68ec7cb2d8",
+      "kind": "line",
+      "file": "voice/k-trace/hintStart.mp3"
+    },
+    "k-trace/hintArrow": {
+      "text": "Follow the arrow.",
+      "hash": "c5cea28801",
+      "kind": "line",
+      "file": "voice/k-trace/hintArrow.mp3"
+    },
+    "k-trace/hintEnd": {
+      "text": "Keep going, all the way to the end!",
+      "hash": "d62378a93b",
+      "kind": "line",
+      "file": "voice/k-trace/hintEnd.mp3"
+    },
+    "k-trace/greatTracing": {
+      "text": "Great tracing!",
+      "hash": "61ca1f1b41",
+      "kind": "line",
+      "file": "voice/k-trace/greatTracing.mp3"
+    },
+    "k-trace/niceLines": {
+      "text": "What nice lines!",
+      "hash": "7c4f368ac8",
+      "kind": "line",
+      "file": "voice/k-trace/niceLines.mp3"
+    },
+    "k-trace/letter/letter=a": {
+      "text": "Let's trace the letter A!",
+      "hash": "e15c5f2185",
+      "kind": "whole",
+      "file": "voice/k-trace/letter/letter=a.mp3"
+    },
+    "k-trace/letter/letter=b": {
+      "text": "Let's trace the letter B!",
+      "hash": "5a6b919a61",
+      "kind": "whole",
+      "file": "voice/k-trace/letter/letter=b.mp3"
+    },
+    "k-trace/letter/letter=c": {
+      "text": "Let's trace the letter C!",
+      "hash": "3fac66202a",
+      "kind": "whole",
+      "file": "voice/k-trace/letter/letter=c.mp3"
+    },
+    "k-trace/letter/letter=d": {
+      "text": "Let's trace the letter D!",
+      "hash": "f468362f21",
+      "kind": "whole",
+      "file": "voice/k-trace/letter/letter=d.mp3"
+    },
+    "k-trace/letter/letter=e": {
+      "text": "Let's trace the letter E!",
+      "hash": "095b29f5eb",
+      "kind": "whole",
+      "file": "voice/k-trace/letter/letter=e.mp3"
+    },
+    "k-trace/letter/letter=f": {
+      "text": "Let's trace the letter F!",
+      "hash": "ce08b5acf3",
+      "kind": "whole",
+      "file": "voice/k-trace/letter/letter=f.mp3"
+    },
+    "k-trace/letter/letter=g": {
+      "text": "Let's trace the letter G!",
+      "hash": "a9e49e7a97",
+      "kind": "whole",
+      "file": "voice/k-trace/letter/letter=g.mp3"
+    },
+    "k-trace/letter/letter=h": {
+      "text": "Let's trace the letter H!",
+      "hash": "5223465cda",
+      "kind": "whole",
+      "file": "voice/k-trace/letter/letter=h.mp3"
+    },
+    "k-trace/letter/letter=i": {
+      "text": "Let's trace the letter I!",
+      "hash": "23714ec4cb",
+      "kind": "whole",
+      "file": "voice/k-trace/letter/letter=i.mp3"
+    },
+    "k-trace/letter/letter=j": {
+      "text": "Let's trace the letter J!",
+      "hash": "7d21fad88e",
+      "kind": "whole",
+      "file": "voice/k-trace/letter/letter=j.mp3"
+    },
+    "k-trace/letter/letter=k": {
+      "text": "Let's trace the letter K!",
+      "hash": "bc0cb75733",
+      "kind": "whole",
+      "file": "voice/k-trace/letter/letter=k.mp3"
+    },
+    "k-trace/letter/letter=l": {
+      "text": "Let's trace the letter L!",
+      "hash": "489534acc1",
+      "kind": "whole",
+      "file": "voice/k-trace/letter/letter=l.mp3"
+    },
+    "k-trace/letter/letter=m": {
+      "text": "Let's trace the letter M!",
+      "hash": "0fd8474aed",
+      "kind": "whole",
+      "file": "voice/k-trace/letter/letter=m.mp3"
+    },
+    "k-trace/letter/letter=n": {
+      "text": "Let's trace the letter N!",
+      "hash": "8ad9efe23f",
+      "kind": "whole",
+      "file": "voice/k-trace/letter/letter=n.mp3"
+    },
+    "k-trace/letter/letter=o": {
+      "text": "Let's trace the letter O!",
+      "hash": "49187dca3b",
+      "kind": "whole",
+      "file": "voice/k-trace/letter/letter=o.mp3"
+    },
+    "k-trace/letter/letter=p": {
+      "text": "Let's trace the letter P!",
+      "hash": "9ecc7622f8",
+      "kind": "whole",
+      "file": "voice/k-trace/letter/letter=p.mp3"
+    },
+    "k-trace/letter/letter=q": {
+      "text": "Let's trace the letter Q!",
+      "hash": "b0e92f7595",
+      "kind": "whole",
+      "file": "voice/k-trace/letter/letter=q.mp3"
+    },
+    "k-trace/letter/letter=r": {
+      "text": "Let's trace the letter R!",
+      "hash": "b63a3571bf",
+      "kind": "whole",
+      "file": "voice/k-trace/letter/letter=r.mp3"
+    },
+    "k-trace/letter/letter=s": {
+      "text": "Let's trace the letter S!",
+      "hash": "8a0648241f",
+      "kind": "whole",
+      "file": "voice/k-trace/letter/letter=s.mp3"
+    },
+    "k-trace/letter/letter=t": {
+      "text": "Let's trace the letter T!",
+      "hash": "6f19cbfb77",
+      "kind": "whole",
+      "file": "voice/k-trace/letter/letter=t.mp3"
+    },
+    "k-trace/letter/letter=u": {
+      "text": "Let's trace the letter U!",
+      "hash": "48fba6ddbb",
+      "kind": "whole",
+      "file": "voice/k-trace/letter/letter=u.mp3"
+    },
+    "k-trace/letter/letter=v": {
+      "text": "Let's trace the letter V!",
+      "hash": "6ac02780b7",
+      "kind": "whole",
+      "file": "voice/k-trace/letter/letter=v.mp3"
+    },
+    "k-trace/letter/letter=w": {
+      "text": "Let's trace the letter W!",
+      "hash": "0e8ca62cce",
+      "kind": "whole",
+      "file": "voice/k-trace/letter/letter=w.mp3"
+    },
+    "k-trace/letter/letter=x": {
+      "text": "Let's trace the letter X!",
+      "hash": "1a4786570d",
+      "kind": "whole",
+      "file": "voice/k-trace/letter/letter=x.mp3"
+    },
+    "k-trace/letter/letter=y": {
+      "text": "Let's trace the letter Y!",
+      "hash": "ba959b7ca2",
+      "kind": "whole",
+      "file": "voice/k-trace/letter/letter=y.mp3"
+    },
+    "k-trace/letter/letter=z": {
+      "text": "Let's trace the letter Z!",
+      "hash": "41674fb5d7",
+      "kind": "whole",
+      "file": "voice/k-trace/letter/letter=z.mp3"
     },
     "k-words/youCanRead": {
       "text": "You can read that word!",

@@ -232,6 +232,23 @@ const POSTERS: Record<string, { bg: string; motif: () => ReactNode }> = {
       </g>
     ),
   },
+  kTracing: {
+    bg: '#e4f1ff',
+    motif: () => (
+      <g strokeLinecap="round" strokeLinejoin="round" fill="none">
+        {/* an L on handwriting lines, half traced in crayon, its green dot and an arrow */}
+        <line x1={70} x2={250} y1={40} y2={40} stroke="#a9cdea" strokeWidth={2.5} />
+        <line x1={70} x2={250} y1={82} y2={82} stroke="#a9cdea" strokeWidth={2.5} strokeDasharray="8 6" />
+        <line x1={70} x2={250} y1={124} y2={124} stroke="#7fb0da" strokeWidth={3} />
+        <path d="M 130 40 L 130 124 L 190 124" stroke="#dccbb0" strokeWidth={22} />
+        <path d="M 130 40 L 130 124 L 190 124" stroke="#f5ecdd" strokeWidth={17} />
+        <path d="M 130 40 L 130 112" stroke="#3f6fd1" strokeWidth={12} />
+        <circle cx={130} cy={40} r={8} fill="#36c35a" stroke={M.ink} strokeWidth={2.5} />
+        <path d="M 154 64 L 154 92 M 145 82 L 154 94 L 163 82" stroke="#ff8a3d" strokeWidth={6} />
+        <circle cx={226} cy={70} r={17} fill="none" stroke="#dccbb0" strokeWidth={10} />
+      </g>
+    ),
+  },
 }
 
 /**

@@ -85,5 +85,13 @@ export default defineVoicePack({
     'stage-k-rhyme-2': 'Finish the rhyme!',
     'stage-k-blend-1': 'Sound it out!',
     'stage-k-sight-1': 'Word hunt!',
+
+    // ── Writing Workshop (K literacy, phase 1b): its name, welcome and stage buttons ──
+    'name-writing-workshop': 'Writing Workshop!',
+    'welcome-writing-workshop': 'Writing Workshop! Tap a star to play!',
+    'stage-k-trace-1': 'Warm-up lines!',
+    'stage-k-trace-2': 'Trace numbers!',
+    'stage-k-trace-3': 'Trace big letters!',
+    'stage-k-story-1': 'Story order!',
   },
 })

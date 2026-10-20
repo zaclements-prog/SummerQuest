@@ -233,12 +233,12 @@ describe('the listen-mode lesson (K–1)', () => {
 })
 
 describe('the lesson picker', () => {
-  it("K–1: three big pictures, nothing to read, and the narrator says what to do", async () => {
+  it("K–1: a big picture per lesson, nothing to read, and the narrator says what to do", async () => {
     setGrade(0)
     mount('/tutor')
     await advance(900)
     const links = [...container.querySelectorAll<HTMLAnchorElement>('a[data-guide^="lesson-pick-"]')]
-    expect(links.map((a) => a.getAttribute('href'))).toEqual(['/tutor/kCounting', '/tutor/kShapes', '/tutor/kLetters', '/tutor/kRhymes'])
+    expect(links.map((a) => a.getAttribute('href'))).toEqual(['/tutor/kCounting', '/tutor/kShapes', '/tutor/kLetters', '/tutor/kRhymes', '/tutor/kTracing'])
     // no words: the letters lesson's picture shows letter tiles, and that's all
     for (const w of visibleWords(container)) expect(w).toMatch(/^[A-Za-z]$/)
     const pictures = container.cloneNode(true) as HTMLElement

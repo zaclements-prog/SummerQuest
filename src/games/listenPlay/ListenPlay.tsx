@@ -195,6 +195,12 @@ export default function ListenPlay({ provider, params, onComplete, meta, paused 
   const cardFrame = sharedFrame(groupCounts(cards.map((c) => c.picture)), 1)
   const pairFrame = problem?.pair ? sharedFrame(groupCounts(problem.pair), pairAspect) : undefined
 
+  // a round starts the provider afresh: a replay, and React's dev double mount, ask from the
+  // first question again (a provider that counts its round, like Count with me's last trace)
+  useEffect(() => {
+    provider.reset?.()
+  }, [provider])
+
   // ── the next question ──
   useEffect(() => {
     let live = true

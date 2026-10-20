@@ -9,7 +9,7 @@ import { focusRows, lessonRows } from '../../world/hubContent'
 
 /** Today's eleven lessons, in their order: grades 2–4 must see exactly these. */
 const TODAY = ['multiplication', 'division', 'fractions', 'placeValue', 'measurement', 'geometry', 'dataGraph', 'wordProblem', 'reading', 'writing', 'science']
-const K_PILOT = ['kCounting', 'kShapes', 'kLetters', 'kRhymes']
+const K_PILOT = ['kCounting', 'kShapes', 'kLetters', 'kRhymes', 'kTracing']
 const ids = (ls: { id: string }[]) => ls.map((l) => l.id)
 
 describe('lessons by grade band', () => {
@@ -67,7 +67,7 @@ describe('the hub (World) lesson lists', () => {
   it("the Library's reading and writing lessons follow the band", () => {
     const p = { attempts: [], sessions: [] }
     const library = ['reading-reef', 'writing-workshop']
-    expect(ids(lessonRows({ ...p, grade: 0 }, library))).toEqual(['kLetters', 'kRhymes'])
+    expect(ids(lessonRows({ ...p, grade: 0 }, library))).toEqual(['kLetters', 'kRhymes', 'kTracing'])
     expect(ids(lessonRows({ ...p, grade: 3 }, library)).sort()).toEqual(['reading', 'writing'])
   })
 
@@ -114,6 +114,7 @@ describe('practice links stay in the band', () => {
       kLetters: ['k-letters-1', 'k-letters-2', 'k-letters-3'],
       // (Letter Reef's literacy stages sit between the letter ones: Rhyme time is second)
       kRhymes: ['k-letters-1', 'k-rhyme-1', 'k-letters-2', 'k-syllables-1', 'k-letters-3', 'k-rhyme-2', 'k-blend-1', 'k-sight-1'],
+      kTracing: ['k-trace-1', 'k-trace-2', 'k-trace-3', 'k-story-1'],
     }
     for (const l of k1Lessons.filter((x) => fixed[x.id])) {
       const zone = withK1(getZone(l.zoneId)!, fixed[l.id])

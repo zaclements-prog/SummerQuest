@@ -46,12 +46,13 @@ function kConfigs(): { label: string; config: ProviderConfig }[] {
 
 afterEach(() => vi.restoreAllMocks())
 
+/** The card questions (a question answered by an activity, like Count with me's last trace, has its own tests). */
 function draw(config: ProviderConfig, seed: string, n = DRAWS): ListenProblem[] {
   vi.spyOn(Math, 'random').mockImplementation(seededRng(seed))
   const p = createProvider(config)
   const out: ListenProblem[] = []
   for (let i = 0; i < n; i++) out.push(p.next() as ListenProblem)
-  return out
+  return out.filter((q) => !q.activity)
 }
 
 const resolves = (ref: VoiceRef | null | undefined): string => {
