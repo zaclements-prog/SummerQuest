@@ -6,6 +6,8 @@ import { todayStr } from '../lib/daily'
 import { Button, Pill, StarRating } from '../components/ui'
 import type { ActiveNpc } from './useWorldUi'
 import { focusRows, lessonRows, zoneStageRows } from './hubContent'
+import { listenGrade } from '../lib/listenNav'
+import ListenWorldPanel from './ListenWorldPanel'
 
 const KIND_ICON = { concept: '💡', practice: '⚡', mastery: '👹' } as const
 
@@ -26,6 +28,7 @@ export default function WorldPanel({
   onClose: () => void
 }) {
   const reduced = useReducedMotion()
+  const listen = listenGrade(useProgress((s) => s.player?.grade))
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
@@ -33,6 +36,9 @@ export default function WorldPanel({
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [onClose])
+
+  // K–1: pictures and a voice instead of lists to read
+  if (listen) return <ListenWorldPanel npc={npc} onLaunch={onLaunch} onClose={onClose} />
 
   const zone = npc.zoneId ? getZone(npc.zoneId) : undefined
   const title = npc.hub ? npc.label : (zone?.title ?? npc.label)

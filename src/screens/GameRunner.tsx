@@ -13,6 +13,7 @@ import TowerDefense from '../games/tower-defense/TowerDefense'
 import WritingPad from '../games/WritingPad'
 import { CloudKeeper, CritterParade, DivisionArena, FractionForge, ListenPlay, TimesGrove } from '../games/lazyGames'
 import { ListenResultCard } from '../games/listenPlay/ListenResultCard'
+import { ListenQuitDialog } from '../components/listen/ListenQuitDialog'
 import { isListenMode } from '../lib/gradeBand'
 import { sfx } from '../lib/sound'
 import {
@@ -231,6 +232,10 @@ export default function GameRunner() {
       />
 
       {/* ── Quit confirmation (the game is paused while this is open) ─────── */}
+      {listen ? (
+        // K–1: asked out loud, answered with a big ✓ (leave) or ↺ (keep playing)
+        <ListenQuitDialog open={confirmQuit} onLeave={() => navigate(exitPath)} onStay={closeQuit} />
+      ) : (
       <ConfirmDialog
         open={confirmQuit}
         emoji="🚪"
@@ -242,6 +247,7 @@ export default function GameRunner() {
       >
         This round won't count, but the stars you already earned are safe. 🌟
       </ConfirmDialog>
+      )}
     </div>
   )
 }

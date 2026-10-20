@@ -1,5 +1,5 @@
 import { getZone, zoneStages } from '../../curriculum'
-import type { Zone } from '../../curriculum'
+import type { Stage, Zone } from '../../curriculum'
 import type { GradeLevel } from '../gradeTiers'
 import { PETS } from './catalog'
 import type { PetDef } from './catalog'
@@ -11,15 +11,21 @@ import type { PetStage } from './types'
  * | Stage | When                                                              |
  * |-------|-------------------------------------------------------------------|
  * | egg   | nothing yet                                                       |
- * | baby  | the zone's lesson is finished, or the zone has its first star     |
+ * | baby  | one of the zone's lessons is finished, or the zone has a star     |
  * | kid   | stars ≥ min(5, total − 1) (5 in most zones, 2 in Tower Battlefront) |
  * | adult | stars ≥ total: the zone is complete (the zone celebration's test) |
  *
- * `stars` counts each of the zone's stages up to its `starsToEarn` (a stage
- * that over-reports can't finish the zone for another), and `total` is the
- * zone's maximum. The stages are the zone's set for the child's grade
- * (`zoneStages`): a pet grows from its zone's current band, and stars from
- * another band count again when the child switches back.
+ * `stars` counts each stage up to its `starsToEarn` (a stage that
+ * over-reports can't finish the zone for another), and `total` is the
+ * maximum, both over ONE stage set: a zone has a set per content band
+ * (2–4 always; K–1 and 5 once authored, `zone.stagesByBand`). A pet's stage is
+ * the BEST it reaches in any of its zone's bands, so changing grade never
+ * shrinks a pet. Bands are never added together: 2 stars in K and 3 in 2–4 are
+ * 3, not 5.
+ *
+ * What it needs next (`next`, and the `stars` / `total` shown with it) is
+ * counted in the child's CURRENT band (`zoneStages(zone, grade)`): the stars
+ * they can earn from where they are.
  */
 export type PetGrowth = 'egg' | PetStage
 
@@ -66,9 +72,24 @@ export function zoneStarTotals(
   progress: ZoneProgressLike | null | undefined,
   grade: GradeLevel | null | undefined,
 ): ZoneStarTotals {
+  return stageSetTotals(zoneStages(zone, grade), progress)
+}
+
+/** Every stage set the zone has: 2–4's, then K–1's and 5th grade's once authored (never an empty one). */
+export function zoneStageSets(zone: Pick<Zone, 'stages' | 'stagesByBand'>): Stage[][] {
+  const sets = [zone.stages]
+  for (const band of ['k1', 'g5'] as const) {
+    const set = zone.stagesByBand?.[band]
+    if (set && set.length > 0 && set !== zone.stages) sets.push(set)
+  }
+  return sets
+}
+
+/** The star totals of one stage set (each stage up to its `starsToEarn`). */
+export function stageSetTotals(stages: readonly Stage[], progress: ZoneProgressLike | null | undefined): ZoneStarTotals {
   let earned = 0
   let total = 0
-  for (const stage of zoneStages(zone, grade)) {
+  for (const stage of stages) {
     const max = Math.max(0, stage.starsToEarn)
     const got = progress?.stages[stage.id]?.stars ?? 0
     earned += Number.isFinite(got) ? Math.min(max, Math.max(0, Math.floor(got))) : 0
@@ -112,7 +133,15 @@ export interface PetStatus {
 
 type ZoneLookup = (id: string) => Pick<Zone, 'stages' | 'stagesByBand'> | undefined
 
-/** One pet's growth (from its zone's stages for `grade`), and what it needs next. */
+/** Any of the pet's lessons is finished (a 2–4 or a K–1 one: either hatches it). */
+export function petLessonDone(pet: Pick<PetDef, 'lessonIds'>, lessonsDone: LessonsDoneLike): boolean {
+  return pet.lessonIds.some((id) => lessonsDone[id] != null)
+}
+
+/**
+ * One pet's growth (the best over its zone's bands), and what it needs next
+ * in the band of `grade` (with that band's `stars` and `total`).
+ */
 export function petStatus(
   pet: PetDef,
   zones: ZonesLike,
@@ -121,17 +150,25 @@ export function petStatus(
   zoneLookup: ZoneLookup = getZone,
 ): PetStatus {
   const zone = zoneLookup(pet.zoneId)
-  const { earned, total } = zone ? zoneStarTotals(zone, zones[pet.zoneId], grade) : { earned: 0, total: 0 }
-  const lessonDone = !!pet.lessonId && lessonsDone[pet.lessonId] != null
-  const stage = growthFromStars(earned, total, lessonDone)
+  const progress = zones[pet.zoneId]
+  const lessonDone = petLessonDone(pet, lessonsDone)
+  // the best stage over every band's set (a max, never a sum)
+  let stage: PetGrowth = growthFromStars(0, 0, lessonDone)
+  for (const set of zone ? zoneStageSets(zone) : []) {
+    const t = stageSetTotals(set, progress)
+    const g = growthFromStars(t.earned, t.total, lessonDone)
+    if (growthRank(g) > growthRank(stage)) stage = g
+  }
+  // …and what comes next, counted in the child's current band
+  const { earned, total } = zone ? zoneStarTotals(zone, progress, grade) : { earned: 0, total: 0 }
   let next: PetNext | null = null
-  if (stage === 'egg') next = { stage: 'baby', more: 1, lesson: !!pet.lessonId }
-  else if (stage === 'baby' && total > 0) next = { stage: 'kid', more: kidStarsFor(total) - earned, lesson: false }
-  else if (stage === 'kid') next = { stage: 'adult', more: total - earned, lesson: false }
+  if (stage === 'egg') next = { stage: 'baby', more: 1, lesson: pet.lessonIds.length > 0 }
+  else if (stage === 'baby' && total > 0) next = { stage: 'kid', more: Math.max(1, kidStarsFor(total) - earned), lesson: false }
+  else if (stage === 'kid' && total > 0) next = { stage: 'adult', more: Math.max(1, total - earned), lesson: false }
   return { pet, stage, stars: earned, total, lessonDone, next }
 }
 
-/** Every pet's status at a grade, in catalog order. */
+/** Every pet's status (its stage is the same at every grade; `next` is the grade's band), in catalog order. */
 export function petStatuses(
   zones: ZonesLike,
   lessonsDone: LessonsDoneLike,
@@ -141,7 +178,7 @@ export function petStatuses(
   return PETS.map((p) => petStatus(p, zones, lessonsDone, grade, zoneLookup))
 }
 
-/** creatureId → its derived stage at a grade, for every pet. */
+/** creatureId → its derived stage, for every pet (a grade change never moves one: the best band counts). */
 export function petStages(
   zones: ZonesLike,
   lessonsDone: LessonsDoneLike,

@@ -4,6 +4,8 @@ import { isStageUnlocked, playableStageId } from '../lib/stageLocks'
 import { weeklyFocus } from '../lib/analytics'
 import type { SessionRecord, SkillAttempt } from '../store/progress'
 import type { GradeLevel } from '../lib/gradeTiers'
+import { contentBand } from '../lib/gradeBand'
+import type { Lesson } from '../tutoring/types'
 
 /**
  * Pure view-model builders for the in-world panels (WorldPanel.tsx), kept out of
@@ -87,4 +89,14 @@ export function focusRows(p: Progress, max = 3, now = Date.now()): FocusRow[] {
         learnHref: `/tutor/${f.lessonId}`,
       }
     })
+}
+
+/**
+ * The Tutor lessons of the child's content band (K–1 lessons carry
+ * `band: 'k1'`; today's eleven are 2nd–4th grade). MERGE: becomes
+ * `lessonsFor(grade)` from the lesson list.
+ */
+export function bandLessons(grade: GradeLevel | null | undefined): Lesson[] {
+  const band = contentBand(grade ?? 4)
+  return allLessons.filter((l) => ((l as Lesson & { band?: string }).band ?? 'g24') === band)
 }

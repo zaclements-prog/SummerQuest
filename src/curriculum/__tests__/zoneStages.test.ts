@@ -94,7 +94,7 @@ describe('readers follow the current band', () => {
     expect(playableStageId(mesa, G24[1].id, progressOf({ [G24[0].id]: 2 }), 3)).toBe(G24[1].id)
   })
 
-  it('zone star totals, the pet and zone mastery use the current band', () => {
+  it('zone star totals use the current band; a pet keeps its best band', () => {
     mesa.stagesByBand = { k1: K1 }
     const lion = petById('lion')!
     const zones = { [ZONE]: progressOf(allG24(3)) }
@@ -102,18 +102,20 @@ describe('readers follow the current band', () => {
     expect(zoneStarTotals(mesa, zones[ZONE], 3)).toEqual({ earned: 9, total: 9, complete: true })
     expect(zoneStarTotals(mesa, zones[ZONE], 0)).toEqual({ earned: 0, total: 6, complete: false })
     expect(petStatus(lion, zones, {}, 3).stage).toBe('adult')
-    expect(petStatus(lion, zones, {}, 0)).toMatchObject({ stage: 'egg', stars: 0, total: 6 })
+    // grown up in 2–4 stays grown up at K (its K stars still count from 0)
+    expect(petStatus(lion, zones, {}, 0)).toMatchObject({ stage: 'adult', stars: 0, total: 6, next: null })
 
-    // K's own stars grow the pet at K (5 of 6 make a kid, all 6 a grown-up)
-    const withK = { [ZONE]: progressOf({ ...allG24(3), 'count-k-1': 3, 'count-k-2': 2 }) }
-    expect(petStatus(lion, withK, {}, 0)).toMatchObject({ stage: 'kid', stars: 5 })
-    withK[ZONE].stages['count-k-2'].stars = 3
-    expect(petStatus(lion, withK, {}, 1).stage).toBe('adult')
+    // K's own stars grow the pet at K too (5 of 6 make a kid, all 6 a grown-up)
+    const kOnly = { [ZONE]: progressOf({ 'count-k-1': 3, 'count-k-2': 2 }) }
+    expect(petStatus(lion, kOnly, {}, 0)).toMatchObject({ stage: 'kid', stars: 5 })
+    expect(petStatus(lion, kOnly, {}, 3)).toMatchObject({ stage: 'kid', stars: 0, next: { stage: 'adult', more: 9 } })
+    kOnly[ZONE].stages['count-k-2'].stars = 3
+    expect(petStatus(lion, kOnly, {}, 1).stage).toBe('adult')
     // …and never leak into the 2–4 totals
     expect(zoneStarTotals(mesa, progressOf({ 'count-k-1': 3, 'count-k-2': 3 }), 3).earned).toBe(0)
   })
 
-  it('zone badges ask for every stage of the current band; star milestones count every band', () => {
+  it('a zone badge takes every stage of any one band (it never goes away on a grade change); star milestones count every band', () => {
     mesa.stagesByBand = { k1: K1 }
     const ctx = (grade: 0 | 3, stars: Record<string, number>) => ({
       zones: { [ZONE]: progressOf(stars) },
@@ -123,9 +125,11 @@ describe('readers follow the current band', () => {
     })
     const badge = (c: ReturnType<typeof ctx>, id: string) => computeBadges(c).find((b) => b.id === id)!.earned
     expect(badge(ctx(3, allG24(1)), 'zone-multiplication-mesa')).toBe(true)
-    expect(badge(ctx(0, allG24(1)), 'zone-multiplication-mesa')).toBe(false)
+    expect(badge(ctx(0, allG24(1)), 'zone-multiplication-mesa')).toBe(true)
     expect(badge(ctx(0, { 'count-k-1': 1, 'count-k-2': 1 }), 'zone-multiplication-mesa')).toBe(true)
-    expect(badge(ctx(3, { 'count-k-1': 1, 'count-k-2': 1 }), 'zone-multiplication-mesa')).toBe(false)
+    expect(badge(ctx(3, { 'count-k-1': 1, 'count-k-2': 1 }), 'zone-multiplication-mesa')).toBe(true)
+    // half of each band is neither (bands never add up)
+    expect(badge(ctx(0, { [G24[0].id]: 1, [G24[1].id]: 1, 'count-k-1': 1 }), 'zone-multiplication-mesa')).toBe(false)
     // "Perfect!" (3 stars on any stage) still counts a star earned in another band
     expect(badge(ctx(0, { [G24[0].id]: 3 }), 'perfect')).toBe(true)
   })

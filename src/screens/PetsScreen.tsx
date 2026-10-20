@@ -4,13 +4,19 @@ import { canvasQuality, useLowGraphics } from '../world/graphicsQuality'
 import PetLineup, { LINEUP_SLOT_SHARE } from '../pets/PetLineup'
 import { useProgress } from '../store/progress'
 import { usePetStatuses } from '../lib/pets/usePets'
-import { petById, petEmoji, petName } from '../lib/pets/catalog'
+import { petById, petEmoji, petLessonFor, petName } from '../lib/pets/catalog'
+import { getLesson } from '../tutoring/lessons'
 import { nextStepText, stageLabel, zoneTitle } from '../lib/pets/copy'
 import { growthRank, kidStarsFor } from '../lib/pets/growth'
 import type { PetGrowth, PetStatus } from '../lib/pets/growth'
 import { PET_STAGES } from '../lib/pets/types'
 import { Button, ProgressBar } from '../components/ui'
 import { sfx } from '../lib/sound'
+import { getZone } from '../curriculum'
+import { isZoneSleeping, listenGrade, zoneTitleFor } from '../lib/listenNav'
+import { useListenIntro } from '../components/listen/useListenIntro'
+import { ListenIconButton } from '../components/listen/ListenIconButton'
+import { SayAgainButton } from '../guide/SayAgainButton'
 
 /** The selected pet when the link doesn't name one: your buddy, else the most grown, else the first. */
 function defaultPet(list: PetStatus[], buddy: string | null): string {
@@ -55,6 +61,7 @@ export default function PetsScreen() {
   const buddy = useProgress((s) => s.buddyPet)
   const active = useProgress((s) => s.activeCreature)
   const owned = useProgress((s) => s.ownedCreatures)
+  const grade = useProgress((s) => s.player?.grade)
   const setBuddyPet = useProgress((s) => s.setBuddyPet)
   const becomeCreature = useProgress((s) => s.becomeCreature)
   const navigate = useNavigate()
@@ -70,6 +77,13 @@ export default function PetsScreen() {
   const isAdult = sel.stage === 'adult'
   const isYou = active === id
   const progress = stageProgress(sel)
+  // the egg's lesson in the child's band (K–1: its K–1 lesson, once there is one)
+  const lessonId = petLessonFor(sel.pet, grade, getLesson)
+  // K–1: pictures for the way back and the pet's place; the voice says what this page is
+  const listen = listenGrade(grade)
+  const explain = useListenIntro('pets', { voice: { line: 'k-nav/petsHelp' } }, listen)
+  const petZone = getZone(sel.pet.zoneId)
+  const zoneOpen = !!petZone && !isZoneSleeping(petZone, grade)
 
   const select = (petId: string) => {
     sfx.click()
@@ -87,6 +101,12 @@ export default function PetsScreen() {
       <div className="w-full max-w-6xl mx-auto flex flex-col gap-3 short:gap-2">
         {/* ── Header ──────────────────────────────────────────────────────── */}
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+          {listen ? (
+            <>
+              <ListenIconButton icon="←" label="Back" onClick={back} tone="sun" />
+              <SayAgainButton onPress={explain} label="What do I do here?" />
+            </>
+          ) : (
           <button
             type="button"
             onClick={back}
@@ -97,12 +117,13 @@ export default function PetsScreen() {
             </span>
             Back
           </button>
+          )}
           <h1 className="kid-text font-bold text-3xl sm:text-4xl short:text-3xl text-sky leading-none">My Pets</h1>
           <span className={`${chip} bg-paper ml-auto`}>
             🐣 {hatched} of {statuses.length} hatched
           </span>
         </div>
-        <p className="kid-text text-lg short:hidden text-ink-700 -mt-1">Learn on the island to hatch your eggs and help your pets grow up!</p>
+        {!listen && <p className="kid-text text-lg short:hidden text-ink-700 -mt-1">Learn on the island to hatch your eggs and help your pets grow up!</p>}
 
         <div className="grid gap-3 short:gap-2 landscape:grid-cols-[minmax(0,1.08fr)_minmax(0,1fr)] items-start">
           {/* ── The selected pet ───────────────────────────────────────────── */}
@@ -140,13 +161,13 @@ export default function PetsScreen() {
               {isBuddy && <span className={`${chip} bg-quest-300`}>⭐ Your buddy</span>}
               {isYou && <span className={`${chip} bg-ocean-200`}>That&apos;s you!</span>}
             </div>
-            <p className="kid-text text-lg short:text-base leading-snug text-ink-800">{nextStepText(sel)}</p>
+            {!listen && <p className="kid-text text-lg short:text-base leading-snug text-ink-800">{nextStepText(sel)}</p>}
             {progress && (
               <ProgressBar
                 value={progress[0]}
                 max={progress[1]}
                 tone={sel.next?.stage === 'adult' ? 'correct' : 'quest'}
-                label={`⭐ Stars in ${zoneTitle(sel.pet.zoneId)}`}
+                label={`⭐ Stars in ${listen && petZone ? zoneTitleFor(petZone, grade) : zoneTitle(sel.pet.zoneId)}`}
               />
             )}
 
@@ -183,13 +204,23 @@ export default function PetsScreen() {
                     {petEmoji(id)} Become {name}
                   </Button>
                 ))}
-              <Button variant={sel.stage === 'egg' ? 'primary' : 'secondary'} to={`/zone/${sel.pet.zoneId}`}>
-                🗺️ Go to {zoneTitle(sel.pet.zoneId)}
-              </Button>
-              {sel.stage === 'egg' && sel.pet.lessonId && (
-                <Button variant="secondary" to={`/tutor/${sel.pet.lessonId}`}>
-                  📚 Lesson
-                </Button>
+              {listen ? (
+                // K–1: the pet's place as a picture (only once it's awake), and its lesson
+                <>
+                  {zoneOpen && petZone && <ListenIconButton icon={petZone.emoji} label={`Go to ${zoneTitleFor(petZone, grade)}`} to={`/zone/${petZone.id}`} tone="sun" />}
+                  {sel.stage === 'egg' && lessonId && <ListenIconButton icon="📚" label="Lesson" to={`/tutor/${lessonId}`} tone="ocean" />}
+                </>
+              ) : (
+                <>
+                  <Button variant={sel.stage === 'egg' ? 'primary' : 'secondary'} to={`/zone/${sel.pet.zoneId}`}>
+                    🗺️ Go to {zoneTitle(sel.pet.zoneId)}
+                  </Button>
+                  {sel.stage === 'egg' && lessonId && (
+                    <Button variant="secondary" to={`/tutor/${lessonId}`}>
+                      📚 Lesson
+                    </Button>
+                  )}
+                </>
               )}
             </div>
             {isBuddy && <p className="kid-text text-base text-ink-700 short:hidden">{name} follows you around the World!</p>}
