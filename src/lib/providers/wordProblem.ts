@@ -516,6 +516,50 @@ const TEMPLATES_DIV: Array<{
       hint: `Split ${dividend} into ${divisor} equal cabins.`,
     }),
   },
+  // CCSS 3.OA.A.3 — equal-share and grouping stories within the division
+  // tables, fresh skeletons so kids meet new stories, not just new numbers.
+  {
+    build: (dividend, divisor) => ({
+      prompt: `Theo bakes ${dividend} cookies and packs them into gift tins of ${divisor}. How many tins can he fill?`,
+      answer: dividend / divisor,
+      hint: `How many groups of ${divisor} are in ${dividend}?`,
+    }),
+  },
+  {
+    build: (dividend, divisor) => ({
+      prompt: `Ana cuts ${dividend} construction-paper squares into ${divisor} equal stacks for the craft bins. How many squares are in each stack?`,
+      answer: dividend / divisor,
+      hint: `Split ${dividend} into ${divisor} equal stacks.`,
+    }),
+  },
+  {
+    build: (dividend, divisor) => ({
+      prompt: `Gus puts ${dividend} wildflowers into ${divisor} vases evenly. How many flowers go in each vase?`,
+      answer: dividend / divisor,
+      hint: `Split ${dividend} into ${divisor} equal vases.`,
+    }),
+  },
+  {
+    build: (dividend, divisor) => ({
+      prompt: `Tess pours ${dividend} ounces of lemonade into cups that hold ${divisor} ounces each. How many cups can she fill?`,
+      answer: dividend / divisor,
+      hint: `How many groups of ${divisor} fit into ${dividend}?`,
+    }),
+  },
+  {
+    build: (dividend, divisor) => ({
+      prompt: `Jude sorts ${dividend} buttons into ${divisor} jars for the craft table. How many buttons go in each jar?`,
+      answer: dividend / divisor,
+      hint: `Split ${dividend} into ${divisor} equal jars.`,
+    }),
+  },
+  {
+    build: (dividend, divisor) => ({
+      prompt: `The gym class has ${dividend} children who split into teams of ${divisor} for parachute games. How many teams are there?`,
+      answer: dividend / divisor,
+      hint: `How many groups of ${divisor} fit into ${dividend}?`,
+    }),
+  },
 ]
 
 export function makeWordProblemProvider(cfg: Config): ProblemProvider {
