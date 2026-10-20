@@ -385,7 +385,7 @@ export function IndexCard({ x, y, w, h, lines = 3, rot = 0, tape = true }: { x: 
   const cx = x + w / 2
   return (
     <g transform={rot ? `rotate(${rot} ${cx} ${y + h / 2})` : undefined}>
-      <rect x={x} y={y} width={w} height={h} rx={14} fill={M.white} stroke={INK} strokeWidth={SW} filter="url(#sq-shadow)" />
+      <rect x={x} y={y} width={w} height={h} rx={14} fill={M.white} stroke={INK} strokeWidth={SW} />
       <line x1={x + 4} y1={y + 46} x2={x + w - 4} y2={y + 46} stroke={M.coral} strokeWidth={2.5} opacity={0.7} />
       {Array.from({ length: lines }, (_, i) => (
         <line key={i} x1={x + 4} y1={y + 46 + ((h - 46) / (lines + 0.4)) * (i + 1)} x2={x + w - 4} y2={y + 46 + ((h - 46) / (lines + 0.4)) * (i + 1)} stroke={M.sea} strokeWidth={2} opacity={0.35} />

@@ -3,7 +3,7 @@ import { ease, interpolate, progress, pulse, spring } from '../anim'
 import { Burst, Camera, Draw, Fade, Kinetic, Paper } from '../kit'
 import { M } from '../palette'
 import type { Scene, SceneProps } from '../types'
-import { CRAYONS, Crayon, Fox, IndexCard } from './_b3art'
+import { CRAYONS, Crayon, Fox, IndexCard, shade } from './_b3art'
 import { FlyTag, Head, Loop, Marker, Scale, Sparkles, Tag, ThoughtBubble, Tick, Twinkle, Txt, Underline, ep, layoutText, popS, sketchRect, span, textW, type WBox } from './_b3kit'
 
 // ── the story card ───────────────────────────────────────────────────────────
@@ -31,12 +31,21 @@ function StoryCard({ t, at, ink, badge }: { t: number; at: number; ink: (i: numb
       {WORDS.map((b, i) => {
         const bd = badge?.(i)
         const k = ink(i)
-        const bump = bd ? 1 + 0.35 * Math.sin(Math.PI * Math.min(1, bd.k)) * (bd.k < 1 ? 1 : 0) : 1
+        const color = bd && bd.k > 0 ? bd.color : M.ink
+        const op = 0.3 + 0.7 * k
+        if (!bd) {
+          return (
+            <Txt key={i} x={b.x} y={b.y} size={TEXT_SIZE} color={color} opacity={op}>
+              {b.text}
+            </Txt>
+          )
+        }
+        const bump = 1 + 0.35 * Math.sin(Math.PI * Math.min(1, bd.k)) * (bd.k < 1 ? 1 : 0)
         return (
           <g key={i}>
-            {bd && bd.k > 0 && <circle cx={b.cx} cy={b.y} r={28 * Math.min(1, spring(bd.k, 0, { damping: 11 }))} fill={bd.color} opacity={0.32} />}
+            {bd.k > 0 && <circle cx={b.cx} cy={b.y} r={28 * Math.min(1, spring(bd.k, 0, { damping: 11 }))} fill={bd.color} opacity={0.32} />}
             <g transform={`translate(${b.cx} ${b.y}) scale(${bump}) translate(${-b.cx} ${-b.y})`}>
-              <Txt x={b.x} y={b.y} size={TEXT_SIZE} color={bd && bd.k > 0 ? bd.color : M.ink} opacity={0.3 + 0.7 * k}>
+              <Txt x={b.x} y={b.y} size={TEXT_SIZE} color={color} opacity={op}>
                 {b.text}
               </Txt>
             </g>
@@ -272,7 +281,29 @@ const ARR = { x: 560, y: 262, len: 60, w: 19, gap: 8, rowGap: 36 }
 const arrRowY = (r: number) => ARR.y + r * ARR.rowGap
 const ARR_W = COLS * ARR.len + (COLS - 1) * ARR.gap
 
-function CrayonRows({ t, rowAt, wiggle = 0, x0 = ARR.x }: { t: number; rowAt: (r: number) => number; wiggle?: number; x0?: number }) {
+/**
+ * A horizontal run of `n` crayons (tips right, centred on y) as two paths:
+ * one outlined silhouette for all n bodies, one set of wrapper bands. Same toon
+ * read as n detailed Crayon props at a fraction of the element count (B2.4).
+ */
+function CrayonRun({ x0, y, color, n = COLS, len = ARR.len, w = ARR.w, gap = ARR.gap }: { x0: number; y: number; color: string; n?: number; len?: number; w?: number; gap?: number }) {
+  const tip = w * 0.85
+  let bodies = ''
+  let bands = ''
+  for (let i = 0; i < n; i++) {
+    const l = x0 + i * (len + gap)
+    bodies += `M ${l} ${y - w / 2} L ${l + len - tip} ${y - w / 2} L ${l + len} ${y} L ${l + len - tip} ${y + w / 2} L ${l} ${y + w / 2} Z `
+    bands += `M ${l + len - tip} ${y - w / 2 + 2} L ${l + len - tip} ${y + w / 2 - 2} `
+  }
+  return (
+    <g>
+      <path d={bodies} fill={color} stroke={M.ink} strokeWidth={3} strokeLinejoin="round" />
+      <path d={bands} fill="none" stroke={shade(color, 0.3)} strokeWidth={2.5} strokeLinecap="round" />
+    </g>
+  )
+}
+
+function CrayonRows({ t, rowAt }: { t: number; rowAt: (r: number) => number }) {
   return (
     <g>
       {Array.from({ length: ROWS }, (_, r) => {
@@ -283,12 +314,8 @@ function CrayonRows({ t, rowAt, wiggle = 0, x0 = ARR.x }: { t: number; rowAt: (r
         const slide = (1 - k) * 60
         return (
           <g key={r} transform={`translate(${slide} 0)`} opacity={Math.min(1, k * 2)}>
-            <rect x={x0 - 12} y={y - 15} width={ARR_W + 24} height={30} rx={15} fill={CRAYONS[r]} opacity={0.22} />
-            {Array.from({ length: COLS }, (_, c) => {
-              const cx = x0 + ARR.len / 2 + c * (ARR.len + ARR.gap)
-              const wig = wiggle * Math.sin(t * 3 + r * 0.9 + c * 1.7) * 2
-              return <Crayon key={c} x={cx} y={y + ARR.len / 2} w={ARR.w} h={ARR.len} color={CRAYONS[r]} rot={90 + wig} />
-            })}
+            <rect x={ARR.x - 12} y={y - 15} width={ARR_W + 24} height={30} rx={15} fill={CRAYONS[r]} opacity={0.22} />
+            <CrayonRun x0={ARR.x} y={y} color={CRAYONS[r]} />
           </g>
         )
       })}
@@ -310,7 +337,6 @@ const plan: Scene = ({ t, cue }: SceneProps) => {
   const asking = cue('is asking')
   const choose = cue('choose the right operation')
   const equal = cue('equal groups')
-  const rows = cue('like rows')
   const same = cue('same size')
   const clue = cue('a clue')
   const multiply = cue('multiply')
@@ -333,7 +359,9 @@ const plan: Scene = ({ t, cue }: SceneProps) => {
   const dim = ep(t, multiply, 0.5)
   const rowAt = (r: number) => equal + 0.1 + r * 0.16
   const lab = (r: number) => same - 0.1 + r * 0.14
-  const breathe = t > multiply + 1 ? 1 + 0.05 * pulse(t, 1.6) : 1
+  // one bounded celebratory pulse on the × tile — motion ends (B2.3)
+  const breatheWin = ep(t, multiply + 1, 0.4) * (1 - ep(t, multiply + 2.4, 0.6))
+  const breathe = 1 + 0.05 * Math.sin(Math.max(0, t - multiply - 1) * 3.14) * breatheWin
   return (
     <>
       <Paper />
@@ -384,25 +412,25 @@ const plan: Scene = ({ t, cue }: SceneProps) => {
           </g>
         )}
 
-        {/* equal groups */}
-        <CrayonRows t={t} rowAt={rowAt} wiggle={t > multiply + 1 ? 1 : 0} />
-        {Array.from({ length: ROWS }, (_, r) => {
-          const y = arrRowY(r)
-          const x = ARR.x + ARR_W + 44
-          return (
-            <g key={r}>
-              <Scale s={popS(t, lab(r), 12)} x={x} y={y}>
-                <circle cx={x} cy={y} r={16} fill={M.white} stroke={M.ink} strokeWidth={3} />
-                <Txt x={x} y={y + 1} size={22} anchor="middle" color="#2f8fc4">
-                  4
-                </Txt>
-              </Scale>
-              <Tick t={t} at={lab(r) + 0.25} x={x + 42} y={y} s={0.75} color={M.leaf} width={6} />
-            </g>
-          )
-        })}
-        <Draw t={t} at={same + 0.05} dur={0.6} d={`M ${ARR.x + ARR_W + 16} ${arrRowY(0) - 26} L ${ARR.x + ARR_W + 16} ${arrRowY(ROWS - 1) + 26}`} stroke={M.inkSoft} width={3} dash="8 8" />
-        <Fade t={t} at={rows} out={multiply}>
+        {/* equal groups — held during "equal groups … same size", gone before the × wins */}
+        <Fade t={t} at={equal} out={multiply}>
+          <CrayonRows t={t} rowAt={rowAt} />
+          {Array.from({ length: ROWS }, (_, r) => {
+            const y = arrRowY(r)
+            const x = ARR.x + ARR_W + 44
+            return (
+              <g key={r}>
+                <Scale s={popS(t, lab(r), 12)} x={x} y={y}>
+                  <circle cx={x} cy={y} r={16} fill={M.white} stroke={M.ink} strokeWidth={3} />
+                  <Txt x={x} y={y + 1} size={22} anchor="middle" color="#2f8fc4">
+                    4
+                  </Txt>
+                </Scale>
+                <Tick t={t} at={lab(r) + 0.25} x={x + 42} y={y} s={0.75} color={M.leaf} width={6} />
+              </g>
+            )
+          })}
+          <Draw t={t} at={same + 0.05} dur={0.6} d={`M ${ARR.x + ARR_W + 16} ${arrRowY(0) - 26} L ${ARR.x + ARR_W + 16} ${arrRowY(ROWS - 1) + 26}`} stroke={M.inkSoft} width={3} dash="8 8" />
           <Txt x={ARR.x + ARR_W / 2} y={arrRowY(ROWS - 1) + 50} size={26} anchor="middle" color={M.inkSoft}>
             6 equal rows
           </Txt>
@@ -410,7 +438,7 @@ const plan: Scene = ({ t, cue }: SceneProps) => {
         <g transform={`translate(${tileX(2)} ${TILE_Y}) scale(${breathe}) translate(${-tileX(2)} ${-TILE_Y})`}>
           <Burst t={t} at={multiply} x={tileX(2)} y={TILE_Y} color={M.gold} r={90} />
           <Sparkles t={t} at={multiply + 0.15} x={tileX(2)} y={TILE_Y} r={80} n={8} seed={4} />
-          <Twinkle t={t} at={multiply + 1} x={tileX(2) + 46} y={TILE_Y - 46} r={11} />
+          <Sparkles t={t} at={multiply + 1} x={tileX(2) + 46} y={TILE_Y - 46} r={22} n={2} seed={5} size={9} />
         </g>
         {/* the rule */}
         <Scale s={popS(t, clue - 0.1, 12)} x={150} y={470}>
