@@ -97,7 +97,7 @@ function Axes({ t, at, hi = () => 0, wave = () => 0 }: { t: number; at: number; 
   const k = ease.inOutCubic(progress(t, at, 0.7))
   if (k <= 0) return null
   return (
-    <g>
+    <>
       {Array.from({ length: MAXV }, (_, j) => {
         const v = j + 1
         const gk = ease.outCubic(progress(t, at + 0.2 + j * 0.04, 0.5))
@@ -119,7 +119,7 @@ function Axes({ t, at, hi = () => 0, wave = () => 0 }: { t: number; at: number; 
           </g>
         )
       })}
-    </g>
+    </>
   )
 }
 
@@ -171,7 +171,7 @@ function Mark({ j, y, k, color = M.ink }: { j: number; y: number; k: number; col
 
 function RowCard({ i, y, children }: { i: number; y: number; children?: ReactNode }) {
   return (
-    <g>
+    <>
       <rect x={90} y={y - 50} width={740} height={100} rx={24} fill={M.white} stroke={M.ink} strokeWidth={3} filter="url(#sq-shadow)" />
       <FruitIcon i={i} x={142} y={y} s={0.95} />
       <Title x={226} y={y + 1} size={30} color={FRUIT[i].txt}>
@@ -180,7 +180,7 @@ function RowCard({ i, y, children }: { i: number; y: number; children?: ReactNod
       <line x1={300} y1={y - 38} x2={300} y2={y + 38} stroke={M.ink} strokeWidth={2} opacity={0.25} />
       <line x1={690} y1={y - 38} x2={690} y2={y + 38} stroke={M.ink} strokeWidth={2} opacity={0.25} />
       {children}
-    </g>
+    </>
   )
 }
 

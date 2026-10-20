@@ -1,0 +1,219 @@
+/*
+ * Listen & Play kit (src/games/listenPlay): picture cards, countable objects,
+ * the happy pop and the gentle "look again". Transform/opacity animations
+ * only; each runs once when its state attribute appears.
+ */
+
+/* ── answer cards ─────────────────────────────────────────────────────────── */
+.lp-card {
+  transition:
+    translate 0.12s ease-out,
+    box-shadow 0.12s ease-out,
+    background-color 0.25s ease,
+    opacity 0.35s ease,
+    filter 0.35s ease;
+}
+.lp-card[data-state='idle']:hover {
+  translate: 0 -3px;
+}
+.lp-card[data-state='idle']:active,
+.lp-card[data-state='chosen'] {
+  translate: 0 3px;
+  box-shadow: 0 1px 0 0 var(--color-line);
+}
+.lp-card[data-state='chosen'] {
+  outline: 5px solid #ffcf4d;
+  outline-offset: 3px;
+}
+.lp-card[data-state='right'] {
+  animation: lp-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+/* a gentle "hmm": a small wobble while we look again, then it rests aside, faded (never red, never ✗) */
+.lp-card[data-state='look'] {
+  outline: 5px solid #9fd3ff;
+  outline-offset: 3px;
+  animation: lp-wobble 0.5s ease-in-out;
+}
+.lp-card[data-state='tried'] {
+  opacity: 0.42;
+  filter: saturate(0.4);
+}
+.lp-card[data-state='dim'] {
+  opacity: 0.55;
+}
+
+.lp-check {
+  animation: lp-pop-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+}
+.lp-count-bubble {
+  animation: lp-pop-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.lp-spark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -14px 0 0 -14px;
+  width: 28px;
+  height: 28px;
+  font-size: 24px;
+  line-height: 28px;
+  text-align: center;
+  opacity: 0;
+  animation: lp-spark 0.8s ease-out var(--d, 0s) forwards;
+}
+
+/* ── countable objects (group pictures, tap-to-count) ─────────────────────── */
+.lp-obj-halo {
+  fill: #ffe594;
+  stroke: #ffcf4d;
+  stroke-width: 4;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.lp-obj[data-marked] .lp-obj-halo {
+  opacity: 0.9;
+}
+.lp-obj-body,
+.lp-badge {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.lp-obj[data-marked] .lp-obj-body {
+  animation: lp-count-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.lp-badge {
+  animation: lp-pop-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+/* (a tapped object takes focus: no box around it; the keyboard gets the halo instead) */
+.lp-obj:focus,
+.lp-obj:focus-visible {
+  outline: none;
+}
+.lp-obj:focus-visible .lp-obj-halo {
+  opacity: 0.6;
+}
+
+/* ── drag-to-make pieces ───────────────────────────────────────────────────── */
+.lp-piece {
+  transition: transform 0.35s cubic-bezier(0.3, 0.8, 0.25, 1);
+  text-shadow: 0 3px 2px rgb(58 44 56 / 0.25);
+  cursor: grab;
+  touch-action: none;
+}
+.lp-piece[data-dragging] {
+  transition: none;
+  z-index: 5;
+  cursor: grabbing;
+}
+
+/* ── the shell ────────────────────────────────────────────────────────────── */
+.lp-progress-dot[data-now] {
+  animation: lp-bob 1.6s ease-in-out infinite;
+}
+
+.lp-picture-panel {
+  background-image: radial-gradient(rgb(58 44 56 / 0.06) 1.6px, transparent 1.7px);
+  background-size: 22px 22px;
+}
+
+/* the result stars land one after another */
+.lp-star {
+  animation: lp-star-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) var(--d, 0s) both;
+}
+
+@keyframes lp-pop {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.14) rotate(-2deg);
+  }
+  70% {
+    transform: scale(0.97);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes lp-pop-in {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes lp-wobble {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(-4deg);
+  }
+  75% {
+    transform: rotate(4deg);
+  }
+}
+
+@keyframes lp-count-pop {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.3) translateY(-6%);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes lp-spark {
+  0% {
+    opacity: 1;
+    transform: rotate(var(--a)) translateY(0) rotate(calc(-1 * var(--a))) scale(0.3);
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(var(--a)) translateY(-95px) rotate(calc(-1 * var(--a))) scale(1.1);
+  }
+}
+
+@keyframes lp-bob {
+  0%,
+  100% {
+    transform: translateY(0) scale(1.15);
+  }
+  50% {
+    transform: translateY(-3px) scale(1.15);
+  }
+}
+
+@keyframes lp-star-in {
+  from {
+    transform: scale(0) rotate(-120deg);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) rotate(0);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-card,
+  .lp-check,
+  .lp-count-bubble,
+  .lp-obj-body,
+  .lp-badge,
+  .lp-progress-dot,
+  .lp-star {
+    animation: none !important;
+  }
+  .lp-spark {
+    display: none;
+  }
+}

@@ -8,6 +8,7 @@ import { SESSIONS_PER_DAY, SESSION_BONUS_COINS } from '../lib/dailyGoal'
 import { parentGateOpen } from '../lib/parentGateSession'
 import ParentGate from './ParentGate'
 import PetMoments from '../pets/PetMoments'
+import GuideLayer from '../guide/GuideLayer'
 
 /*
  * The top bar lays itself out by its OWN width (a container query on <header>),
@@ -210,6 +211,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
       {/* Pet hatch / grow-up celebrations, at calm moments only. */}
       <PetMoments />
+
+      {/* The guide's narrator, spotlight and pointing hand (src/guide); a new screen hushes it. */}
+      <GuideLayer resetKey={pathname} />
 
       <ParentGate
         open={askGrownUp}

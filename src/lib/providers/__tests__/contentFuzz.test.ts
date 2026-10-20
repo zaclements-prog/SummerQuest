@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
-import { curriculum } from '../../../curriculum'
+import { curriculum, zoneStages } from '../../../curriculum'
 import { createProvider, type ProviderConfig } from '..'
 import { GRADE_LEVELS, GRADE_TIERS, effectiveConfigForStage, type GradeLevel } from '../../gradeTiers'
 import { nextProblem, type Problem, type ProblemProvider, type ProblemVisual } from '../../problem'
@@ -41,20 +41,20 @@ interface Case {
   draw?: (p: ProblemProvider, i: number) => Promise<Problem> | Problem
 }
 
-/** Every distinct (stage config × grade) a GameRunner can build. */
+/** Every distinct (stage config × grade) a GameRunner can build: each grade plays its band's stage set. */
 function stageCases(): Case[] {
   const seen = new Set<string>()
   const out: Case[] = []
   for (const zone of curriculum.zones) {
-    zone.stages.forEach((stage, idx) => {
-      for (const grade of GRADE_LEVELS) {
+    for (const grade of GRADE_LEVELS) {
+      zoneStages(zone, grade).forEach((stage, idx) => {
         const config = effectiveConfigForStage(stage, idx, grade)
         const key = JSON.stringify(config)
-        if (seen.has(key)) continue
+        if (seen.has(key)) return
         seen.add(key)
         out.push({ label: `${zone.id}/${stage.id} G${grade}`, config, grade, make: () => createProvider(config) })
-      }
-    })
+      })
+    }
   }
   return out
 }

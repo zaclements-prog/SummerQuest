@@ -21,5 +21,7 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"]
+  "include": ["src"],
+  // dev-only scene frame dump (Node file APIs; run by vitest, which doesn't type-check)
+  "exclude": ["src/tutoring/motion/__tests__/sceneSnapshots.test.tsx"]
 }

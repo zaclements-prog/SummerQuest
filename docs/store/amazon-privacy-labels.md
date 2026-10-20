@@ -49,33 +49,33 @@ crash-reporting or social SDKs. Its only libraries are open-source code bundled 
 
 ## Related answers
 
-- **Privacy policy URL:** TODO(owner): put `docs/store/privacy-policy.md` online (for example,
-  on a simple web page you control) and paste its URL. Amazon only requires the URL when you
-  answer Yes above. Still, provide one: it's expected for a child-directed app, and parents
-  look for it.
+- **Privacy policy URL:** https://zaclements-prog.github.io/summerquest-site/privacy/ (live since 2026-10-18, built from
+  `privacy-policy.md` by the `summerquest-site` repo). Amazon only requires the URL when you
+  answer Yes above; provide it anyway, as expected for a child-directed app.
 - **Does the app allow account creation?** No. There are no accounts, so there's no
   account-deletion URL.
 - **Data deletion:** in the app (Parent area → Danger zone → Reset all progress, behind the
   grown-up check), or by uninstalling the app or clearing its data.
 - **Data encrypted in transit:** not applicable, because no data is transmitted.
 - **Child-directed / COPPA (Target Your App → audience):** yes, this app is directed at
-  children under 13 (ages 7–9). See `content-rating.md`.
+  children under 13 (elementary school; today's content covers grades 2–4). See `content-rating.md`.
 
 ## Before you submit: keep these answers true
 
 These depend on the native wrapper for Fire OS, not on the web build:
 
-- TODO(owner): the wrapper should not request the `INTERNET` permission. A WebView that loads
-  the bundled files doesn't need it. If the wrapper has to keep it, make sure it never loads a
-  remote URL.
-- TODO(owner): set `android:allowBackup="false"` (or confirm that Fire OS backup doesn't copy
-  the app's data). Then the child's name and progress are never copied to a cloud backup.
-- TODO(owner): don't request any other permissions (location, camera, microphone,
-  contacts, storage).
-- TODO(owner): don't add any SDK to the wrapper: no analytics, crash reporting, ads or
-  Amazon engagement services. If one is ever added, these answers and the privacy policy
-  must change first.
-- TODO(owner): on a Fire tablet, check that the text-to-speech voice used for the few lessons
-  without a recorded clip is the built-in, on-device voice. (Only lesson text is ever spoken.)
+- ✅ No `INTERNET` permission: the Capacitor wrapper requests no permissions at all (checked
+  on the debug and the signed release APK).
+- ✅ `android:allowBackup="false"`: the child's name and progress are never copied to a cloud backup.
+- ✅ No other permissions (location, camera, microphone, contacts, storage).
+- ✅ No SDKs: only Capacitor core, `@capacitor/app` (Back button) and
+  `@capacitor-community/keep-awake`. If an SDK is ever added, these answers and the privacy
+  policy must change first.
+- ✅ Text-to-speech: all 45 lesson steps have recorded narration. The device voice is only a
+  fallback for a missing recording: it reads on-screen text (lesson text, questions and
+  instructions), never the child's name or anything the child typed, and runs on the tablet
+  (on-device voices preferred; the APK has no `INTERNET` permission). Recorded voice lines for
+  screens and questions (`public/voice`) are pre-rendered and shipped in the app like the
+  lesson clips. If a native text-to-speech plugin is ever added, re-check the SDK answer above.
 - Run `npm run build:store` for every release. Its check fails the build if the bundle
   can reach the network.

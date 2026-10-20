@@ -43,13 +43,13 @@ function Slice({ cx, cy, r, a0, a1, cheese = CHEESE, glow = false, dim = 0 }: { 
 /** A chef's knife, tip at (0, 0), blade pointing down (+y). */
 function Knife() {
   return (
-    <g>
+    <>
       <path d="M -9 -96 L 9 -96 L 9 -16 Q 4 -2 0 0 Q -2 -8 -9 -14 Z" fill="#e8eef5" stroke={M.ink} strokeWidth={3.5} strokeLinejoin="round" />
       <path d="M 3 -90 L 3 -24" stroke="#ffffff" strokeWidth={3} strokeLinecap="round" />
       <rect x={-11} y={-146} width={22} height={50} rx={8} fill={M.wood} stroke={M.ink} strokeWidth={3.5} />
       <circle cx={0} cy={-133} r={3} fill={M.paper} />
       <circle cx={0} cy={-112} r={3} fill={M.paper} />
-    </g>
+    </>
   )
 }
 
@@ -69,7 +69,7 @@ function Frac({ t, x, y, num, den, size = 64, color = M.ink, at = -1, numAt, den
   const nc = numColor ?? color
   const dc = denColor ?? color
   return (
-    <g>
+    <>
       <Draw t={t} at={barAt ?? at} dur={0.4} d={`M ${x - w / 2} ${y} L ${x + w / 2} ${y}`} stroke={color} width={size * 0.1} />
       <Pop t={t} at={numAt ?? at} x={x} y={ny}>
         {flipAt !== undefined && to ? (
@@ -89,7 +89,7 @@ function Frac({ t, x, y, num, den, size = 64, color = M.ink, at = -1, numAt, den
           </Title>
         )}
       </Pop>
-    </g>
+    </>
   )
 }
 
@@ -112,7 +112,7 @@ function eqLayout(toks: EqTok[], x: number, size: number): number[] {
 function FracEq({ t, x, y, size = 50, toks }: { t: number; x: number; y: number; size?: number; toks: EqTok[] }) {
   const xs = eqLayout(toks, x, size)
   return (
-    <g>
+    <>
       {toks.map((k, i) =>
         'frac' in k ? (
           <Frac key={i} t={t} x={xs[i]} y={y} num={k.frac[0]} den={k.frac[1]} size={size} color={k.color} at={k.at} flipAt={k.flipAt} to={k.to} />
@@ -124,7 +124,7 @@ function FracEq({ t, x, y, size = 50, toks }: { t: number; x: number; y: number;
           </Pop>
         ),
       )}
-    </g>
+    </>
   )
 }
 

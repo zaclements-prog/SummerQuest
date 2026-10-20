@@ -37,11 +37,11 @@ function edgeK(t: number, at: number, dur: number, n: number) {
 /** A chunky two-tone edge (ink outline + colour core). */
 function Edge({ a, b, color, w = 10, glow = 0 }: { a: Pt; b: Pt; color: string; w?: number; glow?: number }) {
   return (
-    <g>
+    <>
       {glow > 0.01 && <line x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} stroke={M.gold} strokeWidth={w + 18 * glow} strokeLinecap="round" opacity={0.55 * glow} />}
       <line x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} stroke={M.ink} strokeWidth={w + 6} strokeLinecap="round" />
       <line x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} stroke={color} strokeWidth={w} strokeLinecap="round" />
-    </g>
+    </>
   )
 }
 
@@ -53,7 +53,7 @@ function BuiltPolygon({ t, pts, at, dur, colorOf, fill = FILL, fillAt, w = 10, g
   const fillK = ease.outCubic(progress(t, fillAt, 0.6))
   const penOut = progress(t, at + dur, 0.35)
   return (
-    <g>
+    <>
       {fillK > 0 && <path d={polyD(pts)} fill={fill} opacity={fillK} />}
       {k < 1 ? (
         <>
@@ -77,7 +77,7 @@ function BuiltPolygon({ t, pts, at, dur, colorOf, fill = FILL, fillAt, w = 10, g
         </>
       )}
       {pen && penOut < 1 && <Pencil x={tr.tip[0]} y={tr.tip[1]} opacity={1 - penOut} s={1 - 0.2 * penOut} />}
-    </g>
+    </>
   )
 }
 
@@ -367,10 +367,10 @@ const family: Scene = ({ t, cue, reduced }: SceneProps) => {
         {fly < 1 && <Backdrop t={t} at={0.05} x={FAM_C[0]} y={FAM_C[1]} r={225} color={mixColor(M.paper, fill, 0.4)} opacity={0.7 * (1 - fly)} reduced={reduced} />}
         {/* the morphing shape */}
         {drawK < 1 ? (
-          <g>
+          <>
             <path d={polyD(tr.pts, false)} fill="none" stroke={M.ink} strokeWidth={10} strokeLinecap="round" strokeLinejoin="round" />
             <Pencil x={tr.tip[0]} y={tr.tip[1]} />
-          </g>
+          </>
         ) : (
           <g filter="url(#sq-shadow)">
             {/* gold glow under each side as it is counted */}
@@ -601,7 +601,7 @@ function Hinge({ v, len, theta, color, wedgeR = 70, wedge = 1, box = 0, ghost = 
   const th = deg(theta)
   const end: Pt = [v[0] + len * Math.cos(th), v[1] - len * Math.sin(th)]
   return (
-    <g>
+    <>
       {ghost > 0.01 && (
         <g opacity={ghost}>
           <line x1={v[0]} y1={v[1]} x2={v[0]} y2={v[1] - len} stroke={RIGHT_TXT} strokeWidth={5} strokeDasharray="12 12" strokeLinecap="round" />
@@ -615,7 +615,7 @@ function Hinge({ v, len, theta, color, wedgeR = 70, wedge = 1, box = 0, ghost = 
       </g>
       <RightMark v={v} u1={[1, 0]} u2={[0, -1]} size={34} k={box} />
       <circle cx={v[0]} cy={v[1]} r={width + 3} fill={CORNER} stroke={M.ink} strokeWidth={3.5} />
-    </g>
+    </>
   )
 }
 
@@ -759,7 +759,7 @@ function InfLine({ a, b, color, k = 1, w = 9 }: { a: Pt; b: Pt; color: string; k
     return `M ${x1} ${y1} L ${p[0]} ${p[1]} L ${x2} ${y2}`
   }
   return (
-    <g>
+    <>
       {[M.ink, color].map((c, i) => (
         <g key={i}>
           <line x1={A[0]} y1={A[1]} x2={B[0]} y2={B[1]} stroke={c} strokeWidth={i ? w : w + 6} strokeLinecap="round" />
@@ -767,7 +767,7 @@ function InfLine({ a, b, color, k = 1, w = 9 }: { a: Pt; b: Pt; color: string; k
           <path d={head(A, -1)} fill="none" stroke={c} strokeWidth={i ? w : w + 6} strokeLinecap="round" strokeLinejoin="round" />
         </g>
       ))}
-    </g>
+    </>
   )
 }
 

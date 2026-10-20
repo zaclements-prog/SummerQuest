@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { createProvider } from '../lib/providers'
 import { effectiveConfigForStage } from '../lib/gradeTiers'
 import { useProgress } from '../store/progress'
+import { zoneStages } from '../curriculum'
 import ConceptPlay from '../games/ConceptPlay'
 import type { GameResult } from './GameRunner'
 import { sfx } from '../lib/sound'
@@ -33,7 +34,9 @@ export default function DailyChallenge() {
   const exitPath = useWorldUi((s) => s.enteredFromWorld) ? '/world' : '/map'
   const exitLabel = exitPath === '/world' ? 'Back to the World' : 'Back to map'
 
-  const { zone, stage } = useMemo(() => pickTodaysChallenge(), [])
+  // Today's pick and its difficulty both follow the profile grade (its zone stage set + tier).
+  const grade = useProgress((s) => s.player?.grade)
+  const { zone, stage } = useMemo(() => pickTodaysChallenge(grade), [grade])
 
   // Provider creation can throw on a malformed config — capture it so we can show
   // a friendly retry path instead of crashing the screen.
@@ -41,15 +44,15 @@ export default function DailyChallenge() {
   const providerResult = useMemo(() => {
     try {
       // Grade tiers: the profile grade scales today's stage difficulty.
-      const idx = Math.max(zone.stages.findIndex((s) => s.id === stage.id), 0)
-      const cfg = effectiveConfigForStage(stage, idx, useProgress.getState().player?.grade)
+      const idx = Math.max(zoneStages(zone, grade).findIndex((s) => s.id === stage.id), 0)
+      const cfg = effectiveConfigForStage(stage, idx, grade)
       return { provider: createProvider(cfg), error: false as const }
     } catch {
       return { provider: null, error: true as const }
     }
     // re-run on retry
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stage, attempt])
+  }, [stage, grade, attempt])
 
   const [result, setResult] = useState<{ res: GameResult; reward: number } | null>(null)
   const [celebrationOpen, setCelebrationOpen] = useState(false)

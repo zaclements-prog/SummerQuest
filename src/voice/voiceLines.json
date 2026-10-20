@@ -1,0 +1,4517 @@
+{
+  "voice": "higgs-audio-v2-mlx-q8:clone:calm-teacher-v1:k",
+  "clips": {
+    "k-math/greatCounting": {
+      "text": "Great counting!",
+      "hash": "e735cf30b4",
+      "kind": "line",
+      "file": "voice/k-math/greatCounting.mp3"
+    },
+    "k-math/letsCount": {
+      "text": "Let's count!",
+      "hash": "6243ee390e",
+      "kind": "line",
+      "file": "voice/k-math/letsCount.mp3"
+    },
+    "k-math/howMany/thing=apples": {
+      "text": "How many apples? Tap the number.",
+      "hash": "425f8fcb49",
+      "kind": "whole",
+      "file": "voice/k-math/howMany/thing=apples.mp3"
+    },
+    "k-math/howMany/thing=stars": {
+      "text": "How many stars? Tap the number.",
+      "hash": "2cfb652999",
+      "kind": "whole",
+      "file": "voice/k-math/howMany/thing=stars.mp3"
+    },
+    "k-math/howMany/thing=fish": {
+      "text": "How many fish? Tap the number.",
+      "hash": "896f965047",
+      "kind": "whole",
+      "file": "voice/k-math/howMany/thing=fish.mp3"
+    },
+    "k-math/howMany/thing=ducks": {
+      "text": "How many ducks? Tap the number.",
+      "hash": "3030a2d42a",
+      "kind": "whole",
+      "file": "voice/k-math/howMany/thing=ducks.mp3"
+    },
+    "k-math/howMany/thing=balls": {
+      "text": "How many balls? Tap the number.",
+      "hash": "6bedd9f49b",
+      "kind": "whole",
+      "file": "voice/k-math/howMany/thing=balls.mp3"
+    },
+    "k-math/howMany/thing=flowers": {
+      "text": "How many flowers? Tap the number.",
+      "hash": "351b47543b",
+      "kind": "whole",
+      "file": "voice/k-math/howMany/thing=flowers.mp3"
+    },
+    "k-math/howMany/thing=bees": {
+      "text": "How many bees? Tap the number.",
+      "hash": "0be8fbc685",
+      "kind": "whole",
+      "file": "voice/k-math/howMany/thing=bees.mp3"
+    },
+    "k-math/howMany/thing=cars": {
+      "text": "How many cars? Tap the number.",
+      "hash": "762e7f591f",
+      "kind": "whole",
+      "file": "voice/k-math/howMany/thing=cars.mp3"
+    },
+    "k-math/howMany/thing=cookies": {
+      "text": "How many cookies? Tap the number.",
+      "hash": "0b544a01b0",
+      "kind": "whole",
+      "file": "voice/k-math/howMany/thing=cookies.mp3"
+    },
+    "k-math/howMany/thing=frogs": {
+      "text": "How many frogs? Tap the number.",
+      "hash": "fb7c247727",
+      "kind": "whole",
+      "file": "voice/k-math/howMany/thing=frogs.mp3"
+    },
+    "k-math/findGroup/n=2,thing=apples": {
+      "text": "Tap the group with two apples.",
+      "hash": "fdad8c31cd",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=2,thing=apples.mp3"
+    },
+    "k-math/findGroup/n=2,thing=stars": {
+      "text": "Tap the group with two stars.",
+      "hash": "85ff0a8336",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=2,thing=stars.mp3"
+    },
+    "k-math/findGroup/n=2,thing=fish": {
+      "text": "Tap the group with two fish.",
+      "hash": "6f5314b695",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=2,thing=fish.mp3"
+    },
+    "k-math/findGroup/n=2,thing=ducks": {
+      "text": "Tap the group with two ducks.",
+      "hash": "5b187b298d",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=2,thing=ducks.mp3"
+    },
+    "k-math/findGroup/n=2,thing=balls": {
+      "text": "Tap the group with two balls.",
+      "hash": "1c13441905",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=2,thing=balls.mp3"
+    },
+    "k-math/findGroup/n=2,thing=flowers": {
+      "text": "Tap the group with two flowers.",
+      "hash": "f75e3be127",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=2,thing=flowers.mp3"
+    },
+    "k-math/findGroup/n=2,thing=bees": {
+      "text": "Tap the group with two bees.",
+      "hash": "3fbe1c1b75",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=2,thing=bees.mp3"
+    },
+    "k-math/findGroup/n=2,thing=cars": {
+      "text": "Tap the group with two cars.",
+      "hash": "ef1dbc94dc",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=2,thing=cars.mp3"
+    },
+    "k-math/findGroup/n=2,thing=cookies": {
+      "text": "Tap the group with two cookies.",
+      "hash": "a8a8e0b00d",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=2,thing=cookies.mp3"
+    },
+    "k-math/findGroup/n=2,thing=frogs": {
+      "text": "Tap the group with two frogs.",
+      "hash": "0d8b4665d7",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=2,thing=frogs.mp3"
+    },
+    "k-math/findGroup/n=3,thing=apples": {
+      "text": "Tap the group with three apples.",
+      "hash": "0c809add5d",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=3,thing=apples.mp3"
+    },
+    "k-math/findGroup/n=3,thing=stars": {
+      "text": "Tap the group with three stars.",
+      "hash": "d73096f760",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=3,thing=stars.mp3"
+    },
+    "k-math/findGroup/n=3,thing=fish": {
+      "text": "Tap the group with three fish.",
+      "hash": "bfd21c1894",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=3,thing=fish.mp3"
+    },
+    "k-math/findGroup/n=3,thing=ducks": {
+      "text": "Tap the group with three ducks.",
+      "hash": "b5a16c82c5",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=3,thing=ducks.mp3"
+    },
+    "k-math/findGroup/n=3,thing=balls": {
+      "text": "Tap the group with three balls.",
+      "hash": "8c48cc3fa9",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=3,thing=balls.mp3"
+    },
+    "k-math/findGroup/n=3,thing=flowers": {
+      "text": "Tap the group with three flowers.",
+      "hash": "db4552c731",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=3,thing=flowers.mp3"
+    },
+    "k-math/findGroup/n=3,thing=bees": {
+      "text": "Tap the group with three bees.",
+      "hash": "fc52d2fb96",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=3,thing=bees.mp3"
+    },
+    "k-math/findGroup/n=3,thing=cars": {
+      "text": "Tap the group with three cars.",
+      "hash": "d6122f67ee",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=3,thing=cars.mp3"
+    },
+    "k-math/findGroup/n=3,thing=cookies": {
+      "text": "Tap the group with three cookies.",
+      "hash": "3dc7fb9579",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=3,thing=cookies.mp3"
+    },
+    "k-math/findGroup/n=3,thing=frogs": {
+      "text": "Tap the group with three frogs.",
+      "hash": "3db4c2c7e0",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=3,thing=frogs.mp3"
+    },
+    "k-math/findGroup/n=4,thing=apples": {
+      "text": "Tap the group with four apples.",
+      "hash": "ae81f63c72",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=4,thing=apples.mp3"
+    },
+    "k-math/findGroup/n=4,thing=stars": {
+      "text": "Tap the group with four stars.",
+      "hash": "8154f9c9f3",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=4,thing=stars.mp3"
+    },
+    "k-math/findGroup/n=4,thing=fish": {
+      "text": "Tap the group with four fish.",
+      "hash": "e1411baf57",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=4,thing=fish.mp3"
+    },
+    "k-math/findGroup/n=4,thing=ducks": {
+      "text": "Tap the group with four ducks.",
+      "hash": "0bf660ec90",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=4,thing=ducks.mp3"
+    },
+    "k-math/findGroup/n=4,thing=balls": {
+      "text": "Tap the group with four balls.",
+      "hash": "a51b3e9dec",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=4,thing=balls.mp3"
+    },
+    "k-math/findGroup/n=4,thing=flowers": {
+      "text": "Tap the group with four flowers.",
+      "hash": "ba06c269bb",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=4,thing=flowers.mp3"
+    },
+    "k-math/findGroup/n=4,thing=bees": {
+      "text": "Tap the group with four bees.",
+      "hash": "96c7207608",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=4,thing=bees.mp3"
+    },
+    "k-math/findGroup/n=4,thing=cars": {
+      "text": "Tap the group with four cars.",
+      "hash": "178940428d",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=4,thing=cars.mp3"
+    },
+    "k-math/findGroup/n=4,thing=cookies": {
+      "text": "Tap the group with four cookies.",
+      "hash": "d7ec5e01e6",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=4,thing=cookies.mp3"
+    },
+    "k-math/findGroup/n=4,thing=frogs": {
+      "text": "Tap the group with four frogs.",
+      "hash": "87a5017cdd",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=4,thing=frogs.mp3"
+    },
+    "k-math/findGroup/n=5,thing=apples": {
+      "text": "Tap the group with five apples.",
+      "hash": "1fe18e3e44",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=5,thing=apples.mp3"
+    },
+    "k-math/findGroup/n=5,thing=stars": {
+      "text": "Tap the group with five stars.",
+      "hash": "d6a3f5b96f",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=5,thing=stars.mp3"
+    },
+    "k-math/findGroup/n=5,thing=fish": {
+      "text": "Tap the group with five fish.",
+      "hash": "fb4951cb60",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=5,thing=fish.mp3"
+    },
+    "k-math/findGroup/n=5,thing=ducks": {
+      "text": "Tap the group with five ducks.",
+      "hash": "e91e06aa35",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=5,thing=ducks.mp3"
+    },
+    "k-math/findGroup/n=5,thing=balls": {
+      "text": "Tap the group with five balls.",
+      "hash": "ea88ec77b6",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=5,thing=balls.mp3"
+    },
+    "k-math/findGroup/n=5,thing=flowers": {
+      "text": "Tap the group with five flowers.",
+      "hash": "4f68643f92",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=5,thing=flowers.mp3"
+    },
+    "k-math/findGroup/n=5,thing=bees": {
+      "text": "Tap the group with five bees.",
+      "hash": "db46bba875",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=5,thing=bees.mp3"
+    },
+    "k-math/findGroup/n=5,thing=cars": {
+      "text": "Tap the group with five cars.",
+      "hash": "db6072c460",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=5,thing=cars.mp3"
+    },
+    "k-math/findGroup/n=5,thing=cookies": {
+      "text": "Tap the group with five cookies.",
+      "hash": "ba882d8aed",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=5,thing=cookies.mp3"
+    },
+    "k-math/findGroup/n=5,thing=frogs": {
+      "text": "Tap the group with five frogs.",
+      "hash": "9f859e8f8f",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=5,thing=frogs.mp3"
+    },
+    "k-math/findGroup/n=6,thing=apples": {
+      "text": "Tap the group with six apples.",
+      "hash": "766106d9c7",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=6,thing=apples.mp3"
+    },
+    "k-math/findGroup/n=6,thing=stars": {
+      "text": "Tap the group with six stars.",
+      "hash": "5a65725093",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=6,thing=stars.mp3"
+    },
+    "k-math/findGroup/n=6,thing=fish": {
+      "text": "Tap the group with six fish.",
+      "hash": "f42d3cfd51",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=6,thing=fish.mp3"
+    },
+    "k-math/findGroup/n=6,thing=ducks": {
+      "text": "Tap the group with six ducks.",
+      "hash": "e994fa4fef",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=6,thing=ducks.mp3"
+    },
+    "k-math/findGroup/n=6,thing=balls": {
+      "text": "Tap the group with six balls.",
+      "hash": "87d2a885d3",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=6,thing=balls.mp3"
+    },
+    "k-math/findGroup/n=6,thing=flowers": {
+      "text": "Tap the group with six flowers.",
+      "hash": "4040b0264d",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=6,thing=flowers.mp3"
+    },
+    "k-math/findGroup/n=6,thing=bees": {
+      "text": "Tap the group with six bees.",
+      "hash": "b2b9e8615c",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=6,thing=bees.mp3"
+    },
+    "k-math/findGroup/n=6,thing=cars": {
+      "text": "Tap the group with six cars.",
+      "hash": "499ce1c8ee",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=6,thing=cars.mp3"
+    },
+    "k-math/findGroup/n=6,thing=cookies": {
+      "text": "Tap the group with six cookies.",
+      "hash": "285d2a1ef5",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=6,thing=cookies.mp3"
+    },
+    "k-math/findGroup/n=6,thing=frogs": {
+      "text": "Tap the group with six frogs.",
+      "hash": "fe71813db3",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=6,thing=frogs.mp3"
+    },
+    "k-math/findGroup/n=7,thing=apples": {
+      "text": "Tap the group with seven apples.",
+      "hash": "86d4f579d3",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=7,thing=apples.mp3"
+    },
+    "k-math/findGroup/n=7,thing=stars": {
+      "text": "Tap the group with seven stars.",
+      "hash": "e9f7a7150e",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=7,thing=stars.mp3"
+    },
+    "k-math/findGroup/n=7,thing=fish": {
+      "text": "Tap the group with seven fish.",
+      "hash": "5726d1b96f",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=7,thing=fish.mp3"
+    },
+    "k-math/findGroup/n=7,thing=ducks": {
+      "text": "Tap the group with seven ducks.",
+      "hash": "a2e30a07d5",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=7,thing=ducks.mp3"
+    },
+    "k-math/findGroup/n=7,thing=balls": {
+      "text": "Tap the group with seven balls.",
+      "hash": "baab7e4acf",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=7,thing=balls.mp3"
+    },
+    "k-math/findGroup/n=7,thing=flowers": {
+      "text": "Tap the group with seven flowers.",
+      "hash": "e5f4d5fb55",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=7,thing=flowers.mp3"
+    },
+    "k-math/findGroup/n=7,thing=bees": {
+      "text": "Tap the group with seven bees.",
+      "hash": "30fbae1a3c",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=7,thing=bees.mp3"
+    },
+    "k-math/findGroup/n=7,thing=cars": {
+      "text": "Tap the group with seven cars.",
+      "hash": "1f6ae05ea0",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=7,thing=cars.mp3"
+    },
+    "k-math/findGroup/n=7,thing=cookies": {
+      "text": "Tap the group with seven cookies.",
+      "hash": "64b69cc7bf",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=7,thing=cookies.mp3"
+    },
+    "k-math/findGroup/n=7,thing=frogs": {
+      "text": "Tap the group with seven frogs.",
+      "hash": "0870953875",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=7,thing=frogs.mp3"
+    },
+    "k-math/findGroup/n=8,thing=apples": {
+      "text": "Tap the group with eight apples.",
+      "hash": "c87ff85c9a",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=8,thing=apples.mp3"
+    },
+    "k-math/findGroup/n=8,thing=stars": {
+      "text": "Tap the group with eight stars.",
+      "hash": "a22d89224c",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=8,thing=stars.mp3"
+    },
+    "k-math/findGroup/n=8,thing=fish": {
+      "text": "Tap the group with eight fish.",
+      "hash": "0658f9b078",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=8,thing=fish.mp3"
+    },
+    "k-math/findGroup/n=8,thing=ducks": {
+      "text": "Tap the group with eight ducks.",
+      "hash": "0383125350",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=8,thing=ducks.mp3"
+    },
+    "k-math/findGroup/n=8,thing=balls": {
+      "text": "Tap the group with eight balls.",
+      "hash": "a4dab5d01a",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=8,thing=balls.mp3"
+    },
+    "k-math/findGroup/n=8,thing=flowers": {
+      "text": "Tap the group with eight flowers.",
+      "hash": "c94c773ac8",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=8,thing=flowers.mp3"
+    },
+    "k-math/findGroup/n=8,thing=bees": {
+      "text": "Tap the group with eight bees.",
+      "hash": "4993f4ff17",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=8,thing=bees.mp3"
+    },
+    "k-math/findGroup/n=8,thing=cars": {
+      "text": "Tap the group with eight cars.",
+      "hash": "e807fb6bfe",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=8,thing=cars.mp3"
+    },
+    "k-math/findGroup/n=8,thing=cookies": {
+      "text": "Tap the group with eight cookies.",
+      "hash": "cd53ea5855",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=8,thing=cookies.mp3"
+    },
+    "k-math/findGroup/n=8,thing=frogs": {
+      "text": "Tap the group with eight frogs.",
+      "hash": "8659a80bff",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=8,thing=frogs.mp3"
+    },
+    "k-math/findGroup/n=9,thing=apples": {
+      "text": "Tap the group with nine apples.",
+      "hash": "797fa2840c",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=9,thing=apples.mp3"
+    },
+    "k-math/findGroup/n=9,thing=stars": {
+      "text": "Tap the group with nine stars.",
+      "hash": "40eda4ad8a",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=9,thing=stars.mp3"
+    },
+    "k-math/findGroup/n=9,thing=fish": {
+      "text": "Tap the group with nine fish.",
+      "hash": "e1f6d84e10",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=9,thing=fish.mp3"
+    },
+    "k-math/findGroup/n=9,thing=ducks": {
+      "text": "Tap the group with nine ducks.",
+      "hash": "a36e5ac6e7",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=9,thing=ducks.mp3"
+    },
+    "k-math/findGroup/n=9,thing=balls": {
+      "text": "Tap the group with nine balls.",
+      "hash": "f074de0c7e",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=9,thing=balls.mp3"
+    },
+    "k-math/findGroup/n=9,thing=flowers": {
+      "text": "Tap the group with nine flowers.",
+      "hash": "39e4e591fc",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=9,thing=flowers.mp3"
+    },
+    "k-math/findGroup/n=9,thing=bees": {
+      "text": "Tap the group with nine bees.",
+      "hash": "520004ee57",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=9,thing=bees.mp3"
+    },
+    "k-math/findGroup/n=9,thing=cars": {
+      "text": "Tap the group with nine cars.",
+      "hash": "4045acddc2",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=9,thing=cars.mp3"
+    },
+    "k-math/findGroup/n=9,thing=cookies": {
+      "text": "Tap the group with nine cookies.",
+      "hash": "186247c62d",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=9,thing=cookies.mp3"
+    },
+    "k-math/findGroup/n=9,thing=frogs": {
+      "text": "Tap the group with nine frogs.",
+      "hash": "903fb2ddc2",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=9,thing=frogs.mp3"
+    },
+    "k-math/findGroup/n=10,thing=apples": {
+      "text": "Tap the group with ten apples.",
+      "hash": "b54f3bd69b",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=10,thing=apples.mp3"
+    },
+    "k-math/findGroup/n=10,thing=stars": {
+      "text": "Tap the group with ten stars.",
+      "hash": "a4a7d601a7",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=10,thing=stars.mp3"
+    },
+    "k-math/findGroup/n=10,thing=fish": {
+      "text": "Tap the group with ten fish.",
+      "hash": "8d2dd3fab1",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=10,thing=fish.mp3"
+    },
+    "k-math/findGroup/n=10,thing=ducks": {
+      "text": "Tap the group with ten ducks.",
+      "hash": "62bb9e90b6",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=10,thing=ducks.mp3"
+    },
+    "k-math/findGroup/n=10,thing=balls": {
+      "text": "Tap the group with ten balls.",
+      "hash": "fa5036fb0c",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=10,thing=balls.mp3"
+    },
+    "k-math/findGroup/n=10,thing=flowers": {
+      "text": "Tap the group with ten flowers.",
+      "hash": "f7f91db994",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=10,thing=flowers.mp3"
+    },
+    "k-math/findGroup/n=10,thing=bees": {
+      "text": "Tap the group with ten bees.",
+      "hash": "73e35a2f66",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=10,thing=bees.mp3"
+    },
+    "k-math/findGroup/n=10,thing=cars": {
+      "text": "Tap the group with ten cars.",
+      "hash": "b2bfa7e1fc",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=10,thing=cars.mp3"
+    },
+    "k-math/findGroup/n=10,thing=cookies": {
+      "text": "Tap the group with ten cookies.",
+      "hash": "a8d071f826",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=10,thing=cookies.mp3"
+    },
+    "k-math/findGroup/n=10,thing=frogs": {
+      "text": "Tap the group with ten frogs.",
+      "hash": "374e3152a2",
+      "kind": "whole",
+      "file": "voice/k-math/findGroup/n=10,thing=frogs.mp3"
+    },
+    "k-math/putInBowl/n=2,thing=apples": {
+      "text": "Put two apples in the bowl.",
+      "hash": "9a67e2b341",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=2,thing=apples.mp3"
+    },
+    "k-math/putInBowl/n=2,thing=stars": {
+      "text": "Put two stars in the bowl.",
+      "hash": "330623f08c",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=2,thing=stars.mp3"
+    },
+    "k-math/putInBowl/n=2,thing=fish": {
+      "text": "Put two fish in the bowl.",
+      "hash": "2e3475ef54",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=2,thing=fish.mp3"
+    },
+    "k-math/putInBowl/n=2,thing=ducks": {
+      "text": "Put two ducks in the bowl.",
+      "hash": "108c417b04",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=2,thing=ducks.mp3"
+    },
+    "k-math/putInBowl/n=2,thing=balls": {
+      "text": "Put two balls in the bowl.",
+      "hash": "82a8ee423d",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=2,thing=balls.mp3"
+    },
+    "k-math/putInBowl/n=2,thing=flowers": {
+      "text": "Put two flowers in the bowl.",
+      "hash": "aef708fc31",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=2,thing=flowers.mp3"
+    },
+    "k-math/putInBowl/n=2,thing=bees": {
+      "text": "Put two bees in the bowl.",
+      "hash": "6b5657544a",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=2,thing=bees.mp3"
+    },
+    "k-math/putInBowl/n=2,thing=cars": {
+      "text": "Put two cars in the bowl.",
+      "hash": "bb7866dadf",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=2,thing=cars.mp3"
+    },
+    "k-math/putInBowl/n=2,thing=cookies": {
+      "text": "Put two cookies in the bowl.",
+      "hash": "f34bd0846a",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=2,thing=cookies.mp3"
+    },
+    "k-math/putInBowl/n=2,thing=frogs": {
+      "text": "Put two frogs in the bowl.",
+      "hash": "af9a9c4638",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=2,thing=frogs.mp3"
+    },
+    "k-math/putInBowl/n=3,thing=apples": {
+      "text": "Put three apples in the bowl.",
+      "hash": "62ff6f150c",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=3,thing=apples.mp3"
+    },
+    "k-math/putInBowl/n=3,thing=stars": {
+      "text": "Put three stars in the bowl.",
+      "hash": "4f59c06798",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=3,thing=stars.mp3"
+    },
+    "k-math/putInBowl/n=3,thing=fish": {
+      "text": "Put three fish in the bowl.",
+      "hash": "c19351ab52",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=3,thing=fish.mp3"
+    },
+    "k-math/putInBowl/n=3,thing=ducks": {
+      "text": "Put three ducks in the bowl.",
+      "hash": "4256a771ee",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=3,thing=ducks.mp3"
+    },
+    "k-math/putInBowl/n=3,thing=balls": {
+      "text": "Put three balls in the bowl.",
+      "hash": "698a23e8c4",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=3,thing=balls.mp3"
+    },
+    "k-math/putInBowl/n=3,thing=flowers": {
+      "text": "Put three flowers in the bowl.",
+      "hash": "ad62215268",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=3,thing=flowers.mp3"
+    },
+    "k-math/putInBowl/n=3,thing=bees": {
+      "text": "Put three bees in the bowl.",
+      "hash": "914911db19",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=3,thing=bees.mp3"
+    },
+    "k-math/putInBowl/n=3,thing=cars": {
+      "text": "Put three cars in the bowl.",
+      "hash": "8630e45f8d",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=3,thing=cars.mp3"
+    },
+    "k-math/putInBowl/n=3,thing=cookies": {
+      "text": "Put three cookies in the bowl.",
+      "hash": "a2b6255367",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=3,thing=cookies.mp3"
+    },
+    "k-math/putInBowl/n=3,thing=frogs": {
+      "text": "Put three frogs in the bowl.",
+      "hash": "64db99495c",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=3,thing=frogs.mp3"
+    },
+    "k-math/putInBowl/n=4,thing=apples": {
+      "text": "Put four apples in the bowl.",
+      "hash": "9b173ca9e5",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=4,thing=apples.mp3"
+    },
+    "k-math/putInBowl/n=4,thing=stars": {
+      "text": "Put four stars in the bowl.",
+      "hash": "fb1715ffcf",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=4,thing=stars.mp3"
+    },
+    "k-math/putInBowl/n=4,thing=fish": {
+      "text": "Put four fish in the bowl.",
+      "hash": "41ae11a3a3",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=4,thing=fish.mp3"
+    },
+    "k-math/putInBowl/n=4,thing=ducks": {
+      "text": "Put four ducks in the bowl.",
+      "hash": "dd51399f47",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=4,thing=ducks.mp3"
+    },
+    "k-math/putInBowl/n=4,thing=balls": {
+      "text": "Put four balls in the bowl.",
+      "hash": "1cf9fa474c",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=4,thing=balls.mp3"
+    },
+    "k-math/putInBowl/n=4,thing=flowers": {
+      "text": "Put four flowers in the bowl.",
+      "hash": "01fae87730",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=4,thing=flowers.mp3"
+    },
+    "k-math/putInBowl/n=4,thing=bees": {
+      "text": "Put four bees in the bowl.",
+      "hash": "9e71180ab2",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=4,thing=bees.mp3"
+    },
+    "k-math/putInBowl/n=4,thing=cars": {
+      "text": "Put four cars in the bowl.",
+      "hash": "71ea00e123",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=4,thing=cars.mp3"
+    },
+    "k-math/putInBowl/n=4,thing=cookies": {
+      "text": "Put four cookies in the bowl.",
+      "hash": "0514b5e5e6",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=4,thing=cookies.mp3"
+    },
+    "k-math/putInBowl/n=4,thing=frogs": {
+      "text": "Put four frogs in the bowl.",
+      "hash": "521f03f27e",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=4,thing=frogs.mp3"
+    },
+    "k-math/putInBowl/n=5,thing=apples": {
+      "text": "Put five apples in the bowl.",
+      "hash": "5786b31cf1",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=5,thing=apples.mp3"
+    },
+    "k-math/putInBowl/n=5,thing=stars": {
+      "text": "Put five stars in the bowl.",
+      "hash": "a39d7ed1aa",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=5,thing=stars.mp3"
+    },
+    "k-math/putInBowl/n=5,thing=fish": {
+      "text": "Put five fish in the bowl.",
+      "hash": "f5cd2390b7",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=5,thing=fish.mp3"
+    },
+    "k-math/putInBowl/n=5,thing=ducks": {
+      "text": "Put five ducks in the bowl.",
+      "hash": "ed3ede125a",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=5,thing=ducks.mp3"
+    },
+    "k-math/putInBowl/n=5,thing=balls": {
+      "text": "Put five balls in the bowl.",
+      "hash": "85a5b6cfb9",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=5,thing=balls.mp3"
+    },
+    "k-math/putInBowl/n=5,thing=flowers": {
+      "text": "Put five flowers in the bowl.",
+      "hash": "05fd853cb1",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=5,thing=flowers.mp3"
+    },
+    "k-math/putInBowl/n=5,thing=bees": {
+      "text": "Put five bees in the bowl.",
+      "hash": "bc3aef3a16",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=5,thing=bees.mp3"
+    },
+    "k-math/putInBowl/n=5,thing=cars": {
+      "text": "Put five cars in the bowl.",
+      "hash": "8d1b70c534",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=5,thing=cars.mp3"
+    },
+    "k-math/putInBowl/n=5,thing=cookies": {
+      "text": "Put five cookies in the bowl.",
+      "hash": "75419e2ca4",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=5,thing=cookies.mp3"
+    },
+    "k-math/putInBowl/n=5,thing=frogs": {
+      "text": "Put five frogs in the bowl.",
+      "hash": "b6729e5e4e",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=5,thing=frogs.mp3"
+    },
+    "k-math/putInBowl/n=6,thing=apples": {
+      "text": "Put six apples in the bowl.",
+      "hash": "29018bdaca",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=6,thing=apples.mp3"
+    },
+    "k-math/putInBowl/n=6,thing=stars": {
+      "text": "Put six stars in the bowl.",
+      "hash": "68c0ab63d2",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=6,thing=stars.mp3"
+    },
+    "k-math/putInBowl/n=6,thing=fish": {
+      "text": "Put six fish in the bowl.",
+      "hash": "cba4af1a65",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=6,thing=fish.mp3"
+    },
+    "k-math/putInBowl/n=6,thing=ducks": {
+      "text": "Put six ducks in the bowl.",
+      "hash": "e982b2772a",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=6,thing=ducks.mp3"
+    },
+    "k-math/putInBowl/n=6,thing=balls": {
+      "text": "Put six balls in the bowl.",
+      "hash": "e4de1f8b38",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=6,thing=balls.mp3"
+    },
+    "k-math/putInBowl/n=6,thing=flowers": {
+      "text": "Put six flowers in the bowl.",
+      "hash": "07a787284f",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=6,thing=flowers.mp3"
+    },
+    "k-math/putInBowl/n=6,thing=bees": {
+      "text": "Put six bees in the bowl.",
+      "hash": "7501dee6d4",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=6,thing=bees.mp3"
+    },
+    "k-math/putInBowl/n=6,thing=cars": {
+      "text": "Put six cars in the bowl.",
+      "hash": "2eda8cc1d0",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=6,thing=cars.mp3"
+    },
+    "k-math/putInBowl/n=6,thing=cookies": {
+      "text": "Put six cookies in the bowl.",
+      "hash": "69bf06203c",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=6,thing=cookies.mp3"
+    },
+    "k-math/putInBowl/n=6,thing=frogs": {
+      "text": "Put six frogs in the bowl.",
+      "hash": "20cd739eb9",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=6,thing=frogs.mp3"
+    },
+    "k-math/putInBowl/n=7,thing=apples": {
+      "text": "Put seven apples in the bowl.",
+      "hash": "7aeab6cb7d",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=7,thing=apples.mp3"
+    },
+    "k-math/putInBowl/n=7,thing=stars": {
+      "text": "Put seven stars in the bowl.",
+      "hash": "1418243241",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=7,thing=stars.mp3"
+    },
+    "k-math/putInBowl/n=7,thing=fish": {
+      "text": "Put seven fish in the bowl.",
+      "hash": "6147a64615",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=7,thing=fish.mp3"
+    },
+    "k-math/putInBowl/n=7,thing=ducks": {
+      "text": "Put seven ducks in the bowl.",
+      "hash": "9fb9b48229",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=7,thing=ducks.mp3"
+    },
+    "k-math/putInBowl/n=7,thing=balls": {
+      "text": "Put seven balls in the bowl.",
+      "hash": "177f9d2f73",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=7,thing=balls.mp3"
+    },
+    "k-math/putInBowl/n=7,thing=flowers": {
+      "text": "Put seven flowers in the bowl.",
+      "hash": "38ec1592d7",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=7,thing=flowers.mp3"
+    },
+    "k-math/putInBowl/n=7,thing=bees": {
+      "text": "Put seven bees in the bowl.",
+      "hash": "216f1b679d",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=7,thing=bees.mp3"
+    },
+    "k-math/putInBowl/n=7,thing=cars": {
+      "text": "Put seven cars in the bowl.",
+      "hash": "4adcd576f1",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=7,thing=cars.mp3"
+    },
+    "k-math/putInBowl/n=7,thing=cookies": {
+      "text": "Put seven cookies in the bowl.",
+      "hash": "ea2a111d4f",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=7,thing=cookies.mp3"
+    },
+    "k-math/putInBowl/n=7,thing=frogs": {
+      "text": "Put seven frogs in the bowl.",
+      "hash": "af129e9a82",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=7,thing=frogs.mp3"
+    },
+    "k-math/putInBowl/n=8,thing=apples": {
+      "text": "Put eight apples in the bowl.",
+      "hash": "ad1177ae9d",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=8,thing=apples.mp3"
+    },
+    "k-math/putInBowl/n=8,thing=stars": {
+      "text": "Put eight stars in the bowl.",
+      "hash": "48c32cba72",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=8,thing=stars.mp3"
+    },
+    "k-math/putInBowl/n=8,thing=fish": {
+      "text": "Put eight fish in the bowl.",
+      "hash": "84bde9765f",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=8,thing=fish.mp3"
+    },
+    "k-math/putInBowl/n=8,thing=ducks": {
+      "text": "Put eight ducks in the bowl.",
+      "hash": "1853e5da8e",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=8,thing=ducks.mp3"
+    },
+    "k-math/putInBowl/n=8,thing=balls": {
+      "text": "Put eight balls in the bowl.",
+      "hash": "f522599fb3",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=8,thing=balls.mp3"
+    },
+    "k-math/putInBowl/n=8,thing=flowers": {
+      "text": "Put eight flowers in the bowl.",
+      "hash": "6e1b69f8dc",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=8,thing=flowers.mp3"
+    },
+    "k-math/putInBowl/n=8,thing=bees": {
+      "text": "Put eight bees in the bowl.",
+      "hash": "4e0e5320c8",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=8,thing=bees.mp3"
+    },
+    "k-math/putInBowl/n=8,thing=cars": {
+      "text": "Put eight cars in the bowl.",
+      "hash": "7327f0291c",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=8,thing=cars.mp3"
+    },
+    "k-math/putInBowl/n=8,thing=cookies": {
+      "text": "Put eight cookies in the bowl.",
+      "hash": "2b1f4813c8",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=8,thing=cookies.mp3"
+    },
+    "k-math/putInBowl/n=8,thing=frogs": {
+      "text": "Put eight frogs in the bowl.",
+      "hash": "c45ee84ac8",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=8,thing=frogs.mp3"
+    },
+    "k-math/putInBowl/n=9,thing=apples": {
+      "text": "Put nine apples in the bowl.",
+      "hash": "f5e262f91b",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=9,thing=apples.mp3"
+    },
+    "k-math/putInBowl/n=9,thing=stars": {
+      "text": "Put nine stars in the bowl.",
+      "hash": "adc056f0b2",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=9,thing=stars.mp3"
+    },
+    "k-math/putInBowl/n=9,thing=fish": {
+      "text": "Put nine fish in the bowl.",
+      "hash": "c428c4ddee",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=9,thing=fish.mp3"
+    },
+    "k-math/putInBowl/n=9,thing=ducks": {
+      "text": "Put nine ducks in the bowl.",
+      "hash": "85e0ffee52",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=9,thing=ducks.mp3"
+    },
+    "k-math/putInBowl/n=9,thing=balls": {
+      "text": "Put nine balls in the bowl.",
+      "hash": "aa8bf282b2",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=9,thing=balls.mp3"
+    },
+    "k-math/putInBowl/n=9,thing=flowers": {
+      "text": "Put nine flowers in the bowl.",
+      "hash": "e01f9021d7",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=9,thing=flowers.mp3"
+    },
+    "k-math/putInBowl/n=9,thing=bees": {
+      "text": "Put nine bees in the bowl.",
+      "hash": "fbd55cb8b6",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=9,thing=bees.mp3"
+    },
+    "k-math/putInBowl/n=9,thing=cars": {
+      "text": "Put nine cars in the bowl.",
+      "hash": "0b5b110a75",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=9,thing=cars.mp3"
+    },
+    "k-math/putInBowl/n=9,thing=cookies": {
+      "text": "Put nine cookies in the bowl.",
+      "hash": "e51c9a74ef",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=9,thing=cookies.mp3"
+    },
+    "k-math/putInBowl/n=9,thing=frogs": {
+      "text": "Put nine frogs in the bowl.",
+      "hash": "d422326de8",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=9,thing=frogs.mp3"
+    },
+    "k-math/putInBowl/n=10,thing=apples": {
+      "text": "Put ten apples in the bowl.",
+      "hash": "2d2ccf5b98",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=10,thing=apples.mp3"
+    },
+    "k-math/putInBowl/n=10,thing=stars": {
+      "text": "Put ten stars in the bowl.",
+      "hash": "1501b660e0",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=10,thing=stars.mp3"
+    },
+    "k-math/putInBowl/n=10,thing=fish": {
+      "text": "Put ten fish in the bowl.",
+      "hash": "11c56a4d84",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=10,thing=fish.mp3"
+    },
+    "k-math/putInBowl/n=10,thing=ducks": {
+      "text": "Put ten ducks in the bowl.",
+      "hash": "d91d9b1908",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=10,thing=ducks.mp3"
+    },
+    "k-math/putInBowl/n=10,thing=balls": {
+      "text": "Put ten balls in the bowl.",
+      "hash": "cbe88388cf",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=10,thing=balls.mp3"
+    },
+    "k-math/putInBowl/n=10,thing=flowers": {
+      "text": "Put ten flowers in the bowl.",
+      "hash": "70bd61dce9",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=10,thing=flowers.mp3"
+    },
+    "k-math/putInBowl/n=10,thing=bees": {
+      "text": "Put ten bees in the bowl.",
+      "hash": "e6d9130f80",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=10,thing=bees.mp3"
+    },
+    "k-math/putInBowl/n=10,thing=cars": {
+      "text": "Put ten cars in the bowl.",
+      "hash": "73179b43fc",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=10,thing=cars.mp3"
+    },
+    "k-math/putInBowl/n=10,thing=cookies": {
+      "text": "Put ten cookies in the bowl.",
+      "hash": "e52f614db5",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=10,thing=cookies.mp3"
+    },
+    "k-math/putInBowl/n=10,thing=frogs": {
+      "text": "Put ten frogs in the bowl.",
+      "hash": "231e5e3fd7",
+      "kind": "whole",
+      "file": "voice/k-math/putInBowl/n=10,thing=frogs.mp3"
+    },
+    "listen/countTogether": {
+      "text": "Let's count together.",
+      "hash": "90a955fdcb",
+      "kind": "line",
+      "file": "voice/listen/countTogether.mp3"
+    },
+    "listen/yourTurn": {
+      "text": "Now you try!",
+      "hash": "f2a9a41d22",
+      "kind": "line",
+      "file": "voice/listen/yourTurn.mp3"
+    },
+    "listen/youDidIt": {
+      "text": "You did it!",
+      "hash": "a7cfba6f57",
+      "kind": "line",
+      "file": "voice/listen/youDidIt.mp3"
+    },
+    "listen/thatsRight": {
+      "text": "Yes! That's right!",
+      "hash": "f6343f99ec",
+      "kind": "line",
+      "file": "voice/listen/thatsRight.mp3"
+    },
+    "listen/stars1": {
+      "text": "You got one star! Tap the arrow to keep going.",
+      "hash": "dd4e531761",
+      "kind": "line",
+      "file": "voice/listen/stars1.mp3"
+    },
+    "listen/stars2": {
+      "text": "You got two stars! Tap the arrow to keep going.",
+      "hash": "4a258b4e4a",
+      "kind": "line",
+      "file": "voice/listen/stars2.mp3"
+    },
+    "listen/stars3": {
+      "text": "You got three stars! Tap the arrow to keep going.",
+      "hash": "f805c572ef",
+      "kind": "line",
+      "file": "voice/listen/stars3.mp3"
+    },
+    "listen/tapToCount": {
+      "text": "Tap each one to count it.",
+      "hash": "16ca90dc5b",
+      "kind": "line",
+      "file": "voice/listen/tapToCount.mp3"
+    },
+    "listen/count1": {
+      "text": "One.",
+      "hash": "9a9481b1cd",
+      "kind": "line",
+      "file": "voice/listen/count1.mp3"
+    },
+    "listen/count2": {
+      "text": "One, two.",
+      "hash": "70adfcb39f",
+      "kind": "line",
+      "file": "voice/listen/count2.mp3"
+    },
+    "listen/count3": {
+      "text": "One, two, three.",
+      "hash": "130c35b2ff",
+      "kind": "line",
+      "file": "voice/listen/count3.mp3"
+    },
+    "listen/count4": {
+      "text": "One, two, three, four.",
+      "hash": "9c1988bb33",
+      "kind": "line",
+      "file": "voice/listen/count4.mp3"
+    },
+    "listen/count5": {
+      "text": "One, two, three, four, five.",
+      "hash": "27f5021e67",
+      "kind": "line",
+      "file": "voice/listen/count5.mp3"
+    },
+    "listen/count6": {
+      "text": "One, two, three, four, five, six.",
+      "hash": "853df6ea65",
+      "kind": "line",
+      "file": "voice/listen/count6.mp3"
+    },
+    "listen/count7": {
+      "text": "One, two, three, four, five, six, seven.",
+      "hash": "0519192214",
+      "kind": "line",
+      "file": "voice/listen/count7.mp3"
+    },
+    "listen/count8": {
+      "text": "One, two, three, four, five, six, seven, eight.",
+      "hash": "59d5476d55",
+      "kind": "line",
+      "file": "voice/listen/count8.mp3"
+    },
+    "listen/count9": {
+      "text": "One, two, three, four, five, six, seven, eight, nine.",
+      "hash": "6ae6d1d110",
+      "kind": "line",
+      "file": "voice/listen/count9.mp3"
+    },
+    "listen/count10": {
+      "text": "One, two, three, four, five, six, seven, eight, nine, ten.",
+      "hash": "d71fe823ee",
+      "kind": "line",
+      "file": "voice/listen/count10.mp3"
+    },
+    "listen/count11": {
+      "text": "One, two, three, four, five, six, seven, eight, nine, ten, eleven.",
+      "hash": "8f3ba7067d",
+      "kind": "line",
+      "file": "voice/listen/count11.mp3"
+    },
+    "listen/count12": {
+      "text": "One, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve.",
+      "hash": "1093045d68",
+      "kind": "line",
+      "file": "voice/listen/count12.mp3"
+    },
+    "listen/count13": {
+      "text": "One, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen.",
+      "hash": "442077744e",
+      "kind": "line",
+      "file": "voice/listen/count13.mp3"
+    },
+    "listen/count14": {
+      "text": "One, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen.",
+      "hash": "76c0a50860",
+      "kind": "line",
+      "file": "voice/listen/count14.mp3"
+    },
+    "listen/count15": {
+      "text": "One, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen.",
+      "hash": "da25c590fe",
+      "kind": "line",
+      "file": "voice/listen/count15.mp3"
+    },
+    "listen/count16": {
+      "text": "One, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen.",
+      "hash": "d62022f12c",
+      "kind": "line",
+      "file": "voice/listen/count16.mp3"
+    },
+    "listen/count17": {
+      "text": "One, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen.",
+      "hash": "c545472e36",
+      "kind": "line",
+      "file": "voice/listen/count17.mp3"
+    },
+    "listen/count18": {
+      "text": "One, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen.",
+      "hash": "13fec5565f",
+      "kind": "line",
+      "file": "voice/listen/count18.mp3"
+    },
+    "listen/count19": {
+      "text": "One, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, nineteen.",
+      "hash": "3e2cb47e94",
+      "kind": "line",
+      "file": "voice/listen/count19.mp3"
+    },
+    "listen/count20": {
+      "text": "One, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, nineteen, twenty.",
+      "hash": "b406b2e24a",
+      "kind": "line",
+      "file": "voice/listen/count20.mp3"
+    },
+    "listen/number/n=0": {
+      "text": "zero!",
+      "hash": "ef2a7e9a8e",
+      "kind": "whole",
+      "file": "voice/listen/number/n=0.mp3"
+    },
+    "listen/number/n=1": {
+      "text": "one!",
+      "hash": "e6dd8dd1fe",
+      "kind": "whole",
+      "file": "voice/listen/number/n=1.mp3"
+    },
+    "listen/number/n=2": {
+      "text": "two!",
+      "hash": "b2c9599ed0",
+      "kind": "whole",
+      "file": "voice/listen/number/n=2.mp3"
+    },
+    "listen/number/n=3": {
+      "text": "three!",
+      "hash": "39bd2ae3cb",
+      "kind": "whole",
+      "file": "voice/listen/number/n=3.mp3"
+    },
+    "listen/number/n=4": {
+      "text": "four!",
+      "hash": "ce81798b9f",
+      "kind": "whole",
+      "file": "voice/listen/number/n=4.mp3"
+    },
+    "listen/number/n=5": {
+      "text": "five!",
+      "hash": "8102f56fe0",
+      "kind": "whole",
+      "file": "voice/listen/number/n=5.mp3"
+    },
+    "listen/number/n=6": {
+      "text": "six!",
+      "hash": "29a8a80609",
+      "kind": "whole",
+      "file": "voice/listen/number/n=6.mp3"
+    },
+    "listen/number/n=7": {
+      "text": "seven!",
+      "hash": "b09ccc0ca2",
+      "kind": "whole",
+      "file": "voice/listen/number/n=7.mp3"
+    },
+    "listen/number/n=8": {
+      "text": "eight!",
+      "hash": "b49d24a3c4",
+      "kind": "whole",
+      "file": "voice/listen/number/n=8.mp3"
+    },
+    "listen/number/n=9": {
+      "text": "nine!",
+      "hash": "b0385c4084",
+      "kind": "whole",
+      "file": "voice/listen/number/n=9.mp3"
+    },
+    "listen/number/n=10": {
+      "text": "ten!",
+      "hash": "5617230012",
+      "kind": "whole",
+      "file": "voice/listen/number/n=10.mp3"
+    },
+    "listen/number/n=11": {
+      "text": "eleven!",
+      "hash": "cdd31c20f8",
+      "kind": "whole",
+      "file": "voice/listen/number/n=11.mp3"
+    },
+    "listen/number/n=12": {
+      "text": "twelve!",
+      "hash": "1499299174",
+      "kind": "whole",
+      "file": "voice/listen/number/n=12.mp3"
+    },
+    "listen/number/n=13": {
+      "text": "thirteen!",
+      "hash": "e13ed98ceb",
+      "kind": "whole",
+      "file": "voice/listen/number/n=13.mp3"
+    },
+    "listen/number/n=14": {
+      "text": "fourteen!",
+      "hash": "fe4015b737",
+      "kind": "whole",
+      "file": "voice/listen/number/n=14.mp3"
+    },
+    "listen/number/n=15": {
+      "text": "fifteen!",
+      "hash": "97beadfd21",
+      "kind": "whole",
+      "file": "voice/listen/number/n=15.mp3"
+    },
+    "listen/number/n=16": {
+      "text": "sixteen!",
+      "hash": "84f5f620fb",
+      "kind": "whole",
+      "file": "voice/listen/number/n=16.mp3"
+    },
+    "listen/number/n=17": {
+      "text": "seventeen!",
+      "hash": "38cbb4b4ed",
+      "kind": "whole",
+      "file": "voice/listen/number/n=17.mp3"
+    },
+    "listen/number/n=18": {
+      "text": "eighteen!",
+      "hash": "4d2189c825",
+      "kind": "whole",
+      "file": "voice/listen/number/n=18.mp3"
+    },
+    "listen/number/n=19": {
+      "text": "nineteen!",
+      "hash": "0e72f5d999",
+      "kind": "whole",
+      "file": "voice/listen/number/n=19.mp3"
+    },
+    "listen/number/n=20": {
+      "text": "twenty!",
+      "hash": "1b4f543799",
+      "kind": "whole",
+      "file": "voice/listen/number/n=20.mp3"
+    },
+    "parade/intro": {
+      "text": "Lead the parade! Walk through the gate that gives us more friends.",
+      "hash": "94b3df92c1",
+      "kind": "line",
+      "file": "voice/parade/intro.mp3"
+    },
+    "parade/introKeep": {
+      "text": "Lead the parade! Some gates send friends off for a snack. Pick the gate that keeps more friends.",
+      "hash": "d4002c9d19",
+      "kind": "line",
+      "file": "voice/parade/introKeep.mp3"
+    },
+    "parade/introListen": {
+      "text": "Lead the parade! Tap the gate that gives us more friends.",
+      "hash": "1234d40683",
+      "kind": "line",
+      "file": "voice/parade/introListen.mp3"
+    },
+    "parade/gatePrompt": {
+      "text": "Which gate gives us more friends?",
+      "hash": "4fc32acb96",
+      "kind": "line",
+      "file": "voice/parade/gatePrompt.mp3"
+    },
+    "parade/keepPrompt": {
+      "text": "Which gate keeps more friends?",
+      "hash": "b2810cc41b",
+      "kind": "line",
+      "file": "voice/parade/keepPrompt.mp3"
+    },
+    "parade/tapGate": {
+      "text": "Tap the gate you want.",
+      "hash": "1ee3bc3297",
+      "kind": "line",
+      "file": "voice/parade/tapGate.mp3"
+    },
+    "parade/smartPick": {
+      "text": "Smart pick!",
+      "hash": "46055864dc",
+      "kind": "line",
+      "file": "voice/parade/smartPick.mp3"
+    },
+    "parade/bothWork": {
+      "text": "Both gates give the same. Both work!",
+      "hash": "c55319c546",
+      "kind": "line",
+      "file": "voice/parade/bothWork.mp3"
+    },
+    "parade/cheerMore": {
+      "text": "Hooray, more friends!",
+      "hash": "fad151641e",
+      "kind": "line",
+      "file": "voice/parade/cheerMore.mp3"
+    },
+    "parade/cheerGrow": {
+      "text": "Look at our parade grow!",
+      "hash": "ac5d46a8a2",
+      "kind": "line",
+      "file": "voice/parade/cheerGrow.mp3"
+    },
+    "parade/cheerThink": {
+      "text": "Great thinking!",
+      "hash": "231af2434d",
+      "kind": "line",
+      "file": "voice/parade/cheerThink.mp3"
+    },
+    "parade/otherHadMore": {
+      "text": "The other gate had more. Watch the see-through parade!",
+      "hash": "0396d2adaf",
+      "kind": "line",
+      "file": "voice/parade/otherHadMore.mp3"
+    },
+    "parade/cageOpen": {
+      "text": "New friends join the parade!",
+      "hash": "e39e4a1f27",
+      "kind": "line",
+      "file": "voice/parade/cageOpen.mp3"
+    },
+    "parade/paradeFull": {
+      "text": "Our parade is full! On to the tug of war!",
+      "hash": "c964e570c0",
+      "kind": "line",
+      "file": "voice/parade/paradeFull.mp3"
+    },
+    "parade/finaleIntro": {
+      "text": "Tug of war with the Grumble Gang!",
+      "hash": "d40bb3b7f8",
+      "kind": "line",
+      "file": "voice/parade/finaleIntro.mp3"
+    },
+    "parade/doWeHaveMore": {
+      "text": "Do we have more?",
+      "hash": "b081562c0c",
+      "kind": "line",
+      "file": "voice/parade/doWeHaveMore.mp3"
+    },
+    "parade/weHaveMore": {
+      "text": "We have more!",
+      "hash": "71df25c108",
+      "kind": "line",
+      "file": "voice/parade/weHaveMore.mp3"
+    },
+    "parade/finaleWin": {
+      "text": "We win! The Grumble Gang cheers up and joins the party!",
+      "hash": "ba231034fb",
+      "kind": "line",
+      "file": "voice/parade/finaleWin.mp3"
+    },
+    "parade/finaleTie": {
+      "text": "It's a tie! Everybody wins, and the Grumble Gang joins the party!",
+      "hash": "d11b5b53bc",
+      "kind": "line",
+      "file": "voice/parade/finaleTie.mp3"
+    },
+    "parade/finaleLose": {
+      "text": "The Grumble Gang pulled harder this time. Want a rematch?",
+      "hash": "aedfba6803",
+      "kind": "line",
+      "file": "voice/parade/finaleLose.mp3"
+    },
+    "parade/nextParade": {
+      "text": "Ready for the next parade?",
+      "hash": "693629eab1",
+      "kind": "line",
+      "file": "voice/parade/nextParade.mp3"
+    },
+    "parade/slowMo": {
+      "text": "Slow motion!",
+      "hash": "c8396dab18",
+      "kind": "line",
+      "file": "voice/parade/slowMo.mp3"
+    },
+    "parade/runDone": {
+      "text": "What a parade! Tap to collect your stars.",
+      "hash": "223d2c6ccf",
+      "kind": "line",
+      "file": "voice/parade/runDone.mp3"
+    },
+    "parade/plusOrPlus/a=1,b=1": {
+      "text": "Plus one or plus one?",
+      "hash": "0b7788b24e",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=1,b=1.mp3"
+    },
+    "parade/plusOrPlus/a=1,b=2": {
+      "text": "Plus one or plus two?",
+      "hash": "244fb4ff89",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=1,b=2.mp3"
+    },
+    "parade/plusOrPlus/a=1,b=3": {
+      "text": "Plus one or plus three?",
+      "hash": "885a8e6515",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=1,b=3.mp3"
+    },
+    "parade/plusOrPlus/a=1,b=4": {
+      "text": "Plus one or plus four?",
+      "hash": "df424e573c",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=1,b=4.mp3"
+    },
+    "parade/plusOrPlus/a=1,b=5": {
+      "text": "Plus one or plus five?",
+      "hash": "5d8a51a613",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=1,b=5.mp3"
+    },
+    "parade/plusOrPlus/a=1,b=6": {
+      "text": "Plus one or plus six?",
+      "hash": "09dadebf95",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=1,b=6.mp3"
+    },
+    "parade/plusOrPlus/a=1,b=7": {
+      "text": "Plus one or plus seven?",
+      "hash": "2f5cdb8cf5",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=1,b=7.mp3"
+    },
+    "parade/plusOrPlus/a=1,b=8": {
+      "text": "Plus one or plus eight?",
+      "hash": "a9cfd02d61",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=1,b=8.mp3"
+    },
+    "parade/plusOrPlus/a=1,b=9": {
+      "text": "Plus one or plus nine?",
+      "hash": "aeeabc6f90",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=1,b=9.mp3"
+    },
+    "parade/plusOrPlus/a=1,b=10": {
+      "text": "Plus one or plus ten?",
+      "hash": "4546aa1300",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=1,b=10.mp3"
+    },
+    "parade/plusOrPlus/a=2,b=1": {
+      "text": "Plus two or plus one?",
+      "hash": "ad4f7ee571",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=2,b=1.mp3"
+    },
+    "parade/plusOrPlus/a=2,b=2": {
+      "text": "Plus two or plus two?",
+      "hash": "787eee6d3a",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=2,b=2.mp3"
+    },
+    "parade/plusOrPlus/a=2,b=3": {
+      "text": "Plus two or plus three?",
+      "hash": "93c59ea895",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=2,b=3.mp3"
+    },
+    "parade/plusOrPlus/a=2,b=4": {
+      "text": "Plus two or plus four?",
+      "hash": "57986d728d",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=2,b=4.mp3"
+    },
+    "parade/plusOrPlus/a=2,b=5": {
+      "text": "Plus two or plus five?",
+      "hash": "442aeaf94c",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=2,b=5.mp3"
+    },
+    "parade/plusOrPlus/a=2,b=6": {
+      "text": "Plus two or plus six?",
+      "hash": "cdaaf86948",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=2,b=6.mp3"
+    },
+    "parade/plusOrPlus/a=2,b=7": {
+      "text": "Plus two or plus seven?",
+      "hash": "720ae55502",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=2,b=7.mp3"
+    },
+    "parade/plusOrPlus/a=2,b=8": {
+      "text": "Plus two or plus eight?",
+      "hash": "90ac865eb9",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=2,b=8.mp3"
+    },
+    "parade/plusOrPlus/a=2,b=9": {
+      "text": "Plus two or plus nine?",
+      "hash": "dbfd4c7868",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=2,b=9.mp3"
+    },
+    "parade/plusOrPlus/a=2,b=10": {
+      "text": "Plus two or plus ten?",
+      "hash": "60396c8c87",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=2,b=10.mp3"
+    },
+    "parade/plusOrPlus/a=3,b=1": {
+      "text": "Plus three or plus one?",
+      "hash": "6b5c89eb56",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=3,b=1.mp3"
+    },
+    "parade/plusOrPlus/a=3,b=2": {
+      "text": "Plus three or plus two?",
+      "hash": "b0d745fa45",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=3,b=2.mp3"
+    },
+    "parade/plusOrPlus/a=3,b=3": {
+      "text": "Plus three or plus three?",
+      "hash": "0c1af74842",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=3,b=3.mp3"
+    },
+    "parade/plusOrPlus/a=3,b=4": {
+      "text": "Plus three or plus four?",
+      "hash": "713b98d97d",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=3,b=4.mp3"
+    },
+    "parade/plusOrPlus/a=3,b=5": {
+      "text": "Plus three or plus five?",
+      "hash": "df6d681c69",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=3,b=5.mp3"
+    },
+    "parade/plusOrPlus/a=3,b=6": {
+      "text": "Plus three or plus six?",
+      "hash": "1d827480a9",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=3,b=6.mp3"
+    },
+    "parade/plusOrPlus/a=3,b=7": {
+      "text": "Plus three or plus seven?",
+      "hash": "4e26945af6",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=3,b=7.mp3"
+    },
+    "parade/plusOrPlus/a=3,b=8": {
+      "text": "Plus three or plus eight?",
+      "hash": "905553508e",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=3,b=8.mp3"
+    },
+    "parade/plusOrPlus/a=3,b=9": {
+      "text": "Plus three or plus nine?",
+      "hash": "cc4584f885",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=3,b=9.mp3"
+    },
+    "parade/plusOrPlus/a=3,b=10": {
+      "text": "Plus three or plus ten?",
+      "hash": "bcb6a9b086",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=3,b=10.mp3"
+    },
+    "parade/plusOrPlus/a=4,b=1": {
+      "text": "Plus four or plus one?",
+      "hash": "d4d38c2f7c",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=4,b=1.mp3"
+    },
+    "parade/plusOrPlus/a=4,b=2": {
+      "text": "Plus four or plus two?",
+      "hash": "94049dcca6",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=4,b=2.mp3"
+    },
+    "parade/plusOrPlus/a=4,b=3": {
+      "text": "Plus four or plus three?",
+      "hash": "6d711ab3ed",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=4,b=3.mp3"
+    },
+    "parade/plusOrPlus/a=4,b=4": {
+      "text": "Plus four or plus four?",
+      "hash": "380e190533",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=4,b=4.mp3"
+    },
+    "parade/plusOrPlus/a=4,b=5": {
+      "text": "Plus four or plus five?",
+      "hash": "c5a4cf0ef0",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=4,b=5.mp3"
+    },
+    "parade/plusOrPlus/a=4,b=6": {
+      "text": "Plus four or plus six?",
+      "hash": "9acc381d62",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=4,b=6.mp3"
+    },
+    "parade/plusOrPlus/a=4,b=7": {
+      "text": "Plus four or plus seven?",
+      "hash": "41014c6567",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=4,b=7.mp3"
+    },
+    "parade/plusOrPlus/a=4,b=8": {
+      "text": "Plus four or plus eight?",
+      "hash": "3eb70b1d5e",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=4,b=8.mp3"
+    },
+    "parade/plusOrPlus/a=4,b=9": {
+      "text": "Plus four or plus nine?",
+      "hash": "e468872208",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=4,b=9.mp3"
+    },
+    "parade/plusOrPlus/a=4,b=10": {
+      "text": "Plus four or plus ten?",
+      "hash": "3a53519ce8",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=4,b=10.mp3"
+    },
+    "parade/plusOrPlus/a=5,b=1": {
+      "text": "Plus five or plus one?",
+      "hash": "a3ce58c3eb",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=5,b=1.mp3"
+    },
+    "parade/plusOrPlus/a=5,b=2": {
+      "text": "Plus five or plus two?",
+      "hash": "692bad4dad",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=5,b=2.mp3"
+    },
+    "parade/plusOrPlus/a=5,b=3": {
+      "text": "Plus five or plus three?",
+      "hash": "cd36873dea",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=5,b=3.mp3"
+    },
+    "parade/plusOrPlus/a=5,b=4": {
+      "text": "Plus five or plus four?",
+      "hash": "b05eb693aa",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=5,b=4.mp3"
+    },
+    "parade/plusOrPlus/a=5,b=5": {
+      "text": "Plus five or plus five?",
+      "hash": "e36ceee1eb",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=5,b=5.mp3"
+    },
+    "parade/plusOrPlus/a=5,b=6": {
+      "text": "Plus five or plus six?",
+      "hash": "1257076d0f",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=5,b=6.mp3"
+    },
+    "parade/plusOrPlus/a=5,b=7": {
+      "text": "Plus five or plus seven?",
+      "hash": "fc9badf5dc",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=5,b=7.mp3"
+    },
+    "parade/plusOrPlus/a=5,b=8": {
+      "text": "Plus five or plus eight?",
+      "hash": "35a21d20ea",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=5,b=8.mp3"
+    },
+    "parade/plusOrPlus/a=5,b=9": {
+      "text": "Plus five or plus nine?",
+      "hash": "12950181f9",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=5,b=9.mp3"
+    },
+    "parade/plusOrPlus/a=5,b=10": {
+      "text": "Plus five or plus ten?",
+      "hash": "a1d507a26e",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=5,b=10.mp3"
+    },
+    "parade/plusOrPlus/a=6,b=1": {
+      "text": "Plus six or plus one?",
+      "hash": "b0d1fd72db",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=6,b=1.mp3"
+    },
+    "parade/plusOrPlus/a=6,b=2": {
+      "text": "Plus six or plus two?",
+      "hash": "2a8ccb7942",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=6,b=2.mp3"
+    },
+    "parade/plusOrPlus/a=6,b=3": {
+      "text": "Plus six or plus three?",
+      "hash": "d58955d0e0",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=6,b=3.mp3"
+    },
+    "parade/plusOrPlus/a=6,b=4": {
+      "text": "Plus six or plus four?",
+      "hash": "39df6ae349",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=6,b=4.mp3"
+    },
+    "parade/plusOrPlus/a=6,b=5": {
+      "text": "Plus six or plus five?",
+      "hash": "194566661e",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=6,b=5.mp3"
+    },
+    "parade/plusOrPlus/a=6,b=6": {
+      "text": "Plus six or plus six?",
+      "hash": "c7350acf87",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=6,b=6.mp3"
+    },
+    "parade/plusOrPlus/a=6,b=7": {
+      "text": "Plus six or plus seven?",
+      "hash": "96aa295dc8",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=6,b=7.mp3"
+    },
+    "parade/plusOrPlus/a=6,b=8": {
+      "text": "Plus six or plus eight?",
+      "hash": "3704dda536",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=6,b=8.mp3"
+    },
+    "parade/plusOrPlus/a=6,b=9": {
+      "text": "Plus six or plus nine?",
+      "hash": "b5cf4ff98c",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=6,b=9.mp3"
+    },
+    "parade/plusOrPlus/a=6,b=10": {
+      "text": "Plus six or plus ten?",
+      "hash": "21b4322db5",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=6,b=10.mp3"
+    },
+    "parade/plusOrPlus/a=7,b=1": {
+      "text": "Plus seven or plus one?",
+      "hash": "626db27bb1",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=7,b=1.mp3"
+    },
+    "parade/plusOrPlus/a=7,b=2": {
+      "text": "Plus seven or plus two?",
+      "hash": "f33a2ab36b",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=7,b=2.mp3"
+    },
+    "parade/plusOrPlus/a=7,b=3": {
+      "text": "Plus seven or plus three?",
+      "hash": "14df7a7e75",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=7,b=3.mp3"
+    },
+    "parade/plusOrPlus/a=7,b=4": {
+      "text": "Plus seven or plus four?",
+      "hash": "2206ba2420",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=7,b=4.mp3"
+    },
+    "parade/plusOrPlus/a=7,b=5": {
+      "text": "Plus seven or plus five?",
+      "hash": "719571d475",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=7,b=5.mp3"
+    },
+    "parade/plusOrPlus/a=7,b=6": {
+      "text": "Plus seven or plus six?",
+      "hash": "995525bea8",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=7,b=6.mp3"
+    },
+    "parade/plusOrPlus/a=7,b=7": {
+      "text": "Plus seven or plus seven?",
+      "hash": "c31abbae13",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=7,b=7.mp3"
+    },
+    "parade/plusOrPlus/a=7,b=8": {
+      "text": "Plus seven or plus eight?",
+      "hash": "2b61f0fcad",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=7,b=8.mp3"
+    },
+    "parade/plusOrPlus/a=7,b=9": {
+      "text": "Plus seven or plus nine?",
+      "hash": "d2fde1575b",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=7,b=9.mp3"
+    },
+    "parade/plusOrPlus/a=7,b=10": {
+      "text": "Plus seven or plus ten?",
+      "hash": "3da0fc65bc",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=7,b=10.mp3"
+    },
+    "parade/plusOrPlus/a=8,b=1": {
+      "text": "Plus eight or plus one?",
+      "hash": "bfddefa0d0",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=8,b=1.mp3"
+    },
+    "parade/plusOrPlus/a=8,b=2": {
+      "text": "Plus eight or plus two?",
+      "hash": "5e593de646",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=8,b=2.mp3"
+    },
+    "parade/plusOrPlus/a=8,b=3": {
+      "text": "Plus eight or plus three?",
+      "hash": "6a792515ef",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=8,b=3.mp3"
+    },
+    "parade/plusOrPlus/a=8,b=4": {
+      "text": "Plus eight or plus four?",
+      "hash": "a205d7e7c4",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=8,b=4.mp3"
+    },
+    "parade/plusOrPlus/a=8,b=5": {
+      "text": "Plus eight or plus five?",
+      "hash": "9e06d22999",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=8,b=5.mp3"
+    },
+    "parade/plusOrPlus/a=8,b=6": {
+      "text": "Plus eight or plus six?",
+      "hash": "d7824f1cc6",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=8,b=6.mp3"
+    },
+    "parade/plusOrPlus/a=8,b=7": {
+      "text": "Plus eight or plus seven?",
+      "hash": "77f1c1f1e5",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=8,b=7.mp3"
+    },
+    "parade/plusOrPlus/a=8,b=8": {
+      "text": "Plus eight or plus eight?",
+      "hash": "32a4ac8cbf",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=8,b=8.mp3"
+    },
+    "parade/plusOrPlus/a=8,b=9": {
+      "text": "Plus eight or plus nine?",
+      "hash": "3eb7f5e030",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=8,b=9.mp3"
+    },
+    "parade/plusOrPlus/a=8,b=10": {
+      "text": "Plus eight or plus ten?",
+      "hash": "ed49885d40",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=8,b=10.mp3"
+    },
+    "parade/plusOrPlus/a=9,b=1": {
+      "text": "Plus nine or plus one?",
+      "hash": "287eaf1dd1",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=9,b=1.mp3"
+    },
+    "parade/plusOrPlus/a=9,b=2": {
+      "text": "Plus nine or plus two?",
+      "hash": "fc81b9d9d5",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=9,b=2.mp3"
+    },
+    "parade/plusOrPlus/a=9,b=3": {
+      "text": "Plus nine or plus three?",
+      "hash": "905059540a",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=9,b=3.mp3"
+    },
+    "parade/plusOrPlus/a=9,b=4": {
+      "text": "Plus nine or plus four?",
+      "hash": "126b63f5b5",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=9,b=4.mp3"
+    },
+    "parade/plusOrPlus/a=9,b=5": {
+      "text": "Plus nine or plus five?",
+      "hash": "39f5603cfd",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=9,b=5.mp3"
+    },
+    "parade/plusOrPlus/a=9,b=6": {
+      "text": "Plus nine or plus six?",
+      "hash": "e73dc97f9b",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=9,b=6.mp3"
+    },
+    "parade/plusOrPlus/a=9,b=7": {
+      "text": "Plus nine or plus seven?",
+      "hash": "952060e6ee",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=9,b=7.mp3"
+    },
+    "parade/plusOrPlus/a=9,b=8": {
+      "text": "Plus nine or plus eight?",
+      "hash": "dbbe63ab1a",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=9,b=8.mp3"
+    },
+    "parade/plusOrPlus/a=9,b=9": {
+      "text": "Plus nine or plus nine?",
+      "hash": "c8d449bf68",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=9,b=9.mp3"
+    },
+    "parade/plusOrPlus/a=9,b=10": {
+      "text": "Plus nine or plus ten?",
+      "hash": "d4d5977537",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=9,b=10.mp3"
+    },
+    "parade/plusOrPlus/a=10,b=1": {
+      "text": "Plus ten or plus one?",
+      "hash": "74c98d13a8",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=10,b=1.mp3"
+    },
+    "parade/plusOrPlus/a=10,b=2": {
+      "text": "Plus ten or plus two?",
+      "hash": "55ccbf1705",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=10,b=2.mp3"
+    },
+    "parade/plusOrPlus/a=10,b=3": {
+      "text": "Plus ten or plus three?",
+      "hash": "4e2d68126c",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=10,b=3.mp3"
+    },
+    "parade/plusOrPlus/a=10,b=4": {
+      "text": "Plus ten or plus four?",
+      "hash": "519cf077be",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=10,b=4.mp3"
+    },
+    "parade/plusOrPlus/a=10,b=5": {
+      "text": "Plus ten or plus five?",
+      "hash": "5fdd79bd73",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=10,b=5.mp3"
+    },
+    "parade/plusOrPlus/a=10,b=6": {
+      "text": "Plus ten or plus six?",
+      "hash": "d8c6389beb",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=10,b=6.mp3"
+    },
+    "parade/plusOrPlus/a=10,b=7": {
+      "text": "Plus ten or plus seven?",
+      "hash": "7fdde52d20",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=10,b=7.mp3"
+    },
+    "parade/plusOrPlus/a=10,b=8": {
+      "text": "Plus ten or plus eight?",
+      "hash": "6bb13d5578",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=10,b=8.mp3"
+    },
+    "parade/plusOrPlus/a=10,b=9": {
+      "text": "Plus ten or plus nine?",
+      "hash": "19dd7d3ada",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=10,b=9.mp3"
+    },
+    "parade/plusOrPlus/a=10,b=10": {
+      "text": "Plus ten or plus ten?",
+      "hash": "247a8a3813",
+      "kind": "whole",
+      "file": "voice/parade/plusOrPlus/a=10,b=10.mp3"
+    },
+    "parade/plusOrTakeAway/a=1,b=1": {
+      "text": "Plus one or take away one?",
+      "hash": "5fadacf52d",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=1,b=1.mp3"
+    },
+    "parade/plusOrTakeAway/a=1,b=2": {
+      "text": "Plus one or take away two?",
+      "hash": "ae72b2010e",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=1,b=2.mp3"
+    },
+    "parade/plusOrTakeAway/a=1,b=3": {
+      "text": "Plus one or take away three?",
+      "hash": "e6ec9204d2",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=1,b=3.mp3"
+    },
+    "parade/plusOrTakeAway/a=1,b=4": {
+      "text": "Plus one or take away four?",
+      "hash": "4a79107a3c",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=1,b=4.mp3"
+    },
+    "parade/plusOrTakeAway/a=1,b=5": {
+      "text": "Plus one or take away five?",
+      "hash": "80196b0cb0",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=1,b=5.mp3"
+    },
+    "parade/plusOrTakeAway/a=1,b=6": {
+      "text": "Plus one or take away six?",
+      "hash": "1b5a866e1b",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=1,b=6.mp3"
+    },
+    "parade/plusOrTakeAway/a=2,b=1": {
+      "text": "Plus two or take away one?",
+      "hash": "ced8a5cc36",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=2,b=1.mp3"
+    },
+    "parade/plusOrTakeAway/a=2,b=2": {
+      "text": "Plus two or take away two?",
+      "hash": "e481c6f028",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=2,b=2.mp3"
+    },
+    "parade/plusOrTakeAway/a=2,b=3": {
+      "text": "Plus two or take away three?",
+      "hash": "1e21ffdd57",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=2,b=3.mp3"
+    },
+    "parade/plusOrTakeAway/a=2,b=4": {
+      "text": "Plus two or take away four?",
+      "hash": "680bf793af",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=2,b=4.mp3"
+    },
+    "parade/plusOrTakeAway/a=2,b=5": {
+      "text": "Plus two or take away five?",
+      "hash": "5e84de84af",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=2,b=5.mp3"
+    },
+    "parade/plusOrTakeAway/a=2,b=6": {
+      "text": "Plus two or take away six?",
+      "hash": "2c83ce45c9",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=2,b=6.mp3"
+    },
+    "parade/plusOrTakeAway/a=3,b=1": {
+      "text": "Plus three or take away one?",
+      "hash": "24ce7f323d",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=3,b=1.mp3"
+    },
+    "parade/plusOrTakeAway/a=3,b=2": {
+      "text": "Plus three or take away two?",
+      "hash": "542a3b5b14",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=3,b=2.mp3"
+    },
+    "parade/plusOrTakeAway/a=3,b=3": {
+      "text": "Plus three or take away three?",
+      "hash": "120cfec6d1",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=3,b=3.mp3"
+    },
+    "parade/plusOrTakeAway/a=3,b=4": {
+      "text": "Plus three or take away four?",
+      "hash": "f0fff240e5",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=3,b=4.mp3"
+    },
+    "parade/plusOrTakeAway/a=3,b=5": {
+      "text": "Plus three or take away five?",
+      "hash": "fede8a33d6",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=3,b=5.mp3"
+    },
+    "parade/plusOrTakeAway/a=3,b=6": {
+      "text": "Plus three or take away six?",
+      "hash": "fa4596e86f",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=3,b=6.mp3"
+    },
+    "parade/plusOrTakeAway/a=4,b=1": {
+      "text": "Plus four or take away one?",
+      "hash": "e2e1f79954",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=4,b=1.mp3"
+    },
+    "parade/plusOrTakeAway/a=4,b=2": {
+      "text": "Plus four or take away two?",
+      "hash": "8145209006",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=4,b=2.mp3"
+    },
+    "parade/plusOrTakeAway/a=4,b=3": {
+      "text": "Plus four or take away three?",
+      "hash": "bf85bf632f",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=4,b=3.mp3"
+    },
+    "parade/plusOrTakeAway/a=4,b=4": {
+      "text": "Plus four or take away four?",
+      "hash": "13e06af92e",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=4,b=4.mp3"
+    },
+    "parade/plusOrTakeAway/a=4,b=5": {
+      "text": "Plus four or take away five?",
+      "hash": "6aa6c2f09e",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=4,b=5.mp3"
+    },
+    "parade/plusOrTakeAway/a=4,b=6": {
+      "text": "Plus four or take away six?",
+      "hash": "fb1fd92c4d",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=4,b=6.mp3"
+    },
+    "parade/plusOrTakeAway/a=5,b=1": {
+      "text": "Plus five or take away one?",
+      "hash": "34134371eb",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=5,b=1.mp3"
+    },
+    "parade/plusOrTakeAway/a=5,b=2": {
+      "text": "Plus five or take away two?",
+      "hash": "eedb577fcb",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=5,b=2.mp3"
+    },
+    "parade/plusOrTakeAway/a=5,b=3": {
+      "text": "Plus five or take away three?",
+      "hash": "244e822a05",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=5,b=3.mp3"
+    },
+    "parade/plusOrTakeAway/a=5,b=4": {
+      "text": "Plus five or take away four?",
+      "hash": "7e63b8f7f4",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=5,b=4.mp3"
+    },
+    "parade/plusOrTakeAway/a=5,b=5": {
+      "text": "Plus five or take away five?",
+      "hash": "0c64c5fa10",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=5,b=5.mp3"
+    },
+    "parade/plusOrTakeAway/a=5,b=6": {
+      "text": "Plus five or take away six?",
+      "hash": "c71ad53a6c",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=5,b=6.mp3"
+    },
+    "parade/plusOrTakeAway/a=6,b=1": {
+      "text": "Plus six or take away one?",
+      "hash": "0a31d8a0a4",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=6,b=1.mp3"
+    },
+    "parade/plusOrTakeAway/a=6,b=2": {
+      "text": "Plus six or take away two?",
+      "hash": "35fd14eaa0",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=6,b=2.mp3"
+    },
+    "parade/plusOrTakeAway/a=6,b=3": {
+      "text": "Plus six or take away three?",
+      "hash": "004eb985f6",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=6,b=3.mp3"
+    },
+    "parade/plusOrTakeAway/a=6,b=4": {
+      "text": "Plus six or take away four?",
+      "hash": "0e5e1f2aa5",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=6,b=4.mp3"
+    },
+    "parade/plusOrTakeAway/a=6,b=5": {
+      "text": "Plus six or take away five?",
+      "hash": "44c18124ae",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=6,b=5.mp3"
+    },
+    "parade/plusOrTakeAway/a=6,b=6": {
+      "text": "Plus six or take away six?",
+      "hash": "6ef28afa06",
+      "kind": "whole",
+      "file": "voice/parade/plusOrTakeAway/a=6,b=6.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=1,b=1": {
+      "text": "Take away one or take away one?",
+      "hash": "dd5aa72b93",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=1,b=1.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=1,b=2": {
+      "text": "Take away one or take away two?",
+      "hash": "8239d9a83b",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=1,b=2.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=1,b=3": {
+      "text": "Take away one or take away three?",
+      "hash": "eaaa9f41e4",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=1,b=3.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=1,b=4": {
+      "text": "Take away one or take away four?",
+      "hash": "f3a97dd1e0",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=1,b=4.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=1,b=5": {
+      "text": "Take away one or take away five?",
+      "hash": "457e18bd26",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=1,b=5.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=1,b=6": {
+      "text": "Take away one or take away six?",
+      "hash": "8fa3adbb3b",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=1,b=6.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=2,b=1": {
+      "text": "Take away two or take away one?",
+      "hash": "3477706cba",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=2,b=1.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=2,b=2": {
+      "text": "Take away two or take away two?",
+      "hash": "3cce9be493",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=2,b=2.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=2,b=3": {
+      "text": "Take away two or take away three?",
+      "hash": "d9c296dcc9",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=2,b=3.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=2,b=4": {
+      "text": "Take away two or take away four?",
+      "hash": "f3ae818ec7",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=2,b=4.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=2,b=5": {
+      "text": "Take away two or take away five?",
+      "hash": "0dc1ba2d51",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=2,b=5.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=2,b=6": {
+      "text": "Take away two or take away six?",
+      "hash": "31d239e04f",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=2,b=6.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=3,b=1": {
+      "text": "Take away three or take away one?",
+      "hash": "c113ead434",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=3,b=1.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=3,b=2": {
+      "text": "Take away three or take away two?",
+      "hash": "10b673daa6",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=3,b=2.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=3,b=3": {
+      "text": "Take away three or take away three?",
+      "hash": "6b31de2c2c",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=3,b=3.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=3,b=4": {
+      "text": "Take away three or take away four?",
+      "hash": "40698ba0de",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=3,b=4.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=3,b=5": {
+      "text": "Take away three or take away five?",
+      "hash": "a6149fcfce",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=3,b=5.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=3,b=6": {
+      "text": "Take away three or take away six?",
+      "hash": "2ea3099d96",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=3,b=6.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=4,b=1": {
+      "text": "Take away four or take away one?",
+      "hash": "85356d25c8",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=4,b=1.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=4,b=2": {
+      "text": "Take away four or take away two?",
+      "hash": "8b9b441427",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=4,b=2.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=4,b=3": {
+      "text": "Take away four or take away three?",
+      "hash": "8ed7b3b35c",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=4,b=3.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=4,b=4": {
+      "text": "Take away four or take away four?",
+      "hash": "c2fb47c149",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=4,b=4.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=4,b=5": {
+      "text": "Take away four or take away five?",
+      "hash": "cb0d477c6c",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=4,b=5.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=4,b=6": {
+      "text": "Take away four or take away six?",
+      "hash": "562e7af25c",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=4,b=6.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=5,b=1": {
+      "text": "Take away five or take away one?",
+      "hash": "f0adf49ebf",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=5,b=1.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=5,b=2": {
+      "text": "Take away five or take away two?",
+      "hash": "74b1f51189",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=5,b=2.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=5,b=3": {
+      "text": "Take away five or take away three?",
+      "hash": "d0fa2095e4",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=5,b=3.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=5,b=4": {
+      "text": "Take away five or take away four?",
+      "hash": "080429d03a",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=5,b=4.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=5,b=5": {
+      "text": "Take away five or take away five?",
+      "hash": "f11ff17a0f",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=5,b=5.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=5,b=6": {
+      "text": "Take away five or take away six?",
+      "hash": "32820b972c",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=5,b=6.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=6,b=1": {
+      "text": "Take away six or take away one?",
+      "hash": "4189120823",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=6,b=1.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=6,b=2": {
+      "text": "Take away six or take away two?",
+      "hash": "1a31f917fe",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=6,b=2.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=6,b=3": {
+      "text": "Take away six or take away three?",
+      "hash": "273d88a921",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=6,b=3.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=6,b=4": {
+      "text": "Take away six or take away four?",
+      "hash": "c51416904b",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=6,b=4.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=6,b=5": {
+      "text": "Take away six or take away five?",
+      "hash": "5d8ae245cd",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=6,b=5.mp3"
+    },
+    "parade/takeAwayOrTakeAway/a=6,b=6": {
+      "text": "Take away six or take away six?",
+      "hash": "c55dcf27e6",
+      "kind": "whole",
+      "file": "voice/parade/takeAwayOrTakeAway/a=6,b=6.mp3"
+    },
+    "parade/friendsJoin/n=1": {
+      "text": "one friends join!",
+      "hash": "721a506a0a",
+      "kind": "whole",
+      "file": "voice/parade/friendsJoin/n=1.mp3"
+    },
+    "parade/friendsJoin/n=2": {
+      "text": "two friends join!",
+      "hash": "5ad518c4fa",
+      "kind": "whole",
+      "file": "voice/parade/friendsJoin/n=2.mp3"
+    },
+    "parade/friendsJoin/n=3": {
+      "text": "three friends join!",
+      "hash": "fc0593565a",
+      "kind": "whole",
+      "file": "voice/parade/friendsJoin/n=3.mp3"
+    },
+    "parade/friendsJoin/n=4": {
+      "text": "four friends join!",
+      "hash": "ea85472632",
+      "kind": "whole",
+      "file": "voice/parade/friendsJoin/n=4.mp3"
+    },
+    "parade/friendsJoin/n=5": {
+      "text": "five friends join!",
+      "hash": "07872d2cbf",
+      "kind": "whole",
+      "file": "voice/parade/friendsJoin/n=5.mp3"
+    },
+    "parade/friendsJoin/n=6": {
+      "text": "six friends join!",
+      "hash": "55a0a7e9fd",
+      "kind": "whole",
+      "file": "voice/parade/friendsJoin/n=6.mp3"
+    },
+    "parade/friendsJoin/n=7": {
+      "text": "seven friends join!",
+      "hash": "3659896f28",
+      "kind": "whole",
+      "file": "voice/parade/friendsJoin/n=7.mp3"
+    },
+    "parade/friendsJoin/n=8": {
+      "text": "eight friends join!",
+      "hash": "ad7a7fdcff",
+      "kind": "whole",
+      "file": "voice/parade/friendsJoin/n=8.mp3"
+    },
+    "parade/friendsJoin/n=9": {
+      "text": "nine friends join!",
+      "hash": "6955ebb33b",
+      "kind": "whole",
+      "file": "voice/parade/friendsJoin/n=9.mp3"
+    },
+    "parade/friendsJoin/n=10": {
+      "text": "ten friends join!",
+      "hash": "9cfae6138d",
+      "kind": "whole",
+      "file": "voice/parade/friendsJoin/n=10.mp3"
+    },
+    "parade/friendsJoin/n=11": {
+      "text": "eleven friends join!",
+      "hash": "7dd469acde",
+      "kind": "whole",
+      "file": "voice/parade/friendsJoin/n=11.mp3"
+    },
+    "parade/friendsJoin/n=12": {
+      "text": "twelve friends join!",
+      "hash": "7864298cce",
+      "kind": "whole",
+      "file": "voice/parade/friendsJoin/n=12.mp3"
+    },
+    "parade/friendsJoin/n=13": {
+      "text": "thirteen friends join!",
+      "hash": "c723d7d123",
+      "kind": "whole",
+      "file": "voice/parade/friendsJoin/n=13.mp3"
+    },
+    "parade/friendsJoin/n=14": {
+      "text": "fourteen friends join!",
+      "hash": "c36a57e0af",
+      "kind": "whole",
+      "file": "voice/parade/friendsJoin/n=14.mp3"
+    },
+    "parade/friendsJoin/n=15": {
+      "text": "fifteen friends join!",
+      "hash": "b3e3825380",
+      "kind": "whole",
+      "file": "voice/parade/friendsJoin/n=15.mp3"
+    },
+    "parade/friendsJoin/n=16": {
+      "text": "sixteen friends join!",
+      "hash": "4d4b5ad0fa",
+      "kind": "whole",
+      "file": "voice/parade/friendsJoin/n=16.mp3"
+    },
+    "parade/friendsJoin/n=17": {
+      "text": "seventeen friends join!",
+      "hash": "bcfe1a2350",
+      "kind": "whole",
+      "file": "voice/parade/friendsJoin/n=17.mp3"
+    },
+    "parade/friendsJoin/n=18": {
+      "text": "eighteen friends join!",
+      "hash": "9b925cd60b",
+      "kind": "whole",
+      "file": "voice/parade/friendsJoin/n=18.mp3"
+    },
+    "parade/friendsJoin/n=19": {
+      "text": "nineteen friends join!",
+      "hash": "d798a61f7c",
+      "kind": "whole",
+      "file": "voice/parade/friendsJoin/n=19.mp3"
+    },
+    "parade/friendsJoin/n=20": {
+      "text": "twenty friends join!",
+      "hash": "830b87f3b3",
+      "kind": "whole",
+      "file": "voice/parade/friendsJoin/n=20.mp3"
+    },
+    "parade/plusWouldHave/a=1,n=2": {
+      "text": "Plus one would have made two!",
+      "hash": "b5ac3fccef",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=1,n=2.mp3"
+    },
+    "parade/plusWouldHave/a=1,n=3": {
+      "text": "Plus one would have made three!",
+      "hash": "24eba9e683",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=1,n=3.mp3"
+    },
+    "parade/plusWouldHave/a=1,n=4": {
+      "text": "Plus one would have made four!",
+      "hash": "e05c599221",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=1,n=4.mp3"
+    },
+    "parade/plusWouldHave/a=1,n=5": {
+      "text": "Plus one would have made five!",
+      "hash": "d6e22080f4",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=1,n=5.mp3"
+    },
+    "parade/plusWouldHave/a=1,n=6": {
+      "text": "Plus one would have made six!",
+      "hash": "c9dbbe8591",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=1,n=6.mp3"
+    },
+    "parade/plusWouldHave/a=1,n=7": {
+      "text": "Plus one would have made seven!",
+      "hash": "eac155104b",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=1,n=7.mp3"
+    },
+    "parade/plusWouldHave/a=1,n=8": {
+      "text": "Plus one would have made eight!",
+      "hash": "e266b30a62",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=1,n=8.mp3"
+    },
+    "parade/plusWouldHave/a=1,n=9": {
+      "text": "Plus one would have made nine!",
+      "hash": "1701f590ec",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=1,n=9.mp3"
+    },
+    "parade/plusWouldHave/a=1,n=10": {
+      "text": "Plus one would have made ten!",
+      "hash": "a9a9024203",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=1,n=10.mp3"
+    },
+    "parade/plusWouldHave/a=1,n=11": {
+      "text": "Plus one would have made eleven!",
+      "hash": "ca3e0ed348",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=1,n=11.mp3"
+    },
+    "parade/plusWouldHave/a=1,n=12": {
+      "text": "Plus one would have made twelve!",
+      "hash": "de4c708a62",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=1,n=12.mp3"
+    },
+    "parade/plusWouldHave/a=1,n=13": {
+      "text": "Plus one would have made thirteen!",
+      "hash": "0bd1771c7d",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=1,n=13.mp3"
+    },
+    "parade/plusWouldHave/a=1,n=14": {
+      "text": "Plus one would have made fourteen!",
+      "hash": "bce1ed0f74",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=1,n=14.mp3"
+    },
+    "parade/plusWouldHave/a=1,n=15": {
+      "text": "Plus one would have made fifteen!",
+      "hash": "4fca3bd25d",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=1,n=15.mp3"
+    },
+    "parade/plusWouldHave/a=1,n=16": {
+      "text": "Plus one would have made sixteen!",
+      "hash": "69f262b8a3",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=1,n=16.mp3"
+    },
+    "parade/plusWouldHave/a=1,n=17": {
+      "text": "Plus one would have made seventeen!",
+      "hash": "e475cbb779",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=1,n=17.mp3"
+    },
+    "parade/plusWouldHave/a=1,n=18": {
+      "text": "Plus one would have made eighteen!",
+      "hash": "8d90986349",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=1,n=18.mp3"
+    },
+    "parade/plusWouldHave/a=1,n=19": {
+      "text": "Plus one would have made nineteen!",
+      "hash": "7e9a69e7cd",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=1,n=19.mp3"
+    },
+    "parade/plusWouldHave/a=1,n=20": {
+      "text": "Plus one would have made twenty!",
+      "hash": "6af940968a",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=1,n=20.mp3"
+    },
+    "parade/plusWouldHave/a=2,n=2": {
+      "text": "Plus two would have made two!",
+      "hash": "639aa9abc6",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=2,n=2.mp3"
+    },
+    "parade/plusWouldHave/a=2,n=3": {
+      "text": "Plus two would have made three!",
+      "hash": "c9b4c92ac9",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=2,n=3.mp3"
+    },
+    "parade/plusWouldHave/a=2,n=4": {
+      "text": "Plus two would have made four!",
+      "hash": "feb767dee8",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=2,n=4.mp3"
+    },
+    "parade/plusWouldHave/a=2,n=5": {
+      "text": "Plus two would have made five!",
+      "hash": "a2cee0fb8d",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=2,n=5.mp3"
+    },
+    "parade/plusWouldHave/a=2,n=6": {
+      "text": "Plus two would have made six!",
+      "hash": "e51fbca361",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=2,n=6.mp3"
+    },
+    "parade/plusWouldHave/a=2,n=7": {
+      "text": "Plus two would have made seven!",
+      "hash": "b212e953a7",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=2,n=7.mp3"
+    },
+    "parade/plusWouldHave/a=2,n=8": {
+      "text": "Plus two would have made eight!",
+      "hash": "66774cda89",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=2,n=8.mp3"
+    },
+    "parade/plusWouldHave/a=2,n=9": {
+      "text": "Plus two would have made nine!",
+      "hash": "9946dd09b2",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=2,n=9.mp3"
+    },
+    "parade/plusWouldHave/a=2,n=10": {
+      "text": "Plus two would have made ten!",
+      "hash": "366a800438",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=2,n=10.mp3"
+    },
+    "parade/plusWouldHave/a=2,n=11": {
+      "text": "Plus two would have made eleven!",
+      "hash": "459a1ea2e5",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=2,n=11.mp3"
+    },
+    "parade/plusWouldHave/a=2,n=12": {
+      "text": "Plus two would have made twelve!",
+      "hash": "c3f99ee80c",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=2,n=12.mp3"
+    },
+    "parade/plusWouldHave/a=2,n=13": {
+      "text": "Plus two would have made thirteen!",
+      "hash": "b5c82d637b",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=2,n=13.mp3"
+    },
+    "parade/plusWouldHave/a=2,n=14": {
+      "text": "Plus two would have made fourteen!",
+      "hash": "f39b6adcdb",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=2,n=14.mp3"
+    },
+    "parade/plusWouldHave/a=2,n=15": {
+      "text": "Plus two would have made fifteen!",
+      "hash": "d311c18a82",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=2,n=15.mp3"
+    },
+    "parade/plusWouldHave/a=2,n=16": {
+      "text": "Plus two would have made sixteen!",
+      "hash": "05339c3ed8",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=2,n=16.mp3"
+    },
+    "parade/plusWouldHave/a=2,n=17": {
+      "text": "Plus two would have made seventeen!",
+      "hash": "b09b625f12",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=2,n=17.mp3"
+    },
+    "parade/plusWouldHave/a=2,n=18": {
+      "text": "Plus two would have made eighteen!",
+      "hash": "6bb9e38857",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=2,n=18.mp3"
+    },
+    "parade/plusWouldHave/a=2,n=19": {
+      "text": "Plus two would have made nineteen!",
+      "hash": "76fe332938",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=2,n=19.mp3"
+    },
+    "parade/plusWouldHave/a=2,n=20": {
+      "text": "Plus two would have made twenty!",
+      "hash": "fbb718f746",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=2,n=20.mp3"
+    },
+    "parade/plusWouldHave/a=3,n=2": {
+      "text": "Plus three would have made two!",
+      "hash": "9fec178a2d",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=3,n=2.mp3"
+    },
+    "parade/plusWouldHave/a=3,n=3": {
+      "text": "Plus three would have made three!",
+      "hash": "34b54e5f76",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=3,n=3.mp3"
+    },
+    "parade/plusWouldHave/a=3,n=4": {
+      "text": "Plus three would have made four!",
+      "hash": "f272bf1f2d",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=3,n=4.mp3"
+    },
+    "parade/plusWouldHave/a=3,n=5": {
+      "text": "Plus three would have made five!",
+      "hash": "94d811daa6",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=3,n=5.mp3"
+    },
+    "parade/plusWouldHave/a=3,n=6": {
+      "text": "Plus three would have made six!",
+      "hash": "e0e2bad370",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=3,n=6.mp3"
+    },
+    "parade/plusWouldHave/a=3,n=7": {
+      "text": "Plus three would have made seven!",
+      "hash": "6ba94190b6",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=3,n=7.mp3"
+    },
+    "parade/plusWouldHave/a=3,n=8": {
+      "text": "Plus three would have made eight!",
+      "hash": "eef92cfb7a",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=3,n=8.mp3"
+    },
+    "parade/plusWouldHave/a=3,n=9": {
+      "text": "Plus three would have made nine!",
+      "hash": "0d10684488",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=3,n=9.mp3"
+    },
+    "parade/plusWouldHave/a=3,n=10": {
+      "text": "Plus three would have made ten!",
+      "hash": "64a52af77e",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=3,n=10.mp3"
+    },
+    "parade/plusWouldHave/a=3,n=11": {
+      "text": "Plus three would have made eleven!",
+      "hash": "51bf2f6956",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=3,n=11.mp3"
+    },
+    "parade/plusWouldHave/a=3,n=12": {
+      "text": "Plus three would have made twelve!",
+      "hash": "2acaed9dbd",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=3,n=12.mp3"
+    },
+    "parade/plusWouldHave/a=3,n=13": {
+      "text": "Plus three would have made thirteen!",
+      "hash": "8c534f9413",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=3,n=13.mp3"
+    },
+    "parade/plusWouldHave/a=3,n=14": {
+      "text": "Plus three would have made fourteen!",
+      "hash": "93b19c1810",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=3,n=14.mp3"
+    },
+    "parade/plusWouldHave/a=3,n=15": {
+      "text": "Plus three would have made fifteen!",
+      "hash": "b1342f2cae",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=3,n=15.mp3"
+    },
+    "parade/plusWouldHave/a=3,n=16": {
+      "text": "Plus three would have made sixteen!",
+      "hash": "c76f6ffd66",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=3,n=16.mp3"
+    },
+    "parade/plusWouldHave/a=3,n=17": {
+      "text": "Plus three would have made seventeen!",
+      "hash": "d401214da0",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=3,n=17.mp3"
+    },
+    "parade/plusWouldHave/a=3,n=18": {
+      "text": "Plus three would have made eighteen!",
+      "hash": "c4e5442048",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=3,n=18.mp3"
+    },
+    "parade/plusWouldHave/a=3,n=19": {
+      "text": "Plus three would have made nineteen!",
+      "hash": "840281188e",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=3,n=19.mp3"
+    },
+    "parade/plusWouldHave/a=3,n=20": {
+      "text": "Plus three would have made twenty!",
+      "hash": "e3e2b1d260",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=3,n=20.mp3"
+    },
+    "parade/plusWouldHave/a=4,n=2": {
+      "text": "Plus four would have made two!",
+      "hash": "fcbac12fd8",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=4,n=2.mp3"
+    },
+    "parade/plusWouldHave/a=4,n=3": {
+      "text": "Plus four would have made three!",
+      "hash": "9bbdcfe70b",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=4,n=3.mp3"
+    },
+    "parade/plusWouldHave/a=4,n=4": {
+      "text": "Plus four would have made four!",
+      "hash": "437fc3951d",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=4,n=4.mp3"
+    },
+    "parade/plusWouldHave/a=4,n=5": {
+      "text": "Plus four would have made five!",
+      "hash": "e18f2b7746",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=4,n=5.mp3"
+    },
+    "parade/plusWouldHave/a=4,n=6": {
+      "text": "Plus four would have made six!",
+      "hash": "857cf4ea53",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=4,n=6.mp3"
+    },
+    "parade/plusWouldHave/a=4,n=7": {
+      "text": "Plus four would have made seven!",
+      "hash": "8609b2b8dd",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=4,n=7.mp3"
+    },
+    "parade/plusWouldHave/a=4,n=8": {
+      "text": "Plus four would have made eight!",
+      "hash": "fce0dd2892",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=4,n=8.mp3"
+    },
+    "parade/plusWouldHave/a=4,n=9": {
+      "text": "Plus four would have made nine!",
+      "hash": "b71fc86e85",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=4,n=9.mp3"
+    },
+    "parade/plusWouldHave/a=4,n=10": {
+      "text": "Plus four would have made ten!",
+      "hash": "3b2745c962",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=4,n=10.mp3"
+    },
+    "parade/plusWouldHave/a=4,n=11": {
+      "text": "Plus four would have made eleven!",
+      "hash": "9a5c90a720",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=4,n=11.mp3"
+    },
+    "parade/plusWouldHave/a=4,n=12": {
+      "text": "Plus four would have made twelve!",
+      "hash": "1246e08c8b",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=4,n=12.mp3"
+    },
+    "parade/plusWouldHave/a=4,n=13": {
+      "text": "Plus four would have made thirteen!",
+      "hash": "cec6e173d4",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=4,n=13.mp3"
+    },
+    "parade/plusWouldHave/a=4,n=14": {
+      "text": "Plus four would have made fourteen!",
+      "hash": "0a9ba03b2b",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=4,n=14.mp3"
+    },
+    "parade/plusWouldHave/a=4,n=15": {
+      "text": "Plus four would have made fifteen!",
+      "hash": "7938018a67",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=4,n=15.mp3"
+    },
+    "parade/plusWouldHave/a=4,n=16": {
+      "text": "Plus four would have made sixteen!",
+      "hash": "63224d130c",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=4,n=16.mp3"
+    },
+    "parade/plusWouldHave/a=4,n=17": {
+      "text": "Plus four would have made seventeen!",
+      "hash": "e216505a1f",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=4,n=17.mp3"
+    },
+    "parade/plusWouldHave/a=4,n=18": {
+      "text": "Plus four would have made eighteen!",
+      "hash": "51827d27ce",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=4,n=18.mp3"
+    },
+    "parade/plusWouldHave/a=4,n=19": {
+      "text": "Plus four would have made nineteen!",
+      "hash": "3938d56a2c",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=4,n=19.mp3"
+    },
+    "parade/plusWouldHave/a=4,n=20": {
+      "text": "Plus four would have made twenty!",
+      "hash": "0b0a2fad96",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=4,n=20.mp3"
+    },
+    "parade/plusWouldHave/a=5,n=2": {
+      "text": "Plus five would have made two!",
+      "hash": "098117d8ce",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=5,n=2.mp3"
+    },
+    "parade/plusWouldHave/a=5,n=3": {
+      "text": "Plus five would have made three!",
+      "hash": "bed4342f4e",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=5,n=3.mp3"
+    },
+    "parade/plusWouldHave/a=5,n=4": {
+      "text": "Plus five would have made four!",
+      "hash": "f6e6b1e6af",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=5,n=4.mp3"
+    },
+    "parade/plusWouldHave/a=5,n=5": {
+      "text": "Plus five would have made five!",
+      "hash": "0a1861668d",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=5,n=5.mp3"
+    },
+    "parade/plusWouldHave/a=5,n=6": {
+      "text": "Plus five would have made six!",
+      "hash": "b0071b7139",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=5,n=6.mp3"
+    },
+    "parade/plusWouldHave/a=5,n=7": {
+      "text": "Plus five would have made seven!",
+      "hash": "f3c3fc502c",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=5,n=7.mp3"
+    },
+    "parade/plusWouldHave/a=5,n=8": {
+      "text": "Plus five would have made eight!",
+      "hash": "c6d4225442",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=5,n=8.mp3"
+    },
+    "parade/plusWouldHave/a=5,n=9": {
+      "text": "Plus five would have made nine!",
+      "hash": "4ad06460aa",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=5,n=9.mp3"
+    },
+    "parade/plusWouldHave/a=5,n=10": {
+      "text": "Plus five would have made ten!",
+      "hash": "1f8255f5a2",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=5,n=10.mp3"
+    },
+    "parade/plusWouldHave/a=5,n=11": {
+      "text": "Plus five would have made eleven!",
+      "hash": "786abe3047",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=5,n=11.mp3"
+    },
+    "parade/plusWouldHave/a=5,n=12": {
+      "text": "Plus five would have made twelve!",
+      "hash": "e42ca98708",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=5,n=12.mp3"
+    },
+    "parade/plusWouldHave/a=5,n=13": {
+      "text": "Plus five would have made thirteen!",
+      "hash": "0386659931",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=5,n=13.mp3"
+    },
+    "parade/plusWouldHave/a=5,n=14": {
+      "text": "Plus five would have made fourteen!",
+      "hash": "241b4c53ad",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=5,n=14.mp3"
+    },
+    "parade/plusWouldHave/a=5,n=15": {
+      "text": "Plus five would have made fifteen!",
+      "hash": "563f62212f",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=5,n=15.mp3"
+    },
+    "parade/plusWouldHave/a=5,n=16": {
+      "text": "Plus five would have made sixteen!",
+      "hash": "ac2e0938ac",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=5,n=16.mp3"
+    },
+    "parade/plusWouldHave/a=5,n=17": {
+      "text": "Plus five would have made seventeen!",
+      "hash": "38a59aa39f",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=5,n=17.mp3"
+    },
+    "parade/plusWouldHave/a=5,n=18": {
+      "text": "Plus five would have made eighteen!",
+      "hash": "959e82bd07",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=5,n=18.mp3"
+    },
+    "parade/plusWouldHave/a=5,n=19": {
+      "text": "Plus five would have made nineteen!",
+      "hash": "597ec7a025",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=5,n=19.mp3"
+    },
+    "parade/plusWouldHave/a=5,n=20": {
+      "text": "Plus five would have made twenty!",
+      "hash": "d990d63778",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=5,n=20.mp3"
+    },
+    "parade/plusWouldHave/a=6,n=2": {
+      "text": "Plus six would have made two!",
+      "hash": "992c542830",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=6,n=2.mp3"
+    },
+    "parade/plusWouldHave/a=6,n=3": {
+      "text": "Plus six would have made three!",
+      "hash": "d8367d6878",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=6,n=3.mp3"
+    },
+    "parade/plusWouldHave/a=6,n=4": {
+      "text": "Plus six would have made four!",
+      "hash": "10f2f93c11",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=6,n=4.mp3"
+    },
+    "parade/plusWouldHave/a=6,n=5": {
+      "text": "Plus six would have made five!",
+      "hash": "306c4bbe20",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=6,n=5.mp3"
+    },
+    "parade/plusWouldHave/a=6,n=6": {
+      "text": "Plus six would have made six!",
+      "hash": "38f2eb2fa8",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=6,n=6.mp3"
+    },
+    "parade/plusWouldHave/a=6,n=7": {
+      "text": "Plus six would have made seven!",
+      "hash": "c144782eb0",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=6,n=7.mp3"
+    },
+    "parade/plusWouldHave/a=6,n=8": {
+      "text": "Plus six would have made eight!",
+      "hash": "aa18f64aa4",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=6,n=8.mp3"
+    },
+    "parade/plusWouldHave/a=6,n=9": {
+      "text": "Plus six would have made nine!",
+      "hash": "f5491ee7c9",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=6,n=9.mp3"
+    },
+    "parade/plusWouldHave/a=6,n=10": {
+      "text": "Plus six would have made ten!",
+      "hash": "6a731ec6e3",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=6,n=10.mp3"
+    },
+    "parade/plusWouldHave/a=6,n=11": {
+      "text": "Plus six would have made eleven!",
+      "hash": "5d7768f0a9",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=6,n=11.mp3"
+    },
+    "parade/plusWouldHave/a=6,n=12": {
+      "text": "Plus six would have made twelve!",
+      "hash": "790cc20150",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=6,n=12.mp3"
+    },
+    "parade/plusWouldHave/a=6,n=13": {
+      "text": "Plus six would have made thirteen!",
+      "hash": "6d92781199",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=6,n=13.mp3"
+    },
+    "parade/plusWouldHave/a=6,n=14": {
+      "text": "Plus six would have made fourteen!",
+      "hash": "e8bd491703",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=6,n=14.mp3"
+    },
+    "parade/plusWouldHave/a=6,n=15": {
+      "text": "Plus six would have made fifteen!",
+      "hash": "6fe1dbc82e",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=6,n=15.mp3"
+    },
+    "parade/plusWouldHave/a=6,n=16": {
+      "text": "Plus six would have made sixteen!",
+      "hash": "797a79d602",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=6,n=16.mp3"
+    },
+    "parade/plusWouldHave/a=6,n=17": {
+      "text": "Plus six would have made seventeen!",
+      "hash": "0834ce466f",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=6,n=17.mp3"
+    },
+    "parade/plusWouldHave/a=6,n=18": {
+      "text": "Plus six would have made eighteen!",
+      "hash": "de53fb558a",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=6,n=18.mp3"
+    },
+    "parade/plusWouldHave/a=6,n=19": {
+      "text": "Plus six would have made nineteen!",
+      "hash": "3d528406b1",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=6,n=19.mp3"
+    },
+    "parade/plusWouldHave/a=6,n=20": {
+      "text": "Plus six would have made twenty!",
+      "hash": "a96bafb9a1",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=6,n=20.mp3"
+    },
+    "parade/plusWouldHave/a=7,n=2": {
+      "text": "Plus seven would have made two!",
+      "hash": "61349f4b1d",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=7,n=2.mp3"
+    },
+    "parade/plusWouldHave/a=7,n=3": {
+      "text": "Plus seven would have made three!",
+      "hash": "3f3c1aa1a3",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=7,n=3.mp3"
+    },
+    "parade/plusWouldHave/a=7,n=4": {
+      "text": "Plus seven would have made four!",
+      "hash": "bc922b558c",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=7,n=4.mp3"
+    },
+    "parade/plusWouldHave/a=7,n=5": {
+      "text": "Plus seven would have made five!",
+      "hash": "1e9bffdb9f",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=7,n=5.mp3"
+    },
+    "parade/plusWouldHave/a=7,n=6": {
+      "text": "Plus seven would have made six!",
+      "hash": "9abc832261",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=7,n=6.mp3"
+    },
+    "parade/plusWouldHave/a=7,n=7": {
+      "text": "Plus seven would have made seven!",
+      "hash": "ba8a68e705",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=7,n=7.mp3"
+    },
+    "parade/plusWouldHave/a=7,n=8": {
+      "text": "Plus seven would have made eight!",
+      "hash": "de0b503d31",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=7,n=8.mp3"
+    },
+    "parade/plusWouldHave/a=7,n=9": {
+      "text": "Plus seven would have made nine!",
+      "hash": "5cb8d60c8a",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=7,n=9.mp3"
+    },
+    "parade/plusWouldHave/a=7,n=10": {
+      "text": "Plus seven would have made ten!",
+      "hash": "4ff2f436cc",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=7,n=10.mp3"
+    },
+    "parade/plusWouldHave/a=7,n=11": {
+      "text": "Plus seven would have made eleven!",
+      "hash": "00dae270d1",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=7,n=11.mp3"
+    },
+    "parade/plusWouldHave/a=7,n=12": {
+      "text": "Plus seven would have made twelve!",
+      "hash": "9eb6abc9fa",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=7,n=12.mp3"
+    },
+    "parade/plusWouldHave/a=7,n=13": {
+      "text": "Plus seven would have made thirteen!",
+      "hash": "bfa8de5e16",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=7,n=13.mp3"
+    },
+    "parade/plusWouldHave/a=7,n=14": {
+      "text": "Plus seven would have made fourteen!",
+      "hash": "73807e8686",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=7,n=14.mp3"
+    },
+    "parade/plusWouldHave/a=7,n=15": {
+      "text": "Plus seven would have made fifteen!",
+      "hash": "55339a5673",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=7,n=15.mp3"
+    },
+    "parade/plusWouldHave/a=7,n=16": {
+      "text": "Plus seven would have made sixteen!",
+      "hash": "04ddee89b4",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=7,n=16.mp3"
+    },
+    "parade/plusWouldHave/a=7,n=17": {
+      "text": "Plus seven would have made seventeen!",
+      "hash": "915e53723b",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=7,n=17.mp3"
+    },
+    "parade/plusWouldHave/a=7,n=18": {
+      "text": "Plus seven would have made eighteen!",
+      "hash": "8fee9c724f",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=7,n=18.mp3"
+    },
+    "parade/plusWouldHave/a=7,n=19": {
+      "text": "Plus seven would have made nineteen!",
+      "hash": "7c2f34e43c",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=7,n=19.mp3"
+    },
+    "parade/plusWouldHave/a=7,n=20": {
+      "text": "Plus seven would have made twenty!",
+      "hash": "40d592aad8",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=7,n=20.mp3"
+    },
+    "parade/plusWouldHave/a=8,n=2": {
+      "text": "Plus eight would have made two!",
+      "hash": "bf8d0f5185",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=8,n=2.mp3"
+    },
+    "parade/plusWouldHave/a=8,n=3": {
+      "text": "Plus eight would have made three!",
+      "hash": "85330a2783",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=8,n=3.mp3"
+    },
+    "parade/plusWouldHave/a=8,n=4": {
+      "text": "Plus eight would have made four!",
+      "hash": "270c15ffe3",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=8,n=4.mp3"
+    },
+    "parade/plusWouldHave/a=8,n=5": {
+      "text": "Plus eight would have made five!",
+      "hash": "d7d0a60746",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=8,n=5.mp3"
+    },
+    "parade/plusWouldHave/a=8,n=6": {
+      "text": "Plus eight would have made six!",
+      "hash": "f1b20c2745",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=8,n=6.mp3"
+    },
+    "parade/plusWouldHave/a=8,n=7": {
+      "text": "Plus eight would have made seven!",
+      "hash": "8c1504b850",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=8,n=7.mp3"
+    },
+    "parade/plusWouldHave/a=8,n=8": {
+      "text": "Plus eight would have made eight!",
+      "hash": "1444c18a06",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=8,n=8.mp3"
+    },
+    "parade/plusWouldHave/a=8,n=9": {
+      "text": "Plus eight would have made nine!",
+      "hash": "0749e0c7a6",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=8,n=9.mp3"
+    },
+    "parade/plusWouldHave/a=8,n=10": {
+      "text": "Plus eight would have made ten!",
+      "hash": "719871fc18",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=8,n=10.mp3"
+    },
+    "parade/plusWouldHave/a=8,n=11": {
+      "text": "Plus eight would have made eleven!",
+      "hash": "8abb9b7821",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=8,n=11.mp3"
+    },
+    "parade/plusWouldHave/a=8,n=12": {
+      "text": "Plus eight would have made twelve!",
+      "hash": "835569402e",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=8,n=12.mp3"
+    },
+    "parade/plusWouldHave/a=8,n=13": {
+      "text": "Plus eight would have made thirteen!",
+      "hash": "adc0546e91",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=8,n=13.mp3"
+    },
+    "parade/plusWouldHave/a=8,n=14": {
+      "text": "Plus eight would have made fourteen!",
+      "hash": "8884fb34ca",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=8,n=14.mp3"
+    },
+    "parade/plusWouldHave/a=8,n=15": {
+      "text": "Plus eight would have made fifteen!",
+      "hash": "9729338cdb",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=8,n=15.mp3"
+    },
+    "parade/plusWouldHave/a=8,n=16": {
+      "text": "Plus eight would have made sixteen!",
+      "hash": "b64e66a67e",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=8,n=16.mp3"
+    },
+    "parade/plusWouldHave/a=8,n=17": {
+      "text": "Plus eight would have made seventeen!",
+      "hash": "bebdb67bb9",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=8,n=17.mp3"
+    },
+    "parade/plusWouldHave/a=8,n=18": {
+      "text": "Plus eight would have made eighteen!",
+      "hash": "a8fa1be09f",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=8,n=18.mp3"
+    },
+    "parade/plusWouldHave/a=8,n=19": {
+      "text": "Plus eight would have made nineteen!",
+      "hash": "ceb82b9f0d",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=8,n=19.mp3"
+    },
+    "parade/plusWouldHave/a=8,n=20": {
+      "text": "Plus eight would have made twenty!",
+      "hash": "24a58fb083",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=8,n=20.mp3"
+    },
+    "parade/plusWouldHave/a=9,n=2": {
+      "text": "Plus nine would have made two!",
+      "hash": "c17bef4d92",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=9,n=2.mp3"
+    },
+    "parade/plusWouldHave/a=9,n=3": {
+      "text": "Plus nine would have made three!",
+      "hash": "ab28fdc3c8",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=9,n=3.mp3"
+    },
+    "parade/plusWouldHave/a=9,n=4": {
+      "text": "Plus nine would have made four!",
+      "hash": "c5a10e8181",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=9,n=4.mp3"
+    },
+    "parade/plusWouldHave/a=9,n=5": {
+      "text": "Plus nine would have made five!",
+      "hash": "d3d4dca474",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=9,n=5.mp3"
+    },
+    "parade/plusWouldHave/a=9,n=6": {
+      "text": "Plus nine would have made six!",
+      "hash": "c44239ac55",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=9,n=6.mp3"
+    },
+    "parade/plusWouldHave/a=9,n=7": {
+      "text": "Plus nine would have made seven!",
+      "hash": "250c470151",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=9,n=7.mp3"
+    },
+    "parade/plusWouldHave/a=9,n=8": {
+      "text": "Plus nine would have made eight!",
+      "hash": "54e3d84366",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=9,n=8.mp3"
+    },
+    "parade/plusWouldHave/a=9,n=9": {
+      "text": "Plus nine would have made nine!",
+      "hash": "715506e2be",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=9,n=9.mp3"
+    },
+    "parade/plusWouldHave/a=9,n=10": {
+      "text": "Plus nine would have made ten!",
+      "hash": "1e4dc2beaa",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=9,n=10.mp3"
+    },
+    "parade/plusWouldHave/a=9,n=11": {
+      "text": "Plus nine would have made eleven!",
+      "hash": "99fe092689",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=9,n=11.mp3"
+    },
+    "parade/plusWouldHave/a=9,n=12": {
+      "text": "Plus nine would have made twelve!",
+      "hash": "d7c09655fe",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=9,n=12.mp3"
+    },
+    "parade/plusWouldHave/a=9,n=13": {
+      "text": "Plus nine would have made thirteen!",
+      "hash": "28c4baf6c1",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=9,n=13.mp3"
+    },
+    "parade/plusWouldHave/a=9,n=14": {
+      "text": "Plus nine would have made fourteen!",
+      "hash": "7703a0a9a9",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=9,n=14.mp3"
+    },
+    "parade/plusWouldHave/a=9,n=15": {
+      "text": "Plus nine would have made fifteen!",
+      "hash": "1481d03749",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=9,n=15.mp3"
+    },
+    "parade/plusWouldHave/a=9,n=16": {
+      "text": "Plus nine would have made sixteen!",
+      "hash": "2dbcc6ac46",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=9,n=16.mp3"
+    },
+    "parade/plusWouldHave/a=9,n=17": {
+      "text": "Plus nine would have made seventeen!",
+      "hash": "9b00587e5b",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=9,n=17.mp3"
+    },
+    "parade/plusWouldHave/a=9,n=18": {
+      "text": "Plus nine would have made eighteen!",
+      "hash": "78d15e35a3",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=9,n=18.mp3"
+    },
+    "parade/plusWouldHave/a=9,n=19": {
+      "text": "Plus nine would have made nineteen!",
+      "hash": "b9b42e0bdc",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=9,n=19.mp3"
+    },
+    "parade/plusWouldHave/a=9,n=20": {
+      "text": "Plus nine would have made twenty!",
+      "hash": "d57bd8a66f",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=9,n=20.mp3"
+    },
+    "parade/plusWouldHave/a=10,n=2": {
+      "text": "Plus ten would have made two!",
+      "hash": "694963d082",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=10,n=2.mp3"
+    },
+    "parade/plusWouldHave/a=10,n=3": {
+      "text": "Plus ten would have made three!",
+      "hash": "a02a17b79c",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=10,n=3.mp3"
+    },
+    "parade/plusWouldHave/a=10,n=4": {
+      "text": "Plus ten would have made four!",
+      "hash": "a3f754a32c",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=10,n=4.mp3"
+    },
+    "parade/plusWouldHave/a=10,n=5": {
+      "text": "Plus ten would have made five!",
+      "hash": "94fb3c06fb",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=10,n=5.mp3"
+    },
+    "parade/plusWouldHave/a=10,n=6": {
+      "text": "Plus ten would have made six!",
+      "hash": "00d9d41d5a",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=10,n=6.mp3"
+    },
+    "parade/plusWouldHave/a=10,n=7": {
+      "text": "Plus ten would have made seven!",
+      "hash": "cd75705373",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=10,n=7.mp3"
+    },
+    "parade/plusWouldHave/a=10,n=8": {
+      "text": "Plus ten would have made eight!",
+      "hash": "080149e16e",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=10,n=8.mp3"
+    },
+    "parade/plusWouldHave/a=10,n=9": {
+      "text": "Plus ten would have made nine!",
+      "hash": "d8be119d91",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=10,n=9.mp3"
+    },
+    "parade/plusWouldHave/a=10,n=10": {
+      "text": "Plus ten would have made ten!",
+      "hash": "9d7b9b6103",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=10,n=10.mp3"
+    },
+    "parade/plusWouldHave/a=10,n=11": {
+      "text": "Plus ten would have made eleven!",
+      "hash": "b28b0fb409",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=10,n=11.mp3"
+    },
+    "parade/plusWouldHave/a=10,n=12": {
+      "text": "Plus ten would have made twelve!",
+      "hash": "14adc135b4",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=10,n=12.mp3"
+    },
+    "parade/plusWouldHave/a=10,n=13": {
+      "text": "Plus ten would have made thirteen!",
+      "hash": "96b7e090e2",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=10,n=13.mp3"
+    },
+    "parade/plusWouldHave/a=10,n=14": {
+      "text": "Plus ten would have made fourteen!",
+      "hash": "3affb8f0ec",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=10,n=14.mp3"
+    },
+    "parade/plusWouldHave/a=10,n=15": {
+      "text": "Plus ten would have made fifteen!",
+      "hash": "fa7662a427",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=10,n=15.mp3"
+    },
+    "parade/plusWouldHave/a=10,n=16": {
+      "text": "Plus ten would have made sixteen!",
+      "hash": "9a7eb028dd",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=10,n=16.mp3"
+    },
+    "parade/plusWouldHave/a=10,n=17": {
+      "text": "Plus ten would have made seventeen!",
+      "hash": "238614385a",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=10,n=17.mp3"
+    },
+    "parade/plusWouldHave/a=10,n=18": {
+      "text": "Plus ten would have made eighteen!",
+      "hash": "3acc5f31a9",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=10,n=18.mp3"
+    },
+    "parade/plusWouldHave/a=10,n=19": {
+      "text": "Plus ten would have made nineteen!",
+      "hash": "ab453c29f1",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=10,n=19.mp3"
+    },
+    "parade/plusWouldHave/a=10,n=20": {
+      "text": "Plus ten would have made twenty!",
+      "hash": "2d97594485",
+      "kind": "whole",
+      "file": "voice/parade/plusWouldHave/a=10,n=20.mp3"
+    },
+    "parade/winBy/n=1": {
+      "text": "We win by one!",
+      "hash": "1ecc900229",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=1.mp3"
+    },
+    "parade/winBy/n=2": {
+      "text": "We win by two!",
+      "hash": "3cd6014c11",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=2.mp3"
+    },
+    "parade/winBy/n=3": {
+      "text": "We win by three!",
+      "hash": "d705c7f7c2",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=3.mp3"
+    },
+    "parade/winBy/n=4": {
+      "text": "We win by four!",
+      "hash": "98f9c2b1ce",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=4.mp3"
+    },
+    "parade/winBy/n=5": {
+      "text": "We win by five!",
+      "hash": "72b11164d4",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=5.mp3"
+    },
+    "parade/winBy/n=6": {
+      "text": "We win by six!",
+      "hash": "c284ddc500",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=6.mp3"
+    },
+    "parade/winBy/n=7": {
+      "text": "We win by seven!",
+      "hash": "e126be7ec0",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=7.mp3"
+    },
+    "parade/winBy/n=8": {
+      "text": "We win by eight!",
+      "hash": "7697409444",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=8.mp3"
+    },
+    "parade/winBy/n=9": {
+      "text": "We win by nine!",
+      "hash": "729e953c00",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=9.mp3"
+    },
+    "parade/winBy/n=10": {
+      "text": "We win by ten!",
+      "hash": "f9a3123cd5",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=10.mp3"
+    },
+    "parade/winBy/n=11": {
+      "text": "We win by eleven!",
+      "hash": "a60db2c906",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=11.mp3"
+    },
+    "parade/winBy/n=12": {
+      "text": "We win by twelve!",
+      "hash": "4638ad74ac",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=12.mp3"
+    },
+    "parade/winBy/n=13": {
+      "text": "We win by thirteen!",
+      "hash": "6e36be8fd8",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=13.mp3"
+    },
+    "parade/winBy/n=14": {
+      "text": "We win by fourteen!",
+      "hash": "ec45ebd09c",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=14.mp3"
+    },
+    "parade/winBy/n=15": {
+      "text": "We win by fifteen!",
+      "hash": "49a5a1256f",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=15.mp3"
+    },
+    "parade/winBy/n=16": {
+      "text": "We win by sixteen!",
+      "hash": "f3e4ecc8c6",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=16.mp3"
+    },
+    "parade/winBy/n=17": {
+      "text": "We win by seventeen!",
+      "hash": "a4bbdbc752",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=17.mp3"
+    },
+    "parade/winBy/n=18": {
+      "text": "We win by eighteen!",
+      "hash": "1290ff2dc9",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=18.mp3"
+    },
+    "parade/winBy/n=19": {
+      "text": "We win by nineteen!",
+      "hash": "e12fdb5d77",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=19.mp3"
+    },
+    "parade/winBy/n=20": {
+      "text": "We win by twenty!",
+      "hash": "6e0194c0d8",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=20.mp3"
+    },
+    "parade/winBy/n=21": {
+      "text": "We win by twenty-one!",
+      "hash": "bf8cf3a051",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=21.mp3"
+    },
+    "parade/winBy/n=22": {
+      "text": "We win by twenty-two!",
+      "hash": "353b934c1f",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=22.mp3"
+    },
+    "parade/winBy/n=23": {
+      "text": "We win by twenty-three!",
+      "hash": "977f396a7a",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=23.mp3"
+    },
+    "parade/winBy/n=24": {
+      "text": "We win by twenty-four!",
+      "hash": "ed6fe9e5a1",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=24.mp3"
+    },
+    "parade/winBy/n=25": {
+      "text": "We win by twenty-five!",
+      "hash": "3009b189eb",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=25.mp3"
+    },
+    "parade/winBy/n=26": {
+      "text": "We win by twenty-six!",
+      "hash": "9905d9c708",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=26.mp3"
+    },
+    "parade/winBy/n=27": {
+      "text": "We win by twenty-seven!",
+      "hash": "8f36a776da",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=27.mp3"
+    },
+    "parade/winBy/n=28": {
+      "text": "We win by twenty-eight!",
+      "hash": "74af9cb27d",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=28.mp3"
+    },
+    "parade/winBy/n=29": {
+      "text": "We win by twenty-nine!",
+      "hash": "700b5debbb",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=29.mp3"
+    },
+    "parade/winBy/n=30": {
+      "text": "We win by thirty!",
+      "hash": "d88692e38b",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=30.mp3"
+    },
+    "parade/winBy/n=31": {
+      "text": "We win by thirty-one!",
+      "hash": "cddc3f35fc",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=31.mp3"
+    },
+    "parade/winBy/n=32": {
+      "text": "We win by thirty-two!",
+      "hash": "9e9cbfcd3e",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=32.mp3"
+    },
+    "parade/winBy/n=33": {
+      "text": "We win by thirty-three!",
+      "hash": "db821ce70f",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=33.mp3"
+    },
+    "parade/winBy/n=34": {
+      "text": "We win by thirty-four!",
+      "hash": "745f5bdec1",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=34.mp3"
+    },
+    "parade/winBy/n=35": {
+      "text": "We win by thirty-five!",
+      "hash": "1b2e779433",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=35.mp3"
+    },
+    "parade/winBy/n=36": {
+      "text": "We win by thirty-six!",
+      "hash": "2a3938d41e",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=36.mp3"
+    },
+    "parade/winBy/n=37": {
+      "text": "We win by thirty-seven!",
+      "hash": "c2a524f248",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=37.mp3"
+    },
+    "parade/winBy/n=38": {
+      "text": "We win by thirty-eight!",
+      "hash": "63fa5572cb",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=38.mp3"
+    },
+    "parade/winBy/n=39": {
+      "text": "We win by thirty-nine!",
+      "hash": "d52d3e4d78",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=39.mp3"
+    },
+    "parade/winBy/n=40": {
+      "text": "We win by forty!",
+      "hash": "c573bd4a95",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=40.mp3"
+    },
+    "parade/winBy/n=41": {
+      "text": "We win by forty-one!",
+      "hash": "cd4168de63",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=41.mp3"
+    },
+    "parade/winBy/n=42": {
+      "text": "We win by forty-two!",
+      "hash": "240e441712",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=42.mp3"
+    },
+    "parade/winBy/n=43": {
+      "text": "We win by forty-three!",
+      "hash": "f6dd29328f",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=43.mp3"
+    },
+    "parade/winBy/n=44": {
+      "text": "We win by forty-four!",
+      "hash": "0c01166ca5",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=44.mp3"
+    },
+    "parade/winBy/n=45": {
+      "text": "We win by forty-five!",
+      "hash": "3a38454f26",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=45.mp3"
+    },
+    "parade/winBy/n=46": {
+      "text": "We win by forty-six!",
+      "hash": "cd353d974c",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=46.mp3"
+    },
+    "parade/winBy/n=47": {
+      "text": "We win by forty-seven!",
+      "hash": "e68d04f1f4",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=47.mp3"
+    },
+    "parade/winBy/n=48": {
+      "text": "We win by forty-eight!",
+      "hash": "554e7158eb",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=48.mp3"
+    },
+    "parade/winBy/n=49": {
+      "text": "We win by forty-nine!",
+      "hash": "f9f106f2f2",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=49.mp3"
+    },
+    "parade/winBy/n=50": {
+      "text": "We win by fifty!",
+      "hash": "7f703077cc",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=50.mp3"
+    },
+    "parade/winBy/n=51": {
+      "text": "We win by fifty-one!",
+      "hash": "4732287c9b",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=51.mp3"
+    },
+    "parade/winBy/n=52": {
+      "text": "We win by fifty-two!",
+      "hash": "9e45b92c65",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=52.mp3"
+    },
+    "parade/winBy/n=53": {
+      "text": "We win by fifty-three!",
+      "hash": "553d94a9b4",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=53.mp3"
+    },
+    "parade/winBy/n=54": {
+      "text": "We win by fifty-four!",
+      "hash": "5270b50b0d",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=54.mp3"
+    },
+    "parade/winBy/n=55": {
+      "text": "We win by fifty-five!",
+      "hash": "520c315085",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=55.mp3"
+    },
+    "parade/winBy/n=56": {
+      "text": "We win by fifty-six!",
+      "hash": "451d6e007b",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=56.mp3"
+    },
+    "parade/winBy/n=57": {
+      "text": "We win by fifty-seven!",
+      "hash": "31a05fbfaa",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=57.mp3"
+    },
+    "parade/winBy/n=58": {
+      "text": "We win by fifty-eight!",
+      "hash": "5a87d78681",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=58.mp3"
+    },
+    "parade/winBy/n=59": {
+      "text": "We win by fifty-nine!",
+      "hash": "8f5e4e4cfb",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=59.mp3"
+    },
+    "parade/winBy/n=60": {
+      "text": "We win by sixty!",
+      "hash": "1b1341822c",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=60.mp3"
+    },
+    "parade/winBy/n=61": {
+      "text": "We win by sixty-one!",
+      "hash": "9be589d792",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=61.mp3"
+    },
+    "parade/winBy/n=62": {
+      "text": "We win by sixty-two!",
+      "hash": "849f84e5a7",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=62.mp3"
+    },
+    "parade/winBy/n=63": {
+      "text": "We win by sixty-three!",
+      "hash": "273fc48d98",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=63.mp3"
+    },
+    "parade/winBy/n=64": {
+      "text": "We win by sixty-four!",
+      "hash": "f3b724fa12",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=64.mp3"
+    },
+    "parade/winBy/n=65": {
+      "text": "We win by sixty-five!",
+      "hash": "747208a022",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=65.mp3"
+    },
+    "parade/winBy/n=66": {
+      "text": "We win by sixty-six!",
+      "hash": "945b2dff1e",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=66.mp3"
+    },
+    "parade/winBy/n=67": {
+      "text": "We win by sixty-seven!",
+      "hash": "ec0f87fce3",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=67.mp3"
+    },
+    "parade/winBy/n=68": {
+      "text": "We win by sixty-eight!",
+      "hash": "703b50e8d2",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=68.mp3"
+    },
+    "parade/winBy/n=69": {
+      "text": "We win by sixty-nine!",
+      "hash": "a81ec0095e",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=69.mp3"
+    },
+    "parade/winBy/n=70": {
+      "text": "We win by seventy!",
+      "hash": "0eee8b4a61",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=70.mp3"
+    },
+    "parade/winBy/n=71": {
+      "text": "We win by seventy-one!",
+      "hash": "7a802d57da",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=71.mp3"
+    },
+    "parade/winBy/n=72": {
+      "text": "We win by seventy-two!",
+      "hash": "e2887ff028",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=72.mp3"
+    },
+    "parade/winBy/n=73": {
+      "text": "We win by seventy-three!",
+      "hash": "c7f18dabe0",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=73.mp3"
+    },
+    "parade/winBy/n=74": {
+      "text": "We win by seventy-four!",
+      "hash": "b815b83cd6",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=74.mp3"
+    },
+    "parade/winBy/n=75": {
+      "text": "We win by seventy-five!",
+      "hash": "06ac93b55b",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=75.mp3"
+    },
+    "parade/winBy/n=76": {
+      "text": "We win by seventy-six!",
+      "hash": "f82e444911",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=76.mp3"
+    },
+    "parade/winBy/n=77": {
+      "text": "We win by seventy-seven!",
+      "hash": "6f0d1be3f7",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=77.mp3"
+    },
+    "parade/winBy/n=78": {
+      "text": "We win by seventy-eight!",
+      "hash": "19cffcaeb2",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=78.mp3"
+    },
+    "parade/winBy/n=79": {
+      "text": "We win by seventy-nine!",
+      "hash": "42c86390d3",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=79.mp3"
+    },
+    "parade/winBy/n=80": {
+      "text": "We win by eighty!",
+      "hash": "0a4667c646",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=80.mp3"
+    },
+    "parade/winBy/n=81": {
+      "text": "We win by eighty-one!",
+      "hash": "8b7bd50654",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=81.mp3"
+    },
+    "parade/winBy/n=82": {
+      "text": "We win by eighty-two!",
+      "hash": "2e54f6c50c",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=82.mp3"
+    },
+    "parade/winBy/n=83": {
+      "text": "We win by eighty-three!",
+      "hash": "30c2726fb0",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=83.mp3"
+    },
+    "parade/winBy/n=84": {
+      "text": "We win by eighty-four!",
+      "hash": "a86540977c",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=84.mp3"
+    },
+    "parade/winBy/n=85": {
+      "text": "We win by eighty-five!",
+      "hash": "2292ab1ab7",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=85.mp3"
+    },
+    "parade/winBy/n=86": {
+      "text": "We win by eighty-six!",
+      "hash": "1783cc5dcf",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=86.mp3"
+    },
+    "parade/winBy/n=87": {
+      "text": "We win by eighty-seven!",
+      "hash": "36a62c2f1b",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=87.mp3"
+    },
+    "parade/winBy/n=88": {
+      "text": "We win by eighty-eight!",
+      "hash": "182f6045ab",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=88.mp3"
+    },
+    "parade/winBy/n=89": {
+      "text": "We win by eighty-nine!",
+      "hash": "b4fa9a92d5",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=89.mp3"
+    },
+    "parade/winBy/n=90": {
+      "text": "We win by ninety!",
+      "hash": "51a5347a03",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=90.mp3"
+    },
+    "parade/winBy/n=91": {
+      "text": "We win by ninety-one!",
+      "hash": "979e2b94ce",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=91.mp3"
+    },
+    "parade/winBy/n=92": {
+      "text": "We win by ninety-two!",
+      "hash": "8a05574746",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=92.mp3"
+    },
+    "parade/winBy/n=93": {
+      "text": "We win by ninety-three!",
+      "hash": "3785647e41",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=93.mp3"
+    },
+    "parade/winBy/n=94": {
+      "text": "We win by ninety-four!",
+      "hash": "2d75f86855",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=94.mp3"
+    },
+    "parade/winBy/n=95": {
+      "text": "We win by ninety-five!",
+      "hash": "3cf1363767",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=95.mp3"
+    },
+    "parade/winBy/n=96": {
+      "text": "We win by ninety-six!",
+      "hash": "4ce3faf3b1",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=96.mp3"
+    },
+    "parade/winBy/n=97": {
+      "text": "We win by ninety-seven!",
+      "hash": "db633d7690",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=97.mp3"
+    },
+    "parade/winBy/n=98": {
+      "text": "We win by ninety-eight!",
+      "hash": "387cf08cf7",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=98.mp3"
+    },
+    "parade/winBy/n=99": {
+      "text": "We win by ninety-nine!",
+      "hash": "2f49cb44f6",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=99.mp3"
+    },
+    "parade/winBy/n=100": {
+      "text": "We win by one hundred!",
+      "hash": "02e47a9c43",
+      "kind": "whole",
+      "file": "voice/parade/winBy/n=100.mp3"
+    },
+    "ui/tapToStart": {
+      "text": "Tap the star to start!",
+      "hash": "92f6e6330e",
+      "kind": "line",
+      "file": "voice/ui/tapToStart.mp3"
+    },
+    "ui/sayItAgain": {
+      "text": "Tap the speaker to hear it again.",
+      "hash": "24d0e16867",
+      "kind": "line",
+      "file": "voice/ui/sayItAgain.mp3"
+    },
+    "ui/greatJob": {
+      "text": "Great job!",
+      "hash": "93a8c4186e",
+      "kind": "line",
+      "file": "voice/ui/greatJob.mp3"
+    },
+    "ui/tryAgain": {
+      "text": "Hmm, let's look again.",
+      "hash": "498716e4e3",
+      "kind": "line",
+      "file": "voice/ui/tryAgain.mp3"
+    },
+    "ui/youGotStars": {
+      "text": "You got stars! Tap the arrow to keep going.",
+      "hash": "64611e596b",
+      "kind": "line",
+      "file": "voice/ui/youGotStars.mp3"
+    },
+    "ui/voiceCheck": {
+      "text": "Hello! This is the recorded teacher voice.",
+      "hash": "ccbc4d0433",
+      "kind": "line",
+      "file": "voice/ui/voiceCheck.mp3"
+    }
+  }
+}

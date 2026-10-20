@@ -1,16 +1,14 @@
 # SummerQuest privacy policy
 
-**Effective date:** TODO(owner): the date this policy goes live (for example, the day the app is published).
+**Effective date:** October 18, 2026
 
-**Who we are:** SummerQuest is made by TODO(owner): your name or company name. You can reach us
-at TODO(owner): a contact email you check, and by post at TODO(owner): a mailing address. (US
-children's privacy law, COPPA, asks apps for children to list a name, an address and a way to
-get in touch.)
+**Who we are:** SummerQuest is made by an independent developer. You can reach us by email at
+zaclements@gmail.com.
 
 ## The short version
 
-SummerQuest is a learning game for children aged 7 to 9. Everything the game remembers stays
-on your child's tablet. There are no accounts and no ads. Nothing is tracked or analyzed, and
+SummerQuest is a learning game for elementary-school children. Everything the game remembers
+stays on your child's tablet. The current version has no accounts and no ads. Nothing is tracked or analyzed, and
 the app contains no third-party code that could do these things. We don't receive any
 information about your child, and nothing is sent anywhere. The game works with the internet
 turned off.
@@ -29,7 +27,7 @@ storage on the tablet:
   of questions they got right or wrong, which the game uses to choose what to practice next.
   The Parent area shows this to you too.
 - **Pets:** which pet follows them around the island, and which pet celebrations they've
-  already seen. Pets hatch and grow from learning; they are never bought.
+  already seen. Pets hatch and grow from learning; they can't be bought.
 - **Coins and what they bought with them:** coins are earned by playing. Your child spends
   them on hats and home decorations. These can't be bought with real money.
 - **High scores** in the mini-games.
@@ -41,7 +39,7 @@ tablet to give them a score. The writing itself is not saved.
 This information is not copied to us or to anyone else. We cannot see it, and we cannot get it
 back for you if the app is removed.
 
-## What does not exist
+## What the app doesn't do
 
 - **No accounts.** There is no sign-up, no login, no email address and no password.
 - **No ads** of any kind.
@@ -52,20 +50,22 @@ back for you if the app is removed.
   analytics tools, crash reporters or social media plugins.
 - **No data leaves the device.** The app makes no internet connections. All pictures, sounds
   and recorded voice lessons are included in the app itself.
-- **No in-app purchases.** The game never asks for money.
+- **No in-app purchases.** The current version doesn't ask for money.
 - **No chat or sharing.** There is no way for your child to contact other people or share
   anything they make.
 - **No links out of the app.** There are no web pages, other apps or stores to tap through to.
 - **No location, camera, microphone or contacts.** The app doesn't ask for any of them.
 
-Some lessons may not have a recorded voice clip. Then the app can read the lesson text aloud
-with the tablet's own built-in voice. It only reads the lesson text. It never reads your
-child's name or anything your child typed.
+The app speaks lessons and, for younger children, questions and instructions, using recorded
+voice clips included in the app. If a recording is missing, the app can read the words on the screen aloud with
+the tablet's own built-in voice instead: the lesson text, a question, or an instruction such
+as "Tap the star to start!". It never reads your child's name or anything your child typed.
+The built-in voice runs on the tablet, and nothing it reads leaves the device.
 
 ## Grown-ups only
 
 The Parent area is behind a grown-up check: a multiplication question that's easy for an adult
-and hard for a 7–9 year old. The same check protects resetting progress and changing the grade
+and hard for a young child. The same check protects resetting progress and changing the grade
 level.
 
 ## Your rights as a parent
@@ -95,8 +95,9 @@ anything, as the law requires.
 ## Changes to this policy
 
 If this policy changes, we will post the new version at the same place and change the
-effective date at the top. An app update will never quietly start collecting data.
+effective date at the top. If a future version adds things like ads or purchases, or needs to
+collect any information, we will update this policy before that version is released.
 
 ## Questions
 
-Email TODO(owner): contact email. We're happy to explain anything in this policy.
+Email zaclements@gmail.com. We're happy to explain anything in this policy.

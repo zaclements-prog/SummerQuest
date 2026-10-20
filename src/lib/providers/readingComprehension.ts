@@ -1,12 +1,13 @@
 import type { Problem, ProblemProvider } from '../problem'
 import { shuffle } from '../random'
 import { makeLlmCachedProvider } from '../llm-cache'
-import { pickLevel } from '../gradeTiers'
+import { pickLevel, type GradeLevel } from '../gradeTiers'
 import { G2_READING } from './content/grade2'
 import { useProgress } from '../../store/progress'
 
 interface Config {
-  level: 2 | 3 | 4
+  /** The shelf to serve (a grade, 0 = K); unstocked levels fall back via pickLevel. */
+  level: GradeLevel
   source?: 'static' | 'llm'
 }
 

@@ -3,7 +3,7 @@ import { ease, interpolate, progress, pulse, spring } from '../anim'
 import { Burst, Camera, Draw, Fade, Kinetic, Paper } from '../kit'
 import { M } from '../palette'
 import type { Scene, SceneProps } from '../types'
-import { CRAYONS, Crayon, Fox, IndexCard, shade } from './_b3art'
+import { CRAYONS, Crayon, Fox, IndexCard } from './_b3art'
 import { FlyTag, Head, Loop, Marker, Scale, Sparkles, Tag, ThoughtBubble, Tick, Twinkle, Txt, Underline, ep, layoutText, popS, sketchRect, span, textW, type WBox } from './_b3kit'
 
 // ── the story card ───────────────────────────────────────────────────────────
@@ -31,21 +31,12 @@ function StoryCard({ t, at, ink, badge }: { t: number; at: number; ink: (i: numb
       {WORDS.map((b, i) => {
         const bd = badge?.(i)
         const k = ink(i)
-        const color = bd && bd.k > 0 ? bd.color : M.ink
-        const op = 0.3 + 0.7 * k
-        if (!bd) {
-          return (
-            <Txt key={i} x={b.x} y={b.y} size={TEXT_SIZE} color={color} opacity={op}>
-              {b.text}
-            </Txt>
-          )
-        }
-        const bump = 1 + 0.35 * Math.sin(Math.PI * Math.min(1, bd.k)) * (bd.k < 1 ? 1 : 0)
+        const bump = bd ? 1 + 0.35 * Math.sin(Math.PI * Math.min(1, bd.k)) * (bd.k < 1 ? 1 : 0) : 1
         return (
           <g key={i}>
-            {bd.k > 0 && <circle cx={b.cx} cy={b.y} r={28 * Math.min(1, spring(bd.k, 0, { damping: 11 }))} fill={bd.color} opacity={0.32} />}
+            {bd && bd.k > 0 && <circle cx={b.cx} cy={b.y} r={28 * Math.min(1, spring(bd.k, 0, { damping: 11 }))} fill={bd.color} opacity={0.32} />}
             <g transform={`translate(${b.cx} ${b.y}) scale(${bump}) translate(${-b.cx} ${-b.y})`}>
-              <Txt x={b.x} y={b.y} size={TEXT_SIZE} color={color} opacity={op}>
+              <Txt x={b.x} y={b.y} size={TEXT_SIZE} color={bd && bd.k > 0 ? bd.color : M.ink} opacity={0.3 + 0.7 * k}>
                 {b.text}
               </Txt>
             </g>
@@ -88,10 +79,8 @@ const CR_W = 17
 const CR_GAP = 7
 const ROW_GAP = 25
 
-/** A lidded crayon tray centred on (x, y); `crayonAt(r, c)` = when each crayon lands.
- * Rows land as whole-row CrayonRun silhouettes whose n grows as columns arrive —
- * same toon read as 24 detailed Crayon props at a fraction of the elements (B2.4). */
-function CrayonTray({ t, x, y, crayonAt }: { t: number; x: number; y: number; crayonAt: (r: number, c: number) => number }) {
+/** A lidded crayon tray centred on (x, y); `crayonAt(r, c)` = when each crayon lands. */
+function CrayonTray({ t, x, y, crayonAt, wiggle = 0 }: { t: number; x: number; y: number; crayonAt: (r: number, c: number) => number; wiggle?: number }) {
   const innerW = COLS * CR_LEN + (COLS - 1) * CR_GAP
   const innerH = ROWS * ROW_GAP
   const pad = 16
@@ -100,7 +89,7 @@ function CrayonTray({ t, x, y, crayonAt }: { t: number; x: number; y: number; cr
   const w = innerW + pad * 2
   const h = innerH + pad * 2
   return (
-    <g>
+    <>
       {/* hinged lid, open behind the tray */}
       <path d={`M ${l + 6} ${top + 4} L ${l + 26} ${top - 62} L ${l + w - 26} ${top - 62} L ${l + w - 6} ${top + 4} Z`} fill={M.leaf} stroke={M.ink} strokeWidth={4} strokeLinejoin="round" />
       <text x={x} y={top - 30} fontFamily={M.font} fontWeight={700} fontSize={26} textAnchor="middle" dominantBaseline="central" fill={M.white} letterSpacing={3}>
@@ -111,20 +100,23 @@ function CrayonTray({ t, x, y, crayonAt }: { t: number; x: number; y: number; cr
       {Array.from({ length: ROWS - 1 }, (_, r) => (
         <line key={r} x1={l + 14} x2={l + w - 14} y1={y - innerH / 2 + (r + 1) * ROW_GAP} y2={y - innerH / 2 + (r + 1) * ROW_GAP} stroke="#c98a1c" strokeWidth={3} strokeLinecap="round" opacity={0.55} />
       ))}
-      {Array.from({ length: ROWS }, (_, r) => {
-        const at0 = crayonAt(r, 0)
-        const k = spring(t, at0, { stiffness: 260, damping: 16 })
-        if (k <= 0.001) return null
-        const n = Math.max(1, Math.min(COLS, 1 + Math.floor((t - at0) / 0.05)))
-        const drop = (1 - k) * -70
-        const cy = y - innerH / 2 + ROW_GAP / 2 + r * ROW_GAP
-        return (
-          <g key={r} transform={`translate(0 ${drop})`} opacity={Math.min(1, k * 3)}>
-            <CrayonRun x0={x - innerW / 2} y={cy} color={CRAYONS[r]} n={n} len={CR_LEN} w={CR_W} gap={CR_GAP} />
-          </g>
-        )
-      })}
-    </g>
+      {Array.from({ length: ROWS }, (_, r) =>
+        Array.from({ length: COLS }, (_, c) => {
+          const at = crayonAt(r, c)
+          const k = spring(t, at, { stiffness: 260, damping: 16 })
+          if (k <= 0.001) return null
+          const cx = x - innerW / 2 + CR_LEN / 2 + c * (CR_LEN + CR_GAP)
+          const cy = y - innerH / 2 + ROW_GAP / 2 + r * ROW_GAP
+          const drop = (1 - k) * -70
+          const wig = wiggle * Math.sin(t * 3 + r * 0.9 + c * 1.7) * 2.5
+          return (
+            <g key={`${r}-${c}`} transform={`translate(0 ${drop})`} opacity={Math.min(1, k * 3)}>
+              <Crayon x={cx} y={cy + CR_LEN / 2} w={CR_W} h={CR_LEN} color={CRAYONS[r]} rot={90 + wig} />
+            </g>
+          )
+        }),
+      )}
+    </>
   )
 }
 
@@ -132,7 +124,7 @@ function CrayonTray({ t, x, y, crayonAt }: { t: number; x: number; y: number; cr
 function StepHead({ t, at, n, text, x, y, color = M.coral }: { t: number; at: number; n: number; text: string; x: number; y: number; color?: string }) {
   const s = popS(t, at - 0.1, 11)
   return (
-    <g>
+    <>
       <Scale s={s} x={x} y={y}>
         <circle cx={x} cy={y} r={22} fill={color} stroke={M.ink} strokeWidth={3.5} />
         <Txt x={x} y={y + 1} size={26} anchor="middle" color={M.white}>
@@ -140,7 +132,7 @@ function StepHead({ t, at, n, text, x, y, color = M.coral }: { t: number; at: nu
         </Txt>
       </Scale>
       <Kinetic t={t} at={at} text={text} x={x + 36} y={y + 2} size={34} anchor="start" />
-    </g>
+    </>
   )
 }
 
@@ -177,8 +169,7 @@ const read: Scene = ({ t, cue }: SceneProps) => {
   const crWord = WORDS[W_CRAYONS]
   // the fox looks at the card while reading, then up at its daydream
   const lookUp = ep(t, picture - 0.2, 0.6, ease.inOutCubic)
-  // two bounded blinks while reading — motion ends (B2.3), no perpetual loop
-  const blink = Math.max(Math.max(0, 1 - Math.abs(t - 3.4) * 10), Math.max(0, 1 - Math.abs(t - 6.8) * 10))
+  const blink = t > 3 ? Math.max(0, 1 - Math.abs(((t + 0.7) % 3.4) - 0.1) * 10) : 0
   const sketch = 1 - ep(t, seeBox, 0.3)
   const trayL = tray.x - 137
   const trayT = tray.y - 91
@@ -234,7 +225,7 @@ const read: Scene = ({ t, cue }: SceneProps) => {
         )}
         {/* …then becomes real */}
         <Scale s={trayS} x={tray.x} y={tray.y + 90}>
-          <CrayonTray t={t} x={tray.x} y={tray.y} crayonAt={crayonAt} />
+          <CrayonTray t={t} x={tray.x} y={tray.y} crayonAt={crayonAt} wiggle={t > done ? 1 : 0} />
         </Scale>
         <Burst t={t} at={seeBox + 0.05} x={tray.x} y={tray.y} color={M.gold} r={160} rays={12} />
         {Array.from({ length: ROWS }, (_, r) => (
@@ -243,8 +234,9 @@ const read: Scene = ({ t, cue }: SceneProps) => {
         {/* the nouns fly out of the story and label the picture */}
         <FlyTag t={t} at={seeBox} dur={0.6} text="box" from={onCard(boxWord.cx, boxWord.y)} to={[tray.x - 92, tray.y + 128]} fromSize={TEXT_SIZE} toSize={26} color={M.gold} lift={90} />
         <FlyTag t={t} at={crayons} dur={0.6} text="crayons" from={onCard(crWord.cx, crWord.y)} to={[tray.x + 70, tray.y + 128]} fromSize={TEXT_SIZE} toSize={26} color={M.pink} lift={110} />
-        {/* one finite celebration flash at the end frame — no perpetual twinkles (B2.3) */}
-        <Sparkles t={t} at={done} x={tray.x + 4} y={tray.y - 40} r={120} n={8} seed={6} size={10} />
+        <Twinkle t={t} at={done} x={tray.x + 172} y={tray.y - 140} r={12} phase={0} />
+        <Twinkle t={t} at={done} x={tray.x - 170} y={tray.y + 60} r={10} phase={0.5} color={M.pink} />
+        <Twinkle t={t} at={done} x={tray.x + 176} y={tray.y + 80} r={9} phase={0.25} color={M.sea} />
       </Camera>
     </>
   )
@@ -280,31 +272,9 @@ const ARR = { x: 560, y: 262, len: 60, w: 19, gap: 8, rowGap: 36 }
 const arrRowY = (r: number) => ARR.y + r * ARR.rowGap
 const ARR_W = COLS * ARR.len + (COLS - 1) * ARR.gap
 
-/**
- * A horizontal run of `n` crayons (tips right, centred on y) as two paths:
- * one outlined silhouette for all n bodies, one set of wrapper bands. Same toon
- * read as n detailed Crayon props at a fraction of the element count (B2.4).
- */
-function CrayonRun({ x0, y, color, n = COLS, len = ARR.len, w = ARR.w, gap = ARR.gap }: { x0: number; y: number; color: string; n?: number; len?: number; w?: number; gap?: number }) {
-  const tip = w * 0.85
-  let bodies = ''
-  let bands = ''
-  for (let i = 0; i < n; i++) {
-    const l = x0 + i * (len + gap)
-    bodies += `M ${l} ${y - w / 2} L ${l + len - tip} ${y - w / 2} L ${l + len} ${y} L ${l + len - tip} ${y + w / 2} L ${l} ${y + w / 2} Z `
-    bands += `M ${l + len - tip} ${y - w / 2 + 2} L ${l + len - tip} ${y + w / 2 - 2} `
-  }
+function CrayonRows({ t, rowAt, wiggle = 0, x0 = ARR.x }: { t: number; rowAt: (r: number) => number; wiggle?: number; x0?: number }) {
   return (
-    <g>
-      <path d={bodies} fill={color} stroke={M.ink} strokeWidth={3} strokeLinejoin="round" />
-      <path d={bands} fill="none" stroke={shade(color, 0.3)} strokeWidth={2.5} strokeLinecap="round" />
-    </g>
-  )
-}
-
-function CrayonRows({ t, rowAt }: { t: number; rowAt: (r: number) => number }) {
-  return (
-    <g>
+    <>
       {Array.from({ length: ROWS }, (_, r) => {
         const at = rowAt(r)
         const k = ep(t, at, 0.55, ease.outBack)
@@ -313,12 +283,16 @@ function CrayonRows({ t, rowAt }: { t: number; rowAt: (r: number) => number }) {
         const slide = (1 - k) * 60
         return (
           <g key={r} transform={`translate(${slide} 0)`} opacity={Math.min(1, k * 2)}>
-            <rect x={ARR.x - 12} y={y - 15} width={ARR_W + 24} height={30} rx={15} fill={CRAYONS[r]} opacity={0.22} />
-            <CrayonRun x0={ARR.x} y={y} color={CRAYONS[r]} />
+            <rect x={x0 - 12} y={y - 15} width={ARR_W + 24} height={30} rx={15} fill={CRAYONS[r]} opacity={0.22} />
+            {Array.from({ length: COLS }, (_, c) => {
+              const cx = x0 + ARR.len / 2 + c * (ARR.len + ARR.gap)
+              const wig = wiggle * Math.sin(t * 3 + r * 0.9 + c * 1.7) * 2
+              return <Crayon key={c} x={cx} y={y + ARR.len / 2} w={ARR.w} h={ARR.len} color={CRAYONS[r]} rot={90 + wig} />
+            })}
           </g>
         )
       })}
-    </g>
+    </>
   )
 }
 
@@ -336,6 +310,7 @@ const plan: Scene = ({ t, cue }: SceneProps) => {
   const asking = cue('is asking')
   const choose = cue('choose the right operation')
   const equal = cue('equal groups')
+  const rows = cue('like rows')
   const same = cue('same size')
   const clue = cue('a clue')
   const multiply = cue('multiply')
@@ -358,9 +333,7 @@ const plan: Scene = ({ t, cue }: SceneProps) => {
   const dim = ep(t, multiply, 0.5)
   const rowAt = (r: number) => equal + 0.1 + r * 0.16
   const lab = (r: number) => same - 0.1 + r * 0.14
-  // one bounded celebratory pulse on the × tile — motion ends (B2.3)
-  const breatheWin = ep(t, multiply + 1, 0.4) * (1 - ep(t, multiply + 2.4, 0.6))
-  const breathe = 1 + 0.05 * Math.sin(Math.max(0, t - multiply - 1) * 3.14) * breatheWin
+  const breathe = t > multiply + 1 ? 1 + 0.05 * pulse(t, 1.6) : 1
   return (
     <>
       <Paper />
@@ -411,25 +384,25 @@ const plan: Scene = ({ t, cue }: SceneProps) => {
           </g>
         )}
 
-        {/* equal groups — held during "equal groups … same size", gone before the × wins */}
-        <Fade t={t} at={equal} out={multiply}>
-          <CrayonRows t={t} rowAt={rowAt} />
-          {Array.from({ length: ROWS }, (_, r) => {
-            const y = arrRowY(r)
-            const x = ARR.x + ARR_W + 44
-            return (
-              <g key={r}>
-                <Scale s={popS(t, lab(r), 12)} x={x} y={y}>
-                  <circle cx={x} cy={y} r={16} fill={M.white} stroke={M.ink} strokeWidth={3} />
-                  <Txt x={x} y={y + 1} size={22} anchor="middle" color="#2f8fc4">
-                    4
-                  </Txt>
-                </Scale>
-                <Tick t={t} at={lab(r) + 0.25} x={x + 42} y={y} s={0.75} color={M.leaf} width={6} />
-              </g>
-            )
-          })}
-          <Draw t={t} at={same + 0.05} dur={0.6} d={`M ${ARR.x + ARR_W + 16} ${arrRowY(0) - 26} L ${ARR.x + ARR_W + 16} ${arrRowY(ROWS - 1) + 26}`} stroke={M.inkSoft} width={3} dash="8 8" />
+        {/* equal groups */}
+        <CrayonRows t={t} rowAt={rowAt} wiggle={t > multiply + 1 ? 1 : 0} />
+        {Array.from({ length: ROWS }, (_, r) => {
+          const y = arrRowY(r)
+          const x = ARR.x + ARR_W + 44
+          return (
+            <g key={r}>
+              <Scale s={popS(t, lab(r), 12)} x={x} y={y}>
+                <circle cx={x} cy={y} r={16} fill={M.white} stroke={M.ink} strokeWidth={3} />
+                <Txt x={x} y={y + 1} size={22} anchor="middle" color="#2f8fc4">
+                  4
+                </Txt>
+              </Scale>
+              <Tick t={t} at={lab(r) + 0.25} x={x + 42} y={y} s={0.75} color={M.leaf} width={6} />
+            </g>
+          )
+        })}
+        <Draw t={t} at={same + 0.05} dur={0.6} d={`M ${ARR.x + ARR_W + 16} ${arrRowY(0) - 26} L ${ARR.x + ARR_W + 16} ${arrRowY(ROWS - 1) + 26}`} stroke={M.inkSoft} width={3} dash="8 8" />
+        <Fade t={t} at={rows} out={multiply}>
           <Txt x={ARR.x + ARR_W / 2} y={arrRowY(ROWS - 1) + 50} size={26} anchor="middle" color={M.inkSoft}>
             6 equal rows
           </Txt>
@@ -437,7 +410,7 @@ const plan: Scene = ({ t, cue }: SceneProps) => {
         <g transform={`translate(${tileX(2)} ${TILE_Y}) scale(${breathe}) translate(${-tileX(2)} ${-TILE_Y})`}>
           <Burst t={t} at={multiply} x={tileX(2)} y={TILE_Y} color={M.gold} r={90} />
           <Sparkles t={t} at={multiply + 0.15} x={tileX(2)} y={TILE_Y} r={80} n={8} seed={4} />
-          <Sparkles t={t} at={multiply + 1} x={tileX(2) + 46} y={TILE_Y - 46} r={22} n={2} seed={5} size={9} />
+          <Twinkle t={t} at={multiply + 1} x={tileX(2) + 46} y={TILE_Y - 46} r={11} />
         </g>
         {/* the rule */}
         <Scale s={popS(t, clue - 0.1, 12)} x={150} y={470}>

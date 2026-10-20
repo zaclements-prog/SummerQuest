@@ -47,6 +47,10 @@ const profile = args.includes('--profile')
 const trace = args.includes('--trace')
 // --eval "<js>": run in the page after settling, before measuring (experiments; `R` = the
 // renderer, `S` = the scene, `gl` = its WebGL context)
+// --tap "Text#n": before measuring, touch the n-th (0-based) element whose text ends with
+// "Text" (a real touch through DevTools, so it counts as a user gesture: narration starts).
+const tapIdx = args.indexOf('--tap')
+const tapSpec = tapIdx >= 0 ? args[tapIdx + 1] : null
 const evalIdx = args.indexOf('--eval')
 const experiment = evalIdx >= 0 ? args[evalIdx + 1] : null
 const routes = args.filter((a, i) => (a.startsWith('/') || a === '.') && !(i > 0 && args[i - 1].startsWith('--')))
@@ -153,6 +157,23 @@ await evaluate(`(() => {
 if (throttle !== 1) await send('Emulation.setCPUThrottlingRate', { rate: throttle })
 const results = []
 for (const route of routes) {
+  if (tapSpec) {
+    const [text, nth = '0'] = tapSpec.split('#')
+    const pt = await evaluate(`(() => {
+      const els = [...document.querySelectorAll('a, button, [role=button], span, div')].filter((e) => e.children.length <= 2 && e.textContent.trim().endsWith(${JSON.stringify(text)}) && e.getBoundingClientRect().width > 0).filter((e, _, all) => !all.some((o) => o !== e && e.contains(o)))
+      const el = els[${Number(nth)}]
+      if (!el) return null
+      el.scrollIntoView({ block: 'center' })
+      const r = el.getBoundingClientRect()
+      return { x: r.left + r.width / 2, y: r.top + r.height / 2 }
+    })()`)
+    if (!pt) throw new Error(`--tap: no element ending with "${text}" #${nth}`)
+    await sleep(0.4)
+    const again = await evaluate(`(() => { const els = [...document.querySelectorAll('a, button, [role=button], span, div')].filter((e) => e.children.length <= 2 && e.textContent.trim().endsWith(${JSON.stringify(text)}) && e.getBoundingClientRect().width > 0).filter((e, _, all) => !all.some((o) => o !== e && e.contains(o))); const r = els[${Number(nth)}].getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 } })()`)
+    for (const type of ['touchStart', 'touchEnd']) {
+      await send('Input.dispatchTouchEvent', { type, touchPoints: type === 'touchEnd' ? [] : [{ x: again.x, y: again.y }] })
+    }
+  }
   if (route === '.') {
     await sleep(settle)
   } else {

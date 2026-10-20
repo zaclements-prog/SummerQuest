@@ -18,25 +18,24 @@ const JAR_W = 190
 const JAR_H = 236
 const PR = 12 // particle radius
 
-/**
- * A particle: a shaded ball with a highlight. `hl={false}` drops the highlight
- * dot for the many small particles (B2.4: the ink outline carries the toon look;
- * only hero-pose particles keep the shine).
- */
-function Ball({ x, y, r = PR, color, opacity, hl = true }: { x: number; y: number; r?: number; color: string; opacity?: number; hl?: boolean }) {
-  return (
-    <g opacity={opacity}>
+/** A particle: a shaded ball with a highlight. */
+function Ball({ x, y, r = PR, color, opacity }: { x: number; y: number; r?: number; color: string; opacity?: number }) {
+  // (dozens of these on screen: no wrapper group unless it fades, and fill-opacity,
+  // which draws the same as opacity on a fill-only shape without a compositing pass)
+  const ball = (
+    <>
       <circle cx={x} cy={y} r={r} fill={color} stroke={M.ink} strokeWidth={2.5} />
-      {hl && <circle cx={x - r * 0.35} cy={y - r * 0.35} r={r * 0.3} fill="#fff" opacity={0.6} />}
-    </g>
+      <circle cx={x - r * 0.35} cy={y - r * 0.35} r={r * 0.3} fill="#fff" fillOpacity={0.6} />
+    </>
   )
+  return opacity === undefined ? ball : <g opacity={opacity}>{ball}</g>
 }
 
 /** Glass jar outline drawn on top of its contents (contents are clipped to the inside). */
 function JarGlass({ x, w, h, id, lid = 0, children }: { x: number; w: number; h: number; id: string; lid?: number; children?: ReactNode }) {
   const d = jarPath(x, JAR_Y, w, h)
   return (
-    <g>
+    <>
       <defs>
         <clipPath id={id}>
           <path d={d} />
@@ -52,7 +51,7 @@ function JarGlass({ x, w, h, id, lid = 0, children }: { x: number; w: number; h:
           <rect x={x - 18} y={JAR_Y - h - 34} width={36} height={14} rx={6} fill={M.wood} stroke={M.ink} strokeWidth={3.5} />
         </g>
       )}
-    </g>
+    </>
   )
 }
 
@@ -81,10 +80,10 @@ function Beaker({ x, y, tilt, level, color }: { x: number; y: number; tilt: numb
 /** A label that types itself above a jar, with the state's colour as an underline. */
 function JarLabel({ t, at, x, text, color }: { t: number; at: number; x: number; text: string; color: string }) {
   return (
-    <g>
+    <>
       <Kinetic t={t} at={at} text={text} x={x} y={JAR_Y - JAR_H - 66} size={44} color={M.ink} />
       <Draw t={t} at={at + 0.2} dur={0.4} d={`M ${x - 54} ${JAR_Y - JAR_H - 36} L ${x + 54} ${JAR_Y - JAR_H - 36}`} stroke={color} width={7} />
-    </g>
+    </>
   )
 }
 
@@ -116,8 +115,6 @@ const states: Scene = ({ t, cue }: SceneProps) => {
   const sDrop = spring(t, solid + 0.15, { stiffness: 200, damping: 11 })
   const sBlock = { x: JARS[0].x, bottom: JAR_Y - 8 }
   const tilt = Math.sin(Math.PI * progress(t, ownShape - 0.1, 1.2)) * 12 * Math.sin(Math.max(0, t - ownShape) * 9)
-  // the in-place jiggle lives inside the "keeps its own shape" beat (B2.3)
-  const jig = Math.sin(Math.PI * progress(t, solid, 2.6))
 
   // ── liquid: 36 particles pour in, then re-pack when the jar morphs wide
   const LN = 36
@@ -132,15 +129,11 @@ const states: Scene = ({ t, cue }: SceneProps) => {
     return [x0 + c * (PR * 2 + 1) + (r % 2 ? PR * 0.5 : 0) * (w > 0 ? 1 : 1), JAR_Y - 8 - PR - r * (PR * 1.8)] as [number, number]
   }
   const beakerTilt = ep(t, liquid, 0.4) * (1 - ep(t, pourAt + LN * 0.045 + 0.2, 0.4))
-  // the sloshing settles once the morphed jar has re-packed (B2.3)
-  const slosh = 1 - ep(t, cup + 1.8, 0.8)
 
   // ── gas: a puff under the lid spreads out to fill the jar
   const GN = 16
   const gasIn = ep(t, gas - 0.2, 0.3)
   const spread = ep(t, gas + 0.4, 1.6, ease.inOutCubic)
-  // the zipping-around settles as the narration finishes "fill all the space" (B2.3)
-  const zip = Math.sin(Math.PI * progress(t, gas, 2.4))
 
   return (
     <>
@@ -175,21 +168,21 @@ const states: Scene = ({ t, cue }: SceneProps) => {
                     {Array.from({ length: 25 }, (_, k) => {
                       const c = k % 5
                       const r = Math.floor(k / 5)
-                      const jx = Math.sin(t * 16 + k * 1.7) * 1.4 * jig
-                      const jy = Math.cos(t * 14 + k * 2.3) * 1.4 * jig
-                      return <Ball key={k} x={sBlock.x - 52 + c * 26 + jx} y={sBlock.bottom - 18 - r * 26 + jy} color={j.color} hl={false} />
+                      const jx = Math.sin(t * 16 + k * 1.7) * 1.4
+                      const jy = Math.cos(t * 14 + k * 2.3) * 1.4
+                      return <Ball key={k} x={sBlock.x - 52 + c * 26 + jx} y={sBlock.bottom - 18 - r * 26 + jy} color={j.color} />
                     })}
                   </g>
                 )}
                 {isLiquid && (
-                  <g>
+                  <>
                     {/* the liquid body: fills the jar up to its level, whatever its shape */}
                     {(() => {
                       const landed = Array.from({ length: LN }, (_, k) => t > pourAt + k * 0.045 + 0.35).filter(Boolean).length
                       const rowsA = Math.ceil(landed / 6)
                       const rowsB = Math.ceil(landed / 10)
                       const rows = rowsA + (rowsB - rowsA) * morph
-                      const top = JAR_Y - 8 - rows * PR * 1.8 - 2 + Math.sin(t * 2.4) * 1.5 * slosh
+                      const top = JAR_Y - 8 - rows * PR * 1.8 - 2 + Math.sin(t * 2.4) * 1.5
                       return landed > 0 ? <rect x={j.x - lw / 2} y={top} width={lw} height={JAR_Y - top} fill={j.color} opacity={0.3} /> : null
                     })()}
                     {Array.from({ length: LN }, (_, k) => {
@@ -199,8 +192,8 @@ const states: Scene = ({ t, cue }: SceneProps) => {
                       const a = slot(k, 6, 0)
                       const b = slot(k, 10, 1)
                       const mk = ep(t, cup + 0.1 + (k % 10) * 0.02, 0.9, ease.inOutCubic)
-                      let x = a[0] + (b[0] - a[0]) * mk + Math.sin(t * 2 + k) * 2 * slosh
-                      let y = a[1] + (b[1] - a[1]) * mk + Math.cos(t * 2.6 + k * 1.3) * 1.5 * slosh
+                      let x = a[0] + (b[0] - a[0]) * mk + Math.sin(t * 2 + k) * 2
+                      let y = a[1] + (b[1] - a[1]) * mk + Math.cos(t * 2.6 + k * 1.3) * 1.5
                       if (t < land) {
                         // falling from the spout
                         const sx = SPOUT[0]
@@ -208,9 +201,9 @@ const states: Scene = ({ t, cue }: SceneProps) => {
                         x = sx + (x - sx) * fall * fall * fall
                         y = sy + (y - sy) * fall * fall
                       }
-                      return <Ball key={k} x={x} y={y} color={j.color} hl={false} />
+                      return <Ball key={k} x={x} y={y} color={j.color} />
                     })}
-                  </g>
+                  </>
                 )}
                 {i === 2 &&
                   gasIn > 0 &&
@@ -221,9 +214,9 @@ const states: Scene = ({ t, cue }: SceneProps) => {
                     const py = JAR_Y - 40 + Math.sin(a0) * r0 * 0.6
                     const gx = j.x - 66 + (k % 4) * 44 + (rand(k * 5) - 0.5) * 20
                     const gy = JAR_Y - 40 - Math.floor(k / 4) * 50 + (rand(k * 7) - 0.5) * 18
-                    const wx = Math.sin(t * (1.6 + rand(k) * 1.4) + k) * 20 * spread * zip
-                    const wy = Math.cos(t * (1.3 + rand(k + 1) * 1.6) + k * 2) * 16 * spread * zip
-                    return <Ball key={k} x={px + (gx - px) * spread + wx} y={py + (gy - py) * spread + wy} color={j.color} opacity={gasIn} hl={false} />
+                    const wx = Math.sin(t * (1.6 + rand(k) * 1.4) + k) * 20 * spread
+                    const wy = Math.cos(t * (1.3 + rand(k + 1) * 1.6) + k * 2) * 16 * spread
+                    return <Ball key={k} x={px + (gx - px) * spread + wx} y={py + (gy - py) * spread + wy} color={j.color} opacity={gasIn} />
                   })}
               </JarGlass>
             </Scale>
@@ -246,8 +239,8 @@ const states: Scene = ({ t, cue }: SceneProps) => {
         ))}
         <Sparkles t={t} at={fill + 0.2} x={JARS[2].x} y={JAR_Y - JAR_H / 2} r={110} n={8} seed={4} />
         <Burst t={t} at={solid + 0.45} x={JARS[0].x} y={JAR_Y - 10} color={M.gold} r={70} />
-        {/* one finite celebration at the end (B2.3), not two perpetual twinkles */}
-        <Sparkles t={t} at={done} x={480} y={JAR_Y - JAR_H / 2} r={330} n={8} seed={7} />
+        <Twinkle t={t} at={done} x={JARS[0].x + 96} y={JAR_Y - JAR_H} r={10} />
+        <Twinkle t={t} at={done} x={JARS[2].x - 100} y={JAR_Y - 30} r={9} phase={0.5} color={M.pink} />
       </Camera>
     </>
   )
@@ -309,17 +302,17 @@ function Blob({ x, y, R, a, b, k, color, mood, t }: { x: number; y: number; R: n
       <path d={smoothClosed(pts)} fill={color} stroke={M.ink} strokeWidth={4.5} strokeLinejoin="round" />
       <ellipse cx={x - R * 0.36} cy={y - R * 0.3} rx={R * 0.14} ry={R * 0.24} fill="#fff" opacity={0.7} transform={`rotate(20 ${x - R * 0.36} ${y - R * 0.3})`} />
       {closed ? (
-        <g>
+        <>
           <path d={`M ${x - R * 0.36} ${ey} q ${R * 0.11} ${-R * 0.12} ${R * 0.22} 0`} fill="none" stroke={M.ink} strokeWidth={3.5} strokeLinecap="round" />
           <path d={`M ${x + R * 0.14} ${ey} q ${R * 0.11} ${-R * 0.12} ${R * 0.22} 0`} fill="none" stroke={M.ink} strokeWidth={3.5} strokeLinecap="round" />
-        </g>
+        </>
       ) : (
-        <g>
+        <>
           <circle cx={x - R * 0.25} cy={ey} r={R * 0.09} fill={M.ink} />
           <circle cx={x + R * 0.25} cy={ey} r={R * 0.09} fill={M.ink} />
           <circle cx={x - R * 0.22} cy={ey - R * 0.04} r={R * 0.03} fill="#fff" />
           <circle cx={x + R * 0.28} cy={ey - R * 0.04} r={R * 0.03} fill="#fff" />
-        </g>
+        </>
       )}
       {mood < 0.5 ? (
         <path d={`M ${x - R * 0.18} ${y + R * 0.34} q ${R * 0.06} ${-R * 0.06} ${R * 0.12} 0 t ${R * 0.12} 0 t ${R * 0.12} 0`} fill="none" stroke={M.ink} strokeWidth={3} strokeLinecap="round" />
@@ -443,12 +436,12 @@ const water: Scene = ({ t, cue }: SceneProps) => {
         })}
         {/* station 1: ice */}
         {t >= at1 && (
-          <g>
+          <>
             <Blob x={ST_X[0]} y={ST_Y + bob(0) * 0.3} R={MR} a="cube" b="cube" k={0} color={ICE} mood={0} t={t} />
             {[0, 1, 2].map((i) => (
               <Snowflake key={i} x={ST_X[0] + [-82, 86, 70][i]} y={ST_Y + [-70, -40, 74][i]} r={[16, 12, 10][i]} rot={t * 30 + i * 40} opacity={ep(t, at1 + i * 0.15, 0.4)} />
             ))}
-          </g>
+          </>
         )}
         {/* station 2: a glass of water */}
         {t > tr2[0] && (
@@ -561,14 +554,14 @@ const COLL_D = 'M 640 506 Q 540 530 448 500'
 function CycleStep({ t, at, d, end, ang, color, label, lx, ly }: { t: number; at: number; d: string; end: P; ang: number; color: string; label: string; lx: number; ly: number }) {
   const w = textW(label, 26) + 34
   return (
-    <g>
+    <>
       <Draw t={t} at={at} dur={0.8} d={d} stroke={M.ink} width={13} />
       <Draw t={t} at={at} dur={0.8} d={d} stroke={color} width={7} />
       {t > at + 0.78 && (
-        <g>
+        <>
           <Head x={end[0]} y={end[1]} ang={ang} size={22} color={M.ink} width={13} />
           <Head x={end[0]} y={end[1]} ang={ang} size={22} color={color} width={7} />
-        </g>
+        </>
       )}
       <Scale s={popS(t, at + 0.35, 11)} x={lx} y={ly}>
         <rect x={lx - w / 2} y={ly - 22} width={w} height={44} rx={22} fill={color} stroke={M.ink} strokeWidth={3.5} />
@@ -576,7 +569,7 @@ function CycleStep({ t, at, d, end, ang, color, label, lx, ly }: { t: number; at
           {label}
         </Txt>
       </Scale>
-    </g>
+    </>
   )
 }
 

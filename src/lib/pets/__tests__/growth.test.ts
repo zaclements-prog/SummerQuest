@@ -80,29 +80,29 @@ describe('pet catalog', () => {
 
 describe('zoneStarTotals', () => {
   it("adds up the curriculum's maximums", () => {
-    expect(zoneStarTotals(getZone('multiplication-mesa')!).total).toBe(9)
-    expect(zoneStarTotals(getZone('division-dunes')!).total).toBe(12)
-    expect(zoneStarTotals(getZone('tower-battlefront')!).total).toBe(3)
+    expect(zoneStarTotals(getZone('multiplication-mesa')!, undefined, 3).total).toBe(9)
+    expect(zoneStarTotals(getZone('division-dunes')!, undefined, 3).total).toBe(12)
+    expect(zoneStarTotals(getZone('tower-battlefront')!, undefined, 3).total).toBe(3)
   })
 
   it('caps a stage that over-reports its stars', () => {
     const z = zonesWith('multiplication-mesa', [99, 4, 0])
-    const t = zoneStarTotals(getZone('multiplication-mesa')!, z['multiplication-mesa'])
+    const t = zoneStarTotals(getZone('multiplication-mesa')!, z['multiplication-mesa'], 3)
     expect(t).toEqual({ earned: 6, total: 9, complete: false })
   })
 
   it('ignores stages the zone no longer has, and bad values', () => {
     const t = zoneStarTotals(getZone('fraction-falls')!, {
       stages: { 'old-stage': { stars: 3 }, 'frac-practice': { stars: Number.NaN }, 'frac-compare': { stars: -2 } },
-    })
+    }, 3)
     expect(t.earned).toBe(0)
   })
 
   it('is complete only at the maximum', () => {
     const zone = getZone('data-delta')!
-    expect(zoneStarTotals(zone, zonesWith('data-delta', [3, 3, 2])['data-delta']).complete).toBe(false)
-    expect(zoneStarTotals(zone, zonesWith('data-delta', [3, 3, 3])['data-delta']).complete).toBe(true)
-    expect(zoneStarTotals({ stages: [] }).complete).toBe(false)
+    expect(zoneStarTotals(zone, zonesWith('data-delta', [3, 3, 2])['data-delta'], 3).complete).toBe(false)
+    expect(zoneStarTotals(zone, zonesWith('data-delta', [3, 3, 3])['data-delta'], 3).complete).toBe(true)
+    expect(zoneStarTotals({ stages: [] }, undefined, 3).complete).toBe(false)
   })
 })
 
@@ -142,64 +142,64 @@ describe('growthFromStars', () => {
 
 describe('petStatus', () => {
   it('starts as an egg that its lesson or a first star hatches', () => {
-    const s = petStatus(pet('frog'), {}, {})
+    const s = petStatus(pet('frog'), {}, {}, 3)
     expect(s.stage).toBe('egg')
     expect(s.next).toEqual({ stage: 'baby', more: 1, lesson: true })
-    expect(petStatus(pet('frog'), {}, { fractions: 1 }).stage).toBe('baby')
-    expect(petStatus(pet('frog'), zonesWith('fraction-falls', [1]), {}).stage).toBe('baby')
+    expect(petStatus(pet('frog'), {}, { fractions: 1 }, 3).stage).toBe('baby')
+    expect(petStatus(pet('frog'), zonesWith('fraction-falls', [1]), {}, 3).stage).toBe('baby')
     // another zone's lesson doesn't count
-    expect(petStatus(pet('frog'), {}, { reading: 1 }).stage).toBe('egg')
+    expect(petStatus(pet('frog'), {}, { reading: 1 }, 3).stage).toBe('egg')
   })
 
   it('says how many stars the next stage needs', () => {
-    const baby = petStatus(pet('lion'), zonesWith('multiplication-mesa', [3, 1]), {})
+    const baby = petStatus(pet('lion'), zonesWith('multiplication-mesa', [3, 1]), {}, 3)
     expect(baby).toMatchObject({ stage: 'baby', stars: 4, total: 9, next: { stage: 'kid', more: 1, lesson: false } })
-    const kid = petStatus(pet('lion'), zonesWith('multiplication-mesa', [3, 3]), {})
+    const kid = petStatus(pet('lion'), zonesWith('multiplication-mesa', [3, 3]), {}, 3)
     expect(kid).toMatchObject({ stage: 'kid', stars: 6, next: { stage: 'adult', more: 3 } })
-    const adult = petStatus(pet('lion'), zonesWith('multiplication-mesa', [3, 3, 3]), {})
+    const adult = petStatus(pet('lion'), zonesWith('multiplication-mesa', [3, 3, 3]), {}, 3)
     expect(adult).toMatchObject({ stage: 'adult', next: null })
   })
 
   it('a lesson-hatched baby still needs every star of the kid stage', () => {
-    const s = petStatus(pet('panda'), {}, { geometry: 123 })
+    const s = petStatus(pet('panda'), {}, { geometry: 123 }, 3)
     expect(s).toMatchObject({ stage: 'baby', lessonDone: true, next: { stage: 'kid', more: 5 } })
   })
 
   it('a 12-star zone (Division Dunes) is a kid at 5 and grown up at 12', () => {
-    expect(petStatus(pet('trex'), zonesWith('division-dunes', [3, 2]), {}).stage).toBe('kid')
-    expect(petStatus(pet('trex'), zonesWith('division-dunes', [3, 3, 3, 2]), {}).stage).toBe('kid')
-    expect(petStatus(pet('trex'), zonesWith('division-dunes', [3, 3, 3, 3]), {}).stage).toBe('adult')
+    expect(petStatus(pet('trex'), zonesWith('division-dunes', [3, 2]), {}, 3).stage).toBe('kid')
+    expect(petStatus(pet('trex'), zonesWith('division-dunes', [3, 3, 3, 2]), {}, 3).stage).toBe('kid')
+    expect(petStatus(pet('trex'), zonesWith('division-dunes', [3, 3, 3, 3]), {}, 3).stage).toBe('adult')
   })
 
   it('Tower Battlefront: the dragon has no lesson and grows on 1, 2 and 3 stars', () => {
-    expect(petStatus(pet('dragon'), {}, {}).next).toEqual({ stage: 'baby', more: 1, lesson: false })
-    expect(petStatus(pet('dragon'), zonesWith('tower-battlefront', [1]), {}).stage).toBe('baby')
-    expect(petStatus(pet('dragon'), zonesWith('tower-battlefront', [2]), {})).toMatchObject({ stage: 'kid', next: { stage: 'adult', more: 1 } })
-    expect(petStatus(pet('dragon'), zonesWith('tower-battlefront', [3]), {}).stage).toBe('adult')
+    expect(petStatus(pet('dragon'), {}, {}, 3).next).toEqual({ stage: 'baby', more: 1, lesson: false })
+    expect(petStatus(pet('dragon'), zonesWith('tower-battlefront', [1]), {}, 3).stage).toBe('baby')
+    expect(petStatus(pet('dragon'), zonesWith('tower-battlefront', [2]), {}, 3)).toMatchObject({ stage: 'kid', next: { stage: 'adult', more: 1 } })
+    expect(petStatus(pet('dragon'), zonesWith('tower-battlefront', [3]), {}, 3).stage).toBe('adult')
   })
 
   it("stages over-reporting stars can't grow a pet past what the zone allows", () => {
     // 99 stars on one stage count as its 3: a baby, not a grown-up
-    expect(petStatus(pet('lion'), zonesWith('multiplication-mesa', [99]), {}).stage).toBe('baby')
+    expect(petStatus(pet('lion'), zonesWith('multiplication-mesa', [99]), {}, 3).stage).toBe('baby')
     // two stages at 5 count as 3 + 3: a kid, three short of grown up
-    expect(petStatus(pet('lion'), zonesWith('multiplication-mesa', [5, 5, 0]), {})).toMatchObject({ stage: 'kid', stars: 6 })
+    expect(petStatus(pet('lion'), zonesWith('multiplication-mesa', [5, 5, 0]), {}, 3)).toMatchObject({ stage: 'kid', stars: 6 })
     // Tower Battlefront's one stage at 7 is simply complete
-    expect(petStatus(pet('dragon'), zonesWith('tower-battlefront', [7]), {})).toMatchObject({ stage: 'adult', stars: 3 })
+    expect(petStatus(pet('dragon'), zonesWith('tower-battlefront', [7]), {}, 3)).toMatchObject({ stage: 'adult', stars: 3 })
   })
 
   it('a pet whose zone is missing stays an egg (or a baby from its lesson)', () => {
     const none = () => undefined
-    expect(petStatus(pet('frog'), {}, {}, none)).toMatchObject({ stage: 'egg', total: 0 })
-    expect(petStatus(pet('frog'), {}, { fractions: 1 }, none)).toMatchObject({ stage: 'baby', next: null })
+    expect(petStatus(pet('frog'), {}, {}, 3, none)).toMatchObject({ stage: 'egg', total: 0 })
+    expect(petStatus(pet('frog'), {}, { fractions: 1 }, 3, none)).toMatchObject({ stage: 'baby', next: null })
   })
 })
 
 describe('all pets', () => {
   it('petStatuses / petStages cover every pet in catalog order', () => {
     const zones = { ...zonesWith('fraction-falls', [3, 3, 3]), ...zonesWith('reading-reef', [2]) }
-    const list = petStatuses(zones, { geometry: 1 })
+    const list = petStatuses(zones, { geometry: 1 }, 3)
     expect(list.map((s) => s.pet.creatureId)).toEqual(PETS.map((p) => p.creatureId))
-    const stages = petStages(zones, { geometry: 1 })
+    const stages = petStages(zones, { geometry: 1 }, 3)
     expect(stages.frog).toBe('adult')
     expect(stages.octopus).toBe('baby')
     expect(stages.panda).toBe('baby')
@@ -238,23 +238,23 @@ describe('pet words', () => {
   })
 
   it('what comes next, in a sentence and in short', () => {
-    const lionKid = petStatus(pet('lion'), zonesWith('multiplication-mesa', [3, 3]), {})
+    const lionKid = petStatus(pet('lion'), zonesWith('multiplication-mesa', [3, 3]), {}, 3)
     expect(nextStepText(lionKid)).toBe('3 more ⭐ in Multiplication Mesa to grow up!')
     expect(nextStepShort(lionKid)).toBe('3 more ⭐ to grow up')
-    const lionBaby = petStatus(pet('lion'), zonesWith('multiplication-mesa', [3, 1]), {})
+    const lionBaby = petStatus(pet('lion'), zonesWith('multiplication-mesa', [3, 1]), {}, 3)
     expect(nextStepText(lionBaby)).toBe('1 more ⭐ in Multiplication Mesa to grow!')
-    expect(nextStepText(petStatus(pet('frog'), {}, {}))).toBe('Finish the lesson or get 1 ⭐ in Fraction Falls to hatch!')
-    expect(nextStepText(petStatus(pet('dragon'), {}, {}))).toBe('Get 1 ⭐ in Tower Battlefront to hatch!')
-    expect(nextStepShort(petStatus(pet('dragon'), {}, {}))).toBe('1 ⭐ to hatch')
-    const adult = petStatus(pet('lion'), zonesWith('multiplication-mesa', [3, 3, 3]), {})
+    expect(nextStepText(petStatus(pet('frog'), {}, {}, 3))).toBe('Finish the lesson or get 1 ⭐ in Fraction Falls to hatch!')
+    expect(nextStepText(petStatus(pet('dragon'), {}, {}, 3))).toBe('Get 1 ⭐ in Tower Battlefront to hatch!')
+    expect(nextStepShort(petStatus(pet('dragon'), {}, {}, 3))).toBe('1 ⭐ to hatch')
+    const adult = petStatus(pet('lion'), zonesWith('multiplication-mesa', [3, 3, 3]), {}, 3)
     expect(nextStepText(adult)).toBe('All grown up! You can play as the Lion!')
   })
 
   it("the line on a zone's page", () => {
-    expect(zonePetLine(petStatus(pet('lion'), {}, {}))).toBe('Your Lion egg: get 1 ⭐ here to hatch it!')
-    expect(zonePetLine(petStatus(pet('lion'), zonesWith('multiplication-mesa', [3, 3]), {}))).toBe('Your kid Lion: 3 more ⭐ here to grow up!')
-    expect(zonePetLine(petStatus(pet('lion'), zonesWith('multiplication-mesa', [3, 1]), {}))).toBe('Your baby Lion: 1 more ⭐ here to grow!')
-    expect(zonePetLine(petStatus(pet('lion'), zonesWith('multiplication-mesa', [3, 3, 3]), {}))).toBe('Your Lion is all grown up!')
+    expect(zonePetLine(petStatus(pet('lion'), {}, {}, 3))).toBe('Your Lion egg: get 1 ⭐ here to hatch it!')
+    expect(zonePetLine(petStatus(pet('lion'), zonesWith('multiplication-mesa', [3, 3]), {}, 3))).toBe('Your kid Lion: 3 more ⭐ here to grow up!')
+    expect(zonePetLine(petStatus(pet('lion'), zonesWith('multiplication-mesa', [3, 1]), {}, 3))).toBe('Your baby Lion: 1 more ⭐ here to grow!')
+    expect(zonePetLine(petStatus(pet('lion'), zonesWith('multiplication-mesa', [3, 3, 3]), {}, 3))).toBe('Your Lion is all grown up!')
   })
 
   it('celebration words', () => {

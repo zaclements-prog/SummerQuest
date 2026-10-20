@@ -3,7 +3,8 @@ import type { FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, useReducedMotion } from 'framer-motion'
 import { useProgress } from '../store/progress'
-import type { GradeLevel } from '../lib/gradeTiers'
+import { GRADE_LABEL, GRADE_SHORT_LABEL, type GradeLevel } from '../lib/gradeTiers'
+import { OFFERED_GRADES } from '../lib/features'
 import { sfx } from '../lib/sound'
 import { Card, Button, BackButton } from '../components/ui'
 import { useEntrance } from '../lib/motion'
@@ -48,11 +49,34 @@ const COLORS = [
   { name: 'Coral', value: '#f43f5e' },
 ]
 
-const GRADES: Array<{ grade: GradeLevel; label: string; blurb: string }> = [
-  { grade: 2, label: '2nd', blurb: 'Add & subtract, arrays, easy fractions' },
-  { grade: 3, label: '3rd', blurb: 'Times tables, fractions, bigger numbers' },
-  { grade: 4, label: '4th', blurb: 'Big multiplication, harder fractions' },
-]
+/** What each grade practices (one line under its big "K" / "2nd" label). */
+const GRADE_BLURB: Record<GradeLevel, string> = {
+  0: 'Counting, shapes, letters',
+  1: 'Add to 20, tens & ones, reading',
+  2: 'Add & subtract, arrays, easy fractions',
+  3: 'Times tables, fractions, bigger numbers',
+  4: 'Big multiplication, harder fractions',
+  5: 'Decimals, long division, fractions',
+}
+
+/** The grades this build offers (lib/features: 2nd–4th in the store build for now). */
+const GRADES: Array<{ grade: GradeLevel; label: string; blurb: string }> = OFFERED_GRADES.map((grade) => ({
+  grade,
+  label: GRADE_SHORT_LABEL[grade],
+  blurb: GRADE_BLURB[grade],
+}))
+
+/**
+ * Cards per row for 3–6 grades: three in a row (today's 2nd–4th); four in a
+ * row for four; rows of three for five or six. A phone takes two per row once
+ * there are more than three, so each big label keeps a thumb-sized card.
+ */
+const GRADE_COLS =
+  GRADES.length <= 3
+    ? 'grid-cols-3'
+    : GRADES.length === 4
+      ? 'grid-cols-2 sm:grid-cols-4'
+      : 'grid-cols-2 min-[480px]:grid-cols-3'
 
 export default function AvatarCreate() {
   const navigate = useNavigate()
@@ -297,7 +321,7 @@ export default function AvatarCreate() {
                 <div
                   role="radiogroup"
                   aria-labelledby="grade-label"
-                  className="grid grid-cols-3 gap-3"
+                  className={`grid ${GRADE_COLS} gap-3`}
                 >
                   {GRADES.map((g) => {
                     const selected = grade === g.grade
@@ -307,7 +331,7 @@ export default function AvatarCreate() {
                         type="button"
                         role="radio"
                         aria-checked={selected}
-                        aria-label={`${g.label} grade`}
+                        aria-label={GRADE_LABEL[g.grade]}
                         onClick={() => {
                           sfx.click()
                           setGrade(g.grade)

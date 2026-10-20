@@ -4,6 +4,8 @@ import { sfx } from '../lib/sound'
 import { Button } from '../components/ui'
 import { useEntrance } from '../lib/motion'
 import { TOON } from '../toon/palette'
+import { gradeListText } from '../lib/gradeTiers'
+import { OFFERED_GRADES } from '../lib/features'
 
 // ── Decorative toon scene ─────────────────────────────────────────────────────
 // A side view of the island in the World's palette: hazy sky, drifting outlined
@@ -174,7 +176,8 @@ export default function Welcome() {
         </motion.div>
 
         <motion.p variants={item} className="kid-text text-base text-ink-800 short:bg-paper/85 short:rounded-full short:px-3">
-          For kids finishing 2nd, 3rd, or 4th grade
+          {/* "2nd, 3rd, or 4th grade" while a build offers 2–4 (lib/features) */}
+          For kids finishing {gradeListText(OFFERED_GRADES)}
         </motion.p>
       </motion.div>
     </div>

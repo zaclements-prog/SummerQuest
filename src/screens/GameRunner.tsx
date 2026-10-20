@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
-import { getStage, getZone } from '../curriculum'
+import { getStage, getZone, zoneStages } from '../curriculum'
 import { useProgress } from '../store/progress'
 import { effectiveConfigForStage } from '../lib/gradeTiers'
 import { createProvider } from '../lib/providers'
@@ -11,7 +11,9 @@ import SpeedRun from '../games/SpeedRun'
 import BossBattle from '../games/BossBattle'
 import TowerDefense from '../games/tower-defense/TowerDefense'
 import WritingPad from '../games/WritingPad'
-import { CloudKeeper, DivisionArena, FractionForge, TimesGrove } from '../games/lazyGames'
+import { CloudKeeper, CritterParade, DivisionArena, FractionForge, ListenPlay, TimesGrove } from '../games/lazyGames'
+import { ListenResultCard } from '../games/listenPlay/ListenResultCard'
+import { isListenMode } from '../lib/gradeBand'
 import { sfx } from '../lib/sound'
 import {
   Card,
@@ -29,7 +31,7 @@ import {
 import { isStageUnlocked } from '../lib/stageLocks'
 import { useWorldUi } from '../world/useWorldUi'
 
-const ARENA_3D = new Set(['divisionArena', 'fractionForge', 'cloudKeeper', 'timesGrove'])
+const ARENA_3D = new Set(['divisionArena', 'fractionForge', 'cloudKeeper', 'timesGrove', 'critterParade'])
 
 export interface GameResult {
   stars: number
@@ -51,12 +53,16 @@ export interface GameProps {
 export default function GameRunner() {
   const { zoneId = '', stageId = '' } = useParams()
   const navigate = useNavigate()
+  // The profile grade picks the zone's stage set (K–1 / 2–4 / 5) and its difficulty.
+  const grade = useProgress((s) => s.player?.grade)
   const zone = getZone(zoneId)
-  const stage = getStage(zoneId, stageId)
+  const stage = getStage(zoneId, stageId, grade)
   const awardStage = useProgress((s) => s.awardStage)
   const addCoins = useProgress((s) => s.addCoins)
   const recordSession = useProgress((s) => s.recordSession)
   const zoneProgress = useProgress((s) => s.zones[zoneId])
+  // K–1 (or a Listen & Play stage): results and chrome without reading.
+  const listen = stage?.gameId === 'listenPlay' || (grade !== undefined && isListenMode(grade))
   // Launched from the 3D World? Then leaving the game goes back there.
   const fromWorld = useWorldUi((s) => s.enteredFromWorld)
   const exitPath = fromWorld ? '/world' : `/zone/${zoneId}`
@@ -69,12 +75,13 @@ export default function GameRunner() {
     if (!stage) return null
     // Grade tiers: the profile grade scales the stage's difficulty knobs;
     // the stage index picks the bank level for static-bank zones.
-    const stages = getZone(zoneId)?.stages ?? []
+    const z = getZone(zoneId)
+    const stages = z ? zoneStages(z, grade) : []
     const idx = Math.max(stages.findIndex((s) => s.id === stageId), 0)
     return createProvider(
-      effectiveConfigForStage(stage, Math.max(idx, 0), useProgress.getState().player?.grade),
+      effectiveConfigForStage(stage, Math.max(idx, 0), grade),
     )
-  }, [stage, zoneId, stageId])
+  }, [stage, zoneId, stageId, grade])
 
   useEffect(() => {
     if (result && zone && stage && processedResultRef.current !== result) {
@@ -113,7 +120,7 @@ export default function GameRunner() {
 
   // ── Locked stage (deep link / old bookmark) ────────────────────────────────
   // Checked before any result exists: finishing a stage can't re-lock it.
-  if (!result && !isStageUnlocked(zone, stageId, zoneProgress)) {
+  if (!result && !isStageUnlocked(zone, stageId, zoneProgress, grade)) {
     return (
       <div className="flex-1 flex items-center justify-center p-4">
         <ErrorState
@@ -129,6 +136,20 @@ export default function GameRunner() {
   // ── Result screen ───────────────────────────────────────────────────────────
   if (result) {
     const coinReward = result.correct * 2 + result.stars * 5
+    if (listen) {
+      return (
+        <ListenResultCard
+          stars={result.stars}
+          coins={coinReward}
+          onNext={() => navigate(exitPath)}
+          onReplay={() => {
+            processedResultRef.current = null
+            setConfirmQuit(false)
+            setResult(null)
+          }}
+        />
+      )
+    }
     return (
       <ResultScreen
         result={result}
@@ -163,8 +184,12 @@ export default function GameRunner() {
         return CloudKeeper
       case 'timesGrove':
         return TimesGrove
+      case 'critterParade':
+        return CritterParade
       case 'writingPad':
         return WritingPad
+      case 'listenPlay':
+        return ListenPlay
       default:
         return null
     }
@@ -191,7 +216,7 @@ export default function GameRunner() {
   return (
     <div className={`flex-1 flex flex-col ${arena3d ? 'bg-[#d9effa]' : ''}`}>
       {/* ── Host top bar ──────────────────────────────────────────────────── */}
-      <TopBar back={{ label: 'Quit', onClick: () => setConfirmQuit(true) }} icon={zone.emoji} title={stage.title} />
+      <TopBar back={{ label: 'Quit', onClick: () => setConfirmQuit(true) }} icon={zone.emoji} title={listen ? '' : stage.title} />
 
       <Game
         provider={provider}

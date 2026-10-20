@@ -1,4 +1,4 @@
-import type { Curriculum } from './types'
+import type { Curriculum, Stage, Zone } from './types'
 import { multiplicationZone } from './multiplication'
 import { divisionZone } from './division'
 import { fractionZone } from './fraction'
@@ -11,11 +11,15 @@ import { readingZone } from './reading'
 import { writingZone } from './writing'
 import { scienceZone } from './science'
 import { towerDefenseZone } from './towerDefense'
+import { contentBand } from '../lib/gradeBand'
+import { DEFAULT_GRADE, gradeSpanText, type GradeLevel } from '../lib/gradeTiers'
+import { OFFERED_GRADES } from '../lib/features'
 
 export const curriculum: Curriculum = {
   id: 'summer-quest',
   title: 'Summer Quest',
-  gradeRange: '2nd-to-4th grade',
+  // "2nd-to-4th grade" while a build offers only 2–4 (lib/features)
+  gradeRange: gradeSpanText(OFFERED_GRADES),
   zones: [
     multiplicationZone,
     divisionZone,
@@ -36,9 +40,26 @@ export function getZone(id: string) {
   return curriculum.zones.find((z) => z.id === id)
 }
 
-export function getStage(zoneId: string, stageId: string) {
+/**
+ * The stages a zone plays at a grade — THE way to read a zone's stages. The
+ * grade's content band (lib/gradeBand) picks the set: K–1 and 5th grade play
+ * their own (`zone.stagesByBand`) once one is authored, everything else (and
+ * a band with no set yet) plays `zone.stages`, the 2nd–4th grade set. A
+ * missing grade counts as DEFAULT_GRADE. Stars live under stage ids, which
+ * differ per band, so a child who changes grade keeps every star and sees
+ * each band's again on switching back.
+ */
+export function zoneStages(zone: Pick<Zone, 'stages' | 'stagesByBand'>, grade: GradeLevel | null | undefined): Stage[] {
+  const band = contentBand(grade ?? DEFAULT_GRADE)
+  if (band === 'g24') return zone.stages
+  const set = zone.stagesByBand?.[band]
+  return set && set.length > 0 ? set : zone.stages
+}
+
+/** A stage of the zone's set for this grade (another band's stage isn't found). */
+export function getStage(zoneId: string, stageId: string, grade: GradeLevel | null | undefined) {
   const zone = getZone(zoneId)
-  return zone?.stages.find((s) => s.id === stageId)
+  return zone ? zoneStages(zone, grade).find((s) => s.id === stageId) : undefined
 }
 
 export * from './types'

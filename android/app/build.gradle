@@ -16,8 +16,24 @@ android {
             ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+    // Release signing: the key and its passwords live outside the repo, in
+    // ~/.gradle/gradle.properties (see scripts/new-release-key.sh). Without them a release
+    // build still runs but comes out unsigned (app-release-unsigned.apk).
+    def sq = { String name -> project.findProperty(name) ?: System.getenv(name) }
+    def hasReleaseKey = sq('SQ_RELEASE_STORE_FILE') && sq('SQ_RELEASE_STORE_PASSWORD') && sq('SQ_RELEASE_KEY_ALIAS') && sq('SQ_RELEASE_KEY_PASSWORD')
+    signingConfigs {
+        if (hasReleaseKey) {
+            release {
+                storeFile file(sq('SQ_RELEASE_STORE_FILE'))
+                storePassword sq('SQ_RELEASE_STORE_PASSWORD')
+                keyAlias sq('SQ_RELEASE_KEY_ALIAS')
+                keyPassword sq('SQ_RELEASE_KEY_PASSWORD')
+            }
+        }
+    }
     buildTypes {
         release {
+            if (hasReleaseKey) signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

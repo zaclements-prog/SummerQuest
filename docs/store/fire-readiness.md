@@ -16,11 +16,11 @@ The store-listing documents sit beside it in `docs/store/`.
 | Fire tablet layouts | ✅ Fire 7, HD 8, HD 10 and Max 11, both orientations, with system bars showing. |
 | Touch / Pencil / rotation | ✅ Tap-to-walk everywhere (World, Home, games). Drags and pinches never misfire. The view survives rotation. |
 | Production build health | ✅ 70 routes and 0 page errors on the production build. |
-| Low-end performance | ✅ / ⚠️ Fire HD 10: every measured 3D screen ~58–59 fps (was ~50). At 3× CPU (≈ Fire 7) World 48 fps, Candy Forge 53, the rest 59–60. See [Performance](#performance). Confirm on a real Fire 7. |
+| Low-end performance | ✅ Fire HD 8 (2022): every 3D screen and lesson ~57–60 fps in both orientations. ✅ Fire HD 10: 3D ~58–59 fps; lessons 44–55 fps while narrating (GPU-bound on its bigger screen). ⏳ Fire 7 not yet tested. See [Performance](#performance). |
 | Kid safety / COPPA | ✅ No ads, no analytics, no SDKs, no network. `npm run build:store` compiles out the AI writing feeder and fails on any network use. Parental gate on the Parent area and every grown-up setting. Store build sweep: 70 routes, 0 errors, 0 outside requests. See `privacy-policy.md`. |
-| Store assets | ✅ Icons 512×512 and 114×114 (`assets/`). ✅ Screenshots 1920×1200. ⏳ Listing text: `listing-draft.md`. |
+| Store assets | ✅ Icons 512×512 and 114×114 (`assets/`). ✅ Screenshots: 7 at 1920×1200 in `screenshots/` (World, two lessons, Times Grove, Candy Forge, map, welcome; Pretty graphics, Fire HD 10 page size). ⏳ Listing text: `listing-draft.md`. |
 | Packaging for Fire OS | ✅ Capacitor Android app in `android/` (2026-10-18). Debug APK builds and passes the emulator checks. ⏳ Release signing key (owner). See [Packaging](#packaging). |
-| Real-device check | ✅ Fire HD 10 (Fire OS 8.3), 2026-10-18. ⏳ Fire 7 / HD 8 still to do (see [Packaging](#packaging)). |
+| Real-device check | ✅ Fire HD 10 and ✅ Fire HD 8 (both Fire OS 8.3), 2026-10-18. ⏳ Fire 7 still to do (see [Packaging](#packaging)). |
 
 ## What Amazon requires, and where we stand
 
@@ -46,6 +46,8 @@ The store-listing documents sit beside it in `docs/store/`.
   Status: a root error boundary turns a crash or a failed screen load into a friendly "Oops!" screen. Everything goes silent when the app is backgrounded (sound effects, narration, speech), and a lesson's voice and pictures pause together. Back is handled by the Capacitor app (see [Packaging](#packaging)).
 
 ## Packaging
+
+(Amazon stopped accepting new *web* apps on Oct 31, 2024, as its Developer Console notes, so an Android package is the only route.)
 
 **Done: Capacitor Android app** (`capacitor.config.ts`, `android/`, Capacitor 8). Fire
 tablets run it in Amazon WebView (Chromium), and the web app runs unchanged inside it.
@@ -85,14 +87,13 @@ The toolchain is JDK 21 (`brew install openjdk@21`) and the Android SDK at
 - Back works: with the on-screen keyboard open, Back closes the keyboard and stays on the screen. Map → Back returns to the World.
 - A lesson plays narration and keeps the screen on. On Home, the audio stops. Back in the app, the narration resumes. Leaving the lesson lets the screen sleep again.
 - No crashes in the log. The test explorer was cleared afterwards.
-- Still to check on a **Fire 7 / HD 8**, the slowest targets.
+- Still to check on a **Fire 7**, the slowest target. The Fire HD 8 passed: see [Performance](#performance).
 
 **Still to do (owner):**
-- **Release signing key.** Create it once and keep it safe and out of git:
-  `keytool -genkeypair -v -keystore summerquest-release.jks -alias summerquest -keyalg RSA -keysize 2048 -validity 10000`.
-  Then wire it into `android/app/build.gradle` `signingConfigs` through `~/.gradle/gradle.properties`. Amazon re-signs the upload with its own certificate for your account.
+- **Release signing key.** The build is wired (`android/app/build.gradle` reads `SQ_RELEASE_*` from `~/.gradle/gradle.properties`); the key itself is yours to create, once:
+  `bash scripts/new-release-key.sh`. It runs keytool (you type the password), stores the key in `~/.summerquest-keys/` outside the repo, and prints the four `gradle.properties` lines. **Back up the key file and its password.** Then `npm run android:release` builds `app-release.apk`, signed. Without the key the release build comes out unsigned. Verified with a throwaway key: signed, no INTERNET permission. Amazon re-signs the upload with its own certificate for your account.
 - **Version.** Set `versionCode` and `versionName` in `android/app/build.gradle`. They are now 1 and "1.0". Bump `versionCode` on every upload.
-- **App ID.** `com.summerquest.app` is permanent once published. Change it now if you want a different one, in `capacitor.config.ts` and `android/app/build.gradle`.
+- **App ID.** `com.summerquest.app`: confirmed by the owner (2026-10-18). It is permanent once published.
 
 ## Quality passes (2026-10-18)
 
@@ -135,6 +136,30 @@ the Fire 7's quad-core A53). It runs in a software-GL browser here, so 3D number
 - Every 3D screen stays under 250 draw calls per frame on Fast.
 - **Watch on a real Fire 7:** the first seconds of the World and the 3D games, while the scenery is merged.
 
+### Fire HD 8 (2022), the low-end check (2026-10-18)
+
+**Device:**
+- KFRAWI: MediaTek MT8169A with six Cortex-A55 cores (no big cores) and a Mali-G52 MC2 GPU (the same GPU as the HD 10).
+- 2 GB RAM; 1280×800 at 1.33× density.
+- Fire OS 8.3.3.8 with Amazon WebView 148.
+
+**Checks:** the debug APK from `master` (after PR #10) passed the smoke test: first run, the World, Map → Back → World, a restart that keeps the explorer, and no crashes. Cold start takes 3.7 s; 1.8 s once warm.
+
+**Measured with `fire-perf.mjs`** at full speed, no throttling. Lessons were started with a real tap, and "after" means after the narration ends.
+
+| Screen | Portrait | Landscape |
+|---|---|---|
+| World | 59.7 fps (110k tris) | 58.6 fps (194k tris) |
+| Home / Pets | 60 / 60 | 60 / 60 |
+| Times Grove / Candy Forge | 60 / 60 | 60 / 60 |
+| Lessons, playing: Multiplication, Division, Fractions, Place Value | 52*–60 | 60, 60, 60, 60 |
+| Lessons, playing: Word Problems, Science | 56, 56 | 58–59, 57–58 (2 repeats) |
+| Lessons, after the narration | 60 | 60 |
+
+\* Multiplication's portrait average includes one 0.8 s pause as the lesson loads; its frames were otherwise steady. One landscape pass had a single slow run each for Word Problems and Science (about 40 fps). Neither repeated in two more runs, most likely background activity on a freshly woken tablet.
+
+**Why the HD 8 beats the HD 10 on lessons:** both have the same GPU, and lessons are limited by redrawing the vector stage. The HD 8's smaller, lower-density screen has about 40% as many pixels to fill. Its slower CPU (all little cores) didn't show up as a limit anywhere. The heavier the screen fill, the more the HD 10 is the device to watch.
+
 ### On a real Fire tablet (2026-10-18)
 
 Measured on the Fire HD 10 (Fire OS 8.3, Amazon WebView 148) with `scripts/fire-perf.mjs`. It attaches to the
@@ -149,6 +174,19 @@ It shows the CPU side only.
 | Times Grove | 56.9 (33 ms) | **58.7 (17 ms)** | 60 → 60 |
 | Candy Forge | 53.4 (33 ms) | **58.7 (17 ms)** | 40 → **53** |
 | Pets | 52.9 (33 ms) | 57 | — → 59 |
+
+**Lessons (motion graphics).** These were the slowest screens. The vector stage was re-rendered and re-rasterized every frame, with live blur filters, and every scene kept moving forever. Measured on the Fire HD 10 in landscape, lesson started with a real tap (`fire-perf.mjs --tap "Watch#n"`); `master` before vs `lesson-perf`:
+
+| Lesson | Playing fps | GPU time per 5 s after the narration | Raster time per 5 s after |
+|---|---|---|---|
+| Multiplication | 35.5 → **47.6** | 4,136 → **1,521 ms** | 1,101 → 270 ms |
+| Division | 46.6 → **50.7** | 3,735 → **1,502 ms** | 1,269 → 301 ms |
+| Fractions | 32.7 → **44.1** | 3,798 → **2,308 ms** | 585 → 213 ms |
+| Place Value | 53.8 → **54.7** | 3,142 → **1,970 ms** | 1,079 → 255 ms |
+
+What changed: on touch devices the stage redraws at a steady 30 fps and holds its last frame 1.5 s after the narration; glows are gradients, not blurs; and stage filters are off. Still open:
+- Drawing the stage at 1× instead of 1.5× (2.25× fewer pixels; check that text stays crisp).
+- Trimming the heaviest scenes (word problems, science: 300+ SVG elements).
 
 What made the difference:
 - **World CPU.** The static batcher kept ~1,800 merged-away meshes in the scene, and three.js walked all ~3,000 objects every frame.
@@ -183,7 +221,7 @@ To measure again, connect the tablet over USB, then run `npm run android:apk`, i
   - grade-2 mixed measurement includes perimeter, elapsed time and change from $10;
   - grade-3 equivalent fractions include fifths and tenths;
   - grade-4 "enrichment" includes averages and angle sums.
-- **Privacy policy:** a contact email, an effective date, and a public URL to host it at (Amazon's listing asks for it).
+- ~~**Privacy policy**~~: done. Contact zaclements@gmail.com, effective October 18, 2026, live at https://zaclements-prog.github.io/summerquest-site/privacy/
 - **Name:** check that "SummerQuest" is clear to use as an app title in your market.
 
 ## Before you submit

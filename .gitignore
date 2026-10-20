@@ -14,6 +14,8 @@ dist-ssr
 
 # TTS generator cache sidecars (regenerable; not committed)
 public/tts/**/*.mp3.hash
+# Python bytecode from the TTS scripts and their tests
+__pycache__/
 
 # Editor directories and files
 .vscode/*
@@ -35,3 +37,7 @@ public/tts/**/*.mp3.hash
 
 # Tablet perf probe output (scripts/fire-perf.mjs)
 perf-results/
+
+# Release signing keys never go in the repo (scripts/new-release-key.sh keeps them in ~/.summerquest-keys)
+*.jks
+*.keystore
