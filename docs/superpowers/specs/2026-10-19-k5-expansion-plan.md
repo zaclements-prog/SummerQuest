@@ -198,6 +198,29 @@ Grade 5 is mostly content; the K–1 machinery doesn't apply.
 - **`src/voice/useVoice.ts`:** `useVoice(ref, { autoPlay })` returns `{ text, playing, clock, replay, stop }`. It is a silent stub until the voice system lands; the signature stays.
 - **`src/lib/problem.ts`:** `Problem.speech?: VoiceRef` (how the question is said) and `Problem.pictureOptions?: PictureOption[]` (K–1 picture answers, each standing for one of `options`). The `Picture` kinds are numeral, group, ten-frame, shape, letter, word, emoji and clock.
 
+## Kindergarten pilot (phase 1) contract
+
+Fixed ids shared by the parallel work. Owner decision: build the pilot now, record the voice later. Until then device speech, or silence, stands in.
+
+**Zones and stages (the `k1` band; grades K and 1 see these):**
+
+| Zone | K–1 title | Stages (`id`, game, kind) |
+|---|---|---|
+| `multiplication-mesa` | Counting Mesa | `k-count-1` Count with me (listenPlay, concept) · `k-count-parade` Critter Parade (critterParade, practice) · `k-count-3` More or fewer (listenPlay, mastery) |
+| `geometry-grove` | Shape Grove | `k-shapes-1` Name that shape (listenPlay) · `k-shapes-2` Flat or solid (listenPlay) · `k-shapes-3` Shape hunt (listenPlay) |
+| `reading-reef` | Letter Reef | `k-letters-1` Find the letter (listenPlay) · `k-letters-2` Big and little letters (listenPlay) · `k-letters-3` First sounds (listenPlay) |
+
+**Lessons (`band: 'k1'`):**
+- `kCounting`: Counting Mesa; its practice stage is `k-count-1`.
+- `kShapes`: Shape Grove; practice `k-shapes-1`.
+- `kLetters`: Letter Reef; practice `k-letters-1`.
+
+**Rules:**
+- **Zones without a K–1 set:** K–1 players see the other nine zones as "still sleeping, coming soon". They can't be entered.
+- **Pets:**
+  - Any of a zone's lessons hatches its pet (`lessonIds`).
+  - Growth takes the best stage across the zone's bands, so switching grade never shrinks a pet.
+
 ## Phases
 
 | Phase | What ships | Notes |
