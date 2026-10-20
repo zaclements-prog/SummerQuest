@@ -27,6 +27,13 @@ export type Picture =
   | {
       kind: 'shape'
       shape: 'circle' | 'square' | 'triangle' | 'rectangle' | 'hexagon' | 'oval' | 'star' | 'cube' | 'sphere' | 'cone' | 'cylinder'
+      /**
+       * Sticker colour (an index into the kit's palette). Default: one per shape;
+       * a quiz varies it so a colour never names a shape.
+       */
+      color?: number
+      /** Flat shapes: turned this many degrees (clockwise), so a shape is known in any position (K.G.2). */
+      turn?: number
     }
   | { kind: 'letter'; ch: string }
   /** A short printed word (grade 1 sight words). */

@@ -3,6 +3,7 @@ import type { Zone } from './types'
 export const readingZone: Zone = {
   id: 'reading-reef',
   title: 'Reading Reef',
+  titleByBand: { k1: 'Letter Reef' },
   subtitle: 'Comprehension passages',
   emoji: '🐠',
   themeColor: 'ocean',
@@ -43,4 +44,41 @@ export const readingZone: Zone = {
       starsToEarn: 3,
     },
   ],
+  stagesByBand: {
+    // K–1 "Letter Reef" (RF.K.1d, RF.K.2–3): letter names → big and little
+    // letters (look-alikes like b and d from the fourth item) → first sounds.
+    // Titles and descriptions are said aloud.
+    k1: [
+      {
+        id: 'k-letters-1',
+        kind: 'concept',
+        title: 'Find the letter',
+        description: 'Listen, then tap the letter you hear.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kLetters', mode: 'findUpper' },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-letters-2',
+        kind: 'practice',
+        title: 'Big and little letters',
+        description: 'Match each big letter to its little letter.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kLetters', mode: 'matchCase', confusablesAfter: 3 },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-letters-3',
+        kind: 'mastery',
+        title: 'First sounds',
+        description: 'Which picture starts with the letter?',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kLetters', mode: 'firstSound' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+    ],
+  },
 }

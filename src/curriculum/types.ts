@@ -1,4 +1,5 @@
 import type { ProviderConfig } from '../lib/providers'
+import type { ContentBand } from '../lib/gradeBand'
 
 export type StageKind = 'concept' | 'practice' | 'mastery'
 
@@ -31,7 +32,13 @@ export interface Stage {
 
 export interface Zone {
   id: string
+  /** The zone's name for 2nd–4th grade (and any band without its own). Read it through `zoneTitle(zone, grade)`. */
   title: string
+  /**
+   * The zone's name for another content band, where its stages teach
+   * something else: Multiplication Mesa is "Counting Mesa" in K–1.
+   */
+  titleByBand?: Partial<Record<ContentBand, string>>
   subtitle: string
   emoji: string
   themeColor: 'island' | 'monster' | 'ocean' | 'quest'
