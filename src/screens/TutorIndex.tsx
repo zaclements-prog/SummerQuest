@@ -2,7 +2,9 @@ import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'framer-motion'
 import type { Variants } from 'framer-motion'
-import { allLessons } from '../tutoring/lessons'
+import { lessonsFor } from '../tutoring/lessons'
+import { isListenMode } from '../lib/gradeBand'
+import ListenTutorIndex from '../tutoring/ui/ListenTutorIndex'
 import { useProgress } from '../store/progress'
 import { weeklyFocus } from '../lib/analytics'
 import { getStage, getZone } from '../curriculum'
@@ -55,7 +57,17 @@ function isComplete(v: LessonView): boolean {
 
 const INK = `0 0 0 3px ${M.ink}`
 
+/**
+ * The lesson picker: the child's grade band's lessons (`lessonsFor`). The
+ * voice-first grades (K–1) get big pictures and nothing to read; grades 2–5
+ * the reading picker below.
+ */
 export default function TutorIndex() {
+  const grade = useProgress((s) => s.player?.grade)
+  return grade != null && isListenMode(grade) ? <ListenTutorIndex /> : <ReadTutorIndex />
+}
+
+function ReadTutorIndex() {
   const attempts = useProgress((s) => s.attempts)
   const sessions = useProgress((s) => s.sessions)
   // Subscribe to zones so progress badges re-render when stars are earned.
@@ -68,9 +80,10 @@ export default function TutorIndex() {
     [attempts, sessions],
   )
 
-  // Build a view-model per lesson, then group by subject area.
+  // The child's lessons (their grade band's), as a view-model each, grouped by subject area.
+  const lessons = useMemo(() => lessonsFor(grade), [grade])
   const groups = useMemo(() => {
-    const views: LessonView[] = allLessons.map((l) => {
+    const views: LessonView[] = lessons.map((l) => {
       const zone = getZone(l.zoneId)
       const subject = (zone?.themeColor ?? 'quest') as Subject
       const zoneProg = zonesProgress[l.zoneId]
@@ -121,9 +134,9 @@ export default function TutorIndex() {
       area,
       lessons: byArea.get(area)!,
     }))
-  }, [zonesProgress, recommended, grade])
+  }, [lessons, zonesProgress, recommended, grade])
 
-  const totalLessons = allLessons.length
+  const totalLessons = lessons.length
   const doneCount = useMemo(
     () =>
       groups.reduce(

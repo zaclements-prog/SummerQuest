@@ -1,6 +1,102 @@
 {
   "voice": "higgs-audio-v2-mlx-q8:clone:calm-teacher-v1:k",
   "clips": {
+    "k-lessons/kShapes-circle": {
+      "text": "Which shape has three sides? Tap it!",
+      "hash": "fb0742ac07",
+      "kind": "line",
+      "file": "voice/k-lessons/kShapes-circle.mp3"
+    },
+    "k-lessons/kShapes-solid": {
+      "text": "Which one is solid? Tap it!",
+      "hash": "31d2267554",
+      "kind": "line",
+      "file": "voice/k-lessons/kShapes-solid.mp3"
+    },
+    "k-lessons/kLetters-bigLittle": {
+      "text": "Tap little b!",
+      "hash": "a83d601723",
+      "kind": "line",
+      "file": "voice/k-lessons/kLetters-bigLittle.mp3"
+    },
+    "k-lessons/kLetters-yourTurn": {
+      "text": "Banana. Apple. Fish. Which one starts like ball?",
+      "hash": "9308355f92",
+      "kind": "line",
+      "file": "voice/k-lessons/kLetters-yourTurn.mp3"
+    },
+    "k-lessons/triangle": {
+      "text": "Triangle!",
+      "hash": "da7385986c",
+      "kind": "line",
+      "file": "voice/k-lessons/triangle.mp3"
+    },
+    "k-lessons/square": {
+      "text": "Square!",
+      "hash": "96405aaa34",
+      "kind": "line",
+      "file": "voice/k-lessons/square.mp3"
+    },
+    "k-lessons/circle": {
+      "text": "Circle!",
+      "hash": "2eff391de7",
+      "kind": "line",
+      "file": "voice/k-lessons/circle.mp3"
+    },
+    "k-lessons/cube": {
+      "text": "Cube!",
+      "hash": "30d11f1319",
+      "kind": "line",
+      "file": "voice/k-lessons/cube.mp3"
+    },
+    "k-lessons/bigB": {
+      "text": "Big B!",
+      "hash": "e9d3d80639",
+      "kind": "line",
+      "file": "voice/k-lessons/bigB.mp3"
+    },
+    "k-lessons/littleB": {
+      "text": "Little b!",
+      "hash": "7faf436094",
+      "kind": "line",
+      "file": "voice/k-lessons/littleB.mp3"
+    },
+    "k-lessons/littleA": {
+      "text": "Little a!",
+      "hash": "cc95cdfe38",
+      "kind": "line",
+      "file": "voice/k-lessons/littleA.mp3"
+    },
+    "k-lessons/banana": {
+      "text": "Banana!",
+      "hash": "09930b250d",
+      "kind": "line",
+      "file": "voice/k-lessons/banana.mp3"
+    },
+    "k-lessons/fish": {
+      "text": "Fish!",
+      "hash": "e085510562",
+      "kind": "line",
+      "file": "voice/k-lessons/fish.mp3"
+    },
+    "k-lessons/apple": {
+      "text": "Apple!",
+      "hash": "5e77bf927a",
+      "kind": "line",
+      "file": "voice/k-lessons/apple.mp3"
+    },
+    "k-lessons/pickLesson": {
+      "text": "Pick a lesson to watch. Tap a picture!",
+      "hash": "2d56d8aa1a",
+      "kind": "line",
+      "file": "voice/k-lessons/pickLesson.mp3"
+    },
+    "k-lessons/lessonDone": {
+      "text": "You did it! Tap the arrow to play.",
+      "hash": "30f36c4f91",
+      "kind": "line",
+      "file": "voice/k-lessons/lessonDone.mp3"
+    },
     "k-math/greatCounting": {
       "text": "Great counting!",
       "hash": "e735cf30b4",

@@ -1,5 +1,5 @@
 import { getZone, zoneStages } from '../curriculum'
-import { allLessons } from '../tutoring/lessons'
+import { isLessonFor, lessonsFor } from '../tutoring/lessons'
 import { isStageUnlocked, playableStageId } from '../lib/stageLocks'
 import { weeklyFocus } from '../lib/analytics'
 import type { SessionRecord, SkillAttempt } from '../store/progress'
@@ -53,11 +53,15 @@ export interface LessonRow {
   href: string
 }
 
-/** Tutor lessons (optionally a subset), recommended-by-the-coach first. */
-export function lessonRows(p: Pick<Progress, 'attempts' | 'sessions'>, only?: string[], now = Date.now()): LessonRow[] {
+/**
+ * The child's tutor lessons (their grade band's: `lessonsFor`), optionally a
+ * subset — `only` lists lesson ids or zone ids (the Library: the reading and
+ * writing zones' lessons, whichever the band) — recommended-by-the-coach first.
+ */
+export function lessonRows(p: Pick<Progress, 'attempts' | 'sessions'> & { grade?: Progress['grade'] }, only?: string[], now = Date.now()): LessonRow[] {
   const recommended = new Set(weeklyFocus(p.attempts, p.sessions, now).map((f) => f.lessonId))
-  return allLessons
-    .filter((l) => !only || only.includes(l.id))
+  return lessonsFor(p.grade)
+    .filter((l) => !only || only.includes(l.id) || only.includes(l.zoneId))
     .map((l) => ({ id: l.id, title: l.title, emoji: l.emoji, recommended: recommended.has(l.id), href: `/tutor/${l.id}` }))
     .sort((a, b) => Number(b.recommended) - Number(a.recommended))
 }
@@ -71,9 +75,14 @@ export interface FocusRow {
   learnHref: string
 }
 
-/** This Week's Focus, top `max` items, with practice links that respect stage locks. */
+/**
+ * This Week's Focus, top `max` items, with practice links that respect stage
+ * locks. Only skills whose lesson is in the child's band: a K child is never
+ * sent to a grade-3 lesson.
+ */
 export function focusRows(p: Progress, max = 3, now = Date.now()): FocusRow[] {
   return weeklyFocus(p.attempts, p.sessions, now)
+    .filter((f) => isLessonFor(f.lessonId, p.grade))
     .slice(0, max)
     .map((f) => {
       const zone = getZone(f.zoneId)

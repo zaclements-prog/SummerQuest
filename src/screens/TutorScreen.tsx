@@ -14,8 +14,9 @@ import { useNarrationDone } from '../tutoring/ui/useNarrationDone'
 import LessonComplete from '../tutoring/ui/LessonComplete'
 import { ArrowLeftIcon, ArrowRightIcon, PauseIcon, PlayIcon, ReplayIcon, SpeakerIcon } from '../tutoring/ui/icons'
 import { seededShuffle } from '../lib/random'
-import { playableStageId } from '../lib/stageLocks'
-import { getZone } from '../curriculum'
+import { isListenMode } from '../lib/gradeBand'
+import { practiceHref } from '../tutoring/lessonLinks'
+import ListenLesson from '../tutoring/ui/ListenLesson'
 import { useProgress } from '../store/progress'
 import { useWorldUi } from '../world/useWorldUi'
 import { usePetUi } from '../lib/pets/usePetUi'
@@ -108,7 +109,20 @@ function StaticStage({ visual, emoji, title }: { visual?: Parameters<typeof Visu
   )
 }
 
+/**
+ * A tutor lesson. The voice-first grades (K–1), and any K–1 lesson, get the
+ * listen-mode player (nothing to read: pictures, 🔊, ↺ and ▶); grades 2–5 get
+ * the reading player below, unchanged.
+ */
 export default function TutorScreen() {
+  const { lessonId = '' } = useParams()
+  const lesson = getLesson(lessonId)
+  const grade = useProgress((s) => s.player?.grade)
+  const listen = !!lesson && lesson.steps.length > 0 && (lesson.band === 'k1' || (grade != null && isListenMode(grade)))
+  return listen ? <ListenLesson key={lesson.id} lesson={lesson} /> : <ReadLessonPlayer />
+}
+
+function ReadLessonPlayer() {
   const { lessonId = '' } = useParams()
   const navigate = useNavigate()
   const reduced = !!useReducedMotion()
@@ -191,12 +205,8 @@ export default function TutorScreen() {
     setMaxSeen((m) => Math.max(m, k))
   }
 
-  const practice = () => {
-    // Practice stage if unlocked; otherwise the first step the kid hasn't cleared.
-    const zone = getZone(lesson.zoneId)
-    const stageId = zone ? playableStageId(zone, lesson.practiceStageId, zoneProgress, grade) : lesson.practiceStageId
-    navigate(`/play/${lesson.zoneId}/${stageId}`)
-  }
+  // Practice stage if unlocked; otherwise the first step the kid hasn't cleared (in the grade's stage set).
+  const practice = () => navigate(practiceHref(lesson, zoneProgress, grade))
 
   const next = () => {
     if (last) {
