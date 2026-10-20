@@ -230,7 +230,9 @@
     {
       "id": "A31",
       "title": "wordProblem skeletons double (add/sub 8->16 each)",
-      "status": "pending"
+      "status": "done",
+      "commit": "5f3db1e..7f0caf0",
+      "evidence": "TEMPLATES_ADD 8->16 (+8, CCSS 2.OA.A.1 add-to within 100: Priya bracelets, Kenji sunflowers, Aisha blueberries, Nadia logs, Cole fireflies, Wren cans, Hana scarves, Milo dogs); TEMPLATES_SUB 8->16 (+8, take-from: birdhouse robins, Diego marbles, Sam tray cookies, Priya painted eggs, library cart, Nia seashells, popsicles melted, Owen blocks); every skeleton states a then b in order so the fuzz solver's number extraction holds; add answers stay <=60 (grade-2 band), sub a-b stays positive; one 'burned candles' skeleton replaced by melting popsicles pre-commit (no fire imagery); variety: fresh names within each batch of 8, no name/setting >2x in any window of 10; vitest providers 226 passed, npm test 783 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
     },
     {
       "id": "A32",
@@ -516,6 +518,14 @@
       "commits": "e52cb4e: +9 grove orders L2 (canonical 2x2 spruce + 8 second-pass phrasings, grovePoolFor widens the served pool, TimesGrove serves the pool + groveOrderWithAlts); 3215564: +8 second phrasings (sycamore, aspen, redwood, serviceberry, magnolia, persimmon, pawpaw, pine) — every 2..5 pair now double-phrased, G2 served pool 15->32; canonical bank stays pair-unique (curated invariant untouched); audit-grove-orders.mjs clean (leak/format/pair/pool/variety windows)",
       "gates": "fast-intermediate/full-final",
       "push": "pushed 2111302..b2391b9 to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 31,
+      "step": "A31",
+      "result": "done",
+      "tests": "vitest providers 226 passed (fast gate on each content commit); final battery: vitest providers 226 passed, npm test 783 passed, lint clean, tsc -b clean, build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "5f3db1e: +8 add skeletons (8->16, CCSS 2.OA.A.1); 7f0caf0: +8 subtract skeletons (8->16) — add/sub doubled per the A1 #10 line; two self-review fixes pre-commit (interpolation newline in Nia template; candles-burning skeleton replaced with melting popsicles — no fire imagery); variety windows clean (fireflies in both banks across the 16-item batch is item-word not name/setting; robins rewrite keeps the batch varied)",
+      "gates": "fast-intermediate/full-final"
     }
   ],
   "notes": "Target counts from handoff A1 table. One step per interval. Owner-approved 2026-10-18: fast gates policy — intermediate commits run vitest providers only; full battery (vitest+npm test+lint+tsc+build:store) runs on the final commit of each step and step is marked done only on full-battery pass. Fails verification twice -> blocked with error, skip to next. All done/blocked: pause cron + final summary in history."
