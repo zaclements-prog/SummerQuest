@@ -43,7 +43,7 @@ describe('lessons and pets in the store', () => {
     expect(first).toBeGreaterThan(0)
     s().markLessonDone('fractions')
     expect(s().lessonsDone.fractions).toBe(first)
-    expect(petStages(s().zones, s().lessonsDone).frog).toBe('baby')
+    expect(petStages(s().zones, s().lessonsDone, s().player?.grade).frog).toBe('baby')
   })
 
   it('the first pet to hatch becomes the World buddy', () => {
@@ -171,7 +171,7 @@ describe('v2 → v3 migration (pets)', () => {
     expect(st.ownedCreatures).toEqual(['fox', 'frog', 'lion'])
     expect(st.activeCreature).toBe('frog')
     expect(st.buddyPet).toBe('lion')
-    expect(pendingMoments(petStages(st.zones, st.lessonsDone), st.petsSeen)).toEqual([])
+    expect(pendingMoments(petStages(st.zones, st.lessonsDone, st.player?.grade), st.petsSeen)).toEqual([])
     expect(JSON.parse(localStorage.getItem(KEY)!).version).toBe(3)
   })
 

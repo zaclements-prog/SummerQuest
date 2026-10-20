@@ -8,7 +8,7 @@ describe('daily challenge pick', () => {
     const zonesSeen = new Set<string>()
     for (let d = 0; d < 366; d++) {
       const day = localDayKey(new Date(start.getFullYear(), 0, 1 + d))
-      const { zone, stage } = pickTodaysChallenge(day)
+      const { zone, stage } = pickTodaysChallenge(3, day)
       expect(stage.gameId).not.toBe('writingPad')
       expect(stage.providerConfig.kind).not.toBe('writingPrompt')
       zonesSeen.add(zone.id)
@@ -18,6 +18,6 @@ describe('daily challenge pick', () => {
   })
 
   it('is stable within a day', () => {
-    expect(pickTodaysChallenge('2026-10-13')).toEqual(pickTodaysChallenge('2026-10-13'))
+    expect(pickTodaysChallenge(3, '2026-10-13')).toEqual(pickTodaysChallenge(3, '2026-10-13'))
   })
 })

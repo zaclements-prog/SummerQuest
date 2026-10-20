@@ -119,6 +119,7 @@ export default function TutorScreen() {
   const [complete, setComplete] = useState(false)
   const step = lesson?.steps[i]
   const zoneProgress = useProgress((s) => (lesson ? s.zones[lesson.zoneId] : undefined))
+  const grade = useProgress((s) => s.player?.grade)
   // Opened from the Schoolhouse / Library in the 3D World? "Back" returns there.
   const fromWorld = useWorldUi((s) => s.enteredFromWorld)
   const markLessonDone = useProgress((s) => s.markLessonDone)
@@ -193,7 +194,7 @@ export default function TutorScreen() {
   const practice = () => {
     // Practice stage if unlocked; otherwise the first step the kid hasn't cleared.
     const zone = getZone(lesson.zoneId)
-    const stageId = zone ? playableStageId(zone, lesson.practiceStageId, zoneProgress) : lesson.practiceStageId
+    const stageId = zone ? playableStageId(zone, lesson.practiceStageId, zoneProgress, grade) : lesson.practiceStageId
     navigate(`/play/${lesson.zoneId}/${stageId}`)
   }
 

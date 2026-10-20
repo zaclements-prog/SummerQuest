@@ -259,6 +259,13 @@ describe('groveMaxFactor', () => {
     expect(groveMaxFactor(4)).toBe(7)
     expect(groveMaxFactor(undefined)).toBe(7)
   })
+  it('gives kindergarten and 1st grade the smallest orders, 5th grade the whole field', () => {
+    // (an unknown grade used to fall through to the hardest, 7)
+    expect(groveMaxFactor(0)).toBe(5)
+    expect(groveMaxFactor(1)).toBe(5)
+    expect(groveMaxFactor(5)).toBe(7)
+    expect(groveMaxFactor(null)).toBe(7) // no profile: 4th grade, the default
+  })
 })
 
 describe('planGroveRun', () => {

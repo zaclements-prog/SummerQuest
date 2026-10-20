@@ -3,11 +3,12 @@ import { useProgress } from '../../store/progress'
 import { petStatuses, shownStage } from './growth'
 import type { PetGrowth, PetStatus } from './growth'
 
-/** Every pet's growth right now (recomputed only when stars or finished lessons change). */
+/** Every pet's growth right now, at the child's grade (recomputed only when stars, finished lessons or the grade change). */
 export function usePetStatuses(): PetStatus[] {
   const zones = useProgress((s) => s.zones)
   const lessonsDone = useProgress((s) => s.lessonsDone)
-  return useMemo(() => petStatuses(zones, lessonsDone), [zones, lessonsDone])
+  const grade = useProgress((s) => s.player?.grade)
+  return useMemo(() => petStatuses(zones, lessonsDone, grade), [zones, lessonsDone, grade])
 }
 
 /** creatureId → the stage it shows in the Home room and the World (see `shownStage`). */

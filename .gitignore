@@ -14,6 +14,8 @@ dist-ssr
 
 # TTS generator cache sidecars (regenerable; not committed)
 public/tts/**/*.mp3.hash
+# Python bytecode from the TTS scripts and their tests
+__pycache__/
 
 # Editor directories and files
 .vscode/*

@@ -31,6 +31,8 @@ const GameRunner = lazyWithRetry(() => import('./screens/GameRunner'))
 const TutorIndex = lazyWithRetry(() => import('./screens/TutorIndex'))
 const TutorScreen = lazyWithRetry(() => import('./screens/TutorScreen'))
 const PetsScreen = lazyWithRetry(() => import('./screens/PetsScreen'))
+// Dev only: the K–1 Listen & Play kit on its own (compiled out of every build).
+const ListenPlayDemo = import.meta.env.DEV ? lazyWithRetry(() => import('./games/listenPlay/ListenPlayDemo')) : null
 
 /** A lazily loaded route with its friendly loading state. */
 function Lazy({ label, children }: { label: string; children: React.ReactNode }) {
@@ -216,6 +218,16 @@ export default function App() {
                 </RequireParent>
               }
             />
+            {ListenPlayDemo && (
+              <Route
+                path="/dev/listen-play"
+                element={
+                  <Lazy label="Loading Listen & Play…">
+                    <ListenPlayDemo />
+                  </Lazy>
+                }
+              />
+            )}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </AppShell>

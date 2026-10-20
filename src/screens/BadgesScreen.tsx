@@ -24,10 +24,11 @@ export default function BadgesScreen() {
   const totalCoinsEarned = useProgress((s) => s.totalCoinsEarned)
   const seenBadges = useProgress((s) => s.seenBadges)
   const markBadgesSeen = useProgress((s) => s.markBadgesSeen)
+  const grade = useProgress((s) => s.player?.grade)
 
   const badges = useMemo(
-    () => computeBadges({ zones, stats, totalCoinsEarned }),
-    [zones, stats, totalCoinsEarned],
+    () => computeBadges({ zones, stats, totalCoinsEarned, grade }),
+    [zones, stats, totalCoinsEarned, grade],
   )
   const earned = badges.filter((b) => b.earned)
   const zoneBadges = badges.filter((b) => b.category === 'zone')

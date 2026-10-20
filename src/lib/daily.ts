@@ -1,5 +1,6 @@
-import { curriculum } from '../curriculum'
+import { curriculum, zoneStages } from '../curriculum'
 import { localDayKey } from './dates'
+import type { GradeLevel } from './gradeTiers'
 
 /** Daily Challenge constants + helpers (kept out of the component file so Fast Refresh stays happy). */
 
@@ -12,12 +13,13 @@ export function todayStr(): string {
 
 /**
  * Today's challenge: a deterministic per-day pick (the whole app agrees on it) of a
- * zone and the stage whose problems feed the 5-question quiz. Only multiple-choice
- * stages qualify — writing prompts have no answer options to quiz on.
+ * zone and the stage whose problems feed the 5-question quiz, from each zone's
+ * stage set for the child's grade (`zoneStages`). Only multiple-choice stages
+ * qualify — writing prompts have no answer options to quiz on.
  */
-export function pickTodaysChallenge(day: string = todayStr()) {
+export function pickTodaysChallenge(grade: GradeLevel | null | undefined, day: string = todayStr()) {
   const eligible = curriculum.zones.flatMap((zone) => {
-    const stage = zone.stages.find((s) => s.gameId !== 'writingPad')
+    const stage = zoneStages(zone, grade).find((s) => s.gameId !== 'writingPad')
     return stage ? [{ zone, stage }] : []
   })
   let h = 0

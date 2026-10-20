@@ -1,7 +1,9 @@
 # Narration handoff: re-render the lesson voice with a local TTS model
 
 **For:** the local agents (and humans) rendering SummerQuest's lesson narration on a
-machine with a GPU and the TTS models on disk: **Qwen3-TTS** and/or **Higgs Audio v3**.
+machine with the TTS models on disk: **Higgs Audio v2** (MLX, the engine of the shipped
+clips) and/or **Qwen3-TTS**. Section 7 covers the voice lines (K–5 screens, games and spoken
+questions), rendered the same way into `public/voice`.
 
 **Goal:** replace the current Microsoft Edge "Jenny" clips with one consistent, warm,
 higher-quality voice for every lesson step. The output must follow the contract
@@ -53,7 +55,7 @@ Manifest (`public/tts/manifest.json`) is one object keyed by `"<lessonId>/<stepI
 **The voice id.** Before rendering, set `src/tutoring/narrationVoice.json` to a new
 unique id naming the engine, voice and version, e.g.
 `{ "voice": "qwen3-tts-1.7b:clone:sunny-teacher-v1" }` or
-`{ "voice": "higgs-audio-v3:belinda-v1" }`. Changing it makes **every** existing clip
+`{ "voice": "higgs-audio-v2-mlx-q8:clone:calm-teacher-v1" }` (the current one). Changing it makes **every** existing clip
 stale, so the app, the tests and `tts:check` all expect a full re-render. Bump the
 suffix (`-v2`) whenever you change the voice settings.
 
@@ -94,16 +96,20 @@ Load with `Qwen3TTSModel.from_pretrained(<local dir or HF id>, device_map="cuda:
 (add `attn_implementation="flash_attention_2"` if installed). It returns `wavs, sr`;
 write with `soundfile`, then encode (see §3). Batch lists of texts for speed.
 
-### Higgs Audio v3 (`bosonai/higgs-audio-v3-tts-4b`)
-- Serve the local weights with SGLang-Omni: `sgl-omni serve --model-path <path> --port 8000`.
-- Call the OpenAI-compatible endpoint `POST http://localhost:8000/v1/audio/speech` with
-  `{"model": "higgs-audio-v3-tts", "input": <text>, "voice": <preset or clone ref>}`.
-  Use one preset (or one cloning reference) for every clip.
-- Follow the model card / SGLang-Omni cookbook for voice cloning and style tags. Keep
-  any style or emotion tags identical across clips.
-- **License:** Higgs Audio v3 is under a *research and non-commercial* license. Fine for
-  a family project; anything commercial needs Boson AI's commercial license. Qwen3-TTS
-  is Apache-2.0.
+### Higgs Audio v2 (`bosonai/higgs-audio-v2-generation-3B-base`, MLX q8: `mlx-community/higgs-audio-v2-3B-mlx-q8`)
+The engine of the shipped clips, run locally on the Mac with MLX by
+`scripts/tts/render_local.py --engine higgs` (venv `~/Projects/contentgen/higgs-mlx/.venv`,
+models from the HF cache).
+- **Zero-shot clone** from one reference pair: a ~12–15 s wav plus its exact transcript
+  (`.txt` next to it). The reference is the synthetic `calm-teacher-v1` persona designed with
+  Qwen3-TTS VoiceDesign (`docs/licensing/higgs-v2.md`, "Provenance"). Use the same pair for
+  every clip.
+- No style tags: delivery comes from the reference and the text's punctuation.
+- No seed control in this port: every take is a fresh draw, so quality comes from the gates
+  in §4bis and retries, not from a lucky setting.
+- **License:** the Boson Higgs Audio 2 Community License: commercial use is allowed below
+  100,000 annual active users, with the attribution notices in
+  `docs/licensing/higgs-v2.md`. Qwen3-TTS is Apache-2.0.
 
 Pick whichever engine sounds best on the pilot (§4, step 3). Don't mix engines.
 
@@ -225,6 +231,169 @@ unit at these clip sizes.
   then `npm run tts:check`.
 - **The old Edge renderer** (`npm run tts`, `scripts/generate-tts.mjs`) still works as a
   fallback and uses the same voice-id file and manifest format.
+- **`--dry-run`** prints the work list (what would render, what is up to date) without
+  loading any model, for either set.
 - **Missing clips** play through the browser's built-in speech, and the motion
   graphics still run on an estimated timeline, so a partial render never breaks a
   lesson. It just sounds worse.
+
+---
+
+## 7. Voice lines (K–5 screens, games and spoken questions)
+
+Everything the app says **outside** the lessons: screen and game instructions, feedback
+("Great job!") and the spoken questions of the K–1 quizzes. Kindergarten and grade 1 are
+voice-first, so these clips are what a five-year-old hears instead of reading. They use the
+same engine, the same timbre and the same post-processing as the lessons, rendered with the
+same script, into their own folder and manifest so they never disturb the lesson clips.
+
+### 7.1 The contract
+
+- **Source of truth:** the voice packs, `src/voice/packs/<pack>.ts` (one `defineVoicePack`
+  default export each). A pack has fixed `lines` (id → exact text) and `templates` (text
+  with `{slot}` placeholders plus the allowed slot values). See `src/voice/types.ts`.
+- **The catalog:** `npm run voice:dump` writes `src/voice/voiceLines.json`, every clip to
+  record:
+
+  ```json
+  { "voice": "higgs-audio-v2-mlx-q8:clone:calm-teacher-v1:k",
+    "clips": { "ui/tapToStart": { "text": "Tap the star to start!", "hash": "1c0e…", "kind": "line",
+                                  "file": "voice/ui/tapToStart.mp3" }, … } }
+  ```
+
+  A test fails when it's out of date with the packs, as for `narration.json`.
+- **The voice id** lives in its own file, `src/voice/voiceId.json`
+  (`higgs-audio-v2-mlx-q8:clone:calm-teacher-v1:k`), so the K delivery can be re-rendered on
+  its own without touching the lessons. Bump its suffix (`…:k2`) when you change the voice
+  settings; every voice clip then goes stale.
+- **Keys and files** (`src/voice/catalog.ts`):
+
+  | Clip | Key | Says | File |
+  |---|---|---|---|
+  | fixed line | `ui/tapToStart` | the line, verbatim | `voice/ui/tapToStart.mp3` |
+  | `whole` template, one per combination | `k-math/tapGroupWith/n=7,thing=apples` | "Tap the group with seven apples." | `voice/k-math/tapGroupWith/n=7,thing=apples.mp3` |
+  | `stitch` template, carrier piece *i* | `k-math/tapGroupWith#0` | "Tap the group with" | `voice/k-math/tapGroupWith.part0.mp3` |
+  | slot value, shared by every pack | `slots/number/7`, `slots/word/apples` | "seven", "apples" | `voice/slots/number/7.mp3` |
+
+  Slots in a whole key are in name order; slot words are slugged (`ice cream` → `ice-cream`).
+  `#` is written `.part` in file names because it would end a URL. Each clip has its
+  `.words.json` next to it.
+- **Manifest:** `public/voice/manifest.json`, keyed by clip key, **the same entry shape as
+  the lessons** (`file`, `hash`, `duration`, `words`). The hash is the same rule:
+  first 10 hex of SHA-1 of `` `${voice}|${text}` `` with `text` exactly as in the catalog.
+- **Numbers are spoken as words.** Captions keep digits ("Tap the group with 7 apples."), the
+  clip text spells them out ("…with seven apples."), American style: `twenty-one`,
+  `one hundred five` (no "and"), which is what `textnorm.py` reads back from Whisper. The
+  player maps the word timings back onto the digits.
+- **`whole` or `stitch`:** a template without `render` is recorded whole up to 200
+  combinations and stitched above that. `render: 'whole'` with more than 400 combinations
+  fails `voice:dump`: switch it to `stitch`. Whole is better (natural prosody); stitch is
+  what makes big spaces (numbers 0–120 × 40 nouns) possible.
+- **Stitching:** the carrier pieces are the text between slots. Leading punctuation and
+  spaces are dropped from a piece (". How many" is recorded as "How many"); they become the
+  pause before it. The player plays the pieces and slot values back to back on the shared
+  audio element with these pauses: 0.05 s within a phrase, 0.18 s at a comma, 0.35 s at a
+  sentence end.
+- **Missing clips** are read by the tablet's own voice (device speech), and if there is
+  none, the line's animations run on an estimated silent timeline. A line never mixes
+  recorded and device voices: one missing piece and the whole line falls back.
+
+### 7.2 Render on the Mac
+
+```bash
+git pull && npm ci
+npm run voice:dump                    # refresh src/voice/voiceLines.json from the packs
+npm run voice:check                   # what's fresh / stale / missing / orphaned
+PY=~/Projects/contentgen/higgs-mlx/.venv/bin/python3
+REF=~/Projects/contentgen/qwen3-tts/refs/sq_teacher_v2.wav     # or the K reference, below
+$PY scripts/tts/render_local.py --set voice --dry-run           # the work list; loads nothing
+$PY scripts/tts/render_local.py --set voice --engine higgs --ref-audio $REF --only ui   # pilot
+#   … listen, open the app (Parent area → Voice check), adjust, then everything:
+$PY scripts/tts/render_local.py --set voice --engine higgs --ref-audio $REF
+npm run voice:prune                   # drop clips nothing uses any more
+npm run voice:check -- --strict       # every clip fresh, 0 problems
+VOICE_STRICT=1 npx vitest run src/voice   # the coverage gate
+```
+
+- `npm run voice:local -- --engine higgs --ref-audio $REF` is the same command when the
+  venv's python is your `python3`.
+- **Idempotent and resumable** like the lesson set: a clip whose manifest hash matches and
+  whose files exist is skipped; the manifest is rewritten atomically after every clip.
+  `--force` re-renders, `--only` takes a key, a pack (`ui`, `slots`), a template
+  (`k-math/tapGroupWith`: its combinations or its pieces) or a slot kind (`slots/number`),
+  comma-separated.
+- **K delivery** (plan §3): slower (about 120–130 wpm), short sentences, more expression,
+  the same `calm-teacher-v1` timbre. Higgs v2 has no style tags, so delivery comes from the
+  reference clip: make a K reference pair with the same persona read more slowly and warmly
+  (Qwen3-TTS VoiceDesign, e.g. *"…the same teacher, speaking slowly and warmly to a
+  five-year-old, with clear pauses"*, then pick the take that still sounds like her) and pass
+  it with `--ref-audio`. Keep that pair banked next to `sq_teacher_v2` and note it in
+  `docs/licensing/higgs-v2.md`.
+- **Size:** 56 kbps mono is about 7 KB per second; the K–1 pilot (~400 short clips) is
+  3–5 MB.
+
+### 7.3 Quality gates (voice lines)
+
+- **Clips of 3 words or fewer** ("Great job!", "seven", "Tap the"): Whisper must hear
+  **exactly** the clip's words in canonical form (numbers as digits, case and punctuation
+  ignored), and the trimmed length must be within `[0.25·words, 1.2 + 0.8·words]` seconds.
+  A recovery ratio and a pace check mean nothing on one word, and a wrong word is the whole
+  clip. Up to 5 fresh draws at rotating temperatures.
+- **Longer clips:** the lesson gates of §4bis (duration window, recovery ≥ 0.94,
+  ≤ 210 wpm); whole lines may fall back to breath-group rendering.
+- **Trimming:** lines and whole templates keep the lesson silences (0.12 s / 0.25 s);
+  carrier pieces and slot words keep almost none (0.02 s / 0.04 s), because the player adds
+  the pauses between them.
+- `npm run voice:check` warns on odd pace (outside 5–22 characters/s for lines of more than
+  3 words) and stray files, and fails on stale or orphaned clips or bad word files.
+
+### 7.4 Slot words: neutral list intonation
+
+Stitching sounds natural only if every slot word is said the same way: level, "one item of
+a list", neither a final fall ("…seven.") nor a question. Read alone, a model gives a single
+word a full-sentence contour. Ways to steer it, best first; audition on a handful
+(`--only slots/number/1,slots/number/7,slots/number/12,slots/word/apples --force`) and listen
+to five stitched sentences in the app before rendering the rest:
+
+1. **A list reference clip.** The clone copies the reference's prosody. Record (or design)
+   a ~12 s reference of the same voice calmly reading a list with even, level items ("one,
+   two, three, four, five, six…" or "apples, bananas, cars, ducks…"), with its exact
+   transcript, and render only the slots with it:
+   `--only slots --ref-audio refs/sq_teacher_list.wav`.
+2. **A list-item frame.** `--slot-frame '{w},'` gives the model "seven," (a trailing comma
+   tends to give the level "more to come" contour); compare with `'{w}.'` and `'{w}...'`.
+3. **Carrier pieces that run into a slot** ("Tap the group with") end mid-sentence: a
+   `--piece-frame '{w},'` or `'{w}...'` avoids a final fall. Pieces that end a sentence
+   ("do you see?") are never framed.
+4. **One session, one setting:** render all slot words with the same reference and frame,
+   in one run. Mixed sessions drift.
+
+Frames may only add punctuation (the renderer refuses anything that adds words); the gates,
+the word timings and the hash always use the clip text. A frame doesn't change the hash, so
+re-render with `--force` after changing it. If a template still sounds choppy, switch it to
+`render: 'whole'` (up to 400 combinations): natural prosody beats a smaller download.
+
+### 7.5 Device speech and the Fire check
+
+The fallback is the browser's `speechSynthesis` (behind a small interface in
+`src/voice/speech.ts`, so a native Capacitor text-to-speech plugin can replace it later). It
+reads the caption, prefers on-device voices, and never reads the child's name.
+
+Whether it works in the Amazon WebView is unverified. On a real Fire tablet with the store
+build: Parent area (grown-up check) → **Voice check**. It shows whether `speechSynthesis`
+exists, how many voices it has (on-device / English), how many recorded clips are in the
+build, and has two buttons: **▶ Recorded line** (plays `ui/voiceCheck` with no fallback, so
+"loaded and played" means recorded clips work) and **▶ Device voice** (the device reads a
+line; "started speaking" or "silent: the engine never started"). Note what you hear and what
+it says.
+
+### 7.6 Tests
+
+- `npx vitest run src/voice`: the catalog rules, every pack line and template resolves and
+  plays only catalog clips, `voiceLines.json` is in sync with the packs, manifest clips are
+  fresh, the player's playlist and clock (fake audio element), and one voice at a time with
+  the lesson narration. The coverage test only reports missing clips unless
+  `VOICE_STRICT=1`.
+- `python3 -m unittest discover -s scripts/tts`: the renderer's voice rules (short-clip gate,
+  frames, trimming, `--only`, the work list) and an end-to-end `--set voice` run with a fake
+  engine and a fake Whisper (needs ffmpeg). No models needed.

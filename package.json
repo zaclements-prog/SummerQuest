@@ -19,6 +19,10 @@
     "tts:check": "node scripts/check-tts.mjs",
     "tts:local": "python3 scripts/tts/render_local.py",
     "tts:audit": "python3 scripts/tts/recheck_all.py",
+    "voice:dump": "node --import tsx scripts/dump-voice-lines.mjs",
+    "voice:check": "node scripts/check-voice.mjs",
+    "voice:prune": "node scripts/prune-voice.mjs",
+    "voice:local": "python3 scripts/tts/render_local.py --set voice",
     "android:sync": "npm run build:store && cap sync android",
     "android:apk": "npm run android:sync && cd android && ./gradlew assembleDebug",
     "android:release": "npm run android:sync && cd android && ./gradlew bundleRelease assembleRelease"

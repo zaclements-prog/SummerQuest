@@ -25,7 +25,15 @@ export default defineConfig(({ mode }) => {
     define: {
       'import.meta.env.VITE_OFFLINE': JSON.stringify(single ? 'true' : 'false'),
       'import.meta.env.VITE_STORE': JSON.stringify(store ? 'true' : 'false'),
-      ...(store ? { 'import.meta.env.VITE_DEV_TOOLS': JSON.stringify('false') } : {}),
+      ...(store
+        ? {
+            'import.meta.env.VITE_DEV_TOOLS': JSON.stringify('false'),
+            // K–1 and grade 5 aren't authored yet (lib/features): the store build offers
+            // them only when its own command line asks, never because of .env.local.
+            'import.meta.env.VITE_K1': JSON.stringify(process.env.VITE_K1 === 'true' ? 'true' : 'false'),
+            'import.meta.env.VITE_G5': JSON.stringify(process.env.VITE_G5 === 'true' ? 'true' : 'false'),
+          }
+        : {}),
     },
     // `npm run play` (what the launchers use) serves the production build on the
     // SAME port as the dev server, so the browser origin — and the saved progress

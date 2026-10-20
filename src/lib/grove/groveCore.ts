@@ -243,9 +243,14 @@ export function skipCount(rows: number, cols: number): number[] {
   return Array.from({ length: Math.max(0, rows) }, (_, i) => (i + 1) * cols)
 }
 
-/** Grade → the biggest factor a grove order may use (the field is 7 × 7). */
-export function groveMaxFactor(grade: number | undefined): number {
-  return grade === 2 ? 5 : grade === 3 ? 6 : 7
+/**
+ * Grade → the biggest factor a grove order may use (the field is 7 × 7): K–2
+ * plant ≤ 5, 3rd grade ≤ 6, 4th and 5th the whole field. No profile counts as
+ * 4th grade (lib/gradeTiers' DEFAULT_GRADE, not imported: gradeTiers imports this).
+ */
+export function groveMaxFactor(grade: number | null | undefined): number {
+  const g = grade ?? 4
+  return g <= 2 ? 5 : g === 3 ? 6 : 7
 }
 
 const PAR: Record<GroveTaskKind, number> = { order: 18, missing: 24, total: 24, finale: 26 }

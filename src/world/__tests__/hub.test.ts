@@ -46,15 +46,16 @@ describe('world hub layout', () => {
 
 describe('hub panel content', () => {
   it('lists a zone\'s stages with the same locks as the zone page', () => {
-    const fresh = zoneStageRows('reading-reef', { zones: {} })
+    const fresh = zoneStageRows('reading-reef', { zones: {}, grade: 3 })
     expect(fresh.map((r) => r.locked)).toEqual([false, true, true])
     expect(fresh[0].href).toBe('/play/reading-reef/read-3rd')
     const progressed = zoneStageRows('reading-reef', {
       zones: { 'reading-reef': { stages: { 'read-3rd': { stars: 2 } } } },
+      grade: 3,
     })
     expect(progressed.map((r) => r.locked)).toEqual([false, false, true])
     expect(progressed[0].stars).toBe(2)
-    expect(zoneStageRows('nope', { zones: {} })).toEqual([])
+    expect(zoneStageRows('nope', { zones: {}, grade: 3 })).toEqual([])
   })
 
   it('offers every lesson, coach-recommended ones first', () => {
@@ -69,7 +70,7 @@ describe('hub panel content', () => {
     expect(lessonRows({ attempts: [], sessions: [] }, ['reading', 'writing']).map((r) => r.id).sort()).toEqual(['reading', 'writing'])
 
     // Focus practice links respect locks: div-practice is locked for a fresh player → first step.
-    const focus = focusRows({ zones: {}, attempts: misses, sessions: [] }, 3, now)
+    const focus = focusRows({ zones: {}, attempts: misses, sessions: [], grade: 3 }, 3, now)
     expect(focus[0]).toMatchObject({ practiceHref: '/play/division-dunes/div-concept', learnHref: '/tutor/division' })
   })
 })

@@ -1,4 +1,5 @@
-import { curriculum } from '../curriculum'
+import { curriculum, zoneStages } from '../curriculum'
+import type { GradeLevel } from './gradeTiers'
 
 /**
  * Badge / achievement catalog. Every badge is DERIVED from progress the game
@@ -29,6 +30,12 @@ export interface BadgeCtx {
   stats: { problemsAnswered: number; streakDays: number; bestStreak?: number }
   /** Cumulative coins ever earned (monotonic) so a "collector" badge can't be un-earned by spending. */
   totalCoinsEarned: number
+  /**
+   * The child's grade (`player.grade`): zone badges ask for every stage of the
+   * zone's set for this grade (`zoneStages`). Star / stage milestones count
+   * every band's stars.
+   */
+  grade: GradeLevel | null | undefined
 }
 
 const ZONE_BADGES: { zoneId: string; emoji: string; title: string }[] = [
@@ -51,8 +58,13 @@ function clearedStages(zone?: { stages: Record<string, { stars: number }> }): nu
   return Object.values(zone.stages).filter((s) => s.stars > 0).length
 }
 
-function zoneMastered(ctx: BadgeCtx, zoneId: string, expectedStages: number): boolean {
-  return clearedStages(ctx.zones[zoneId]) >= expectedStages && expectedStages > 0
+/** A star on every stage of the zone's set for the child's grade (another band's stars don't count). */
+function zoneMastered(ctx: BadgeCtx, zoneId: string): boolean {
+  const zone = curriculum.zones.find((z) => z.id === zoneId)
+  if (!zone) return false
+  const stages = zoneStages(zone, ctx.grade)
+  const progress = ctx.zones[zoneId]
+  return stages.length > 0 && stages.every((s) => (progress?.stages[s.id]?.stars ?? 0) > 0)
 }
 
 function totalStars(ctx: BadgeCtx): number {
@@ -75,7 +87,7 @@ function clearedStageCount(ctx: BadgeCtx): number {
 function masteredZoneCount(ctx: BadgeCtx): number {
   let c = 0
   for (const zone of curriculum.zones) {
-    if (zoneMastered(ctx, zone.id, zone.stages.length)) c++
+    if (zoneMastered(ctx, zone.id)) c++
   }
   return c
 }
@@ -85,14 +97,13 @@ export function computeBadges(ctx: BadgeCtx): BadgeStatus[] {
 
   const zoneBadges: BadgeStatus[] = ZONE_BADGES.map((zb) => {
     const zone = curriculum.zones.find((z) => z.id === zb.zoneId)
-    const expected = zone?.stages.length ?? 3
     return {
       id: `zone-${zb.zoneId}`,
       emoji: zb.emoji,
       title: zb.title,
       category: 'zone',
       description: `Earn a star on every stage of ${zone?.title ?? zb.title}.`,
-      earned: zoneMastered(ctx, zb.zoneId, expected),
+      earned: zoneMastered(ctx, zb.zoneId),
     }
   })
 
