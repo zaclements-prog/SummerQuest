@@ -341,6 +341,50 @@ const TEMPLATES_MULT: Array<{
       hint: `${a} songs × ${b} days`,
     }),
   },
+  // CCSS 3.OA.A.3 — equal-groups stories within the multiplication tables,
+  // fresh skeletons so kids meet new stories, not just new numbers.
+  {
+    build: (a, b) => ({
+      prompt: `Hana sets ${a} tables for the club meeting and puts ${b} napkins on each table. How many napkins does she set out in all?`,
+      answer: a * b,
+      hint: `${a} tables × ${b} napkins each`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Kai gathers ${a} crates and puts ${b} pinecones in each crate for the nature corner. How many pinecones does he gather in all?`,
+      answer: a * b,
+      hint: `${a} crates × ${b} pinecones`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Ms. Ito tends ${a} beehives, and each hive holds ${b} frames of honey. How many frames of honey are there in all?`,
+      answer: a * b,
+      hint: `${a} hives × ${b} frames`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Rosa writes ${a} postcards and puts ${b} stamps on each postcard. How many stamps does she use in all?`,
+      answer: a * b,
+      hint: `${a} postcards × ${b} stamps`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `There are ${a} cubbies in the hallway, and each cubby holds ${b} hats. How many hats are there in all?`,
+      answer: a * b,
+      hint: `${a} cubbies × ${b} hats`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Zara plants ${a} window boxes with ${b} marigolds in each box. How many marigolds does she plant in all?`,
+      answer: a * b,
+      hint: `${a} boxes × ${b} marigolds`,
+    }),
+  },
 ]
 
 const TEMPLATES_DIV: Array<{
