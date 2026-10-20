@@ -75,9 +75,15 @@ interface ClockState {
 const perf = () => (typeof performance !== 'undefined' ? performance.now() : Date.now())
 const pageHidden = () => typeof document !== 'undefined' && document.visibilityState === 'hidden'
 
-/** Plays narration for a lesson step: MP3 if available, else browser speech synthesis. */
-export function useNarration(lessonId: string, stepId: string, text: string) {
+/**
+ * Plays narration for a lesson step: MP3 if available, else browser speech synthesis.
+ * `pace` (default 1) slows device speech and the silent timeline: the K–1 lessons
+ * pass `narrationPace(lesson)` (tutoring/lessons). A recording keeps its own pace.
+ */
+export function useNarration(lessonId: string, stepId: string, text: string, { pace = 1 }: { pace?: number } = {}) {
   const soundEnabled = useProgress((s) => s.soundEnabled)
+  const cpsBase = DEFAULT_CHARS_PER_SEC * pace
+  const speechRate = SPEECH_RATE * pace
   const audioRef = useRef<HTMLAudioElement | null>(null)
   // Identifies this player to the shared, gesture-unlocked <audio> element
   // (src/platform/web/audioUnlock.ts): every clip reuses that one element on
@@ -99,7 +105,7 @@ export function useNarration(lessonId: string, stepId: string, text: string) {
     start: perf(),
     audio: null,
     endedAt: null,
-    cps: DEFAULT_CHARS_PER_SEC,
+    cps: cpsBase,
     clipDuration: null,
     aligned: null,
     paused: false,
@@ -145,7 +151,7 @@ export function useNarration(lessonId: string, stepId: string, text: string) {
     s.start = perf() - at * 1000
     s.audio = null
     s.endedAt = null
-    s.cps = DEFAULT_CHARS_PER_SEC
+    s.cps = cpsBase
     s.aligned = null
     s.paused = false
   }
@@ -247,6 +253,7 @@ export function useNarration(lessonId: string, stepId: string, text: string) {
       s.start = perf() - offset * 1000
       takeSpeechChannel(audioOwner, interruptNarration)
       speak(text.slice(from), setPlaying, {
+        rate: speechRate,
         onStart: () => {
           if (gen === genRef.current) clockRef.current.start = perf() - offset * 1000
         },
@@ -269,12 +276,13 @@ export function useNarration(lessonId: string, stepId: string, text: string) {
     s.audio = null
     s.endedAt = null
     s.aligned = null
-    s.cps = DEFAULT_CHARS_PER_SEC
+    s.cps = cpsBase
     // Paused (or in the background) before the clip could fall back: stay
     // quiet; resume() speaks from the frozen moment.
     if (s.paused) return
     s.start = perf()
     speak(textRef.current, setPlaying, {
+      rate: speechRate,
       onStart: () => {
         if (gen === genRef.current) clockRef.current.start = perf()
       },
@@ -409,17 +417,20 @@ export function useNarration(lessonId: string, stepId: string, text: string) {
   return { playing, paused, play, stop, pause, resume, replay, clock }
 }
 
+/** Device speech's rate for narration (lessons at their usual pace). */
+const SPEECH_RATE = 0.95
+
 function speak(
   text: string,
   setPlaying: (b: boolean) => void,
-  hooks: { onStart?: () => void; onBoundary?: (charIndex: number) => void } = {},
+  hooks: { rate?: number; onStart?: () => void; onBoundary?: (charIndex: number) => void } = {},
 ) {
   if (!('speechSynthesis' in window)) {
     setPlaying(false)
     return
   }
   const u = new SpeechSynthesisUtterance(text)
-  u.rate = 0.95
+  u.rate = hooks.rate ?? SPEECH_RATE
   const v = window.speechSynthesis.getVoices().find((x) => x.lang.startsWith('en'))
   if (v) u.voice = v
   u.onstart = () => hooks.onStart?.()

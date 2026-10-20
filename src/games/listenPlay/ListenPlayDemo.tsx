@@ -4,7 +4,10 @@ import { TopBar } from '../../components/ui'
 import { guide, useGuideCaption } from '../../guide/store'
 import { SayAgainButton } from '../../guide/SayAgainButton'
 import type { Picture } from '../../lib/problem'
-import { makeKCountingProvider, type KCountingKind } from '../../lib/providers/kCounting'
+import { createProvider, type ProviderConfig } from '../../lib/providers'
+import type { KCountingItem } from '../../lib/providers/kCounting'
+import type { KShapeKind, KShapesMode } from '../../lib/providers/kShapes'
+import type { KLettersMode } from '../../lib/providers/kLetters'
 import type { GameResult } from '../../screens/GameRunner'
 import { DragToMake } from './DragToMake'
 import ListenPlay from './ListenPlay'
@@ -14,11 +17,13 @@ import { TapToCount } from './TapToCount'
 
 /**
  * DEV ONLY (/dev/listen-play, routed only when import.meta.env.DEV): the
- * Listen & Play kit on its own, with the kindergarten counting provider, until
- * the K–1 stage sets wire it into the curriculum.
+ * Listen & Play kit on its own, with any of the kindergarten providers (the
+ * K–1 stage sets play them through the GameRunner too).
  *
  *   ?tab=play|count|drag|pictures|results|marker   (default play)
- *   ?kind=howMany|findGroup                 (default: both, mixed)
+ *   ?k=counting|shapes|letters             (default counting)
+ *   ?mode=count|compare · name2d|flatSolid|hunt · findUpper|matchCase|firstSound
+ *   ?kind=howMany|findGroup|more|fewer|same|bigger · name|flat|solid|nameSolid|withSides|noCorners|howManySides   (one question shape)
  *
  * The voice is still the silent timeline stub, so a caption pill at the bottom
  * shows what the narrator is saying.
@@ -31,7 +36,15 @@ type Tab = (typeof TABS)[number]
 export default function ListenPlayDemo() {
   const [params, setParams] = useSearchParams()
   const tab = (TABS as readonly string[]).includes(params.get('tab') ?? '') ? (params.get('tab') as Tab) : 'play'
-  const kind = params.get('kind') as KCountingKind | null
+  const kind = params.get('kind') as KCountingItem | null
+  const k = params.get('k')
+  const mode = params.get('mode') ?? undefined
+  const config: ProviderConfig =
+    k === 'shapes'
+      ? { kind: 'kShapes', mode: mode as KShapesMode | undefined, kinds: kind ? [kind as unknown as KShapeKind] : undefined }
+      : k === 'letters'
+        ? { kind: 'kLetters', mode: mode as KLettersMode | undefined, confusablesAfter: 3 }
+        : { kind: 'kCounting', mode: mode === 'compare' ? 'compare' : 'count', kinds: kind ? [kind] : undefined }
 
   return (
     <div className="flex-1 flex flex-col min-h-0">
@@ -57,7 +70,7 @@ export default function ListenPlayDemo() {
           </nav>
         }
       />
-      {tab === 'play' && <PlayTab kinds={kind ? [kind] : undefined} />}
+      {tab === 'play' && <PlayTab config={config} />}
       {tab === 'count' && <CountTab />}
       {tab === 'drag' && <DragTab />}
       {tab === 'pictures' && <PicturesTab />}
@@ -75,11 +88,11 @@ export default function ListenPlayDemo() {
   )
 }
 
-function PlayTab({ kinds }: { kinds?: KCountingKind[] }) {
+function PlayTab({ config }: { config: ProviderConfig }) {
   const [round, setRound] = useState(0)
   const [result, setResult] = useState<GameResult | null>(null)
-  const key = kinds?.join(',') ?? ''
-  const provider = useMemo(() => makeKCountingProvider({ kinds: key ? (key.split(',') as KCountingKind[]) : undefined }), [key])
+  const key = JSON.stringify(config)
+  const provider = useMemo(() => createProvider(JSON.parse(key) as ProviderConfig), [key])
   if (result) {
     return (
       <ListenResultCard

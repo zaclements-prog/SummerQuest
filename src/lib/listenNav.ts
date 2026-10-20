@@ -1,7 +1,7 @@
 import { zoneStages, type Stage, type Zone } from '../curriculum'
 import { lineText } from '../voice/registry'
 import type { VoiceRef } from '../voice/types'
-import { contentBand, isListenMode } from './gradeBand'
+import { isListenMode } from './gradeBand'
 import { isStageUnlocked } from './stageLocks'
 import type { GradeLevel } from './gradeTiers'
 
@@ -17,23 +17,6 @@ import type { GradeLevel } from './gradeTiers'
  */
 
 type Grade = GradeLevel | null | undefined
-
-/**
- * The K–1 zone titles (the pilot contract). MERGE: once the curriculum has
- * `zoneTitle(zone, grade)` (with `Zone.titleByBand`), `zoneTitleFor` below
- * calls it and this map goes.
- */
-const K1_TITLE_FALLBACK: Record<string, string> = {
-  'multiplication-mesa': 'Counting Mesa',
-  'geometry-grove': 'Shape Grove',
-  'reading-reef': 'Letter Reef',
-}
-
-/** A zone's title for the child's grade ("Counting Mesa" in K–1, "Multiplication Mesa" in 2–4). */
-export function zoneTitleFor(zone: Pick<Zone, 'id' | 'title'>, grade: Grade): string {
-  if (grade != null && contentBand(grade) === 'k1') return K1_TITLE_FALLBACK[zone.id] ?? zone.title
-  return zone.title
-}
 
 /** The zone has its own K–1 stage set (so a K–1 child can play it). */
 export function hasK1Set(zone: Pick<Zone, 'stagesByBand'>): boolean {

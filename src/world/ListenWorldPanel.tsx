@@ -7,7 +7,8 @@ import { ListenStagePicker } from '../components/listen/ListenStagePicker'
 import { ListenSleeping } from '../components/listen/ListenSleeping'
 import { ListenIconButton } from '../components/listen/ListenIconButton'
 import type { ActiveNpc } from './useWorldUi'
-import { bandLessons } from './hubContent'
+import { lessonsFor } from '../tutoring/lessons'
+import type { GradeLevel } from '../lib/gradeTiers'
 import { npcSleeping, npcTitle } from './listenWorld'
 
 /**
@@ -54,8 +55,8 @@ export default function ListenWorldPanel({ npc, onLaunch, onClose }: { npc: Acti
 }
 
 /** The band's lessons as picture buttons ("Let's learn something new!"). */
-function LessonPictures({ grade, onLaunch }: { grade: Parameters<typeof bandLessons>[0]; onLaunch: (path: string) => void }) {
-  const lessons = bandLessons(grade)
+function LessonPictures({ grade, onLaunch }: { grade: GradeLevel | null | undefined; onLaunch: (path: string) => void }) {
+  const lessons = lessonsFor(grade)
   const first = lessons[0]?.id
   useEffect(() => {
     void guide.show({ voice: { line: 'k-nav/lessonTime' }, target: first ? `lesson-${first}` : null })

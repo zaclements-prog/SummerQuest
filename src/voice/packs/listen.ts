@@ -13,6 +13,10 @@ export default defineVoicePack({
   id: 'listen',
   lines: {
     countTogether: "Let's count together.",
+    /** The walkthrough of a comparison: both groups are counted, one after the other. */
+    countEach: "Let's count each group.",
+    /** The walkthrough of a shape: each side lights up as it is counted. */
+    countSides: "Let's count the sides.",
     yourTurn: 'Now you try!',
     youDidIt: 'You did it!',
     thatsRight: "Yes! That's right!",

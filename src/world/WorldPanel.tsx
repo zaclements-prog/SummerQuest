@@ -73,7 +73,7 @@ export default function WorldPanel({
             <StageList zoneId="reading-reef" onLaunch={onLaunch} />
           </Section>
           <Section title="📖 Lessons">
-            <LessonList only={['reading', 'writing']} onLaunch={onLaunch} />
+            <LessonList only={['reading-reef', 'writing-workshop']} onLaunch={onLaunch} />
           </Section>
         </>
       ) : npc.zoneId ? (
@@ -138,7 +138,8 @@ function StageList({ zoneId, onLaunch }: { zoneId: string; onLaunch: (path: stri
 function LessonList({ only, onLaunch }: { only?: string[]; onLaunch: (path: string) => void }) {
   const attempts = useProgress((s) => s.attempts)
   const sessions = useProgress((s) => s.sessions)
-  const rows = lessonRows({ attempts, sessions }, only)
+  const grade = useProgress((s) => s.player?.grade)
+  const rows = lessonRows({ attempts, sessions, grade }, only)
   return (
     <div className="grid grid-cols-2 gap-2">
       {rows.map((l) => (

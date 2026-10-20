@@ -20,6 +20,13 @@ export interface TimedWord {
 /** Typical child-friendly narration pace (characters per second, incl. spaces). */
 export const DEFAULT_CHARS_PER_SEC = 14
 
+/**
+ * The K–1 lessons' pace without a recording (device speech and the silent
+ * timeline), as a share of the usual: slower, about 120–130 words a minute
+ * (K–5 plan §3). A recorded clip keeps its own pace.
+ */
+export const K1_NARRATION_PACE = 0.85
+
 const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '')
 
 /**

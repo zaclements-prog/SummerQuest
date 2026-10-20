@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest'
 import { curriculum, getZone } from '../../../curriculum'
-import { allLessons } from '../../../tutoring/lessons'
+import { everyLesson, zoneLessonFor } from '../../../tutoring/lessons'
 import { CREATURES } from '../../home/catalog'
-import { PETS, petById, petLessonFor } from '../catalog'
+import { PETS, petById } from '../catalog'
 import {
   adultPets,
   growthFromStars,
@@ -58,34 +58,28 @@ describe('pet catalog', () => {
     }
   })
 
-  it("each lesson belongs to its pet's zone, and every lesson hatches a pet", () => {
-    // the kindergarten pilot's lessons (the lessons work adds them; until then they're not in the list)
-    const K_PILOT = ['kCounting', 'kShapes', 'kLetters']
+  it("each lesson belongs to its pet's zone, and every lesson (2–4 and K–1) hatches a pet", () => {
     for (const p of PETS) {
       for (const id of p.lessonIds) {
-        const lesson = allLessons.find((l) => l.id === id)
-        if (!lesson) {
-          expect(K_PILOT, `${p.creatureId}: ${id}`).toContain(id)
-          continue
-        }
-        expect(lesson.zoneId).toBe(p.zoneId)
+        const lesson = everyLesson.find((l) => l.id === id)
+        expect(lesson, `${p.creatureId}: ${id}`).toBeDefined()
+        expect(lesson!.zoneId).toBe(p.zoneId)
       }
     }
     const hatching = new Set(PETS.flatMap((p) => p.lessonIds))
-    for (const l of allLessons) expect(hatching.has(l.id), l.id).toBe(true)
+    for (const l of everyLesson) expect(hatching.has(l.id), l.id).toBe(true)
   })
 
-  it('suggests the lesson of the child’s band (K–1: only its own)', () => {
-    const lessons: Record<string, { band?: string }> = { multiplication: {}, geometry: {} }
-    const find = (id: string) => lessons[id]
-    expect(petLessonFor(pet('lion'), 3, find)).toBe('multiplication')
-    expect(petLessonFor(pet('lion'), 5, find)).toBe('multiplication') // no grade-5 lesson yet: as before
-    expect(petLessonFor(pet('lion'), 0, find)).toBeNull() // no K lesson in this build
-    lessons.kCounting = { band: 'k1' }
-    expect(petLessonFor(pet('lion'), 0, find)).toBe('kCounting')
-    expect(petLessonFor(pet('lion'), 1, find)).toBe('kCounting')
-    expect(petLessonFor(pet('lion'), 2, find)).toBe('multiplication')
-    expect(petLessonFor(pet('dragon'), 3, find)).toBeNull()
+  it('the lesson an egg suggests (its zone’s lesson for the grade) is always one that hatches it', () => {
+    for (const p of PETS) {
+      for (const g of [0, 1, 2, 3, 4, 5]) {
+        const l = zoneLessonFor(p.zoneId, g)
+        if (l) expect(p.lessonIds, `${p.creatureId} at grade ${g}`).toContain(l.id)
+      }
+    }
+    expect(zoneLessonFor('multiplication-mesa', 0)?.id).toBe('kCounting')
+    expect(zoneLessonFor('multiplication-mesa', 3)?.id).toBe('multiplication')
+    expect(zoneLessonFor('division-dunes', 0)).toBeUndefined() // a sleeping zone: no lesson button
   })
 
   it('every egg has its own colors', () => {

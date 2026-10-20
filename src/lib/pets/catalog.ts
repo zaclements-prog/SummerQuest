@@ -1,6 +1,4 @@
 import { creatureById } from '../home/catalog'
-import { contentBand } from '../gradeBand'
-import { DEFAULT_GRADE, type GradeLevel } from '../gradeTiers'
 
 /**
  * The twelve zone pets (see docs/superpowers/specs/2026-10-18-pets-plan.md).
@@ -51,24 +49,4 @@ export function petName(creatureId: string): string {
 }
 export function petEmoji(creatureId: string): string {
   return creatureById(creatureId)?.emoji ?? '🐾'
-}
-
-/**
- * The pet's lesson to suggest at a grade: the one of the child's content band
- * (a K–1 lesson carries `band: 'k1'`; today's lessons are 2nd–4th grade). K–1
- * gets only its own (none in this build: no lesson button); other grades fall
- * back to the 2–4 lesson, as before. `lessonById` finds a lesson in this build.
- */
-export function petLessonFor(
-  pet: Pick<PetDef, 'lessonIds'>,
-  grade: GradeLevel | null | undefined,
-  lessonById: (id: string) => object | undefined,
-): string | null {
-  const band = contentBand(grade ?? DEFAULT_GRADE)
-  const bandOf = (id: string) => (lessonById(id) as { band?: string } | undefined)?.band ?? 'g24'
-  const known = pet.lessonIds.filter((id) => lessonById(id) !== undefined)
-  const own = known.find((id) => bandOf(id) === band)
-  if (own) return own
-  if (band === 'k1') return null
-  return known.find((id) => bandOf(id) === 'g24') ?? null
 }

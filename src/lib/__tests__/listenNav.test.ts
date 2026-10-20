@@ -1,5 +1,5 @@
 import { afterAll, beforeEach, describe, expect, it } from 'vitest'
-import { curriculum, getZone, type Stage } from '../../curriculum'
+import { curriculum, getZone, zoneTitle, type Stage } from '../../curriculum'
 import {
   hasK1Set,
   isZoneSleeping,
@@ -8,7 +8,6 @@ import {
   stagePicture,
   stageVoice,
   zoneNameVoice,
-  zoneTitleFor,
   zoneWelcomeVoice,
 } from '../listenNav'
 import { npcGreeting, npcSleeping, npcTitle } from '../../world/listenWorld'
@@ -51,12 +50,12 @@ describe('zones for a K–1 child', () => {
   it('K–1 titles for the pilot zones; every other grade (and zone) keeps its title', () => {
     for (const [zoneId, p] of Object.entries(PILOT)) {
       const zone = getZone(zoneId)!
-      expect(zoneTitleFor(zone, 0)).toBe(p.title)
-      expect(zoneTitleFor(zone, 1)).toBe(p.title)
-      for (const g of [2, 3, 4, 5] as const) expect(zoneTitleFor(zone, g)).toBe(zone.title)
-      expect(zoneTitleFor(zone, null)).toBe(zone.title)
+      expect(zoneTitle(zone, 0)).toBe(p.title)
+      expect(zoneTitle(zone, 1)).toBe(p.title)
+      for (const g of [2, 3, 4, 5] as const) expect(zoneTitle(zone, g)).toBe(zone.title)
+      expect(zoneTitle(zone, null)).toBe(zone.title)
     }
-    expect(zoneTitleFor(getZone('division-dunes')!, 0)).toBe('Division Dunes')
+    expect(zoneTitle(getZone('division-dunes')!, 0)).toBe('Division Dunes')
   })
 
   it('a zone sleeps for K–1 until it has a K–1 stage set, and never for grades 2–5', () => {
@@ -116,13 +115,14 @@ describe('what the voice says (k-nav)', () => {
 describe('World gateways', () => {
   const npc = (zoneId?: string, hub?: 'schoolhouse' | 'library', label = 'X') => ({ zoneId, hub, label })
 
-  it('K–1: a zone gateway follows its zone, the Library follows Letter Reef, the Schoolhouse waits for K–1 lessons', () => {
+  it('K–1: a zone gateway follows its zone, the Library follows Letter Reef, the Schoolhouse opens with the K–1 lessons', () => {
     expect(npcSleeping(npc('multiplication-mesa'), 0)).toBe(true)
     withPilotSets()
     expect(npcSleeping(npc('multiplication-mesa'), 0)).toBe(false)
     expect(npcSleeping(npc('division-dunes'), 1)).toBe(true)
     expect(npcSleeping(npc('reading-reef', 'library', 'Library'), 0)).toBe(false)
-    expect(npcSleeping(npc(undefined, 'schoolhouse', 'Schoolhouse'), 0)).toBe(true) // no K lessons in this build
+    expect(npcSleeping(npc(undefined, 'schoolhouse', 'Schoolhouse'), 0)).toBe(false) // the K lessons (kCounting, kShapes, kLetters)
+    expect(npcGreeting(npc(undefined, 'schoolhouse', 'Schoolhouse'), 1)).toEqual({ line: 'k-nav/lessonTime' })
     expect(npcGreeting(npc('multiplication-mesa'), 0)).toEqual({ line: 'k-nav/welcome-multiplication-mesa' })
     expect(npcGreeting(npc('division-dunes'), 0)).toEqual({ line: 'k-nav/sleeping' })
     expect(npcTitle(npc('multiplication-mesa', undefined, 'Multiplication Mesa'), 0)).toBe('Counting Mesa')

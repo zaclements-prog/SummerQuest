@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { curriculum, zoneStages, type Zone } from '../curriculum'
+import { curriculum, zoneStages, zoneTitle, type Zone } from '../curriculum'
 import { useProgress, zoneStars } from '../store/progress'
 import { sfx } from '../lib/sound'
 import { computeBadges, type BadgeStatus } from '../lib/badges'
@@ -13,7 +13,7 @@ import { useWorldUi } from '../world/useWorldUi'
 import { hatchedPets, petStages } from '../lib/pets/growth'
 import { PETS } from '../lib/pets/catalog'
 import type { GradeLevel } from '../lib/gradeTiers'
-import { isZoneSleeping, listenGrade, SLEEPING_LINE, zoneNameVoice, zoneTitleFor } from '../lib/listenNav'
+import { isZoneSleeping, listenGrade, SLEEPING_LINE, zoneNameVoice } from '../lib/listenNav'
 import { guide } from '../guide/store'
 import { SayAgainButton } from '../guide/SayAgainButton'
 import { ListenIconButton } from '../components/listen/ListenIconButton'
@@ -370,7 +370,7 @@ function ListenZoneMarker({ zone, isNext }: { zone: Zone; isNext: boolean }) {
   if (!spot) return null
   const sleeping = !zone.available || isZoneSleeping(zone, grade)
   const tone = TONES[toneOf(zone.themeColor)]
-  const title = zoneTitleFor(zone, grade)
+  const title = zoneTitle(zone, grade)
   const size = sleeping ? MEDAL_SLEEP : MEDAL_OPEN
   const stars = zoneStars(zone.id, grade)
   const maxStars = maxStarsOf(zone, grade)

@@ -4,16 +4,16 @@ import { canvasQuality, useLowGraphics } from '../world/graphicsQuality'
 import PetLineup, { LINEUP_SLOT_SHARE } from '../pets/PetLineup'
 import { useProgress } from '../store/progress'
 import { usePetStatuses } from '../lib/pets/usePets'
-import { petById, petEmoji, petLessonFor, petName } from '../lib/pets/catalog'
-import { getLesson } from '../tutoring/lessons'
+import { petById, petEmoji, petName } from '../lib/pets/catalog'
+import { zoneLessonFor } from '../tutoring/lessons'
 import { nextStepText, stageLabel, zoneTitle } from '../lib/pets/copy'
 import { growthRank, kidStarsFor } from '../lib/pets/growth'
 import type { PetGrowth, PetStatus } from '../lib/pets/growth'
 import { PET_STAGES } from '../lib/pets/types'
 import { Button, ProgressBar } from '../components/ui'
 import { sfx } from '../lib/sound'
-import { getZone } from '../curriculum'
-import { isZoneSleeping, listenGrade, zoneTitleFor } from '../lib/listenNav'
+import { getZone, zoneTitle as bandZoneTitle } from '../curriculum'
+import { isZoneSleeping, listenGrade } from '../lib/listenNav'
 import { useListenIntro } from '../components/listen/useListenIntro'
 import { ListenIconButton } from '../components/listen/ListenIconButton'
 import { SayAgainButton } from '../guide/SayAgainButton'
@@ -77,8 +77,8 @@ export default function PetsScreen() {
   const isAdult = sel.stage === 'adult'
   const isYou = active === id
   const progress = stageProgress(sel)
-  // the egg's lesson in the child's band (K–1: its K–1 lesson, once there is one)
-  const lessonId = petLessonFor(sel.pet, grade, getLesson)
+  // the egg's lesson in the child's band (K–1: its K–1 lesson; a zone without one has none)
+  const lessonId = zoneLessonFor(sel.pet.zoneId, grade)?.id ?? null
   // K–1: pictures for the way back and the pet's place; the voice says what this page is
   const listen = listenGrade(grade)
   const explain = useListenIntro('pets', { voice: { line: 'k-nav/petsHelp' } }, listen)
@@ -167,7 +167,7 @@ export default function PetsScreen() {
                 value={progress[0]}
                 max={progress[1]}
                 tone={sel.next?.stage === 'adult' ? 'correct' : 'quest'}
-                label={`⭐ Stars in ${listen && petZone ? zoneTitleFor(petZone, grade) : zoneTitle(sel.pet.zoneId)}`}
+                label={`⭐ Stars in ${listen && petZone ? bandZoneTitle(petZone, grade) : zoneTitle(sel.pet.zoneId)}`}
               />
             )}
 
@@ -207,7 +207,7 @@ export default function PetsScreen() {
               {listen ? (
                 // K–1: the pet's place as a picture (only once it's awake), and its lesson
                 <>
-                  {zoneOpen && petZone && <ListenIconButton icon={petZone.emoji} label={`Go to ${zoneTitleFor(petZone, grade)}`} to={`/zone/${petZone.id}`} tone="sun" />}
+                  {zoneOpen && petZone && <ListenIconButton icon={petZone.emoji} label={`Go to ${bandZoneTitle(petZone, grade)}`} to={`/zone/${petZone.id}`} tone="sun" />}
                   {sel.stage === 'egg' && lessonId && <ListenIconButton icon="📚" label="Lesson" to={`/tutor/${lessonId}`} tone="ocean" />}
                 </>
               ) : (

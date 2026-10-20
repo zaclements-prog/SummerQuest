@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { useProgress } from '../store/progress'
 import { weeklyFocus, byDay, type FocusItem } from '../lib/analytics'
 import { skillMeta } from '../tutoring/skills'
+import { isLessonFor } from '../tutoring/lessons'
 import { getZone } from '../curriculum'
 import BarChart from '../components/BarChart'
 import { seedSampleWeek } from '../tutoring/devSeed'
@@ -94,7 +95,9 @@ function FocusRow({ f }: { f: FocusItem }) {
 export default function FocusScreen() {
   const attempts = useProgress((s) => s.attempts)
   const sessions = useProgress((s) => s.sessions)
-  const focus = weeklyFocus(attempts, sessions)
+  const grade = useProgress((s) => s.player?.grade)
+  // only skills whose "Learn it" lesson is in the child's grade band
+  const focus = weeklyFocus(attempts, sessions).filter((f) => isLessonFor(f.lessonId, grade))
   const days = byDay(sessions, 7)
 
   const { container, item } = useEntrance()

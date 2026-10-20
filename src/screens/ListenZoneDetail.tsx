@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import type { Zone } from '../curriculum'
+import { zoneTitle, type Zone } from '../curriculum'
 import { useProgress } from '../store/progress'
 import { sfx } from '../lib/sound'
 import { Celebration, Medallion, Page, ToonStar, toneOf } from '../components/ui'
@@ -9,7 +9,7 @@ import { guide } from '../guide/store'
 import { ListenIconButton } from '../components/listen/ListenIconButton'
 import { ListenStagePicker } from '../components/listen/ListenStagePicker'
 import { ListenSleeping, SleepingBadge } from '../components/listen/ListenSleeping'
-import { isZoneSleeping, zoneTitleFor } from '../lib/listenNav'
+import { isZoneSleeping } from '../lib/listenNav'
 import { petEmoji } from '../lib/pets/catalog'
 import { zonePetLine } from '../lib/pets/copy'
 import type { PetStatus } from '../lib/pets/growth'
@@ -41,7 +41,7 @@ export default function ListenZoneDetail({
   const navigate = useNavigate()
   const grade = useProgress((s) => s.player?.grade)
   const sleeping = isZoneSleeping(zone, grade)
-  const title = zoneTitleFor(zone, grade)
+  const title = zoneTitle(zone, grade)
   const back = fromWorld ? '/world' : '/map'
   const celebrate = celebrateOpen && !sleeping
 

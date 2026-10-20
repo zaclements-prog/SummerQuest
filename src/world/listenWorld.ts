@@ -1,8 +1,8 @@
-import { getZone } from '../curriculum'
-import { isZoneSleeping, listenGrade, SLEEPING_LINE, zoneTitleFor, zoneWelcomeVoice } from '../lib/listenNav'
+import { getZone, zoneTitle } from '../curriculum'
+import { isZoneSleeping, listenGrade, SLEEPING_LINE, zoneWelcomeVoice } from '../lib/listenNav'
 import type { GradeLevel } from '../lib/gradeTiers'
 import type { VoiceRef } from '../voice/types'
-import { bandLessons } from './hubContent'
+import { lessonBand, lessonsFor } from '../tutoring/lessons'
 import type { ActiveNpc } from './useWorldUi'
 
 /**
@@ -18,7 +18,8 @@ type NpcLike = Pick<ActiveNpc, 'zoneId' | 'hub' | 'label'>
 /** K–1: this gateway can't be entered yet ("still sleeping, coming soon"). Never true for grades 2–5. */
 export function npcSleeping(npc: NpcLike, grade: Grade): boolean {
   if (!listenGrade(grade)) return false
-  if (npc.hub === 'schoolhouse') return bandLessons(grade).length === 0
+  // (the band has its own lessons: `lessonsFor` lends 2–4's to a band that has none)
+  if (npc.hub === 'schoolhouse') return !lessonsFor(grade).some((l) => lessonBand(l) === 'k1')
   const zone = npc.zoneId ? getZone(npc.zoneId) : undefined
   return !zone || isZoneSleeping(zone, grade)
 }
@@ -34,5 +35,5 @@ export function npcGreeting(npc: NpcLike, grade: Grade): VoiceRef {
 export function npcTitle(npc: NpcLike, grade: Grade): string {
   const zone = npc.zoneId ? getZone(npc.zoneId) : undefined
   if (npc.hub || !zone) return npc.label
-  return zoneTitleFor(zone, grade)
+  return zoneTitle(zone, grade)
 }
