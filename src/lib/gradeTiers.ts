@@ -227,6 +227,7 @@ export function effectiveConfig(
     case 'kCounting':
     case 'kShapes':
     case 'kLetters':
+    case 'kLiteracy':
       return config
   }
 }

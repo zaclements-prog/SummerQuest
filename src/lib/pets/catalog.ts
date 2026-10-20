@@ -32,7 +32,7 @@ export const PETS: readonly PetDef[] = [
   { creatureId: 'panda', zoneId: 'geometry-grove', lessonIds: ['geometry', 'kShapes'], egg: { shell: '#ddcdf7', spot: '#8461b6' } },
   { creatureId: 'fox', zoneId: 'data-delta', lessonIds: ['dataGraph'], egg: { shell: '#ffd9c7', spot: '#f2766b' } },
   { creatureId: 'owl', zoneId: 'word-problem-woods', lessonIds: ['wordProblem'], egg: { shell: '#e9dcc4', spot: '#9a6a46' } },
-  { creatureId: 'octopus', zoneId: 'reading-reef', lessonIds: ['reading', 'kLetters'], egg: { shell: '#ffc9b8', spot: '#f7a1c4' } },
+  { creatureId: 'octopus', zoneId: 'reading-reef', lessonIds: ['reading', 'kLetters', 'kRhymes'], egg: { shell: '#ffc9b8', spot: '#f7a1c4' } },
   { creatureId: 'dragonet', zoneId: 'writing-workshop', lessonIds: ['writing'], egg: { shell: '#cfe8fb', spot: '#8ab8ff' } },
   { creatureId: 'tiger', zoneId: 'science-summit', lessonIds: ['science'], egg: { shell: '#fff0c2', spot: '#f2a65a' } },
   { creatureId: 'dragon', zoneId: 'tower-battlefront', lessonIds: [], egg: { shell: '#ffd0c4', spot: '#c94c42' } },

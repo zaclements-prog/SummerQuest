@@ -6,11 +6,12 @@ import { VOICE_PACKS, voiceText } from '../../voice/registry'
 import { seededShuffle } from '../../lib/random'
 import { LESSON_STAGE, askSteps, checkCards, lessonCard } from '../ui/listenScript'
 
-/** The kindergarten pilot contract (docs/superpowers/specs/2026-10-19-k5-expansion-plan.md). */
+/** The kindergarten pilot and literacy (phase 1b) contracts (docs/superpowers/specs/2026-10-19-k5-expansion-plan.md). */
 const CONTRACT = {
   kCounting: { zoneId: 'multiplication-mesa', practiceStageId: 'k-count-1' },
   kShapes: { zoneId: 'geometry-grove', practiceStageId: 'k-shapes-1' },
   kLetters: { zoneId: 'reading-reef', practiceStageId: 'k-letters-1' },
+  kRhymes: { zoneId: 'reading-reef', practiceStageId: 'k-rhyme-1' },
 }
 
 const checks = k1Lessons.flatMap((l) => l.steps.filter((s) => s.check).map((s) => ({ lesson: l, step: s, check: s.check! })))
@@ -18,7 +19,7 @@ const words = (s: string) => s.split(/\s+/).filter(Boolean)
 
 describe('the kindergarten lessons', () => {
   it('are the pilot’s fixed lessons, zones and practice stages', () => {
-    expect(Object.fromEntries(k1Lessons.map((l) => [l.id, { zoneId: l.zoneId, practiceStageId: l.practiceStageId }]))).toEqual(CONTRACT)
+    expect(Object.fromEntries(k1Lessons.filter((l) => l.id in CONTRACT).map((l) => [l.id, { zoneId: l.zoneId, practiceStageId: l.practiceStageId }]))).toEqual(CONTRACT)
     for (const l of k1Lessons) expect(l.band).toBe('k1')
   })
 
@@ -123,5 +124,40 @@ describe('the kindergarten checks', () => {
     const cards = seededShuffle(checkCards(check), `${lesson.id}/${step.id}`)
     const sweep = askSteps(check, cards, [0, 2]).at(-1)!
     expect(sweep.target).toEqual([lessonCard(0), lessonCard(2)])
+  })
+})
+
+describe('kRhymes (phase-1b contract: rhymes and word parts)', () => {
+  const lesson = k1Lessons.find((l) => l.id === 'kRhymes')!
+  const own = checks.filter((c) => c.lesson === lesson)
+
+  it('is a Letter Reef K lesson of about four steps, practised in Rhyme time', () => {
+    expect(lesson).toBeDefined()
+    expect(lesson).toMatchObject({ band: 'k1', zoneId: 'reading-reef', practiceStageId: 'k-rhyme-1' })
+    expect(lesson.steps.length).toBeGreaterThanOrEqual(3)
+    expect(lesson.steps.length).toBeLessThanOrEqual(5)
+    expect(lesson.skillIds).toEqual(['k-rhymes', 'k-syllables'])
+  })
+
+  it('teaches that rhymes sound the same at the end, and that words have parts to clap', () => {
+    const told = lesson.steps.map((s) => s.narration).join(' ')
+    expect(told).toMatch(/rhyme/i)
+    expect(told).toMatch(/same at the end/i)
+    expect(told).toMatch(/parts/i)
+    expect(told).toMatch(/clap/i)
+  })
+
+  it('has two picture-card "your turn" checks: a rhyme, then the claps in a word', () => {
+    expect(own).toHaveLength(2)
+    const [rhyme, claps] = own.map((c) => c.check)
+    // "Which one rhymes with moon?": the pictures named in the order shown, one rhymes
+    expect(rhyme.question).toMatch(/rhymes with moon\?$/)
+    expect(rhyme.answer).toBe('spoon')
+    expect(rhyme.pictures!.every((p) => p.picture.kind === 'emoji')).toBe(true)
+    expect(rhyme.namedAt!.map((n) => n.option).sort()).toEqual([...rhyme.options].sort())
+    // "How many claps in banana?": numeral cards; a wrong pick counts the three claps on the stage
+    expect(claps.answer).toBe(3)
+    expect(claps.pictures!.every((p) => p.picture.kind === 'numeral')).toBe(true)
+    expect(claps.countAlong).toBe(3)
   })
 })

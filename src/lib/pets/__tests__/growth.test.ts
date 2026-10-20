@@ -41,7 +41,7 @@ describe('pet catalog', () => {
   it('matches the plan’s pet ↔ zone ↔ lessons table (2–4 lesson, then the K–1 pilot’s)', () => {
     const table: [string, string, string[]][] = [
       ['frog', 'fraction-falls', ['fractions']],
-      ['octopus', 'reading-reef', ['reading', 'kLetters']],
+      ['octopus', 'reading-reef', ['reading', 'kLetters', 'kRhymes']],
       ['owl', 'word-problem-woods', ['wordProblem']],
       ['panda', 'geometry-grove', ['geometry', 'kShapes']],
       ['lion', 'multiplication-mesa', ['multiplication', 'kCounting']],

@@ -254,5 +254,23 @@
       "stepId": "yourTurn",
       "text": "Your turn! Listen to the start of each word. Does it start like ball?"
     }
+  ],
+  "kRhymes": [
+    {
+      "stepId": "rhyme",
+      "text": "Listen to the end of each word. Cat. Hat. Bat. They sound the same at the end. They rhyme!"
+    },
+    {
+      "stepId": "moon",
+      "text": "Moon and spoon rhyme, too. Moon, spoon! Now you find a rhyme."
+    },
+    {
+      "stepId": "parts",
+      "text": "Words have parts. Let's clap them! Ti… ger. Tiger has two claps!"
+    },
+    {
+      "stepId": "yourTurn",
+      "text": "Your turn! Clap the parts of banana. Ba… na… na!"
+    }
   ]
 }

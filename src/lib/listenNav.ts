@@ -64,12 +64,28 @@ const STAGE_PICTURE: Record<string, string> = {
   'k-letters-1': '🔤',
   'k-letters-2': 'Aa',
   'k-letters-3': '🐝',
+  'k-rhyme-1': '🎩',
+  'k-syllables-1': '🥁',
+  'k-rhyme-2': '🌙',
+  'k-blend-1': '🐍',
+  'k-sight-1': '👀',
 }
 const KIND_PICTURE: Record<Stage['kind'], string> = { concept: '💡', practice: '⚡', mastery: '🏆' }
 
 /** The picture on a stage's button: its own emoji, the pilot's, or one for its kind. */
 export function stagePicture(stage: Pick<Stage, 'id' | 'kind'> & { emoji?: string }): string {
   return stage.emoji ?? STAGE_PICTURE[stage.id] ?? KIND_PICTURE[stage.kind] ?? '⭐'
+}
+
+/**
+ * How many picture buttons a K–1 stage picker puts in a row: all of them up
+ * to four (the pilot's three, Writing Workshop's four), then rows of three
+ * (five or six stages) or four (seven or eight: Letter Reef), so the rows come
+ * out even and a short last row sits in the middle.
+ */
+export function stagePickerColumns(count: number): number {
+  if (count <= 4) return Math.max(1, count)
+  return count <= 6 ? 3 : 4
 }
 
 type ZoneProgressLike = { stages: Record<string, { stars: number } | undefined> } | undefined

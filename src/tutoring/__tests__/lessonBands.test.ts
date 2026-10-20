@@ -9,7 +9,7 @@ import { focusRows, lessonRows } from '../../world/hubContent'
 
 /** Today's eleven lessons, in their order: grades 2–4 must see exactly these. */
 const TODAY = ['multiplication', 'division', 'fractions', 'placeValue', 'measurement', 'geometry', 'dataGraph', 'wordProblem', 'reading', 'writing', 'science']
-const K_PILOT = ['kCounting', 'kShapes', 'kLetters']
+const K_PILOT = ['kCounting', 'kShapes', 'kLetters', 'kRhymes']
 const ids = (ls: { id: string }[]) => ls.map((l) => l.id)
 
 describe('lessons by grade band', () => {
@@ -67,7 +67,7 @@ describe('the hub (World) lesson lists', () => {
   it("the Library's reading and writing lessons follow the band", () => {
     const p = { attempts: [], sessions: [] }
     const library = ['reading-reef', 'writing-workshop']
-    expect(ids(lessonRows({ ...p, grade: 0 }, library))).toEqual(['kLetters'])
+    expect(ids(lessonRows({ ...p, grade: 0 }, library))).toEqual(['kLetters', 'kRhymes'])
     expect(ids(lessonRows({ ...p, grade: 3 }, library)).sort()).toEqual(['reading', 'writing'])
   })
 
@@ -112,12 +112,19 @@ describe('practice links stay in the band', () => {
       kCounting: ['k-count-1', 'k-count-parade', 'k-count-3'],
       kShapes: ['k-shapes-1', 'k-shapes-2', 'k-shapes-3'],
       kLetters: ['k-letters-1', 'k-letters-2', 'k-letters-3'],
+      // (Letter Reef's literacy stages sit between the letter ones: Rhyme time is second)
+      kRhymes: ['k-letters-1', 'k-rhyme-1', 'k-letters-2', 'k-syllables-1', 'k-letters-3', 'k-rhyme-2', 'k-blend-1', 'k-sight-1'],
     }
-    for (const l of k1Lessons) {
+    for (const l of k1Lessons.filter((x) => fixed[x.id])) {
       const zone = withK1(getZone(l.zoneId)!, fixed[l.id])
-      // a K child goes straight to the lesson's practice stage (the first of the K set)
-      expect(practiceStageFor(l, undefined, 0, zone)).toBe(l.practiceStageId)
-      expect(practiceStageFor(l, undefined, 1, zone)).toBe(l.practiceStageId)
+      // a K child goes straight to the lesson's practice stage once it is open (the first of the
+      // K set is; a later one, after the stage before it has a star; before that, the first)
+      const first = fixed[l.id][0]
+      const before = fixed[l.id][fixed[l.id].indexOf(l.practiceStageId) - 1]
+      const opened = before ? { stages: { [before]: { stars: 1 } } } : undefined
+      expect(practiceStageFor(l, opened, 0, zone)).toBe(l.practiceStageId)
+      expect(practiceStageFor(l, opened, 1, zone)).toBe(l.practiceStageId)
+      expect(practiceStageFor(l, undefined, 0, zone)).toBe(before ? first : l.practiceStageId)
       // a grade-3 child who opens a K lesson lands on a grade 2–4 stage, never a K one
       const g24 = zone.stages.map((s) => s.id)
       expect(g24).toContain(practiceStageFor(l, undefined, 3, zone))

@@ -25,6 +25,18 @@
       "kind": "line",
       "file": "voice/k-lessons/kLetters-yourTurn.mp3"
     },
+    "k-lessons/kRhymes-moon": {
+      "text": "Car. Spoon. Fish. Which one rhymes with moon?",
+      "hash": "02e8798056",
+      "kind": "line",
+      "file": "voice/k-lessons/kRhymes-moon.mp3"
+    },
+    "k-lessons/kRhymes-yourTurn": {
+      "text": "How many claps in banana? Tap the number!",
+      "hash": "dcd61c03ba",
+      "kind": "line",
+      "file": "voice/k-lessons/kRhymes-yourTurn.mp3"
+    },
     "k-lessons/triangle": {
       "text": "Triangle!",
       "hash": "da7385986c",
@@ -84,6 +96,18 @@
       "hash": "5e77bf927a",
       "kind": "line",
       "file": "voice/k-lessons/apple.mp3"
+    },
+    "k-lessons/spoon": {
+      "text": "Spoon!",
+      "hash": "d301096c9e",
+      "kind": "line",
+      "file": "voice/k-lessons/spoon.mp3"
+    },
+    "k-lessons/car": {
+      "text": "Car!",
+      "hash": "b3139966ff",
+      "kind": "line",
+      "file": "voice/k-lessons/car.mp3"
     },
     "k-lessons/pickLesson": {
       "text": "Pick a lesson to watch. Tap a picture!",
@@ -3253,6 +3277,648 @@
       "kind": "line",
       "file": "voice/k-nav/stage-k-letters-3.mp3"
     },
+    "k-nav/stage-k-rhyme-1": {
+      "text": "Rhyme time!",
+      "hash": "1148738793",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-rhyme-1.mp3"
+    },
+    "k-nav/stage-k-syllables-1": {
+      "text": "Clap the parts!",
+      "hash": "f8068fbea7",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-syllables-1.mp3"
+    },
+    "k-nav/stage-k-rhyme-2": {
+      "text": "Finish the rhyme!",
+      "hash": "bdd253ef2c",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-rhyme-2.mp3"
+    },
+    "k-nav/stage-k-blend-1": {
+      "text": "Sound it out!",
+      "hash": "79e9ced532",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-blend-1.mp3"
+    },
+    "k-nav/stage-k-sight-1": {
+      "text": "Word hunt!",
+      "hash": "3ca2d5e6ca",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-sight-1.mp3"
+    },
+    "k-rhymes/youHearRhyme": {
+      "text": "You can hear the rhyme!",
+      "hash": "bf6b701bbe",
+      "kind": "line",
+      "file": "voice/k-rhymes/youHearRhyme.mp3"
+    },
+    "k-rhymes/thatRhymes": {
+      "text": "Yes! That rhymes!",
+      "hash": "c8c1aa5735",
+      "kind": "line",
+      "file": "voice/k-rhymes/thatRhymes.mp3"
+    },
+    "k-rhymes/verse-hickory": {
+      "text": "Hickory, dickory, dock. The mouse ran up the…",
+      "hash": "06907d9a4b",
+      "kind": "line",
+      "file": "voice/k-rhymes/verse-hickory.mp3"
+    },
+    "k-rhymes/verse-jackJill": {
+      "text": "Jack and Jill went up the hill, to fetch a pail of water. Jack fell down, and broke his…",
+      "hash": "fd7ebe600d",
+      "kind": "line",
+      "file": "voice/k-rhymes/verse-jackJill.mp3"
+    },
+    "k-rhymes/verse-buckle": {
+      "text": "One, two, buckle my…",
+      "hash": "951f991e31",
+      "kind": "line",
+      "file": "voice/k-rhymes/verse-buckle.mp3"
+    },
+    "k-rhymes/verse-knock": {
+      "text": "Three, four, knock at the…",
+      "hash": "f7f62ceca7",
+      "kind": "line",
+      "file": "voice/k-rhymes/verse-knock.mp3"
+    },
+    "k-rhymes/verse-fatHen": {
+      "text": "Nine, ten, a big fat…",
+      "hash": "1158148fdc",
+      "kind": "line",
+      "file": "voice/k-rhymes/verse-fatHen.mp3"
+    },
+    "k-rhymes/verse-boPeep": {
+      "text": "Little Bo-Peep has lost her…",
+      "hash": "6590166d84",
+      "kind": "line",
+      "file": "voice/k-rhymes/verse-boPeep.mp3"
+    },
+    "k-rhymes/verse-boyBlue": {
+      "text": "Little Boy Blue, come blow your horn. The sheep's in the meadow, the cow's in the…",
+      "hash": "36a7fab452",
+      "kind": "line",
+      "file": "voice/k-rhymes/verse-boyBlue.mp3"
+    },
+    "k-rhymes/verse-diddle": {
+      "text": "Hey, diddle, diddle, the cat and the fiddle, the cow jumped over the moon. The little dog laughed to see such sport, and the dish ran away with the…",
+      "hash": "81c3b969ad",
+      "kind": "line",
+      "file": "voice/k-rhymes/verse-diddle.mp3"
+    },
+    "k-rhymes/verse-rubADub": {
+      "text": "Rub-a-dub-dub, three men in a…",
+      "hash": "cc792b29d5",
+      "kind": "line",
+      "file": "voice/k-rhymes/verse-rubADub.mp3"
+    },
+    "k-rhymes/verse-sixpence": {
+      "text": "The king was in his counting house, counting out his money. The queen was in the parlor, eating bread and…",
+      "hash": "2b1ad691d3",
+      "kind": "line",
+      "file": "voice/k-rhymes/verse-sixpence.mp3"
+    },
+    "k-rhymes/verse-blackbird": {
+      "text": "The maid was in the garden, hanging out the clothes, when down came a blackbird and pecked off her…",
+      "hash": "dd85bd9e66",
+      "kind": "line",
+      "file": "voice/k-rhymes/verse-blackbird.mp3"
+    },
+    "k-rhymes/verse-crooked": {
+      "text": "He bought a crooked cat, which caught a crooked mouse, and they all lived together in a little crooked…",
+      "hash": "2255bf3d7b",
+      "kind": "line",
+      "file": "voice/k-rhymes/verse-crooked.mp3"
+    },
+    "k-rhymes/rhymesWith/word=cat": {
+      "text": "Which one rhymes with cat?",
+      "hash": "96301c52a3",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=cat.mp3"
+    },
+    "k-rhymes/rhymesWith/word=hat": {
+      "text": "Which one rhymes with hat?",
+      "hash": "5ffe0c9816",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=hat.mp3"
+    },
+    "k-rhymes/rhymesWith/word=bat": {
+      "text": "Which one rhymes with bat?",
+      "hash": "b35639ad04",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=bat.mp3"
+    },
+    "k-rhymes/rhymesWith/word=house": {
+      "text": "Which one rhymes with house?",
+      "hash": "c79878191a",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=house.mp3"
+    },
+    "k-rhymes/rhymesWith/word=mouse": {
+      "text": "Which one rhymes with mouse?",
+      "hash": "05df07dc81",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=mouse.mp3"
+    },
+    "k-rhymes/rhymesWith/word=cake": {
+      "text": "Which one rhymes with cake?",
+      "hash": "016415d91b",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=cake.mp3"
+    },
+    "k-rhymes/rhymesWith/word=snake": {
+      "text": "Which one rhymes with snake?",
+      "hash": "9e906f75aa",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=snake.mp3"
+    },
+    "k-rhymes/rhymesWith/word=car": {
+      "text": "Which one rhymes with car?",
+      "hash": "bbedc19e4b",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=car.mp3"
+    },
+    "k-rhymes/rhymesWith/word=star": {
+      "text": "Which one rhymes with star?",
+      "hash": "98920cc995",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=star.mp3"
+    },
+    "k-rhymes/rhymesWith/word=bee": {
+      "text": "Which one rhymes with bee?",
+      "hash": "58a0bfc66f",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=bee.mp3"
+    },
+    "k-rhymes/rhymesWith/word=tree": {
+      "text": "Which one rhymes with tree?",
+      "hash": "6fb83ead83",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=tree.mp3"
+    },
+    "k-rhymes/rhymesWith/word=key": {
+      "text": "Which one rhymes with key?",
+      "hash": "7f2b6d99f6",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=key.mp3"
+    },
+    "k-rhymes/rhymesWith/word=three": {
+      "text": "Which one rhymes with three?",
+      "hash": "6860018d97",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=three.mp3"
+    },
+    "k-rhymes/rhymesWith/word=frog": {
+      "text": "Which one rhymes with frog?",
+      "hash": "3f50ec8b75",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=frog.mp3"
+    },
+    "k-rhymes/rhymesWith/word=dog": {
+      "text": "Which one rhymes with dog?",
+      "hash": "ead4810f89",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=dog.mp3"
+    },
+    "k-rhymes/rhymesWith/word=moon": {
+      "text": "Which one rhymes with moon?",
+      "hash": "08fb61c1a4",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=moon.mp3"
+    },
+    "k-rhymes/rhymesWith/word=spoon": {
+      "text": "Which one rhymes with spoon?",
+      "hash": "2cd9e154fc",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=spoon.mp3"
+    },
+    "k-rhymes/rhymesWith/word=balloon": {
+      "text": "Which one rhymes with balloon?",
+      "hash": "71debd9b27",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=balloon.mp3"
+    },
+    "k-rhymes/rhymesWith/word=goat": {
+      "text": "Which one rhymes with goat?",
+      "hash": "1332a99be2",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=goat.mp3"
+    },
+    "k-rhymes/rhymesWith/word=boat": {
+      "text": "Which one rhymes with boat?",
+      "hash": "d39384a27b",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=boat.mp3"
+    },
+    "k-rhymes/rhymesWith/word=fox": {
+      "text": "Which one rhymes with fox?",
+      "hash": "4ec6dce1b1",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=fox.mp3"
+    },
+    "k-rhymes/rhymesWith/word=box": {
+      "text": "Which one rhymes with box?",
+      "hash": "e363d83e5a",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=box.mp3"
+    },
+    "k-rhymes/rhymesWith/word=king": {
+      "text": "Which one rhymes with king?",
+      "hash": "ebb586a75b",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=king.mp3"
+    },
+    "k-rhymes/rhymesWith/word=ring": {
+      "text": "Which one rhymes with ring?",
+      "hash": "f8a8807530",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=ring.mp3"
+    },
+    "k-rhymes/rhymesWith/word=snail": {
+      "text": "Which one rhymes with snail?",
+      "hash": "38b7855abb",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=snail.mp3"
+    },
+    "k-rhymes/rhymesWith/word=whale": {
+      "text": "Which one rhymes with whale?",
+      "hash": "c095e0762c",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=whale.mp3"
+    },
+    "k-rhymes/rhymesWith/word=bed": {
+      "text": "Which one rhymes with bed?",
+      "hash": "8ddd925959",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=bed.mp3"
+    },
+    "k-rhymes/rhymesWith/word=bread": {
+      "text": "Which one rhymes with bread?",
+      "hash": "724364d7b0",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=bread.mp3"
+    },
+    "k-rhymes/rhymesWith/word=clock": {
+      "text": "Which one rhymes with clock?",
+      "hash": "1dbc948bbe",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=clock.mp3"
+    },
+    "k-rhymes/rhymesWith/word=lock": {
+      "text": "Which one rhymes with lock?",
+      "hash": "49547b7f80",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=lock.mp3"
+    },
+    "k-rhymes/rhymesWith/word=train": {
+      "text": "Which one rhymes with train?",
+      "hash": "c9cfc2c766",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=train.mp3"
+    },
+    "k-rhymes/rhymesWith/word=plane": {
+      "text": "Which one rhymes with plane?",
+      "hash": "13ff06f3db",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=plane.mp3"
+    },
+    "k-rhymes/rhymesWith/word=bell": {
+      "text": "Which one rhymes with bell?",
+      "hash": "13b6fc429d",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=bell.mp3"
+    },
+    "k-rhymes/rhymesWith/word=shell": {
+      "text": "Which one rhymes with shell?",
+      "hash": "d6e2107cc7",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=shell.mp3"
+    },
+    "k-rhymes/rhymesWith/word=bear": {
+      "text": "Which one rhymes with bear?",
+      "hash": "2b7e96d76c",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=bear.mp3"
+    },
+    "k-rhymes/rhymesWith/word=pear": {
+      "text": "Which one rhymes with pear?",
+      "hash": "5b2d509e2a",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=pear.mp3"
+    },
+    "k-rhymes/rhymesWith/word=nose": {
+      "text": "Which one rhymes with nose?",
+      "hash": "5a6833c5ce",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=nose.mp3"
+    },
+    "k-rhymes/rhymesWith/word=rose": {
+      "text": "Which one rhymes with rose?",
+      "hash": "f1a44909b9",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=rose.mp3"
+    },
+    "k-rhymes/rhymesWith/word=hen": {
+      "text": "Which one rhymes with hen?",
+      "hash": "4bf975fe03",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=hen.mp3"
+    },
+    "k-rhymes/rhymesWith/word=pen": {
+      "text": "Which one rhymes with pen?",
+      "hash": "8c41c05cc2",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=pen.mp3"
+    },
+    "k-rhymes/rhymesWith/word=ten": {
+      "text": "Which one rhymes with ten?",
+      "hash": "a8782d7bd8",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=ten.mp3"
+    },
+    "k-rhymes/rhymesWith/word=honey": {
+      "text": "Which one rhymes with honey?",
+      "hash": "e4f619c1d2",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=honey.mp3"
+    },
+    "k-rhymes/rhymesWith/word=money": {
+      "text": "Which one rhymes with money?",
+      "hash": "ea8743bb91",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=money.mp3"
+    },
+    "k-rhymes/rhymesWith/word=crown": {
+      "text": "Which one rhymes with crown?",
+      "hash": "339677a571",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=crown.mp3"
+    },
+    "k-rhymes/rhymesWith/word=clown": {
+      "text": "Which one rhymes with clown?",
+      "hash": "55b88ceb2d",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=clown.mp3"
+    },
+    "k-rhymes/rhymesWith/word=door": {
+      "text": "Which one rhymes with door?",
+      "hash": "efb142dacb",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=door.mp3"
+    },
+    "k-rhymes/rhymesWith/word=four": {
+      "text": "Which one rhymes with four?",
+      "hash": "283781176d",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=four.mp3"
+    },
+    "k-rhymes/rhymesWith/word=shoe": {
+      "text": "Which one rhymes with shoe?",
+      "hash": "d3d2ea8006",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=shoe.mp3"
+    },
+    "k-rhymes/rhymesWith/word=two": {
+      "text": "Which one rhymes with two?",
+      "hash": "4c4cae33aa",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=two.mp3"
+    },
+    "k-rhymes/rhymesWith/word=duck": {
+      "text": "Which one rhymes with duck?",
+      "hash": "0bfeda2eef",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=duck.mp3"
+    },
+    "k-rhymes/rhymesWith/word=truck": {
+      "text": "Which one rhymes with truck?",
+      "hash": "a3a3eca713",
+      "kind": "whole",
+      "file": "voice/k-rhymes/rhymesWith/word=truck.mp3"
+    },
+    "k-rhymes/word/word=bat": {
+      "text": "bat!",
+      "hash": "a76f8174cb",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=bat.mp3"
+    },
+    "k-rhymes/word/word=key": {
+      "text": "key!",
+      "hash": "de869e17b2",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=key.mp3"
+    },
+    "k-rhymes/word/word=spoon": {
+      "text": "spoon!",
+      "hash": "d4f7502feb",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=spoon.mp3"
+    },
+    "k-rhymes/word/word=balloon": {
+      "text": "balloon!",
+      "hash": "29062aa1b9",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=balloon.mp3"
+    },
+    "k-rhymes/word/word=boat": {
+      "text": "boat!",
+      "hash": "c6a62b3ef4",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=boat.mp3"
+    },
+    "k-rhymes/word/word=box": {
+      "text": "box!",
+      "hash": "edc2883324",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=box.mp3"
+    },
+    "k-rhymes/word/word=king": {
+      "text": "king!",
+      "hash": "cf06ee279f",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=king.mp3"
+    },
+    "k-rhymes/word/word=ring": {
+      "text": "ring!",
+      "hash": "5a2f8dc8c1",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=ring.mp3"
+    },
+    "k-rhymes/word/word=snail": {
+      "text": "snail!",
+      "hash": "2d83f82cbc",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=snail.mp3"
+    },
+    "k-rhymes/word/word=whale": {
+      "text": "whale!",
+      "hash": "b2b16ee0a7",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=whale.mp3"
+    },
+    "k-rhymes/word/word=bed": {
+      "text": "bed!",
+      "hash": "1a75d359d3",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=bed.mp3"
+    },
+    "k-rhymes/word/word=bread": {
+      "text": "bread!",
+      "hash": "b9f2f12d4a",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=bread.mp3"
+    },
+    "k-rhymes/word/word=clock": {
+      "text": "clock!",
+      "hash": "3a5254328c",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=clock.mp3"
+    },
+    "k-rhymes/word/word=lock": {
+      "text": "lock!",
+      "hash": "64d528e811",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=lock.mp3"
+    },
+    "k-rhymes/word/word=plane": {
+      "text": "plane!",
+      "hash": "355e045300",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=plane.mp3"
+    },
+    "k-rhymes/word/word=bell": {
+      "text": "bell!",
+      "hash": "190c3b9736",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=bell.mp3"
+    },
+    "k-rhymes/word/word=shell": {
+      "text": "shell!",
+      "hash": "49e734d292",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=shell.mp3"
+    },
+    "k-rhymes/word/word=bear": {
+      "text": "bear!",
+      "hash": "5cdc8c3872",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=bear.mp3"
+    },
+    "k-rhymes/word/word=pear": {
+      "text": "pear!",
+      "hash": "ed591d2e9f",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=pear.mp3"
+    },
+    "k-rhymes/word/word=nose": {
+      "text": "nose!",
+      "hash": "a9443847b2",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=nose.mp3"
+    },
+    "k-rhymes/word/word=rose": {
+      "text": "rose!",
+      "hash": "433ac2f7c1",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=rose.mp3"
+    },
+    "k-rhymes/word/word=hen": {
+      "text": "hen!",
+      "hash": "f043830242",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=hen.mp3"
+    },
+    "k-rhymes/word/word=pen": {
+      "text": "pen!",
+      "hash": "af9cb1b281",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=pen.mp3"
+    },
+    "k-rhymes/word/word=honey": {
+      "text": "honey!",
+      "hash": "c8aab3ccd4",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=honey.mp3"
+    },
+    "k-rhymes/word/word=money": {
+      "text": "money!",
+      "hash": "23c5c72888",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=money.mp3"
+    },
+    "k-rhymes/word/word=crown": {
+      "text": "crown!",
+      "hash": "2dd93aa461",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=crown.mp3"
+    },
+    "k-rhymes/word/word=clown": {
+      "text": "clown!",
+      "hash": "583a6a2435",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=clown.mp3"
+    },
+    "k-rhymes/word/word=shoe": {
+      "text": "shoe!",
+      "hash": "8d1207c17e",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=shoe.mp3"
+    },
+    "k-rhymes/word/word=truck": {
+      "text": "truck!",
+      "hash": "69705db948",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=truck.mp3"
+    },
+    "k-rhymes/word/word=sheep": {
+      "text": "sheep!",
+      "hash": "ac944d95ef",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=sheep.mp3"
+    },
+    "k-rhymes/word/word=corn": {
+      "text": "corn!",
+      "hash": "797147c959",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=corn.mp3"
+    },
+    "k-rhymes/word/word=tub": {
+      "text": "tub!",
+      "hash": "f3b4cf8246",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=tub.mp3"
+    },
+    "k-rhymes/word/word=map": {
+      "text": "map!",
+      "hash": "ff14c669ca",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=map.mp3"
+    },
+    "k-rhymes/word/word=milk": {
+      "text": "milk!",
+      "hash": "4556f09b25",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=milk.mp3"
+    },
+    "k-rhymes/word/word=fire": {
+      "text": "fire!",
+      "hash": "91ad9f53d8",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=fire.mp3"
+    },
+    "k-rhymes/word/word=ship": {
+      "text": "ship!",
+      "hash": "936a284e0d",
+      "kind": "whole",
+      "file": "voice/k-rhymes/word/word=ship.mp3"
+    },
+    "k-rhymes/noRhyme#2": {
+      "text": "Those don't rhyme.",
+      "hash": "436bd79cb0",
+      "kind": "piece",
+      "file": "voice/k-rhymes/noRhyme.part2.mp3"
+    },
     "k-shapes/tapFlat": {
       "text": "Tap the shape that is flat.",
       "hash": "258bcaf552",
@@ -3486,6 +4152,1500 @@
       "hash": "5adf941330",
       "kind": "whole",
       "file": "voice/k-shapes/isSolid/shape=cylinder.mp3"
+    },
+    "k-sounds/youHeardParts": {
+      "text": "You heard every part!",
+      "hash": "733e6ffba6",
+      "kind": "line",
+      "file": "voice/k-sounds/youHeardParts.mp3"
+    },
+    "k-sounds/soundsTogether": {
+      "text": "You put the sounds together!",
+      "hash": "2f40d2be31",
+      "kind": "line",
+      "file": "voice/k-sounds/soundsTogether.mp3"
+    },
+    "k-sounds/tapTogether": {
+      "text": "Let's tap it together.",
+      "hash": "7daf9df8e6",
+      "kind": "line",
+      "file": "voice/k-sounds/tapTogether.mp3"
+    },
+    "k-sounds/parts-cat": {
+      "text": "Cat.",
+      "hash": "cc1d388188",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-cat.mp3"
+    },
+    "k-sounds/parts-dog": {
+      "text": "Dog.",
+      "hash": "4d591f9dab",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-dog.mp3"
+    },
+    "k-sounds/parts-sun": {
+      "text": "Sun.",
+      "hash": "e785b71b8b",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-sun.mp3"
+    },
+    "k-sounds/parts-fish": {
+      "text": "Fish.",
+      "hash": "fdb182a071",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-fish.mp3"
+    },
+    "k-sounds/parts-frog": {
+      "text": "Frog.",
+      "hash": "d852322291",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-frog.mp3"
+    },
+    "k-sounds/parts-bee": {
+      "text": "Bee.",
+      "hash": "7a68272e03",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-bee.mp3"
+    },
+    "k-sounds/parts-tree": {
+      "text": "Tree.",
+      "hash": "fba4c8fd2a",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-tree.mp3"
+    },
+    "k-sounds/parts-car": {
+      "text": "Car.",
+      "hash": "c4abac29d6",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-car.mp3"
+    },
+    "k-sounds/parts-star": {
+      "text": "Star.",
+      "hash": "de5ad2bbf4",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-star.mp3"
+    },
+    "k-sounds/parts-moon": {
+      "text": "Moon.",
+      "hash": "639e6ee518",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-moon.mp3"
+    },
+    "k-sounds/parts-house": {
+      "text": "House.",
+      "hash": "082fca6be0",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-house.mp3"
+    },
+    "k-sounds/parts-cake": {
+      "text": "Cake.",
+      "hash": "356c7fb0fb",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-cake.mp3"
+    },
+    "k-sounds/parts-snake": {
+      "text": "Snake.",
+      "hash": "3bb7bf74b1",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-snake.mp3"
+    },
+    "k-sounds/parts-goat": {
+      "text": "Goat.",
+      "hash": "4fd4e1f620",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-goat.mp3"
+    },
+    "k-sounds/parts-boat": {
+      "text": "Boat.",
+      "hash": "5980ec3eae",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-boat.mp3"
+    },
+    "k-sounds/parts-fox": {
+      "text": "Fox.",
+      "hash": "c75a9adb1f",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-fox.mp3"
+    },
+    "k-sounds/parts-ring": {
+      "text": "Ring.",
+      "hash": "ee8c5e5665",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-ring.mp3"
+    },
+    "k-sounds/parts-bell": {
+      "text": "Bell.",
+      "hash": "2e296eb72e",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-bell.mp3"
+    },
+    "k-sounds/parts-duck": {
+      "text": "Duck.",
+      "hash": "4b51f261b6",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-duck.mp3"
+    },
+    "k-sounds/parts-bus": {
+      "text": "Bus.",
+      "hash": "451c5fc73d",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-bus.mp3"
+    },
+    "k-sounds/parts-hat": {
+      "text": "Hat.",
+      "hash": "58cbfd2870",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-hat.mp3"
+    },
+    "k-sounds/parts-ball": {
+      "text": "Ball.",
+      "hash": "394e7b4101",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-ball.mp3"
+    },
+    "k-sounds/parts-pig": {
+      "text": "Pig.",
+      "hash": "957eb6b7b9",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-pig.mp3"
+    },
+    "k-sounds/parts-train": {
+      "text": "Train.",
+      "hash": "20d5f30dab",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-train.mp3"
+    },
+    "k-sounds/parts-shoe": {
+      "text": "Shoe.",
+      "hash": "59778e4d31",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-shoe.mp3"
+    },
+    "k-sounds/parts-clock": {
+      "text": "Clock.",
+      "hash": "0e83741c7c",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-clock.mp3"
+    },
+    "k-sounds/parts-bed": {
+      "text": "Bed.",
+      "hash": "1524ce9309",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-bed.mp3"
+    },
+    "k-sounds/parts-nose": {
+      "text": "Nose.",
+      "hash": "87251eae54",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-nose.mp3"
+    },
+    "k-sounds/parts-bear": {
+      "text": "Bear.",
+      "hash": "f25c56bc65",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-bear.mp3"
+    },
+    "k-sounds/parts-key": {
+      "text": "Key.",
+      "hash": "c46a50c342",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-key.mp3"
+    },
+    "k-sounds/parts-tiger": {
+      "text": "Tie… gur.",
+      "hash": "0133b98ae2",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-tiger.mp3"
+    },
+    "k-sounds/parts-monkey": {
+      "text": "Mun… kee.",
+      "hash": "dfc2087038",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-monkey.mp3"
+    },
+    "k-sounds/parts-rabbit": {
+      "text": "Rab… bit.",
+      "hash": "6e1d64d912",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-rabbit.mp3"
+    },
+    "k-sounds/parts-pizza": {
+      "text": "Peet… zuh.",
+      "hash": "8f828375f3",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-pizza.mp3"
+    },
+    "k-sounds/parts-apple": {
+      "text": "Ap… pull.",
+      "hash": "3a4828d044",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-apple.mp3"
+    },
+    "k-sounds/parts-lemon": {
+      "text": "Lem… un.",
+      "hash": "5008a1057f",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-lemon.mp3"
+    },
+    "k-sounds/parts-rocket": {
+      "text": "Rock… it.",
+      "hash": "e8c95ea050",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-rocket.mp3"
+    },
+    "k-sounds/parts-robot": {
+      "text": "Roe… bot.",
+      "hash": "73fc319dd9",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-robot.mp3"
+    },
+    "k-sounds/parts-rainbow": {
+      "text": "Rain… boe.",
+      "hash": "6149a4f48d",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-rainbow.mp3"
+    },
+    "k-sounds/parts-penguin": {
+      "text": "Pen… gwin.",
+      "hash": "77da9ab9c2",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-penguin.mp3"
+    },
+    "k-sounds/parts-turtle": {
+      "text": "Tur… tull.",
+      "hash": "5e66c06349",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-turtle.mp3"
+    },
+    "k-sounds/parts-spider": {
+      "text": "Spy… der.",
+      "hash": "f70cdd474a",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-spider.mp3"
+    },
+    "k-sounds/parts-carrot": {
+      "text": "Care… ut.",
+      "hash": "1d69e8f10e",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-carrot.mp3"
+    },
+    "k-sounds/parts-cookie": {
+      "text": "Cook… ee.",
+      "hash": "6e01ab82f5",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-cookie.mp3"
+    },
+    "k-sounds/parts-donut": {
+      "text": "Doe… nut.",
+      "hash": "25af2ce147",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-donut.mp3"
+    },
+    "k-sounds/parts-pumpkin": {
+      "text": "Pump… kin.",
+      "hash": "f8bb50f544",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-pumpkin.mp3"
+    },
+    "k-sounds/parts-candy": {
+      "text": "Can… dee.",
+      "hash": "4669c8390a",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-candy.mp3"
+    },
+    "k-sounds/parts-lion": {
+      "text": "Lie… un.",
+      "hash": "e249ec8b4a",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-lion.mp3"
+    },
+    "k-sounds/parts-panda": {
+      "text": "Pan… duh.",
+      "hash": "13e6d9a7ae",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-panda.mp3"
+    },
+    "k-sounds/parts-balloon": {
+      "text": "Buh… loon.",
+      "hash": "2d63ea750d",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-balloon.mp3"
+    },
+    "k-sounds/parts-popcorn": {
+      "text": "Pop… corn.",
+      "hash": "c9c209c848",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-popcorn.mp3"
+    },
+    "k-sounds/parts-snowman": {
+      "text": "Snow… man.",
+      "hash": "32c262a0bd",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-snowman.mp3"
+    },
+    "k-sounds/parts-honey": {
+      "text": "Hun… ee.",
+      "hash": "de113f5c88",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-honey.mp3"
+    },
+    "k-sounds/parts-banana": {
+      "text": "Buh… nan… uh.",
+      "hash": "effccb0bb9",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-banana.mp3"
+    },
+    "k-sounds/parts-octopus": {
+      "text": "Ock… tuh… puss.",
+      "hash": "6d47342eda",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-octopus.mp3"
+    },
+    "k-sounds/parts-elephant": {
+      "text": "El… uh… fint.",
+      "hash": "4dc1368a1c",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-elephant.mp3"
+    },
+    "k-sounds/parts-butterfly": {
+      "text": "But… ter… fly.",
+      "hash": "18e14c18e1",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-butterfly.mp3"
+    },
+    "k-sounds/parts-tomato": {
+      "text": "Tuh… may… toe.",
+      "hash": "f87c1ba73d",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-tomato.mp3"
+    },
+    "k-sounds/parts-pineapple": {
+      "text": "Pine… ap… pull.",
+      "hash": "623db3697c",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-pineapple.mp3"
+    },
+    "k-sounds/parts-potato": {
+      "text": "Puh… tay… toe.",
+      "hash": "98264d918e",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-potato.mp3"
+    },
+    "k-sounds/parts-strawberry": {
+      "text": "Straw… bair… ee.",
+      "hash": "2190a5cdb2",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-strawberry.mp3"
+    },
+    "k-sounds/parts-gorilla": {
+      "text": "Guh… rill… uh.",
+      "hash": "be930ebe3f",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-gorilla.mp3"
+    },
+    "k-sounds/parts-umbrella": {
+      "text": "Um… brell… uh.",
+      "hash": "0aaddcb121",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-umbrella.mp3"
+    },
+    "k-sounds/parts-ladybug": {
+      "text": "Lay… dee… bug.",
+      "hash": "350e79ded3",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-ladybug.mp3"
+    },
+    "k-sounds/parts-bicycle": {
+      "text": "Buy… sick… ull.",
+      "hash": "8cd4a38090",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-bicycle.mp3"
+    },
+    "k-sounds/parts-lollipop": {
+      "text": "Lol… ee… pop.",
+      "hash": "826b20a7f3",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-lollipop.mp3"
+    },
+    "k-sounds/parts-volcano": {
+      "text": "Vol… kay… no.",
+      "hash": "c5960d7c18",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-volcano.mp3"
+    },
+    "k-sounds/parts-violin": {
+      "text": "Vie… oh… lin.",
+      "hash": "b6dc9348e9",
+      "kind": "line",
+      "file": "voice/k-sounds/parts-violin.mp3"
+    },
+    "k-sounds/blend-moon": {
+      "text": "Listen: mmmm… oon. What word?",
+      "hash": "9918c4a9ca",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-moon.mp3"
+    },
+    "k-sounds/blend-mouse": {
+      "text": "Listen: mmmm… owss. What word?",
+      "hash": "48dd7cdfad",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-mouse.mp3"
+    },
+    "k-sounds/blend-map": {
+      "text": "Listen: mmmm… ap. What word?",
+      "hash": "d6177d62f1",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-map.mp3"
+    },
+    "k-sounds/blend-milk": {
+      "text": "Listen: mmmm… ilk. What word?",
+      "hash": "e009b5c84b",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-milk.mp3"
+    },
+    "k-sounds/blend-sun": {
+      "text": "Listen: ssss… un. What word?",
+      "hash": "2db03a9e04",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-sun.mp3"
+    },
+    "k-sounds/blend-fish": {
+      "text": "Listen: ffff… ish. What word?",
+      "hash": "f4fe316d66",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-fish.mp3"
+    },
+    "k-sounds/blend-fox": {
+      "text": "Listen: ffff… ox. What word?",
+      "hash": "d5c36a2cd4",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-fox.mp3"
+    },
+    "k-sounds/blend-fire": {
+      "text": "Listen: ffff… ire. What word?",
+      "hash": "fa7419b098",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-fire.mp3"
+    },
+    "k-sounds/blend-leaf": {
+      "text": "Listen: llll… eef. What word?",
+      "hash": "92a63fa269",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-leaf.mp3"
+    },
+    "k-sounds/blend-lock": {
+      "text": "Listen: llll… ock. What word?",
+      "hash": "f0a14822cd",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-lock.mp3"
+    },
+    "k-sounds/blend-nose": {
+      "text": "Listen: nnnn… oze. What word?",
+      "hash": "15dc4615f3",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-nose.mp3"
+    },
+    "k-sounds/blend-ring": {
+      "text": "Listen: rrrr… ing. What word?",
+      "hash": "2b9bac02ce",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-ring.mp3"
+    },
+    "k-sounds/blend-rose": {
+      "text": "Listen: rrrr… oze. What word?",
+      "hash": "a9673ab648",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-rose.mp3"
+    },
+    "k-sounds/blend-shoe": {
+      "text": "Listen: shhhh… oo. What word?",
+      "hash": "79161a40c2",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-shoe.mp3"
+    },
+    "k-sounds/blend-sheep": {
+      "text": "Listen: shhhh… eep. What word?",
+      "hash": "318c20e106",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-sheep.mp3"
+    },
+    "k-sounds/blend-shell": {
+      "text": "Listen: shhhh… ell. What word?",
+      "hash": "7109431d6b",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-shell.mp3"
+    },
+    "k-sounds/blend-ship": {
+      "text": "Listen: shhhh… ip. What word?",
+      "hash": "f016409ac2",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-ship.mp3"
+    },
+    "k-sounds/blend-cat": {
+      "text": "Listen: kuh… at. What word?",
+      "hash": "d7b208676e",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-cat.mp3"
+    },
+    "k-sounds/blend-cake": {
+      "text": "Listen: kuh… ache. What word?",
+      "hash": "699f8b7a3d",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-cake.mp3"
+    },
+    "k-sounds/blend-car": {
+      "text": "Listen: kuh… ar. What word?",
+      "hash": "7cd47ccfed",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-car.mp3"
+    },
+    "k-sounds/blend-king": {
+      "text": "Listen: kuh… ing. What word?",
+      "hash": "b4b2bb1a33",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-king.mp3"
+    },
+    "k-sounds/blend-key": {
+      "text": "Listen: kuh… ee. What word?",
+      "hash": "1e92357c22",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-key.mp3"
+    },
+    "k-sounds/blend-dog": {
+      "text": "Listen: duh… og. What word?",
+      "hash": "31aba2ce47",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-dog.mp3"
+    },
+    "k-sounds/blend-duck": {
+      "text": "Listen: duh… uck. What word?",
+      "hash": "f48e4eefdc",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-duck.mp3"
+    },
+    "k-sounds/blend-door": {
+      "text": "Listen: duh… or. What word?",
+      "hash": "8f40fb2a58",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-door.mp3"
+    },
+    "k-sounds/blend-pig": {
+      "text": "Listen: puh… ig. What word?",
+      "hash": "bc2a15fc40",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-pig.mp3"
+    },
+    "k-sounds/blend-pen": {
+      "text": "Listen: puh… en. What word?",
+      "hash": "d4e0cd2c0f",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-pen.mp3"
+    },
+    "k-sounds/blend-pear": {
+      "text": "Listen: puh… air. What word?",
+      "hash": "7d47ea5ac4",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-pear.mp3"
+    },
+    "k-sounds/blend-bee": {
+      "text": "Listen: buh… ee. What word?",
+      "hash": "0ce7fde86c",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-bee.mp3"
+    },
+    "k-sounds/blend-bed": {
+      "text": "Listen: buh… ed. What word?",
+      "hash": "3128dc2aad",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-bed.mp3"
+    },
+    "k-sounds/blend-bus": {
+      "text": "Listen: buh… us. What word?",
+      "hash": "8f85560282",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-bus.mp3"
+    },
+    "k-sounds/blend-bat": {
+      "text": "Listen: buh… at. What word?",
+      "hash": "1344b66a3e",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-bat.mp3"
+    },
+    "k-sounds/blend-box": {
+      "text": "Listen: buh… ox. What word?",
+      "hash": "5596e439ce",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-box.mp3"
+    },
+    "k-sounds/blend-boat": {
+      "text": "Listen: buh… oat. What word?",
+      "hash": "6f2fb40906",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-boat.mp3"
+    },
+    "k-sounds/blend-bell": {
+      "text": "Listen: buh… ell. What word?",
+      "hash": "7bfbd37cea",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-bell.mp3"
+    },
+    "k-sounds/blend-goat": {
+      "text": "Listen: guh… oat. What word?",
+      "hash": "011f49d776",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-goat.mp3"
+    },
+    "k-sounds/blend-tub": {
+      "text": "Listen: tuh… ub. What word?",
+      "hash": "7f1242ca9f",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-tub.mp3"
+    },
+    "k-sounds/blend-hat": {
+      "text": "Listen: hhhh… at. What word?",
+      "hash": "3cfc63c6b5",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-hat.mp3"
+    },
+    "k-sounds/blend-hen": {
+      "text": "Listen: hhhh… en. What word?",
+      "hash": "37c9995279",
+      "kind": "line",
+      "file": "voice/k-sounds/blend-hen.mp3"
+    },
+    "k-sounds/that-moon": {
+      "text": "That's moon: mmmm… oon.",
+      "hash": "7bc68c478d",
+      "kind": "line",
+      "file": "voice/k-sounds/that-moon.mp3"
+    },
+    "k-sounds/that-mouse": {
+      "text": "That's mouse: mmmm… owss.",
+      "hash": "a42981efc2",
+      "kind": "line",
+      "file": "voice/k-sounds/that-mouse.mp3"
+    },
+    "k-sounds/that-map": {
+      "text": "That's map: mmmm… ap.",
+      "hash": "9a917b7bb2",
+      "kind": "line",
+      "file": "voice/k-sounds/that-map.mp3"
+    },
+    "k-sounds/that-milk": {
+      "text": "That's milk: mmmm… ilk.",
+      "hash": "8a8379856a",
+      "kind": "line",
+      "file": "voice/k-sounds/that-milk.mp3"
+    },
+    "k-sounds/that-sun": {
+      "text": "That's sun: ssss… un.",
+      "hash": "892cf9c918",
+      "kind": "line",
+      "file": "voice/k-sounds/that-sun.mp3"
+    },
+    "k-sounds/that-fish": {
+      "text": "That's fish: ffff… ish.",
+      "hash": "e7d4ab5074",
+      "kind": "line",
+      "file": "voice/k-sounds/that-fish.mp3"
+    },
+    "k-sounds/that-fox": {
+      "text": "That's fox: ffff… ox.",
+      "hash": "c90ffd82c9",
+      "kind": "line",
+      "file": "voice/k-sounds/that-fox.mp3"
+    },
+    "k-sounds/that-fire": {
+      "text": "That's fire: ffff… ire.",
+      "hash": "53f4686bdb",
+      "kind": "line",
+      "file": "voice/k-sounds/that-fire.mp3"
+    },
+    "k-sounds/that-leaf": {
+      "text": "That's leaf: llll… eef.",
+      "hash": "886f4a4e93",
+      "kind": "line",
+      "file": "voice/k-sounds/that-leaf.mp3"
+    },
+    "k-sounds/that-lock": {
+      "text": "That's lock: llll… ock.",
+      "hash": "de4f3bbad1",
+      "kind": "line",
+      "file": "voice/k-sounds/that-lock.mp3"
+    },
+    "k-sounds/that-nose": {
+      "text": "That's nose: nnnn… oze.",
+      "hash": "664ba3828e",
+      "kind": "line",
+      "file": "voice/k-sounds/that-nose.mp3"
+    },
+    "k-sounds/that-ring": {
+      "text": "That's ring: rrrr… ing.",
+      "hash": "2f6eda449a",
+      "kind": "line",
+      "file": "voice/k-sounds/that-ring.mp3"
+    },
+    "k-sounds/that-rose": {
+      "text": "That's rose: rrrr… oze.",
+      "hash": "24ce6bde03",
+      "kind": "line",
+      "file": "voice/k-sounds/that-rose.mp3"
+    },
+    "k-sounds/that-shoe": {
+      "text": "That's shoe: shhhh… oo.",
+      "hash": "182d415d4e",
+      "kind": "line",
+      "file": "voice/k-sounds/that-shoe.mp3"
+    },
+    "k-sounds/that-sheep": {
+      "text": "That's sheep: shhhh… eep.",
+      "hash": "5cdc34fa27",
+      "kind": "line",
+      "file": "voice/k-sounds/that-sheep.mp3"
+    },
+    "k-sounds/that-shell": {
+      "text": "That's shell: shhhh… ell.",
+      "hash": "56f0722b78",
+      "kind": "line",
+      "file": "voice/k-sounds/that-shell.mp3"
+    },
+    "k-sounds/that-ship": {
+      "text": "That's ship: shhhh… ip.",
+      "hash": "97996979dc",
+      "kind": "line",
+      "file": "voice/k-sounds/that-ship.mp3"
+    },
+    "k-sounds/that-cat": {
+      "text": "That's cat: kuh… at.",
+      "hash": "7b6968aa5e",
+      "kind": "line",
+      "file": "voice/k-sounds/that-cat.mp3"
+    },
+    "k-sounds/that-cake": {
+      "text": "That's cake: kuh… ache.",
+      "hash": "0f79c5f13c",
+      "kind": "line",
+      "file": "voice/k-sounds/that-cake.mp3"
+    },
+    "k-sounds/that-car": {
+      "text": "That's car: kuh… ar.",
+      "hash": "780bc23c80",
+      "kind": "line",
+      "file": "voice/k-sounds/that-car.mp3"
+    },
+    "k-sounds/that-king": {
+      "text": "That's king: kuh… ing.",
+      "hash": "7d4237214f",
+      "kind": "line",
+      "file": "voice/k-sounds/that-king.mp3"
+    },
+    "k-sounds/that-key": {
+      "text": "That's key: kuh… ee.",
+      "hash": "b1f11d317f",
+      "kind": "line",
+      "file": "voice/k-sounds/that-key.mp3"
+    },
+    "k-sounds/that-dog": {
+      "text": "That's dog: duh… og.",
+      "hash": "4e051cc20e",
+      "kind": "line",
+      "file": "voice/k-sounds/that-dog.mp3"
+    },
+    "k-sounds/that-duck": {
+      "text": "That's duck: duh… uck.",
+      "hash": "1fa1213368",
+      "kind": "line",
+      "file": "voice/k-sounds/that-duck.mp3"
+    },
+    "k-sounds/that-door": {
+      "text": "That's door: duh… or.",
+      "hash": "1dedb807a8",
+      "kind": "line",
+      "file": "voice/k-sounds/that-door.mp3"
+    },
+    "k-sounds/that-pig": {
+      "text": "That's pig: puh… ig.",
+      "hash": "c3e3b5f586",
+      "kind": "line",
+      "file": "voice/k-sounds/that-pig.mp3"
+    },
+    "k-sounds/that-pen": {
+      "text": "That's pen: puh… en.",
+      "hash": "2780c5f17c",
+      "kind": "line",
+      "file": "voice/k-sounds/that-pen.mp3"
+    },
+    "k-sounds/that-pear": {
+      "text": "That's pear: puh… air.",
+      "hash": "ebbe52254e",
+      "kind": "line",
+      "file": "voice/k-sounds/that-pear.mp3"
+    },
+    "k-sounds/that-bee": {
+      "text": "That's bee: buh… ee.",
+      "hash": "01729fd407",
+      "kind": "line",
+      "file": "voice/k-sounds/that-bee.mp3"
+    },
+    "k-sounds/that-bed": {
+      "text": "That's bed: buh… ed.",
+      "hash": "9be37e6ff8",
+      "kind": "line",
+      "file": "voice/k-sounds/that-bed.mp3"
+    },
+    "k-sounds/that-bus": {
+      "text": "That's bus: buh… us.",
+      "hash": "184974b800",
+      "kind": "line",
+      "file": "voice/k-sounds/that-bus.mp3"
+    },
+    "k-sounds/that-bat": {
+      "text": "That's bat: buh… at.",
+      "hash": "c88acfbedb",
+      "kind": "line",
+      "file": "voice/k-sounds/that-bat.mp3"
+    },
+    "k-sounds/that-box": {
+      "text": "That's box: buh… ox.",
+      "hash": "18baf231c7",
+      "kind": "line",
+      "file": "voice/k-sounds/that-box.mp3"
+    },
+    "k-sounds/that-boat": {
+      "text": "That's boat: buh… oat.",
+      "hash": "0c8516d123",
+      "kind": "line",
+      "file": "voice/k-sounds/that-boat.mp3"
+    },
+    "k-sounds/that-bell": {
+      "text": "That's bell: buh… ell.",
+      "hash": "27c8655d4b",
+      "kind": "line",
+      "file": "voice/k-sounds/that-bell.mp3"
+    },
+    "k-sounds/that-goat": {
+      "text": "That's goat: guh… oat.",
+      "hash": "885a8a509b",
+      "kind": "line",
+      "file": "voice/k-sounds/that-goat.mp3"
+    },
+    "k-sounds/that-tub": {
+      "text": "That's tub: tuh… ub.",
+      "hash": "ff7dae582d",
+      "kind": "line",
+      "file": "voice/k-sounds/that-tub.mp3"
+    },
+    "k-sounds/that-hat": {
+      "text": "That's hat: hhhh… at.",
+      "hash": "a4cc784937",
+      "kind": "line",
+      "file": "voice/k-sounds/that-hat.mp3"
+    },
+    "k-sounds/that-hen": {
+      "text": "That's hen: hhhh… en.",
+      "hash": "5c9de4862a",
+      "kind": "line",
+      "file": "voice/k-sounds/that-hen.mp3"
+    },
+    "k-sounds/drumWord/word=cat": {
+      "text": "Cat! Tap the drum for each part, then tap the check.",
+      "hash": "d5a5e8d798",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=cat.mp3"
+    },
+    "k-sounds/drumWord/word=dog": {
+      "text": "Dog! Tap the drum for each part, then tap the check.",
+      "hash": "f2931ede1f",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=dog.mp3"
+    },
+    "k-sounds/drumWord/word=sun": {
+      "text": "Sun! Tap the drum for each part, then tap the check.",
+      "hash": "cfa3ed0ba1",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=sun.mp3"
+    },
+    "k-sounds/drumWord/word=fish": {
+      "text": "Fish! Tap the drum for each part, then tap the check.",
+      "hash": "f0643aa29a",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=fish.mp3"
+    },
+    "k-sounds/drumWord/word=frog": {
+      "text": "Frog! Tap the drum for each part, then tap the check.",
+      "hash": "4f5b66b57f",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=frog.mp3"
+    },
+    "k-sounds/drumWord/word=bee": {
+      "text": "Bee! Tap the drum for each part, then tap the check.",
+      "hash": "73323605ff",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=bee.mp3"
+    },
+    "k-sounds/drumWord/word=tree": {
+      "text": "Tree! Tap the drum for each part, then tap the check.",
+      "hash": "b9e466e84a",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=tree.mp3"
+    },
+    "k-sounds/drumWord/word=car": {
+      "text": "Car! Tap the drum for each part, then tap the check.",
+      "hash": "2243c10d7d",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=car.mp3"
+    },
+    "k-sounds/drumWord/word=star": {
+      "text": "Star! Tap the drum for each part, then tap the check.",
+      "hash": "503b982514",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=star.mp3"
+    },
+    "k-sounds/drumWord/word=moon": {
+      "text": "Moon! Tap the drum for each part, then tap the check.",
+      "hash": "4179408dc9",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=moon.mp3"
+    },
+    "k-sounds/drumWord/word=house": {
+      "text": "House! Tap the drum for each part, then tap the check.",
+      "hash": "73b8faa02a",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=house.mp3"
+    },
+    "k-sounds/drumWord/word=cake": {
+      "text": "Cake! Tap the drum for each part, then tap the check.",
+      "hash": "d851d840c4",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=cake.mp3"
+    },
+    "k-sounds/drumWord/word=snake": {
+      "text": "Snake! Tap the drum for each part, then tap the check.",
+      "hash": "9476b54808",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=snake.mp3"
+    },
+    "k-sounds/drumWord/word=goat": {
+      "text": "Goat! Tap the drum for each part, then tap the check.",
+      "hash": "a5c3854390",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=goat.mp3"
+    },
+    "k-sounds/drumWord/word=boat": {
+      "text": "Boat! Tap the drum for each part, then tap the check.",
+      "hash": "8e270e9c1c",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=boat.mp3"
+    },
+    "k-sounds/drumWord/word=fox": {
+      "text": "Fox! Tap the drum for each part, then tap the check.",
+      "hash": "40b341accd",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=fox.mp3"
+    },
+    "k-sounds/drumWord/word=ring": {
+      "text": "Ring! Tap the drum for each part, then tap the check.",
+      "hash": "9a565a5d0c",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=ring.mp3"
+    },
+    "k-sounds/drumWord/word=bell": {
+      "text": "Bell! Tap the drum for each part, then tap the check.",
+      "hash": "6c5cc5774d",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=bell.mp3"
+    },
+    "k-sounds/drumWord/word=duck": {
+      "text": "Duck! Tap the drum for each part, then tap the check.",
+      "hash": "4774895fe5",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=duck.mp3"
+    },
+    "k-sounds/drumWord/word=bus": {
+      "text": "Bus! Tap the drum for each part, then tap the check.",
+      "hash": "9716edc591",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=bus.mp3"
+    },
+    "k-sounds/drumWord/word=hat": {
+      "text": "Hat! Tap the drum for each part, then tap the check.",
+      "hash": "8e4ee323d1",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=hat.mp3"
+    },
+    "k-sounds/drumWord/word=ball": {
+      "text": "Ball! Tap the drum for each part, then tap the check.",
+      "hash": "04fa9ba4b5",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=ball.mp3"
+    },
+    "k-sounds/drumWord/word=pig": {
+      "text": "Pig! Tap the drum for each part, then tap the check.",
+      "hash": "6962c2c956",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=pig.mp3"
+    },
+    "k-sounds/drumWord/word=train": {
+      "text": "Train! Tap the drum for each part, then tap the check.",
+      "hash": "4fd469c2bd",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=train.mp3"
+    },
+    "k-sounds/drumWord/word=shoe": {
+      "text": "Shoe! Tap the drum for each part, then tap the check.",
+      "hash": "8b9b06c48b",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=shoe.mp3"
+    },
+    "k-sounds/drumWord/word=clock": {
+      "text": "Clock! Tap the drum for each part, then tap the check.",
+      "hash": "fedbbaaed9",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=clock.mp3"
+    },
+    "k-sounds/drumWord/word=bed": {
+      "text": "Bed! Tap the drum for each part, then tap the check.",
+      "hash": "d70b68271d",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=bed.mp3"
+    },
+    "k-sounds/drumWord/word=nose": {
+      "text": "Nose! Tap the drum for each part, then tap the check.",
+      "hash": "bf2e8f4cfd",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=nose.mp3"
+    },
+    "k-sounds/drumWord/word=bear": {
+      "text": "Bear! Tap the drum for each part, then tap the check.",
+      "hash": "44e10ead6c",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=bear.mp3"
+    },
+    "k-sounds/drumWord/word=key": {
+      "text": "Key! Tap the drum for each part, then tap the check.",
+      "hash": "ebacb153d8",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=key.mp3"
+    },
+    "k-sounds/drumWord/word=tiger": {
+      "text": "Tiger! Tap the drum for each part, then tap the check.",
+      "hash": "95ad6b5884",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=tiger.mp3"
+    },
+    "k-sounds/drumWord/word=monkey": {
+      "text": "Monkey! Tap the drum for each part, then tap the check.",
+      "hash": "85db87eeb4",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=monkey.mp3"
+    },
+    "k-sounds/drumWord/word=rabbit": {
+      "text": "Rabbit! Tap the drum for each part, then tap the check.",
+      "hash": "64eb606233",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=rabbit.mp3"
+    },
+    "k-sounds/drumWord/word=pizza": {
+      "text": "Pizza! Tap the drum for each part, then tap the check.",
+      "hash": "7d797156aa",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=pizza.mp3"
+    },
+    "k-sounds/drumWord/word=apple": {
+      "text": "Apple! Tap the drum for each part, then tap the check.",
+      "hash": "b9810150e0",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=apple.mp3"
+    },
+    "k-sounds/drumWord/word=lemon": {
+      "text": "Lemon! Tap the drum for each part, then tap the check.",
+      "hash": "236045b8d4",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=lemon.mp3"
+    },
+    "k-sounds/drumWord/word=rocket": {
+      "text": "Rocket! Tap the drum for each part, then tap the check.",
+      "hash": "a202ccbf4c",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=rocket.mp3"
+    },
+    "k-sounds/drumWord/word=robot": {
+      "text": "Robot! Tap the drum for each part, then tap the check.",
+      "hash": "7c4e8736b7",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=robot.mp3"
+    },
+    "k-sounds/drumWord/word=rainbow": {
+      "text": "Rainbow! Tap the drum for each part, then tap the check.",
+      "hash": "5b52a5accc",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=rainbow.mp3"
+    },
+    "k-sounds/drumWord/word=penguin": {
+      "text": "Penguin! Tap the drum for each part, then tap the check.",
+      "hash": "17d828f99d",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=penguin.mp3"
+    },
+    "k-sounds/drumWord/word=turtle": {
+      "text": "Turtle! Tap the drum for each part, then tap the check.",
+      "hash": "03823cf145",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=turtle.mp3"
+    },
+    "k-sounds/drumWord/word=spider": {
+      "text": "Spider! Tap the drum for each part, then tap the check.",
+      "hash": "694cf1ad13",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=spider.mp3"
+    },
+    "k-sounds/drumWord/word=carrot": {
+      "text": "Carrot! Tap the drum for each part, then tap the check.",
+      "hash": "d1bba679fe",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=carrot.mp3"
+    },
+    "k-sounds/drumWord/word=cookie": {
+      "text": "Cookie! Tap the drum for each part, then tap the check.",
+      "hash": "9d29a46e06",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=cookie.mp3"
+    },
+    "k-sounds/drumWord/word=donut": {
+      "text": "Donut! Tap the drum for each part, then tap the check.",
+      "hash": "8ce0c9510e",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=donut.mp3"
+    },
+    "k-sounds/drumWord/word=pumpkin": {
+      "text": "Pumpkin! Tap the drum for each part, then tap the check.",
+      "hash": "beda2df9c6",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=pumpkin.mp3"
+    },
+    "k-sounds/drumWord/word=candy": {
+      "text": "Candy! Tap the drum for each part, then tap the check.",
+      "hash": "2e2d49b27e",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=candy.mp3"
+    },
+    "k-sounds/drumWord/word=lion": {
+      "text": "Lion! Tap the drum for each part, then tap the check.",
+      "hash": "f3ee710fc6",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=lion.mp3"
+    },
+    "k-sounds/drumWord/word=panda": {
+      "text": "Panda! Tap the drum for each part, then tap the check.",
+      "hash": "99ef5897c5",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=panda.mp3"
+    },
+    "k-sounds/drumWord/word=balloon": {
+      "text": "Balloon! Tap the drum for each part, then tap the check.",
+      "hash": "aac4d6cd73",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=balloon.mp3"
+    },
+    "k-sounds/drumWord/word=popcorn": {
+      "text": "Popcorn! Tap the drum for each part, then tap the check.",
+      "hash": "03cae44441",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=popcorn.mp3"
+    },
+    "k-sounds/drumWord/word=snowman": {
+      "text": "Snowman! Tap the drum for each part, then tap the check.",
+      "hash": "11bf55c656",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=snowman.mp3"
+    },
+    "k-sounds/drumWord/word=honey": {
+      "text": "Honey! Tap the drum for each part, then tap the check.",
+      "hash": "6cef92ebf6",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=honey.mp3"
+    },
+    "k-sounds/drumWord/word=banana": {
+      "text": "Banana! Tap the drum for each part, then tap the check.",
+      "hash": "0b4c6a0c99",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=banana.mp3"
+    },
+    "k-sounds/drumWord/word=octopus": {
+      "text": "Octopus! Tap the drum for each part, then tap the check.",
+      "hash": "d01e6f5559",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=octopus.mp3"
+    },
+    "k-sounds/drumWord/word=elephant": {
+      "text": "Elephant! Tap the drum for each part, then tap the check.",
+      "hash": "6c6d7eebb6",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=elephant.mp3"
+    },
+    "k-sounds/drumWord/word=butterfly": {
+      "text": "Butterfly! Tap the drum for each part, then tap the check.",
+      "hash": "0ab909527b",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=butterfly.mp3"
+    },
+    "k-sounds/drumWord/word=tomato": {
+      "text": "Tomato! Tap the drum for each part, then tap the check.",
+      "hash": "8b8fa716ca",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=tomato.mp3"
+    },
+    "k-sounds/drumWord/word=pineapple": {
+      "text": "Pineapple! Tap the drum for each part, then tap the check.",
+      "hash": "fa1dbd5a55",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=pineapple.mp3"
+    },
+    "k-sounds/drumWord/word=potato": {
+      "text": "Potato! Tap the drum for each part, then tap the check.",
+      "hash": "c945058006",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=potato.mp3"
+    },
+    "k-sounds/drumWord/word=strawberry": {
+      "text": "Strawberry! Tap the drum for each part, then tap the check.",
+      "hash": "53778accf0",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=strawberry.mp3"
+    },
+    "k-sounds/drumWord/word=gorilla": {
+      "text": "Gorilla! Tap the drum for each part, then tap the check.",
+      "hash": "38ff85f132",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=gorilla.mp3"
+    },
+    "k-sounds/drumWord/word=umbrella": {
+      "text": "Umbrella! Tap the drum for each part, then tap the check.",
+      "hash": "5cfaa725b3",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=umbrella.mp3"
+    },
+    "k-sounds/drumWord/word=ladybug": {
+      "text": "Ladybug! Tap the drum for each part, then tap the check.",
+      "hash": "8f1717d21d",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=ladybug.mp3"
+    },
+    "k-sounds/drumWord/word=bicycle": {
+      "text": "Bicycle! Tap the drum for each part, then tap the check.",
+      "hash": "9529c958a6",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=bicycle.mp3"
+    },
+    "k-sounds/drumWord/word=lollipop": {
+      "text": "Lollipop! Tap the drum for each part, then tap the check.",
+      "hash": "02a05dee6b",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=lollipop.mp3"
+    },
+    "k-sounds/drumWord/word=volcano": {
+      "text": "Volcano! Tap the drum for each part, then tap the check.",
+      "hash": "02ef206e2f",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=volcano.mp3"
+    },
+    "k-sounds/drumWord/word=violin": {
+      "text": "Violin! Tap the drum for each part, then tap the check.",
+      "hash": "6285e6c022",
+      "kind": "whole",
+      "file": "voice/k-sounds/drumWord/word=violin.mp3"
+    },
+    "k-words/youCanRead": {
+      "text": "You can read that word!",
+      "hash": "fba6267dd3",
+      "kind": "line",
+      "file": "voice/k-words/youCanRead.mp3"
+    },
+    "k-words/greatReading": {
+      "text": "Great reading!",
+      "hash": "66addd2ca8",
+      "kind": "line",
+      "file": "voice/k-words/greatReading.mp3"
+    },
+    "k-words/findWord/word=a": {
+      "text": "Find the word a.",
+      "hash": "3bfb847221",
+      "kind": "whole",
+      "file": "voice/k-words/findWord/word=a.mp3"
+    },
+    "k-words/findWord/word=i": {
+      "text": "Find the word I.",
+      "hash": "ebc6fdc12a",
+      "kind": "whole",
+      "file": "voice/k-words/findWord/word=i.mp3"
+    },
+    "k-words/findWord/word=the": {
+      "text": "Find the word the.",
+      "hash": "d0e380dc2c",
+      "kind": "whole",
+      "file": "voice/k-words/findWord/word=the.mp3"
+    },
+    "k-words/findWord/word=see": {
+      "text": "Find the word see.",
+      "hash": "4d144eebf8",
+      "kind": "whole",
+      "file": "voice/k-words/findWord/word=see.mp3"
+    },
+    "k-words/findWord/word=can": {
+      "text": "Find the word can.",
+      "hash": "137bd27945",
+      "kind": "whole",
+      "file": "voice/k-words/findWord/word=can.mp3"
+    },
+    "k-words/findWord/word=we": {
+      "text": "Find the word we.",
+      "hash": "59aaceeec8",
+      "kind": "whole",
+      "file": "voice/k-words/findWord/word=we.mp3"
+    },
+    "k-words/findWord/word=like": {
+      "text": "Find the word like.",
+      "hash": "e68fb3f0e4",
+      "kind": "whole",
+      "file": "voice/k-words/findWord/word=like.mp3"
+    },
+    "k-words/findWord/word=my": {
+      "text": "Find the word my.",
+      "hash": "1683161cac",
+      "kind": "whole",
+      "file": "voice/k-words/findWord/word=my.mp3"
+    },
+    "k-words/findWord/word=go": {
+      "text": "Find the word go.",
+      "hash": "93077d1055",
+      "kind": "whole",
+      "file": "voice/k-words/findWord/word=go.mp3"
+    },
+    "k-words/findWord/word=to": {
+      "text": "Find the word to.",
+      "hash": "0ac8507388",
+      "kind": "whole",
+      "file": "voice/k-words/findWord/word=to.mp3"
+    },
+    "k-words/findWord/word=and": {
+      "text": "Find the word and.",
+      "hash": "183e7091ac",
+      "kind": "whole",
+      "file": "voice/k-words/findWord/word=and.mp3"
+    },
+    "k-words/findWord/word=is": {
+      "text": "Find the word is.",
+      "hash": "9ce09cc2d4",
+      "kind": "whole",
+      "file": "voice/k-words/findWord/word=is.mp3"
+    },
+    "k-words/findWord/word=it": {
+      "text": "Find the word it.",
+      "hash": "a9eaf40c1c",
+      "kind": "whole",
+      "file": "voice/k-words/findWord/word=it.mp3"
+    },
+    "k-words/findWord/word=up": {
+      "text": "Find the word up.",
+      "hash": "b36d146c5a",
+      "kind": "whole",
+      "file": "voice/k-words/findWord/word=up.mp3"
+    },
+    "k-words/findWord/word=look": {
+      "text": "Find the word look.",
+      "hash": "87080f163f",
+      "kind": "whole",
+      "file": "voice/k-words/findWord/word=look.mp3"
+    },
+    "k-words/thatWordIs/word=a": {
+      "text": "That word is a.",
+      "hash": "e2547a7dde",
+      "kind": "whole",
+      "file": "voice/k-words/thatWordIs/word=a.mp3"
+    },
+    "k-words/thatWordIs/word=i": {
+      "text": "That word is I.",
+      "hash": "a82fa1f4e1",
+      "kind": "whole",
+      "file": "voice/k-words/thatWordIs/word=i.mp3"
+    },
+    "k-words/thatWordIs/word=the": {
+      "text": "That word is the.",
+      "hash": "3042b433ad",
+      "kind": "whole",
+      "file": "voice/k-words/thatWordIs/word=the.mp3"
+    },
+    "k-words/thatWordIs/word=see": {
+      "text": "That word is see.",
+      "hash": "96c73dae9c",
+      "kind": "whole",
+      "file": "voice/k-words/thatWordIs/word=see.mp3"
+    },
+    "k-words/thatWordIs/word=can": {
+      "text": "That word is can.",
+      "hash": "a239000134",
+      "kind": "whole",
+      "file": "voice/k-words/thatWordIs/word=can.mp3"
+    },
+    "k-words/thatWordIs/word=we": {
+      "text": "That word is we.",
+      "hash": "c5f632cd7a",
+      "kind": "whole",
+      "file": "voice/k-words/thatWordIs/word=we.mp3"
+    },
+    "k-words/thatWordIs/word=like": {
+      "text": "That word is like.",
+      "hash": "0e17058314",
+      "kind": "whole",
+      "file": "voice/k-words/thatWordIs/word=like.mp3"
+    },
+    "k-words/thatWordIs/word=my": {
+      "text": "That word is my.",
+      "hash": "1014dc8137",
+      "kind": "whole",
+      "file": "voice/k-words/thatWordIs/word=my.mp3"
+    },
+    "k-words/thatWordIs/word=go": {
+      "text": "That word is go.",
+      "hash": "005b5caf92",
+      "kind": "whole",
+      "file": "voice/k-words/thatWordIs/word=go.mp3"
+    },
+    "k-words/thatWordIs/word=to": {
+      "text": "That word is to.",
+      "hash": "258a58c35d",
+      "kind": "whole",
+      "file": "voice/k-words/thatWordIs/word=to.mp3"
+    },
+    "k-words/thatWordIs/word=and": {
+      "text": "That word is and.",
+      "hash": "c8c06eebf6",
+      "kind": "whole",
+      "file": "voice/k-words/thatWordIs/word=and.mp3"
+    },
+    "k-words/thatWordIs/word=is": {
+      "text": "That word is is.",
+      "hash": "7b400912ab",
+      "kind": "whole",
+      "file": "voice/k-words/thatWordIs/word=is.mp3"
+    },
+    "k-words/thatWordIs/word=it": {
+      "text": "That word is it.",
+      "hash": "ddabc92e3e",
+      "kind": "whole",
+      "file": "voice/k-words/thatWordIs/word=it.mp3"
+    },
+    "k-words/thatWordIs/word=up": {
+      "text": "That word is up.",
+      "hash": "5550a1708f",
+      "kind": "whole",
+      "file": "voice/k-words/thatWordIs/word=up.mp3"
+    },
+    "k-words/thatWordIs/word=look": {
+      "text": "That word is look.",
+      "hash": "dfe2e60107",
+      "kind": "whole",
+      "file": "voice/k-words/thatWordIs/word=look.mp3"
     },
     "listen/countTogether": {
       "text": "Let's count together.",
@@ -6864,6 +9024,522 @@
       "hash": "5ad14536d4",
       "kind": "line",
       "file": "voice/ui/dailyDone.mp3"
+    },
+    "slots/word/ant": {
+      "text": "ant",
+      "hash": "e0aad58a6b",
+      "kind": "slot",
+      "file": "voice/slots/word/ant.mp3"
+    },
+    "slots/word/apple": {
+      "text": "apple",
+      "hash": "5372745457",
+      "kind": "slot",
+      "file": "voice/slots/word/apple.mp3"
+    },
+    "slots/word/ball": {
+      "text": "ball",
+      "hash": "4498f873b9",
+      "kind": "slot",
+      "file": "voice/slots/word/ball.mp3"
+    },
+    "slots/word/balloon": {
+      "text": "balloon",
+      "hash": "621f751537",
+      "kind": "slot",
+      "file": "voice/slots/word/balloon.mp3"
+    },
+    "slots/word/bat": {
+      "text": "bat",
+      "hash": "44fa292bbc",
+      "kind": "slot",
+      "file": "voice/slots/word/bat.mp3"
+    },
+    "slots/word/bear": {
+      "text": "bear",
+      "hash": "1643bf9d1d",
+      "kind": "slot",
+      "file": "voice/slots/word/bear.mp3"
+    },
+    "slots/word/bed": {
+      "text": "bed",
+      "hash": "95ff40cdce",
+      "kind": "slot",
+      "file": "voice/slots/word/bed.mp3"
+    },
+    "slots/word/bee": {
+      "text": "bee",
+      "hash": "8d7c8faf6e",
+      "kind": "slot",
+      "file": "voice/slots/word/bee.mp3"
+    },
+    "slots/word/bell": {
+      "text": "bell",
+      "hash": "97bf9da717",
+      "kind": "slot",
+      "file": "voice/slots/word/bell.mp3"
+    },
+    "slots/word/boat": {
+      "text": "boat",
+      "hash": "00cf52b60e",
+      "kind": "slot",
+      "file": "voice/slots/word/boat.mp3"
+    },
+    "slots/word/box": {
+      "text": "box",
+      "hash": "be9f8ca7bd",
+      "kind": "slot",
+      "file": "voice/slots/word/box.mp3"
+    },
+    "slots/word/bread": {
+      "text": "bread",
+      "hash": "cb3b2fc946",
+      "kind": "slot",
+      "file": "voice/slots/word/bread.mp3"
+    },
+    "slots/word/bus": {
+      "text": "bus",
+      "hash": "6ca619fca4",
+      "kind": "slot",
+      "file": "voice/slots/word/bus.mp3"
+    },
+    "slots/word/cake": {
+      "text": "cake",
+      "hash": "91ecf81364",
+      "kind": "slot",
+      "file": "voice/slots/word/cake.mp3"
+    },
+    "slots/word/car": {
+      "text": "car",
+      "hash": "0626a3b2fb",
+      "kind": "slot",
+      "file": "voice/slots/word/car.mp3"
+    },
+    "slots/word/cat": {
+      "text": "cat",
+      "hash": "c470cf5149",
+      "kind": "slot",
+      "file": "voice/slots/word/cat.mp3"
+    },
+    "slots/word/clock": {
+      "text": "clock",
+      "hash": "a88fe536e9",
+      "kind": "slot",
+      "file": "voice/slots/word/clock.mp3"
+    },
+    "slots/word/clothes": {
+      "text": "clothes",
+      "hash": "ecbb4eef1b",
+      "kind": "slot",
+      "file": "voice/slots/word/clothes.mp3"
+    },
+    "slots/word/clown": {
+      "text": "clown",
+      "hash": "027e234e97",
+      "kind": "slot",
+      "file": "voice/slots/word/clown.mp3"
+    },
+    "slots/word/corn": {
+      "text": "corn",
+      "hash": "9f375c2ba4",
+      "kind": "slot",
+      "file": "voice/slots/word/corn.mp3"
+    },
+    "slots/word/crown": {
+      "text": "crown",
+      "hash": "2a08ea7f45",
+      "kind": "slot",
+      "file": "voice/slots/word/crown.mp3"
+    },
+    "slots/word/dock": {
+      "text": "dock",
+      "hash": "550be4fb16",
+      "kind": "slot",
+      "file": "voice/slots/word/dock.mp3"
+    },
+    "slots/word/dog": {
+      "text": "dog",
+      "hash": "5e94e17fbf",
+      "kind": "slot",
+      "file": "voice/slots/word/dog.mp3"
+    },
+    "slots/word/door": {
+      "text": "door",
+      "hash": "d0a18b7ea8",
+      "kind": "slot",
+      "file": "voice/slots/word/door.mp3"
+    },
+    "slots/word/down": {
+      "text": "down",
+      "hash": "6675d4c46b",
+      "kind": "slot",
+      "file": "voice/slots/word/down.mp3"
+    },
+    "slots/word/dub": {
+      "text": "dub",
+      "hash": "f3982b27c6",
+      "kind": "slot",
+      "file": "voice/slots/word/dub.mp3"
+    },
+    "slots/word/duck": {
+      "text": "duck",
+      "hash": "f302294e85",
+      "kind": "slot",
+      "file": "voice/slots/word/duck.mp3"
+    },
+    "slots/word/fire": {
+      "text": "fire",
+      "hash": "67557ae8fc",
+      "kind": "slot",
+      "file": "voice/slots/word/fire.mp3"
+    },
+    "slots/word/fish": {
+      "text": "fish",
+      "hash": "806738c9e8",
+      "kind": "slot",
+      "file": "voice/slots/word/fish.mp3"
+    },
+    "slots/word/four": {
+      "text": "four",
+      "hash": "ab2b3e829f",
+      "kind": "slot",
+      "file": "voice/slots/word/four.mp3"
+    },
+    "slots/word/fox": {
+      "text": "fox",
+      "hash": "4bb32a0430",
+      "kind": "slot",
+      "file": "voice/slots/word/fox.mp3"
+    },
+    "slots/word/frog": {
+      "text": "frog",
+      "hash": "2f465b9b43",
+      "kind": "slot",
+      "file": "voice/slots/word/frog.mp3"
+    },
+    "slots/word/goat": {
+      "text": "goat",
+      "hash": "db01829ae8",
+      "kind": "slot",
+      "file": "voice/slots/word/goat.mp3"
+    },
+    "slots/word/grapes": {
+      "text": "grapes",
+      "hash": "b88a691172",
+      "kind": "slot",
+      "file": "voice/slots/word/grapes.mp3"
+    },
+    "slots/word/guitar": {
+      "text": "guitar",
+      "hash": "9d9d9e6a70",
+      "kind": "slot",
+      "file": "voice/slots/word/guitar.mp3"
+    },
+    "slots/word/hat": {
+      "text": "hat",
+      "hash": "28aaa9bcd9",
+      "kind": "slot",
+      "file": "voice/slots/word/hat.mp3"
+    },
+    "slots/word/hen": {
+      "text": "hen",
+      "hash": "b092976e56",
+      "kind": "slot",
+      "file": "voice/slots/word/hen.mp3"
+    },
+    "slots/word/honey": {
+      "text": "honey",
+      "hash": "410a9fdc93",
+      "kind": "slot",
+      "file": "voice/slots/word/honey.mp3"
+    },
+    "slots/word/horn": {
+      "text": "horn",
+      "hash": "271a10053d",
+      "kind": "slot",
+      "file": "voice/slots/word/horn.mp3"
+    },
+    "slots/word/horse": {
+      "text": "horse",
+      "hash": "86ba0783d0",
+      "kind": "slot",
+      "file": "voice/slots/word/horse.mp3"
+    },
+    "slots/word/house": {
+      "text": "house",
+      "hash": "42462fcdc0",
+      "kind": "slot",
+      "file": "voice/slots/word/house.mp3"
+    },
+    "slots/word/key": {
+      "text": "key",
+      "hash": "d5ab055b2f",
+      "kind": "slot",
+      "file": "voice/slots/word/key.mp3"
+    },
+    "slots/word/king": {
+      "text": "king",
+      "hash": "aeb8e0e7eb",
+      "kind": "slot",
+      "file": "voice/slots/word/king.mp3"
+    },
+    "slots/word/leaf": {
+      "text": "leaf",
+      "hash": "5133a8c43d",
+      "kind": "slot",
+      "file": "voice/slots/word/leaf.mp3"
+    },
+    "slots/word/lemon": {
+      "text": "lemon",
+      "hash": "675ed3acc9",
+      "kind": "slot",
+      "file": "voice/slots/word/lemon.mp3"
+    },
+    "slots/word/lion": {
+      "text": "lion",
+      "hash": "5a9ebc166f",
+      "kind": "slot",
+      "file": "voice/slots/word/lion.mp3"
+    },
+    "slots/word/lock": {
+      "text": "lock",
+      "hash": "76bd74a4a2",
+      "kind": "slot",
+      "file": "voice/slots/word/lock.mp3"
+    },
+    "slots/word/map": {
+      "text": "map",
+      "hash": "41fc4d0ca1",
+      "kind": "slot",
+      "file": "voice/slots/word/map.mp3"
+    },
+    "slots/word/milk": {
+      "text": "milk",
+      "hash": "82fdfd3d2a",
+      "kind": "slot",
+      "file": "voice/slots/word/milk.mp3"
+    },
+    "slots/word/money": {
+      "text": "money",
+      "hash": "f09f1a324b",
+      "kind": "slot",
+      "file": "voice/slots/word/money.mp3"
+    },
+    "slots/word/monkey": {
+      "text": "monkey",
+      "hash": "aaaa04f67e",
+      "kind": "slot",
+      "file": "voice/slots/word/monkey.mp3"
+    },
+    "slots/word/moon": {
+      "text": "moon",
+      "hash": "a7bfeffb0b",
+      "kind": "slot",
+      "file": "voice/slots/word/moon.mp3"
+    },
+    "slots/word/mouse": {
+      "text": "mouse",
+      "hash": "3c4a915476",
+      "kind": "slot",
+      "file": "voice/slots/word/mouse.mp3"
+    },
+    "slots/word/nose": {
+      "text": "nose",
+      "hash": "6f812f2362",
+      "kind": "slot",
+      "file": "voice/slots/word/nose.mp3"
+    },
+    "slots/word/octopus": {
+      "text": "octopus",
+      "hash": "923d4bf7d7",
+      "kind": "slot",
+      "file": "voice/slots/word/octopus.mp3"
+    },
+    "slots/word/orange": {
+      "text": "orange",
+      "hash": "fafeb39785",
+      "kind": "slot",
+      "file": "voice/slots/word/orange.mp3"
+    },
+    "slots/word/pear": {
+      "text": "pear",
+      "hash": "fbccfaffb8",
+      "kind": "slot",
+      "file": "voice/slots/word/pear.mp3"
+    },
+    "slots/word/peep": {
+      "text": "peep",
+      "hash": "7e1ed3256f",
+      "kind": "slot",
+      "file": "voice/slots/word/peep.mp3"
+    },
+    "slots/word/pen": {
+      "text": "pen",
+      "hash": "7c712008df",
+      "kind": "slot",
+      "file": "voice/slots/word/pen.mp3"
+    },
+    "slots/word/penguin": {
+      "text": "penguin",
+      "hash": "5a5e37b7d0",
+      "kind": "slot",
+      "file": "voice/slots/word/penguin.mp3"
+    },
+    "slots/word/pig": {
+      "text": "pig",
+      "hash": "83d05ee3a9",
+      "kind": "slot",
+      "file": "voice/slots/word/pig.mp3"
+    },
+    "slots/word/pizza": {
+      "text": "pizza",
+      "hash": "c8ba645a9d",
+      "kind": "slot",
+      "file": "voice/slots/word/pizza.mp3"
+    },
+    "slots/word/plane": {
+      "text": "plane",
+      "hash": "ffc25f4839",
+      "kind": "slot",
+      "file": "voice/slots/word/plane.mp3"
+    },
+    "slots/word/rainbow": {
+      "text": "rainbow",
+      "hash": "ffb0ddce85",
+      "kind": "slot",
+      "file": "voice/slots/word/rainbow.mp3"
+    },
+    "slots/word/ring": {
+      "text": "ring",
+      "hash": "685dfafb2a",
+      "kind": "slot",
+      "file": "voice/slots/word/ring.mp3"
+    },
+    "slots/word/robot": {
+      "text": "robot",
+      "hash": "99e3b5bb37",
+      "kind": "slot",
+      "file": "voice/slots/word/robot.mp3"
+    },
+    "slots/word/rocket": {
+      "text": "rocket",
+      "hash": "4981554fe1",
+      "kind": "slot",
+      "file": "voice/slots/word/rocket.mp3"
+    },
+    "slots/word/rose": {
+      "text": "rose",
+      "hash": "a58c0c9c4e",
+      "kind": "slot",
+      "file": "voice/slots/word/rose.mp3"
+    },
+    "slots/word/sheep": {
+      "text": "sheep",
+      "hash": "6e192fbb68",
+      "kind": "slot",
+      "file": "voice/slots/word/sheep.mp3"
+    },
+    "slots/word/shell": {
+      "text": "shell",
+      "hash": "e0e7fc220a",
+      "kind": "slot",
+      "file": "voice/slots/word/shell.mp3"
+    },
+    "slots/word/ship": {
+      "text": "ship",
+      "hash": "b22d25ae78",
+      "kind": "slot",
+      "file": "voice/slots/word/ship.mp3"
+    },
+    "slots/word/shoe": {
+      "text": "shoe",
+      "hash": "64b735eaf6",
+      "kind": "slot",
+      "file": "voice/slots/word/shoe.mp3"
+    },
+    "slots/word/snail": {
+      "text": "snail",
+      "hash": "2918c43a97",
+      "kind": "slot",
+      "file": "voice/slots/word/snail.mp3"
+    },
+    "slots/word/snake": {
+      "text": "snake",
+      "hash": "498c8477f2",
+      "kind": "slot",
+      "file": "voice/slots/word/snake.mp3"
+    },
+    "slots/word/spoon": {
+      "text": "spoon",
+      "hash": "5189f2bfb1",
+      "kind": "slot",
+      "file": "voice/slots/word/spoon.mp3"
+    },
+    "slots/word/star": {
+      "text": "star",
+      "hash": "b8367e90fa",
+      "kind": "slot",
+      "file": "voice/slots/word/star.mp3"
+    },
+    "slots/word/sun": {
+      "text": "sun",
+      "hash": "4e6817737d",
+      "kind": "slot",
+      "file": "voice/slots/word/sun.mp3"
+    },
+    "slots/word/ten": {
+      "text": "ten",
+      "hash": "56037eeab2",
+      "kind": "slot",
+      "file": "voice/slots/word/ten.mp3"
+    },
+    "slots/word/three": {
+      "text": "three",
+      "hash": "7595413882",
+      "kind": "slot",
+      "file": "voice/slots/word/three.mp3"
+    },
+    "slots/word/tiger": {
+      "text": "tiger",
+      "hash": "8968c29e27",
+      "kind": "slot",
+      "file": "voice/slots/word/tiger.mp3"
+    },
+    "slots/word/train": {
+      "text": "train",
+      "hash": "b90532ec97",
+      "kind": "slot",
+      "file": "voice/slots/word/train.mp3"
+    },
+    "slots/word/tree": {
+      "text": "tree",
+      "hash": "3bcd46bed6",
+      "kind": "slot",
+      "file": "voice/slots/word/tree.mp3"
+    },
+    "slots/word/truck": {
+      "text": "truck",
+      "hash": "61a37a485d",
+      "kind": "slot",
+      "file": "voice/slots/word/truck.mp3"
+    },
+    "slots/word/tub": {
+      "text": "tub",
+      "hash": "d398c08ee9",
+      "kind": "slot",
+      "file": "voice/slots/word/tub.mp3"
+    },
+    "slots/word/two": {
+      "text": "two",
+      "hash": "2840846a64",
+      "kind": "slot",
+      "file": "voice/slots/word/two.mp3"
+    },
+    "slots/word/whale": {
+      "text": "whale",
+      "hash": "28b7128584",
+      "kind": "slot",
+      "file": "voice/slots/word/whale.mp3"
     }
   }
 }

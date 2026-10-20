@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react'
-import type { FocusEvent } from 'react'
+import type { CSSProperties, FocusEvent } from 'react'
 import { zoneStages, type Stage, type Zone } from '../../curriculum'
 import { useProgress } from '../../store/progress'
 import { isStageUnlocked } from '../../lib/stageLocks'
-import { nextStageToPlay, stagePicture, stageVoice, zoneWelcomeVoice } from '../../lib/listenNav'
+import { nextStageToPlay, stagePickerColumns, stagePicture, stageVoice, zoneWelcomeVoice } from '../../lib/listenNav'
 import { guide } from '../../guide/store'
 import { sfx } from '../../lib/sound'
 import { ToonStar } from '../ui'
@@ -16,6 +16,11 @@ import { ToonStar } from '../ui'
  *
  * On mount it says the zone's welcome ("Counting Mesa! Tap a star to play!")
  * with the hand on the next stage to play; 🔊 says it again.
+ *
+ * Three stages sit in one row, as in the pilot. More (Writing Workshop's four,
+ * Letter Reef's eight) share the width evenly in rows of `stagePickerColumns`,
+ * a short last row centred; with two rows the pictures shrink with the
+ * screen's height, so a sideways tablet shows them all without scrolling.
  */
 export function ListenStagePicker({
   zone,
@@ -65,11 +70,33 @@ export function ListenStagePicker({
     if (keyboardFocus(e.currentTarget)) void say(stage)
   }
 
-  const btn = size === 'lg' ? 'w-[min(28vw,13rem)] min-w-[7.5rem] pt-4 pb-3' : 'w-[min(28vw,8.25rem)] min-w-24 pt-3 pb-2'
-  const pic = size === 'lg' ? 'text-[clamp(3.5rem,9vw,5.5rem)] h-[clamp(4.5rem,11vw,7rem)]' : 'text-[clamp(2.75rem,8vw,3.75rem)] h-[clamp(3.5rem,10vw,4.5rem)]'
+  // three in a row as in the pilot; more share the row evenly (a column count and the gap, as CSS variables)
+  const cols = stagePickerColumns(stages.length)
+  const shared = stages.length > 3
+  const twoRows = stages.length > cols
+  const width = shared
+    ? `w-[calc((100%_-_(var(--cols)_-_1)_*_var(--gap))_/_var(--cols))] min-w-16 ${size === 'lg' ? 'max-w-[13rem]' : 'max-w-[8.25rem]'}`
+    : size === 'lg'
+      ? 'w-[min(28vw,13rem)] min-w-[7.5rem]'
+      : 'w-[min(28vw,8.25rem)] min-w-24'
+  const btn = `${width} ${size === 'lg' ? 'pt-4 pb-3' : 'pt-3 pb-2'} ${twoRows ? 'short:pt-2.5 short:pb-2' : ''}`
+  const pic = twoRows
+    ? size === 'lg'
+      ? 'text-[clamp(2.75rem,min(12vw,11vh),5.5rem)] h-[clamp(3.5rem,min(15vw,14vh),7rem)] short:text-[clamp(2.5rem,13vh,4.5rem)] short:h-[clamp(3rem,17vh,6rem)]'
+      : 'text-[clamp(2.25rem,min(10vw,9vh),3.75rem)] h-[clamp(3rem,min(13vw,11vh),4.5rem)] short:text-[clamp(2rem,9vh,3.25rem)] short:h-[clamp(2.75rem,12vh,4rem)]'
+    : size === 'lg'
+      ? 'text-[clamp(3.5rem,9vw,5.5rem)] h-[clamp(4.5rem,11vw,7rem)]'
+      : 'text-[clamp(2.75rem,8vw,3.75rem)] h-[clamp(3.5rem,10vw,4.5rem)]'
+  const grid = shared ? 'flex-wrap [--gap:0.75rem] short:[--gap:0.625rem] roomy:[--gap:1.25rem] gap-[var(--gap)]' : 'gap-3 short:gap-2.5 roomy:gap-5'
 
   return (
-    <div className="flex items-stretch justify-center gap-3 short:gap-2.5 roomy:gap-5" role="group" aria-label={`${zone.title} games`}>
+    <div
+      className={`flex items-stretch justify-center ${grid}`}
+      style={shared ? ({ '--cols': cols } as CSSProperties) : undefined}
+      data-cols={cols}
+      role="group"
+      aria-label={`${zone.title} games`}
+    >
       {stages.map((stage) => {
         const locked = !isStageUnlocked(zone, stage.id, progress, grade)
         const earned = progress?.stages[stage.id]?.stars ?? 0
@@ -93,7 +120,12 @@ export function ListenStagePicker({
               locked ? 'bg-cream-100 shadow-ledge-sm' : isNext ? 'bg-quest-200 shadow-ledge hover:bg-quest-100' : 'bg-paper shadow-ledge hover:bg-cream-100',
             ].join(' ')}
           >
-            <span className={`grid place-items-center leading-none kid-text font-bold text-ink-900 ${pic} ${locked ? 'opacity-45 grayscale' : ''}`} aria-hidden="true">
+            <span
+              className={`grid place-items-center leading-none kid-text font-bold text-ink-900 ${pic} ${locked ? 'opacity-45 grayscale' : ''}`}
+              aria-hidden="true"
+              // (letters as the picture, like "Aa": a picture of letters, not a word to read)
+              data-glyph={/\p{L}/u.test(stagePicture(stage)) ? '' : undefined}
+            >
               {stagePicture(stage)}
             </span>
             <span className="flex items-center justify-center -space-x-0.5" aria-hidden="true">
