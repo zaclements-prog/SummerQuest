@@ -318,6 +318,18 @@ describe('World HUD', () => {
     expect(container.textContent).not.toContain(getZone('multiplication-mesa')!.description)
   })
 
+  it('K: the Schoolhouse offers the K–1 lessons as pictures', () => {
+    player(0, { toursSeen: ['world'] })
+    render('/world', <WorldHud posRef={posRef} />, '/world')
+    near('', 'Schoolhouse', 'schoolhouse')
+    expect(lines()).toEqual(['k-nav/lessonTime'])
+    click(q('[data-guide="world-visit"]'))
+    expect(qa('[data-guide^="lesson-"]').map((b) => b.dataset.guide)).toEqual(['lesson-kCounting', 'lesson-kShapes', 'lesson-kLetters'])
+    expect(lines()).toEqual(['k-lessons/pickLesson'])
+    click(q('[data-guide="lesson-kShapes"]'))
+    expect(at.path).toBe('/tutor/kShapes')
+  })
+
   it('K: a sleeping gateway says so and never opens', () => {
     player(0, { toursSeen: ['world'] })
     render('/world', <WorldHud posRef={posRef} />, '/world')

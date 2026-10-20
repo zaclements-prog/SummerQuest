@@ -54,14 +54,18 @@ export default function ListenWorldPanel({ npc, onLaunch, onClose }: { npc: Acti
   )
 }
 
-/** The band's lessons as picture buttons ("Let's learn something new!"). */
+/**
+ * The band's lessons as picture buttons, asked like the K–1 lesson picker
+ * ("Pick a lesson to watch. Tap a picture!", the hand gliding over them).
+ */
 function LessonPictures({ grade, onLaunch }: { grade: GradeLevel | null | undefined; onLaunch: (path: string) => void }) {
   const lessons = lessonsFor(grade)
-  const first = lessons[0]?.id
+  const key = lessons.map((l) => l.id).join(',')
   useEffect(() => {
-    void guide.show({ voice: { line: 'k-nav/lessonTime' }, target: first ? `lesson-${first}` : null })
+    const ids = key ? key.split(',').map((id) => `lesson-${id}`) : null
+    void guide.show({ voice: { line: 'k-lessons/pickLesson' }, target: ids, cue: 'Tap', hand: 'sweep' })
     return () => guide.clear({ forget: true })
-  }, [first])
+  }, [key])
   return (
     <div className="flex flex-wrap items-center justify-center gap-3">
       {lessons.map((l) => (
