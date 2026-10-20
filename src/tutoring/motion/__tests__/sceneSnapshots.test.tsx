@@ -2,9 +2,9 @@ import { describe, it } from 'vitest'
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { allLessons } from '../../lessons'
+import { everyLesson, narrationPace } from '../../lessons'
 import { sceneFor } from '../scenes'
-import { alignWords, phraseIndex, timeAtChar } from '../cues'
+import { DEFAULT_CHARS_PER_SEC, alignWords, phraseIndex, timeAtChar } from '../cues'
 import type { TimedWord } from '../cues'
 import { Defs } from '../kit'
 import { H, M, W } from '../palette'
@@ -25,7 +25,7 @@ const stepS = Number(process.env.SCENE_SNAP_STEP ?? 0.25)
 
 describe.skipIf(!only)('scene frame dump', () => {
   it('writes frames', () => {
-    const lessons = only === 'all' ? allLessons : allLessons.filter((l) => only!.split(',').includes(l.id))
+    const lessons = only === 'all' ? everyLesson : everyLesson.filter((l) => only!.split(',').includes(l.id))
     const manifest = JSON.parse(readFileSync('public/tts/manifest.json', 'utf8')) as Record<string, { duration: number; words?: string }>
     const counts: Record<string, { frames: number; peak: number; mean: number }> = {}
     for (const l of lessons)
@@ -34,7 +34,8 @@ describe.skipIf(!only)('scene frame dump', () => {
         if (!Scene) continue
         const key = `${l.id}/${s.id}`
         const clip = manifest[key]
-        const dur = clip?.duration ?? s.narration.length / 14
+        // (no clip yet: the app's silent timeline, at the lesson's own pace — slower for K–1)
+        const dur = clip?.duration ?? s.narration.length / (DEFAULT_CHARS_PER_SEC * narrationPace(l))
         const words = clip?.words ? (JSON.parse(readFileSync(join('public', clip.words), 'utf8')) as { words?: TimedWord[] }).words ?? null : null
         const aligned = words ? alignWords(s.narration, words) : null
         const cue = (phrase: string, nth = 0) => {

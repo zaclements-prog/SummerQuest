@@ -1,19 +1,19 @@
 import { describe, it, expect } from 'vitest'
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { allLessons } from '../../lessons'
+import { everyLesson } from '../../lessons'
 import { sceneFor } from '../scenes'
 import { phraseIndex } from '../cues'
 
 describe('lesson motion scenes', () => {
   it('every lesson step has a scene', () => {
-    const missing = allLessons.flatMap((l) => l.steps.filter((s) => !sceneFor(l.id, s.id)).map((s) => `${l.id}/${s.id}`))
+    const missing = everyLesson.flatMap((l) => l.steps.filter((s) => !sceneFor(l.id, s.id)).map((s) => `${l.id}/${s.id}`))
     expect(missing).toEqual([])
   })
 
   it('every cue phrase is spoken in its step, and scenes render across their timeline', () => {
     const badCues = new Set<string>()
-    for (const l of allLessons)
+    for (const l of everyLesson)
       for (const s of l.steps) {
         const Scene = sceneFor(l.id, s.id)
         if (!Scene) continue
