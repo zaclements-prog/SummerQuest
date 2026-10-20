@@ -251,7 +251,9 @@
     {
       "id": "B2",
       "title": "perf rework: wordProblem/read scene",
-      "status": "pending"
+      "status": "done",
+      "commit": "1cd1547",
+      "evidence": "wordProblem/read peak 247->115 SVG elements (budget 150) measured by scripts/audit-scene-elements.mjs over the real narration timeline (public/tts/wordProblem/read.words.json); 24-crayon tray relaid as per-row CrayonRun silhouettes whose n grows as columns land (same drop/spring per row, stagger preserved); perpetual fox blink loop -> two bounded blinks at 3.4s/6.8s (B2.3); perpetual Twinkles -> one finite Sparkles flash at done; ThoughtBubble sq-shadow filter removed (B2.2, ink outline carries the toon look — read now 0 filter frames); audit script repaired to self-bootstrap TSX_TSCONFIG_PATH=tsconfig.app.json (tsx was resolving the root solution config -> classic JSX -> 'React is not defined'); plan re-verified ok at 125; vitest src/tutoring 43 passed, npm test 783 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
     },
     {
       "id": "B3",
@@ -548,7 +550,15 @@
       "tests": "final battery (single scene commit for the step): vitest src/tutoring 43 passed, npm test 783 passed, lint clean, tsc -b clean, build:store ✓ 83 files, all fetches same-origin/known loaders",
       "commits": "8182137: wordProblem/plan perf rework — peak SVG elements 257 -> 125 (budget 150) measured by new scripts/audit-scene-elements.mjs (renders the scene at 0.05s steps over the real narration timeline from public/tts/wordProblem/plan.words.json and counts paint elements); 24-crayon detail grid replaced by per-row two-path CrayonRun silhouettes, equal-groups block now fades out at 'multiply' so the end frame holds just ops + rule, infinite breathe pulse replaced by one bounded wave (B2.3), perpetual Twinkle replaced by a finite Sparkle flash, StoryCard unbadged words render as bare Txt (read benefits too), IndexCard filter removed (B2.2, filters stay off in plan) — scene keeps every beat: loop + underlines, op keys + hopping ring, equal rows tagged 4 and ticked, × wins with burst, equal groups → multiply rule line",
       "gates": "full-final (single scene commit for the step)",
-      "push": "push-skipped (one attempt; see push note below)"
+      "push": "pushed ff91ade..7accef5 to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 34,
+      "step": "B2",
+      "result": "done",
+      "tests": "final battery (single scene commit for the step): vitest src/tutoring 43 passed, npm test 783 passed, lint clean, tsc -b clean, build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "1cd1547: wordProblem/read perf rework — peak SVG elements 247 -> 115 (budget 150), 0 filter frames (was 151); 24-crayon tray relaid as per-row CrayonRun silhouettes whose n grows as columns land (per-row drop/spring and stagger preserved), perpetual fox blink loop -> two bounded blinks (B2.3), three perpetual Twinkles -> one finite Sparkles flash at done, ThoughtBubble sq-shadow filter removed (B2.2; ink outline carries the toon look, same treatment as B1's IndexCard); scene audit script repaired: tsx now self-bootstraps TSX_TSCONFIG_PATH=tsconfig.app.json because the root solution tsconfig has no compilerOptions (classic JSX runtime -> 'React is not defined'); plan re-verified ok at 125; note for B3 planning: wordProblem/solve measures 222 peak with 359 filter frames (not a listed step — consider whether the plan's scope covers it or it needs its own step)",
+      "gates": "full-final (single scene commit for the step)"
     }
   ],
   "notes": "Target counts from handoff A1 table. One step per interval. Owner-approved 2026-10-18: fast gates policy — intermediate commits run vitest providers only; full battery (vitest+npm test+lint+tsc+build:store) runs on the final commit of each step and step is marked done only on full-battery pass. Fails verification twice -> blocked with error, skip to next. All done/blocked: pause cron + final summary in history."
