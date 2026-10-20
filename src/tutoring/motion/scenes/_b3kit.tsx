@@ -355,7 +355,7 @@ export function ThoughtBubble({ cx, cy, w, h, tail, dots: dotList, grow = 1, fil
         const ds = clamp(s * 3 - i * 0.6)
         return ds > 0 ? <circle key={i} cx={x} cy={y} r={r * ds} fill={fill} stroke={M.ink} strokeWidth={4} /> : null
       })}
-      <g transform={`translate(${cx} ${cy}) scale(${s}) translate(${-cx} ${-cy})`} filter="url(#sq-shadow)">
+      <g transform={`translate(${cx} ${cy}) scale(${s}) translate(${-cx} ${-cy})`}>
         {body(true)}
         {body(false)}
       </g>

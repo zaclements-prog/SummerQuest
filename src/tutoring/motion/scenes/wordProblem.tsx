@@ -88,8 +88,10 @@ const CR_W = 17
 const CR_GAP = 7
 const ROW_GAP = 25
 
-/** A lidded crayon tray centred on (x, y); `crayonAt(r, c)` = when each crayon lands. */
-function CrayonTray({ t, x, y, crayonAt, wiggle = 0 }: { t: number; x: number; y: number; crayonAt: (r: number, c: number) => number; wiggle?: number }) {
+/** A lidded crayon tray centred on (x, y); `crayonAt(r, c)` = when each crayon lands.
+ * Rows land as whole-row CrayonRun silhouettes whose n grows as columns arrive —
+ * same toon read as 24 detailed Crayon props at a fraction of the elements (B2.4). */
+function CrayonTray({ t, x, y, crayonAt }: { t: number; x: number; y: number; crayonAt: (r: number, c: number) => number }) {
   const innerW = COLS * CR_LEN + (COLS - 1) * CR_GAP
   const innerH = ROWS * ROW_GAP
   const pad = 16
@@ -109,22 +111,19 @@ function CrayonTray({ t, x, y, crayonAt, wiggle = 0 }: { t: number; x: number; y
       {Array.from({ length: ROWS - 1 }, (_, r) => (
         <line key={r} x1={l + 14} x2={l + w - 14} y1={y - innerH / 2 + (r + 1) * ROW_GAP} y2={y - innerH / 2 + (r + 1) * ROW_GAP} stroke="#c98a1c" strokeWidth={3} strokeLinecap="round" opacity={0.55} />
       ))}
-      {Array.from({ length: ROWS }, (_, r) =>
-        Array.from({ length: COLS }, (_, c) => {
-          const at = crayonAt(r, c)
-          const k = spring(t, at, { stiffness: 260, damping: 16 })
-          if (k <= 0.001) return null
-          const cx = x - innerW / 2 + CR_LEN / 2 + c * (CR_LEN + CR_GAP)
-          const cy = y - innerH / 2 + ROW_GAP / 2 + r * ROW_GAP
-          const drop = (1 - k) * -70
-          const wig = wiggle * Math.sin(t * 3 + r * 0.9 + c * 1.7) * 2.5
-          return (
-            <g key={`${r}-${c}`} transform={`translate(0 ${drop})`} opacity={Math.min(1, k * 3)}>
-              <Crayon x={cx} y={cy + CR_LEN / 2} w={CR_W} h={CR_LEN} color={CRAYONS[r]} rot={90 + wig} />
-            </g>
-          )
-        }),
-      )}
+      {Array.from({ length: ROWS }, (_, r) => {
+        const at0 = crayonAt(r, 0)
+        const k = spring(t, at0, { stiffness: 260, damping: 16 })
+        if (k <= 0.001) return null
+        const n = Math.max(1, Math.min(COLS, 1 + Math.floor((t - at0) / 0.05)))
+        const drop = (1 - k) * -70
+        const cy = y - innerH / 2 + ROW_GAP / 2 + r * ROW_GAP
+        return (
+          <g key={r} transform={`translate(0 ${drop})`} opacity={Math.min(1, k * 3)}>
+            <CrayonRun x0={x - innerW / 2} y={cy} color={CRAYONS[r]} n={n} len={CR_LEN} w={CR_W} gap={CR_GAP} />
+          </g>
+        )
+      })}
     </g>
   )
 }
@@ -178,7 +177,8 @@ const read: Scene = ({ t, cue }: SceneProps) => {
   const crWord = WORDS[W_CRAYONS]
   // the fox looks at the card while reading, then up at its daydream
   const lookUp = ep(t, picture - 0.2, 0.6, ease.inOutCubic)
-  const blink = t > 3 ? Math.max(0, 1 - Math.abs(((t + 0.7) % 3.4) - 0.1) * 10) : 0
+  // two bounded blinks while reading — motion ends (B2.3), no perpetual loop
+  const blink = Math.max(Math.max(0, 1 - Math.abs(t - 3.4) * 10), Math.max(0, 1 - Math.abs(t - 6.8) * 10))
   const sketch = 1 - ep(t, seeBox, 0.3)
   const trayL = tray.x - 137
   const trayT = tray.y - 91
@@ -234,7 +234,7 @@ const read: Scene = ({ t, cue }: SceneProps) => {
         )}
         {/* …then becomes real */}
         <Scale s={trayS} x={tray.x} y={tray.y + 90}>
-          <CrayonTray t={t} x={tray.x} y={tray.y} crayonAt={crayonAt} wiggle={t > done ? 1 : 0} />
+          <CrayonTray t={t} x={tray.x} y={tray.y} crayonAt={crayonAt} />
         </Scale>
         <Burst t={t} at={seeBox + 0.05} x={tray.x} y={tray.y} color={M.gold} r={160} rays={12} />
         {Array.from({ length: ROWS }, (_, r) => (
@@ -243,9 +243,8 @@ const read: Scene = ({ t, cue }: SceneProps) => {
         {/* the nouns fly out of the story and label the picture */}
         <FlyTag t={t} at={seeBox} dur={0.6} text="box" from={onCard(boxWord.cx, boxWord.y)} to={[tray.x - 92, tray.y + 128]} fromSize={TEXT_SIZE} toSize={26} color={M.gold} lift={90} />
         <FlyTag t={t} at={crayons} dur={0.6} text="crayons" from={onCard(crWord.cx, crWord.y)} to={[tray.x + 70, tray.y + 128]} fromSize={TEXT_SIZE} toSize={26} color={M.pink} lift={110} />
-        <Twinkle t={t} at={done} x={tray.x + 172} y={tray.y - 140} r={12} phase={0} />
-        <Twinkle t={t} at={done} x={tray.x - 170} y={tray.y + 60} r={10} phase={0.5} color={M.pink} />
-        <Twinkle t={t} at={done} x={tray.x + 176} y={tray.y + 80} r={9} phase={0.25} color={M.sea} />
+        {/* one finite celebration flash at the end frame — no perpetual twinkles (B2.3) */}
+        <Sparkles t={t} at={done} x={tray.x + 4} y={tray.y - 40} r={120} n={8} seed={6} size={10} />
       </Camera>
     </>
   )

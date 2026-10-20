@@ -11,12 +11,25 @@
  * and reports the peak. Budget: ~150 steady-state (warn), 250 transition peak (fail).
  * Exit 1 if any scene exceeds its budget.
  */
-import { readFileSync, existsSync } from 'node:fs'
-import { renderToStaticMarkup } from 'react-dom/server'
-import { createElement } from 'react'
-import { allLessons } from '../src/tutoring/lessons/index.ts'
-import { sceneFor } from '../src/tutoring/motion/scenes/index.ts'
-import { phraseIndex, alignWords, timeAtChar } from '../src/tutoring/motion/cues.ts'
+// tsx resolves the root solution tsconfig.json (no compilerOptions) by default,
+// which transpiles .tsx with the CLASSIC JSX runtime → "React is not defined".
+// Re-exec once with TSX_TSCONFIG_PATH pointed at the app config (jsx: react-jsx).
+// IMPORTANT: keep the guard BEFORE any .ts imports — static imports hoist above
+// top-level code and would crash the parent before the guard runs.
+import { spawnSync } from 'node:child_process'
+if (!process.env.TSX_TSCONFIG_PATH) {
+  const r = spawnSync(process.execPath, ['--import', 'tsx', ...process.argv.slice(1)], {
+    stdio: 'inherit',
+    env: { ...process.env, TSX_TSCONFIG_PATH: 'tsconfig.app.json' },
+  })
+  process.exit(r.status ?? 1)
+}
+const { readFileSync, existsSync } = await import('node:fs')
+const { renderToStaticMarkup } = await import('react-dom/server')
+const { createElement } = await import('react')
+const { allLessons } = await import('../src/tutoring/lessons/index.ts')
+const { sceneFor } = await import('../src/tutoring/motion/scenes/index.ts')
+const { phraseIndex, alignWords, timeAtChar } = await import('../src/tutoring/motion/cues.ts')
 
 const args = process.argv.slice(2)
 const budgetIdx = args.indexOf('--budget')
