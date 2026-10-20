@@ -154,6 +154,32 @@ describe('makeMultiplicationGroveProvider', () => {
     }
   })
 
+  it('widens the served G2 pool to 30 while GROVE_ORDERS stays pair-unique', () => {
+    // every canonical pair is still distinct (the curated-bank invariant)
+    const pairs = new Set(GROVE_ORDERS.map((o) => `${o.rows}x${o.cols}`))
+    expect(pairs.size).toBe(GROVE_ORDERS.length)
+    // but a grade-2 kid sees at least 30 plantable orders across the pool
+    const pool = grovePoolFor(5)
+    expect(pool.length).toBeGreaterThanOrEqual(30)
+    expect(new Set(pool.map((o) => o.prompt)).size).toBe(pool.length)
+    expect(grovePoolFor(7)).toHaveLength(GROVE_ORDERS.length + GROVE_ORDER_ALTS.length)
+    // every G2 canonical pair has at least one second-pass phrasing
+    for (const o of groveOrdersFor(5)) {
+      expect(GROVE_ORDER_ALTS.some((a) => a.rows === o.rows && a.cols === o.cols)).toBe(true)
+    }
+  })
+
+  it('runs the whole widened pool before any repeat at G2', async () => {
+    const p = makeMultiplicationGroveProvider({ maxFactor: 5 })
+    const seen = new Set<string>()
+    for (let i = 0; i < grovePoolFor(5).length; i++) {
+      const problem = await p.next()
+      expect(seen.has(problem.prompt)).toBe(false)
+      seen.add(problem.prompt)
+    }
+    expect(seen.size).toBeGreaterThanOrEqual(30)
+  })
+
   it('reshuffles after the bank is exhausted and resets', async () => {
     const p = makeMultiplicationGroveProvider()
     // the served pool is the canonical bank plus the second-pass phrasings

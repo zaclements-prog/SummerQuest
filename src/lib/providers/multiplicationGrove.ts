@@ -64,7 +64,7 @@ export const GROVE_ORDERS: PlantingOrder[] = [
  * second sighting of a pair reads fresh. A variant may repeat a pair (that is
  * its whole point), so it lives OUTSIDE GROVE_ORDERS — the canonical bank
  * stays pair-unique. Together they widen the served pool a grade sees to 30+
- * (31 at G2, factors ≤5). Same invariants as canonical orders: the prompt
+ * (32 at G2, factors ≤5). Same invariants as canonical orders: the prompt
  * states "rows of/with cols" in that order, never a candidate total.
  */
 export const GROVE_ORDER_ALTS: PlantingOrder[] = [
@@ -76,6 +76,14 @@ export const GROVE_ORDER_ALTS: PlantingOrder[] = [
   { rows: 5, cols: 2, prompt: 'Plant 5 rows with 2 juniper trees in each row by the trail.' },
   { rows: 3, cols: 3, prompt: 'Plant a square patch: 3 rows of 3 palm trees down the shell path.' },
   { rows: 3, cols: 4, prompt: 'The keeper ropes off 3 rows of 4 dogwood trees near the creek.' },
+  { rows: 2, cols: 2, prompt: 'The tiny plot wants 2 rows with 2 sycamore trees beside the signpost.' },
+  { rows: 4, cols: 3, prompt: 'Draw 4 rows with 3 aspen trees in each row below the orchard hill.' },
+  { rows: 3, cols: 5, prompt: 'The order card asks for 3 rows of 5 redwood trees down the long yard.' },
+  { rows: 5, cols: 3, prompt: 'Set out 5 rows with 3 serviceberry trees in each row along the lane.' },
+  { rows: 4, cols: 4, prompt: 'Plant a square patch: 4 rows of 4 magnolia trees on the plaza.' },
+  { rows: 4, cols: 5, prompt: 'The keeper marks 4 rows of 5 persimmon trees beside the market path.' },
+  { rows: 5, cols: 4, prompt: 'The garden plan wants 5 rows with 4 pawpaw trees in each row.' },
+  { rows: 5, cols: 5, prompt: 'Plant a square patch: 5 rows of 5 pine trees on the south hedge.' },
 ]
 
 /** The orders a grade may plant: both factors ≤ `maxFactor` (default: up to 6). */
