@@ -14,6 +14,8 @@ interface ButtonProps {
   className?: string
   children: ReactNode
   type?: 'button' | 'submit' | 'reset'
+  /** A `data-guide` id, so the guide can point at this button. */
+  guide?: string
 }
 
 /*
@@ -43,6 +45,7 @@ export default function Button({
   className = '',
   children,
   type = 'button',
+  guide,
 }: ButtonProps) {
   function handleClick() {
     sfx.click()
@@ -75,7 +78,7 @@ export default function Button({
         : 'inline-flex'
     return (
       <div className={wrap} onClick={handleClick}>
-        <Link to={to} className={baseClasses}>
+        <Link to={to} className={baseClasses} data-guide={guide}>
           {children}
         </Link>
       </div>
@@ -83,7 +86,7 @@ export default function Button({
   }
 
   return (
-    <button type={type} disabled={disabled} onClick={handleClick} className={baseClasses}>
+    <button type={type} disabled={disabled} onClick={handleClick} className={baseClasses} data-guide={guide}>
       {children}
     </button>
   )

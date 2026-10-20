@@ -2941,6 +2941,318 @@
       "kind": "whole",
       "file": "voice/k-math/putInBowl/n=10,thing=frogs.mp3"
     },
+    "k-nav/pickAnimal": {
+      "text": "Pick your animal friend!",
+      "hash": "0be121581a",
+      "kind": "line",
+      "file": "voice/k-nav/pickAnimal.mp3"
+    },
+    "k-nav/pickColor": {
+      "text": "Now pick a color!",
+      "hash": "ae21d62b74",
+      "kind": "line",
+      "file": "voice/k-nav/pickColor.mp3"
+    },
+    "k-nav/tapBegin": {
+      "text": "Tap the big green button to start!",
+      "hash": "34d2e972fc",
+      "kind": "line",
+      "file": "voice/k-nav/tapBegin.mp3"
+    },
+    "k-nav/animal-fox": {
+      "text": "Fox!",
+      "hash": "2893644075",
+      "kind": "line",
+      "file": "voice/k-nav/animal-fox.mp3"
+    },
+    "k-nav/animal-tiger": {
+      "text": "Tiger!",
+      "hash": "0ac03b6dca",
+      "kind": "line",
+      "file": "voice/k-nav/animal-tiger.mp3"
+    },
+    "k-nav/animal-lion": {
+      "text": "Lion!",
+      "hash": "bdc90b4d0a",
+      "kind": "line",
+      "file": "voice/k-nav/animal-lion.mp3"
+    },
+    "k-nav/animal-bear": {
+      "text": "Bear!",
+      "hash": "bf1e2e791d",
+      "kind": "line",
+      "file": "voice/k-nav/animal-bear.mp3"
+    },
+    "k-nav/animal-panda": {
+      "text": "Panda!",
+      "hash": "6ba3b37f23",
+      "kind": "line",
+      "file": "voice/k-nav/animal-panda.mp3"
+    },
+    "k-nav/animal-frog": {
+      "text": "Frog!",
+      "hash": "b61c2ba364",
+      "kind": "line",
+      "file": "voice/k-nav/animal-frog.mp3"
+    },
+    "k-nav/animal-owl": {
+      "text": "Owl!",
+      "hash": "a9b32da45f",
+      "kind": "line",
+      "file": "voice/k-nav/animal-owl.mp3"
+    },
+    "k-nav/animal-dragonet": {
+      "text": "Little dragon!",
+      "hash": "3ffa6f77e1",
+      "kind": "line",
+      "file": "voice/k-nav/animal-dragonet.mp3"
+    },
+    "k-nav/animal-unicorn": {
+      "text": "Unicorn!",
+      "hash": "b9db337e13",
+      "kind": "line",
+      "file": "voice/k-nav/animal-unicorn.mp3"
+    },
+    "k-nav/animal-octopus": {
+      "text": "Octopus!",
+      "hash": "2f9baa566e",
+      "kind": "line",
+      "file": "voice/k-nav/animal-octopus.mp3"
+    },
+    "k-nav/animal-trex": {
+      "text": "Dinosaur!",
+      "hash": "607ed0ca15",
+      "kind": "line",
+      "file": "voice/k-nav/animal-trex.mp3"
+    },
+    "k-nav/animal-dragon": {
+      "text": "Dragon!",
+      "hash": "6f98f4f241",
+      "kind": "line",
+      "file": "voice/k-nav/animal-dragon.mp3"
+    },
+    "k-nav/color-orange": {
+      "text": "Orange!",
+      "hash": "7410398cf3",
+      "kind": "line",
+      "file": "voice/k-nav/color-orange.mp3"
+    },
+    "k-nav/color-pink": {
+      "text": "Pink!",
+      "hash": "feabe48127",
+      "kind": "line",
+      "file": "voice/k-nav/color-pink.mp3"
+    },
+    "k-nav/color-green": {
+      "text": "Green!",
+      "hash": "ea1d1c96f7",
+      "kind": "line",
+      "file": "voice/k-nav/color-green.mp3"
+    },
+    "k-nav/color-blue": {
+      "text": "Blue!",
+      "hash": "680dd89206",
+      "kind": "line",
+      "file": "voice/k-nav/color-blue.mp3"
+    },
+    "k-nav/color-purple": {
+      "text": "Purple!",
+      "hash": "0c026735cf",
+      "kind": "line",
+      "file": "voice/k-nav/color-purple.mp3"
+    },
+    "k-nav/color-red": {
+      "text": "Red!",
+      "hash": "0ef7a75cec",
+      "kind": "line",
+      "file": "voice/k-nav/color-red.mp3"
+    },
+    "k-nav/worldHello": {
+      "text": "This is your island!",
+      "hash": "2d1ce05e0c",
+      "kind": "line",
+      "file": "voice/k-nav/worldHello.mp3"
+    },
+    "k-nav/tourMap": {
+      "text": "Tap the map to see the whole island.",
+      "hash": "e643316a94",
+      "kind": "line",
+      "file": "voice/k-nav/tourMap.mp3"
+    },
+    "k-nav/tourPets": {
+      "text": "Your pets live here.",
+      "hash": "a08364c329",
+      "kind": "line",
+      "file": "voice/k-nav/tourPets.mp3"
+    },
+    "k-nav/tourHome": {
+      "text": "And this is your home.",
+      "hash": "b49436efcf",
+      "kind": "line",
+      "file": "voice/k-nav/tourHome.mp3"
+    },
+    "k-nav/tourWalk": {
+      "text": "Tap the ground to walk. Find a bright place to play!",
+      "hash": "b5edd0eb09",
+      "kind": "line",
+      "file": "voice/k-nav/tourWalk.mp3"
+    },
+    "k-nav/sleeping": {
+      "text": "This place is still sleeping. Come back soon!",
+      "hash": "1bdf3080c6",
+      "kind": "line",
+      "file": "voice/k-nav/sleeping.mp3"
+    },
+    "k-nav/tapAStar": {
+      "text": "Tap a star to play!",
+      "hash": "fd29530161",
+      "kind": "line",
+      "file": "voice/k-nav/tapAStar.mp3"
+    },
+    "k-nav/playThisFirst": {
+      "text": "Play this one first!",
+      "hash": "0288987ba1",
+      "kind": "line",
+      "file": "voice/k-nav/playThisFirst.mp3"
+    },
+    "k-nav/lessonTime": {
+      "text": "Let's learn something new!",
+      "hash": "b1be2b7fb3",
+      "kind": "line",
+      "file": "voice/k-nav/lessonTime.mp3"
+    },
+    "k-nav/mapHelp": {
+      "text": "This is the island map. Tap a bright place to go there!",
+      "hash": "ba0bc93cac",
+      "kind": "line",
+      "file": "voice/k-nav/mapHelp.mp3"
+    },
+    "k-nav/homeHelp": {
+      "text": "This is your home! Tap the arrow to go back outside.",
+      "hash": "dab423b19b",
+      "kind": "line",
+      "file": "voice/k-nav/homeHelp.mp3"
+    },
+    "k-nav/petsHelp": {
+      "text": "These are your pets. Play games to hatch the eggs and help them grow!",
+      "hash": "9812b455f4",
+      "kind": "line",
+      "file": "voice/k-nav/petsHelp.mp3"
+    },
+    "k-nav/petHatched": {
+      "text": "Your egg hatched!",
+      "hash": "e402a4a5cf",
+      "kind": "line",
+      "file": "voice/k-nav/petHatched.mp3"
+    },
+    "k-nav/petGrew": {
+      "text": "Your pet grew bigger!",
+      "hash": "69ef673cb9",
+      "kind": "line",
+      "file": "voice/k-nav/petGrew.mp3"
+    },
+    "k-nav/petGrownUp": {
+      "text": "Your pet is all grown up!",
+      "hash": "04fcd9b07e",
+      "kind": "line",
+      "file": "voice/k-nav/petGrownUp.mp3"
+    },
+    "k-nav/quitAsk": {
+      "text": "Do you want to stop playing?",
+      "hash": "3167235bf1",
+      "kind": "line",
+      "file": "voice/k-nav/quitAsk.mp3"
+    },
+    "k-nav/name-multiplication-mesa": {
+      "text": "Counting Mesa!",
+      "hash": "13cfd1e99c",
+      "kind": "line",
+      "file": "voice/k-nav/name-multiplication-mesa.mp3"
+    },
+    "k-nav/name-geometry-grove": {
+      "text": "Shape Grove!",
+      "hash": "89dabba472",
+      "kind": "line",
+      "file": "voice/k-nav/name-geometry-grove.mp3"
+    },
+    "k-nav/name-reading-reef": {
+      "text": "Letter Reef!",
+      "hash": "0f6a1d3b8d",
+      "kind": "line",
+      "file": "voice/k-nav/name-reading-reef.mp3"
+    },
+    "k-nav/welcome-multiplication-mesa": {
+      "text": "Counting Mesa! Tap a star to play!",
+      "hash": "ada0c1cea7",
+      "kind": "line",
+      "file": "voice/k-nav/welcome-multiplication-mesa.mp3"
+    },
+    "k-nav/welcome-geometry-grove": {
+      "text": "Shape Grove! Tap a star to play!",
+      "hash": "c5eca4d30c",
+      "kind": "line",
+      "file": "voice/k-nav/welcome-geometry-grove.mp3"
+    },
+    "k-nav/welcome-reading-reef": {
+      "text": "Letter Reef! Tap a star to play!",
+      "hash": "c2b62fe1e4",
+      "kind": "line",
+      "file": "voice/k-nav/welcome-reading-reef.mp3"
+    },
+    "k-nav/stage-k-count-1": {
+      "text": "Count with me!",
+      "hash": "4bdf33f39b",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-count-1.mp3"
+    },
+    "k-nav/stage-k-count-parade": {
+      "text": "Critter Parade!",
+      "hash": "767e45a48d",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-count-parade.mp3"
+    },
+    "k-nav/stage-k-count-3": {
+      "text": "More or fewer!",
+      "hash": "f21c9267c0",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-count-3.mp3"
+    },
+    "k-nav/stage-k-shapes-1": {
+      "text": "Name that shape!",
+      "hash": "2b8d3f9cb8",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-shapes-1.mp3"
+    },
+    "k-nav/stage-k-shapes-2": {
+      "text": "Flat or solid!",
+      "hash": "7dbc3dbb40",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-shapes-2.mp3"
+    },
+    "k-nav/stage-k-shapes-3": {
+      "text": "Shape hunt!",
+      "hash": "9bdc30f437",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-shapes-3.mp3"
+    },
+    "k-nav/stage-k-letters-1": {
+      "text": "Find the letter!",
+      "hash": "bf8d55b21f",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-letters-1.mp3"
+    },
+    "k-nav/stage-k-letters-2": {
+      "text": "Big and little letters!",
+      "hash": "4d56cff71e",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-letters-2.mp3"
+    },
+    "k-nav/stage-k-letters-3": {
+      "text": "First sounds!",
+      "hash": "3507e6104f",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-letters-3.mp3"
+    },
     "k-shapes/tapFlat": {
       "text": "Tap the shape that is flat.",
       "hash": "258bcaf552",

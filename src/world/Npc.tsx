@@ -5,7 +5,9 @@ import { Group, Vector3 } from 'three'
 import { useWorldUi } from './useWorldUi'
 import type { HubKind } from './worldLayout'
 import { TOON } from '../toon/palette'
-import { TBlob, TCapsule, TCyl, TSphere } from '../toon/shapes'
+import { TBlob, TBox, TCapsule, TCyl, TSphere } from '../toon/shapes'
+import { useProgress } from '../store/progress'
+import { npcSleeping } from './listenWorld'
 
 const INTERACT_R = 2.4
 
@@ -25,6 +27,49 @@ function Marker({ markerRef }: { markerRef: RefObject<Group | null> }) {
     <group ref={markerRef} position={[0, 2.0, 0]}>
       <TCapsule radius={0.08} length={0.26} position={[0, 0.2, 0]} color={TOON.gold} emissive={TOON.gold} emissiveIntensity={0.7} outline castShadow={false} />
       <TSphere position={[0, -0.12, 0]} scale={0.09} color={TOON.gold} emissive={TOON.gold} emissiveIntensity={0.7} outline castShadow={false} />
+    </group>
+  )
+}
+
+const ZZZ = '#a99cf0'
+
+/** One "Z": a top bar, a diagonal and a bottom bar (local size ≈ 1). */
+function ZShape() {
+  return (
+    <group>
+      <TBox size={[0.62, 0.15, 0.12]} position={[0, 0.34, 0]} color={ZZZ} emissive={ZZZ} emissiveIntensity={0.35} outline castShadow={false} />
+      <TBox size={[0.82, 0.15, 0.12]} rotation={[0, 0, Math.atan2(0.68, 0.62)]} color={ZZZ} emissive={ZZZ} emissiveIntensity={0.35} outline castShadow={false} />
+      <TBox size={[0.62, 0.15, 0.12]} position={[0, -0.34, 0]} color={ZZZ} emissive={ZZZ} emissiveIntensity={0.35} outline castShadow={false} />
+    </group>
+  )
+}
+
+/**
+ * K–1, a place with no games for them yet: "still sleeping". Z's drift up
+ * from the dozing NPC (instead of the "!"), and a soft shadow dims its stage.
+ */
+function Sleeping() {
+  const zs = useRef<(Group | null)[]>([])
+  useFrame(({ clock }) => {
+    const t = clock.elapsedTime
+    zs.current.forEach((z, i) => {
+      if (!z) return
+      const k = (t * 0.35 + i / 3) % 1
+      z.position.set(0.25 + k * 0.5, 1.45 + k * 1.1, 0)
+      z.scale.setScalar(0.28 + Math.sin(k * Math.PI) * 0.3)
+    })
+  })
+  return (
+    <group>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.02, 0]} renderOrder={1}>
+        <circleGeometry args={[1.5, 28]} />
+        <meshBasicMaterial color="#2c2440" transparent opacity={0.22} depthWrite={false} />
+      </mesh>
+      {[0, 1, 2].map((i) => (
+        <group key={i} ref={(g) => { zs.current[i] = g }}>
+          <ZShape />
+        </group>
+      ))}
     </group>
   )
 }
@@ -71,10 +116,13 @@ export default function Npc({
   const body = useRef<Group>(null)
   const marker = useRef<Group>(null)
   const setActiveNpc = useWorldUi((s) => s.setActiveNpc)
+  // K–1: a place with nothing for them yet dozes (grades 2–5: never)
+  const grade = useProgress((s) => s.player?.grade)
+  const asleep = npcSleeping({ zoneId, hub, label }, grade)
 
   useFrame(({ clock }) => {
     const t = clock.elapsedTime
-    if (body.current) body.current.position.y = Math.abs(Math.sin(t * 2)) * 0.08
+    if (body.current) body.current.position.y = asleep ? 0 : Math.abs(Math.sin(t * 2)) * 0.08
     if (marker.current) marker.current.position.y = 2.0 + Math.sin(t * 3) * 0.1
 
     const p = posRef.current
@@ -90,10 +138,10 @@ export default function Npc({
   return (
     <group position={position}>
       <Stage />
-      <group ref={body} rotation={[0, facing, 0]}>
+      <group ref={body} rotation={[0, facing, asleep ? 0.22 : 0]}>
         {children ?? <DefaultNpcCharacter />}
       </group>
-      <Marker markerRef={marker} />
+      {asleep ? <Sleeping /> : <Marker markerRef={marker} />}
     </group>
   )
 }

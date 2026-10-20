@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { curriculum, getZone } from '../../../curriculum'
-import { allLessons } from '../../../tutoring/lessons'
+import { everyLesson, zoneLessonFor } from '../../../tutoring/lessons'
 import { CREATURES } from '../../home/catalog'
 import { PETS, petById } from '../catalog'
 import {
@@ -38,35 +38,48 @@ describe('pet catalog', () => {
     expect(new Set(PETS.map((p) => p.zoneId))).toEqual(new Set(curriculum.zones.map((z) => z.id)))
   })
 
-  it('matches the plan’s pet ↔ zone ↔ lesson table', () => {
-    const table: [string, string, string | null][] = [
-      ['frog', 'fraction-falls', 'fractions'],
-      ['octopus', 'reading-reef', 'reading'],
-      ['owl', 'word-problem-woods', 'wordProblem'],
-      ['panda', 'geometry-grove', 'geometry'],
-      ['lion', 'multiplication-mesa', 'multiplication'],
-      ['trex', 'division-dunes', 'division'],
-      ['bear', 'measurement-marsh', 'measurement'],
-      ['fox', 'data-delta', 'dataGraph'],
-      ['unicorn', 'place-value-plateau', 'placeValue'],
-      ['dragonet', 'writing-workshop', 'writing'],
-      ['tiger', 'science-summit', 'science'],
-      ['dragon', 'tower-battlefront', null],
+  it('matches the plan’s pet ↔ zone ↔ lessons table (2–4 lesson, then the K–1 pilot’s)', () => {
+    const table: [string, string, string[]][] = [
+      ['frog', 'fraction-falls', ['fractions']],
+      ['octopus', 'reading-reef', ['reading', 'kLetters']],
+      ['owl', 'word-problem-woods', ['wordProblem']],
+      ['panda', 'geometry-grove', ['geometry', 'kShapes']],
+      ['lion', 'multiplication-mesa', ['multiplication', 'kCounting']],
+      ['trex', 'division-dunes', ['division']],
+      ['bear', 'measurement-marsh', ['measurement']],
+      ['fox', 'data-delta', ['dataGraph']],
+      ['unicorn', 'place-value-plateau', ['placeValue']],
+      ['dragonet', 'writing-workshop', ['writing']],
+      ['tiger', 'science-summit', ['science']],
+      ['dragon', 'tower-battlefront', []],
     ]
-    for (const [id, zoneId, lessonId] of table) {
-      expect(pet(id)).toMatchObject({ creatureId: id, zoneId, lessonId })
+    for (const [id, zoneId, lessonIds] of table) {
+      expect(pet(id)).toMatchObject({ creatureId: id, zoneId, lessonIds })
     }
   })
 
-  it("each lesson belongs to its pet's zone", () => {
+  it("each lesson belongs to its pet's zone, and every lesson (2–4 and K–1) hatches a pet", () => {
     for (const p of PETS) {
-      if (!p.lessonId) continue
-      const lesson = allLessons.find((l) => l.id === p.lessonId)
-      expect(lesson, p.lessonId).toBeDefined()
-      expect(lesson!.zoneId).toBe(p.zoneId)
+      for (const id of p.lessonIds) {
+        const lesson = everyLesson.find((l) => l.id === id)
+        expect(lesson, `${p.creatureId}: ${id}`).toBeDefined()
+        expect(lesson!.zoneId).toBe(p.zoneId)
+      }
     }
-    // every lesson hatches some pet
-    expect(new Set(allLessons.map((l) => l.id))).toEqual(new Set(PETS.flatMap((p) => (p.lessonId ? [p.lessonId] : []))))
+    const hatching = new Set(PETS.flatMap((p) => p.lessonIds))
+    for (const l of everyLesson) expect(hatching.has(l.id), l.id).toBe(true)
+  })
+
+  it('the lesson an egg suggests (its zone’s lesson for the grade) is always one that hatches it', () => {
+    for (const p of PETS) {
+      for (const g of [0, 1, 2, 3, 4, 5]) {
+        const l = zoneLessonFor(p.zoneId, g)
+        if (l) expect(p.lessonIds, `${p.creatureId} at grade ${g}`).toContain(l.id)
+      }
+    }
+    expect(zoneLessonFor('multiplication-mesa', 0)?.id).toBe('kCounting')
+    expect(zoneLessonFor('multiplication-mesa', 3)?.id).toBe('multiplication')
+    expect(zoneLessonFor('division-dunes', 0)).toBeUndefined() // a sleeping zone: no lesson button
   })
 
   it('every egg has its own colors', () => {

@@ -11,6 +11,8 @@ import { useStarterCreature } from '../home/starterCreature'
 import { canvasQuality, useLowGraphics } from '../world/graphicsQuality'
 import { useVoice } from '../voice/useVoice'
 import type { VoiceRef } from '../voice/types'
+import { guide, useGuideCaption } from '../guide/store'
+import { GuideMarker } from '../guide/GuideMarker'
 import { bestSide, scaffoldCheck, type Decision, type OpFamily, type Side } from '../lib/gates'
 import {
   LEVELS,
@@ -45,6 +47,23 @@ import { ParadeScene, makeWorld, type Hooks, type ShownGate, type World } from '
 import { Caption, CountBadge, FinaleReadout, GateButtons, LevelEndCard, LevelPips, RevealChips, type LevelEnd, type Reveal } from './CritterParade.hud'
 import { CAM, GATE_COLORS, LANE_X, STEER_MAX, crowdCaps, marchSpeed } from './CritterParade.layout'
 import type { ThemeKey } from './CritterParade.set'
+
+/** K–1: guide targets on the two gates the parade waits at (GuideMarker anchors). */
+const GATE_LEFT = 'parade-gate-left'
+const GATE_RIGHT = 'parade-gate-right'
+
+/**
+ * K–1: say a gate pair's question through the guide, so the hand lands on
+ * each gate as the voice names it ("Plus 2 or plus 5?": the left gate from
+ * the start, the right one on "or"). No dimming over the game.
+ */
+function askAtGates(prompt: VoiceRef) {
+  const right = 'template' in prompt ? ' or ' : 0.5
+  void guide.sequence([
+    { voice: prompt, target: GATE_LEFT, dim: false, pad: 4 },
+    { target: GATE_RIGHT, cue: right, dim: false, pad: 4 },
+  ])
+}
 
 /**
  * Critter Parade — the flagship gate runner (docs/superpowers/specs/
@@ -181,6 +200,9 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
 
   const voice = useVoice(voiceRef)
   const say = useCallback((ref: VoiceRef | null) => setVoiceRef(ref), [])
+  // K–1: the gate question is said by the guide (hand on each gate); its words caption like the rest
+  const guideCaption = useGuideCaption()
+  const askRef = useRef<VoiceRef | null>(null)
 
   const timersRef = useRef<number[]>([])
   const later = useCallback((ms: number, fn: () => void) => {
@@ -428,12 +450,15 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
     showUpcoming(state)
   }, [later, flash, say, showUpcoming, listen])
 
-  /** K–1: the world waits at a gate pair; the voice asks. */
+  /** K–1: the world waits at a gate pair; the voice asks, the guide points at each gate as it's named. */
   const onAsk = useCallback(() => {
     const up = runRef.current.level?.upcoming
     if (!up || up.kind !== 'gate') return
     setWaiting(true)
-    say(gatePrompt(up.pair, true))
+    const prompt = gatePrompt(up.pair, true)
+    askRef.current = prompt
+    say(null)
+    askAtGates(prompt)
   }, [say])
 
   /** A tap on a gate (K–1: before or while the world waits), or ← → while waiting. */
@@ -448,9 +473,22 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
       setWaiting(false)
       setGates((g) => g.map((x) => (x.at === at ? { ...x, picked: side } : x)))
       sfx.click()
+      // (picked: the guide stops pointing)
+      if (listen) {
+        askRef.current = null
+        guide.clear({ forget: true })
+      }
     },
     [listen],
   )
+
+  // K–1: "Quit?" hushes the question; back in the game, it's asked again if the gates still wait.
+  useEffect(() => {
+    if (!listen) return
+    if (paused) guide.clear({ forget: true })
+    else if (worldRef.current?.sim.waiting && askRef.current) askAtGates(askRef.current)
+  }, [paused, listen])
+  useEffect(() => () => guide.clear({ forget: true }), [])
 
   // grades 2+: the question as each pair comes into view (after the last pick's cheer)
   useEffect(() => {
@@ -685,7 +723,7 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
   }, [onGate, onCage, onAsk, onFinaleStart, onFinaleResult])
 
   const plan = plans[levelIdx]
-  const caption = voice.text
+  const caption = voice.text || (listen ? guideCaption : '')
   const showSlow = !listen && (opSet === 'mulAdd' || opSet === 'divSub') && phase === 'march'
   const upGate = upcoming?.kind === 'gate' ? upcoming : null
 
@@ -723,6 +761,13 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
           activeCreature={activeCreature}
           onTap={listen ? tapGate : undefined}
         />
+        {/* K–1: while the parade waits, a guide marker over each gate (the hand lands on them as they're named) */}
+        {listen && waiting && upGate && (
+          <>
+            <GuideMarker position={[-LANE_X, 0, -upGate.ev.at + 0.9]} anchor={GATE_LEFT} height={5.3} radius={1.4} anchorSize={130} />
+            <GuideMarker position={[LANE_X, 0, -upGate.ev.at + 0.9]} anchor={GATE_RIGHT} height={5.3} radius={1.4} anchorSize={130} />
+          </>
+        )}
       </GLCanvas>
 
       {/* ── HUD: the parade's size top-left; the prompt / reveal / tug readout top-centre ── */}
