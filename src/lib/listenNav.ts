@@ -90,6 +90,14 @@ const STAGE_PICTURE: Record<string, string> = {
   'k-trace-2': '🔢',
   'k-trace-3': '🔤',
   'k-story-1': '📖',
+  // Add-and-Take Falls
+  'k-addsub-1': '🐸',
+  'k-addsub-2': '🦆',
+  'k-addsub-3': '🔟',
+  // Story Woods
+  'k-woods-1': '🐻',
+  'k-woods-2': '🍐',
+  'k-woods-3': '🥕',
 }
 const KIND_PICTURE: Record<Stage['kind'], string> = { concept: '💡', practice: '⚡', mastery: '🏆' }
 

@@ -65,6 +65,12 @@ export const SKILLS: Record<string, SkillMeta> = {
   'k-trace-numbers': { label: 'writing numbers', zoneId: 'writing-workshop', lessonId: 'kTracing', practiceStageId: 'k-trace-2' },
   'k-trace-letters': { label: 'writing capital letters', zoneId: 'writing-workshop', lessonId: 'kTracing', practiceStageId: 'k-trace-3' },
   'k-story-order':   { label: 'telling a story in order', zoneId: 'writing-workshop', lessonId: 'kTracing', practiceStageId: 'k-story-1' },
+  // Add-and-Take Falls (K complete, phase 2a; lesson kAddTake)
+  'k-add-take': { label: 'adding and taking away', zoneId: 'fraction-falls', lessonId: 'kAddTake', practiceStageId: 'k-addsub-1' },
+  'k-make-ten': { label: 'making ten', zoneId: 'fraction-falls', lessonId: 'kAddTake', practiceStageId: 'k-addsub-3' },
+  // Story Woods (K complete, phase 2a; lesson kStoryMath)
+  'k-story-problems': { label: 'story problems', zoneId: 'word-problem-woods', lessonId: 'kStoryMath', practiceStageId: 'k-woods-1' },
+  'k-story-more':     { label: 'how many more', zoneId: 'word-problem-woods', lessonId: 'kStoryMath', practiceStageId: 'k-woods-3' },
 }
 
 export interface Skill { id: string; label: string }

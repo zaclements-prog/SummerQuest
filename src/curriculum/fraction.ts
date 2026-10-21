@@ -3,6 +3,7 @@ import type { Zone } from './types'
 export const fractionZone: Zone = {
   id: 'fraction-falls',
   title: 'Fraction Falls',
+  titleByBand: { k1: 'Add-and-Take Falls' },
   subtitle: 'Equivalent and comparing',
   emoji: '💧',
   themeColor: 'ocean',
@@ -43,4 +44,41 @@ export const fractionZone: Zone = {
       starsToEarn: 3,
     },
   ],
+  stagesByBand: {
+    // K "Add-and-Take Falls" (K.OA.1, K.OA.5, K.OA.4): things join and leave on screen as
+    // the voice says so (the `mathStory` activity), answered with numeral cards: within 5,
+    // then within 10, then make ten on a ten-frame. Titles and descriptions are said aloud.
+    k1: [
+      {
+        id: 'k-addsub-1',
+        kind: 'concept',
+        title: 'Hop in, hop out',
+        description: 'Watch them come and go. How many now?',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kAddTake', mode: 'within5' },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-addsub-2',
+        kind: 'practice',
+        title: 'Up to ten',
+        description: 'Add and take away, all the way to ten.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kAddTake', mode: 'within10' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-addsub-3',
+        kind: 'mastery',
+        title: 'Make ten',
+        description: 'Fill the ten frame. How many more make ten?',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kAddTake', mode: 'make10' },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+    ],
+  },
 }

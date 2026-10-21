@@ -4,6 +4,8 @@ import { kShapesLesson } from '../../tutoring/lessons/kShapes'
 import { kLettersLesson } from '../../tutoring/lessons/kLetters'
 import { kRhymesLesson } from '../../tutoring/lessons/kRhymes'
 import { kTracingLesson } from '../../tutoring/lessons/kTracing'
+import { kAddTakeLesson } from '../../tutoring/lessons/kAddTake'
+import { kStoryMathLesson } from '../../tutoring/lessons/kStoryMath'
 import { K_LESSON_PACK } from '../../tutoring/lessons/k1Voice'
 
 /**
@@ -21,6 +23,11 @@ for (const lesson of [kCountingLesson, kShapesLesson, kLettersLesson, kRhymesLes
     const ref = step.check?.speech
     if (ref && 'line' in ref && ref.line.startsWith(`${K_LESSON_PACK}/`)) asked[ref.line.slice(K_LESSON_PACK.length + 1)] = step.check!.question
   }
+}
+// K complete (phase 2a): Add-and-Take Falls and Story Woods ask theirs the same way
+for (const step of [...kAddTakeLesson.steps, ...kStoryMathLesson.steps]) {
+  const ref = step.check?.speech
+  if (ref && 'line' in ref && ref.line.startsWith(`${K_LESSON_PACK}/`)) asked[ref.line.slice(K_LESSON_PACK.length + 1)] = step.check!.question
 }
 
 export default defineVoicePack({

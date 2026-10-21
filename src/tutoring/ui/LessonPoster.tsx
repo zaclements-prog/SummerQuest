@@ -249,6 +249,47 @@ const POSTERS: Record<string, { bg: string; motif: () => ReactNode }> = {
       </g>
     ),
   },
+  // ── K complete (phase 2a) ──
+  kAddTake: {
+    bg: '#dcf3fb',
+    motif: () => (
+      <g>
+        {/* a ten-frame: seven coral counters and three mint ones hopping in */}
+        <rect x={70} y={44} width={180} height={76} rx={10} fill="#fffaf0" stroke={M.ink} strokeWidth={3.5} />
+        {[1, 2, 3, 4].map((k) => (
+          <line key={k} x1={70 + k * 36} y1={44} x2={70 + k * 36} y2={120} stroke={M.ink} strokeWidth={2.5} />
+        ))}
+        <line x1={70} y1={82} x2={250} y2={82} stroke={M.ink} strokeWidth={2.5} />
+        {Array.from({ length: 10 }, (_, i) => (
+          <circle key={i} cx={88 + (i % 5) * 36} cy={63 + Math.floor(i / 5) * 38 - (i >= 7 ? 4 : 0)} r={12} fill={i < 7 ? '#f2766b' : '#74d3bd'} stroke={M.ink} strokeWidth={2.5} />
+        ))}
+        <circle cx={278} cy={50} r={22} fill={M.gold} stroke={M.ink} strokeWidth={3} />
+        <text x={278} y={52} fontFamily={M.font} fontWeight={700} fontSize={22} textAnchor="middle" dominantBaseline="middle" fill={M.ink}>
+          10
+        </text>
+      </g>
+    ),
+  },
+  kStoryMath: {
+    bg: '#e1f5d9',
+    motif: () => (
+      <g strokeLinejoin="round">
+        {/* Bear and a basket of apples */}
+        <circle cx={70} cy={58} r={14} fill="#c7955f" stroke={M.ink} strokeWidth={3} />
+        <circle cx={112} cy={58} r={14} fill="#c7955f" stroke={M.ink} strokeWidth={3} />
+        <circle cx={91} cy={86} r={36} fill="#c7955f" stroke={M.ink} strokeWidth={3.5} />
+        <ellipse cx={91} cy={98} rx={15} ry={11} fill="#f1d9a6" stroke={M.ink} strokeWidth={2.5} />
+        <circle cx={79} cy={80} r={4} fill={M.ink} />
+        <circle cx={103} cy={80} r={4} fill={M.ink} />
+        <ellipse cx={91} cy={94} rx={5} ry={4} fill={M.ink} />
+        {[0, 1, 2].map((i) => (
+          <Apple key={i} x={170 + i * 36} y={86} r={15} color="#f2766b" />
+        ))}
+        <path d="M 150 98 L 262 98 L 252 132 L 160 132 Z" fill="#e3b77e" stroke={M.ink} strokeWidth={3.5} />
+        <rect x={146} y={92} width={120} height={10} rx={5} fill="#d29a5c" stroke={M.ink} strokeWidth={3} />
+      </g>
+    ),
+  },
 }
 
 /**
