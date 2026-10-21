@@ -3,6 +3,7 @@ import { isZoneSleeping, listenGrade, SLEEPING_LINE, zoneWelcomeVoice } from '..
 import type { GradeLevel } from '../lib/gradeTiers'
 import type { VoiceRef } from '../voice/types'
 import { lessonBand, lessonsFor } from '../tutoring/lessons'
+import { isListenBand } from '../lib/gradeBand'
 import type { ActiveNpc } from './useWorldUi'
 
 /**
@@ -19,7 +20,7 @@ type NpcLike = Pick<ActiveNpc, 'zoneId' | 'hub' | 'label'>
 export function npcSleeping(npc: NpcLike, grade: Grade): boolean {
   if (!listenGrade(grade)) return false
   // (the band has its own lessons: `lessonsFor` lends 2–4's to a band that has none)
-  if (npc.hub === 'schoolhouse') return !lessonsFor(grade).some((l) => lessonBand(l) === 'k1')
+  if (npc.hub === 'schoolhouse') return !lessonsFor(grade).some((l) => isListenBand(lessonBand(l)))
   const zone = npc.zoneId ? getZone(npc.zoneId) : undefined
   return !zone || isZoneSleeping(zone, grade)
 }
@@ -28,7 +29,7 @@ export function npcSleeping(npc: NpcLike, grade: Grade): boolean {
 export function npcGreeting(npc: NpcLike, grade: Grade): VoiceRef {
   if (npcSleeping(npc, grade)) return SLEEPING_LINE
   if (npc.hub === 'schoolhouse') return { line: 'k-nav/lessonTime' }
-  return npc.zoneId ? zoneWelcomeVoice(npc.zoneId) : { line: 'k-nav/tapAStar' }
+  return npc.zoneId ? zoneWelcomeVoice(npc.zoneId, grade) : { line: 'k-nav/tapAStar' }
 }
 
 /** The gateway's name for the child's grade ("Counting Mesa" in K–1). */

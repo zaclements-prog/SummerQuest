@@ -1,7 +1,7 @@
 import { zoneStages, type Stage, type Zone } from '../curriculum'
 import { lineText } from '../voice/registry'
 import type { VoiceRef } from '../voice/types'
-import { isListenMode } from './gradeBand'
+import { bandFallbacks, contentBand, isListenMode } from './gradeBand'
 import { isStageUnlocked } from './stageLocks'
 import type { GradeLevel } from './gradeTiers'
 
@@ -18,9 +18,18 @@ import type { GradeLevel } from './gradeTiers'
 
 type Grade = GradeLevel | null | undefined
 
-/** The zone has its own K–1 stage set (so a K–1 child can play it). */
+/** The zone has its own kindergarten stage set. */
 export function hasK1Set(zone: Pick<Zone, 'stagesByBand'>): boolean {
   return (zone.stagesByBand?.k1?.length ?? 0) > 0
+}
+
+/**
+ * The zone has a voice-first stage set for this grade: kindergarten's for K;
+ * 1st grade's own, or else kindergarten's, for 1st grade.
+ */
+export function hasListenSet(zone: Pick<Zone, 'stagesByBand'>, grade: Grade): boolean {
+  if (grade == null) return false
+  return bandFallbacks(contentBand(grade)).some((b) => (b === 'k1' || b === 'g1') && (zone.stagesByBand?.[b]?.length ?? 0) > 0)
 }
 
 /** A voice-first child (K–1) at this grade. */
@@ -28,9 +37,9 @@ export function listenGrade(grade: Grade): boolean {
   return grade != null && isListenMode(grade)
 }
 
-/** K–1 only: a zone with no K–1 stages yet is "still sleeping, coming soon" (it can't be entered). */
+/** K–1 only: a zone with no voice-first stages for the grade yet is "still sleeping, coming soon" (it can't be entered). */
 export function isZoneSleeping(zone: Pick<Zone, 'stagesByBand'>, grade: Grade): boolean {
-  return listenGrade(grade) && !hasK1Set(zone)
+  return listenGrade(grade) && !hasListenSet(zone, grade)
 }
 
 const line = (id: string): VoiceRef | null => (lineText(`k-nav/${id}`) !== undefined ? { line: `k-nav/${id}` } : null)
@@ -38,14 +47,21 @@ const line = (id: string): VoiceRef | null => (lineText(`k-nav/${id}`) !== undef
 /** "This place is still sleeping. Come back soon!" */
 export const SLEEPING_LINE: VoiceRef = { line: 'k-nav/sleeping' }
 
+/**
+ * A 1st-grade zone line where the zone has a 1st-grade name of its own
+ * (`name-g1-<zoneId>`), else kindergarten's (`name-<zoneId>`).
+ */
+const zoneLine = (kind: 'name' | 'welcome', zoneId: string, grade: Grade): VoiceRef | null =>
+  (grade != null && contentBand(grade) === 'g1' ? line(`${kind}-g1-${zoneId}`) : null) ?? line(`${kind}-${zoneId}`)
+
 /** A zone's name, said when it's tapped on the map ("Counting Mesa!"); null when it has none. */
-export function zoneNameVoice(zoneId: string): VoiceRef | null {
-  return line(`name-${zoneId}`)
+export function zoneNameVoice(zoneId: string, grade?: Grade): VoiceRef | null {
+  return zoneLine('name', zoneId, grade)
 }
 
 /** A zone's welcome, at its gateway and on its page ("Counting Mesa! Tap a star to play!"). */
-export function zoneWelcomeVoice(zoneId: string): VoiceRef {
-  return line(`welcome-${zoneId}`) ?? { line: 'k-nav/tapAStar' }
+export function zoneWelcomeVoice(zoneId: string, grade?: Grade): VoiceRef {
+  return zoneLine('welcome', zoneId, grade) ?? { line: 'k-nav/tapAStar' }
 }
 
 /** A stage's title, said when its picture button is focused or tapped ("Count with me!"). */

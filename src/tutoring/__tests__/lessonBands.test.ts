@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { getZone, zoneStages } from '../../curriculum'
 import type { Stage, Zone } from '../../curriculum/types'
 import { DEFAULT_GRADE, GRADE_LEVELS } from '../../lib/gradeTiers'
-import { contentBand } from '../../lib/gradeBand'
+import { bandFallbacks, contentBand } from '../../lib/gradeBand'
 import { allLessons, everyLesson, g24Lessons, getLesson, isLessonFor, k1Lessons, lessonBand, lessonsFor, zoneLessonFor } from '../lessons'
 import { practiceHref, practiceStageFor } from '../lessonLinks'
 import { focusRows, lessonRows } from '../../world/hubContent'
@@ -38,9 +38,19 @@ describe('lessons by grade band', () => {
     for (const l of g24Lessons) expect(lessonBand(l), l.id).toBe('g24')
     for (const l of k1Lessons) expect(l.band, l.id).toBe('k1')
     for (const g of GRADE_LEVELS) {
-      const band = contentBand(g)
-      for (const l of lessonsFor(g)) expect([band, 'g24']).toContain(lessonBand(l))
+      // (1st grade borrows kindergarten's lesson for a zone it has none of its own for)
+      const bands = [...bandFallbacks(contentBand(g)), 'g24']
+      for (const l of lessonsFor(g)) expect(bands).toContain(lessonBand(l))
     }
+  })
+
+  it('1st grade: its own lesson for a zone where it has one, else kindergarten’s', () => {
+    const own = new Set(lessonsFor(1).filter((l) => lessonBand(l) === 'g1').map((l) => l.zoneId))
+    for (const l of lessonsFor(1)) if (lessonBand(l) === 'k1') expect(own.has(l.zoneId), l.id).toBe(false)
+    // every zone kindergarten has a lesson for, 1st grade has one for too
+    const kZones = new Set(lessonsFor(0).map((l) => l.zoneId))
+    const g1Zones = new Set(lessonsFor(1).map((l) => l.zoneId))
+    for (const z of kZones) expect(g1Zones.has(z), z).toBe(true)
   })
 
   it('getLesson finds a lesson of any band; the band helpers agree with lessonsFor', () => {

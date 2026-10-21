@@ -1,5 +1,5 @@
 import type { Lesson } from '../types'
-import { contentBand, type ContentBand } from '../../lib/gradeBand'
+import { bandFallbacks, contentBand, isListenBand, type ContentBand } from '../../lib/gradeBand'
 import { K1_NARRATION_PACE } from '../motion/cues'
 import { multiplicationLesson } from './multiplication'
 import { divisionLesson } from './division'
@@ -19,9 +19,10 @@ import { kRhymesLesson } from './kRhymes'
 import { kTracingLesson } from './kTracing'
 
 /**
- * The lessons, by content band (lib/gradeBand; K–5 plan §2): K–1 children get
- * the short voice lessons, grades 2–4 today's eleven, and grade 5 borrows the
- * 2–4 lessons until its own are written. Pick a child's list with
+ * The lessons, by content band (lib/gradeBand; K–5 plan §2): kindergarten and
+ * 1st grade get the short voice lessons (1st grade its own where a zone has
+ * one, else kindergarten's), grades 2–4 today's eleven, and grade 5 its own
+ * (borrowing the 2–4 lessons until they're written). Pick a child's list with
  * `lessonsFor(grade)`; look any lesson up with `getLesson(id)`.
  */
 
@@ -40,11 +41,17 @@ export const g24Lessons: Lesson[] = [
   scienceLesson,
 ]
 
-/** Kindergarten and grade 1 (band `k1`): the kindergarten pilot's voice lessons, then K literacy's. */
+/** Kindergarten (band `k1`; 1st grade too where it has none of its own): the kindergarten pilot's voice lessons, then K literacy's. */
 export const k1Lessons: Lesson[] = [kCountingLesson, kShapesLesson, kLettersLesson, kRhymesLesson, kTracingLesson]
 
+/** 1st grade (band `g1`): its own voice lessons. */
+export const g1Lessons: Lesson[] = []
+
+/** 5th grade (band `g5`). */
+export const g5Lessons: Lesson[] = []
+
 /** Every lesson of every band: what `getLesson` finds, and what the narration dump and scene tests cover. */
-export const everyLesson: Lesson[] = [...g24Lessons, ...k1Lessons]
+export const everyLesson: Lesson[] = [...g24Lessons, ...k1Lessons, ...g1Lessons, ...g5Lessons]
 
 /**
  * Grades 2–4's lessons under their original name (code written before the
@@ -57,19 +64,27 @@ export const allLessons: Lesson[] = g24Lessons
 export const lessonBand = (l: Pick<Lesson, 'band'>): ContentBand => l.band ?? 'g24'
 
 /** How fast the lesson is told without a recording (`useNarration`'s `pace`): slower for K–1. */
-export const narrationPace = (l: Pick<Lesson, 'band'>): number => (lessonBand(l) === 'k1' ? K1_NARRATION_PACE : 1)
+export const narrationPace = (l: Pick<Lesson, 'band'>): number => (isListenBand(lessonBand(l)) ? K1_NARRATION_PACE : 1)
 
 /** Grade 4's band: what a missing grade means (as `zoneStages` reads it: lib/gradeTiers DEFAULT_GRADE). */
 const DEFAULT_BAND: ContentBand = 'g24'
 
 /**
  * The lessons a child of this grade sees: their band's, or grades 2–4's when
- * the band has none yet (grade 5, for now). A missing grade counts as grade 4.
+ * the band has none yet. 1st grade gets its own lesson(s) for each zone that
+ * has some, and kindergarten's for the others (`bandFallbacks`). A missing
+ * grade counts as grade 4.
  */
 export function lessonsFor(grade: number | null | undefined): Lesson[] {
   const band = grade == null ? DEFAULT_BAND : contentBand(grade)
-  const own = everyLesson.filter((l) => lessonBand(l) === band)
-  return own.length > 0 ? own : g24Lessons
+  const out: Lesson[] = []
+  const covered = new Set<string>()
+  for (const b of bandFallbacks(band)) {
+    const own = everyLesson.filter((l) => lessonBand(l) === b && !covered.has(l.zoneId))
+    out.push(...own)
+    for (const l of own) covered.add(l.zoneId)
+  }
+  return out.length > 0 ? out : g24Lessons
 }
 
 /** Is this lesson one a child of this grade is offered? */

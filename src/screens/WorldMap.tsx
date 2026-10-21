@@ -383,7 +383,7 @@ function ListenZoneMarker({ zone, isNext }: { zone: Zone; isNext: boolean }) {
       return
     }
     sfx.enter()
-    const name = zoneNameVoice(zone.id)
+    const name = zoneNameVoice(zone.id, grade)
     if (name && !(await guide.say(name))) return // another tap took over
     going.current = true
     navigate(`/zone/${zone.id}`)

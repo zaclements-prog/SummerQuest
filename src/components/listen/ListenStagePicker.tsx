@@ -41,7 +41,7 @@ export function ListenStagePicker({
   const launching = useRef(false)
 
   useEffect(() => {
-    void guide.show({ voice: zoneWelcomeVoice(zone.id), target: nextId ? `stage-${nextId}` : null, cue: 'star' })
+    void guide.show({ voice: zoneWelcomeVoice(zone.id, grade), target: nextId ? `stage-${nextId}` : null, cue: 'star' })
     return () => guide.clear({ forget: true })
     // the welcome once per zone (not again as stars come in)
     // eslint-disable-next-line react-hooks/exhaustive-deps

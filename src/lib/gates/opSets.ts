@@ -1,5 +1,5 @@
 import { compare, decimalText, fromDecimal, isInteger, mul, rat, int, ONE, type Rational } from '../numbers'
-import { contentBand } from '../gradeBand'
+import { contentBand, isListenBand } from '../gradeBand'
 import type { GateOp } from './ops'
 import { applyOp } from './ops'
 import type { OpSetId, TrapKind } from './types'
@@ -490,7 +490,7 @@ export type OpFamily = 'mul' | 'div'
  */
 export function opSetFor(family: OpFamily, grade: number): OpSetId {
   const band = contentBand(grade)
-  if (band === 'k1') return 'addSub'
+  if (isListenBand(band)) return 'addSub'
   if (band === 'g5') return 'fracDec'
   if (family === 'div') return 'divSub'
   return grade >= 4 ? 'mulFrac' : 'mulAdd'

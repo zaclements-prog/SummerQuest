@@ -75,10 +75,10 @@ export function zoneStarTotals(
   return stageSetTotals(zoneStages(zone, grade), progress)
 }
 
-/** Every stage set the zone has: 2–4's, then K–1's and 5th grade's once authored (never an empty one). */
+/** Every stage set the zone has: 2–4's, then kindergarten's, 1st grade's and 5th grade's once authored (never an empty one). */
 export function zoneStageSets(zone: Pick<Zone, 'stages' | 'stagesByBand'>): Stage[][] {
   const sets = [zone.stages]
-  for (const band of ['k1', 'g5'] as const) {
+  for (const band of ['k1', 'g1', 'g5'] as const) {
     const set = zone.stagesByBand?.[band]
     if (set && set.length > 0 && set !== zone.stages) sets.push(set)
   }

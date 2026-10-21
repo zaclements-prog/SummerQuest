@@ -16,7 +16,7 @@
  */
 
 import { GRADE_LEVELS, type GradeLevel } from './gradeTiers'
-import { contentBand } from './gradeBand'
+import { contentBand, isListenBand } from './gradeBand'
 
 export interface Features {
   /** Offer kindergarten and 1st grade. */
@@ -50,7 +50,7 @@ export const FEATURES: Features = readFeatures({
 export function offeredGrades(features: Features): GradeLevel[] {
   return GRADE_LEVELS.filter((g) => {
     const band = contentBand(g)
-    return band === 'k1' ? features.k1 : band === 'g5' ? features.g5 : true
+    return isListenBand(band) ? features.k1 : band === 'g5' ? features.g5 : true
   })
 }
 

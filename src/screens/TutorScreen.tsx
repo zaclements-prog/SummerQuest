@@ -14,7 +14,7 @@ import { useNarrationDone } from '../tutoring/ui/useNarrationDone'
 import LessonComplete from '../tutoring/ui/LessonComplete'
 import { ArrowLeftIcon, ArrowRightIcon, PauseIcon, PlayIcon, ReplayIcon, SpeakerIcon } from '../tutoring/ui/icons'
 import { seededShuffle } from '../lib/random'
-import { isListenMode } from '../lib/gradeBand'
+import { isListenBand, isListenMode } from '../lib/gradeBand'
 import { practiceHref } from '../tutoring/lessonLinks'
 import ListenLesson from '../tutoring/ui/ListenLesson'
 import { useProgress } from '../store/progress'
@@ -118,7 +118,7 @@ export default function TutorScreen() {
   const { lessonId = '' } = useParams()
   const lesson = getLesson(lessonId)
   const grade = useProgress((s) => s.player?.grade)
-  const listen = !!lesson && lesson.steps.length > 0 && (lesson.band === 'k1' || (grade != null && isListenMode(grade)))
+  const listen = !!lesson && lesson.steps.length > 0 && ((lesson.band != null && isListenBand(lesson.band)) || (grade != null && isListenMode(grade)))
   return listen ? <ListenLesson key={lesson.id} lesson={lesson} /> : <ReadLessonPlayer />
 }
 

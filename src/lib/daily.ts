@@ -1,7 +1,8 @@
 import { curriculum, zoneStages } from '../curriculum'
 import { localDayKey } from './dates'
 import { DEFAULT_GRADE, type GradeLevel } from './gradeTiers'
-import { contentBand } from './gradeBand'
+import { contentBand, isListenBand } from './gradeBand'
+import { hasListenSet } from './listenNav'
 
 /** Daily Challenge constants + helpers (kept out of the component file so Fast Refresh stays happy). */
 
@@ -20,9 +21,9 @@ export function todayStr(): string {
  * from zones that have a K–1 stage set (the others are still sleeping for them).
  */
 export function pickTodaysChallenge(grade: GradeLevel | null | undefined, day: string = todayStr()) {
-  const k1 = contentBand(grade ?? DEFAULT_GRADE) === 'k1'
+  const listen = isListenBand(contentBand(grade ?? DEFAULT_GRADE))
   const eligible = curriculum.zones.flatMap((zone) => {
-    if (k1 && !zone.stagesByBand?.k1?.length) return []
+    if (listen && !hasListenSet(zone, grade ?? DEFAULT_GRADE)) return []
     const stage = zoneStages(zone, grade).find((s) => s.gameId !== 'writingPad')
     return stage ? [{ zone, stage }] : []
   })

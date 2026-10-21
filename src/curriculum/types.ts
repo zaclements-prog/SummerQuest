@@ -36,7 +36,8 @@ export interface Zone {
   title: string
   /**
    * The zone's name for another content band, where its stages teach
-   * something else: Multiplication Mesa is "Counting Mesa" in K–1.
+   * something else: Multiplication Mesa is "Counting Mesa" in kindergarten.
+   * 1st grade with no name of its own uses kindergarten's.
    */
   titleByBand?: Partial<Record<ContentBand, string>>
   subtitle: string
@@ -46,12 +47,14 @@ export interface Zone {
   /** The 2nd–4th grade stages (difficulty scaled per grade by lib/gradeTiers). */
   stages: Stage[]
   /**
-   * Stage sets for the other content bands (lib/gradeBand): K–1 and 5th grade.
-   * A band with no set yet plays `stages`. Their stage ids are new (e.g.
-   * `count-k-1`), so stars never mix across bands. Read a zone's stages only
-   * through `zoneStages(zone, grade)` (curriculum/index).
+   * Stage sets for the other content bands (lib/gradeBand): kindergarten
+   * (`k1`), 1st grade (`g1`) and 5th grade (`g5`). 1st grade with no set of
+   * its own plays kindergarten's; any other band with no set plays `stages`.
+   * Their stage ids are new (e.g. `k-count-1`), so stars never mix across
+   * bands. Read a zone's stages only through `zoneStages(zone, grade)`
+   * (curriculum/index).
    */
-  stagesByBand?: Partial<Record<'k1' | 'g5', Stage[]>>
+  stagesByBand?: Partial<Record<'k1' | 'g1' | 'g5', Stage[]>>
   estimatedMinutes: number
   available: boolean
   position: { x: number; y: number }

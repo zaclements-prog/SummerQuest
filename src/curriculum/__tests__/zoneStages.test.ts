@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
-import { curriculum, getStage, getZone, zoneStages, zoneTitle, type Stage } from '..'
+import { curriculum, getStage, getZone, zoneStages, zoneTitle, type Stage, type Zone } from '..'
 import { GRADE_LEVELS } from '../../lib/gradeTiers'
 import { isStageUnlocked, playableStageId } from '../../lib/stageLocks'
 import { petStatus, zoneStarTotals } from '../../lib/pets/growth'
@@ -72,6 +72,43 @@ describe('zoneStages', () => {
     expect(zoneStages(mesa, 1)).toBe(K1)
     for (const g of [2, 3, 4, 5] as const) expect(zoneStages(mesa, g)).toBe(G24)
     expect(zoneStages(mesa, null)).toBe(G24) // no profile: the default grade (4)
+  })
+
+  it('1st grade plays its own set where the zone has one, else kindergarten’s', () => {
+    const G1: Stage[] = [kStage('add-g1-1', 'concept'), kStage('add-g1-2', 'mastery')]
+    mesa.stagesByBand = { k1: K1, g1: G1 }
+    expect(zoneStages(mesa, 1)).toBe(G1)
+    expect(zoneStages(mesa, 0)).toBe(K1) // kindergarten never sees 1st grade's
+    for (const g of [2, 3, 4, 5] as const) expect(zoneStages(mesa, g)).toBe(G24)
+    expect(getStage(ZONE, 'add-g1-1', 1)?.id).toBe('add-g1-1')
+    expect(getStage(ZONE, 'add-g1-1', 0)).toBeUndefined()
+    expect(getStage(ZONE, 'count-k-1', 1)).toBeUndefined()
+    // an empty 1st grade set counts as none
+    mesa.stagesByBand = { k1: K1, g1: [] }
+    expect(zoneStages(mesa, 1)).toBe(K1)
+    // only a 1st grade set: kindergarten plays 2–4's (and sees the zone sleeping)
+    mesa.stagesByBand = { g1: G1 }
+    expect(zoneStages(mesa, 0)).toBe(G24)
+    expect(isZoneSleeping(mesa, 0)).toBe(true)
+    expect(isZoneSleeping(mesa, 1)).toBe(false)
+    // a 1st grade name of its own, else kindergarten's
+    const named = { title: 'Multiplication Mesa', titleByBand: { k1: 'Counting Mesa' } as Zone['titleByBand'] }
+    expect(zoneTitle(named, 1)).toBe('Counting Mesa')
+    named.titleByBand = { k1: 'Counting Mesa', g1: 'Adding Mesa' }
+    expect(zoneTitle(named, 1)).toBe('Adding Mesa')
+    expect(zoneTitle(named, 0)).toBe('Counting Mesa')
+    expect(zoneTitle(named, 3)).toBe('Multiplication Mesa')
+  })
+
+  it('a pet grows from its best band, 1st grade’s set included', () => {
+    const G1: Stage[] = [kStage('add-g1-1', 'concept'), kStage('add-g1-2', 'mastery')]
+    mesa.stagesByBand = { k1: K1, g1: G1 }
+    const lion = petById('lion')!
+    const g1Only = { [ZONE]: progressOf({ 'add-g1-1': 3, 'add-g1-2': 3 }) }
+    expect(petStatus(lion, g1Only, {}, 1).stage).toBe('adult')
+    // grown up in 1st grade stays grown up after a switch to kindergarten or 3rd grade
+    expect(petStatus(lion, g1Only, {}, 0).stage).toBe('adult')
+    expect(petStatus(lion, g1Only, {}, 3).stage).toBe('adult')
   })
 
   it('uses a grade-5 set for 5th grade only', () => {
