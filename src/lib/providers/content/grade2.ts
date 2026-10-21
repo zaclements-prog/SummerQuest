@@ -49,9 +49,42 @@ export const G2_GEOMETRY: GeoItem[] = [
   { level: 2, question: 'You cut a circle into 4 equal pieces. What is one piece called?', answer: 'a fourth', options: ['a third', 'a half', 'a fourth'], hint: 'Four equal shares make fourths.' },
   { level: 2, question: 'What shape is each flat face of a cube?', answer: 'square', options: ['circle', 'square', 'triangle'], hint: 'Look at a die or a toy block: every face has 4 equal sides.' },
   { level: 2, question: 'A table shaped like a hexagon seats 1 kid on each side. How many kids can sit around it?', answer: '6', options: ['4', '6', '8'], hint: 'One seat per side, six sides.' },
+  // 2.G.A.1-3 — batch: real-world shapes, cube stacking, and equal shares.
+  { level: 2, question: 'How many corners does a hexagon have?', answer: '6', options: ['5', '6', '7'], hint: 'Count the points where two sides meet.' },
+  { level: 2, question: 'The cover of a storybook is most like which shape?', answer: 'rectangle', options: ['circle', 'rectangle', 'triangle'], hint: 'It has 4 sides and 4 square corners.' },
+  { level: 2, question: 'The face of a round wall clock is most like which shape?', answer: 'circle', options: ['square', 'circle', 'triangle'], hint: 'It is perfectly round, with no corners.' },
+  { level: 2, question: 'A watermelon slice cut from a round melon is most like which shape?', answer: 'triangle', options: ['triangle', 'circle', 'rectangle'], hint: 'It has 3 sides: one curved crust edge and two cut sides.' },
+  { level: 2, question: 'A box has 6 flat faces, and every face is a square. What shape is the box?', answer: 'cube', options: ['sphere', 'cube', 'cone'] },
+  { level: 2, question: 'Amir stacks cubes to cover the bottom of a box. The box is 2 cubes long and 2 cubes wide. How many cubes fit on the bottom?', answer: '4', options: ['2', '4', '8'], hint: 'Line them up: 2 cubes in one row, 2 cubes in the next.' },
+  { level: 2, question: 'You cut a round pancake into 2 equal pieces. What is each piece called?', answer: 'a half', options: ['a third', 'a half', 'a fourth'], hint: 'Two equal shares are called halves.' },
+  { level: 2, question: 'A pie is cut into fourths. How many pieces is that?', answer: '4', options: ['2', '3', '4'], hint: 'Fourths come from four equal shares.' },
+  { level: 2, question: 'Ana cuts an orange into 2 equal slices. Bo cuts the same size orange into 4 equal slices. Whose slices are bigger?', answer: "Ana's", options: ["Ana's", "Bo's", 'they are the same size'], hint: 'More slices means each slice is smaller.' },
+  { level: 2, question: 'Which shape has more sides, a pentagon or a hexagon?', answer: 'hexagon', options: ['pentagon', 'hexagon', 'they have the same number of sides'], hint: 'A hexagon has 6 sides and a pentagon has 5.' },
+  { level: 2, question: 'A triangle has 3 corners and a square has 4 corners. How many corners do they have together?', answer: '7', options: ['5', '7', '9'], hint: 'Add the two numbers of corners: 3 + 4.' },
+  // 2.G.A.1-3 — batch: real-world shapes, cube stacking, and equal shares.
+  { level: 2, question: 'A sheet of notebook paper is most like which shape?', answer: 'rectangle', options: ['rectangle', 'square', 'triangle'], hint: 'It has 4 sides and 4 square corners, with two long sides and two short sides.' },
+  { level: 2, question: 'Nina puts a square tile on the shelf. How many corners does that tile have?', answer: '4', options: ['3', '4', '6'], hint: 'A square has 4 corners, and so does every rectangle.' },
+  { level: 2, question: 'Mr. Ito bakes cornbread and cuts it into 3 equal columns. Into how many equal shares is the cornbread cut?', answer: 'thirds', options: ['halves', 'thirds', 'fourths'], hint: 'Three equal shares are called thirds.' },
+  { level: 2, question: 'Zoe stacks cubes to build a straight tower. If she uses 3 cubes, how many cubes tall is the tower?', answer: '3', options: ['1', '3', '9'], hint: 'Count the cubes from bottom to top.' },
+  { level: 2, question: 'Which shape has more corners, a triangle or a square?', answer: 'square', options: ['triangle', 'square', 'they have the same number of corners'], hint: 'A square has 4 corners and a triangle has 3.' },
+  // 2.G.A.1-3 — batch: cutting, solids, and arrays of tiles.
+  { level: 2, question: 'Lucy slices a square piece of toast diagonally from corner to corner. What two shapes does she get?', answer: 'two triangles', options: ['two circles', 'two triangles', 'two hexagons'], hint: 'Each piece has 3 sides: two sides from the toast and one cut line.' },
+  { level: 2, question: 'A basketball is most like which shape?', answer: 'sphere', options: ['circle', 'sphere', 'cube'], hint: 'It is round and solid, so you can hold it in your hands.' },
+  { level: 2, question: 'Gus lines up square tiles in 2 rows of 3 to edge his bulletin board. How many tiles does he use?', answer: '6', options: ['5', '6', '8'], hint: 'Count by rows: 3, 6.' },
+  { level: 2, question: 'Lily folds a round paper napkin in half, then in half again. How many equal shares does the folded napkin make?', answer: '4', options: ['2', '4', '8'], hint: 'Halving twice makes 4 equal shares.' },
+  { level: 2, question: 'How many sides do 2 triangles have in all?', answer: '6', options: ['3', '6', '9'], hint: 'Each triangle has 3 sides: 3 + 3 makes 6.' },
+  { level: 2, question: 'One cake is cut into halves. Another cake the same size is cut into fourths. Which share is bigger?', answer: 'one half of the cake', options: ['one half of the cake', 'one fourth of the cake', 'they are the same size'], hint: 'Fewer equal shares make each share bigger.' },
 ]
 
 // ---- Data & graphs, level 2 (2.MD.D.10: single-unit scale, ≤4 categories) ------
+
+/** One question keyed to a chart: the primary one inline, or an extra in `questions`. */
+export interface ChartQuestion {
+  question: string
+  answer: string
+  options: string[]
+  hint?: string
+}
 
 export interface ChartItem {
   level: number
@@ -62,6 +95,8 @@ export interface ChartItem {
   answer: string
   options: string[]
   hint?: string
+  /** Extra questions read off the same bars; the provider deals (chart, question) pairs. */
+  questions?: ChartQuestion[]
 }
 
 export const G2_CHARTS: ChartItem[] = [
@@ -75,6 +110,34 @@ export const G2_CHARTS: ChartItem[] = [
   { level: 2, title: 'Jumping Jacks', unit: 'jacks', bars: [{ label: 'Kim', value: 9, emoji: '🤸' }, { label: 'Leo', value: 6, emoji: '🏃' }, { label: 'Mo', value: 7, emoji: '💃' }], question: 'Who did 7 jumping jacks?', answer: 'Mo', options: ['Kim', 'Leo', 'Mo'], hint: 'Find the bar that reaches 7.' },
   { level: 2, title: 'Blocks Stacked', unit: 'blocks', bars: [{ label: 'Red', value: 5, emoji: '🟥' }, { label: 'Blue', value: 8, emoji: '🟦' }, { label: 'Green', value: 3, emoji: '🟩' }], question: 'Which color tower is the tallest?', answer: 'Blue', options: ['Red', 'Green', 'Blue'], hint: 'Tallest bar = most blocks.' },
   { level: 2, title: 'Bug Count', unit: 'bugs', bars: [{ label: 'Ant', value: 4, emoji: '🐜' }, { label: 'Beetle', value: 6, emoji: '🪲' }, { label: 'Bee', value: 9, emoji: '🐝' }], question: 'How many more bees than ants were counted?', answer: '5', options: ['3', '5', '6'], hint: 'Take the ants away from the bees: 9 − 4.' },
+  // 2.MD.D.10 — batch: trail finds, feeder birds, garden vegetables, snowy
+  // months, game night, carnival tickets, aquarium animals, flower vases, tree
+  // planting, bead necklaces. Some charts carry extra `questions` so one chart
+  // serves 2–3 reads (the provider deals (chart, question) pairs).
+  { level: 2, title: 'Trail Finds', unit: 'items', bars: [{ label: 'Pinecones', value: 6 }, { label: 'Acorns', value: 9 }, { label: 'Rocks', value: 4 }], question: 'What did the hikers find the MOST of?', answer: 'Acorns', options: ['Pinecones', 'Acorns', 'Rocks'], hint: 'Look for the tallest bar.', questions: [{ question: 'How many pinecones did the hikers find?', answer: '6', options: ['4', '6', '9'], hint: 'Read the top of the Pinecones bar.' }, { question: 'How many fewer rocks than acorns did they find?', answer: '5', options: ['5', '4', '6'], hint: 'Take the rocks away from the acorns: 9 − 4.' }] },
+  { level: 2, title: 'Feeder Birds', unit: 'birds', bars: [{ label: 'Jays', value: 8 }, { label: 'Cardinals', value: 5 }, { label: 'Finches', value: 3 }, { label: 'Doves', value: 6 }], question: 'Which birds came to the feeder the MOST?', answer: 'Jays', options: ['Jays', 'Doves', 'Finches', 'Cardinals'], hint: 'Look for the tallest bar.', questions: [{ question: 'How many doves came to the feeder?', answer: '6', options: ['3', '5', '6', '8'], hint: 'Find the Doves bar and read its top.' }, { question: 'How many more jays than cardinals came to the feeder?', answer: '3', options: ['3', '5', '2'], hint: 'Take the cardinals away from the jays: 8 − 5.' }] },
+  { level: 2, title: 'Garden Vegetables', unit: 'vegetables', bars: [{ label: 'Carrots', value: 8, emoji: '🥕' }, { label: 'Beans', value: 5, emoji: '🫛' }, { label: 'Corn', value: 6, emoji: '🌽' }, { label: 'Pumpkin', value: 3, emoji: '🎃' }], question: 'How many carrots were picked from the garden?', answer: '8', options: ['8', '3', '5', '6'], hint: 'Read the top of the Carrots bar.', questions: [{ question: 'Which vegetable had the FEWEST picked?', answer: 'Pumpkin', options: ['Pumpkin', 'Corn', 'Beans', 'Carrots'], hint: 'Look for the shortest bar.' }, { question: 'How many beans and corn were picked together?', answer: '11', options: ['11', '14', '9'], hint: 'Add the beans and the corn: 5 + 6.' }] },
+  { level: 2, title: 'Snowy Months', unit: 'days', bars: [{ label: 'December', value: 7, emoji: '❄️' }, { label: 'January', value: 9, emoji: '❄️' }, { label: 'February', value: 4, emoji: '❄️' }], question: 'Which month had the MOST snowy days?', answer: 'January', options: ['December', 'January', 'February'], hint: 'Look for the tallest bar.', questions: [{ question: 'How many snowy days were there in all three months?', answer: '20', options: ['20', '17', '24'], hint: 'Add all three bars: 7 + 9 + 4.' }, { question: 'How many fewer snowy days did February have than January?', answer: '5', options: ['5', '4', '3'], hint: 'Take February away from January: 9 − 4.' }] },
+  { level: 2, title: 'Game Night Scores', unit: 'points', bars: [{ label: 'Hana', value: 9 }, { label: 'Cole', value: 5 }, { label: 'Wren', value: 7 }], question: 'Who scored the MOST points?', answer: 'Hana', options: ['Hana', 'Wren', 'Cole'], hint: 'Find the tallest bar.', questions: [{ question: 'How many points did Wren score?', answer: '7', options: ['5', '7', '9'], hint: "Find Wren's bar and read its top." }] },
+  { level: 2, title: 'Carnival Tickets', unit: 'tickets', bars: [{ label: 'Elena', value: 8, emoji: '🎟️' }, { label: 'Felix', value: 5, emoji: '🎟️' }, { label: 'Lucy', value: 9, emoji: '🎟️' }], question: 'Who earned 5 tickets?', answer: 'Felix', options: ['Elena', 'Felix', 'Lucy'], hint: 'Find the bar that reaches 5.', questions: [{ question: 'How many more tickets did Lucy earn than Felix?', answer: '4', options: ['4', '3', '5'], hint: "Take Felix's tickets away from Lucy's: 9 − 5." }] },
+  { level: 2, title: 'Aquarium Animals', unit: 'animals', bars: [{ label: 'Clownfish', value: 7 }, { label: 'Seahorse', value: 4 }, { label: 'Turtle', value: 6 }], question: 'Which animal did they see the fewest of?', answer: 'Seahorse', options: ['Seahorse', 'Turtle', 'Clownfish'], hint: 'Look for the shortest bar.', questions: [{ question: 'How many clownfish and sea turtles did they see together?', answer: '13', options: ['13', '11', '17'], hint: 'Add the clownfish and the turtles: 7 + 6.' }] },
+  { level: 2, title: 'Flower Vases', unit: 'flowers', bars: [{ label: 'Tulips', value: 5 }, { label: 'Daisies', value: 9 }, { label: 'Roses', value: 7 }], question: 'How many daisies were put in the vases?', answer: '9', options: ['9', '5', '7'], hint: 'Read the top of the Daisies bar.', questions: [{ question: 'Which flower did they count the MOST?', answer: 'Daisies', options: ['Roses', 'Daisies', 'Tulips'], hint: 'Find the tallest bar.' }] },
+  { level: 2, title: 'Tree Planting', unit: 'trees', bars: [{ label: 'Oak', value: 7 }, { label: 'Maple', value: 5 }, { label: 'Willow', value: 3 }, { label: 'Birch', value: 6 }], question: 'Which tree had the fewest planted?', answer: 'Willow', options: ['Oak', 'Willow', 'Maple', 'Birch'], hint: 'Look for the shortest bar.', questions: [{ question: 'How many oak trees were planted?', answer: '7', options: ['5', '6', '7', '3'], hint: 'Find the Oak bar and read its top.' }, { question: 'How many maple and willow trees were planted together?', answer: '8', options: ['8', '9', '12'], hint: 'Add the maples and the willows: 5 + 3.' }] },
+  { level: 2, title: 'Bead Necklaces', unit: 'beads', bars: [{ label: 'Jude', value: 8 }, { label: 'Ito', value: 5 }, { label: 'Rosa', value: 10 }], question: 'Who strung 10 beads?', answer: 'Rosa', options: ['Jude', 'Ito', 'Rosa'], hint: 'Find the bar that reaches 10.', questions: [{ question: 'How many beads did Ito string?', answer: '5', options: ['5', '8', '10'], hint: 'Read the top of the Ito bar.' }, { question: 'How many beads did Jude and Ito string together?', answer: '13', options: ['13', '15', '12'], hint: "Add Jude's beads and Ito's beads: 8 + 5." }] },
+  // 2.MD.D.10 — batch: paper planes, recycling drive, lost and found, kite
+  // festival, pancake breakfast, worm count, bike helmets, soccer goals, bake
+  // sale, lighthouse watch. Each chart carries 2 extra reads so one chart
+  // serves 3 questions (the provider deals (chart, question) pairs).
+  { level: 2, title: 'Paper Planes', unit: 'meters', bars: [{ label: 'Kai', value: 8 }, { label: 'Milo', value: 5 }, { label: 'Nia', value: 6 }], question: 'How many meters did Kai\'s paper plane fly?', answer: '8', options: ['8', '5', '6', '10'], hint: 'Read the top of the Kai bar.', questions: [{ question: 'How many more meters did Kai\'s plane fly than Milo\'s?', answer: '3', options: ['3', '2', '4', '5'], hint: 'Take Milo\'s meters away from Kai\'s: 8 − 5.' }, { question: 'How many meters did the three planes fly in all?', answer: '19', options: ['16', '19', '21', '13'], hint: 'Add all three bars: 8 + 5 + 6.' }] },
+  { level: 2, title: 'Recycling Drive', unit: 'cans', bars: [{ label: 'Room 1', value: 6 }, { label: 'Room 2', value: 9 }, { label: 'Room 3', value: 4 }], question: 'How many cans did Room 2 collect?', answer: '9', options: ['9', '6', '4'], hint: 'Find the Room 2 bar and read its top.', questions: [{ question: 'Which room collected the FEWEST cans?', answer: 'Room 3', options: ['Room 1', 'Room 3', 'Room 2'], hint: 'Look for the shortest bar.' }, { question: 'How many cans did the rooms collect in total?', answer: '19', options: ['15', '17', '19', '21'], hint: 'Add all three bars: 6 + 9 + 4.' }] },
+  { level: 2, title: 'Lost and Found', unit: 'items', bars: [{ label: 'Hats', value: 5 }, { label: 'Mittens', value: 8 }, { label: 'Scarves', value: 3 }, { label: 'Socks', value: 6 }], question: 'Which item did the class find the MOST of?', answer: 'Mittens', options: ['Hats', 'Mittens', 'Scarves', 'Socks'], hint: 'Look for the tallest bar.', questions: [{ question: 'How many more mittens than scarves did they find?', answer: '5', options: ['5', '4', '6'], hint: 'Take the scarves away from the mittens: 8 − 3.' }, { question: 'How many scarves did they find?', answer: '3', options: ['5', '3', '4', '6'], hint: 'Find the Scarves bar and read its top.' }] },
+  { level: 2, title: 'Kite Festival', unit: 'kites', bars: [{ label: 'Zara', value: 7 }, { label: 'Gus', value: 4 }, { label: 'Tess', value: 9 }], question: 'Who flew the most kites?', answer: 'Tess', options: ['Zara', 'Gus', 'Tess'], hint: 'Find the tallest bar.', questions: [{ question: 'How many kites did Gus fly?', answer: '4', options: ['4', '7', '9'], hint: 'Read the top of the Gus bar.' }, { question: 'How many more kites did Tess fly than Zara?', answer: '2', options: ['2', '3', '4'], hint: 'Take Zara\'s kites away from Tess\'s: 9 − 7.' }] },
+  { level: 2, title: 'Pancake Breakfast', unit: 'pancakes', bars: [{ label: 'Plain', value: 5 }, { label: 'Blueberry', value: 8 }, { label: 'Banana', value: 3 }], question: 'How many blueberry pancakes were sold?', answer: '8', options: ['8', '3', '5'], hint: 'Read the top of the Blueberry bar.', questions: [{ question: 'Which topping had the FEWEST pancakes?', answer: 'Banana', options: ['Plain', 'Blueberry', 'Banana'], hint: 'Look for the shortest bar.' }, { question: 'How many pancakes were served in all?', answer: '16', options: ['16', '14', '18', '13'], hint: 'Add all three bars: 5 + 8 + 3.' }] },
+  { level: 2, title: 'Worm Count', unit: 'worms', bars: [{ label: 'March', value: 6 }, { label: 'April', value: 9 }, { label: 'May', value: 4 }], question: 'In which month were the fewest worms seen?', answer: 'May', options: ['March', 'April', 'May'], hint: 'Look for the shortest bar.', questions: [{ question: 'How many worms were seen in March?', answer: '6', options: ['4', '6', '9'], hint: 'Find the March bar and read its top.' }, { question: 'How many worms were seen in all three months?', answer: '19', options: ['17', '19', '21', '15'], hint: 'Add all three bars: 6 + 9 + 4.' }] },
+  { level: 2, title: 'Bike Helmet Colors', unit: 'helmets', bars: [{ label: 'Red', value: 5 }, { label: 'Blue', value: 8 }, { label: 'Green', value: 4 }, { label: 'Yellow', value: 6 }], question: 'Which helmet color is the MOST popular?', answer: 'Blue', options: ['Red', 'Blue', 'Green', 'Yellow'], hint: 'Look for the tallest bar.', questions: [{ question: 'How many red helmets were counted?', answer: '5', options: ['8', '5', '4', '6'], hint: 'Find the Red bar and read its top.' }, { question: 'How many fewer green helmets than blue helmets were counted?', answer: '4', options: ['4', '2', '3', '5'], hint: 'Take the green helmets away from the blue ones: 8 − 4.' }] },
+  { level: 2, title: 'Soccer Goals', unit: 'goals', bars: [{ label: 'Falcons', value: 7 }, { label: 'Otters', value: 4 }, { label: 'Comets', value: 9 }], question: 'Which team scored the most goals?', answer: 'Comets', options: ['Falcons', 'Otters', 'Comets'], hint: 'Find the tallest bar.', questions: [{ question: 'How many goals did the Falcons score?', answer: '7', options: ['9', '4', '7'], hint: 'Read the top of the Falcons bar.' }, { question: 'How many goals did all three teams score in total?', answer: '20', options: ['18', '20', '22', '17'], hint: 'Add all three bars: 7 + 4 + 9.' }] },
+  { level: 2, title: 'Bake Sale', unit: 'cupcakes', bars: [{ label: 'Chocolate', value: 7 }, { label: 'Vanilla', value: 4 }, { label: 'Lemon', value: 6 }, { label: 'Berry', value: 5 }], question: 'How many lemon cupcakes were sold?', answer: '6', options: ['6', '4', '5', '7'], hint: 'Read the top of the Lemon bar.', questions: [{ question: 'Which flavor sold the FEWEST cupcakes?', answer: 'Vanilla', options: ['Chocolate', 'Vanilla', 'Lemon', 'Berry'], hint: 'Look for the shortest bar.' }, { question: 'How many more chocolate than vanilla cupcakes were sold?', answer: '3', options: ['1', '3', '2', '4'], hint: 'Take the vanilla cupcakes away from the chocolate ones: 7 − 4.' }] },
+  { level: 2, title: 'Lighthouse Watch', unit: 'ships', bars: [{ label: 'Cargo', value: 5 }, { label: 'Sailboat', value: 4 }, { label: 'Ferries', value: 7 }], question: 'Which ship did the keeper spot the fewest?', answer: 'Sailboat', options: ['Cargo', 'Sailboat', 'Ferries'], hint: 'Look for the shortest bar.', questions: [{ question: 'How many ferries did the keeper spot?', answer: '7', options: ['4', '5', '7'], hint: 'Find the Ferries bar and read its top.' }, { question: 'How many ships did the keeper spot in total?', answer: '16', options: ['16', '14', '12', '18'], hint: 'Add all three bars: 5 + 4 + 7.' }] },
 ]
 
 // ---- Reading, level 2 (RL.2.1 / 2.2 / 2.4; ≈60–110 words, short sentences) ----
@@ -172,6 +235,190 @@ export const G2_READING: ReadingItem[] = [
       { question: 'Why did Mama turn clean-up into a race?', answer: 'to make hard work fun', options: ['to make hard work fun', 'because she was in a hurry', 'because Mia asked her to'], type: 'inference' },
     ],
   },
+  // RL.2.1/2.2/2.4 — batch: puppy, sidewalk art, fire station, backyard movie,
+  // desert, lost-and-found, ants, moon, cider.
+  {
+    title: 'Biscuit’s Muddy Day',
+    level: 2,
+    text: `Biscuit the puppy slept in his cozy bed. He woke up hungry. His food bowl sat on the kitchen floor, but it was empty. Biscuit barked once, then twice. His boy Owen heard him and laughed. "Breakfast time already?" Owen filled the bowl with kibble. Biscuit ate every last piece, then licked his nose. After breakfast, he dug a hole in the yard and fell asleep inside it, muddy from ear to tail.`,
+    questions: [
+      { question: 'Who filled Biscuit’s food bowl?', answer: 'Owen', options: ['the mail carrier', 'Owen', 'his sister Mia'], type: 'detail' },
+      { question: 'What is this story mostly about?', answer: 'a hungry puppy who gets breakfast and a nap', options: ['a puppy who learns to fetch a ball', 'a hungry puppy who gets breakfast and a nap', 'a lost dog who finds a new home'], type: 'main-idea' },
+      { question: 'In the story, the word "cozy" means:', answer: 'comfortable', options: ['comfortable', 'very noisy', 'hard and cold'], type: 'vocab' },
+    ],
+  },
+  {
+    title: 'The Chalk Museum',
+    level: 2,
+    text: `Ana and Theo made a museum on the sidewalk. They drew pictures with chalk and lined them up like real exhibits. Ana drew a big blue whale. Theo drew a rocket and a friendly alien. Neighbors walked by in a slow line to see each picture. "Please do not touch the art," Ana said with a grin. At the end of the day, a rain shower washed the museum away. Ana and Theo planned a new show for next week.`,
+    questions: [
+      { question: 'What did Ana draw?', answer: 'a whale', options: ['a rocket', 'a whale', 'a tall castle'], type: 'detail' },
+      { question: 'In the story, an "exhibit" is:', answer: 'one picture on show', options: ['a ticket you buy at the door', 'one picture on show', 'a place to sit and rest'], type: 'vocab' },
+      { question: 'What is this story mostly about?', answer: 'kids sharing their sidewalk art with neighbors', options: ['kids sharing their sidewalk art with neighbors', 'two friends racing chalk rockets down a street', 'a rainy day that ruined one show, and what the kids did next'], type: 'main-idea' },
+    ],
+  },
+  {
+    title: 'A Trip to the Fire Station',
+    level: 2,
+    text: `Ms. Ivy’s class took a field trip to the fire station. A firefighter named Rex showed them a big red engine. "This truck holds water, a long ladder, and heavy tools," he said. The class climbed the steps and sat in the driver’s seat. Rex showed the kids how to fold up their coats and wear a firefighter’s helmet. Before the class left, Rex handed out shiny stickers. Everyone drew a picture of the trip that afternoon.`,
+    questions: [
+      { question: 'Where did the class go on its field trip?', answer: 'the fire station', options: ['the fire station', 'the public library', 'the city park'], type: 'detail' },
+      { question: 'In the story, the word "heavy" means:', answer: 'very weighty', options: ['very colorful', 'very weighty', 'very quick'], type: 'vocab' },
+      { question: 'What is this story mostly about?', answer: 'a class visiting a fire station', options: ['a class visiting a fire station', 'a firefighter who teaches her class to read maps', 'the best way to ride a big red engine'], type: 'main-idea' },
+    ],
+  },
+  {
+    title: 'Backyard Movie Night',
+    level: 2,
+    text: `On Friday, Gia’s family hung a white sheet on the fence. Papa carried out a bowl of buttery popcorn. Mama strung tiny lights along the porch rail. The kids spread quilts on the grass and sat down in a row. The movie was about penguins who slide on the ice. Moths danced around the little lights while the family watched. At the end, Gia’s little brother fell asleep right on his quilt.`,
+    questions: [
+      { question: 'Who brought out the popcorn?', answer: 'Papa', options: ['Papa', 'Gia’s brother', 'the next-door neighbor'], type: 'detail' },
+      { question: 'What happens FIRST in the story?', answer: 'the family hangs a sheet on the fence', options: ['the kids spread quilts on the grass', 'the family hangs a sheet on the fence', 'the brother falls fast asleep'], type: 'detail' },
+      { question: 'The story shows that the family…', answer: 'liked making fun together at home', options: ['liked making fun together at home', 'sold popcorn to the neighbors', 'never watched movies after dark'], type: 'inference' },
+    ],
+  },
+  {
+    title: 'The Saguaro’s Water Trick',
+    level: 2,
+    text: `The saguaro is a giant cactus of the desert. It has tall arms that reach up to the sky. Rain is rare in the desert, so the saguaro keeps water inside its thick stem. When a storm finally comes, the cactus soaks up the rain fast. Its body fills like an accordion and stores the drink for later. A roadrunner jogs past on long legs, hunting grasshoppers in the shade of the saguaro.`,
+    questions: [
+      { question: 'Where does the saguaro keep its water?', answer: 'in its thick stem', options: ['in its long roots', 'in its thick stem', 'inside its sharp spines'], type: 'detail' },
+      { question: 'In the story, the word "rare" means:', answer: 'not happening very often', options: ['tiny and easy to miss', 'not happening very often', 'strange and new'], type: 'vocab' },
+      { question: 'What is this story mostly about?', answer: 'how a desert cactus saves up water', options: ['how a desert cactus saves up water', 'why deserts get storms at night', 'the fast jog of a roadrunner'], type: 'main-idea' },
+    ],
+  },
+  {
+    title: 'The Lost Umbrella',
+    level: 2,
+    text: `A red umbrella sat in the school lost-and-found bin. June spotted it right away — it was hers! She had left it on the bus last Tuesday. June checked with the office before taking it home. Mr. Diaz looked at his list and nodded. "No one else has claimed it," he said. "It has your name inside the fold." June hung the umbrella by the door, glad the office kept careful notes about what kids lost.`,
+    questions: [
+      { question: 'Where did June lose her umbrella?', answer: 'on the bus', options: ['on the bus', 'at the park', 'in the cafeteria'], type: 'detail' },
+      { question: 'What did June do BEFORE she took the umbrella home?', answer: 'checked with the office', options: ['asked her friend Leo', 'checked with the office', 'waited for a rainy day'], type: 'detail' },
+      { question: 'Why was June glad at the end?', answer: 'the office keeps good records', options: ['the office keeps good records', 'her umbrella was brand-new', 'the bus was late again'], type: 'inference' },
+    ],
+  },
+  {
+    title: 'The Ant Farm Jar',
+    level: 2,
+    text: `Ravi watched the ants in his glass jar. The queen ant sat still in the middle of the dirt, laying tiny eggs. Worker ants dug twisting tunnels from top to bottom. They carried crumbs down into the dark and stacked them in a neat pile. One crumb was bigger than an ant, but two ants lifted it together. At night, Ravi covered the jar with a cloth so the ants could rest in the dark.`,
+    questions: [
+      { question: 'What did the worker ants carry?', answer: 'crumbs', options: ['crumbs', 'small stones', 'drops of water'], type: 'detail' },
+      { question: 'How did the ants move the big crumb?', answer: 'two ants lifted it together', options: ['the queen carried it alone', 'two ants lifted it together', 'they pushed it up the glass'], type: 'detail' },
+      { question: 'In the story, the word "carry" means:', answer: 'haul', options: ['haul', 'bury', 'share'], type: 'vocab' },
+    ],
+  },
+  {
+    title: 'The Night the Moon Turned Red',
+    level: 2,
+    text: `One clear spring night, families packed into the town park. They brought lawn chairs and warm blankets to watch the moon. When the total eclipse began, the bright moon slowly turned a deep copper red. It hung there, glowing like a night-light over the trees. The whole crowd cheered and clapped. The red color lasted for more than an hour. On the walk home, kids compared drawings of the rusty moon.`,
+    questions: [
+      { question: 'What color did the moon turn?', answer: 'deep copper red', options: ['deep copper red', 'bright shiny green', 'pale snowy white'], type: 'detail' },
+      { question: 'What did the crowd do as the moon changed?', answer: 'cheer and clap', options: ['go home right away', 'cheer and clap', 'turn on flashlights'], type: 'detail' },
+      { question: 'In the story, the word "lasted" means:', answer: 'went on for a time', options: ['went on for a time', 'slipped right away', 'grew bigger and bigger'], type: 'vocab' },
+    ],
+  },
+  {
+    title: 'Apple Cider Day',
+    level: 2,
+    text: `In October, Priya’s class visited an apple farm. The farmer showed them an old press that squeezes juice from the apples. First, the kids washed the apples in big tubs of water. Then the machine ground the fruit into soft pieces. The press gave the pieces a long, slow squeeze, and sweet juice ran into a bucket. The farmer handed each kid a cool cup. Priya thought the fresh cider was the best drink of fall.`,
+    questions: [
+      { question: 'Who showed the class the press?', answer: 'the farmer', options: ['the farmer', 'Priya’s teacher', 'a friendly tourist'], type: 'detail' },
+      { question: 'What did the kids do BEFORE the apples were ground up?', answer: 'washed them in tubs', options: ['washed them in tubs', 'pressed them slowly', 'drew pictures of cider'], type: 'detail' },
+      { question: 'In the story, a "press" is:', answer: 'a machine that squeezes', options: ['a machine that squeezes', 'a big tub of cold water', 'a basket for picked apples'], type: 'vocab' },
+    ],
+  },
+  // RL.2.1/2.2/2.4 — batch: broken crayon, paper boat, bean sprout, snail,
+  // sandcastle picnic, cloud shapes, field-day flags, first snowman, drum practice.
+  {
+    title: 'Diego’s Broken Crayon',
+    level: 2,
+    text: `Diego’s favorite crayon was red. One morning it fell on the floor and snapped in two. Diego’s lip began to tremble. Ms. Rosa knelt beside him. “Broken crayons still draw,” she said, and handed him the short stub. Diego drew a bright red apple with it. The apple looked perfect. That afternoon, Diego taped three stubs together and made a brand-new crayon of his own. It was his favorite color: orange.`,
+    questions: [
+      { question: 'Who told Diego that broken crayons still draw?', answer: 'Ms. Rosa', options: ['his mom', 'Ms. Rosa', 'the principal'], type: 'detail' },
+      { question: 'The story shows that Diego…', answer: 'found a way to fix his problem', options: ['found a way to fix his problem', 'lost interest in drawing pictures', 'forgot all about his red crayon'], type: 'inference' },
+      { question: 'In the story, “snapped” means:', answer: 'broke suddenly', options: ['broke suddenly', 'rolled far away', 'melted in the sun'], type: 'vocab' },
+    ],
+  },
+  {
+    title: 'Kenji’s Paper Boat',
+    level: 2,
+    text: `Kenji folded a paper boat at the kitchen table. The boat had a pointy bow and a flat bottom. He carried it carefully to the bathtub and set it on the water. The boat bobbed up and down. Kenji blew on it softly, and it sailed across the tub like a tiny ship. A wet corner dipped, but the boat did not sink. When the water finally tipped it over, Kenji fished it out and hung it on a line to dry.`,
+    questions: [
+      { question: 'Where did Kenji set his boat?', answer: 'in the bathtub', options: ['on the kitchen table', 'in the bathtub', 'in the fish bowl'], type: 'detail' },
+      { question: 'What made the boat sail across the tub?', answer: 'Kenji blew on it softly', options: ['Kenji blew on it softly', 'the water moved by itself', 'his sister pushed the boat'], type: 'detail' },
+      { question: 'What is this story mostly about?', answer: 'a paper boat that floats in the tub', options: ['a paper boat that floats in the tub', 'Kenji learning to sail a real ship', 'a bathtub that leaks on the floor'], type: 'main-idea' },
+    ],
+  },
+  {
+    title: 'Aisha’s Seed Cup',
+    level: 2,
+    text: `Aisha planted a bean seed in a small cup of dirt. She set the cup on the sunny windowsill and gave it one spoon of water each day. For three days, nothing happened. Aisha was about to give up. On the fourth morning, a tiny green loop pushed up through the soil. By Friday, two little leaves had opened like hands. Aisha wrote her name on a stick and set it in the cup. This plant would be hers to watch all summer.`,
+    questions: [
+      { question: 'Where did Aisha keep her cup?', answer: 'on the windowsill', options: ['under her bed', 'on the windowsill', 'inside the fridge'], type: 'detail' },
+      { question: 'How much water did the seed get each day?', answer: 'one spoon of water', options: ['one spoon of water', 'two cups of water', 'a whole watering can'], type: 'detail' },
+      { question: 'In the story, to “give up” means:', answer: 'stop trying', options: ['stop trying', 'start again', 'ask for help'], type: 'vocab' },
+    ],
+  },
+  {
+    title: 'The Patient Snail',
+    level: 2,
+    text: `A snail crossed the patio wall one slow afternoon. Maya crouched down to watch it. The snail left a shiny silver trail behind its soft body. It stopped at a crumb of toast, tasted it, and moved on. Maya almost picked it up, but she remembered that snails like shade and quiet. Instead, she followed the snail to a cool patch of ferns, where it tucked itself under a leaf. Maya waved goodbye. The snail had somewhere to be, even if it was in no hurry.`,
+    questions: [
+      { question: 'What did the snail leave behind?', answer: 'a shiny silver trail', options: ['a shiny silver trail', 'a line of tiny eggs', 'a wet sand pile'], type: 'detail' },
+      { question: 'The story shows that Maya…', answer: 'treated the snail gently', options: ['treated the snail gently', 'knew snails could bite her', 'wanted to name the snail'], type: 'inference' },
+      { question: 'What is this story mostly about?', answer: 'a slow snail and a careful girl', options: ['a slow snail and a careful girl', 'how snails find their food at night', 'the best way to grow a fern garden'], type: 'main-idea' },
+    ],
+  },
+  {
+    title: 'The Sandcastle Picnic',
+    level: 2,
+    text: `Lily’s family spread a checkered blanket on the warm sand at the beach. First they built a sandcastle with four towers and a deep moat. Lily pressed shells into the walls and stuck a tiny flag on top. Then Mama unpacked sandwiches, cut fruit, and cold lemonade. The tide crept in and licked the moat, but the castle stood strong. After lunch, everyone dug for clams in the wet sand. By afternoon, Lily had a full bucket to carry home to Grandmother.`,
+    questions: [
+      { question: 'What did Lily put on top of the castle?', answer: 'a tiny flag', options: ['a tiny flag', 'a big red shell', 'her baby sister'], type: 'detail' },
+      { question: 'What did the tide do?', answer: 'reached the moat but not the castle', options: ['rained on the sandwiches', 'reached the moat but not the castle', 'washed the flag away'], type: 'detail' },
+      { question: 'What is this story mostly about?', answer: 'a beach day with a sandcastle and lunch', options: ['a beach day with a sandcastle and lunch', 'learning to swim in the cold ocean', 'how to catch fish on a boat'], type: 'main-idea' },
+    ],
+  },
+  {
+    title: 'Cloud Shapes on the Hill',
+    level: 2,
+    text: `On Sunday, Owen and his dad lay on the grassy hill behind Grandma’s house and watched the clouds. “That one looks like a rabbit,” said Owen. His dad shook his head. “To me, it is a whale with a tiny tail.” They watched the same cloud turn slowly into both animals. Later, a gray cloud shaped like a boat brought a soft rain, and they ran home laughing. On Monday, Owen drew the whale, the rabbit, and the rain boat for his class.`,
+    questions: [
+      { question: 'What animal did Owen see first?', answer: 'a rabbit', options: ['a rabbit', 'a whale', 'a big horse'], type: 'detail' },
+      { question: 'The story shows that Owen and his dad…', answer: 'enjoyed using their imaginations', options: ['enjoyed using their imaginations', 'thought the clouds were boring', 'had never visited the hill before'], type: 'inference' },
+      { question: 'What is this story mostly about?', answer: 'a game of cloud shapes', options: ['a game of cloud shapes', 'why clouds move so fast', 'a rainy drive home'], type: 'main-idea' },
+    ],
+  },
+  {
+    title: 'The Field-Day Flags',
+    level: 2,
+    text: `The school gym filled with color for Field Day. Every class carried a flag it had made itself. Sam’s class held a blue flag with one white star and a sailing ship. Nina’s class waved a striped flag of orange and gold. The flags marched in a big circle while the band played its loudest song. After the parade, Ms. Rosa hung every flag high on the gym wall. All week, the kids hunted for their own artwork and counted the stars.`,
+    questions: [
+      { question: 'Which class carried the orange-and-gold flag?', answer: 'Nina’s class', options: ['Sam’s class', 'Nina’s class', 'the school band'], type: 'detail' },
+      { question: 'Where were the flags hung after the parade?', answer: 'on the gym wall', options: ['on the gym wall', 'in the cafeteria', 'outside the front gate'], type: 'detail' },
+      { question: 'What is this story mostly about?', answer: 'the school’s flag parade on Field Day', options: ['the school’s flag parade on Field Day', 'the loudest band song of the year', 'how to hang art on a wall'], type: 'main-idea' },
+    ],
+  },
+  {
+    title: 'Maya’s First Snowman',
+    level: 2,
+    text: `The first snow of winter blanketed Maya’s yard. She pulled on her mittens, her scarf, and her tallest boots. Maya rolled a small snowball, then bigger, and bigger still. The two snowballs made a plump snowman with a carrot nose pointed right at the sky. Maya gave him a hat and two stick arms. When she went inside, the snowman stood guard over the bird feeder all night. By morning he had shrunk a little, but the birds left seeds on his hat.`,
+    questions: [
+      { question: 'What was the snowman’s nose?', answer: 'a carrot', options: ['a carrot', 'an apple', 'a round stone'], type: 'detail' },
+      { question: 'In the story, “guard” means:', answer: 'watch over', options: ['watch over', 'dance near', 'run from'], type: 'vocab' },
+      { question: 'What is this story mostly about?', answer: 'a snowman built after the first snow', options: ['a snowman built after the first snow', 'the birds that visit a feeder', 'the best boots for snowy days'], type: 'main-idea' },
+    ],
+  },
+  {
+    title: 'Leo Learns the Drum',
+    level: 2,
+    text: `Leo got a small drum for his birthday. He banged it loudly all afternoon, and the windows rattled. His dad sat down beside him. “Try a quiet beat,” he said, “then a loud one.” Leo played soft, soft, loud. His mom clapped along. Soon Leo could play three songs, from a slow march to a happy jig. On Saturday, he played the drums in the park for his friends. They sang along, and Leo kept every beat just right.`,
+    questions: [
+      { question: 'What did Dad tell Leo to try first?', answer: 'a quiet beat', options: ['a quiet beat', 'a faster song', 'a long drum roll'], type: 'detail' },
+      { question: 'When did Leo play for his friends?', answer: 'on Saturday', options: ['on Saturday', 'at bedtime', 'after lunch'], type: 'detail' },
+      { question: 'What is this story mostly about?', answer: 'practicing the drums at home', options: ['the loudest noise in the whole house', 'practicing the drums at home', 'a birthday gift for Leo'], type: 'main-idea' },
+    ],
+  },
 ]
 
 // ---- Science, level 2 (NGSS 2-PS1 / 2-LS2 / 2-LS4 / 2-ESS2) --------------------
@@ -190,9 +437,9 @@ export const G2_SCIENCE: ReadingItem[] = [
   {
     title: 'The Sunshine Test',
     level: 2,
-    text: `Two friends grow bean seeds in two cups. Both cups get the same soil and the same water. But one cup sits on a sunny windowsill, and the other lives in a dark closet. After a week, the windowsill bean has a green sprout. The closet bean is pale and floppy. The test shows that plants need sunlight to grow strong and green.`,
+    text: `Two friends grow bean plants in two pots. Both pots get the same soil and the same water. But one pot sits on a sunny windowsill, and the other lives in a dark closet. After a week, the windowsill bean has a green sprout. The closet bean is pale and floppy. The test shows that plants need sunlight to grow strong and green.`,
     questions: [
-      { question: 'What was the ONE difference between the two cups?', answer: 'sunlight', options: ['the kind of soil in each cup', 'sunlight', 'the amount of water'], type: 'detail' },
+      { question: 'What was the ONE difference between the two pots?', answer: 'sunlight', options: ['the kind of soil in each pot', 'sunlight', 'the amount of water'], type: 'detail' },
       { question: 'How did the closet bean look?', answer: 'pale and floppy', options: ['tall, thick, and green', 'pale and floppy', 'curly and purple'], type: 'detail' },
       { question: 'This test shows plants need…', answer: 'sunlight to grow strong and green', options: ['sunlight to grow strong and green', 'music and loud dancing every morning', 'sandy soil only'], type: 'main-idea' },
     ],
@@ -200,10 +447,10 @@ export const G2_SCIENCE: ReadingItem[] = [
   {
     title: 'The Seed Taxi',
     level: 2,
-    text: `An acorn cannot walk anywhere, but it travels far anyway. A squirrel finds the acorn and buries it in the ground for winter. Sometimes the squirrel forgets exactly where! That forgotten acorn gets sunlight, rain, and safe soil — and it grows into an oak tree. Animals like squirrels and birds are seed taxis. They carry seeds to new places and plant gardens without trying.`,
+    text: `An acorn cannot walk anywhere, but it travels far anyway. A squirrel finds the acorn and buries it in the ground for winter. Sometimes the squirrel forgets exactly where! That forgotten acorn sits in the sun, safe under soft soil — and it grows into an oak tree. Animals like squirrels and birds are seed taxis. They carry seeds to new places and grow whole new trees without trying.`,
     questions: [
       { question: 'Who buries the acorn?', answer: 'a squirrel', options: ['a squirrel', 'a honeybee', 'a child'], type: 'detail' },
-      { question: 'Why do forgotten acorns often grow?', answer: 'they land in good soil with sun and rain', options: ['they land in good soil with sun and rain', 'the squirrel comes back every week to water them', 'they grow in bare rock'], type: 'inference' },
+      { question: 'Why do forgotten acorns often grow?', answer: 'it rests in soft soil with sunshine', options: ['it rests in soft soil with sunshine', 'the squirrel comes back every week to water it', 'it grows on a bare rock'], type: 'inference' },
       { question: 'Animals are called "seed taxis" because they…', answer: 'carry seeds away to brand-new places', options: ['carry seeds away to brand-new places', 'eat every single seed they can ever find', 'sing to the seeds'], type: 'detail' },
     ],
   },
@@ -245,6 +492,149 @@ export const G2_SCIENCE: ReadingItem[] = [
       { question: 'What problem did the park have?', answer: 'its sandy beach kept washing away', options: ['its sandy beach kept washing away', 'there were far too many turtles visiting', 'the fence was too tall'], type: 'detail' },
       { question: 'How does the beach grass help?', answer: 'its deep roots grab the sand', options: ['its deep roots grab the sand', 'it scares the wild waves far away', 'it blows new sand up'], type: 'detail' },
       { question: 'What should a scientist do before picking a fix?', answer: 'test each option and measure the results', options: ['test each option and measure the results', 'pick the shiniest one very fast', 'guess with your eyes closed'], type: 'main-idea' },
+    ],
+  },
+  // NGSS 2-PS1.1: some materials dissolve in water, others do not (observable).
+  {
+    title: 'Stir and See',
+    level: 2,
+    text: `Can a material hide inside water? Maya fills three jars with clean water. She stirs sugar into the first jar, and the sugar disappears! It dissolves in the water. She stirs salt into the second jar, and that disappears too. Sand goes into the third jar, but it just sinks to the bottom and stays there. The sugar and the salt are still inside their jars. You can taste them, and you can dry the water off to find them again. Some materials dissolve in water, and some do not.`,
+    questions: [
+      { question: 'What happens to the sugar in the water?', answer: 'it dissolves and disappears', options: ['it sinks straight to the bottom', 'it dissolves and disappears', 'the water turns it into sand'], type: 'detail' },
+      { question: 'What stays at the bottom of its jar?', answer: 'the sand', options: ['the sugar', 'the salt', 'the sand'], type: 'detail' },
+      { question: 'This test shows that…', answer: 'water can hide some materials, but not all', options: ['only sugar can hide inside a glass of water', 'water can hide some materials, but not all', 'every material in the world dissolves in water'], type: 'main-idea' },
+    ],
+  },
+  // NGSS 2-LS2.1: plants need water to grow (fair test: water is the one difference).
+  {
+    title: 'The Watering Can Test',
+    level: 2,
+    text: `Diego plants a marigold seed in each of two identical cups. Both cups sit in the warm sunshine, and both are filled with the same dark dirt. Diego waters one cup a little every day. He gives the other cup no water at all. In a week, the watered cup pushes up green sprouts. The dry cup stays empty, with not a single leaf. Diego writes down what he saw beside each cup. His test shows that a seed needs water to sprout and grow strong.`,
+    questions: [
+      { question: 'What was the ONE difference between the two cups?', answer: 'the daily watering', options: ['the kind of dirt in each cup', 'the daily watering', 'where the cups sat in the sun'], type: 'detail' },
+      { question: 'How did the dry cup look after a week?', answer: 'empty, with not a single leaf', options: ['empty, with not a single leaf', 'tall, green, and bushy', 'full of blooming marigolds'], type: 'detail' },
+      { question: 'Diego’s test shows that a seed needs…', answer: 'water to sprout and grow', options: ['bright lights shining all through the night', 'water to sprout and grow', 'soft music played every morning'], type: 'main-idea' },
+    ],
+  },
+  // NGSS 2-LS2.2: animals carry seeds to new places (burdock hooks on fur).
+  {
+    title: 'Sticky Seeds',
+    level: 2,
+    text: `Burdock plants make seeds with tiny hooks on them. When a dog trots through the meadow, the hooks grab onto its fur and ride along for miles. Far from home, the seeds shake loose and fall to the ground. New burdock plants grow up in that spot, just like their parents. Without legs or wings, they still travel a long way. Hitching a ride on an animal’s fur is one clever way seeds go exploring.`,
+    questions: [
+      { question: 'What helps burdock seeds grab onto fur?', answer: 'tiny hooks', options: ['tiny hooks', 'long roots', 'bright petals'], type: 'detail' },
+      { question: 'Why do new burdock plants grow far from the old ones?', answer: 'animals carry the seeds there', options: ['the old plants throw their seeds far away', 'animals carry the seeds there', 'the seeds grow legs and walk off'], type: 'inference' },
+      { question: 'This story is mostly about…', answer: 'seeds that hitch rides on animal fur', options: ['a dog who loves to run through the meadow', 'how to plant flowers at home', 'seeds that hitch rides on animal fur'], type: 'main-idea' },
+    ],
+  },
+  // NGSS 2-LS4.1: many different living things can make their home in one habitat.
+  {
+    title: 'The Old Fallen Log',
+    level: 2,
+    text: `An old tree falls in the forest and slowly becomes part of the ground. But a fallen log is not dead — it is a whole neighborhood! Pill bugs roll up under its damp bark. Earthworms chew through the soft wood. Bright moss grows on top, and tiny mushrooms pop out after a shower. Beetles lay their eggs inside the log, and a hungry mouse visits to hunt for snacks. One old log gives a home to many different living things.`,
+    questions: [
+      { question: 'What grows on top of the fallen log?', answer: 'bright moss', options: ['tall pine trees', 'bright moss', 'yellow daisies'], type: 'detail' },
+      { question: 'Who chews through the soft wood?', answer: 'earthworms', options: ['earthworms', 'honeybees', 'bluebirds'], type: 'detail' },
+      { question: 'What is this passage mostly about?', answer: 'one fallen log that is home to many living things', options: ['a forest where only mushrooms can grow', 'one fallen log that is home to many living things', 'why tall trees grow faster than small ones'], type: 'main-idea' },
+    ],
+  },
+  // NGSS 2-ESS2.2: moving water shapes and changes land (rain cuts grooves in a field).
+  {
+    title: 'Rain Lines in the Field',
+    level: 2,
+    text: `After a heavy rain, Zoe walks out to the big dirt field behind her school. Tiny streams of water run down the slope, carving thin lines in the soft ground. Each line is a little valley being made. When the rain stops, the streams dry up, but the grooves stay. A little water moved a little dirt, and the shape of the field changed. Rain shapes the land the same way every time it pours on a hill.`,
+    questions: [
+      { question: 'What carved thin lines in the soft ground?', answer: 'tiny streams of rainwater', options: ['tiny streams of rainwater', 'the school buses driving past', 'kids digging with sticks'], type: 'detail' },
+      { question: 'The grooves that stay after the rain show that…', answer: 'water changed the shape of the ground', options: ['the field grew bigger overnight', 'water changed the shape of the ground', 'the dirt turned into new rocks'], type: 'inference' },
+      { question: 'This passage is mostly about how…', answer: 'rain shapes the land', options: ['rain helps flowers bloom in the spring', 'rain shapes new fields of tall green grass', 'rain shapes the land'], type: 'main-idea' },
+    ],
+  },
+  // NGSS 2-ESS2.3: solid water (ice) becomes liquid water when it warms.
+  {
+    title: 'The Icy Race',
+    level: 2,
+    text: `On a cold morning, two ice cubes sit side by side on the porch step. One cube waits in the bright sunshine. The other stays in the cool shadow of the wall. By lunchtime, the sunny cube has shrunk down to a small puddle of water. The shaded cube is still mostly ice! The warmth of the sun changed solid ice into liquid water. The shady spot stayed too cool for that change to happen fast.`,
+    questions: [
+      { question: 'Which ice cube melted first?', answer: 'the one in the sunshine', options: ['the one in the shade', 'the one in the sunshine', 'they both melted at the same time'], type: 'detail' },
+      { question: 'What did the sunny ice cube become?', answer: 'liquid water in a small puddle', options: ['liquid water in a small puddle', 'a pile of white salt', 'a block of hard snow'], type: 'detail' },
+      { question: 'What made the sunny ice melt faster?', answer: 'the warmth of the sun', options: ['the warmth of the sun', 'the cold wind from the north', 'the color of the porch step'], type: 'inference' },
+    ],
+  },
+  // NGSS 2-PS1.1: floating and sinking are observable properties that sort materials.
+  {
+    title: 'Float or Sink?',
+    level: 2,
+    text: `Why do some things float? Sam fills a big pot with water and sets it on the top step by the creek. He drops in a dry leaf, and it floats right on top. A smooth pebble sinks straight to the bottom. Next come a metal key, a pencil, and a tiny shell. The pencil floats, but the key and the shell sink together. Sam writes down each answer. Some materials float in water, and some sink.`,
+    questions: [
+      { question: 'What happened to the dry leaf?', answer: 'it floated on top of the water', options: ['it sank straight down', 'it floated on top of the water', 'it turned into a boat'], type: 'detail' },
+      { question: 'Which item sinks to the bottom?', answer: 'the key', options: ['the dry leaf', 'the pencil', 'the key'], type: 'detail' },
+      { question: 'This passage is mostly about how…', answer: 'some materials float and others sink', options: ['Sam cleans his hands by the creek', 'some materials float and others sink', 'pencils can write under the water'], type: 'main-idea' },
+    ],
+  },
+  // NGSS 2-LS2.1: plants need light to grow (light is the one thing reaching the sprouts).
+  {
+    title: 'The Reach for Light',
+    level: 2,
+    text: `Ivy tucks two bean seedlings inside a tall cardboard box. A small window is cut into one side, and the seedlings sit far away from it. Only light from that window can reach inside. After a week, Ivy lifts the lid. Both plants have grown long and pale, and every stem bends toward the window! The tiny seedlings reached around the corner to find their light.`,
+    questions: [
+      { question: 'Where did every stem bend?', answer: 'toward the window', options: ['toward the window', 'down into the dirt', 'away from the light'], type: 'detail' },
+      { question: 'What does the word "bend" mean?', answer: 'curve', options: ['curve', 'freeze solid', 'fall apart'], type: 'vocab' },
+      { question: 'What do the bending plants show?', answer: 'they grow toward the light', options: ['they sleep all week inside tall boxes', 'they grow toward the light', 'bean seedlings need cold dark nights'], type: 'main-idea' },
+    ],
+  },
+  // NGSS 2-ESS2.2: slow changes by ice shape the land over many years.
+  {
+    title: 'The Crack That Grew',
+    level: 2,
+    text: `Zoe spots a thin crack in the sidewalk near the corner store. Rain seeps into it, and when cold nights arrive the water freezes into ice. That ice pushes the crack open a tiny bit more. Each spring, Zoe notices the crack is wider than last year. A little weed pokes through and waves in the breeze. Year after year, the crack keeps growing wider.`,
+    questions: [
+      { question: 'What pokes into the crack each winter?', answer: 'ice', options: ['ice', 'sand', 'dirt'], type: 'detail' },
+      { question: 'What happens to the crack over many winters?', answer: 'it keeps growing wider', options: ['it heals up smooth again', 'it keeps growing wider', 'it fills with beach sand'], type: 'detail' },
+      { question: 'This passage shows how the land changes…', answer: 'slowly, little by little', options: ['slowly, little by little', 'all at once in one minute', 'only when kids dig at it'], type: 'main-idea' },
+    ],
+  },
+  // NGSS 2-LS4.1: one habitat is home to animals with different body coverings.
+  {
+    title: 'Fur, Feathers, Scales',
+    level: 2,
+    text: `Look closely at the animals in the pine grove behind Lena's house. A rabbit hops by with soft brown fur and a fluffy white tail. A bird fluffs up its feather coat and lifts into the branches. Under a warm stone, a little lizard gleams with smooth scales. Fur, feathers, and scales are all coverings that keep these animals snug and warm.`,
+    questions: [
+      { question: 'Which animal has feathers?', answer: 'the bird', options: ['the lizard', 'the rabbit', 'the bird'], type: 'detail' },
+      { question: 'What covers the little lizard?', answer: 'smooth scales', options: ['long fur', 'smooth scales', 'fluffy feathers'], type: 'detail' },
+      { question: 'What is this passage mostly about?', answer: 'one habitat that is home to animals with different coverings', options: ['a school where kids study lizards all day', 'one habitat that is home to animals with different coverings', 'why rabbits grow longer tails each year'], type: 'main-idea' },
+    ],
+  },
+  // NGSS 2-LS4.1: a tide pool holds many kinds of animals sharing one small habitat.
+  {
+    title: 'The Tide Pool',
+    level: 2,
+    text: `When the ocean pulls back at low tide, it leaves a small pool behind at the edge of the beach. A whole world lives inside it! A starfish rests under a flat rock, and a hermit crab scuttles between the stones. Purple anemones wave their soft arms, and tiny snails graze on the green film coating the rocks. The tide pool fills up again when the water slides back in.`,
+    questions: [
+      { question: 'Where does the starfish live?', answer: 'under a flat rock', options: ['in a tree by the path', 'in a sandy hole far inland', 'under a flat rock'], type: 'detail' },
+      { question: 'What does the word "graze" mean?', answer: 'nibble', options: ['nibble', 'sleep', 'jump'], type: 'vocab' },
+      { question: 'What is this passage mostly about?', answer: 'a tide pool that is home to many animals', options: ['a long day swimming at the pool', 'a tide pool that is home to many animals', 'how the ocean gets its salty taste'], type: 'main-idea' },
+    ],
+  },
+  // NGSS 2-ESS2.2: moving water carries materials and reshapes the land.
+  {
+    title: 'Where the Salt Went',
+    level: 2,
+    text: `Elena notices white grains dusting the street after a snowy night. The town spread salt on the roads to melt the frozen slush. When the sun comes out, the slush turns to water and trickles toward the storm drain. Elena watches the salty water swirl down and disappear. By the next day, the street looks clean again. Moving water carried the salt far away.`,
+    questions: [
+      { question: 'What were the white grains?', answer: 'salt that keeps roads safe', options: ['flour spilled from a truck', 'salt that keeps roads safe', 'powdered sugar thrown by kids'], type: 'detail' },
+      { question: 'What took the salt away?', answer: 'the slush that melted and ran to the drain', options: ['a street broom', 'the slush that melted and ran to the drain', 'the wind on cold nights'], type: 'detail' },
+      { question: 'What is this passage mostly about?', answer: 'moving water carrying stuff away', options: ['moving water carrying stuff away', 'why snow falls only on city roads', 'how to build a snow fort downtown'], type: 'main-idea' },
+    ],
+  },
+  // NGSS 2-PS1.1: materials differ in observable properties; testing reveals which repels water.
+  {
+    title: 'Keeping It Dry',
+    level: 2,
+    text: `Kim wants paper that will keep a sandwich dry on a rainy picnic. She tests three kinds of paper with drops of water. A drop sinks right into thin tissue paper and makes a wet spot. A drop soaks into notebook paper after a few minutes. But a drop sits on top of wax paper like a shiny bead and never soaks in. Kim picks wax paper for her sandwich. Testing each kind side by side showed her which one really keeps water out.`,
+    questions: [
+      { question: 'Which paper soaks up water the fastest?', answer: 'the thin tissue paper', options: ['the wax paper', 'the notebook paper', 'the thin tissue paper'], type: 'detail' },
+      { question: 'How does water act on wax paper?', answer: 'it sits on top like a shiny bead', options: ['it sinks in right away', 'it sits on top like a shiny bead', 'it turns the paper bright red'], type: 'detail' },
+      { question: 'How did Kim find the best paper?', answer: 'by testing each kind side by side', options: ['by picking the prettiest sheet', 'by asking a friend to choose for her', 'by testing each kind side by side'], type: 'main-idea' },
     ],
   },
 ]

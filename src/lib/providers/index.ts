@@ -12,7 +12,7 @@ import type { ProblemProvider } from '../problem'
 import type { GradeLevel } from '../gradeTiers'
 import { makeMultiplicationProvider } from './multiplication'
 import { makeDivisionProvider } from './division'
-import { makeFractionEquivalenceProvider } from './fractionEquivalence'
+import { makeFractionEquivalenceProvider, type FracEqMode } from './fractionEquivalence'
 import { makeFractionCompareProvider } from './fractionCompare'
 import { makePlaceValueRoundingProvider } from './placeValueRounding'
 import { makePlaceValueIdentifyProvider } from './placeValueIdentify'
@@ -35,7 +35,7 @@ import { makeKStoriesProvider } from './kStories'
 export type ProviderConfig =
   | { kind: 'multiplication'; factorMin: number; factorMax: number }
   | { kind: 'division'; divisorMin: number; divisorMax: number; quotientMin: number; quotientMax: number }
-  | { kind: 'fractionEquivalence'; maxDenominator: number }
+  | { kind: 'fractionEquivalence'; maxDenominator: number; shapes?: readonly FracEqMode[] }
   | { kind: 'fractionCompare'; maxDenominator: number }
   | { kind: 'placeValueRounding'; maxPlace: 100 | 1000 | 10000 | 100000; roundTo: 10 | 100 | 1000 }
   | { kind: 'placeValueIdentify'; maxPlace: 1000 | 10000 | 100000 }

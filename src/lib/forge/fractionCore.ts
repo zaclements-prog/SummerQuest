@@ -50,7 +50,9 @@ export const FORGE_LIMITS = { denomMax: 12 } as const
 
 /** Grade's equivalence denominator ceiling → forge-bounded provider config (never harder than the grade). */
 export function forgeFactConfig(tierDenomMax: number) {
-  return { maxDenominator: Math.min(FORGE_LIMITS.denomMax, Math.max(2, tierDenomMax)) }
+  // The gauge prints the target denominator on the order, so the forge only asks
+  // the blank-the-top scale-up shape (the provider's wider shapes are for quizzes).
+  return { maxDenominator: Math.min(FORGE_LIMITS.denomMax, Math.max(2, tierDenomMax)), shapes: ['numUp'] as const }
 }
 
 /** Slab centers for an `n`-slab row of total length `span`, centered on 0. */

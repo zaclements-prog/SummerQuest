@@ -348,6 +348,428 @@ export const PASSAGES: Passage[] = [
       },
     ],
   },
+  // NGSS 3-LS1-1: frogs have a changing life cycle — eggs, tadpoles with gills,
+  // adults with lungs that lay eggs of their own.
+  {
+    title: 'How a Frog Grows',
+    level: 3,
+    text: `On a warm spring day, Nadia spots jelly-like eggs floating in the pond. A few weeks later, tiny tadpoles hatch from them. Tadpoles live underwater, swim with their tails, and breathe through gills, just like fish. As tadpoles grow, back legs appear, then front legs, and their tails shrink away. By early summer, the tadpoles climb onto a log as small frogs that breathe air with lungs. The frogs will grow up and lay eggs of their own next spring.`,
+    questions: [
+      {
+        question: 'What do tadpoles use to breathe underwater?',
+        answer: 'gills',
+        options: ['gills', 'lungs', 'noses', 'tails'],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, a "tadpole" is:',
+        answer: 'a baby frog that lives in the water',
+        options: [
+          'a baby frog that lives in the water',
+          'a fully grown frog with shiny skin',
+          'a jelly-like egg floating on the pond',
+          'a small fish with a long, curly tail',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'Why can the young frogs climb out onto the log?',
+        answer: 'They had grown lungs to breathe air.',
+        options: [
+          'They had grown lungs to breathe air.',
+          'They wanted to build a nest in the trees.',
+          'They were too big to see underwater.',
+          'Their tails had grown longer and stronger.',
+        ],
+        type: 'inference',
+      },
+    ],
+  },
+  // NGSS 3-LS1-1: plants have offspring in diverse ways — seeds travel by air,
+  // fur, and floating before sprouting in a new place.
+  {
+    title: 'How Seeds Travel',
+    level: 3,
+    text: `A plant cannot walk, but many plants send their seeds on long trips. A dandelion seed wears a puff of white fluff that catches a breeze and floats like a tiny parachute. Some seeds have tiny hooks that grab onto fur and hitch a ride on passing animals. A coconut has a light, tough husk that floats, so ocean currents can carry it for miles. When a seed lands in good soil with enough water and light, it can sprout into a brand-new plant.`,
+    questions: [
+      {
+        question: 'What helps a coconut travel across the ocean?',
+        answer: 'its light, tough husk',
+        options: ['its light, tough husk', 'its long, curly roots', 'its bright yellow flowers', 'its heavy brown seeds'],
+        type: 'detail',
+      },
+      {
+        question: 'What is this passage mostly about?',
+        answer: 'the different ways seeds travel to new places',
+        options: [
+          'the different ways seeds travel to new places',
+          'how coconuts grow on tall palm trees',
+          'what animals like to eat in the wild',
+          'why some plants have fragrant flowers',
+        ],
+        type: 'main-idea',
+      },
+      {
+        question: 'How do the tiny hooks on some seeds help the plant?',
+        answer: 'They grab onto fur and ride along.',
+        options: [
+          'They grab onto fur and ride along.',
+          'They float across the wide ocean.',
+          'They bury the seeds under fallen leaves.',
+          'They help the plant stand up straight.',
+        ],
+        type: 'inference',
+      },
+    ],
+  },
+  // NGSS 3-LS1-1 (LS2.A): bees and flowers depend on each other — pollen carried
+  // between flowers helps plants make seeds.
+  {
+    title: 'Busy Bees, Helpful Flowers',
+    level: 3,
+    text: `Bees and flowers help each other in a busy garden. A honeybee lands on a flower and sips sweet juice called nectar. While it works, yellow dust called pollen sticks to the bee's fuzzy body. When the bee flies to the next flower, some pollen falls off. That pollen helps the flower make seeds, which can grow into new plants. So every time a bee stops for a snack, it also helps a garden grow more flowers, fruits, and vegetables.`,
+    questions: [
+      {
+        question: 'Where does pollen stick while the bee travels between flowers?',
+        answer: "the bee's fuzzy body",
+        options: [
+          "the bee's fuzzy body",
+          "the bee's two thin wings",
+          'the green stem of the flower',
+          'the soft dirt below',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, "pollen" is:',
+        answer: 'the yellow dust that helps flowers make seeds',
+        options: [
+          'the sticky sweet juice a bee sips deep inside a flower',
+          'the yellow dust that helps flowers make seeds',
+          'the fuzzy hair on a honeybee',
+          'the green stem under a flower',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'What would a garden look like if there were no bees at all?',
+        answer: 'There would be fewer flowers, fruits, and vegetables.',
+        options: [
+          'There would be fewer flowers, fruits, and vegetables.',
+          'The garden would grow twice as fast.',
+          'All the soil would turn into sand.',
+          'Every flower would turn blue overnight.',
+        ],
+        type: 'inference',
+      },
+    ],
+  },
+  // NGSS ESS1.B: the day and night cycle happens because Earth rotates once
+  // about every 24 hours, facing each side toward and away from the Sun.
+  {
+    title: 'Day and Night',
+    level: 3,
+    text: `Owen watches the Sun rise in the morning, cross the sky, and set in the evening. Day and night happen because Earth is always spinning, like a giant, slow top. Earth turns all the way around once about every twenty-four hours. The side facing the Sun is having a bright, sunny day, while the side turned away is having a dark night. As Earth keeps spinning, the place where you live moves from sunlight into darkness, and back again.`,
+    questions: [
+      {
+        question: 'About how long does it take Earth to spin around once?',
+        answer: 'about twenty-four hours',
+        options: ['about a minute', 'about an hour', 'about twenty-four hours', 'about two weeks, or fourteen days'],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, to "spin" means:',
+        answer: 'to turn around and around',
+        options: [
+          'to turn around and around',
+          'to stay completely still for hours',
+          'to jump up and down',
+          'to move in a straight line',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'Why does night come to the place where Owen lives?',
+        answer: 'Its side faces away from the Sun.',
+        options: [
+          'Its side faces away from the Sun.',
+          'Its side turns toward the Moon at dusk.',
+          'The Sun hides behind clouds every evening.',
+          'The town stops moving until morning.',
+        ],
+        type: 'inference',
+      },
+    ],
+  },
+  // NGSS 3-ESS2-1: weather is described and tracked with measurements —
+  // thermometer, rain gauge, and wind tools; a forecast uses the records.
+  {
+    title: 'Weather Watchers',
+    level: 3,
+    text: `Aisha keeps a little weather station in her yard. A thermometer measures how hot or cold the air is, and a rain gauge catches rain so she can see how much fell. A set of spinning cups shows how fast the wind is blowing, and a vane points the way the wind is going. Each morning, Aisha writes her readings in a notebook. When she puts the numbers together, she can make a forecast, which is a careful guess about what the weather will do next.`,
+    questions: [
+      {
+        question: 'Which tool measures how hot or cold the air is?',
+        answer: 'a thermometer',
+        options: ['a thermometer', 'a rain gauge', 'a wind vane', 'a measuring cup'],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, a "forecast" is:',
+        answer: 'a careful guess about what weather comes next',
+        options: [
+          'a report about storms far away across the ocean',
+          'a careful guess about what weather comes next',
+          'a record of past weather in a town',
+          'a tool that measures falling rain',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'What is this passage mostly about?',
+        answer: 'tools that help people watch and record the weather',
+        options: [
+          'tools that help people watch and record the weather',
+          'how storms form high above the land',
+          'why Aisha enjoys writing in her notebook',
+          'the best season of the year for playing outside',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
+  // NGSS 3-LS4-3: animals with helpful traits survive better — camouflage lets
+  // a stick insect, a snowshoe hare, and an octopus blend into surroundings.
+  {
+    title: 'Animal Hide-and-Seek',
+    level: 3,
+    text: `Diego spots a green stick resting on a leaf, until the stick starts to walk! A stick insect looks just like a twig, so hungry birds often glance right past it. This trick is called camouflage, and many animals use it. A snowshoe hare wears white fur in the snowy winter and brown fur in the green summer. An octopus can even change its color to match the rocks and sand below it. Hiding in plain sight helps these animals stay safe.`,
+    questions: [
+      {
+        question: 'What is the trick of blending into surroundings called?',
+        answer: 'camouflage',
+        options: ['camouflage', 'migration', 'hibernation', 'communication'],
+        type: 'detail',
+      },
+      {
+        question: "Why does a snowshoe hare's fur change color with the seasons?",
+        answer: 'So it stays hidden in both seasons.',
+        options: [
+          'So it stays hidden in both seasons.',
+          'So it can stay warm when it is cold.',
+          'So birds can spot it more quickly.',
+          'So it looks bigger to other hares.',
+        ],
+        type: 'inference',
+      },
+      {
+        question: 'What is this passage mostly about?',
+        answer: 'how some animals hide using their looks',
+        options: [
+          'how some animals hide using their looks',
+          'how animals hunt for food at night',
+          'where animals live in different habitats',
+          'why animals travel to warm places',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
+  // NGSS LS2.A/LS4.D: coral is an animal made of tiny polyps that build hard
+  // shells; the reef becomes habitat for fish.
+  {
+    title: 'Coral: An Animal or a Rock?',
+    level: 3,
+    text: `Lily looks at a colorful coral reef in the ocean and wonders: is coral a rock, a plant, or an animal? The answer is animal! Each piece of coral is built by tiny creatures called polyps, which are related to jellyfish. A polyp has a soft body and makes a hard shell around itself. Thousands of polyps living close together build the rocky-looking reefs. Coral reefs come in many shapes, from branching fans to rounded hills, and fish love to call them home.`,
+    questions: [
+      {
+        question: 'What kind of living thing is coral?',
+        answer: 'an animal',
+        options: ['an animal', 'a plant', 'a hard gray rock', 'a kind of seaweed'],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, "polyps" are:',
+        answer: 'tiny creatures that build coral shells',
+        options: [
+          'tiny creatures that build coral shells',
+          'large fish that swim near reefs',
+          'the colorful top of a flower',
+          'soft plants that drift in the sea',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'Why do so many fish live near a reef?',
+        answer: 'the reef offers shelter',
+        options: [
+          'the reef offers shelter',
+          'the reef makes the ocean saltier',
+          'the reef supplies food for fish',
+          'the reef keeps water warm all year',
+        ],
+        type: 'inference',
+      },
+    ],
+  },
+  // NGSS 3-LS2-1: some animals live in groups because group life helps them
+  // survive — fish schools, bird flocks, and wolf packs.
+  {
+    title: 'Why Animals Stay in Groups',
+    level: 3,
+    text: `Sam watches the fish at the pond and notices they swim side by side in a tight school. Many animals live together in groups because group life helps them survive. Fish swim close together so a hunter cannot easily pick one out. Flocks of birds take turns resting while the others keep watch for danger. Wolves hunt as a pack to catch food that would be too quick for one wolf alone. Living together also keeps young animals warm and safe, with more eyes and ears on guard.`,
+    questions: [
+      {
+        question: 'Why do fish swim close together in a school?',
+        answer: 'So a hunter cannot easily pick one out.',
+        options: [
+          'Because fish enjoy warm water.',
+          'So a hunter cannot easily pick one out.',
+          'Because swimming close together makes them faster.',
+          'So fish can rest at the same time.',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, "survive" means:',
+        answer: 'to stay alive',
+        options: [
+          'to stay alive',
+          'to travel a long way',
+          'to change color by season',
+          'to sleep through the whole winter',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'What is this passage mostly about?',
+        answer: 'why living in groups helps animals stay safe',
+        options: [
+          'what wolves eat when hunting for food alone',
+          'why living in groups helps animals stay safe',
+          'how birds build their nests high in the trees',
+          'where young animals find water on hot days',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
+  // NGSS LS1.D: some animals migrate, or travel far, when the seasons change;
+  // the V formation helps geese save energy on the long flight.
+  {
+    title: 'The Long Flight South',
+    level: 3,
+    text: `Every autumn, flocks of geese lift off from northern lakes and fly a long way south. They migrate, or travel far, because winter brings cold weather and little food. Down south the ponds stay open, and fields of grain feed the birds through the season. Geese fly in a shape like the letter V. This formation helps each bird save energy, and the birds take turns at the front, where flying is hardest. When spring warms their home lakes again, the geese head back north to raise their families.`,
+    questions: [
+      {
+        question: 'Why do the geese migrate before winter?',
+        answer: 'Because winter brings cold and little food.',
+        options: [
+          'Because the ponds down south freeze solid.',
+          'Because winter brings cold and little food.',
+          'Because they must practice flying in a V shape.',
+          'To visit other flocks far to the south.',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, "migrate" means:',
+        answer: 'to travel far away for a season',
+        options: [
+          'to fly in wide circles over a lake',
+          'to travel far away for a season',
+          'to hide from hunters in the tall reeds',
+          'to rest during the long cold winter',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'Why do geese take turns flying at the front of the V?',
+        answer: 'Sharing the hardest spot saves energy for everyone.',
+        options: [
+          'Bigger wings block the wind for smaller birds.',
+          'Sharing the hardest spot saves energy for everyone.',
+          'The last bird needs to watch for hawks and eagles.',
+          'A single leader must always guide the flock.',
+        ],
+        type: 'inference',
+      },
+    ],
+  },
+  // NGSS ESS1.A: the Sun is a star; it looks bigger than the other stars
+  // because it is much closer to Earth.
+  {
+    title: 'Our Nearest Star',
+    level: 3,
+    text: `Kenji calls the Sun the brightest light in the daytime sky. His teacher has a surprise for him: the Sun is a star! Stars are enormous balls of glowing gas. The Sun looks much bigger than the other stars only because it is so much closer to Earth. The tiny points that twinkle after sunset are stars too, each one enormous, but they are so distant that they seem small and dim. The Sun gives Earth the light and warmth that help plants, animals, and people thrive.`,
+    questions: [
+      {
+        question: 'According to the passage, what is the Sun?',
+        answer: 'a star',
+        options: ['a planet', 'a star', 'a glowing cloud', 'the Moon'],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, "enormous" means:',
+        answer: 'extremely large',
+        options: ['extremely large', 'very cold', 'soft like a cloud', 'moving very quickly'],
+        type: 'vocab',
+      },
+      {
+        question: 'Why do distant stars look small when they are really enormous?',
+        answer: 'Because they are much farther away from Earth.',
+        options: [
+          'Because they burn with a cooler flame.',
+          'Because they are much farther away from Earth.',
+          'Because clouds cover them most of the year.',
+          'Because they shine only while the Moon is out.',
+        ],
+        type: 'inference',
+      },
+    ],
+  },
+  // NGSS 3-LS4-3: helpful body-part traits — webbed feet, thick fur and
+  // blubber, a fat-storing hump — suit animals to where they live.
+  {
+    title: 'Special Feet and Warm Coats',
+    level: 3,
+    text: `Priya learns that many animals have body parts suited to where they live. A duck has wide, webbed feet that push through the water like paddles. A polar bear wears thick fur and a layer of fat called blubber, which keeps it toasty in the frozen Arctic. A camel stores fat in its hump, so it can go a long time between meals in the dry desert. Each body part gives an animal an edge where it lives. These helpful traits give animals a better chance to survive and thrive.`,
+    questions: [
+      {
+        question: "What do a duck's wide, webbed feet do?",
+        answer: 'They push through water like paddles.',
+        options: [
+          'They help it run on soft sand.',
+          'They push through water like paddles.',
+          'They keep the duck warm in cold weather.',
+          'They dig deep holes for hiding.',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, "blubber" is:',
+        answer: 'a warm layer of fat',
+        options: [
+          'a wide webbed foot',
+          'a hard shell on a turtle',
+          'a warm layer of fat',
+          'a warm coat of fluffy fur',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'What is this passage mostly about?',
+        answer: 'how body parts help animals live where they live',
+        options: [
+          'what polar bears eat during the long cold winter months',
+          'how a young animal learns from its family',
+          'how animals travel to places with mild weather',
+          'how body parts help animals live where they live',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
   {
     title: 'How Plants Make Their Own Food',
     level: 4,
@@ -392,7 +814,7 @@ export const PASSAGES: Passage[] = [
   {
     title: 'The Water Cycle',
     level: 4,
-    text: `The water on Earth is always on the move in a journey called the water cycle. When the sun warms a lake or ocean, some water turns into an invisible gas called water vapor and rises into the sky. This step is called evaporation. Higher up, the air is cooler, so the vapor turns back into tiny droplets that gather into clouds. This step is called condensation. When the droplets grow heavy enough, they fall as rain or snow, which is called precipitation. The water then flows into rivers and back to the ocean, and the cycle starts all over again.`,
+    text: `The water on Earth is always on the move in a journey called the water cycle. When sunlight warms a lake or ocean, some water turns into an invisible gas called water vapor and rises into the sky. This step is called evaporation. Higher up, the air is cooler, so the vapor turns back into tiny droplets that gather into clouds. This step is called condensation. When the droplets grow heavy enough, they fall as rain or snow, which is called precipitation. The water then flows into rivers and back to the ocean, and the cycle starts all over again.`,
     questions: [
       {
         question: 'What is it called when water turns into vapor and rises into the sky?',
@@ -666,6 +1088,447 @@ export const PASSAGES: Passage[] = [
         answer: 'migration',
         options: ['migration', 'metamorphosis', 'condensation', 'orbit'],
         type: 'vocab',
+      },
+    ],
+  },
+  // NGSS 4-LS4-1: fossils are the remains or traces of ancient organisms and
+  // give scientists evidence of past life on Earth.
+  {
+    title: 'Footprints in Stone',
+    level: 4,
+    text: `Ana visits a museum full of fossils, which are the remains or traces of living things from long ago. Some fossils are bones, shells, or teeth that slowly turned to stone. Others are traces, like an animal's footprint pressed into soft mud that hardened over a very long time. Fossils have been found on mountaintops, in dry valleys, and even in frozen places. Scientists study fossils to learn what ancient animals looked like, what they ate, and where they lived. Each fossil is a piece of evidence showing that life on Earth is far older than people are.`,
+    questions: [
+      {
+        question: 'What does the passage say fossils are?',
+        answer: 'the remains or traces of living things from long ago',
+        options: [
+          'the remains or traces of living things from long ago',
+          'a copy of an animal drawn by an early scientist',
+          'rocks that people polish into shiny shapes',
+          'the shadows left behind at sunset',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, "ancient" means:',
+        answer: 'very old',
+        options: ['very old', 'very heavy', 'found deep underground', 'shaped like an animal'],
+        type: 'vocab',
+      },
+      {
+        question: 'Why are fossils helpful to scientists?',
+        answer: 'They show what life was like long before people.',
+        options: [
+          'They help gardeners grow bigger vegetables each season.',
+          'They show what life was like long before people.',
+          'They tell us what the weather will do tomorrow.',
+          'They prove mountains are always covered in snow.',
+        ],
+        type: 'inference',
+      },
+    ],
+  },
+  // NGSS 4-LS2-1: the availability of water, food, and shelter within a
+  // habitat influences the kinds of organisms that live there.
+  {
+    title: 'What a Habitat Provides',
+    level: 4,
+    text: `Ravi learns that an animal's home is called its habitat, and that a habitat gives an animal everything it needs to survive: food, water, shelter, and space to move around. A meadow gives a rabbit grass to eat, water from a stream, and tall grass that hides it from danger. A forest gives a squirrel nuts to store, shade on hot afternoons, and cozy hollow logs to sleep in. Different habitats hold different mixtures of these things, which is why a frog thrives in a pond and a lizard thrives in dry, sandy places.`,
+    questions: [
+      {
+        question: 'What does a habitat give an animal?',
+        answer: 'everything it needs to survive',
+        options: [
+          'only the food it likes to eat',
+          'only a place to sleep at night',
+          'everything it needs to survive',
+          'a warm coat for the winter',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, a “habitat” is:',
+        answer: 'an animal’s natural home',
+        options: [
+          'a group of animals that live together',
+          'an animal’s natural home',
+          'a place where people keep pets',
+          'a zoo built for visitors',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'What is this passage mostly about?',
+        answer: 'different habitats are home to different animals',
+        options: [
+          'how animals store food for the cold winter months',
+          'why a meadow is nicer than a forest',
+          'different habitats are home to different animals',
+          'what rabbits and squirrels like to eat most',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
+  // NGSS 4-ESS2-2: analyze and compare data to describe typical weather and
+  // climate patterns for a region.
+  {
+    title: 'Two Places, Two Climates',
+    level: 4,
+    text: `Weather is what the air feels like right now, and it can change from one hour to the next. Climate is the pattern of weather in a place over many years. The desert has a hot, dry climate, so it stays warm and hardly any water ever falls from the sky. The rainforest has a warm, wet climate, so green plants grow thick and tall all year long. Even when one week feels cool, a place keeps its climate, because climate is the long-term pattern rather than a single morning or afternoon.`,
+    questions: [
+      {
+        question: 'According to the passage, what is climate?',
+        answer: 'the pattern of weather in a place over many years',
+        options: [
+          'the weather outside on one particular morning',
+          'the pattern of weather in a place over many years',
+          'the study of clouds high in the sky',
+          'a report about whether tomorrow will be sunny',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, “pattern” means:',
+        answer: 'the way something repeats over time',
+        options: [
+          'a way to fold a paper napkin',
+          'the way something repeats over time',
+          'a sudden change that surprises everyone',
+          'a line drawn on a map',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'What is this passage mostly about?',
+        answer: 'the difference between weather and climate',
+        options: [
+          'why the desert is the hottest place on Earth',
+          'the difference between weather and climate',
+          'how rain clouds form high above the ocean',
+          'why people like to check the weather in the morning',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
+  // NGSS 4-ESS2-1: Earth's processes (moving water, wind, and ice) shape
+  // Earth's surface slowly over time.
+  {
+    title: 'Slow Work, Shaping the Land',
+    level: 4,
+    text: `Have you ever wondered how valleys are made? Moving water, wind, and ice shape the land slowly, bit by bit. This wearing-away of soil and rock is called erosion. Each time water rushes down a hill in a heavy storm, it carries tiny bits of soil with it. Over many years, that moving water can carve a deep valley into the ground. Wind picks up sand and tumbles it against rocks, smoothing them round. Glaciers are giant rivers of ice that push and scrape the land as they crawl. Erosion works slowly, but it can reshape the whole face of the Earth.`,
+    questions: [
+      {
+        question: 'What is erosion?',
+        answer: 'the wearing-away of land',
+        options: [
+          'the wearing-away of land',
+          'the building of new land at the ocean',
+          'the freezing of lakes in cold weather',
+          'the planting of grass along a road',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, a “glacier” is:',
+        answer: 'a giant river of ice',
+        options: [
+          'a giant river of ice',
+          'a deep valley carved by water',
+          'a storm that brings heavy rain and hail',
+          'a smooth round stone',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'What is this passage mostly about?',
+        answer: 'moving water, wind, and ice slowly shape the land',
+        options: [
+          'how a single storm floods a farm field',
+          'why glaciers melt during warm summers',
+          'moving water, wind, and ice slowly shape the land',
+          'where builders find stone for new houses',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
+  // NGSS 4-PS4-3: light reflects off a mirror; rough surfaces scatter light
+  // in many directions.
+  {
+    title: 'Mirror, Mirror',
+    level: 4,
+    text: `When you look into a mirror, light bounces off the smooth surface and straight back to your eyes. This bouncing of light is called reflection. Smooth, shiny surfaces like mirrors reflect light very well, which is why a mirror shows a clear picture of your face. Rough surfaces, like a brick wall, scatter light in many directions, so they cannot show a reflection. People use reflection in clever tools. A periscope uses two mirrors so a sailor can peek above the water. Doctors also use a shiny mirror to help them see into ears and throats.`,
+    questions: [
+      {
+        question: 'In this passage, “reflection” is:',
+        answer: 'a bouncing of light off a surface',
+        options: [
+          'a bouncing of light off a surface',
+          'a loud sound that comes back to you',
+          'a shadow cast by a tall object',
+          'a tool used for cutting glass',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'Why does a brick wall not show a reflection?',
+        answer: 'It is rough, so it scatters light.',
+        options: [
+          'It is rough, so it scatters light.',
+          'It is too far away from the road.',
+          'It is made of heavy red clay.',
+          'It is covered in dust and dirt.',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'What can we learn about periscopes from this passage?',
+        answer: 'Mirrors inside them bounce light so a sailor can see above the water.',
+        options: [
+          'Mirrors inside them bounce light so a sailor can see above the water.',
+          'They help sailors hear ships far away in the fog.',
+          'They keep sailors warm on cold nights at sea.',
+          'They show sailors the weather to come.',
+        ],
+        type: 'inference',
+      },
+    ],
+  },
+  // NGSS ETS1: simple machines (ramp, lever, wheel and axle) change the push
+  // or pull needed to do work.
+  {
+    title: 'Simple Machines Make Work Easier',
+    level: 4,
+    text: `Marco watches his dad push a heavy barrel up a long ramp instead of lifting it straight up. A simple machine is a tool with few or no moving parts that makes work easier. A ramp, which is called an inclined plane, lets you roll a heavy load upward with less effort. A lever, like a seesaw on the playground, helps you lift a big rock by pushing down on one end. A wheel and axle makes it easy to roll a wagon down the street. Simple machines do not do the work by themselves, but they change the push or pull you need.`,
+    questions: [
+      {
+        question: 'According to the passage, what does a ramp do?',
+        answer: 'It lets you roll a heavy load up with less effort.',
+        options: [
+          'It lets you roll a heavy load up with less effort.',
+          'It makes a heavy load weigh much less than before.',
+          'It turns a heavy barrel into a light one.',
+          'It stops a barrel from rolling back down.',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, an “inclined plane” is:',
+        answer: 'a ramp',
+        options: ['a ramp', 'a wheel and axle', 'a heavy barrel', 'a playground seesaw'],
+        type: 'vocab',
+      },
+      {
+        question: 'What is this passage mostly about?',
+        answer: 'simple machines make hard jobs easier',
+        options: [
+          'how one boy carries boxes across his yard',
+          'simple machines make hard jobs easier',
+          'why playground seesaws are fun to ride after school',
+          'the history of the wheel and axle',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
+  // NGSS 4-PS4-1: waves typically transfer energy without transferring matter.
+  {
+    title: 'Waves Across the Pool',
+    level: 4,
+    text: `Ellie watches ripples spread across the swimming pool after her friend jumps in. A wave is a moving disturbance that carries energy from place to place. Waves do not carry the water itself very far. You can see this by watching a floating leaf. When a wave slides under the leaf, the leaf bobs up and down, then settles almost exactly where it started. The energy keeps traveling, while the water mostly stays behind. Ocean waves work the same way. Moving air passes its energy to the surface of the sea, and that energy travels outward until it rolls gently onto the shore.`,
+    questions: [
+      {
+        question: 'What does a wave carry across the water?',
+        answer: 'energy',
+        options: ['energy', 'the water itself', 'sand from the bottom', 'leaves floating on top'],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, “ripples” are:',
+        answer: 'small waves that spread outward',
+        options: [
+          'large stones resting under the water',
+          'small waves that spread outward',
+          'a kind of swimming stroke',
+          'fish darting just below the surface',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'Why does the floating leaf end up almost where it started?',
+        answer: 'The water only bobs in place while the wave carries energy past it.',
+        options: [
+          'The water only bobs in place while the wave carries energy past it.',
+          'The leaf is too heavy for any wave to ever move it.',
+          'The wind pulls every floating leaf back to the same spot.',
+          'The pool water is stuck together and cannot move at all.',
+        ],
+        type: 'inference',
+      },
+    ],
+  },
+  // Grade 4 light and shadows: light travels in straight lines, so a blocked path
+  // makes a shadow, and the shadow's length follows the Sun's position in the sky.
+  {
+    title: 'Shadows Across the Day',
+    level: 4,
+    text: `Kenji notices his shadow on the sidewalk all day long. A shadow appears when an object blocks light, because light travels in straight lines and cannot bend around the object. In the early morning, the Sun hangs low, so Kenji’s shadow stretches out long behind him. Around midday, the Sun climbs high overhead, and his shadow shrinks to a short blob at his feet. In the late afternoon, the shadow grows long again on the other side. A shadow always falls opposite the Sun, and its changing length shows how the Sun moves across the sky.`,
+    questions: [
+      {
+        question: 'What makes a shadow appear?',
+        answer: 'An object blocks the light.',
+        options: [
+          'An object blocks the light.',
+          'A mirror reflects the sunlight away.',
+          'An object grows warm in the sunlight.',
+          'The light is too dim to see clearly.',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, “opposite” means:',
+        answer: 'on the other side',
+        options: ['on the other side', 'very far away', 'right up close', 'hidden underneath something'],
+        type: 'vocab',
+      },
+      {
+        question: 'What is this passage mostly about?',
+        answer: 'how a shadow changes as the Sun moves across the sky',
+        options: [
+          'how shadows are painted on city sidewalks',
+          'how a shadow changes as the Sun moves across the sky',
+          'why some objects have no color at all',
+          'why children like to play outside until dark',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
+  // NGSS 4-ESS3-1: natural resources supply the materials people use; some are
+  // renewable and some are not.
+  {
+    title: 'Earth’s Natural Resources',
+    level: 4,
+    text: `Nadia learns that everything people use comes from materials the Earth provides, called natural resources. Some resources are renewable because nature replaces them within a short time. Sunlight and moving water are renewable, and they keep arriving day after day. Trees are renewable too, since new trees can be planted where old ones grew. Other resources are nonrenewable. Coal, oil, and natural gas formed very slowly from the remains of ancient plants and animals over millions of years. Once people use them up, those fuels are gone for good. Saving energy and choosing renewable resources when possible help these gifts of the Earth last longer.`,
+    questions: [
+      {
+        question: 'In this passage, “renewable” means:',
+        answer: 'nature replaces it within a short time',
+        options: [
+          'it is something people must buy from stores',
+          'nature replaces it within a short time',
+          'it can only be found deep underground',
+          'it was invented not long ago',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'Which resources are renewable, according to the passage?',
+        answer: 'sunlight and moving water',
+        options: [
+          'coal, oil, and other fuels from long ago',
+          'sunlight and moving water',
+          'rocks people dig up',
+          'metals and shiny gems',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'What is this passage mostly about?',
+        answer: 'the difference between renewable and nonrenewable resources',
+        options: [
+          'why saving energy at home is a good habit',
+          'the difference between renewable and nonrenewable resources',
+          'how ancient animals became fossils',
+          'where people look for new supplies of oil',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
+  // Grade 4 Earth science (supports 4-ESS2-2): instruments measure temperature,
+  // wind speed and direction, and rainfall.
+  {
+    title: 'Tools That Measure the Weather',
+    level: 4,
+    text: `Priya’s family keeps a small weather station in their backyard. Different tools measure different parts of the weather. A thermometer tells the temperature, how warm or cool the air is, and is read in degrees. An anemometer has little cups that spin in the wind; the faster the cups spin, the faster the wind is blowing. A wind vane swings around to point the direction the wind is coming from. A rain gauge collects rain so the family can measure how much fell. Together, these tools turn a patch of backyard into a serious science corner.`,
+    questions: [
+      {
+        question: 'What does an anemometer measure?',
+        answer: 'how fast the wind is blowing',
+        options: [
+          'how fast the wind is blowing',
+          'how much rain fell during a storm',
+          'which direction the wind comes from',
+          'how warm or cool the air is',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, a “weather station” is:',
+        answer: 'a small set of tools that watches the weather',
+        options: [
+          'a shop that sells warm coats',
+          'a place where weather forecasts are filmed on TV',
+          'a small set of tools that watches the weather',
+          'a big storm heading toward a town',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'What is this passage mostly about?',
+        answer: 'weather tools that measure different parts of the weather',
+        options: [
+          'everything a family needs to know before a big storm arrives',
+          'weather tools that measure different parts of the weather',
+          'why thunderstorms happen near the ocean',
+          'how to read a thermometer at home',
+        ],
+        type: 'main-idea',
+      },
+    ],
+  },
+  // Grade 4 energy: electricity flows through a complete, closed circuit; a switch
+  // opens or closes the path.
+  {
+    title: 'Inside a Flashlight',
+    level: 4,
+    text: `Omar takes apart an old flashlight to see how it works. Inside, he finds a battery, a tiny light bulb, and a slide switch. Electricity flows through a complete circle of wire called a circuit. When Omar slides the switch on, the circuit is closed, and electricity runs from the battery to the bulb, making it glow. When he slides it off, the circuit opens, the flow stops, and the light goes dark. A fuse can open a circuit on purpose to cut off the flow of electricity and keep homes safe.`,
+    questions: [
+      {
+        question: 'What makes the flashlight’s bulb glow?',
+        answer: 'electricity reaches the bulb',
+        options: [
+          'the battery grows warmer and heavier',
+          'electricity reaches the bulb',
+          'the bulb is bigger than the switch',
+          'the switch is painted shiny silver',
+        ],
+        type: 'detail',
+      },
+      {
+        question: 'In this passage, a “circuit” is:',
+        answer: 'a complete circle that electricity flows through',
+        options: [
+          'a tool that measures how strong the wind is',
+          'a complete circle that electricity flows through',
+          'a kind of lamp found in old houses',
+          'a circle of roads that cars follow around a town',
+        ],
+        type: 'vocab',
+      },
+      {
+        question: 'Why does the light go dark when Omar slides the switch off?',
+        answer: 'The circuit opens and the electricity stops.',
+        options: [
+          'The battery runs out of power at that exact moment.',
+          'The circuit opens and the electricity stops.',
+          'The bulb slowly cools down after glowing for hours.',
+          'The glass covering over the bulb gets dusty.',
+        ],
+        type: 'inference',
       },
     ],
   },

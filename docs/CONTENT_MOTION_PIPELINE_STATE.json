@@ -1,0 +1,577 @@
+{
+  "plan": "content-and-motion-graphics handoff (docs/handoff/content-and-motion-graphics.md)",
+  "base_branch": "lesson-perf",
+  "work_branch": "content/banks-expansion",
+  "created": "2026-10-18T17:30:00-07:00",
+  "standing_invariants": [
+    "npm test, npm run lint, npx tsc -b, npm run build:store all pass on every commit",
+    "static/offline only — no network, no runtime AI, no new dependencies",
+    "never weaken a test to pass content; fix the content",
+    "never change lesson narration unless task is a new lesson step (+B6 tts flow)",
+    "original content only; kid-safe (7-9, child-directed); when unsure about a fact, leave it out",
+    "US spelling, serial comma, spelled-out labels, no standards codes/dev words in kid-facing copy",
+    "answers exact members of options; >30% longest / >35% shortest answer ratio fails answerBias — vary lengths",
+    "variety rule: any batch of 10, no name/setting more than twice",
+    "commit format: Content: +N <bank> L<level> (<theme words>) — ledger committed together with content",
+    "motion (if touched): no filters, motion ends within 1-2s of cue, ~150 elements, Paper bg, deterministic rand(i), reduced handled"
+  ],
+  "current_phase": "complete",
+  "steps": [
+    {
+      "id": "A1",
+      "title": "writingPrompt.ts: byGrade map + code change + tests (>=30 prompts/kind/grade gate)",
+      "status": "done",
+      "commit": "ded61cd",
+      "evidence": "byGrade map + poolForKind + grade plumbing + writingPrompts.test.ts; 219 passed (vitest providers), 776 passed (npm test)"
+    },
+    {
+      "id": "A2",
+      "title": "writing prompts G2: sentence+paragraph+story to 40+ each (reuse shared pool counts toward per-grade)",
+      "status": "done",
+      "commit": "24e86e2..2d3872a",
+      "evidence": "G2 shelf: 28 sentence + 28 paragraph + 28 story authored; poolForKind = 47/40/40; grade gate armed and green; 219 passed (vitest providers), 776 passed (npm test)"
+    },
+    {
+      "id": "A3",
+      "title": "writing prompts G3: sentence+paragraph+story to 40+ each",
+      "status": "done",
+      "commit": "457ffb1..a9198ed",
+      "evidence": "G3 shelf: 29 sentence + 30 paragraph + 29 story authored (W.3.1-W.3.3); poolForKind = 40/40/40; 12 content commits; variety audit clean (scripts/audit-writing-variety.mjs); answerBias n/a for prompts (no options)"
+    },
+    {
+      "id": "A4",
+      "title": "writing prompts G4: sentence+paragraph+story to 40+ each",
+      "status": "done",
+      "commit": "84d120a..3279b72",
+      "evidence": "G4 shelf: 29 sentence + 28 paragraph + 28 story authored (W.4.1-W.4.3); poolForKind = 41/40/40; variety audit clean (lunch cluster fixed); answerBias n/a for prompts (no options); 219 passed (vitest providers), 776 passed (npm test)"
+    },
+    {
+      "id": "A5",
+      "title": "G2_READING passages +8 (8->16) content/grade2.ts",
+      "status": "done",
+      "commit": "c52676b",
+      "evidence": "G2_READING 8->17 passages (+9, one over the +8 target, inside the 5-10/commit rule); bias audit: 51 items, longest 25.5% (<=30%), shortest 23.5% (<=35%); variety windows clean; vitest providers 219 passed, npm test 776 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
+    },
+    {
+      "id": "A6",
+      "title": "G2_READING passages +9 (16->25)",
+      "status": "done",
+      "commit": "a7b7ee7",
+      "evidence": "G2_READING 17->26 passages (+9, one over the +9 target, inside the 5-10/commit rule); bias audit across all 78 q-items: longest-answer 19 (24.4%, <=30%), shortest-answer 20 (25.6%, <=35%); variety windows clean (Maya 2x, Ms. Rosa 2x, none 3x); vitest providers 219 passed, npm test 776 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
+    },
+    {
+      "id": "A7",
+      "title": "readingComprehension L3 +8 (9->17)",
+      "status": "done",
+      "commit": "d9a1c3d",
+      "evidence": "readingComprehension L3 9->17 passages (+8, RL.3.1-3.4); bias audit across all 47 q-items: longest-answer 13 (27.7%, <=30%), shortest-answer 14 (29.8%, <=35%); variety windows clean (max 2x per word in any window of 10; new scripts/audit-reading-l3.mjs); L3 passage word counts 70-90; vitest providers 219 passed, npm test 776 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
+    },
+    {
+      "id": "A8",
+      "title": "readingComprehension L3 +8 (17->25)",
+      "status": "done",
+      "commit": "aa6da20",
+      "evidence": "readingComprehension L3 17->25 passages (+8, RL.3.1-3.4); bias audit across all 71 q-items: longest-answer 21 (29.6%, <=30%), shortest-answer 21 (29.6%, <=35%) — one answer flipped off longest by lengthening a distractor pre-commit; variety windows clean (new names Ellie/Theo/Ana/Pip/Owen/Aisha/Ravi/Marco, one per passage); new passage word counts 70-85 (L3 spec); vitest providers 219 passed, npm test 776 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
+    },
+    {
+      "id": "A9",
+      "title": "readingComprehension L4 +8 (9->17)",
+      "status": "done",
+      "commit": "3cb2e7a",
+      "evidence": "readingComprehension L4 9->17 passages (+8, RL.4.1-4.4); bias audit across all 51 q-items: longest-answer 13 (25.5%, <=30%), shortest-answer 11 (21.6%, <=35%); variety windows clean (fresh topics: poles, chameleon, banyan, Arctic tern, thunder, paper, earthworms, hummingbird — no setting/name word >2x in any window of 10); new passage word counts 87-105 (L4 spec 85-110); vitest providers 219 passed, npm test 776 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
+    },
+    {
+      "id": "A10",
+      "title": "reading L4 +8 (17->25) — l4Enrich or provider",
+      "status": "done",
+      "commit": "c61c99a",
+      "evidence": "readingComprehension L4 17->25 passages (+8, RL.4.1-4.4, written into the provider PASSAGES); bias audit across all 75 q-items: longest-answer 21 (28.0%, <=30%), shortest-answer 14 (18.7%, <=35%); variety windows clean (fresh topics: axolotl, seeds, maps, bats, sea otters, Silk Road, pigeon post, tortoises — no name/setting word >2x in any window of 10); new passage word counts 93-106 (L4 spec 85-110); vitest providers 219 passed, npm test 776 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
+    },
+    {
+      "id": "A11",
+      "title": "G2_SCIENCE +7 (7->14)",
+      "status": "done",
+      "commit": "76b793d",
+      "evidence": "G2_SCIENCE 7->14 passages (+7, NGSS 2-PS1.1/2-LS2.1/2-LS2.2/2-LS4.1/2-ESS2.2/2-ESS2.3); bias audit across all 42 q-items: longest-answer 12 (28.6%, <=30%), shortest-answer 9 (21.4%, <=35%); variety windows clean (new scripts/audit-g2-science.mjs with widened word-bag; soil/rain/seeds/green cups collisions in older passages reworded pre-commit); new passage word counts 75-90 (L2 spec 60-110); vitest providers 219 passed, npm test 776 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
+    },
+    {
+      "id": "A12",
+      "title": "G2_SCIENCE +6 (14->20)",
+      "status": "done",
+      "commit": "c1b4f86",
+      "evidence": "G2_SCIENCE 14->20 passages (+6, NGSS 2-PS1.1/2-LS2.1/2-LS4.1/2-ESS2.2); bias audit across all 60 q-items: longest-answer 17 (28.3%, <=30%), shortest-answer 19 (31.7%, <=35%); variety windows clean (new: float/sink, reach-for-light, crack-grew, coverings, tide pool, road salt — collisions with older passages reworded pre-commit: sprouts->seedlings, school->house, ice->slush); new passage word counts 62-77 (L2 spec 60-110); vitest providers 219 passed, npm test 776 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
+    },
+    {
+      "id": "A13",
+      "title": "science.ts L3 +7 (9->16)",
+      "status": "done",
+      "commit": "18107a9",
+      "evidence": "science L3 9->16 passages (+7, NGSS 3-LS1-1/3-LS4-3/3-ESS2-1/ESS1.B/LS2.A); bias audit across all 48 q-items: longest-answer 10 (20.8%, <=30%), shortest-answer 8 (16.7%, <=35%); variety windows clean (new: Nadia, Owen, Aisha, Diego, Lily + frog, seeds, bees, day-night, weather, camouflage, coral — no name/setting word >2x in any window of 10); new passage word counts 79-86 (L3 spec 70-90); one coral distractor fixed pre-commit (answer must be exact member of options); vitest providers 219 passed, npm test 776 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
+    },
+    {
+      "id": "A14",
+      "title": "science.ts L3 +4 (16->20)",
+      "status": "done",
+      "commit": "c369ff3",
+      "evidence": "science L3 16->20 passages (+4, NGSS 3-LS2-1/LS1.D/ESS1.A/3-LS4-3); bias audit across all 60 q-items: longest-answer 11 (18.3%, <=30%), shortest-answer 11 (18.3%, <=35%); variety windows clean (Sam pond-groups, geese migration, Kenji Sun-is-a-star, Priya webbed-feet/blubber/hump — one collision 'home' reworded pre-commit); new passage word counts 87-90 (L3 spec 70-90, audit at from=16 exit 0; older 'Your Five Senses' 68 words predates the count rule); vitest providers 219 passed, npm test 776 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
+    },
+    {
+      "id": "A15",
+      "title": "science.ts L4 +6 (9->15)",
+      "status": "done",
+      "commit": "59bda8e",
+      "evidence": "science L4 9->15 passages (+6, NGSS 4-LS4-1/4-LS2-1/4-ESS2-2/4-ESS2-1/4-PS4-3/ETS1); bias audit across all 46 q-items: longest-answer 11 (23.9%, <=30%), shortest-answer 8 (17.4%, <=35%); variety windows clean (fresh names Ana/Ravi/Marco, fresh topics fossils, habitat, climate, erosion, reflection, simple machines; 'sun'/'day' window collisions fixed pre-commit by rewording Water Cycle 'the sun'->'sunlight'); new passage word counts 92-104 (L4 spec 85-110); vitest providers 219 passed, npm test 776 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
+    },
+    {
+      "id": "A16",
+      "title": "science L4 +5 (15->20)",
+      "status": "done",
+      "commit": "7c548d7",
+      "evidence": "science L4 15->20 passages (+5, NGSS 4-PS4-1/4-ESS3-1 + grade-4 light-shadows, weather-instruments, closed-circuit); bias audit across all 61 q-items: longest-answer 14 (23.0%, <=30%), shortest-answer 11 (18.0%, <=35%); variety windows clean after rewording 'Wind passes its energy'->'Moving air passes its energy' and dropping 'wind' from Resources body (answer/options reworded to match); new passage word counts 92-105 (L4 spec 85-110); vitest providers 219 passed, npm test 776 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
+    },
+    {
+      "id": "A17",
+      "title": "dataGraph code: questions[] per chart (keep question working) + solver test update",
+      "status": "done",
+      "commit": "5b5c577",
+      "evidence": "ChartItem/DataChart carry optional questions[] (ChartQuestion); inline question/answer/options/hint keep working unchanged; provider deals (chart, question) pairs via flatMap + chartQuestions() helper; contentFuzz solver test now answers every question of every chart against its own bars (new test: 'answers every question of every chart in the bank'); vitest providers 220 passed, npm test 777 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
+    },
+    {
+      "id": "A18",
+      "title": "G2_CHARTS +10 (10->20)",
+      "status": "done",
+      "commit": "8eb2e06",
+      "evidence": "G2_CHARTS 10->20 charts (+10, 2.MD.D.10, written with extra questions[] so several charts carry 2-3 reads; 36 q-items total); solver replay clean on every (chart,q) pair via new scripts/audit-g2-charts.mjs; bias audit across all 36 q-items: longest-answer 3 (8.3%, <=30%), shortest-answer 4 (11.1%, <=35%); variety windows clean (fresh themes: trail finds, feeder birds, garden vegetables, snowy months, game night, carnival tickets, aquarium, flower vases, tree planting, bead necklaces; fresh names Hana/Cole/Wren/Elena/Felix/Lucy/Jude/Ito/Rosa); all charts <=4 bars, tie-free extremes; vitest providers 220 passed, npm test 777 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
+    },
+    {
+      "id": "A19",
+      "title": "G2_CHARTS +10 (20->30)",
+      "status": "done",
+      "commit": "39525ea",
+      "evidence": "G2_CHARTS 20->30 charts (+10, 2.MD.D.10, each new chart carries 2 extra questions[] — 3 reads per chart, 30 new q-items, 66 total); solver replay clean on every (chart,q) pair via scripts/audit-g2-charts.mjs; bias audit across all 66 q-items: longest-answer 4 (6.1%, <=30%), shortest-answer 5 (7.6%, <=35%); variety windows clean (fresh themes: paper planes, recycling drive, lost and found, kite festival, pancake breakfast, worm count, bike helmets, soccer goals, bake sale, lighthouse watch; fresh names Kai/Milo/Nia/Zara/Gus/Tess; team names Falcons/Otters/Comets; no word >2x in any window of 10); all charts <=4 bars, tie-free extremes; vitest providers 220 passed, npm test 777 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
+    },
+    {
+      "id": "A20",
+      "title": "charts L3 +8 (14->22), L4 +7 (17->24) extra questions per existing charts",
+      "status": "done",
+      "commit": "a8b04cf..8efb066",
+      "evidence": "dataGraph CHARTS: L3 14->22 (+8, 3.MD.D.3, each new chart carries 1 extra questions[] read — 16 new q-items, 30 total) and L4 17->24 (+7, 4.MD.B, each new chart carries 2 extra questions[] — 21 new q-items, 38 total); solver replay clean on every (chart,q) pair via new scripts/audit-charts-l34.mjs; bias audit L3: 30 q-items longest 1 (3.3%, <=30%), shortest 0 (0%, <=35%); L4: 38 q-items longest 0 (0%), shortest 1 (2.6%); variety windows clean both levels; one solver trap fixed pre-commit (singular 'Potato' label vs plural question — solver only aliases trailing s, labels made plural); averages whole (124/4=31, 66/3=22); vitest providers 220 passed, npm test 777 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
+    },
+    {
+      "id": "A21",
+      "title": "charts L3 +8 (22->30), L4 +6 (24->30)",
+      "status": "done",
+      "commit": "c9ef0d9..bb4d3e9",
+      "evidence": "dataGraph CHARTS: L3 22->30 (+8, 3.MD.D.3, each new chart carries 1 extra questions[] read — 8 new q-items, 46 total) and L4 24->30 (+6, 4.MD.B, each new chart carries 2 extra questions[] — 12 new q-items, 56 total); solver replay clean on every (chart,q) pair via scripts/audit-charts-l34.mjs; bias audit L3: 46 q-items longest 3 (6.5%, <=30%), shortest 1 (2.2%, <=35%); L4: 56 q-items longest 0 (0%), shortest 1 (1.8%); variety windows clean both levels (fresh themes: kites, ladybugs, puddle jumps, cup stacks, seashells, muffins, block towers, snow forts, trail signs, scarves, compost, beehives, towel rentals, pottery); two solver/self-review fixes pre-commit (Pottery 'three groups TOGETHER' -> named two bars; Compost renumbered off Trail's 54-total); averages whole (54/3=18, 60/3=20); vitest providers 220 passed, npm test 777 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
+    },
+    {
+      "id": "A22",
+      "title": "CYCLE_SITUATIONS +11 (18->29)",
+      "status": "done",
+      "commit": "20283b5..0b9af55",
+      "evidence": "CYCLE_SITUATIONS 18->29 situations (+11, water cycle; per-process 10/10/9 — balanced across evaporation/condensation/precipitation); answers are always the three existing process words so answerBias n/a (options identical every item); prompts leak-free (never contain their own answer word), every prompt ends in ? or ___, captions 6-28 chars leak-free; variety windows clean (new scripts/audit-cycle-situations.mjs: names+settings watch-list, none >2x in any window of 10); fresh settings: beach sand, sidewalk, laundry line, pool, bathroom mirror, chilly breath, soup pot lid, foggy meadow, camping tent, snowy yard; vitest providers 220 passed, npm test 777 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
+    },
+    {
+      "id": "A23",
+      "title": "CYCLE_SITUATIONS +11 (29->40)",
+      "status": "done",
+      "commit": "243b971..c40c7e6",
+      "evidence": "CYCLE_SITUATIONS 29->40 situations (+11, water cycle; per-process 14/13/13 — balances the bank at 40, the A1 table target); answers are always the three existing process words so answerBias n/a (options identical every item); prompts leak-free (never contain their own answer word), every prompt ends in ? or ___, captions 6-28 chars leak-free; variety windows clean (audit-cycle-situations.mjs: names+settings watch-list, none >2x in any window of 10; one 'afternoon' x3 collision reworded pre-commit); fresh settings: kettle stove, sprinkler driveway, deck towels, park grass, night kitchen window, cold bottle, foggy glasses, ball game, fence/mailbox, pavement, farm hail; vitest providers 220 passed, npm test 777 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
+    },
+    {
+      "id": "A24",
+      "title": "geometry L2 +11 (18->29)",
+      "status": "done",
+      "commit": "4048657..b97bc70",
+      "evidence": "G2_GEOMETRY 18->29 items (+11, 2.G.A.1-3: storybook cover, clock face, watermelon slice, cube box, 2x2 cube rows, hexagon corners, pancake halves, pie fourths, orange-slice comparison, pentagon-vs-hexagon, corner sum); bias audit across all 29 L2 items: longest-answer 4 (13.8%, <=30%), shortest-answer 4 (13.8%, <=35%); variety windows clean (new scripts/audit-geometry-l2.mjs); vitest providers 220 passed, npm test 777 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
+    },
+    {
+      "id": "A25",
+      "title": "geometry L2 +11 (29->40)",
+      "status": "done",
+      "commit": "bc8acce..bc2291b",
+      "evidence": "G2_GEOMETRY 29->40 items (+11, 2.G.A.1-3: notebook paper, tile corners, cornbread thirds, cube tower, corner compare; toast triangles, basketball sphere, tile rows, napkin folds, triangle sides, half-vs-fourth); bias audit across all 40 L2 items: longest-answer 6 (15.0%, <=30%), shortest-answer 6 (15.0%, <=35%); variety windows clean (one 'box' x3 collision reworded to 'tile' pre-commit; audit watch-list widened with toast/napkin/cake/basketball/tile/shelf/tower/cornbread); fresh names Nina/Zoe/Lucy/Gus/Lily; vitest providers 220 passed, npm test 777 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
+    },
+    {
+      "id": "A26",
+      "title": "geometry L3 +8 (25->33)",
+      "status": "done",
+      "commit": "c8adb82",
+      "evidence": "geometry L3 25->33 items (+8, CCSS 3.G.A.1: pentagon corners, rectangle parallel pairs, square-as-rectangle, sphere-no-flat-faces, cube-square-faces, nonagon sides, honeycomb hexagon, octagon corners); bias audit across all 33 L3 items: longest-answer 7 (21.2%, <=30%), shortest-answer 1 (3.0%, <=35%); variety windows clean (no watch-list word >2x in any window of 10; new scripts/audit-geometry-l3.mjs membership+bias+variety audit); vitest providers 220 passed, npm test 777 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
+    },
+    {
+      "id": "A27",
+      "title": "geometry L3 +7 (33->40)",
+      "status": "done",
+      "commit": "67d92be",
+      "evidence": "geometry L3 33->40 items (+7, CCSS 3.G.A.1-2: hexagon corners, cylinder circle ends, brownie eighths, quadrilateral group, heptagon corners, apple sixths, pizza fourths); bias audit across all 40 L3 items: longest-answer 8 (20.0%, <=30%), shortest-answer 1 (2.5%, <=35%); variety windows clean (one fresh name Ana; brownies/apple/pizza settings, none >2x in any window of 10); equal-shares items stay within 3.G.A.2 unit-fraction language (halves through eighths, no fifths/tenths above-band issues); vitest providers 220 passed, npm test 777 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
+    },
+    {
+      "id": "A28",
+      "title": "geometry L4 +10 (30->40)",
+      "status": "done",
+      "commit": "f752171",
+      "evidence": "geometry L4 30->40 items (+10, CCSS 4.G.A.1-3 / 4.MD.C.5: vertex, ray, line segment, protractor, right angle = quarter turn, 270° three-quarter turn, two right angles = straight, regular hexagon 6 symmetry lines, letter H two symmetry lines, adjacent angles); bias audit across all 40 served L4 items (provider section + L4_ENRICH_GEOMETRY; new scripts/audit-geometry-l4.mjs): longest-answer 8 (20.0%, <=30%), shortest-answer 3 (7.5%, <=35%); variety windows clean (no watch-list word >2x in any window of 10); facts checked: H has exactly 2 lines of symmetry, regular hexagon has 6, 270° = three quarters of 360°; vitest providers 220 passed, npm test 777 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
+    },
+    {
+      "id": "A29",
+      "title": "fraction equivalence G2 generator widen within 2.G.A.3",
+      "status": "done",
+      "commit": "6aac95c",
+      "evidence": "fractionEquivalence.ts generator: Fact gains mode + known + div; four blanks now served — ?/d ×-up (classic, unchanged shape+hint), c/? ×-up, ?/t ÷-down, c/? ÷-down (4/6 = 2/3, the standard's own example); enumerated fact shelf at G2 /8: 8 -> 24 distinct facts (verified: prompts max denominator 8, all proper fractions, all four shapes present). factId mirrors the prompt blank (frac-eq:2/3=4/?) and round-trips through parseFracEqFactId; weak-fact boost keeps serving old ?/d ids. Forge keeps shapes:['numUp'] (gauge prints the target denominator) — forge shelf unchanged. Guards extended, never weakened: contentFuzz + contentInvariants now recompute answers for all four shapes incl. hint-verb (Multiply/Divide) and properness; new shelf test pins >=20 facts and all four shapes at /8; vitest providers 221 passed (+1), npm test 778 passed, lint clean, tsc -b clean, build:store ✓ 83 files, all fetches same-origin/known loaders"
+    },
+    {
+      "id": "A30",
+      "title": "GROVE_ORDERS G2 15->30 (factors <=5)",
+      "status": "done",
+      "commit": "e52cb4e..3215564",
+      "evidence": "G2 served pool 15->32 (target 30): canonical bank 30->31 (added the last missing pair 2x2 spruce; stays pair-unique) + new GROVE_ORDER_ALTS shelf of 16 fresh second-pass phrasings — every 2..5 pair now has a distinct second reading; provider and TimesGrove serve grovePoolFor (canonical+alts) and groveOrderWithAlts rotates phrasings by sighting; CCSS 2.OA.A.3-4 note added; answerBias n/a (options are groveCandidates sibling totals); leak/format/pair/pool/variety audit clean (new scripts/audit-grove-orders.mjs); vitest providers 226 passed, npm test 783 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
+    },
+    {
+      "id": "A31",
+      "title": "wordProblem skeletons double (add/sub 8->16 each)",
+      "status": "done",
+      "commit": "5f3db1e..7f0caf0",
+      "evidence": "TEMPLATES_ADD 8->16 (+8, CCSS 2.OA.A.1 add-to within 100: Priya bracelets, Kenji sunflowers, Aisha blueberries, Nadia logs, Cole fireflies, Wren cans, Hana scarves, Milo dogs); TEMPLATES_SUB 8->16 (+8, take-from: birdhouse robins, Diego marbles, Sam tray cookies, Priya painted eggs, library cart, Nia seashells, popsicles melted, Owen blocks); every skeleton states a then b in order so the fuzz solver's number extraction holds; add answers stay <=60 (grade-2 band), sub a-b stays positive; one 'burned candles' skeleton replaced by melting popsicles pre-commit (no fire imagery); variety: fresh names within each batch of 8, no name/setting >2x in any window of 10; vitest providers 226 passed, npm test 783 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
+    },
+    {
+      "id": "A32",
+      "title": "wordProblem skeletons double (mul/div 12->24 each)",
+      "status": "done",
+      "commit": "5e8787b..ff91ade",
+      "evidence": "TEMPLATES_MULT 12->24 and TEMPLATES_DIV 12->24 (+24 skeletons, CCSS 3.OA.A.3 equal-groups/share stories, 4 content commits of 6; fresh names Hana/Kai/Ms. Ito/Rosa/Zara/Felix/Lucy/Omar/Elena/Theo/Ana/Gus/Tess/Jude/Mr. Hale/Wren/Nia/Grandpa, fresh settings napkin tables, pinecone crates, beehives, postcards, cubbies, marigolds, muffin tins, book cartons, basil pots, porch lights, quilts, pumpkins, gift tins, paper stacks, vases, lemonade cups, button jars, parachute teams, recital chairs, shelter treats, ribbon bunches, shell bags, kit bags, garden stakes); every skeleton states exactly two numbers in solver order (nums[0]=a/dividend before nums[1]=b/divisor); answerBias n/a (choices are computed numeric values, lengths identical by shape); variety windows clean per shelf (new scripts/audit-word-problems.mjs; two 'holds' collisions reworded pre-commit — cubby 'fits', wagon 'stacked'; parachute-teams skeleton reordered dividend-before-divisor); vitest providers 226 passed, npm test 783 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
+    },
+    {
+      "id": "B1",
+      "title": "perf rework: wordProblem/plan scene under ~150 elements",
+      "status": "done",
+      "commit": "8182137",
+      "evidence": "wordProblem/plan peak 257->125 SVG elements (new scripts/audit-scene-elements.mjs: real words.json cue timings, 0.05s sampling); R: 24-crayon grid -> per-row two-path CrayonRun silhouette, equal-groups block fades out at 'multiply' (rule line stays), infinite breathe pulse -> one bounded wave, perpetual Twinkle -> finite Sparkles, StoryCard unbadged words drop their wrapper <g>, IndexCard filter=sq-shadow removed (B2.2; reading/QCard benefits too); plan now B2-clean: ends, no filters, Paper only, deterministic; vitest src/tutoring 43 passed, npm test 783 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
+    },
+    {
+      "id": "B2",
+      "title": "perf rework: wordProblem/read scene",
+      "status": "done",
+      "commit": "1cd1547",
+      "evidence": "wordProblem/read peak 247->115 SVG elements (budget 150) measured by scripts/audit-scene-elements.mjs over the real narration timeline (public/tts/wordProblem/read.words.json); 24-crayon tray relaid as per-row CrayonRun silhouettes whose n grows as columns land (same drop/spring per row, stagger preserved); perpetual fox blink loop -> two bounded blinks at 3.4s/6.8s (B2.3); perpetual Twinkles -> one finite Sparkles flash at done; ThoughtBubble sq-shadow filter removed (B2.2, ink outline carries the toon look — read now 0 filter frames); audit script repaired to self-bootstrap TSX_TSCONFIG_PATH=tsconfig.app.json (tsx was resolving the root solution config -> classic JSX -> 'React is not defined'); plan re-verified ok at 125; vitest src/tutoring 43 passed, npm test 783 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
+    },
+    {
+      "id": "B3",
+      "title": "perf rework: science/states scene",
+      "status": "done",
+      "commit": "3dd93d2",
+      "evidence": "science/states peak 195 -> 118 SVG elements (budget 150) measured by scripts/audit-scene-elements.mjs over the real narration timeline (public/tts/science/states.words.json, dur 12.68s); Ball gains hl flag — highlight shine dropped on the dense particle fields (25 solid + 36 liquid + 16 gas particles; the ink outline carries the toon look, same rationale as B2.2 filter removal); perpetual sine motions bounded per B2.3: solid in-place jiggle -> windowed ramp peaking in the 'keeps its own shape' beat, liquid slosh + surface bob -> ramp to zero after the jar re-packs, gas zip -> sin-window settling at 'fill all the space'; two perpetual Twinkles -> one finite Sparkles flash at done; every beat preserved: block drop + dashed outline trace, beaker tilt + pour stream + 6->10 re-pack morph, gas puff + lid + spread, labels/captions/ticks; vitest src/tutoring 43 passed, npm test 783 passed, lint clean, tsc -b clean, build:store ✓ 83 files"
+    }
+  ],
+  "history": [
+    {
+      "interval": 1,
+      "step": "A1",
+      "result": "done",
+      "tests": "vitest providers 219 passed; npm test 776 passed; lint, tsc -b, build:store clean",
+      "push": "push-skipped (one attempt; remote ref unchanged at 6f2bf5f — local commits are source of truth)"
+    },
+    {
+      "interval": 2,
+      "step": "A2",
+      "result": "done",
+      "tests": "vitest providers 219 passed (9 commits re-ran the full providers suite each time); npm test 776 passed; lint, tsc -b, build:store clean on every commit",
+      "commits": "10 content commits 24e86e2..2d3872a, +84 G2 prompts (28 sentence W.2.1, 28 paragraph W.2.2, 28 story W.2.3); pools 47/40/40; variety windows audited clean",
+      "push": "push-skipped (one attempt; timed out at 120s — local commits are source of truth)"
+    },
+    {
+      "interval": 3,
+      "step": "A3",
+      "result": "done",
+      "tests": "vitest providers 219 passed (full providers suite re-ran on each of the 13 commits); npm test 776 passed; lint, tsc -b, build:store clean on every commit",
+      "commits": "13 commits 457ffb1..a9198ed: +92 G3 prompts (29 sentence W.3.1, 30 paragraph W.3.2, 29 story W.3.3); pools 40/40/40; variety pass corrected school/ocean/night/town clusters; added scripts/audit-writing-variety.mjs (window-of-10 audit, now committed; G2 re-audited clean)",
+      "push": "push-skipped (one attempt; remote ref unchanged at 6f2bf5f — local commits are source of truth)"
+    },
+    {
+      "interval": 4,
+      "step": "A4",
+      "result": "done",
+      "tests": "vitest providers 219 passed (fast gate on each of the 11 commits); final battery: vitest providers 219 passed, npm test 776 passed, lint clean, tsc -b clean, build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "11 commits 84d120a..3279b72: +94 G4 prompts (29 sentence W.4.1, 28 paragraph W.4.2, 28 story W.4.3); pools 41/40/40; variety audit clean after lunch-cluster fix (midday break, sandwich); one CJK typo caught and fixed pre-commit",
+      "gates": "fast-intermediate/full-final",
+      "push": "pushed 6f2bf5f..3279b72 to origin/content/banks-expansion (one attempt, exit 0)"
+    },
+    {
+      "interval": 5,
+      "step": "A5",
+      "result": "done",
+      "tests": "vitest providers 219 passed; npm test 776 passed; lint clean; tsc -b clean; build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "c52676b: +9 G2_READING passages (8->17, RL.2.1/2.2/2.4); one lost-umbrella story rewritten wholesome pre-commit (kid checks office before claiming); Apple Cider third question swapped detail->vocab (press = a machine that squeezes); bias audit 51 items longest 25.5% / shortest 23.5%; variety windows clean",
+      "gates": "full-final (single content commit for the step)",
+      "push": "pushed c52676b to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 6,
+      "step": "A6",
+      "result": "done",
+      "tests": "vitest providers 219 passed; npm test 776 passed; lint clean; tsc -b clean; build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "a7b7ee7: +9 G2_READING passages (17->26, RL.2.1/2.2/2.4); bias audit 78 q-items longest 24.4% / shortest 25.6%; variety windows clean (Maya 2x, Ms. Rosa 2x max)",
+      "gates": "full-final (single content commit for the step)"
+    },
+    {
+      "interval": 7,
+      "step": "A7",
+      "result": "done",
+      "tests": "vitest providers 219 passed; npm test 776 passed; lint clean; tsc -b clean; build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "d9a1c3d: +8 readingComprehension L3 passages (9->17, RL.3.1-3.4); bias audit 47 q-items longest 27.7% / shortest 29.8%; variety windows clean (L3 word-bag max 2x per window of 10); word counts tuned to 70-90 pre-commit; added scripts/audit-reading-l3.mjs (bias + variety audit for reading levels 3/4)",
+      "gates": "full-final (single content commit for the step)"
+    },
+    {
+      "interval": 8,
+      "step": "A8",
+      "result": "done",
+      "tests": "vitest providers 219 passed; npm test 776 passed; lint clean; tsc -b clean; build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "aa6da20: +8 readingComprehension L3 passages (17->25, RL.3.1-3.4); bias audit 71 q-items longest 29.6% / shortest 29.6% (one answer flipped off longest by lengthening a distractor); variety windows clean (Ellie, Theo, Ana/Pip, Owen/Aisha, desert snail, whales, Ravi, Marco — fresh names/settings, none repeated); new passage word counts 70-85",
+      "gates": "full-final (single content commit for the step)"
+    },
+    {
+      "interval": 9,
+      "step": "A9",
+      "result": "done",
+      "tests": "vitest providers 219 passed; npm test 776 passed; lint clean; tsc -b clean; build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "3cb2e7a: +8 readingComprehension L4 passages (9->17, RL.4.1-4.4); bias audit 51 q-items longest 25.5% / shortest 21.6%; variety windows clean (fresh topics, no word >2x per window of 10); new passage word counts 87-105",
+      "gates": "full-final (single content commit for the step)",
+      "push": "pushed bf54127..9091b7a to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 10,
+      "step": "A10",
+      "result": "done",
+      "tests": "vitest providers 219 passed; npm test 776 passed; lint clean; tsc -b clean; build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "c61c99a: +8 readingComprehension L4 passages (17->25, RL.4.1-4.4); bias audit 75 q-items longest 28.0% / shortest 18.7%; variety windows clean (axolotl, seeds, maps, bats, sea otters, Silk Road, pigeon post, tortoises); new passage word counts 93-106",
+      "gates": "full-final (single content commit for the step)",
+      "push": "pushed 9091b7a..dd0a7e3 to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 11,
+      "step": "A11",
+      "result": "done",
+      "tests": "vitest providers 219 passed; npm test 776 passed; lint clean; tsc -b clean; build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "76b793d: +7 G2_SCIENCE passages (7->14, NGSS 2-PS1.1/2-LS2.1/2-LS2.2/2-LS4.1/2-ESS2.2/2-ESS2.3); bias audit 42 q-items longest 28.6% / shortest 21.4%; variety windows clean after rewording soil/rain/seeds/green collisions across older passages; added scripts/audit-g2-science.mjs (bias + variety + word-count audit for the G2 science shelf)",
+      "gates": "full-final (single content commit for the step)",
+      "push": "pushed f641517..6362907 to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 12,
+      "step": "A12",
+      "result": "done",
+      "tests": "vitest providers 219 passed; npm test 776 passed; lint clean; tsc -b clean; build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "c1b4f86: +6 G2_SCIENCE passages (14->20, NGSS 2-PS1.1/2-LS2.1/2-LS4.1/2-ESS2.2); bias audit 60 q-items longest 28.3% / shortest 31.7%; variety windows clean after rewording sprouts/school/ice collisions; new passage word counts 62-77",
+      "gates": "full-final (single content commit for the step)",
+      "push": "pushed ee4b523..ca835b9 to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 13,
+      "step": "A13",
+      "result": "done",
+      "tests": "vitest providers 219 passed; npm test 776 passed; lint clean; tsc -b clean; build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "18107a9: +7 science L3 passages (9->16, NGSS 3-LS1-1/3-LS4-3/3-ESS2-1/ESS1.B/LS2.A); bias audit 48 q-items longest 20.8% / shortest 16.7%; variety windows clean (Nadia, Owen, Aisha, Diego, Lily — fresh names, one per passage); new passage word counts 79-86; added scripts/audit-science-l3.mjs (bias + variety + word-count audit for the science shelf; supports L4 for A15/A16)",
+      "gates": "full-final (single content commit for the step)",
+      "push": "pushed ca835b9..fa1d85f to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 14,
+      "step": "A14",
+      "result": "done",
+      "tests": "vitest providers 219 passed; npm test 776 passed; lint clean; tsc -b clean; build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "c369ff3: +4 science L3 passages (16->20, NGSS 3-LS2-1/LS1.D/ESS1.A/3-LS4-3); bias audit 60 q-items longest 18.3% / shortest 18.3%; variety windows clean after rewording 'home' collision; new passage word counts 87-90; 'Your Five Senses' 68-word flag is pre-existing (predates count rule)",
+      "gates": "full-final (single content commit for the step)",
+      "push": "pushed 0951dfa..3325de8 to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 15,
+      "step": "A15",
+      "result": "done",
+      "tests": "vitest providers 219 passed; npm test 776 passed; lint clean; tsc -b clean; build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "59bda8e: +6 science L4 passages (9->15, NGSS 4-LS4-1/4-LS2-1/4-ESS2-2/4-ESS2-1/4-PS4-3/ETS1); bias audit 46 q-items longest 23.9% / shortest 17.4%; variety windows clean after rewording 'the sun'->'sunlight' (Water Cycle) and dropping 'day' x3 (climate passage); new passage word counts 92-104",
+      "gates": "full-final (single content commit for the step)",
+      "push": "pushed 3325de8..95c1526 to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 16,
+      "step": "A16",
+      "result": "done",
+      "tests": "vitest providers 219 passed; npm test 776 passed; lint clean; tsc -b clean; build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "7c548d7: +5 science L4 passages (15->20, NGSS 4-PS4-1/4-ESS3-1 + grade-4 light-and-shadows, weather instruments, closed circuits); bias audit 61 q-items longest 23.0% / shortest 18.0%; variety windows clean after rewording 'wind' collisions across Waves/Resources passages; new passage word counts 92-105",
+      "gates": "full-final (single content commit for the step)",
+      "push": "pushed 95c1526..03e02bb to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 17,
+      "step": "A17",
+      "result": "done",
+      "tests": "vitest providers 220 passed (+1 new solver test); npm test 777 passed; lint clean; tsc -b clean; build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "5b5c577: dataGraph code step — ChartItem (content/grade2.ts) and DataChart (dataGraph.ts) gain optional questions?: ChartQuestion[]; inline question/answer/options/hint unchanged so existing authored charts and the answerBias sampler keep working; makeStaticDataGraphProvider now deals (chart, question) pairs via flatMap over chartQuestions(); contentFuzz.test.ts solver suite gained 'answers every question of every chart in the bank, keyed to its own bars' — walks CHARTS and asserts the solver reproduces each key",
+      "gates": "full-final (single code commit for the step)",
+      "push": "pushed 03e02bb..1e997e9 to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 18,
+      "step": "A18",
+      "result": "done",
+      "tests": "vitest providers 220 passed; npm test 777 passed; lint clean; tsc -b clean; build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "8eb2e06: +10 G2_CHARTS charts (10->20, 2.MD.D.10); several charts carry extra questions[] (2-3 reads per chart, provider deals (chart,q) pairs) — 36 q-items; solver replay clean on every pair; bias audit 36 q-items longest 8.3% / shortest 11.1%; variety windows clean; added scripts/audit-g2-charts.mjs (solver+bias+variety audit for the charts shelf, reusable for A19)",
+      "gates": "full-final (single content commit for the step)",
+      "push": "pushed 1e997e9..3f69fe9 to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 19,
+      "step": "A19",
+      "result": "done",
+      "tests": "vitest providers 220 passed; npm test 777 passed; lint clean; tsc -b clean; build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "39525ea: +10 G2_CHARTS charts (20->30, 2.MD.D.10); every new chart carries 2 extra questions[] (3 reads per chart, 30 new q-items, 66 total); solver replay clean on every pair; bias audit 66 q-items longest 6.1% / shortest 7.6%; variety windows clean (paper planes, recycling, lost and found, kites, pancakes, worms, helmets, soccer, bake sale, lighthouse)",
+      "gates": "full-final (single content commit for the step)",
+      "push": "pushed 3f69fe9..948f75f to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 20,
+      "step": "A20",
+      "result": "done",
+      "tests": "vitest providers 220 passed (fast gate on the intermediate commit); final battery: vitest providers 220 passed, npm test 777 passed, lint clean, tsc -b clean, build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "a8b04cf: +8 data graphs L3 (14->22, 3.MD.D.3, 16 new q-items via extra questions[]); 8efb066: +7 data graphs L4 (17->24, 4.MD.B, 21 new q-items incl. two whole-number averages); new scripts/audit-charts-l34.mjs (solver+bias+variety audit across dataGraph.ts and l4Enrich.ts); bias L3 longest 3.3%/shortest 0%, L4 longest 0%/shortest 2.6%; variety clean both levels; one solver trap fixed pre-commit (plural labels)",
+      "gates": "fast-intermediate/full-final",
+      "push": "pushed 1b73833..ba6e819 to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 21,
+      "step": "A21",
+      "result": "done",
+      "tests": "vitest providers 220 passed (fast gate on the intermediate commit); final battery: vitest providers 220 passed, npm test 777 passed, lint clean, tsc -b clean, build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "c9ef0d9: +8 data graphs L3 (22->30, 3.MD.D.3, 8 new q-items via extra questions[]); bb4d3e9: +6 data graphs L4 (24->30, 4.MD.B, 12 new q-items incl. two whole-number averages); audit-charts-l34 clean: L3 bias longest 6.5%/shortest 2.2%, L4 longest 0%/shortest 1.8%; variety clean both levels; two self-review fixes pre-commit (unsolvable 'three groups TOGETHER' question reworded to name two bars; Compost renumbered off Trail's identical 54-total)",
+      "gates": "fast-intermediate/full-final",
+      "push": "pushed 4071af0..3636074 to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 22,
+      "step": "A22",
+      "result": "done",
+      "tests": "vitest providers 220 passed (fast gate on the intermediate commit); final battery: vitest providers 220 passed, npm test 777 passed, lint clean, tsc -b clean, build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "20283b5: +5 CYCLE_SITUATIONS (evaporation x4, condensation x1); 0b9af55: +6 CYCLE_SITUATIONS (condensation x3, precipitation x3) — bank 18->29, per-process 10/10/9; audit clean: leak-free, captions leak-free, asks-something, variety windows (names/settings none >2x per window of 10); three caption/emoji dupes and one snow-word collision fixed pre-commit; added scripts/audit-cycle-situations.mjs (leak+balance+variety audit for the Cloud Keeper bank, reusable for A23)",
+      "gates": "fast-intermediate/full-final",
+      "push": "pushed 5a29837..60fa589 to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 23,
+      "step": "A23",
+      "result": "done",
+      "tests": "vitest providers 220 passed (fast gate on the intermediate commit); final battery: vitest providers 220 passed, npm test 777 passed, lint clean, tsc -b clean, build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "243b971: +5 CYCLE_SITUATIONS (kettle steam, sprinkler driveway, deck towels, park grass, night kitchen window); c40c7e6: +6 CYCLE_SITUATIONS (cold bottle, foggy glasses, ball-game rain, fence snow, pavement rain, farm hail) — bank 29->40, per-process 14/13/13; audit-cycle-situations clean: leak-free, captions leak-free, asks-something, variety windows (one 'afternoon' x3 collision reworded pre-commit)",
+      "gates": "fast-intermediate/full-final",
+      "push": "pushed 60fa589..041d8af to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 24,
+      "step": "A24",
+      "result": "done",
+      "tests": "vitest providers 220 passed (fast gate on the intermediate commit); final battery: vitest providers 220 passed, npm test 777 passed, lint clean, tsc -b clean, build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "4048657: +6 geometry L2 (hexagon corners, storybook cover, clock face, watermelon slice, cube box, 2x2 cube rows); b97bc70: +5 geometry L2 (pancake halves, pie fourths, orange-slice comparison, pentagon-vs-hexagon, corner sum) — bank 18->29; audit clean: bias longest 13.8%/shortest 13.8%, variety windows (fresh names Amir/Ana/Bo, fresh settings storybook/clock/pantry/watermelon/box); added scripts/audit-geometry-l2.mjs (membership+bias+variety audit for the geometry L2 shelf, reusable for A25)",
+      "gates": "fast-intermediate/full-final",
+      "push": "pushed 041d8af..8073f70 to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 25,
+      "step": "A25",
+      "result": "done",
+      "tests": "vitest providers 220 passed (fast gate on the intermediate commit); final battery: vitest providers 220 passed, npm test 777 passed, lint clean, tsc -b clean, build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "bc8acce: +5 geometry L2 (notebook paper, tile corners, cornbread thirds, cube tower, corner compare); bc2291b: +6 geometry L2 (toast triangles, basketball sphere, tile rows, napkin folds, triangle sides, half-vs-fourth) — bank 29->40, the A1 target; audit-geometry-l2 clean: bias longest 15.0%/shortest 15.0%, variety windows (one 'box' x3 collision reworded to 'tile' pre-commit); audit watch-list widened with new setting words",
+      "gates": "fast-intermediate/full-final",
+      "push": "pushed eb88ea4..d1e1b4c to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 26,
+      "step": "A26",
+      "result": "done",
+      "tests": "final battery (single content commit for the step): vitest providers 220 passed, npm test 777 passed, lint clean, tsc -b clean, build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "c8adb82: +8 geometry L3 (25->33, CCSS 3.G.A.1 — pentagon corners, rectangle parallel pairs, square-as-rectangle, sphere no flat faces, cube square faces, nonagon, honeycomb hexagon, octagon corners); audit-geometry-l3 clean: bias longest 21.2%/shortest 3.0%, variety windows clean",
+      "gates": "full-final (single content commit for the step)",
+      "push": "pushed d1e1b4c..d0d9179 to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 27,
+      "step": "A27",
+      "result": "done",
+      "tests": "final battery (single content commit for the step): vitest providers 220 passed, npm test 777 passed, lint clean, tsc -b clean, build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "67d92be: +7 geometry L3 (33->40, CCSS 3.G.A.1-2 — hexagon corners, cylinder circle ends, brownie eighths, quadrilateral group, heptagon corners, apple sixths, pizza fourths); audit-geometry-l3 clean: 40 items, bias longest 20.0%/shortest 2.5%, variety windows clean",
+      "gates": "full-final (single content commit for the step)",
+      "push": "pushed a2dd51a..67d92be to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 28,
+      "step": "A28",
+      "result": "done",
+      "tests": "final battery (single content commit for the step): vitest providers 220 passed, npm test 777 passed, lint clean, tsc -b clean, build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "f752171: +10 geometry L4 (30->40, CCSS 4.G.A.1-3 / 4.MD.C.5 — vertex, ray, line segment, protractor, right angle as quarter turn, 270° three-quarter turn, two right angles make straight, hexagon 6 symmetry lines, letter H two symmetry lines, adjacent angles); new scripts/audit-geometry-l4.mjs audits the served L4 bank across geometry.ts + l4Enrich.ts: bias longest 20.0%/shortest 7.5%, variety windows clean",
+      "gates": "full-final (single content commit for the step)",
+      "push": "pushed 67d92be..9a21d38 to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 29,
+      "step": "A29",
+      "result": "done",
+      "tests": "final battery (single code commit for the step): vitest providers 221 passed (+1 new shelf test), npm test 778 passed, lint clean, tsc -b clean, build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "6aac95c: fraction equivalence generator widen within 2.G.A.3 — Fact gains mode/known/div; G2 /8 shelf 8 -> 24 distinct facts (top-blank ×-up unchanged, plus bottom-blank ×-up, top-blank ÷-down, bottom-blank ÷-down); factId mirrors the prompt blank and round-trips; fuzz + invariant guards extended to recompute all four shapes (never weakened); new shelf test pins >=20 facts and all four shapes; forge locked to numUp so its gauge keeps printing the target denominator",
+      "gates": "full-final (single code commit for the step)",
+      "push": "pushed 9a21d38..2111302 to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 30,
+      "step": "A30",
+      "result": "done",
+      "tests": "vitest providers 226 passed (fast gate on each content commit; +5 new grove tests); final battery on 3215564: vitest providers 226 passed, npm test 783 passed, lint clean, tsc -b clean, build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "e52cb4e: +9 grove orders L2 (canonical 2x2 spruce + 8 second-pass phrasings, grovePoolFor widens the served pool, TimesGrove serves the pool + groveOrderWithAlts); 3215564: +8 second phrasings (sycamore, aspen, redwood, serviceberry, magnolia, persimmon, pawpaw, pine) — every 2..5 pair now double-phrased, G2 served pool 15->32; canonical bank stays pair-unique (curated invariant untouched); audit-grove-orders.mjs clean (leak/format/pair/pool/variety windows)",
+      "gates": "fast-intermediate/full-final",
+      "push": "pushed 2111302..b2391b9 to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 31,
+      "step": "A31",
+      "result": "done",
+      "tests": "vitest providers 226 passed (fast gate on each content commit); final battery: vitest providers 226 passed, npm test 783 passed, lint clean, tsc -b clean, build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "5f3db1e: +8 add skeletons (8->16, CCSS 2.OA.A.1); 7f0caf0: +8 subtract skeletons (8->16) — add/sub doubled per the A1 #10 line; two self-review fixes pre-commit (interpolation newline in Nia template; candles-burning skeleton replaced with melting popsicles — no fire imagery); variety windows clean (fireflies in both banks across the 16-item batch is item-word not name/setting; robins rewrite keeps the batch varied)",
+      "gates": "fast-intermediate/full-final",
+      "push": "pushed b2391b9..580f70c to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 32,
+      "step": "A32",
+      "result": "done",
+      "tests": "vitest providers 226 passed (fast gate on each content commit); final battery: vitest providers 226 passed, npm test 783 passed, lint clean, tsc -b clean, build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "5e8787b: +6 multiply (napkins, pinecones, beehives, postcards, cubbies, marigolds); 7fc26b9: +6 multiply (muffin tins, book cartons, basil pots, porch lights, quilts, pumpkins); bcd7681: +6 divide (gift tins, paper stacks, vases, lemonade cups, button jars, parachute teams); ff91ade: +6 divide (chair rows, shelter treats, ribbon bunches, shell bags, kit bags, garden stakes) — TEMPLATES_MULT and TEMPLATES_DIV each 12->24, CCSS 3.OA.A.3; new scripts/audit-word-problems.mjs (counts, two-numbers-in-solver-order, format, uniqueness, variety windows per shelf); pre-commit fixes: parachute-teams skeleton reordered so dividend precedes divisor, 'holds' x3 collisions reworded (cubby 'fits', wagon 'stacked', basil 'with N plants in each pot'), Kai 'nature table'->'nature corner' and Wren 'card table'->'bake sale' off the 'table' window",
+      "gates": "fast-intermediate/full-final",
+      "push": "pushed 580f70c..ff91ade to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 33,
+      "step": "B1",
+      "result": "done",
+      "tests": "final battery (single scene commit for the step): vitest src/tutoring 43 passed, npm test 783 passed, lint clean, tsc -b clean, build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "8182137: wordProblem/plan perf rework — peak SVG elements 257 -> 125 (budget 150) measured by new scripts/audit-scene-elements.mjs (renders the scene at 0.05s steps over the real narration timeline from public/tts/wordProblem/plan.words.json and counts paint elements); 24-crayon detail grid replaced by per-row two-path CrayonRun silhouettes, equal-groups block now fades out at 'multiply' so the end frame holds just ops + rule, infinite breathe pulse replaced by one bounded wave (B2.3), perpetual Twinkle replaced by a finite Sparkle flash, StoryCard unbadged words render as bare Txt (read benefits too), IndexCard filter removed (B2.2, filters stay off in plan) — scene keeps every beat: loop + underlines, op keys + hopping ring, equal rows tagged 4 and ticked, × wins with burst, equal groups → multiply rule line",
+      "gates": "full-final (single scene commit for the step)",
+      "push": "pushed ff91ade..7accef5 to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 34,
+      "step": "B2",
+      "result": "done",
+      "tests": "final battery (single scene commit for the step): vitest src/tutoring 43 passed, npm test 783 passed, lint clean, tsc -b clean, build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "1cd1547: wordProblem/read perf rework — peak SVG elements 247 -> 115 (budget 150), 0 filter frames (was 151); 24-crayon tray relaid as per-row CrayonRun silhouettes whose n grows as columns land (per-row drop/spring and stagger preserved), perpetual fox blink loop -> two bounded blinks (B2.3), three perpetual Twinkles -> one finite Sparkles flash at done, ThoughtBubble sq-shadow filter removed (B2.2; ink outline carries the toon look, same treatment as B1's IndexCard); scene audit script repaired: tsx now self-bootstraps TSX_TSCONFIG_PATH=tsconfig.app.json because the root solution tsconfig has no compilerOptions (classic JSX runtime -> 'React is not defined'); plan re-verified ok at 125; note for B3 planning: wordProblem/solve measures 222 peak with 359 filter frames (not a listed step — consider whether the plan's scope covers it or it needs its own step)",
+      "gates": "full-final (single scene commit for the step)",
+      "push": "pushed 7accef5..20ed99b to origin/content/banks-expansion (one attempt, exit 0; credential-helper warning harmless)"
+    },
+    {
+      "interval": 35,
+      "step": "B3",
+      "result": "done",
+      "tests": "final battery (single scene commit for the step): vitest src/tutoring 43 passed, npm test 783 passed, lint clean, tsc -b clean, build:store ✓ 83 files, all fetches same-origin/known loaders",
+      "commits": "3dd93d2: science/states perf rework — peak SVG elements 195 -> 118 (budget 150), measured by audit-scene-elements.mjs over the real narration timeline; Ball gains hl flag (shine dots dropped on the 77-particle fields, ink outline carries the toon look); three perpetual sine loops bounded per B2.3 (solid jiggle windowed to the 'keeps its own shape' beat, liquid slosh/surface bob ramp to zero after re-pack, gas zip settles at 'fill all the space'); two perpetual Twinkles -> one finite Sparkles flash at done; every beat preserved (block drop + dashed trace, beaker pour + 6->10 morph, gas puff + lid + spread)",
+      "gates": "full-final (single scene commit for the step)",
+      "note": "ALL STEPS COMPLETE — every A1..A32 and B1..B3 step is done, none blocked. current_phase set to complete; cron job paused. Whole plan landed on content/banks-expansion; local commits are source of truth where pushes were skipped."
+    }
+  ],
+  "notes": "Target counts from handoff A1 table. One step per interval. Owner-approved 2026-10-18: fast gates policy — intermediate commits run vitest providers only; full battery (vitest+npm test+lint+tsc+build:store) runs on the final commit of each step and step is marked done only on full-battery pass. Fails verification twice -> blocked with error, skip to next. All done/blocked: pause cron + final summary in history."
+}

@@ -75,6 +75,64 @@ const TEMPLATES_ADD: Array<{
       hint: `Add ${a} and ${b}.`,
     }),
   },
+  // CCSS 2.OA.A.1 — one-step "add to" stories within 100, fresh skeletons
+  // so kids meet new stories, not just new numbers. Names/settings rotate.
+  {
+    build: (a, b) => ({
+      prompt: `Priya made ${a} friendship bracelets at camp and ${b} more for her friends at home. How many bracelets did she make in all?`,
+      answer: a + b,
+      hint: `Add ${a} and ${b}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Kenji's garden grew ${a} sunflowers, and ${b} more bloomed after the rain. How many sunflowers are there now?`,
+      answer: a + b,
+      hint: `Add ${a} and ${b}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Aisha picked ${a} blueberries, and her grandpa picked ${b} more. How many blueberries did they pick in all?`,
+      answer: a + b,
+      hint: `Add ${a} and ${b}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Nadia stacked ${a} logs by the woodshed, and ${b} more arrived by truck. How many logs are there now?`,
+      answer: a + b,
+      hint: `Add ${a} and ${b}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Cole spotted ${a} fireflies in the meadow and ${b} more near the porch. How many fireflies did he see in all?`,
+      answer: a + b,
+      hint: `Add ${a} and ${b}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Wren's class collected ${a} soup cans on Monday and ${b} more by Friday. How many cans did the class collect in all?`,
+      answer: a + b,
+      hint: `Add ${a} and ${b}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Hana knitted ${a} scarves for the winter fair and ${b} more over the weekend. How many scarves did she knit in all?`,
+      answer: a + b,
+      hint: `Add ${a} and ${b}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Milo walked ${a} dogs on his morning route and ${b} more after lunch. How many dogs did he walk in all?`,
+      answer: a + b,
+      hint: `Add ${a} and ${b}.`,
+    }),
+  },
 ]
 
 const TEMPLATES_SUB: Array<{
@@ -132,6 +190,64 @@ const TEMPLATES_SUB: Array<{
   {
     build: (a, b) => ({
       prompt: `Maya had ${a} coins and spent ${b} at the snack shop. How many coins does she have left?`,
+      answer: a - b,
+      hint: `Take ${b} away from ${a}.`,
+    }),
+  },
+  // CCSS 2.OA.A.1 — one-step "take from" stories within 100, fresh skeletons
+  // so kids meet new stories, not just new numbers. Names/settings rotate.
+  {
+    build: (a, b) => ({
+      prompt: `A birdhouse held ${a} robins. At bedtime, ${b} flew off to roost. How many robins are left in the birdhouse?`,
+      answer: a - b,
+      hint: `Take ${b} away from ${a}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Diego had ${a} marbles in a pouch and lost ${b} in the grass. How many marbles does he have now?`,
+      answer: a - b,
+      hint: `Take ${b} away from ${a}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `A tray of ${a} cookies cooled on the counter. Sam ate ${b} of them. How many cookies are left?`,
+      answer: a - b,
+      hint: `Take ${b} away from ${a}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Priya painted ${a} eggs for the spring fair and sold ${b} of them. How many paintings does she have left?`,
+      answer: a - b,
+      hint: `Take ${b} away from ${a}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `The library cart held ${a} books. A helper shelved ${b} of them. How many books are still on the cart?`,
+      answer: a - b,
+      hint: `Take ${b} away from ${a}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Nia saved ${a} seashells in a shoebox and gave ${b} to her cousin. How many seashells does she keep?`,
+      answer: a - b,
+      hint: `Take ${b} away from ${a}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `A tray held ${a} popsicles on a hot day, and ${b} melted. How many popsicles are left?`,
+      answer: a - b,
+      hint: `Take ${b} away from ${a}.`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Owen built ${a} blocks tall and pulled out ${b} blocks. How many blocks are left in the tower?`,
       answer: a - b,
       hint: `Take ${b} away from ${a}.`,
     }),
@@ -225,6 +341,92 @@ const TEMPLATES_MULT: Array<{
       hint: `${a} songs × ${b} days`,
     }),
   },
+  // CCSS 3.OA.A.3 — equal-groups stories within the multiplication tables,
+  // fresh skeletons so kids meet new stories, not just new numbers.
+  {
+    build: (a, b) => ({
+      prompt: `Hana sets ${a} tables for the club meeting and puts ${b} napkins on each table. How many napkins does she set out in all?`,
+      answer: a * b,
+      hint: `${a} tables × ${b} napkins each`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Kai gathers ${a} crates and puts ${b} pinecones in each crate for the nature corner. How many pinecones does he gather in all?`,
+      answer: a * b,
+      hint: `${a} crates × ${b} pinecones`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Ms. Ito tends ${a} beehives, and each hive holds ${b} frames of honey. How many frames of honey are there in all?`,
+      answer: a * b,
+      hint: `${a} hives × ${b} frames`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Rosa writes ${a} postcards and puts ${b} stamps on each postcard. How many stamps does she use in all?`,
+      answer: a * b,
+      hint: `${a} postcards × ${b} stamps`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `There are ${a} cubbies in the hallway, and each cubby fits ${b} hats. How many hats are there in all?`,
+      answer: a * b,
+      hint: `${a} cubbies × ${b} hats`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Zara plants ${a} window boxes with ${b} marigolds in each box. How many marigolds does she plant in all?`,
+      answer: a * b,
+      hint: `${a} boxes × ${b} marigolds`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Felix fills ${a} muffin tins with ${b} muffins in each tin. How many muffins does he bake in all?`,
+      answer: a * b,
+      hint: `${a} tins × ${b} muffins`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `The librarian orders ${a} cartons with ${b} picture books in each carton. How many picture books arrive in all?`,
+      answer: a * b,
+      hint: `${a} cartons × ${b} books`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Lucy sets out ${a} pots of basil with ${b} plants in each pot. How many basil plants does she set out in all?`,
+      answer: a * b,
+      hint: `${a} pots × ${b} plants`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Omar strings ${a} lights across the porch, and each strand holds ${b} bulbs. How many bulbs does he string in all?`,
+      answer: a * b,
+      hint: `${a} strands × ${b} bulbs`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `Elena sews ${a} quilts with ${b} patches in each quilt. How many patches does she sew in all?`,
+      answer: a * b,
+      hint: `${a} quilts × ${b} patches`,
+    }),
+  },
+  {
+    build: (a, b) => ({
+      prompt: `A hay wagon pulls ${a} carts with ${b} pumpkins stacked in each cart. How many pumpkins are there in all?`,
+      answer: a * b,
+      hint: `${a} carts × ${b} pumpkins`,
+    }),
+  },
 ]
 
 const TEMPLATES_DIV: Array<{
@@ -312,6 +514,92 @@ const TEMPLATES_DIV: Array<{
       prompt: `A camp has ${dividend} campers split equally into ${divisor} cabins. How many campers are in each cabin?`,
       answer: dividend / divisor,
       hint: `Split ${dividend} into ${divisor} equal cabins.`,
+    }),
+  },
+  // CCSS 3.OA.A.3 — equal-share and grouping stories within the division
+  // tables, fresh skeletons so kids meet new stories, not just new numbers.
+  {
+    build: (dividend, divisor) => ({
+      prompt: `Theo bakes ${dividend} cookies and packs them into gift tins of ${divisor}. How many tins can he fill?`,
+      answer: dividend / divisor,
+      hint: `How many groups of ${divisor} are in ${dividend}?`,
+    }),
+  },
+  {
+    build: (dividend, divisor) => ({
+      prompt: `Ana cuts ${dividend} construction-paper squares into ${divisor} equal stacks for the craft bins. How many squares are in each stack?`,
+      answer: dividend / divisor,
+      hint: `Split ${dividend} into ${divisor} equal stacks.`,
+    }),
+  },
+  {
+    build: (dividend, divisor) => ({
+      prompt: `Gus puts ${dividend} wildflowers into ${divisor} vases evenly. How many flowers go in each vase?`,
+      answer: dividend / divisor,
+      hint: `Split ${dividend} into ${divisor} equal vases.`,
+    }),
+  },
+  {
+    build: (dividend, divisor) => ({
+      prompt: `Tess pours ${dividend} ounces of lemonade into cups that hold ${divisor} ounces each. How many cups can she fill?`,
+      answer: dividend / divisor,
+      hint: `How many groups of ${divisor} fit into ${dividend}?`,
+    }),
+  },
+  {
+    build: (dividend, divisor) => ({
+      prompt: `Jude sorts ${dividend} buttons into ${divisor} jars for the craft table. How many buttons go in each jar?`,
+      answer: dividend / divisor,
+      hint: `Split ${dividend} into ${divisor} equal jars.`,
+    }),
+  },
+  {
+    build: (dividend, divisor) => ({
+      prompt: `The gym class has ${dividend} children who split into teams of ${divisor} for parachute games. How many teams are there?`,
+      answer: dividend / divisor,
+      hint: `How many groups of ${divisor} fit into ${dividend}?`,
+    }),
+  },
+  {
+    build: (dividend, divisor) => ({
+      prompt: `Mr. Hale sets ${dividend} chairs in ${divisor} equal rows for the recital. How many chairs go in each row?`,
+      answer: dividend / divisor,
+      hint: `Split ${dividend} into ${divisor} equal rows.`,
+    }),
+  },
+  {
+    build: (dividend, divisor) => ({
+      prompt: `The animal shelter hands out ${dividend} treats equally to ${divisor} dogs. How many treats does each dog get?`,
+      answer: dividend / divisor,
+      hint: `Split ${dividend} into ${divisor} equal shares.`,
+    }),
+  },
+  {
+    build: (dividend, divisor) => ({
+      prompt: `Wren ties ${dividend} ribbons into bunches of ${divisor} for the bake sale. How many bunches can she tie?`,
+      answer: dividend / divisor,
+      hint: `How many groups of ${divisor} fit into ${dividend}?`,
+    }),
+  },
+  {
+    build: (dividend, divisor) => ({
+      prompt: `Nia sorts ${dividend} seashells into ${divisor} equal bags for her collection. How many seashells go in each bag?`,
+      answer: dividend / divisor,
+      hint: `Split ${dividend} into ${divisor} equal bags.`,
+    }),
+  },
+  {
+    build: (dividend, divisor) => ({
+      prompt: `The soccer club packs ${dividend} uniforms evenly into ${divisor} kit bags. How many uniforms go in each kit bag?`,
+      answer: dividend / divisor,
+      hint: `Split ${dividend} into ${divisor} equal kit bags.`,
+    }),
+  },
+  {
+    build: (dividend, divisor) => ({
+      prompt: `Grandpa shares ${dividend} garden stakes equally among ${divisor} flower beds. How many stakes go on each bed?`,
+      answer: dividend / divisor,
+      hint: `Split ${dividend} into ${divisor} equal beds.`,
     }),
   },
 ]

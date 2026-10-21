@@ -29,6 +29,8 @@ interface DataChart {
   answer: string
   options: string[]
   hint?: string
+  /** Extra questions read off the same bars (optional; the primary is inline). */
+  questions?: { question: string; answer: string; options: string[]; hint?: string }[]
 }
 
 /** Exported for content tests (grade-tier coverage; see lib/__tests__/gradeTiers.test.ts). */
@@ -441,7 +443,738 @@ export const CHARTS: DataChart[] = [
     options: ['11', '9', '35', '6'],
     hint: 'Blue (23) minus Green (12).',
   },
+  // ---- Level 3, added batch (CCSS 3.MD.D.3: read scaled bar graphs; direct reads, values 2–10) ----
+  {
+    level: 3,
+    title: 'Fireflies at Night',
+    unit: 'fireflies',
+    bars: [
+      { label: 'Porch', value: 6, emoji: '🏡' },
+      { label: 'Meadow', value: 9, emoji: '🌿' },
+      { label: 'Trees', value: 4, emoji: '🌳' },
+    ],
+    question: 'Where were the FEWEST fireflies seen?',
+    answer: 'Trees',
+    options: ['Porch', 'Meadow', 'Trees'],
+    hint: 'Look for the shortest bar.',
+    questions: [
+      {
+        question: 'How many fireflies were seen on the porch?',
+        answer: '6',
+        options: ['6', '7', '9', '4'],
+        hint: 'Read the height of the Porch bar.',
+      },
+    ],
+  },
+  {
+    level: 3,
+    title: 'Paper Cranes Folded',
+    unit: 'cranes',
+    bars: [
+      { label: 'Ada', value: 7 },
+      { label: 'Cal', value: 3 },
+      { label: 'Luna', value: 5 },
+      { label: 'Nico', value: 8 },
+    ],
+    question: 'Who folded the MOST paper cranes?',
+    answer: 'Nico',
+    options: ['Nico', 'Ada', 'Luna', 'Cal'],
+    hint: 'Find the tallest bar.',
+    questions: [
+      {
+        question: 'How many MORE cranes did Nico fold than Cal?',
+        answer: '5',
+        options: ['5', '4', '11', '3'],
+        hint: 'Nico (8) minus Cal (3).',
+      },
+    ],
+  },
+  {
+    level: 3,
+    title: 'Chalk Drawings',
+    unit: 'drawings',
+    bars: [
+      { label: 'Tue', value: 5, emoji: '🎨' },
+      { label: 'Wed', value: 9, emoji: '🎨' },
+      { label: 'Thu', value: 7, emoji: '🎨' },
+    ],
+    question: 'On which day were the MOST chalk drawings made?',
+    answer: 'Wed',
+    options: ['Wed', 'Tue', 'Thu', 'Fri'],
+    hint: 'Look for the tallest bar.',
+    questions: [
+      {
+        question: 'How many chalk drawings were made on Thursday?',
+        answer: '7',
+        options: ['7', '5', '9', '3'],
+        hint: 'Read the height of the Thursday bar.',
+      },
+    ],
+  },
+  {
+    level: 3,
+    title: 'Worms After the Rain',
+    unit: 'worms',
+    bars: [
+      { label: 'Left Bed', value: 5, emoji: '🪱' },
+      { label: 'Middle Bed', value: 8, emoji: '🪱' },
+      { label: 'Right Bed', value: 3, emoji: '🪱' },
+    ],
+    question: 'Which bed had the FEWEST worms?',
+    answer: 'Right Bed',
+    options: ['Right Bed', 'Middle Bed', 'Left Bed'],
+    hint: 'Look for the shortest bar.',
+    questions: [
+      {
+        question: 'How many worms were found in the left bed?',
+        answer: '5',
+        options: ['5', '8', '3', '6'],
+        hint: 'Read the height of the Left Bed bar.',
+      },
+    ],
+  },
+  {
+    level: 3,
+    title: 'Pinecones Gathered',
+    unit: 'pinecones',
+    bars: [
+      { label: 'Bea', value: 4 },
+      { label: 'Hugo', value: 9 },
+      { label: 'Iris', value: 6 },
+    ],
+    question: 'Who gathered the MOST pinecones?',
+    answer: 'Hugo',
+    options: ['Hugo', 'Iris', 'Bea', 'Wes'],
+    hint: 'Find the tallest bar.',
+    questions: [
+      {
+        question: 'How many pinecones did Iris gather?',
+        answer: '6',
+        options: ['6', '4', '9', '5'],
+        hint: 'Read the height of the Iris bar.',
+      },
+    ],
+  },
+  {
+    level: 3,
+    title: 'Mittens in the Lost and Found',
+    unit: 'mittens',
+    bars: [
+      { label: 'Gray', value: 8, emoji: '🧤' },
+      { label: 'Red', value: 6, emoji: '🧤' },
+      { label: 'Blue', value: 3, emoji: '🧤' },
+    ],
+    question: 'Which color has the MOST mittens?',
+    answer: 'Gray',
+    options: ['Gray', 'Red', 'Blue'],
+    hint: 'Look for the tallest bar.',
+    questions: [
+      {
+        question: 'How many MORE gray mittens are there than blue mittens?',
+        answer: '5',
+        options: ['5', '3', '9', '11'],
+        hint: 'Gray (8) minus Blue (3).',
+      },
+    ],
+  },
+  {
+    level: 3,
+    title: 'Vegetables Picked',
+    unit: 'vegetables',
+    bars: [
+      { label: 'Carrots', value: 9 },
+      { label: 'Potatoes', value: 4 },
+      { label: 'Turnips', value: 6 },
+    ],
+    question: 'Which vegetable was picked the MOST?',
+    answer: 'Carrots',
+    options: ['Carrots', 'Potatoes', 'Turnips'],
+    hint: 'Find the tallest bar.',
+    questions: [
+      {
+        question: 'How many more carrots than potatoes were picked?',
+        answer: '5',
+        options: ['5', '4', '13', '6'],
+        hint: 'Carrots (9) minus potatoes (4).',
+      },
+    ],
+  },
+  {
+    level: 3,
+    title: 'Marbles Won',
+    unit: 'marbles',
+    bars: [
+      { label: 'Theo', value: 9 },
+      { label: 'Uma', value: 6 },
+      { label: 'Otto', value: 4 },
+    ],
+    question: 'Who won the MOST marbles?',
+    answer: 'Theo',
+    options: ['Theo', 'Otto', 'Uma', 'Bea'],
+    hint: 'Look for the tallest bar.',
+    questions: [
+      {
+        question: 'How many FEWER marbles did Otto have than Uma?',
+        answer: '2',
+        options: ['2', '4', '10', '3'],
+        hint: 'Uma (6) minus Otto (4).',
+      },
+    ],
+  },
+  // ---- Level 3, second added batch (CCSS 3.MD.D.3: read bar graphs; direct reads and one-step differences, values 2–10) ----
+  {
+    level: 3,
+    title: 'Kite Flying Contest',
+    unit: 'kites',
+    bars: [
+      { label: 'Kai', value: 7, emoji: '🪁' },
+      { label: 'Mia', value: 4, emoji: '🪁' },
+      { label: 'Eli', value: 9, emoji: '🪁' },
+    ],
+    question: 'Who flew the MOST kites?',
+    answer: 'Eli',
+    options: ['Eli', 'Kai', 'Mia'],
+    hint: 'Find the tallest bar.',
+    questions: [
+      {
+        question: 'How many FEWER kites did Kai fly than Eli?',
+        answer: '2',
+        options: ['2', '10', '4'],
+        hint: 'Eli (9) minus Kai (7).',
+      },
+    ],
+  },
+  {
+    level: 3,
+    title: 'Ladybugs on Leaves',
+    unit: 'ladybugs',
+    bars: [
+      { label: 'Big Leaf', value: 6, emoji: '🍃' },
+      { label: 'Round Leaf', value: 9, emoji: '🍃' },
+      { label: 'Small Leaf', value: 3, emoji: '🍃' },
+    ],
+    question: 'Which leaf had the FEWEST ladybugs?',
+    answer: 'Small Leaf',
+    options: ['Small Leaf', 'Round Leaf', 'Big Leaf'],
+    hint: 'Look for the shortest bar.',
+    questions: [
+      {
+        question: 'How many ladybugs were on the big leaf?',
+        answer: '6',
+        options: ['6', '3', '9'],
+        hint: 'Read the height of the Big Leaf bar.',
+      },
+    ],
+  },
+  {
+    level: 3,
+    title: 'Puddle Jumps',
+    unit: 'jumps',
+    bars: [
+      { label: 'Nia', value: 8 },
+      { label: 'Gus', value: 5 },
+      { label: 'Tess', value: 10 },
+    ],
+    question: 'Who made the MOST puddle jumps?',
+    answer: 'Tess',
+    options: ['Tess', 'Nia', 'Gus'],
+    hint: 'Look for the tallest bar.',
+    questions: [
+      {
+        question: 'How many MORE jumps did Nia make than Gus?',
+        answer: '3',
+        options: ['3', '5', '8'],
+        hint: 'Nia (8) minus Gus (5).',
+      },
+    ],
+  },
+  {
+    level: 3,
+    title: 'Cup Stacks',
+    unit: 'cups',
+    bars: [
+      { label: 'Sol', value: 6 },
+      { label: 'Ivo', value: 4 },
+      { label: 'Zane', value: 8 },
+    ],
+    question: 'Who stacked the MOST cups?',
+    answer: 'Zane',
+    options: ['Zane', 'Sol', 'Ivo'],
+    hint: 'Find the tallest bar.',
+    questions: [
+      {
+        question: 'How many cups did Sol and Ivo stack TOGETHER?',
+        answer: '10',
+        options: ['10', '11', '9'],
+        hint: 'Add Sol (6) and Ivo (4).',
+      },
+    ],
+  },
+  {
+    level: 3,
+    title: 'Seashell Buckets',
+    unit: 'seashells',
+    bars: [
+      { label: 'Wren', value: 7 },
+      { label: 'Cody', value: 5 },
+      { label: 'Pia', value: 9 },
+    ],
+    question: 'Who found the MOST seashells?',
+    answer: 'Pia',
+    options: ['Pia', 'Wren', 'Cody'],
+    hint: 'Look for the tallest bar.',
+    questions: [
+      {
+        question: 'How many seashells did Cody find?',
+        answer: '5',
+        options: ['5', '7', '9'],
+        hint: 'Read the height of the Cody bar.',
+      },
+    ],
+  },
+  {
+    level: 3,
+    title: 'Muffin Trays',
+    unit: 'muffins',
+    bars: [
+      { label: 'Apple', value: 7, emoji: '🧁' },
+      { label: 'Banana', value: 9, emoji: '🧁' },
+      { label: 'Cherry', value: 5, emoji: '🧁' },
+    ],
+    question: 'Which tray baked the MOST muffins?',
+    answer: 'Banana',
+    options: ['Apple', 'Banana', 'Cherry', 'Plum'],
+    hint: 'Find the tallest bar.',
+    questions: [
+      {
+        question: 'How many muffins were on the cherry tray?',
+        answer: '5',
+        options: ['5', '7', '9'],
+        hint: 'Read the height of the Cherry bar.',
+      },
+    ],
+  },
+  {
+    level: 3,
+    title: 'Block Towers',
+    unit: 'blocks',
+    bars: [
+      { label: 'Omar', value: 6 },
+      { label: 'Leo', value: 9 },
+      { label: 'Cleo', value: 3 },
+    ],
+    question: 'Who built the tallest tower?',
+    answer: 'Leo',
+    options: ['Leo', 'Omar', 'Cleo', 'Ada'],
+    hint: 'Look for the tallest bar.',
+    questions: [
+      {
+        question: 'How many blocks did Omar and Cleo stack TOGETHER?',
+        answer: '9',
+        options: ['9', '8', '10', '6'],
+        hint: 'Add Omar (6) and Cleo (3).',
+      },
+    ],
+  },
+  {
+    level: 3,
+    title: 'Snow Forts',
+    unit: 'snow blocks',
+    bars: [
+      { label: 'Ruby', value: 9 },
+      { label: 'Tara', value: 7 },
+      { label: 'Noor', value: 4 },
+    ],
+    question: 'Who stacked the MOST snow blocks?',
+    answer: 'Ruby',
+    options: ['Ruby', 'Tara', 'Noor', 'Bea'],
+    hint: 'Find the tallest bar.',
+    questions: [
+      {
+        question: 'How many FEWER snow blocks did Noor stack than Ruby?',
+        answer: '5',
+        options: ['5', '4', '9', '13'],
+        hint: 'Ruby (9) minus Noor (4).',
+      },
+    ],
+  },
+  // ---- Level 4, added batch (CCSS 4.MD.B: multi-step reads from bar graphs; sums, differences, whole-number averages) ----
+  {
+    level: 4,
+    title: 'Book Reading Week',
+    unit: 'books',
+    bars: [
+      { label: 'Week 1', value: 19, emoji: '📚' },
+      { label: 'Week 2', value: 28, emoji: '📚' },
+      { label: 'Week 3', value: 24, emoji: '📚' },
+      { label: 'Week 4', value: 33, emoji: '📚' },
+    ],
+    question: 'How many MORE books were read in Week 4 than in Week 1?',
+    answer: '14',
+    options: ['14', '13', '52', '19'],
+    hint: 'Week 4 (33) minus Week 1 (19).',
+    questions: [
+      {
+        question: 'How many books were read in Week 2 and Week 3 TOGETHER?',
+        answer: '52',
+        options: ['52', '57', '45', '54'],
+        hint: 'Add Week 2 (28) and Week 3 (24).',
+      },
+      {
+        question: 'Which week had the FEWEST books read?',
+        answer: 'Week 1',
+        options: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+        hint: 'Look for the shortest bar.',
+      },
+    ],
+  },
+  {
+    level: 4,
+    title: 'Lost Library Books',
+    unit: 'books',
+    bars: [
+      { label: 'Mon', value: 9, emoji: '🔎' },
+      { label: 'Tue', value: 14, emoji: '🔎' },
+      { label: 'Wed', value: 6, emoji: '🔎' },
+      { label: 'Thu', value: 11, emoji: '🔎' },
+    ],
+    question: 'On which day were the MOST lost books returned?',
+    answer: 'Tue',
+    options: ['Tue', 'Wed', 'Mon', 'Thu'],
+    hint: 'Find the tallest bar.',
+    questions: [
+      {
+        question: 'How many books were returned on Monday and Tuesday TOGETHER?',
+        answer: '23',
+        options: ['23', '14', '11', '9'],
+        hint: 'Add Monday (9) and Tuesday (14).',
+      },
+      {
+        question: 'How many FEWER books were returned on Wednesday than on Thursday?',
+        answer: '5',
+        options: ['5', '11', '17', '25'],
+        hint: 'Thursday (11) minus Wednesday (6).',
+      },
+    ],
+  },
+  {
+    level: 4,
+    title: 'Penny Jars',
+    unit: 'pennies',
+    bars: [
+      { label: 'Red Jar', value: 34, emoji: '🪙' },
+      { label: 'Blue Jar', value: 28, emoji: '🪙' },
+      { label: 'Green Jar', value: 19, emoji: '🪙' },
+      { label: 'Yellow Jar', value: 43, emoji: '🪙' },
+    ],
+    question: 'How many MORE pennies are in the Yellow Jar than the Green Jar?',
+    answer: '24',
+    options: ['24', '23', '86', '75'],
+    hint: 'Yellow Jar (43) minus Green Jar (19).',
+    questions: [
+      {
+        question: 'How many pennies are in the Red Jar and the Blue Jar TOGETHER?',
+        answer: '62',
+        options: ['62', '71', '57', '61'],
+        hint: 'Add Red Jar (34) and Blue Jar (28).',
+      },
+      {
+        question: 'What is the average number of pennies in the four jars?',
+        answer: '31',
+        options: ['31', '32', '28', '26'],
+        hint: 'Add all four bars (124), then divide by 4.',
+      },
+    ],
+  },
+  {
+    level: 4,
+    title: 'Soccer Tryouts',
+    unit: 'points',
+    bars: [
+      { label: 'Robins', value: 27, emoji: '⚽' },
+      { label: 'Wrens', value: 32, emoji: '⚽' },
+      { label: 'Hawks', value: 24, emoji: '⚽' },
+      { label: 'Eagles', value: 38, emoji: '⚽' },
+    ],
+    question: 'How many MORE points did the Eagles score than the Robins?',
+    answer: '11',
+    options: ['11', '10', '65', '27'],
+    hint: 'Eagles (38) minus Robins (27).',
+    questions: [
+      {
+        question: 'How many points did the Hawks and the Wrens score TOGETHER?',
+        answer: '56',
+        options: ['56', '55', '62', '48'],
+        hint: 'Add Hawks (24) and Wrens (32).',
+      },
+      {
+        question: 'How many points did all FOUR teams score IN TOTAL?',
+        answer: '121',
+        options: ['121', '112', '98', '131'],
+        hint: 'Add all four bars: 27 + 32 + 24 + 38.',
+      },
+    ],
+  },
+  {
+    level: 4,
+    title: 'Bird Feeder Counts',
+    unit: 'birds',
+    bars: [
+      { label: 'Mon', value: 8, emoji: '🐦' },
+      { label: 'Tue', value: 12, emoji: '🐦' },
+      { label: 'Wed', value: 6, emoji: '🐦' },
+      { label: 'Thu', value: 10, emoji: '🐦' },
+    ],
+    question: 'On which day did the birds visit the MOST?',
+    answer: 'Tue',
+    options: ['Tue', 'Mon', 'Thu', 'Wed'],
+    hint: 'Look for the tallest bar.',
+    questions: [
+      {
+        question: 'How many MORE birds visited on Tuesday than on Monday?',
+        answer: '4',
+        options: ['4', '3', '18', '8'],
+        hint: 'Tuesday (12) minus Monday (8).',
+      },
+      {
+        question: 'How many birds visited on Monday and Wednesday TOGETHER?',
+        answer: '14',
+        options: ['14', '18', '16', '6'],
+        hint: 'Add Monday (8) and Wednesday (6).',
+      },
+    ],
+  },
+  {
+    level: 4,
+    title: 'Cookie Sale Days',
+    unit: 'cookies',
+    bars: [
+      { label: 'Fri', value: 18, emoji: '🍪' },
+      { label: 'Sat', value: 26, emoji: '🍪' },
+      { label: 'Sun', value: 20, emoji: '🍪' },
+    ],
+    question: 'How many MORE cookies were sold on Saturday than on Friday?',
+    answer: '8',
+    options: ['8', '9', '46', '44'],
+    hint: 'Saturday (26) minus Friday (18).',
+    questions: [
+      {
+        question: 'How many cookies were sold on Friday and Sunday TOGETHER?',
+        answer: '38',
+        options: ['38', '36', '44', '46'],
+        hint: 'Add Friday (18) and Sunday (20).',
+      },
+      {
+        question: 'How many cookies were sold across all THREE days?',
+        answer: '64',
+        options: ['64', '62', '58', '74'],
+        hint: 'Add all three: 18 + 26 + 20.',
+      },
+    ],
+  },
+  {
+    level: 4,
+    title: 'Lemonade Stand Sales',
+    unit: 'dollars',
+    bars: [
+      { label: 'Thu', value: 14, emoji: '🍋' },
+      { label: 'Fri', value: 24, emoji: '🍋' },
+      { label: 'Sat', value: 28, emoji: '🍋' },
+    ],
+    question: 'How many MORE dollars were earned on Saturday than on Thursday?',
+    answer: '14',
+    options: ['14', '15', '42', '28'],
+    hint: 'Saturday (28) minus Thursday (14).',
+    questions: [
+      {
+        question: 'How many dollars did the stand earn IN TOTAL?',
+        answer: '66',
+        options: ['66', '68', '62', '56'],
+        hint: 'Add all three bars: 14 + 24 + 28.',
+      },
+      {
+        question: 'What is the average number of dollars earned each day?',
+        answer: '22',
+        options: ['22', '24', '20', '26'],
+        hint: 'Add all three bars (66), then divide by 3.',
+      },
+    ],
+  },
+  // ---- Level 4, second added batch (CCSS 4.MD.B: multi-step reads from bar graphs; sums, differences, whole-number averages) ----
+  {
+    level: 4,
+    title: 'Trail Signs Found',
+    unit: 'signs',
+    bars: [
+      { label: 'Sat', value: 18, emoji: '🪧' },
+      { label: 'Sun', value: 24, emoji: '🪧' },
+      { label: 'Mon', value: 12, emoji: '🪧' },
+    ],
+    question: 'How many MORE signs were found on Sunday than on Monday?',
+    answer: '12',
+    options: ['12', '11', '36', '6'],
+    hint: 'Sunday (24) minus Monday (12).',
+    questions: [
+      {
+        question: 'How many signs were found on Saturday and Sunday TOGETHER?',
+        answer: '42',
+        options: ['42', '48', '36', '44'],
+        hint: 'Add Saturday (18) and Sunday (24).',
+      },
+      {
+        question: 'What is the average number of signs found each day?',
+        answer: '18',
+        options: ['18', '16', '20', '22'],
+        hint: 'Add all three bars (54), then divide by 3.',
+      },
+    ],
+  },
+  {
+    level: 4,
+    title: 'Knitted Scarves',
+    unit: 'scarves',
+    bars: [
+      { label: 'Ivy', value: 26, emoji: '🧣' },
+      { label: 'Nate', value: 19, emoji: '🧣' },
+      { label: 'Luca', value: 31, emoji: '🧣' },
+    ],
+    question: 'Who knitted the MOST scarves?',
+    answer: 'Luca',
+    options: ['Luca', 'Ivy', 'Nate'],
+    hint: 'Find the tallest bar.',
+    questions: [
+      {
+        question: 'How many MORE scarves did Luca knit than Nate?',
+        answer: '12',
+        options: ['12', '7', '50', '19'],
+        hint: 'Luca (31) minus Nate (19).',
+      },
+      {
+        question: 'How many scarves did Ivy and Nate knit TOGETHER?',
+        answer: '45',
+        options: ['45', '44', '55', '42'],
+        hint: 'Add Ivy (26) and Nate (19).',
+      },
+    ],
+  },
+  {
+    level: 4,
+    title: 'Compost Buckets',
+    unit: 'buckets',
+    bars: [
+      { label: 'Mon', value: 16, emoji: '🪣' },
+      { label: 'Tue', value: 24, emoji: '🪣' },
+      { label: 'Wed', value: 20, emoji: '🪣' },
+    ],
+    question: 'How many FEWER compost buckets were filled on Monday than on Tuesday?',
+    answer: '8',
+    options: ['8', '4', '40', '16'],
+    hint: 'Tuesday (24) minus Monday (16).',
+    questions: [
+      {
+        question: 'How many compost buckets were filled IN TOTAL?',
+        answer: '60',
+        options: ['60', '68', '52', '56'],
+        hint: 'Add all three bars: 16 + 24 + 20.',
+      },
+      {
+        question: 'What is the average number of buckets filled each day?',
+        answer: '20',
+        options: ['20', '22', '18', '24'],
+        hint: 'Add all three bars (60), then divide by 3.',
+      },
+    ],
+  },
+  {
+    level: 4,
+    title: 'Beehive Families',
+    unit: 'bees',
+    bars: [
+      { label: 'South Field', value: 240, emoji: '🐝' },
+      { label: 'North Field', value: 310, emoji: '🐝' },
+      { label: 'Creek Side', value: 270, emoji: '🐝' },
+    ],
+    question: 'Which hive had the MOST bees?',
+    answer: 'North Field',
+    options: ['North Field', 'Creek Side', 'South Field'],
+    hint: 'Look for the tallest bar.',
+    questions: [
+      {
+        question: 'How many MORE bees were in North Field than in South Field?',
+        answer: '70',
+        options: ['70', '80', '50', '60'],
+        hint: 'North Field (310) minus South Field (240).',
+      },
+      {
+        question: 'How many bees were counted across all THREE hives?',
+        answer: '820',
+        options: ['820', '810', '790', '830'],
+        hint: 'Add all three bars: 240 + 310 + 270.',
+      },
+    ],
+  },
+  {
+    level: 4,
+    title: 'Beach Towel Rentals',
+    unit: 'towels',
+    bars: [
+      { label: 'Sat', value: 27, emoji: '🏖️' },
+      { label: 'Sun', value: 35, emoji: '🏖️' },
+      { label: 'Mon', value: 18, emoji: '🏖️' },
+    ],
+    question: 'How many MORE towels were rented on Sunday than on Saturday?',
+    answer: '8',
+    options: ['8', '9', '17', '62'],
+    hint: 'Sunday (35) minus Saturday (27).',
+    questions: [
+      {
+        question: 'How many towels were rented IN TOTAL?',
+        answer: '80',
+        options: ['80', '85', '70', '90'],
+        hint: 'Add all three bars: 27 + 35 + 18.',
+      },
+      {
+        question: 'How many FEWER towels were rented on Monday than on Saturday?',
+        answer: '9',
+        options: ['9', '8', '10', '45'],
+        hint: 'Saturday (27) minus Monday (18).',
+      },
+    ],
+  },
+  {
+    level: 4,
+    title: 'Pottery Class Bowls',
+    unit: 'bowls',
+    bars: [
+      { label: 'Clay Club', value: 21, emoji: '🏺' },
+      { label: 'Glaze Group', value: 28, emoji: '🏺' },
+      { label: 'Kiln Crew', value: 35, emoji: '🏺' },
+    ],
+    question: 'Which group made the FEWEST bowls?',
+    answer: 'Clay Club',
+    options: ['Clay Club', 'Kiln Crew', 'Glaze Group'],
+    hint: 'Look for the shortest bar.',
+    questions: [
+      {
+        question: 'How many MORE bowls did Kiln Crew make than Clay Club?',
+        answer: '14',
+        options: ['14', '7', '56', '21'],
+        hint: 'Kiln Crew (35) minus Clay Club (21).',
+      },
+      {
+        question: 'How many bowls did the Clay Club and Glaze Group make TOGETHER?',
+        answer: '49',
+        options: ['49', '56', '42', '63'],
+        hint: 'Add Clay Club (21) and Glaze Group (28).',
+      },
+    ],
+  },
 ]
+
+/** Every question a chart carries: the inline primary plus extras, in order. Exported for tests. */
+export function chartQuestions(c: DataChart): { question: string; answer: string; options: string[]; hint?: string }[] {
+  return [{ question: c.question, answer: c.answer, options: c.options, hint: c.hint }, ...(c.questions ?? [])]
+}
 
 export function makeDataGraphProvider(cfg: Config): ProblemProvider {
   const staticProvider = makeStaticDataGraphProvider(cfg)
@@ -462,7 +1195,10 @@ export function makeDataGraphProvider(cfg: Config): ProblemProvider {
 function makeStaticDataGraphProvider(cfg: Config): ProblemProvider {
   let serial = 0
   const level = pickLevel(cfg.level, CHARTS.map((c) => c.level))
-  const pool = CHARTS.filter((c) => c.level === level)
+  // Deal (chart, question) pairs: every chart plays its inline question plus any extras.
+  const pool = CHARTS.filter((c) => c.level === level).flatMap((c) =>
+    chartQuestions(c).map((q) => ({ chart: c, q })),
+  )
   function reshuffle() {
     const order = [...pool]
     for (let i = order.length - 1; i > 0; i--) {
@@ -476,16 +1212,16 @@ function makeStaticDataGraphProvider(cfg: Config): ProblemProvider {
     topic: 'data',
     next(): Problem {
       if (queue.length === 0) queue = reshuffle()
-      const c = queue.shift()!
+      const { chart: c, q } = queue.shift()!
       return {
         id: `data-${serial++}`,
-        prompt: c.question,
-        options: shuffle(c.options),
-        answer: c.answer,
+        prompt: q.question,
+        options: shuffle(q.options),
+        answer: q.answer,
         visual: { kind: 'barGraph', title: c.title, unit: c.unit, bars: c.bars },
         topic: 'data',
         difficulty: cfg.level,
-        hint: c.hint,
+        hint: q.hint,
         skill: { id: 'data-graphs', label: 'reading graphs' },
       }
     },

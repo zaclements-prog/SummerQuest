@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { GROVE_ORDERS, groveOrder, groveOrdersFor, groveProblem, groveSkill, makeMultiplicationGroveProvider } from '../multiplicationGrove'
+import { GROVE_ORDER_ALTS, GROVE_ORDERS, groveOrder, groveOrdersFor, grovePoolFor, groveProblem, groveSkill, makeMultiplicationGroveProvider } from '../multiplicationGrove'
 import { FIELD, groveCandidates, groveChant, parseGroveRound } from '../../grove/groveCore'
 import { SKILLS } from '../../../tutoring/skills'
 
@@ -57,6 +57,40 @@ describe('grove order bank', () => {
   it('groveOrder finds the bank order, or makes a plain one', () => {
     expect(groveOrder(3, 4).prompt).toContain('3 rows of 4')
     expect(groveOrder(7, 7)).toEqual({ rows: 7, cols: 7, prompt: 'Plant 7 rows of 7 trees.' })
+  })
+})
+
+// CCSS 2.OA.A.3-4 — the second-pass phrasings that widen the G2 pool to 30+.
+describe('grove second-pass phrasings', () => {
+  it('keeps a substantial shelf with unique prompts that name the order', () => {
+    expect(GROVE_ORDER_ALTS.length).toBeGreaterThanOrEqual(5)
+    const seen = new Set<string>()
+    for (const o of GROVE_ORDER_ALTS) {
+      expect(seen.has(o.prompt)).toBe(false)
+      seen.add(o.prompt)
+      expect(o.prompt.length).toBeGreaterThan(30)
+      expect(o.prompt).toMatch(new RegExp(`${o.rows}\\s*(rows)?\\s*(of|with)\\s*${o.cols}\\b`))
+      expect(o.prompt).not.toMatch(/which/i)
+    }
+    // never re-prints a canonical prompt — an alt must be a fresh reading
+    const canonical = new Set(GROVE_ORDERS.map((o) => o.prompt))
+    for (const o of GROVE_ORDER_ALTS) expect(canonical.has(o.prompt)).toBe(false)
+  })
+
+  it('stays inside the grade-2 cap (factors ≤ 5)', () => {
+    for (const o of GROVE_ORDER_ALTS) expect(Math.max(o.rows, o.cols)).toBeLessThanOrEqual(5)
+  })
+
+  it('prompts never leak a candidate total, and orders round-trip', () => {
+    for (const o of GROVE_ORDER_ALTS) {
+      const tokens = o.prompt.match(/\d+/g) ?? []
+      for (const s of groveCandidates(o.rows, o.cols)) {
+        expect(tokens, `${o.prompt}: leaks total ${s.total}`).not.toContain(String(s.total))
+      }
+      const round = parseGroveRound(groveProblem(o))
+      expect(round.shape.total).toBe(o.rows * o.cols)
+      expect(new Set(round.siblings.map((s) => s.total)).size).toBe(3)
+    }
   })
 })
 
@@ -120,13 +154,40 @@ describe('makeMultiplicationGroveProvider', () => {
     }
   })
 
+  it('widens the served G2 pool to 30 while GROVE_ORDERS stays pair-unique', () => {
+    // every canonical pair is still distinct (the curated-bank invariant)
+    const pairs = new Set(GROVE_ORDERS.map((o) => `${o.rows}x${o.cols}`))
+    expect(pairs.size).toBe(GROVE_ORDERS.length)
+    // but a grade-2 kid sees at least 30 plantable orders across the pool
+    const pool = grovePoolFor(5)
+    expect(pool.length).toBeGreaterThanOrEqual(30)
+    expect(new Set(pool.map((o) => o.prompt)).size).toBe(pool.length)
+    expect(grovePoolFor(7)).toHaveLength(GROVE_ORDERS.length + GROVE_ORDER_ALTS.length)
+    // every G2 canonical pair has at least one second-pass phrasing
+    for (const o of groveOrdersFor(5)) {
+      expect(GROVE_ORDER_ALTS.some((a) => a.rows === o.rows && a.cols === o.cols)).toBe(true)
+    }
+  })
+
+  it('runs the whole widened pool before any repeat at G2', async () => {
+    const p = makeMultiplicationGroveProvider({ maxFactor: 5 })
+    const seen = new Set<string>()
+    for (let i = 0; i < grovePoolFor(5).length; i++) {
+      const problem = await p.next()
+      expect(seen.has(problem.prompt)).toBe(false)
+      seen.add(problem.prompt)
+    }
+    expect(seen.size).toBeGreaterThanOrEqual(30)
+  })
+
   it('reshuffles after the bank is exhausted and resets', async () => {
     const p = makeMultiplicationGroveProvider()
-    for (let i = 0; i < GROVE_ORDERS.length; i++) await p.next()
+    // the served pool is the canonical bank plus the second-pass phrasings
+    for (let i = 0; i < grovePoolFor().length; i++) await p.next()
     const first = await p.next()
-    expect(GROVE_ORDERS.some((o) => first.prompt.startsWith(o.prompt))).toBe(true)
+    expect(grovePoolFor().some((o) => first.prompt.startsWith(o.prompt))).toBe(true)
     p.reset?.()
     const after = await p.next()
-    expect(GROVE_ORDERS.some((o) => after.prompt.startsWith(o.prompt))).toBe(true)
+    expect(grovePoolFor().some((o) => after.prompt.startsWith(o.prompt))).toBe(true)
   })
 })

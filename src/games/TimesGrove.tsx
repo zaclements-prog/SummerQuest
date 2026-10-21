@@ -29,7 +29,7 @@ import {
   type Planted,
   type Tile,
 } from '../lib/grove/groveCore'
-import { groveOrder, groveOrdersFor, groveProblem } from '../lib/providers/multiplicationGrove'
+import { groveOrderWithAlts, grovePoolFor, groveProblem } from '../lib/providers/multiplicationGrove'
 import { CrateStack, FieldLabels, Keeper, PlantField, RootRing, SeedBag, type FieldMode, type KeeperMood } from './TimesGrove.parts'
 import { GroveSet } from './TimesGrove.set'
 import { CAM_FOCUS_LOCAL, CAM_FOV, CAM_OFFSET, CRATES, DWELL, FIELD_HALF, FRUITS, ISO_YAW, SEED_BAG, SPAWN_LOCAL, toWorld, wpos } from './TimesGrove.layout'
@@ -148,7 +148,7 @@ export default function TimesGrove({ params, onComplete, meta, paused: hostPause
   const grade = useProgress((s) => s.player?.grade)
   const maxFactor = groveMaxFactor(grade)
   // grade tiers: the order bank is filtered to the grade's factors
-  const tasks = useMemo(() => planGroveRun(totalRounds, groveOrdersFor(maxFactor)), [totalRounds, maxFactor])
+  const tasks = useMemo(() => planGroveRun(totalRounds, grovePoolFor(maxFactor)), [totalRounds, maxFactor])
 
   const spawnWorld = useMemo(() => toWorld(...SPAWN_LOCAL), [])
   const posRef = useRef(new Vector3(spawnWorld[0], 0, spawnWorld[1]))
@@ -207,7 +207,7 @@ export default function TimesGrove({ params, onComplete, meta, paused: hostPause
   const startTask = useCallback(
     (index: number) => {
       const task = tasks[index]
-      problemRef.current = groveProblem(groveOrder(task.rows, task.cols))
+      problemRef.current = groveProblem(groveOrderWithAlts(task.rows, task.cols, index))
       triedRef.current = false
       lastCommit.current = ''
       clockRef.current = 0
