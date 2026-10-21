@@ -31,6 +31,8 @@ import { makeKLettersProvider, type KLettersConfig } from './kLetters'
 import { makeKLiteracyProvider, type KLiteracyConfig } from './kLiteracy'
 import { makeKTraceProvider, type KTraceConfig } from './kTrace'
 import { makeKStoriesProvider } from './kStories'
+import { makeKAddTakeProvider, type KAddTakeConfig } from './kAddTake'
+import { makeKStoryMathProvider, type KStoryMathConfig } from './kStoryMath'
 
 export type ProviderConfig =
   | { kind: 'multiplication'; factorMin: number; factorMax: number }
@@ -61,6 +63,10 @@ export type ProviderConfig =
   | ({ kind: 'kTrace' } & KTraceConfig)
   /** Writing Workshop: a three-picture story, then first, next, last (the `order` activity). */
   | { kind: 'kStories' }
+  /** Add-and-Take Falls: things join and leave as the voice says so, within 5, then 10; make ten (the `mathStory` activity). */
+  | ({ kind: 'kAddTake' } & KAddTakeConfig)
+  /** Story Woods: spoken story problems within 10, acted out (the `mathStory` activity). */
+  | ({ kind: 'kStoryMath' } & KStoryMathConfig)
 
 export function createProvider(config: ProviderConfig): ProblemProvider {
   switch (config.kind) {
@@ -106,5 +112,9 @@ export function createProvider(config: ProviderConfig): ProblemProvider {
       return makeKTraceProvider(config)
     case 'kStories':
       return makeKStoriesProvider()
+    case 'kAddTake':
+      return makeKAddTakeProvider(config)
+    case 'kStoryMath':
+      return makeKStoryMathProvider(config)
   }
 }

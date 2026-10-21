@@ -93,5 +93,19 @@ export default defineVoicePack({
     'stage-k-trace-2': 'Trace numbers!',
     'stage-k-trace-3': 'Trace big letters!',
     'stage-k-story-1': 'Story order!',
+
+    // ── Add-and-Take Falls (K complete, phase 2a): its name, welcome and stage buttons ──
+    'name-fraction-falls': 'Add-and-Take Falls!',
+    'welcome-fraction-falls': 'Add-and-Take Falls! Tap a star to play!',
+    'stage-k-addsub-1': 'Hop in, hop out!',
+    'stage-k-addsub-2': 'Up to ten!',
+    'stage-k-addsub-3': 'Make ten!',
+
+    // ── Story Woods (K complete, phase 2a): its name, welcome and stage buttons ──
+    'name-word-problem-woods': 'Story Woods!',
+    'welcome-word-problem-woods': 'Story Woods! Tap a star to play!',
+    'stage-k-woods-1': 'Act it out!',
+    'stage-k-woods-2': 'Story time!',
+    'stage-k-woods-3': 'Story puzzles!',
   },
 })

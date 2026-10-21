@@ -23,6 +23,8 @@ describe('daily challenge pick', () => {
 
   it('K–1 only picks a zone that is open to K–1, and plays its K stage', () => {
     const open = new Set(['multiplication-mesa', 'geometry-grove', 'reading-reef', 'writing-workshop'])
+    // (K complete, phase 2a)
+    for (const z of ['fraction-falls', 'word-problem-woods']) open.add(z)
     for (const grade of [0, 1] as const) {
       const zonesSeen = new Set<string>()
       for (let d = 0; d < 120; d++) {
@@ -40,6 +42,9 @@ describe('daily challenge pick', () => {
       const { zone, stage } = pickTodaysChallenge(0, localDayKey(new Date(2026, 0, 1 + d)))
       if (zone.id === 'writing-workshop') expect(stage.id).toBe('k-trace-1')
       if (zone.id === 'multiplication-mesa') expect(stage.id).toBe('k-count-1')
+      // (K complete, phase 2a: the first stage of each, a mathStory round)
+      if (zone.id === 'fraction-falls') expect(stage.id).toBe('k-addsub-1')
+      if (zone.id === 'word-problem-woods') expect(stage.id).toBe('k-woods-1')
       expect(stage.gameId).toBe('listenPlay')
     }
   })

@@ -225,11 +225,17 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
     'reading-reef': ['k-letters-1', 'k-rhyme-1', 'k-letters-2', 'k-syllables-1', 'k-letters-3', 'k-rhyme-2', 'k-blend-1', 'k-sight-1'],
     // (K literacy, phase 1b: Writing Workshop wakes up as the fourth K zone)
     'writing-workshop': ['k-trace-1', 'k-trace-2', 'k-trace-3', 'k-story-1'],
+    // (K complete, phase 2a)
+    'fraction-falls': ['k-addsub-1', 'k-addsub-2', 'k-addsub-3'],
+    'word-problem-woods': ['k-woods-1', 'k-woods-2', 'k-woods-3'],
   }
   const K1_TITLES: Record<string, string> = {
     'multiplication-mesa': 'Counting Mesa',
     'geometry-grove': 'Shape Grove',
     'reading-reef': 'Letter Reef',
+    // (K complete, phase 2a)
+    'fraction-falls': 'Add-and-Take Falls',
+    'word-problem-woods': 'Story Woods',
   }
 
   it('kindergarten and 1st grade see the K–1 stage sets; 2nd–5th grade still see today’s', () => {
@@ -271,6 +277,9 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
       ...['kCounting', 'kCounting', 'kCounting', 'kShapes', 'kShapes', 'kShapes'],
       ...['kLetters', 'kLiteracy', 'kLetters', 'kLiteracy', 'kLetters', 'kLiteracy', 'kLiteracy', 'kLiteracy'],
       ...['kTrace', 'kTrace', 'kTrace', 'kStories'],
+      // (K complete, phase 2a)
+      ...['kAddTake', 'kAddTake', 'kAddTake'],
+      ...['kStoryMath', 'kStoryMath', 'kStoryMath'],
     ])
     // the counting stages climb: count to 10, count on to 20 (the parade), then compare
     expect(all.slice(0, 3).map((s) => s.providerConfig)).toMatchObject([
@@ -340,6 +349,31 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
     // and it's no longer sleeping for K–1; it keeps its own name
     expect(isZoneSleeping(getZone('writing-workshop')!, 0)).toBe(false)
     expect(zoneTitle(getZone('writing-workshop')!, 0)).toBe('Writing Workshop')
+  })
+
+  it('Add-and-Take Falls and Story Woods (phase-2a contract): their K titles, stage ids, kinds and lessons', () => {
+    const falls = getZone('fraction-falls')!
+    const woods = getZone('word-problem-woods')!
+    for (const [zone, title, ids] of [
+      [falls, 'Add-and-Take Falls', ['k-addsub-1', 'k-addsub-2', 'k-addsub-3']],
+      [woods, 'Story Woods', ['k-woods-1', 'k-woods-2', 'k-woods-3']],
+    ] as const) {
+      const set = zoneStages(zone, 0)
+      expect(set.map((s) => s.id)).toEqual(ids)
+      expect(set.map((s) => s.kind)).toEqual(['concept', 'practice', 'mastery'])
+      expect(zoneTitle(zone, 0)).toBe(title)
+      expect(isZoneSleeping(zone, 0)).toBe(false)
+      // each unlocks after the one before it
+      const stars = (xs: string[]) => ({ stages: Object.fromEntries(xs.map((id) => [id, { stars: 1 }])) })
+      set.forEach((s, i) => expect(isStageUnlocked(zone, s.id, stars(ids.slice(0, i)), 0), s.id).toBe(true))
+      expect(isStageUnlocked(zone, ids[2], stars([ids[0]]), 0)).toBe(false)
+      // answered by the mathStory activity (things join and leave on screen), never by reading
+      const q = createProvider(set[0].providerConfig).next() as ListenProblem
+      expect(q.activity?.kind).toBe('mathStory')
+    }
+    // the 2–4 stages are unchanged
+    expect(falls.stages.map((s) => s.id)).toEqual(['frac-concept', 'frac-practice', 'frac-mastery'])
+    expect(woods.stages.map((s) => s.id)).toEqual(['wp-concept', 'wp-practice', 'wp-mastery'])
   })
 
   it('names the three zones for K–1 only (zoneTitle)', () => {

@@ -290,5 +290,41 @@
       "stepId": "yourTurn",
       "text": "Your turn! Start at the dot, and follow the arrow. You can do it!"
     }
+  ],
+  "kAddTake": [
+    {
+      "stepId": "join",
+      "text": "Three frogs sit on a log. Two more hop on! Now there are five frogs."
+    },
+    {
+      "stepId": "away",
+      "text": "Five ducks swim in the pond. Then two swim away. Bye, ducks!"
+    },
+    {
+      "stepId": "ten",
+      "text": "This is a ten frame. It has ten spots. Seven are full. Three more make ten!"
+    },
+    {
+      "stepId": "yourTurn",
+      "text": "Your turn! Six spots are full. Look at the empty spots."
+    }
+  ],
+  "kStoryMath": [
+    {
+      "stepId": "story",
+      "text": "Listen to a story. Bear has two apples. Fox brings her three more!"
+    },
+    {
+      "stepId": "act",
+      "text": "Let's act it out. Put them together and count. One, two, three, four, five. Five apples!"
+    },
+    {
+      "stepId": "away",
+      "text": "Owl sees six birds in a tree. Then two birds fly away."
+    },
+    {
+      "stepId": "basket",
+      "text": "Your turn! Bunny has three pears and two peaches."
+    }
   ]
 }

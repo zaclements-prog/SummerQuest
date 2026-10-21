@@ -18,6 +18,7 @@ import { isSolidShape, shapeSides } from '../../../games/listenPlay/shapeGeometr
 import { glyph } from '../../trace/glyphs'
 import { isTraceSpec } from '../../trace/spec'
 import { isOrderSpec, STORY_PICTURES } from '../kStories'
+import { isMathStorySpec } from '../../../games/listenPlay/activities/mathStorySpec'
 
 /**
  * Generator fuzz suite: every stage in the curriculum, at every grade tier, plus
@@ -419,6 +420,54 @@ function answerProblems(config: ProviderConfig, grade: GradeLevel, p: Problem): 
     case 'kStories':
       errs.push(...activityProblems(p as ListenProblem))
       break
+    // (K complete, phase 2a: Add-and-Take Falls and Story Woods, the `mathStory` activity)
+    case 'kAddTake':
+    case 'kStoryMath':
+      errs.push(...mathStoryProblems(config, p as ListenProblem))
+      break
+  }
+  return errs
+}
+
+// ── K–1 story math (Add-and-Take Falls, Story Woods): the answer, worked out from what is SAID ──
+
+function mathStoryProblems(config: Extract<ProviderConfig, { kind: 'kAddTake' | 'kStoryMath' }>, p: ListenProblem): string[] {
+  const s = p.activity
+  if (!isMathStorySpec(s)) return [`not a mathStory question: ${JSON.stringify(s)}`]
+  const errs: string[] = []
+  const want = (n: number) => {
+    if (p.answer !== n) errs.push(`answer is ${JSON.stringify(p.answer)}, the story says ${n}`)
+  }
+  const cards = p.pictureOptions ?? []
+  if (cards.length !== 3 || cards.some((c, i) => c.value !== p.options[i] || c.picture.kind !== 'numeral')) errs.push('three numeral cards, one per option')
+  if (p.options.filter((o) => o === p.answer).length !== 1) errs.push('the answer is not exactly one card')
+  for (const o of p.options) if (!(Number.isInteger(o) && (o as number) >= 1 && (o as number) <= 10)) errs.push(`card ${o} is not 1–10`)
+  const word = (x: string | undefined) => (x === undefined ? NaN : /^one$/i.test(x) ? 1 : Number(x))
+  if (config.kind === 'kAddTake') {
+    const a = word(/^Here (?:are (\d+)|is (one)) \w+\./.exec(p.prompt)?.slice(1).find(Boolean))
+    if (Number.isNaN(a)) return [...errs, `no start in "${p.prompt}"`]
+    if (/How many more make ten\?$/.test(p.prompt)) {
+      if (config.mode !== 'make10') errs.push(`make ten in ${config.mode}`)
+      want(10 - a)
+    } else {
+      const join = /(\d+|One) more \w+ in\./.exec(p.prompt)
+      const leave = /(\d+|One) \w+ away\./.exec(p.prompt)
+      const b = word((join ?? leave)?.[1])
+      if (Number.isNaN(b)) return [...errs, `no change in "${p.prompt}"`]
+      if (join && !/How many now\?$/.test(p.prompt)) errs.push('joining, but not asked how many now')
+      if (leave && !/How many are left\?$/.test(p.prompt)) errs.push('leaving, but not asked how many are left')
+      want(join ? a + b : a - b)
+      const top = join ? a + b : a
+      if (top > (config.mode === 'within5' ? 5 : 10)) errs.push(`${top} is past the stage's ${config.mode}`)
+    }
+    if (s.a !== a) errs.push(`the scene starts with ${s.a}, the voice says ${a}`)
+  } else {
+    const [a, b] = (p.prompt.match(/\d+/g) ?? []).map(Number)
+    if (s.a !== a || s.b !== b) errs.push(`the scene shows ${s.a} and ${s.b}, the story says ${a} and ${b}`)
+    if (!(config.plots as readonly string[] | undefined)?.includes(s.plot)) errs.push(`a ${s.plot} story in a stage of ${config.plots}`)
+    want(s.plot === 'join' || s.plot === 'together' ? a + b : a - b)
+    if ((s.plot === 'compare') !== /How many more /.test(p.prompt)) errs.push(`"how many more" for a ${s.plot} story`)
+    if (!s.act) errs.push('a Story Woods story with nothing to act out')
   }
   return errs
 }

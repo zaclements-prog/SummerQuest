@@ -2,6 +2,7 @@ import type { ListenActivityDef, ListenActivitySpec } from '../types'
 import { drumActivity } from './Drum'
 import { traceActivity } from './Trace'
 import { storyOrderActivity } from './StoryOrder'
+import { mathStoryActivity } from './MathStory'
 
 /**
  * Listen & Play activities by `kind` (see `ListenProblem.activity`): the
@@ -13,6 +14,7 @@ export const LISTEN_ACTIVITIES: Record<string, ListenActivityDef<any>> = {
   drum: drumActivity,
   trace: traceActivity,
   order: storyOrderActivity,
+  mathStory: mathStoryActivity,
 }
 
 export function activityDef(spec: ListenActivitySpec | undefined): ListenActivityDef | null {

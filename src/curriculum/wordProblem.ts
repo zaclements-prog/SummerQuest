@@ -3,6 +3,7 @@ import type { Zone } from './types'
 export const wordProblemZone: Zone = {
   id: 'word-problem-woods',
   title: 'Word Problem Woods',
+  titleByBand: { k1: 'Story Woods' },
   subtitle: 'Read, plan, solve',
   emoji: '🌲',
   themeColor: 'island',
@@ -43,4 +44,42 @@ export const wordProblemZone: Zone = {
       starsToEarn: 3,
     },
   ],
+  stagesByBand: {
+    // K "Story Woods" (K.OA.2): spoken story problems within 10 with characters and places;
+    // the child acts each story out (the `mathStory` activity), then taps the answer. Adding
+    // to and taking from within 5; then within 10 with two kinds in one basket; then every
+    // kind, how many more too. Titles and descriptions are said aloud.
+    k1: [
+      {
+        id: 'k-woods-1',
+        kind: 'concept',
+        title: 'Act it out',
+        description: 'Listen to the story. Then act it out!',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kStoryMath', plots: ['join', 'leave'], max: 5 },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-woods-2',
+        kind: 'practice',
+        title: 'Story time',
+        description: 'Stories up to ten. Fill the basket!',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kStoryMath', plots: ['join', 'leave', 'together'], max: 10 },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-woods-3',
+        kind: 'mastery',
+        title: 'Story puzzles',
+        description: 'Every kind of story. How many more?',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kStoryMath', plots: ['join', 'leave', 'together', 'compare'], max: 10 },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+    ],
+  },
 }

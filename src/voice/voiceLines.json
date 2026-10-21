@@ -1,6 +1,888 @@
 {
   "voice": "higgs-audio-v2-mlx-q8:clone:calm-teacher-v1:k",
   "clips": {
+    "k-addtake/howManyNow": {
+      "text": "How many now?",
+      "hash": "5e390491b0",
+      "kind": "line",
+      "file": "voice/k-addtake/howManyNow.mp3"
+    },
+    "k-addtake/howManyLeft": {
+      "text": "How many are left?",
+      "hash": "6738c190b7",
+      "kind": "line",
+      "file": "voice/k-addtake/howManyLeft.mp3"
+    },
+    "k-addtake/makeTen": {
+      "text": "How many more make ten?",
+      "hash": "044e6dc09c",
+      "kind": "line",
+      "file": "voice/k-addtake/makeTen.mp3"
+    },
+    "k-addtake/one-frogs": {
+      "text": "Here is one frog.",
+      "hash": "55ce479127",
+      "kind": "line",
+      "file": "voice/k-addtake/one-frogs.mp3"
+    },
+    "k-addtake/one-bunnies": {
+      "text": "Here is one bunny.",
+      "hash": "337e60c860",
+      "kind": "line",
+      "file": "voice/k-addtake/one-bunnies.mp3"
+    },
+    "k-addtake/one-ducks": {
+      "text": "Here is one duck.",
+      "hash": "4ff671cc8f",
+      "kind": "line",
+      "file": "voice/k-addtake/one-ducks.mp3"
+    },
+    "k-addtake/one-fish": {
+      "text": "Here is one fish.",
+      "hash": "2c69ee60e9",
+      "kind": "line",
+      "file": "voice/k-addtake/one-fish.mp3"
+    },
+    "k-addtake/one-turtles": {
+      "text": "Here is one turtle.",
+      "hash": "e56f1cd68e",
+      "kind": "line",
+      "file": "voice/k-addtake/one-turtles.mp3"
+    },
+    "k-addtake/one-bees": {
+      "text": "Here is one bee.",
+      "hash": "595fd6e02d",
+      "kind": "line",
+      "file": "voice/k-addtake/one-bees.mp3"
+    },
+    "k-addtake/one-butterflies": {
+      "text": "Here is one butterfly.",
+      "hash": "0f9f2613db",
+      "kind": "line",
+      "file": "voice/k-addtake/one-butterflies.mp3"
+    },
+    "k-addtake/one-ladybugs": {
+      "text": "Here is one ladybug.",
+      "hash": "2c7f0476c2",
+      "kind": "line",
+      "file": "voice/k-addtake/one-ladybugs.mp3"
+    },
+    "k-addtake/one-birds": {
+      "text": "Here is one bird.",
+      "hash": "c9295810c5",
+      "kind": "line",
+      "file": "voice/k-addtake/one-birds.mp3"
+    },
+    "k-addtake/hopIn-1": {
+      "text": "One more hops in.",
+      "hash": "5037e162bc",
+      "kind": "line",
+      "file": "voice/k-addtake/hopIn-1.mp3"
+    },
+    "k-addtake/hopAway-1": {
+      "text": "One hops away.",
+      "hash": "ecafb5223b",
+      "kind": "line",
+      "file": "voice/k-addtake/hopAway-1.mp3"
+    },
+    "k-addtake/swimIn-1": {
+      "text": "One more swims in.",
+      "hash": "502dfeee90",
+      "kind": "line",
+      "file": "voice/k-addtake/swimIn-1.mp3"
+    },
+    "k-addtake/swimAway-1": {
+      "text": "One swims away.",
+      "hash": "9e665aa485",
+      "kind": "line",
+      "file": "voice/k-addtake/swimAway-1.mp3"
+    },
+    "k-addtake/flyIn-1": {
+      "text": "One more flies in.",
+      "hash": "bf16c30747",
+      "kind": "line",
+      "file": "voice/k-addtake/flyIn-1.mp3"
+    },
+    "k-addtake/flyAway-1": {
+      "text": "One flies away.",
+      "hash": "5442f3a40b",
+      "kind": "line",
+      "file": "voice/k-addtake/flyAway-1.mp3"
+    },
+    "k-addtake/start/n=2,thing=frogs": {
+      "text": "Here are two frogs.",
+      "hash": "2577ba3262",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=2,thing=frogs.mp3"
+    },
+    "k-addtake/start/n=2,thing=bunnies": {
+      "text": "Here are two bunnies.",
+      "hash": "12444eaf70",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=2,thing=bunnies.mp3"
+    },
+    "k-addtake/start/n=2,thing=ducks": {
+      "text": "Here are two ducks.",
+      "hash": "f401a23d04",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=2,thing=ducks.mp3"
+    },
+    "k-addtake/start/n=2,thing=fish": {
+      "text": "Here are two fish.",
+      "hash": "5d147f116a",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=2,thing=fish.mp3"
+    },
+    "k-addtake/start/n=2,thing=turtles": {
+      "text": "Here are two turtles.",
+      "hash": "ee8821ab0e",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=2,thing=turtles.mp3"
+    },
+    "k-addtake/start/n=2,thing=bees": {
+      "text": "Here are two bees.",
+      "hash": "b9c1438642",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=2,thing=bees.mp3"
+    },
+    "k-addtake/start/n=2,thing=butterflies": {
+      "text": "Here are two butterflies.",
+      "hash": "b6a7a14061",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=2,thing=butterflies.mp3"
+    },
+    "k-addtake/start/n=2,thing=ladybugs": {
+      "text": "Here are two ladybugs.",
+      "hash": "40f4d6422f",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=2,thing=ladybugs.mp3"
+    },
+    "k-addtake/start/n=2,thing=birds": {
+      "text": "Here are two birds.",
+      "hash": "1b91bebd81",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=2,thing=birds.mp3"
+    },
+    "k-addtake/start/n=3,thing=frogs": {
+      "text": "Here are three frogs.",
+      "hash": "75b571a99e",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=3,thing=frogs.mp3"
+    },
+    "k-addtake/start/n=3,thing=bunnies": {
+      "text": "Here are three bunnies.",
+      "hash": "697be0e40e",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=3,thing=bunnies.mp3"
+    },
+    "k-addtake/start/n=3,thing=ducks": {
+      "text": "Here are three ducks.",
+      "hash": "f46012ea65",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=3,thing=ducks.mp3"
+    },
+    "k-addtake/start/n=3,thing=fish": {
+      "text": "Here are three fish.",
+      "hash": "cb3aea23a3",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=3,thing=fish.mp3"
+    },
+    "k-addtake/start/n=3,thing=turtles": {
+      "text": "Here are three turtles.",
+      "hash": "5a91bc02f3",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=3,thing=turtles.mp3"
+    },
+    "k-addtake/start/n=3,thing=bees": {
+      "text": "Here are three bees.",
+      "hash": "9af660c1ff",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=3,thing=bees.mp3"
+    },
+    "k-addtake/start/n=3,thing=butterflies": {
+      "text": "Here are three butterflies.",
+      "hash": "08e8594136",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=3,thing=butterflies.mp3"
+    },
+    "k-addtake/start/n=3,thing=ladybugs": {
+      "text": "Here are three ladybugs.",
+      "hash": "00f7d214ae",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=3,thing=ladybugs.mp3"
+    },
+    "k-addtake/start/n=3,thing=birds": {
+      "text": "Here are three birds.",
+      "hash": "f9dfe9207b",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=3,thing=birds.mp3"
+    },
+    "k-addtake/start/n=4,thing=frogs": {
+      "text": "Here are four frogs.",
+      "hash": "973baa6120",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=4,thing=frogs.mp3"
+    },
+    "k-addtake/start/n=4,thing=bunnies": {
+      "text": "Here are four bunnies.",
+      "hash": "91daae0367",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=4,thing=bunnies.mp3"
+    },
+    "k-addtake/start/n=4,thing=ducks": {
+      "text": "Here are four ducks.",
+      "hash": "b1f0936211",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=4,thing=ducks.mp3"
+    },
+    "k-addtake/start/n=4,thing=fish": {
+      "text": "Here are four fish.",
+      "hash": "16caba2b3e",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=4,thing=fish.mp3"
+    },
+    "k-addtake/start/n=4,thing=turtles": {
+      "text": "Here are four turtles.",
+      "hash": "ec64618a33",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=4,thing=turtles.mp3"
+    },
+    "k-addtake/start/n=4,thing=bees": {
+      "text": "Here are four bees.",
+      "hash": "05d362a6dd",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=4,thing=bees.mp3"
+    },
+    "k-addtake/start/n=4,thing=butterflies": {
+      "text": "Here are four butterflies.",
+      "hash": "6f7eb63730",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=4,thing=butterflies.mp3"
+    },
+    "k-addtake/start/n=4,thing=ladybugs": {
+      "text": "Here are four ladybugs.",
+      "hash": "99c8149c3e",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=4,thing=ladybugs.mp3"
+    },
+    "k-addtake/start/n=4,thing=birds": {
+      "text": "Here are four birds.",
+      "hash": "4880d1b040",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=4,thing=birds.mp3"
+    },
+    "k-addtake/start/n=5,thing=frogs": {
+      "text": "Here are five frogs.",
+      "hash": "e026cf7bad",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=5,thing=frogs.mp3"
+    },
+    "k-addtake/start/n=5,thing=bunnies": {
+      "text": "Here are five bunnies.",
+      "hash": "6b27f25dba",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=5,thing=bunnies.mp3"
+    },
+    "k-addtake/start/n=5,thing=ducks": {
+      "text": "Here are five ducks.",
+      "hash": "c72ea8ba78",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=5,thing=ducks.mp3"
+    },
+    "k-addtake/start/n=5,thing=fish": {
+      "text": "Here are five fish.",
+      "hash": "76c79f6f7f",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=5,thing=fish.mp3"
+    },
+    "k-addtake/start/n=5,thing=turtles": {
+      "text": "Here are five turtles.",
+      "hash": "3f9bc8555a",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=5,thing=turtles.mp3"
+    },
+    "k-addtake/start/n=5,thing=bees": {
+      "text": "Here are five bees.",
+      "hash": "82bccda99c",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=5,thing=bees.mp3"
+    },
+    "k-addtake/start/n=5,thing=butterflies": {
+      "text": "Here are five butterflies.",
+      "hash": "51a9a54421",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=5,thing=butterflies.mp3"
+    },
+    "k-addtake/start/n=5,thing=ladybugs": {
+      "text": "Here are five ladybugs.",
+      "hash": "c3212e2dc8",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=5,thing=ladybugs.mp3"
+    },
+    "k-addtake/start/n=5,thing=birds": {
+      "text": "Here are five birds.",
+      "hash": "40010bb798",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=5,thing=birds.mp3"
+    },
+    "k-addtake/start/n=6,thing=frogs": {
+      "text": "Here are six frogs.",
+      "hash": "9955bbc1c0",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=6,thing=frogs.mp3"
+    },
+    "k-addtake/start/n=6,thing=bunnies": {
+      "text": "Here are six bunnies.",
+      "hash": "f01b5e997e",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=6,thing=bunnies.mp3"
+    },
+    "k-addtake/start/n=6,thing=ducks": {
+      "text": "Here are six ducks.",
+      "hash": "40dc3b5cbb",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=6,thing=ducks.mp3"
+    },
+    "k-addtake/start/n=6,thing=fish": {
+      "text": "Here are six fish.",
+      "hash": "4698cf8a42",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=6,thing=fish.mp3"
+    },
+    "k-addtake/start/n=6,thing=turtles": {
+      "text": "Here are six turtles.",
+      "hash": "0f0e230e62",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=6,thing=turtles.mp3"
+    },
+    "k-addtake/start/n=6,thing=bees": {
+      "text": "Here are six bees.",
+      "hash": "88efb9f74a",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=6,thing=bees.mp3"
+    },
+    "k-addtake/start/n=6,thing=butterflies": {
+      "text": "Here are six butterflies.",
+      "hash": "18642fc5bb",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=6,thing=butterflies.mp3"
+    },
+    "k-addtake/start/n=6,thing=ladybugs": {
+      "text": "Here are six ladybugs.",
+      "hash": "c705bbf6c7",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=6,thing=ladybugs.mp3"
+    },
+    "k-addtake/start/n=6,thing=birds": {
+      "text": "Here are six birds.",
+      "hash": "8bcae96157",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=6,thing=birds.mp3"
+    },
+    "k-addtake/start/n=7,thing=frogs": {
+      "text": "Here are seven frogs.",
+      "hash": "e367040951",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=7,thing=frogs.mp3"
+    },
+    "k-addtake/start/n=7,thing=bunnies": {
+      "text": "Here are seven bunnies.",
+      "hash": "7ae7de6d2b",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=7,thing=bunnies.mp3"
+    },
+    "k-addtake/start/n=7,thing=ducks": {
+      "text": "Here are seven ducks.",
+      "hash": "1b6fbe6b16",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=7,thing=ducks.mp3"
+    },
+    "k-addtake/start/n=7,thing=fish": {
+      "text": "Here are seven fish.",
+      "hash": "33e8def219",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=7,thing=fish.mp3"
+    },
+    "k-addtake/start/n=7,thing=turtles": {
+      "text": "Here are seven turtles.",
+      "hash": "bdc816588a",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=7,thing=turtles.mp3"
+    },
+    "k-addtake/start/n=7,thing=bees": {
+      "text": "Here are seven bees.",
+      "hash": "571bcfc5e5",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=7,thing=bees.mp3"
+    },
+    "k-addtake/start/n=7,thing=butterflies": {
+      "text": "Here are seven butterflies.",
+      "hash": "8ccbf183f9",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=7,thing=butterflies.mp3"
+    },
+    "k-addtake/start/n=7,thing=ladybugs": {
+      "text": "Here are seven ladybugs.",
+      "hash": "7faa26ea62",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=7,thing=ladybugs.mp3"
+    },
+    "k-addtake/start/n=7,thing=birds": {
+      "text": "Here are seven birds.",
+      "hash": "73c2c1ec4a",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=7,thing=birds.mp3"
+    },
+    "k-addtake/start/n=8,thing=frogs": {
+      "text": "Here are eight frogs.",
+      "hash": "b2bba809b6",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=8,thing=frogs.mp3"
+    },
+    "k-addtake/start/n=8,thing=bunnies": {
+      "text": "Here are eight bunnies.",
+      "hash": "0b4b82eb5f",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=8,thing=bunnies.mp3"
+    },
+    "k-addtake/start/n=8,thing=ducks": {
+      "text": "Here are eight ducks.",
+      "hash": "2d8c1c91b2",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=8,thing=ducks.mp3"
+    },
+    "k-addtake/start/n=8,thing=fish": {
+      "text": "Here are eight fish.",
+      "hash": "a1a9604736",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=8,thing=fish.mp3"
+    },
+    "k-addtake/start/n=8,thing=turtles": {
+      "text": "Here are eight turtles.",
+      "hash": "c50710b286",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=8,thing=turtles.mp3"
+    },
+    "k-addtake/start/n=8,thing=bees": {
+      "text": "Here are eight bees.",
+      "hash": "5549f933f9",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=8,thing=bees.mp3"
+    },
+    "k-addtake/start/n=8,thing=butterflies": {
+      "text": "Here are eight butterflies.",
+      "hash": "3ffe14e967",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=8,thing=butterflies.mp3"
+    },
+    "k-addtake/start/n=8,thing=ladybugs": {
+      "text": "Here are eight ladybugs.",
+      "hash": "6ad718d40d",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=8,thing=ladybugs.mp3"
+    },
+    "k-addtake/start/n=8,thing=birds": {
+      "text": "Here are eight birds.",
+      "hash": "631bc0bc70",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=8,thing=birds.mp3"
+    },
+    "k-addtake/start/n=9,thing=frogs": {
+      "text": "Here are nine frogs.",
+      "hash": "b5f86f648f",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=9,thing=frogs.mp3"
+    },
+    "k-addtake/start/n=9,thing=bunnies": {
+      "text": "Here are nine bunnies.",
+      "hash": "3c17615785",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=9,thing=bunnies.mp3"
+    },
+    "k-addtake/start/n=9,thing=ducks": {
+      "text": "Here are nine ducks.",
+      "hash": "a2d106e5ba",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=9,thing=ducks.mp3"
+    },
+    "k-addtake/start/n=9,thing=fish": {
+      "text": "Here are nine fish.",
+      "hash": "bb8910bef9",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=9,thing=fish.mp3"
+    },
+    "k-addtake/start/n=9,thing=turtles": {
+      "text": "Here are nine turtles.",
+      "hash": "9a62e06635",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=9,thing=turtles.mp3"
+    },
+    "k-addtake/start/n=9,thing=bees": {
+      "text": "Here are nine bees.",
+      "hash": "82a230f6d0",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=9,thing=bees.mp3"
+    },
+    "k-addtake/start/n=9,thing=butterflies": {
+      "text": "Here are nine butterflies.",
+      "hash": "cd4b55fa2d",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=9,thing=butterflies.mp3"
+    },
+    "k-addtake/start/n=9,thing=ladybugs": {
+      "text": "Here are nine ladybugs.",
+      "hash": "cab09388c6",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=9,thing=ladybugs.mp3"
+    },
+    "k-addtake/start/n=9,thing=birds": {
+      "text": "Here are nine birds.",
+      "hash": "e4a91e807e",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=9,thing=birds.mp3"
+    },
+    "k-addtake/start/n=10,thing=frogs": {
+      "text": "Here are ten frogs.",
+      "hash": "8f7960e0af",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=10,thing=frogs.mp3"
+    },
+    "k-addtake/start/n=10,thing=bunnies": {
+      "text": "Here are ten bunnies.",
+      "hash": "316d53e63c",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=10,thing=bunnies.mp3"
+    },
+    "k-addtake/start/n=10,thing=ducks": {
+      "text": "Here are ten ducks.",
+      "hash": "6983f32dda",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=10,thing=ducks.mp3"
+    },
+    "k-addtake/start/n=10,thing=fish": {
+      "text": "Here are ten fish.",
+      "hash": "f809a07b67",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=10,thing=fish.mp3"
+    },
+    "k-addtake/start/n=10,thing=turtles": {
+      "text": "Here are ten turtles.",
+      "hash": "74d3667092",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=10,thing=turtles.mp3"
+    },
+    "k-addtake/start/n=10,thing=bees": {
+      "text": "Here are ten bees.",
+      "hash": "939b0d80f9",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=10,thing=bees.mp3"
+    },
+    "k-addtake/start/n=10,thing=butterflies": {
+      "text": "Here are ten butterflies.",
+      "hash": "d9f0c476a8",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=10,thing=butterflies.mp3"
+    },
+    "k-addtake/start/n=10,thing=ladybugs": {
+      "text": "Here are ten ladybugs.",
+      "hash": "e3b8a8b3cc",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=10,thing=ladybugs.mp3"
+    },
+    "k-addtake/start/n=10,thing=birds": {
+      "text": "Here are ten birds.",
+      "hash": "bf3adf2593",
+      "kind": "whole",
+      "file": "voice/k-addtake/start/n=10,thing=birds.mp3"
+    },
+    "k-addtake/hopIn/n=2": {
+      "text": "two more hop in.",
+      "hash": "53bfdd69dd",
+      "kind": "whole",
+      "file": "voice/k-addtake/hopIn/n=2.mp3"
+    },
+    "k-addtake/hopIn/n=3": {
+      "text": "three more hop in.",
+      "hash": "156b0b0dc1",
+      "kind": "whole",
+      "file": "voice/k-addtake/hopIn/n=3.mp3"
+    },
+    "k-addtake/hopIn/n=4": {
+      "text": "four more hop in.",
+      "hash": "e7c43ce2a7",
+      "kind": "whole",
+      "file": "voice/k-addtake/hopIn/n=4.mp3"
+    },
+    "k-addtake/hopIn/n=5": {
+      "text": "five more hop in.",
+      "hash": "a53bd3eb3a",
+      "kind": "whole",
+      "file": "voice/k-addtake/hopIn/n=5.mp3"
+    },
+    "k-addtake/hopIn/n=6": {
+      "text": "six more hop in.",
+      "hash": "9481649711",
+      "kind": "whole",
+      "file": "voice/k-addtake/hopIn/n=6.mp3"
+    },
+    "k-addtake/hopIn/n=7": {
+      "text": "seven more hop in.",
+      "hash": "fe4e0db4cb",
+      "kind": "whole",
+      "file": "voice/k-addtake/hopIn/n=7.mp3"
+    },
+    "k-addtake/hopIn/n=8": {
+      "text": "eight more hop in.",
+      "hash": "12fda674c7",
+      "kind": "whole",
+      "file": "voice/k-addtake/hopIn/n=8.mp3"
+    },
+    "k-addtake/hopIn/n=9": {
+      "text": "nine more hop in.",
+      "hash": "56acc318e0",
+      "kind": "whole",
+      "file": "voice/k-addtake/hopIn/n=9.mp3"
+    },
+    "k-addtake/hopAway/n=2": {
+      "text": "two hop away.",
+      "hash": "c27072a755",
+      "kind": "whole",
+      "file": "voice/k-addtake/hopAway/n=2.mp3"
+    },
+    "k-addtake/hopAway/n=3": {
+      "text": "three hop away.",
+      "hash": "fb7b131d7b",
+      "kind": "whole",
+      "file": "voice/k-addtake/hopAway/n=3.mp3"
+    },
+    "k-addtake/hopAway/n=4": {
+      "text": "four hop away.",
+      "hash": "5da874dddd",
+      "kind": "whole",
+      "file": "voice/k-addtake/hopAway/n=4.mp3"
+    },
+    "k-addtake/hopAway/n=5": {
+      "text": "five hop away.",
+      "hash": "c95344ee8e",
+      "kind": "whole",
+      "file": "voice/k-addtake/hopAway/n=5.mp3"
+    },
+    "k-addtake/hopAway/n=6": {
+      "text": "six hop away.",
+      "hash": "254da1b922",
+      "kind": "whole",
+      "file": "voice/k-addtake/hopAway/n=6.mp3"
+    },
+    "k-addtake/hopAway/n=7": {
+      "text": "seven hop away.",
+      "hash": "f323af679b",
+      "kind": "whole",
+      "file": "voice/k-addtake/hopAway/n=7.mp3"
+    },
+    "k-addtake/hopAway/n=8": {
+      "text": "eight hop away.",
+      "hash": "f9076c4b78",
+      "kind": "whole",
+      "file": "voice/k-addtake/hopAway/n=8.mp3"
+    },
+    "k-addtake/hopAway/n=9": {
+      "text": "nine hop away.",
+      "hash": "f94971ae54",
+      "kind": "whole",
+      "file": "voice/k-addtake/hopAway/n=9.mp3"
+    },
+    "k-addtake/swimIn/n=2": {
+      "text": "two more swim in.",
+      "hash": "84f601d7de",
+      "kind": "whole",
+      "file": "voice/k-addtake/swimIn/n=2.mp3"
+    },
+    "k-addtake/swimIn/n=3": {
+      "text": "three more swim in.",
+      "hash": "8ce1dd6795",
+      "kind": "whole",
+      "file": "voice/k-addtake/swimIn/n=3.mp3"
+    },
+    "k-addtake/swimIn/n=4": {
+      "text": "four more swim in.",
+      "hash": "a4a652c0a2",
+      "kind": "whole",
+      "file": "voice/k-addtake/swimIn/n=4.mp3"
+    },
+    "k-addtake/swimIn/n=5": {
+      "text": "five more swim in.",
+      "hash": "1c7e50847f",
+      "kind": "whole",
+      "file": "voice/k-addtake/swimIn/n=5.mp3"
+    },
+    "k-addtake/swimIn/n=6": {
+      "text": "six more swim in.",
+      "hash": "ae1accde51",
+      "kind": "whole",
+      "file": "voice/k-addtake/swimIn/n=6.mp3"
+    },
+    "k-addtake/swimIn/n=7": {
+      "text": "seven more swim in.",
+      "hash": "4e5a916ee6",
+      "kind": "whole",
+      "file": "voice/k-addtake/swimIn/n=7.mp3"
+    },
+    "k-addtake/swimIn/n=8": {
+      "text": "eight more swim in.",
+      "hash": "89a1425965",
+      "kind": "whole",
+      "file": "voice/k-addtake/swimIn/n=8.mp3"
+    },
+    "k-addtake/swimIn/n=9": {
+      "text": "nine more swim in.",
+      "hash": "f309f54dbb",
+      "kind": "whole",
+      "file": "voice/k-addtake/swimIn/n=9.mp3"
+    },
+    "k-addtake/swimAway/n=2": {
+      "text": "two swim away.",
+      "hash": "eb3163bb2f",
+      "kind": "whole",
+      "file": "voice/k-addtake/swimAway/n=2.mp3"
+    },
+    "k-addtake/swimAway/n=3": {
+      "text": "three swim away.",
+      "hash": "e7f498e43e",
+      "kind": "whole",
+      "file": "voice/k-addtake/swimAway/n=3.mp3"
+    },
+    "k-addtake/swimAway/n=4": {
+      "text": "four swim away.",
+      "hash": "ffefb14f6d",
+      "kind": "whole",
+      "file": "voice/k-addtake/swimAway/n=4.mp3"
+    },
+    "k-addtake/swimAway/n=5": {
+      "text": "five swim away.",
+      "hash": "91d8dca75b",
+      "kind": "whole",
+      "file": "voice/k-addtake/swimAway/n=5.mp3"
+    },
+    "k-addtake/swimAway/n=6": {
+      "text": "six swim away.",
+      "hash": "a6be0addc8",
+      "kind": "whole",
+      "file": "voice/k-addtake/swimAway/n=6.mp3"
+    },
+    "k-addtake/swimAway/n=7": {
+      "text": "seven swim away.",
+      "hash": "6949945df2",
+      "kind": "whole",
+      "file": "voice/k-addtake/swimAway/n=7.mp3"
+    },
+    "k-addtake/swimAway/n=8": {
+      "text": "eight swim away.",
+      "hash": "781231f917",
+      "kind": "whole",
+      "file": "voice/k-addtake/swimAway/n=8.mp3"
+    },
+    "k-addtake/swimAway/n=9": {
+      "text": "nine swim away.",
+      "hash": "dec3c1dee4",
+      "kind": "whole",
+      "file": "voice/k-addtake/swimAway/n=9.mp3"
+    },
+    "k-addtake/flyIn/n=2": {
+      "text": "two more fly in.",
+      "hash": "8fdca6a002",
+      "kind": "whole",
+      "file": "voice/k-addtake/flyIn/n=2.mp3"
+    },
+    "k-addtake/flyIn/n=3": {
+      "text": "three more fly in.",
+      "hash": "5029623c9a",
+      "kind": "whole",
+      "file": "voice/k-addtake/flyIn/n=3.mp3"
+    },
+    "k-addtake/flyIn/n=4": {
+      "text": "four more fly in.",
+      "hash": "448d6b33d8",
+      "kind": "whole",
+      "file": "voice/k-addtake/flyIn/n=4.mp3"
+    },
+    "k-addtake/flyIn/n=5": {
+      "text": "five more fly in.",
+      "hash": "4426aa577d",
+      "kind": "whole",
+      "file": "voice/k-addtake/flyIn/n=5.mp3"
+    },
+    "k-addtake/flyIn/n=6": {
+      "text": "six more fly in.",
+      "hash": "2d48d9e72d",
+      "kind": "whole",
+      "file": "voice/k-addtake/flyIn/n=6.mp3"
+    },
+    "k-addtake/flyIn/n=7": {
+      "text": "seven more fly in.",
+      "hash": "cd0229de40",
+      "kind": "whole",
+      "file": "voice/k-addtake/flyIn/n=7.mp3"
+    },
+    "k-addtake/flyIn/n=8": {
+      "text": "eight more fly in.",
+      "hash": "b7e3f9fb13",
+      "kind": "whole",
+      "file": "voice/k-addtake/flyIn/n=8.mp3"
+    },
+    "k-addtake/flyIn/n=9": {
+      "text": "nine more fly in.",
+      "hash": "bf862378de",
+      "kind": "whole",
+      "file": "voice/k-addtake/flyIn/n=9.mp3"
+    },
+    "k-addtake/flyAway/n=2": {
+      "text": "two fly away.",
+      "hash": "c0fae68ee8",
+      "kind": "whole",
+      "file": "voice/k-addtake/flyAway/n=2.mp3"
+    },
+    "k-addtake/flyAway/n=3": {
+      "text": "three fly away.",
+      "hash": "354877163e",
+      "kind": "whole",
+      "file": "voice/k-addtake/flyAway/n=3.mp3"
+    },
+    "k-addtake/flyAway/n=4": {
+      "text": "four fly away.",
+      "hash": "bcd59d8d6a",
+      "kind": "whole",
+      "file": "voice/k-addtake/flyAway/n=4.mp3"
+    },
+    "k-addtake/flyAway/n=5": {
+      "text": "five fly away.",
+      "hash": "696031f9b2",
+      "kind": "whole",
+      "file": "voice/k-addtake/flyAway/n=5.mp3"
+    },
+    "k-addtake/flyAway/n=6": {
+      "text": "six fly away.",
+      "hash": "a39faeb246",
+      "kind": "whole",
+      "file": "voice/k-addtake/flyAway/n=6.mp3"
+    },
+    "k-addtake/flyAway/n=7": {
+      "text": "seven fly away.",
+      "hash": "df2668748f",
+      "kind": "whole",
+      "file": "voice/k-addtake/flyAway/n=7.mp3"
+    },
+    "k-addtake/flyAway/n=8": {
+      "text": "eight fly away.",
+      "hash": "9c85ee35c0",
+      "kind": "whole",
+      "file": "voice/k-addtake/flyAway/n=8.mp3"
+    },
+    "k-addtake/flyAway/n=9": {
+      "text": "nine fly away.",
+      "hash": "903094678c",
+      "kind": "whole",
+      "file": "voice/k-addtake/flyAway/n=9.mp3"
+    },
     "k-lessons/kShapes-circle": {
       "text": "Which shape has three sides? Tap it!",
       "hash": "fb0742ac07",
@@ -48,6 +930,30 @@
       "hash": "7588f0c925",
       "kind": "line",
       "file": "voice/k-lessons/kTracing-lineL.mp3"
+    },
+    "k-lessons/kAddTake-away": {
+      "text": "How many ducks are left? Tap the number.",
+      "hash": "4f0dd233c9",
+      "kind": "line",
+      "file": "voice/k-lessons/kAddTake-away.mp3"
+    },
+    "k-lessons/kAddTake-yourTurn": {
+      "text": "How many more make ten? Tap the number.",
+      "hash": "1bf5bf3b39",
+      "kind": "line",
+      "file": "voice/k-lessons/kAddTake-yourTurn.mp3"
+    },
+    "k-lessons/kStoryMath-away": {
+      "text": "How many birds are still in the tree? Tap the number.",
+      "hash": "faf967cc04",
+      "kind": "line",
+      "file": "voice/k-lessons/kStoryMath-away.mp3"
+    },
+    "k-lessons/kStoryMath-basket": {
+      "text": "How many fruits are in the basket? Tap the number.",
+      "hash": "369620bf4a",
+      "kind": "line",
+      "file": "voice/k-lessons/kStoryMath-basket.mp3"
     },
     "k-lessons/triangle": {
       "text": "Triangle!",
@@ -3373,6 +4279,66 @@
       "kind": "line",
       "file": "voice/k-nav/stage-k-story-1.mp3"
     },
+    "k-nav/name-fraction-falls": {
+      "text": "Add-and-Take Falls!",
+      "hash": "8d06fe1b2d",
+      "kind": "line",
+      "file": "voice/k-nav/name-fraction-falls.mp3"
+    },
+    "k-nav/welcome-fraction-falls": {
+      "text": "Add-and-Take Falls! Tap a star to play!",
+      "hash": "233c365d82",
+      "kind": "line",
+      "file": "voice/k-nav/welcome-fraction-falls.mp3"
+    },
+    "k-nav/stage-k-addsub-1": {
+      "text": "Hop in, hop out!",
+      "hash": "28bdc86b6a",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-addsub-1.mp3"
+    },
+    "k-nav/stage-k-addsub-2": {
+      "text": "Up to ten!",
+      "hash": "b28e8ba36a",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-addsub-2.mp3"
+    },
+    "k-nav/stage-k-addsub-3": {
+      "text": "Make ten!",
+      "hash": "e273ac8c20",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-addsub-3.mp3"
+    },
+    "k-nav/name-word-problem-woods": {
+      "text": "Story Woods!",
+      "hash": "ff2a01f37b",
+      "kind": "line",
+      "file": "voice/k-nav/name-word-problem-woods.mp3"
+    },
+    "k-nav/welcome-word-problem-woods": {
+      "text": "Story Woods! Tap a star to play!",
+      "hash": "bec0d7c29b",
+      "kind": "line",
+      "file": "voice/k-nav/welcome-word-problem-woods.mp3"
+    },
+    "k-nav/stage-k-woods-1": {
+      "text": "Act it out!",
+      "hash": "29868339af",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-woods-1.mp3"
+    },
+    "k-nav/stage-k-woods-2": {
+      "text": "Story time!",
+      "hash": "d2eecbd67f",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-woods-2.mp3"
+    },
+    "k-nav/stage-k-woods-3": {
+      "text": "Story puzzles!",
+      "hash": "783a6dbd7e",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-woods-3.mp3"
+    },
     "k-rhymes/youHearRhyme": {
       "text": "You can hear the rhyme!",
       "hash": "bf6b701bbe",
@@ -5815,6 +6781,186 @@
       "kind": "line",
       "file": "voice/k-stories/popcorn-3.mp3"
     },
+    "k-story-math/actIn": {
+      "text": "Tap each one to bring it in!",
+      "hash": "4e866f93e8",
+      "kind": "line",
+      "file": "voice/k-story-math/actIn.mp3"
+    },
+    "k-story-math/actAway": {
+      "text": "Tap each one that goes away!",
+      "hash": "b35930a10f",
+      "kind": "line",
+      "file": "voice/k-story-math/actAway.mp3"
+    },
+    "k-story-math/actPut": {
+      "text": "Tap each one to put it in!",
+      "hash": "1b5114a6d2",
+      "kind": "line",
+      "file": "voice/k-story-math/actPut.mp3"
+    },
+    "k-story-math/actGive": {
+      "text": "Tap each one to give it to a friend!",
+      "hash": "ec0f84d030",
+      "kind": "line",
+      "file": "voice/k-story-math/actGive.mp3"
+    },
+    "k-story-math/watchAgain": {
+      "text": "Let's watch it again.",
+      "hash": "378f21ab57",
+      "kind": "line",
+      "file": "voice/k-story-math/watchAgain.mp3"
+    },
+    "k-story-math/actTogether": {
+      "text": "Let's act it out together.",
+      "hash": "725d7d6e6a",
+      "kind": "line",
+      "file": "voice/k-story-math/actTogether.mp3"
+    },
+    "k-story-math/countEmpty": {
+      "text": "Let's count the empty spots.",
+      "hash": "83638c900c",
+      "kind": "line",
+      "file": "voice/k-story-math/countEmpty.mp3"
+    },
+    "k-story-math/noteStart": {
+      "text": "That's how many there were at the start.",
+      "hash": "c555163876",
+      "kind": "line",
+      "file": "voice/k-story-math/noteStart.mp3"
+    },
+    "k-story-math/noteMoreCame": {
+      "text": "More came, so there are more now.",
+      "hash": "cc150df8e2",
+      "kind": "line",
+      "file": "voice/k-story-math/noteMoreCame.mp3"
+    },
+    "k-story-math/noteSomeLeft": {
+      "text": "Some went away, so there are fewer now.",
+      "hash": "648b873519",
+      "kind": "line",
+      "file": "voice/k-story-math/noteSomeLeft.mp3"
+    },
+    "k-story-math/noteGone": {
+      "text": "That's how many went away.",
+      "hash": "1f85dacc05",
+      "kind": "line",
+      "file": "voice/k-story-math/noteGone.mp3"
+    },
+    "k-story-math/noteOneKind": {
+      "text": "That's just one kind. Count them all!",
+      "hash": "f65e6eb383",
+      "kind": "line",
+      "file": "voice/k-story-math/noteOneKind.mp3"
+    },
+    "k-story-math/noteFull": {
+      "text": "That's how many are there already.",
+      "hash": "541106781a",
+      "kind": "line",
+      "file": "voice/k-story-math/noteFull.mp3"
+    },
+    "k-story-math/noteTen": {
+      "text": "Ten fills the whole frame.",
+      "hash": "d0564e5d75",
+      "kind": "line",
+      "file": "voice/k-story-math/noteTen.mp3"
+    },
+    "k-story-math/noteFriends": {
+      "text": "That's how many friends there are.",
+      "hash": "667ca00174",
+      "kind": "line",
+      "file": "voice/k-story-math/noteFriends.mp3"
+    },
+    "k-story-math/noteHave": {
+      "text": "That's how many we have.",
+      "hash": "a6f6f01d31",
+      "kind": "line",
+      "file": "voice/k-story-math/noteHave.mp3"
+    },
+    "k-story-math/oneMoreMakesTen": {
+      "text": "One more makes ten!",
+      "hash": "026a8ec4b0",
+      "kind": "line",
+      "file": "voice/k-story-math/oneMoreMakesTen.mp3"
+    },
+    "k-story-math/greatAdding": {
+      "text": "Great adding!",
+      "hash": "528d2038bc",
+      "kind": "line",
+      "file": "voice/k-story-math/greatAdding.mp3"
+    },
+    "k-story-math/greatTakingAway": {
+      "text": "Great taking away!",
+      "hash": "19e45913fb",
+      "kind": "line",
+      "file": "voice/k-story-math/greatTakingAway.mp3"
+    },
+    "k-story-math/youMadeTen": {
+      "text": "You made ten!",
+      "hash": "2b4138349a",
+      "kind": "line",
+      "file": "voice/k-story-math/youMadeTen.mp3"
+    },
+    "k-story-math/youSolvedIt": {
+      "text": "You solved the story!",
+      "hash": "8a44e100e6",
+      "kind": "line",
+      "file": "voice/k-story-math/youSolvedIt.mp3"
+    },
+    "k-story-math/smartThinking": {
+      "text": "Smart thinking!",
+      "hash": "f75c98ee7f",
+      "kind": "line",
+      "file": "voice/k-story-math/smartThinking.mp3"
+    },
+    "k-story-math/moreMakeTen/n=2": {
+      "text": "two more make ten!",
+      "hash": "8ad97dc8ac",
+      "kind": "whole",
+      "file": "voice/k-story-math/moreMakeTen/n=2.mp3"
+    },
+    "k-story-math/moreMakeTen/n=3": {
+      "text": "three more make ten!",
+      "hash": "e1c62f1fd3",
+      "kind": "whole",
+      "file": "voice/k-story-math/moreMakeTen/n=3.mp3"
+    },
+    "k-story-math/moreMakeTen/n=4": {
+      "text": "four more make ten!",
+      "hash": "598154f6e5",
+      "kind": "whole",
+      "file": "voice/k-story-math/moreMakeTen/n=4.mp3"
+    },
+    "k-story-math/moreMakeTen/n=5": {
+      "text": "five more make ten!",
+      "hash": "bd75f6af83",
+      "kind": "whole",
+      "file": "voice/k-story-math/moreMakeTen/n=5.mp3"
+    },
+    "k-story-math/moreMakeTen/n=6": {
+      "text": "six more make ten!",
+      "hash": "0ecc4f0f4a",
+      "kind": "whole",
+      "file": "voice/k-story-math/moreMakeTen/n=6.mp3"
+    },
+    "k-story-math/moreMakeTen/n=7": {
+      "text": "seven more make ten!",
+      "hash": "2f1972b5e8",
+      "kind": "whole",
+      "file": "voice/k-story-math/moreMakeTen/n=7.mp3"
+    },
+    "k-story-math/moreMakeTen/n=8": {
+      "text": "eight more make ten!",
+      "hash": "d2f2f96a3d",
+      "kind": "whole",
+      "file": "voice/k-story-math/moreMakeTen/n=8.mp3"
+    },
+    "k-story-math/moreMakeTen/n=9": {
+      "text": "nine more make ten!",
+      "hash": "7cfbabd4d9",
+      "kind": "whole",
+      "file": "voice/k-story-math/moreMakeTen/n=9.mp3"
+    },
     "k-trace/warm-down": {
       "text": "Let's trace a big line down!",
       "hash": "4dd88ccf6b",
@@ -6330,6 +7476,2094 @@
       "hash": "41674fb5d7",
       "kind": "whole",
       "file": "voice/k-trace/letter/letter=z.mp3"
+    },
+    "k-woods/bearApples-q": {
+      "text": "How many apples does Bear have now?",
+      "hash": "8fdc6664a2",
+      "kind": "line",
+      "file": "voice/k-woods/bearApples-q.mp3"
+    },
+    "k-woods/squirrelNuts-q": {
+      "text": "How many nuts does Squirrel have now?",
+      "hash": "7f6305a27a",
+      "kind": "line",
+      "file": "voice/k-woods/squirrelNuts-q.mp3"
+    },
+    "k-woods/henChicks-q": {
+      "text": "How many chicks does Hen have now?",
+      "hash": "a3a23719de",
+      "kind": "line",
+      "file": "voice/k-woods/henChicks-q.mp3"
+    },
+    "k-woods/puppyBalloons-q": {
+      "text": "How many balloons does Puppy have now?",
+      "hash": "cdd6298afd",
+      "kind": "line",
+      "file": "voice/k-woods/puppyBalloons-q.mp3"
+    },
+    "k-woods/crabShells-q": {
+      "text": "How many shells does Crab have now?",
+      "hash": "f0c6e366d2",
+      "kind": "line",
+      "file": "voice/k-woods/crabShells-q.mp3"
+    },
+    "k-woods/bunnyTulips-q": {
+      "text": "How many tulips are in the garden now?",
+      "hash": "bc135ceb8e",
+      "kind": "line",
+      "file": "voice/k-woods/bunnyTulips-q.mp3"
+    },
+    "k-woods/penguinSnowmen-q": {
+      "text": "How many snowmen are there now?",
+      "hash": "0b32f6f12b",
+      "kind": "line",
+      "file": "voice/k-woods/penguinSnowmen-q.mp3"
+    },
+    "k-woods/birdEggs-q": {
+      "text": "How many eggs are in the nest now?",
+      "hash": "a8ec064295",
+      "kind": "line",
+      "file": "voice/k-woods/birdEggs-q.mp3"
+    },
+    "k-woods/mouseCheese-q": {
+      "text": "How many pieces does Mouse have now?",
+      "hash": "300a0ca6d3",
+      "kind": "line",
+      "file": "voice/k-woods/mouseCheese-q.mp3"
+    },
+    "k-woods/monkeyBananas-q": {
+      "text": "How many bananas does Monkey have now?",
+      "hash": "f9c350fe26",
+      "kind": "line",
+      "file": "voice/k-woods/monkeyBananas-q.mp3"
+    },
+    "k-woods/owlStars-q": {
+      "text": "How many stars can Owl see now?",
+      "hash": "f6c1243c8a",
+      "kind": "line",
+      "file": "voice/k-woods/owlStars-q.mp3"
+    },
+    "k-woods/owlBirds-q": {
+      "text": "How many birds are still in the tree?",
+      "hash": "dcd57bf886",
+      "kind": "line",
+      "file": "voice/k-woods/owlBirds-q.mp3"
+    },
+    "k-woods/bearCookies-q": {
+      "text": "How many cookies does Bear have now?",
+      "hash": "62c25a6df1",
+      "kind": "line",
+      "file": "voice/k-woods/bearCookies-q.mp3"
+    },
+    "k-woods/puppyFloat-q": {
+      "text": "How many balloons does Puppy have now?",
+      "hash": "cdd6298afd",
+      "kind": "line",
+      "file": "voice/k-woods/puppyFloat-q.mp3"
+    },
+    "k-woods/bearFish-q": {
+      "text": "How many fish are still there?",
+      "hash": "cda396bf95",
+      "kind": "line",
+      "file": "voice/k-woods/bearFish-q.mp3"
+    },
+    "k-woods/bunnyButterflies-q": {
+      "text": "How many butterflies are still there?",
+      "hash": "f2fa5f1ce0",
+      "kind": "line",
+      "file": "voice/k-woods/bunnyButterflies-q.mp3"
+    },
+    "k-woods/penguinSnowflakes-q": {
+      "text": "How many snowflakes are left?",
+      "hash": "8cd0167b94",
+      "kind": "line",
+      "file": "voice/k-woods/penguinSnowflakes-q.mp3"
+    },
+    "k-woods/chicksYard-q": {
+      "text": "How many chicks are still playing?",
+      "hash": "ddb5550283",
+      "kind": "line",
+      "file": "voice/k-woods/chicksYard-q.mp3"
+    },
+    "k-woods/bunnyCarrots-q": {
+      "text": "How many carrots does Bunny have now?",
+      "hash": "f8b76fa25b",
+      "kind": "line",
+      "file": "voice/k-woods/bunnyCarrots-q.mp3"
+    },
+    "k-woods/frogBoats-q": {
+      "text": "How many boats are still on the lake?",
+      "hash": "823b2d06be",
+      "kind": "line",
+      "file": "voice/k-woods/frogBoats-q.mp3"
+    },
+    "k-woods/owlPencils-q": {
+      "text": "How many pencils does Owl have now?",
+      "hash": "0bcc420449",
+      "kind": "line",
+      "file": "voice/k-woods/owlPencils-q.mp3"
+    },
+    "k-woods/foxLeaves-q": {
+      "text": "How many leaves are still in the pile?",
+      "hash": "f4f036f8df",
+      "kind": "line",
+      "file": "voice/k-woods/foxLeaves-q.mp3"
+    },
+    "k-woods/bearFruit-q": {
+      "text": "How many fruits are in her basket?",
+      "hash": "1121c019ab",
+      "kind": "line",
+      "file": "voice/k-woods/bearFruit-q.mp3"
+    },
+    "k-woods/foxFruit-q": {
+      "text": "How many fruits did Fox pick?",
+      "hash": "5d646c2d8d",
+      "kind": "line",
+      "file": "voice/k-woods/foxFruit-q.mp3"
+    },
+    "k-woods/monkeyFruit-q": {
+      "text": "How many fruits did Monkey find?",
+      "hash": "46dea3911a",
+      "kind": "line",
+      "file": "voice/k-woods/monkeyFruit-q.mp3"
+    },
+    "k-woods/bunnyFlowers-q": {
+      "text": "How many flowers did Bunny pick?",
+      "hash": "0d0a2f2f8a",
+      "kind": "line",
+      "file": "voice/k-woods/bunnyFlowers-q.mp3"
+    },
+    "k-woods/puppyToys-q": {
+      "text": "How many toys are in the box?",
+      "hash": "0793f2c97d",
+      "kind": "line",
+      "file": "voice/k-woods/puppyToys-q.mp3"
+    },
+    "k-woods/pigPicnic-q": {
+      "text": "How many fruits did Pig pack?",
+      "hash": "7eb8ea1f44",
+      "kind": "line",
+      "file": "voice/k-woods/pigPicnic-q.mp3"
+    },
+    "k-woods/logFriends-q": {
+      "text": "How many animals are on the log?",
+      "hash": "0043384773",
+      "kind": "line",
+      "file": "voice/k-woods/logFriends-q.mp3"
+    },
+    "k-woods/bunnyLunch-q": {
+      "text": "How many more carrots do we need?",
+      "hash": "a4ae231ece",
+      "kind": "line",
+      "file": "voice/k-woods/bunnyLunch-q.mp3"
+    },
+    "k-woods/kittenBalls-q": {
+      "text": "How many more balls do we need?",
+      "hash": "5813ad7fbd",
+      "kind": "line",
+      "file": "voice/k-woods/kittenBalls-q.mp3"
+    },
+    "k-woods/monkeyShare-q": {
+      "text": "How many more bananas do we need?",
+      "hash": "4c7fb018d4",
+      "kind": "line",
+      "file": "voice/k-woods/monkeyShare-q.mp3"
+    },
+    "k-woods/bearHoney-q": {
+      "text": "How many more honey pots do we need?",
+      "hash": "df77e80a0e",
+      "kind": "line",
+      "file": "voice/k-woods/bearHoney-q.mp3"
+    },
+    "k-woods/puppyHats-q": {
+      "text": "How many more hats do we need?",
+      "hash": "a0e9a281f2",
+      "kind": "line",
+      "file": "voice/k-woods/puppyHats-q.mp3"
+    },
+    "k-woods/mouseSnack-q": {
+      "text": "How many more pieces do we need?",
+      "hash": "1a5633ac98",
+      "kind": "line",
+      "file": "voice/k-woods/mouseSnack-q.mp3"
+    },
+    "k-woods/bearApples-a/n=2": {
+      "text": "Bear picked two apples.",
+      "hash": "d0d7a1a289",
+      "kind": "whole",
+      "file": "voice/k-woods/bearApples-a/n=2.mp3"
+    },
+    "k-woods/bearApples-a/n=3": {
+      "text": "Bear picked three apples.",
+      "hash": "0c9c337891",
+      "kind": "whole",
+      "file": "voice/k-woods/bearApples-a/n=3.mp3"
+    },
+    "k-woods/bearApples-a/n=4": {
+      "text": "Bear picked four apples.",
+      "hash": "7b0e1702a9",
+      "kind": "whole",
+      "file": "voice/k-woods/bearApples-a/n=4.mp3"
+    },
+    "k-woods/bearApples-a/n=5": {
+      "text": "Bear picked five apples.",
+      "hash": "b97c03522a",
+      "kind": "whole",
+      "file": "voice/k-woods/bearApples-a/n=5.mp3"
+    },
+    "k-woods/bearApples-a/n=6": {
+      "text": "Bear picked six apples.",
+      "hash": "abb9724eb6",
+      "kind": "whole",
+      "file": "voice/k-woods/bearApples-a/n=6.mp3"
+    },
+    "k-woods/bearApples-b/n=1": {
+      "text": "Then Fox brought her one more.",
+      "hash": "da9ea3513e",
+      "kind": "whole",
+      "file": "voice/k-woods/bearApples-b/n=1.mp3"
+    },
+    "k-woods/bearApples-b/n=2": {
+      "text": "Then Fox brought her two more.",
+      "hash": "6977ba29db",
+      "kind": "whole",
+      "file": "voice/k-woods/bearApples-b/n=2.mp3"
+    },
+    "k-woods/bearApples-b/n=3": {
+      "text": "Then Fox brought her three more.",
+      "hash": "9c554d3e8d",
+      "kind": "whole",
+      "file": "voice/k-woods/bearApples-b/n=3.mp3"
+    },
+    "k-woods/bearApples-b/n=4": {
+      "text": "Then Fox brought her four more.",
+      "hash": "590303ecfa",
+      "kind": "whole",
+      "file": "voice/k-woods/bearApples-b/n=4.mp3"
+    },
+    "k-woods/squirrelNuts-a/n=2": {
+      "text": "Squirrel found two nuts under a tree.",
+      "hash": "3eaa06c83a",
+      "kind": "whole",
+      "file": "voice/k-woods/squirrelNuts-a/n=2.mp3"
+    },
+    "k-woods/squirrelNuts-a/n=3": {
+      "text": "Squirrel found three nuts under a tree.",
+      "hash": "b25ff30d22",
+      "kind": "whole",
+      "file": "voice/k-woods/squirrelNuts-a/n=3.mp3"
+    },
+    "k-woods/squirrelNuts-a/n=4": {
+      "text": "Squirrel found four nuts under a tree.",
+      "hash": "dd87bdfdad",
+      "kind": "whole",
+      "file": "voice/k-woods/squirrelNuts-a/n=4.mp3"
+    },
+    "k-woods/squirrelNuts-a/n=5": {
+      "text": "Squirrel found five nuts under a tree.",
+      "hash": "a3d16ffce8",
+      "kind": "whole",
+      "file": "voice/k-woods/squirrelNuts-a/n=5.mp3"
+    },
+    "k-woods/squirrelNuts-a/n=6": {
+      "text": "Squirrel found six nuts under a tree.",
+      "hash": "c065cf111e",
+      "kind": "whole",
+      "file": "voice/k-woods/squirrelNuts-a/n=6.mp3"
+    },
+    "k-woods/squirrelNuts-b/n=1": {
+      "text": "Then she found one more.",
+      "hash": "2f3dc3644b",
+      "kind": "whole",
+      "file": "voice/k-woods/squirrelNuts-b/n=1.mp3"
+    },
+    "k-woods/squirrelNuts-b/n=2": {
+      "text": "Then she found two more.",
+      "hash": "e896bc6d1a",
+      "kind": "whole",
+      "file": "voice/k-woods/squirrelNuts-b/n=2.mp3"
+    },
+    "k-woods/squirrelNuts-b/n=3": {
+      "text": "Then she found three more.",
+      "hash": "e0b8496272",
+      "kind": "whole",
+      "file": "voice/k-woods/squirrelNuts-b/n=3.mp3"
+    },
+    "k-woods/squirrelNuts-b/n=4": {
+      "text": "Then she found four more.",
+      "hash": "ed535e50b9",
+      "kind": "whole",
+      "file": "voice/k-woods/squirrelNuts-b/n=4.mp3"
+    },
+    "k-woods/henChicks-a/n=2": {
+      "text": "Hen had two chicks in the yard.",
+      "hash": "e7adec73bc",
+      "kind": "whole",
+      "file": "voice/k-woods/henChicks-a/n=2.mp3"
+    },
+    "k-woods/henChicks-a/n=3": {
+      "text": "Hen had three chicks in the yard.",
+      "hash": "439f8d77c3",
+      "kind": "whole",
+      "file": "voice/k-woods/henChicks-a/n=3.mp3"
+    },
+    "k-woods/henChicks-a/n=4": {
+      "text": "Hen had four chicks in the yard.",
+      "hash": "1d2d779fc1",
+      "kind": "whole",
+      "file": "voice/k-woods/henChicks-a/n=4.mp3"
+    },
+    "k-woods/henChicks-a/n=5": {
+      "text": "Hen had five chicks in the yard.",
+      "hash": "c3132f1697",
+      "kind": "whole",
+      "file": "voice/k-woods/henChicks-a/n=5.mp3"
+    },
+    "k-woods/henChicks-a/n=6": {
+      "text": "Hen had six chicks in the yard.",
+      "hash": "3967536736",
+      "kind": "whole",
+      "file": "voice/k-woods/henChicks-a/n=6.mp3"
+    },
+    "k-woods/henChicks-b/n=1": {
+      "text": "Then one more hatched!",
+      "hash": "e2d160c8b0",
+      "kind": "whole",
+      "file": "voice/k-woods/henChicks-b/n=1.mp3"
+    },
+    "k-woods/henChicks-b/n=2": {
+      "text": "Then two more hatched!",
+      "hash": "597caabba7",
+      "kind": "whole",
+      "file": "voice/k-woods/henChicks-b/n=2.mp3"
+    },
+    "k-woods/henChicks-b/n=3": {
+      "text": "Then three more hatched!",
+      "hash": "22e890b947",
+      "kind": "whole",
+      "file": "voice/k-woods/henChicks-b/n=3.mp3"
+    },
+    "k-woods/henChicks-b/n=4": {
+      "text": "Then four more hatched!",
+      "hash": "7102290799",
+      "kind": "whole",
+      "file": "voice/k-woods/henChicks-b/n=4.mp3"
+    },
+    "k-woods/puppyBalloons-a/n=2": {
+      "text": "Puppy had two balloons for his party.",
+      "hash": "56fa20b59c",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyBalloons-a/n=2.mp3"
+    },
+    "k-woods/puppyBalloons-a/n=3": {
+      "text": "Puppy had three balloons for his party.",
+      "hash": "6510bfff62",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyBalloons-a/n=3.mp3"
+    },
+    "k-woods/puppyBalloons-a/n=4": {
+      "text": "Puppy had four balloons for his party.",
+      "hash": "fa06dc84fe",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyBalloons-a/n=4.mp3"
+    },
+    "k-woods/puppyBalloons-a/n=5": {
+      "text": "Puppy had five balloons for his party.",
+      "hash": "cd12e1298f",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyBalloons-a/n=5.mp3"
+    },
+    "k-woods/puppyBalloons-a/n=6": {
+      "text": "Puppy had six balloons for his party.",
+      "hash": "4d917287d1",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyBalloons-a/n=6.mp3"
+    },
+    "k-woods/puppyBalloons-b/n=1": {
+      "text": "Then Kitty brought one more.",
+      "hash": "2ce5bcc5b9",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyBalloons-b/n=1.mp3"
+    },
+    "k-woods/puppyBalloons-b/n=2": {
+      "text": "Then Kitty brought two more.",
+      "hash": "3a15dec5db",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyBalloons-b/n=2.mp3"
+    },
+    "k-woods/puppyBalloons-b/n=3": {
+      "text": "Then Kitty brought three more.",
+      "hash": "019322ed23",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyBalloons-b/n=3.mp3"
+    },
+    "k-woods/puppyBalloons-b/n=4": {
+      "text": "Then Kitty brought four more.",
+      "hash": "5e117d5964",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyBalloons-b/n=4.mp3"
+    },
+    "k-woods/crabShells-a/n=2": {
+      "text": "Crab found two shells on the beach.",
+      "hash": "d1325fb666",
+      "kind": "whole",
+      "file": "voice/k-woods/crabShells-a/n=2.mp3"
+    },
+    "k-woods/crabShells-a/n=3": {
+      "text": "Crab found three shells on the beach.",
+      "hash": "61a65089fa",
+      "kind": "whole",
+      "file": "voice/k-woods/crabShells-a/n=3.mp3"
+    },
+    "k-woods/crabShells-a/n=4": {
+      "text": "Crab found four shells on the beach.",
+      "hash": "28879534c9",
+      "kind": "whole",
+      "file": "voice/k-woods/crabShells-a/n=4.mp3"
+    },
+    "k-woods/crabShells-a/n=5": {
+      "text": "Crab found five shells on the beach.",
+      "hash": "713576731f",
+      "kind": "whole",
+      "file": "voice/k-woods/crabShells-a/n=5.mp3"
+    },
+    "k-woods/crabShells-a/n=6": {
+      "text": "Crab found six shells on the beach.",
+      "hash": "13b86cae75",
+      "kind": "whole",
+      "file": "voice/k-woods/crabShells-a/n=6.mp3"
+    },
+    "k-woods/crabShells-b/n=1": {
+      "text": "Then a wave brought one more.",
+      "hash": "bff90b35f8",
+      "kind": "whole",
+      "file": "voice/k-woods/crabShells-b/n=1.mp3"
+    },
+    "k-woods/crabShells-b/n=2": {
+      "text": "Then a wave brought two more.",
+      "hash": "260570d518",
+      "kind": "whole",
+      "file": "voice/k-woods/crabShells-b/n=2.mp3"
+    },
+    "k-woods/crabShells-b/n=3": {
+      "text": "Then a wave brought three more.",
+      "hash": "d08ed93d2d",
+      "kind": "whole",
+      "file": "voice/k-woods/crabShells-b/n=3.mp3"
+    },
+    "k-woods/crabShells-b/n=4": {
+      "text": "Then a wave brought four more.",
+      "hash": "93ef355d9f",
+      "kind": "whole",
+      "file": "voice/k-woods/crabShells-b/n=4.mp3"
+    },
+    "k-woods/bunnyTulips-a/n=2": {
+      "text": "Bunny planted two tulips.",
+      "hash": "6696d427f9",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyTulips-a/n=2.mp3"
+    },
+    "k-woods/bunnyTulips-a/n=3": {
+      "text": "Bunny planted three tulips.",
+      "hash": "1027ac7c93",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyTulips-a/n=3.mp3"
+    },
+    "k-woods/bunnyTulips-a/n=4": {
+      "text": "Bunny planted four tulips.",
+      "hash": "7ce2f0e70e",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyTulips-a/n=4.mp3"
+    },
+    "k-woods/bunnyTulips-a/n=5": {
+      "text": "Bunny planted five tulips.",
+      "hash": "aec83b0ba1",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyTulips-a/n=5.mp3"
+    },
+    "k-woods/bunnyTulips-a/n=6": {
+      "text": "Bunny planted six tulips.",
+      "hash": "fdce096a9c",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyTulips-a/n=6.mp3"
+    },
+    "k-woods/bunnyTulips-b/n=1": {
+      "text": "Then she planted one more.",
+      "hash": "41659f9fb3",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyTulips-b/n=1.mp3"
+    },
+    "k-woods/bunnyTulips-b/n=2": {
+      "text": "Then she planted two more.",
+      "hash": "35e472b665",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyTulips-b/n=2.mp3"
+    },
+    "k-woods/bunnyTulips-b/n=3": {
+      "text": "Then she planted three more.",
+      "hash": "a633536602",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyTulips-b/n=3.mp3"
+    },
+    "k-woods/bunnyTulips-b/n=4": {
+      "text": "Then she planted four more.",
+      "hash": "c0661aa69f",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyTulips-b/n=4.mp3"
+    },
+    "k-woods/penguinSnowmen-a/n=2": {
+      "text": "Penguin built two snowmen.",
+      "hash": "f91b110d98",
+      "kind": "whole",
+      "file": "voice/k-woods/penguinSnowmen-a/n=2.mp3"
+    },
+    "k-woods/penguinSnowmen-a/n=3": {
+      "text": "Penguin built three snowmen.",
+      "hash": "1fea0cc30c",
+      "kind": "whole",
+      "file": "voice/k-woods/penguinSnowmen-a/n=3.mp3"
+    },
+    "k-woods/penguinSnowmen-a/n=4": {
+      "text": "Penguin built four snowmen.",
+      "hash": "55621a17ef",
+      "kind": "whole",
+      "file": "voice/k-woods/penguinSnowmen-a/n=4.mp3"
+    },
+    "k-woods/penguinSnowmen-a/n=5": {
+      "text": "Penguin built five snowmen.",
+      "hash": "3b2c1dba4c",
+      "kind": "whole",
+      "file": "voice/k-woods/penguinSnowmen-a/n=5.mp3"
+    },
+    "k-woods/penguinSnowmen-a/n=6": {
+      "text": "Penguin built six snowmen.",
+      "hash": "eedd703f12",
+      "kind": "whole",
+      "file": "voice/k-woods/penguinSnowmen-a/n=6.mp3"
+    },
+    "k-woods/penguinSnowmen-b/n=1": {
+      "text": "Then his friends built one more.",
+      "hash": "95e24f2b0e",
+      "kind": "whole",
+      "file": "voice/k-woods/penguinSnowmen-b/n=1.mp3"
+    },
+    "k-woods/penguinSnowmen-b/n=2": {
+      "text": "Then his friends built two more.",
+      "hash": "cee854c6fb",
+      "kind": "whole",
+      "file": "voice/k-woods/penguinSnowmen-b/n=2.mp3"
+    },
+    "k-woods/penguinSnowmen-b/n=3": {
+      "text": "Then his friends built three more.",
+      "hash": "6ae1184502",
+      "kind": "whole",
+      "file": "voice/k-woods/penguinSnowmen-b/n=3.mp3"
+    },
+    "k-woods/penguinSnowmen-b/n=4": {
+      "text": "Then his friends built four more.",
+      "hash": "4ef564a904",
+      "kind": "whole",
+      "file": "voice/k-woods/penguinSnowmen-b/n=4.mp3"
+    },
+    "k-woods/birdEggs-a/n=2": {
+      "text": "Bird had two eggs in her nest.",
+      "hash": "a425e18ab5",
+      "kind": "whole",
+      "file": "voice/k-woods/birdEggs-a/n=2.mp3"
+    },
+    "k-woods/birdEggs-a/n=3": {
+      "text": "Bird had three eggs in her nest.",
+      "hash": "8a2ed23b50",
+      "kind": "whole",
+      "file": "voice/k-woods/birdEggs-a/n=3.mp3"
+    },
+    "k-woods/birdEggs-a/n=4": {
+      "text": "Bird had four eggs in her nest.",
+      "hash": "0ab4939059",
+      "kind": "whole",
+      "file": "voice/k-woods/birdEggs-a/n=4.mp3"
+    },
+    "k-woods/birdEggs-a/n=5": {
+      "text": "Bird had five eggs in her nest.",
+      "hash": "939ea3a023",
+      "kind": "whole",
+      "file": "voice/k-woods/birdEggs-a/n=5.mp3"
+    },
+    "k-woods/birdEggs-a/n=6": {
+      "text": "Bird had six eggs in her nest.",
+      "hash": "4585726a22",
+      "kind": "whole",
+      "file": "voice/k-woods/birdEggs-a/n=6.mp3"
+    },
+    "k-woods/birdEggs-b/n=1": {
+      "text": "Then she laid one more.",
+      "hash": "f583c37976",
+      "kind": "whole",
+      "file": "voice/k-woods/birdEggs-b/n=1.mp3"
+    },
+    "k-woods/birdEggs-b/n=2": {
+      "text": "Then she laid two more.",
+      "hash": "361fb5a259",
+      "kind": "whole",
+      "file": "voice/k-woods/birdEggs-b/n=2.mp3"
+    },
+    "k-woods/birdEggs-b/n=3": {
+      "text": "Then she laid three more.",
+      "hash": "b2e529891a",
+      "kind": "whole",
+      "file": "voice/k-woods/birdEggs-b/n=3.mp3"
+    },
+    "k-woods/birdEggs-b/n=4": {
+      "text": "Then she laid four more.",
+      "hash": "e743353014",
+      "kind": "whole",
+      "file": "voice/k-woods/birdEggs-b/n=4.mp3"
+    },
+    "k-woods/mouseCheese-a/n=2": {
+      "text": "Mouse had two pieces of cheese.",
+      "hash": "a5642daa52",
+      "kind": "whole",
+      "file": "voice/k-woods/mouseCheese-a/n=2.mp3"
+    },
+    "k-woods/mouseCheese-a/n=3": {
+      "text": "Mouse had three pieces of cheese.",
+      "hash": "971b537210",
+      "kind": "whole",
+      "file": "voice/k-woods/mouseCheese-a/n=3.mp3"
+    },
+    "k-woods/mouseCheese-a/n=4": {
+      "text": "Mouse had four pieces of cheese.",
+      "hash": "ffb2f95bad",
+      "kind": "whole",
+      "file": "voice/k-woods/mouseCheese-a/n=4.mp3"
+    },
+    "k-woods/mouseCheese-a/n=5": {
+      "text": "Mouse had five pieces of cheese.",
+      "hash": "c319d1a316",
+      "kind": "whole",
+      "file": "voice/k-woods/mouseCheese-a/n=5.mp3"
+    },
+    "k-woods/mouseCheese-a/n=6": {
+      "text": "Mouse had six pieces of cheese.",
+      "hash": "ce490678c2",
+      "kind": "whole",
+      "file": "voice/k-woods/mouseCheese-a/n=6.mp3"
+    },
+    "k-woods/mouseCheese-b/n=1": {
+      "text": "Then Hamster gave him one more.",
+      "hash": "1bbe1de525",
+      "kind": "whole",
+      "file": "voice/k-woods/mouseCheese-b/n=1.mp3"
+    },
+    "k-woods/mouseCheese-b/n=2": {
+      "text": "Then Hamster gave him two more.",
+      "hash": "5568247ee8",
+      "kind": "whole",
+      "file": "voice/k-woods/mouseCheese-b/n=2.mp3"
+    },
+    "k-woods/mouseCheese-b/n=3": {
+      "text": "Then Hamster gave him three more.",
+      "hash": "2a02746349",
+      "kind": "whole",
+      "file": "voice/k-woods/mouseCheese-b/n=3.mp3"
+    },
+    "k-woods/mouseCheese-b/n=4": {
+      "text": "Then Hamster gave him four more.",
+      "hash": "458556d0c0",
+      "kind": "whole",
+      "file": "voice/k-woods/mouseCheese-b/n=4.mp3"
+    },
+    "k-woods/monkeyBananas-a/n=2": {
+      "text": "Monkey picked two bananas.",
+      "hash": "daff47b1ed",
+      "kind": "whole",
+      "file": "voice/k-woods/monkeyBananas-a/n=2.mp3"
+    },
+    "k-woods/monkeyBananas-a/n=3": {
+      "text": "Monkey picked three bananas.",
+      "hash": "885024d5a5",
+      "kind": "whole",
+      "file": "voice/k-woods/monkeyBananas-a/n=3.mp3"
+    },
+    "k-woods/monkeyBananas-a/n=4": {
+      "text": "Monkey picked four bananas.",
+      "hash": "17a5c101b7",
+      "kind": "whole",
+      "file": "voice/k-woods/monkeyBananas-a/n=4.mp3"
+    },
+    "k-woods/monkeyBananas-a/n=5": {
+      "text": "Monkey picked five bananas.",
+      "hash": "0bed871a2d",
+      "kind": "whole",
+      "file": "voice/k-woods/monkeyBananas-a/n=5.mp3"
+    },
+    "k-woods/monkeyBananas-a/n=6": {
+      "text": "Monkey picked six bananas.",
+      "hash": "14a16da8d3",
+      "kind": "whole",
+      "file": "voice/k-woods/monkeyBananas-a/n=6.mp3"
+    },
+    "k-woods/monkeyBananas-b/n=1": {
+      "text": "Then Elephant gave her one more.",
+      "hash": "1b5a3c5009",
+      "kind": "whole",
+      "file": "voice/k-woods/monkeyBananas-b/n=1.mp3"
+    },
+    "k-woods/monkeyBananas-b/n=2": {
+      "text": "Then Elephant gave her two more.",
+      "hash": "b51bb3c088",
+      "kind": "whole",
+      "file": "voice/k-woods/monkeyBananas-b/n=2.mp3"
+    },
+    "k-woods/monkeyBananas-b/n=3": {
+      "text": "Then Elephant gave her three more.",
+      "hash": "f69d9e6613",
+      "kind": "whole",
+      "file": "voice/k-woods/monkeyBananas-b/n=3.mp3"
+    },
+    "k-woods/monkeyBananas-b/n=4": {
+      "text": "Then Elephant gave her four more.",
+      "hash": "5ecbe3873c",
+      "kind": "whole",
+      "file": "voice/k-woods/monkeyBananas-b/n=4.mp3"
+    },
+    "k-woods/owlStars-a/n=2": {
+      "text": "Owl saw two stars in the sky.",
+      "hash": "82565bfad1",
+      "kind": "whole",
+      "file": "voice/k-woods/owlStars-a/n=2.mp3"
+    },
+    "k-woods/owlStars-a/n=3": {
+      "text": "Owl saw three stars in the sky.",
+      "hash": "233de7f3df",
+      "kind": "whole",
+      "file": "voice/k-woods/owlStars-a/n=3.mp3"
+    },
+    "k-woods/owlStars-a/n=4": {
+      "text": "Owl saw four stars in the sky.",
+      "hash": "e7e7bd27db",
+      "kind": "whole",
+      "file": "voice/k-woods/owlStars-a/n=4.mp3"
+    },
+    "k-woods/owlStars-a/n=5": {
+      "text": "Owl saw five stars in the sky.",
+      "hash": "c876a49386",
+      "kind": "whole",
+      "file": "voice/k-woods/owlStars-a/n=5.mp3"
+    },
+    "k-woods/owlStars-a/n=6": {
+      "text": "Owl saw six stars in the sky.",
+      "hash": "e8e350f2f0",
+      "kind": "whole",
+      "file": "voice/k-woods/owlStars-a/n=6.mp3"
+    },
+    "k-woods/owlStars-b/n=1": {
+      "text": "Then one more came out.",
+      "hash": "6bd510adff",
+      "kind": "whole",
+      "file": "voice/k-woods/owlStars-b/n=1.mp3"
+    },
+    "k-woods/owlStars-b/n=2": {
+      "text": "Then two more came out.",
+      "hash": "957692014d",
+      "kind": "whole",
+      "file": "voice/k-woods/owlStars-b/n=2.mp3"
+    },
+    "k-woods/owlStars-b/n=3": {
+      "text": "Then three more came out.",
+      "hash": "4dbfb3ab07",
+      "kind": "whole",
+      "file": "voice/k-woods/owlStars-b/n=3.mp3"
+    },
+    "k-woods/owlStars-b/n=4": {
+      "text": "Then four more came out.",
+      "hash": "773e7556e1",
+      "kind": "whole",
+      "file": "voice/k-woods/owlStars-b/n=4.mp3"
+    },
+    "k-woods/owlBirds-a/n=3": {
+      "text": "Owl saw three birds in the tree.",
+      "hash": "b20218b2c7",
+      "kind": "whole",
+      "file": "voice/k-woods/owlBirds-a/n=3.mp3"
+    },
+    "k-woods/owlBirds-a/n=4": {
+      "text": "Owl saw four birds in the tree.",
+      "hash": "a9b1e5c419",
+      "kind": "whole",
+      "file": "voice/k-woods/owlBirds-a/n=4.mp3"
+    },
+    "k-woods/owlBirds-a/n=5": {
+      "text": "Owl saw five birds in the tree.",
+      "hash": "35b80284d0",
+      "kind": "whole",
+      "file": "voice/k-woods/owlBirds-a/n=5.mp3"
+    },
+    "k-woods/owlBirds-a/n=6": {
+      "text": "Owl saw six birds in the tree.",
+      "hash": "e3e76562f2",
+      "kind": "whole",
+      "file": "voice/k-woods/owlBirds-a/n=6.mp3"
+    },
+    "k-woods/owlBirds-a/n=7": {
+      "text": "Owl saw seven birds in the tree.",
+      "hash": "f6d19bf525",
+      "kind": "whole",
+      "file": "voice/k-woods/owlBirds-a/n=7.mp3"
+    },
+    "k-woods/owlBirds-a/n=8": {
+      "text": "Owl saw eight birds in the tree.",
+      "hash": "a5651234c6",
+      "kind": "whole",
+      "file": "voice/k-woods/owlBirds-a/n=8.mp3"
+    },
+    "k-woods/owlBirds-b/n=1": {
+      "text": "Then one flew away.",
+      "hash": "578a6e07dc",
+      "kind": "whole",
+      "file": "voice/k-woods/owlBirds-b/n=1.mp3"
+    },
+    "k-woods/owlBirds-b/n=2": {
+      "text": "Then two flew away.",
+      "hash": "131cf88db7",
+      "kind": "whole",
+      "file": "voice/k-woods/owlBirds-b/n=2.mp3"
+    },
+    "k-woods/owlBirds-b/n=3": {
+      "text": "Then three flew away.",
+      "hash": "53c5e5b2de",
+      "kind": "whole",
+      "file": "voice/k-woods/owlBirds-b/n=3.mp3"
+    },
+    "k-woods/owlBirds-b/n=4": {
+      "text": "Then four flew away.",
+      "hash": "083782c6d0",
+      "kind": "whole",
+      "file": "voice/k-woods/owlBirds-b/n=4.mp3"
+    },
+    "k-woods/bearCookies-a/n=3": {
+      "text": "Bear baked three cookies.",
+      "hash": "1b03d66293",
+      "kind": "whole",
+      "file": "voice/k-woods/bearCookies-a/n=3.mp3"
+    },
+    "k-woods/bearCookies-a/n=4": {
+      "text": "Bear baked four cookies.",
+      "hash": "d4af3bcd4f",
+      "kind": "whole",
+      "file": "voice/k-woods/bearCookies-a/n=4.mp3"
+    },
+    "k-woods/bearCookies-a/n=5": {
+      "text": "Bear baked five cookies.",
+      "hash": "eca80526ae",
+      "kind": "whole",
+      "file": "voice/k-woods/bearCookies-a/n=5.mp3"
+    },
+    "k-woods/bearCookies-a/n=6": {
+      "text": "Bear baked six cookies.",
+      "hash": "9bfe9afdf8",
+      "kind": "whole",
+      "file": "voice/k-woods/bearCookies-a/n=6.mp3"
+    },
+    "k-woods/bearCookies-a/n=7": {
+      "text": "Bear baked seven cookies.",
+      "hash": "19f2bf0c3a",
+      "kind": "whole",
+      "file": "voice/k-woods/bearCookies-a/n=7.mp3"
+    },
+    "k-woods/bearCookies-a/n=8": {
+      "text": "Bear baked eight cookies.",
+      "hash": "f5faf89b41",
+      "kind": "whole",
+      "file": "voice/k-woods/bearCookies-a/n=8.mp3"
+    },
+    "k-woods/bearCookies-b/n=1": {
+      "text": "She gave one to Bunny.",
+      "hash": "35656a487a",
+      "kind": "whole",
+      "file": "voice/k-woods/bearCookies-b/n=1.mp3"
+    },
+    "k-woods/bearCookies-b/n=2": {
+      "text": "She gave two to Bunny.",
+      "hash": "0df4ca0e85",
+      "kind": "whole",
+      "file": "voice/k-woods/bearCookies-b/n=2.mp3"
+    },
+    "k-woods/bearCookies-b/n=3": {
+      "text": "She gave three to Bunny.",
+      "hash": "07aa5dc7fc",
+      "kind": "whole",
+      "file": "voice/k-woods/bearCookies-b/n=3.mp3"
+    },
+    "k-woods/bearCookies-b/n=4": {
+      "text": "She gave four to Bunny.",
+      "hash": "b470a69f1d",
+      "kind": "whole",
+      "file": "voice/k-woods/bearCookies-b/n=4.mp3"
+    },
+    "k-woods/puppyFloat-a/n=3": {
+      "text": "Puppy held three balloons.",
+      "hash": "38454da65c",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyFloat-a/n=3.mp3"
+    },
+    "k-woods/puppyFloat-a/n=4": {
+      "text": "Puppy held four balloons.",
+      "hash": "5d49bde3b1",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyFloat-a/n=4.mp3"
+    },
+    "k-woods/puppyFloat-a/n=5": {
+      "text": "Puppy held five balloons.",
+      "hash": "33948e0692",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyFloat-a/n=5.mp3"
+    },
+    "k-woods/puppyFloat-a/n=6": {
+      "text": "Puppy held six balloons.",
+      "hash": "0a704d809d",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyFloat-a/n=6.mp3"
+    },
+    "k-woods/puppyFloat-a/n=7": {
+      "text": "Puppy held seven balloons.",
+      "hash": "2bd3c40934",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyFloat-a/n=7.mp3"
+    },
+    "k-woods/puppyFloat-a/n=8": {
+      "text": "Puppy held eight balloons.",
+      "hash": "70959fcb9c",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyFloat-a/n=8.mp3"
+    },
+    "k-woods/puppyFloat-b/n=1": {
+      "text": "Whoosh! one floated away.",
+      "hash": "3e5a351b62",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyFloat-b/n=1.mp3"
+    },
+    "k-woods/puppyFloat-b/n=2": {
+      "text": "Whoosh! two floated away.",
+      "hash": "863b8823bb",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyFloat-b/n=2.mp3"
+    },
+    "k-woods/puppyFloat-b/n=3": {
+      "text": "Whoosh! three floated away.",
+      "hash": "b20b4edb29",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyFloat-b/n=3.mp3"
+    },
+    "k-woods/puppyFloat-b/n=4": {
+      "text": "Whoosh! four floated away.",
+      "hash": "9a85137889",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyFloat-b/n=4.mp3"
+    },
+    "k-woods/bearFish-a/n=3": {
+      "text": "Bear saw three fish in the river.",
+      "hash": "9a2fe49829",
+      "kind": "whole",
+      "file": "voice/k-woods/bearFish-a/n=3.mp3"
+    },
+    "k-woods/bearFish-a/n=4": {
+      "text": "Bear saw four fish in the river.",
+      "hash": "c60584223f",
+      "kind": "whole",
+      "file": "voice/k-woods/bearFish-a/n=4.mp3"
+    },
+    "k-woods/bearFish-a/n=5": {
+      "text": "Bear saw five fish in the river.",
+      "hash": "de54a46baf",
+      "kind": "whole",
+      "file": "voice/k-woods/bearFish-a/n=5.mp3"
+    },
+    "k-woods/bearFish-a/n=6": {
+      "text": "Bear saw six fish in the river.",
+      "hash": "6892a5133c",
+      "kind": "whole",
+      "file": "voice/k-woods/bearFish-a/n=6.mp3"
+    },
+    "k-woods/bearFish-a/n=7": {
+      "text": "Bear saw seven fish in the river.",
+      "hash": "956a2ae857",
+      "kind": "whole",
+      "file": "voice/k-woods/bearFish-a/n=7.mp3"
+    },
+    "k-woods/bearFish-a/n=8": {
+      "text": "Bear saw eight fish in the river.",
+      "hash": "eb8edb3900",
+      "kind": "whole",
+      "file": "voice/k-woods/bearFish-a/n=8.mp3"
+    },
+    "k-woods/bearFish-b/n=1": {
+      "text": "Then one swam away.",
+      "hash": "dbe86d18f2",
+      "kind": "whole",
+      "file": "voice/k-woods/bearFish-b/n=1.mp3"
+    },
+    "k-woods/bearFish-b/n=2": {
+      "text": "Then two swam away.",
+      "hash": "32307e0628",
+      "kind": "whole",
+      "file": "voice/k-woods/bearFish-b/n=2.mp3"
+    },
+    "k-woods/bearFish-b/n=3": {
+      "text": "Then three swam away.",
+      "hash": "7721b5f172",
+      "kind": "whole",
+      "file": "voice/k-woods/bearFish-b/n=3.mp3"
+    },
+    "k-woods/bearFish-b/n=4": {
+      "text": "Then four swam away.",
+      "hash": "a5bef0faa8",
+      "kind": "whole",
+      "file": "voice/k-woods/bearFish-b/n=4.mp3"
+    },
+    "k-woods/bunnyButterflies-a/n=3": {
+      "text": "Bunny saw three butterflies in the garden.",
+      "hash": "bb20588bdc",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyButterflies-a/n=3.mp3"
+    },
+    "k-woods/bunnyButterflies-a/n=4": {
+      "text": "Bunny saw four butterflies in the garden.",
+      "hash": "2867d2fdaa",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyButterflies-a/n=4.mp3"
+    },
+    "k-woods/bunnyButterflies-a/n=5": {
+      "text": "Bunny saw five butterflies in the garden.",
+      "hash": "123188f35d",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyButterflies-a/n=5.mp3"
+    },
+    "k-woods/bunnyButterflies-a/n=6": {
+      "text": "Bunny saw six butterflies in the garden.",
+      "hash": "7c0b941c1a",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyButterflies-a/n=6.mp3"
+    },
+    "k-woods/bunnyButterflies-a/n=7": {
+      "text": "Bunny saw seven butterflies in the garden.",
+      "hash": "259c4405a4",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyButterflies-a/n=7.mp3"
+    },
+    "k-woods/bunnyButterflies-a/n=8": {
+      "text": "Bunny saw eight butterflies in the garden.",
+      "hash": "fb90ce410e",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyButterflies-a/n=8.mp3"
+    },
+    "k-woods/bunnyButterflies-b/n=1": {
+      "text": "Then one flew away.",
+      "hash": "578a6e07dc",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyButterflies-b/n=1.mp3"
+    },
+    "k-woods/bunnyButterflies-b/n=2": {
+      "text": "Then two flew away.",
+      "hash": "131cf88db7",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyButterflies-b/n=2.mp3"
+    },
+    "k-woods/bunnyButterflies-b/n=3": {
+      "text": "Then three flew away.",
+      "hash": "53c5e5b2de",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyButterflies-b/n=3.mp3"
+    },
+    "k-woods/bunnyButterflies-b/n=4": {
+      "text": "Then four flew away.",
+      "hash": "083782c6d0",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyButterflies-b/n=4.mp3"
+    },
+    "k-woods/penguinSnowflakes-a/n=3": {
+      "text": "Penguin caught three snowflakes.",
+      "hash": "1a5680698d",
+      "kind": "whole",
+      "file": "voice/k-woods/penguinSnowflakes-a/n=3.mp3"
+    },
+    "k-woods/penguinSnowflakes-a/n=4": {
+      "text": "Penguin caught four snowflakes.",
+      "hash": "763b862ab8",
+      "kind": "whole",
+      "file": "voice/k-woods/penguinSnowflakes-a/n=4.mp3"
+    },
+    "k-woods/penguinSnowflakes-a/n=5": {
+      "text": "Penguin caught five snowflakes.",
+      "hash": "aec6da8129",
+      "kind": "whole",
+      "file": "voice/k-woods/penguinSnowflakes-a/n=5.mp3"
+    },
+    "k-woods/penguinSnowflakes-a/n=6": {
+      "text": "Penguin caught six snowflakes.",
+      "hash": "e484f90ecf",
+      "kind": "whole",
+      "file": "voice/k-woods/penguinSnowflakes-a/n=6.mp3"
+    },
+    "k-woods/penguinSnowflakes-a/n=7": {
+      "text": "Penguin caught seven snowflakes.",
+      "hash": "b3f90e9f65",
+      "kind": "whole",
+      "file": "voice/k-woods/penguinSnowflakes-a/n=7.mp3"
+    },
+    "k-woods/penguinSnowflakes-a/n=8": {
+      "text": "Penguin caught eight snowflakes.",
+      "hash": "c5067e7724",
+      "kind": "whole",
+      "file": "voice/k-woods/penguinSnowflakes-a/n=8.mp3"
+    },
+    "k-woods/penguinSnowflakes-b/n=1": {
+      "text": "Then one melted.",
+      "hash": "9732cdd86d",
+      "kind": "whole",
+      "file": "voice/k-woods/penguinSnowflakes-b/n=1.mp3"
+    },
+    "k-woods/penguinSnowflakes-b/n=2": {
+      "text": "Then two melted.",
+      "hash": "69d2059435",
+      "kind": "whole",
+      "file": "voice/k-woods/penguinSnowflakes-b/n=2.mp3"
+    },
+    "k-woods/penguinSnowflakes-b/n=3": {
+      "text": "Then three melted.",
+      "hash": "fd14533e70",
+      "kind": "whole",
+      "file": "voice/k-woods/penguinSnowflakes-b/n=3.mp3"
+    },
+    "k-woods/penguinSnowflakes-b/n=4": {
+      "text": "Then four melted.",
+      "hash": "d14835e90c",
+      "kind": "whole",
+      "file": "voice/k-woods/penguinSnowflakes-b/n=4.mp3"
+    },
+    "k-woods/chicksYard-a/n=3": {
+      "text": "three chicks played in the yard.",
+      "hash": "7b950305a7",
+      "kind": "whole",
+      "file": "voice/k-woods/chicksYard-a/n=3.mp3"
+    },
+    "k-woods/chicksYard-a/n=4": {
+      "text": "four chicks played in the yard.",
+      "hash": "251dcf8f22",
+      "kind": "whole",
+      "file": "voice/k-woods/chicksYard-a/n=4.mp3"
+    },
+    "k-woods/chicksYard-a/n=5": {
+      "text": "five chicks played in the yard.",
+      "hash": "3ea4aa6729",
+      "kind": "whole",
+      "file": "voice/k-woods/chicksYard-a/n=5.mp3"
+    },
+    "k-woods/chicksYard-a/n=6": {
+      "text": "six chicks played in the yard.",
+      "hash": "9a797d7ca9",
+      "kind": "whole",
+      "file": "voice/k-woods/chicksYard-a/n=6.mp3"
+    },
+    "k-woods/chicksYard-a/n=7": {
+      "text": "seven chicks played in the yard.",
+      "hash": "5dfa5c6a78",
+      "kind": "whole",
+      "file": "voice/k-woods/chicksYard-a/n=7.mp3"
+    },
+    "k-woods/chicksYard-a/n=8": {
+      "text": "eight chicks played in the yard.",
+      "hash": "9b8351737b",
+      "kind": "whole",
+      "file": "voice/k-woods/chicksYard-a/n=8.mp3"
+    },
+    "k-woods/chicksYard-b/n=1": {
+      "text": "Then one ran back to Hen.",
+      "hash": "3fd0fcf48c",
+      "kind": "whole",
+      "file": "voice/k-woods/chicksYard-b/n=1.mp3"
+    },
+    "k-woods/chicksYard-b/n=2": {
+      "text": "Then two ran back to Hen.",
+      "hash": "2eeae830a7",
+      "kind": "whole",
+      "file": "voice/k-woods/chicksYard-b/n=2.mp3"
+    },
+    "k-woods/chicksYard-b/n=3": {
+      "text": "Then three ran back to Hen.",
+      "hash": "be5aa8b53c",
+      "kind": "whole",
+      "file": "voice/k-woods/chicksYard-b/n=3.mp3"
+    },
+    "k-woods/chicksYard-b/n=4": {
+      "text": "Then four ran back to Hen.",
+      "hash": "18b99f48ec",
+      "kind": "whole",
+      "file": "voice/k-woods/chicksYard-b/n=4.mp3"
+    },
+    "k-woods/bunnyCarrots-a/n=3": {
+      "text": "Bunny pulled up three carrots.",
+      "hash": "caa2ff39a7",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyCarrots-a/n=3.mp3"
+    },
+    "k-woods/bunnyCarrots-a/n=4": {
+      "text": "Bunny pulled up four carrots.",
+      "hash": "a42b407b3f",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyCarrots-a/n=4.mp3"
+    },
+    "k-woods/bunnyCarrots-a/n=5": {
+      "text": "Bunny pulled up five carrots.",
+      "hash": "0a7bc2fdb2",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyCarrots-a/n=5.mp3"
+    },
+    "k-woods/bunnyCarrots-a/n=6": {
+      "text": "Bunny pulled up six carrots.",
+      "hash": "01950f97f9",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyCarrots-a/n=6.mp3"
+    },
+    "k-woods/bunnyCarrots-a/n=7": {
+      "text": "Bunny pulled up seven carrots.",
+      "hash": "ac4e6415ca",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyCarrots-a/n=7.mp3"
+    },
+    "k-woods/bunnyCarrots-a/n=8": {
+      "text": "Bunny pulled up eight carrots.",
+      "hash": "78013de2b6",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyCarrots-a/n=8.mp3"
+    },
+    "k-woods/bunnyCarrots-b/n=1": {
+      "text": "She gave one to Pig.",
+      "hash": "94d9fc862b",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyCarrots-b/n=1.mp3"
+    },
+    "k-woods/bunnyCarrots-b/n=2": {
+      "text": "She gave two to Pig.",
+      "hash": "0c11d1a70a",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyCarrots-b/n=2.mp3"
+    },
+    "k-woods/bunnyCarrots-b/n=3": {
+      "text": "She gave three to Pig.",
+      "hash": "b4dbefb7e2",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyCarrots-b/n=3.mp3"
+    },
+    "k-woods/bunnyCarrots-b/n=4": {
+      "text": "She gave four to Pig.",
+      "hash": "5728348a75",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyCarrots-b/n=4.mp3"
+    },
+    "k-woods/frogBoats-a/n=3": {
+      "text": "Frog saw three boats on the lake.",
+      "hash": "df68f02345",
+      "kind": "whole",
+      "file": "voice/k-woods/frogBoats-a/n=3.mp3"
+    },
+    "k-woods/frogBoats-a/n=4": {
+      "text": "Frog saw four boats on the lake.",
+      "hash": "318ae5e8eb",
+      "kind": "whole",
+      "file": "voice/k-woods/frogBoats-a/n=4.mp3"
+    },
+    "k-woods/frogBoats-a/n=5": {
+      "text": "Frog saw five boats on the lake.",
+      "hash": "440ce72966",
+      "kind": "whole",
+      "file": "voice/k-woods/frogBoats-a/n=5.mp3"
+    },
+    "k-woods/frogBoats-a/n=6": {
+      "text": "Frog saw six boats on the lake.",
+      "hash": "d5c85db8c5",
+      "kind": "whole",
+      "file": "voice/k-woods/frogBoats-a/n=6.mp3"
+    },
+    "k-woods/frogBoats-a/n=7": {
+      "text": "Frog saw seven boats on the lake.",
+      "hash": "9dca01d1fd",
+      "kind": "whole",
+      "file": "voice/k-woods/frogBoats-a/n=7.mp3"
+    },
+    "k-woods/frogBoats-a/n=8": {
+      "text": "Frog saw eight boats on the lake.",
+      "hash": "630fee9be7",
+      "kind": "whole",
+      "file": "voice/k-woods/frogBoats-a/n=8.mp3"
+    },
+    "k-woods/frogBoats-b/n=1": {
+      "text": "Then one sailed home.",
+      "hash": "918d84ec6a",
+      "kind": "whole",
+      "file": "voice/k-woods/frogBoats-b/n=1.mp3"
+    },
+    "k-woods/frogBoats-b/n=2": {
+      "text": "Then two sailed home.",
+      "hash": "4efe576602",
+      "kind": "whole",
+      "file": "voice/k-woods/frogBoats-b/n=2.mp3"
+    },
+    "k-woods/frogBoats-b/n=3": {
+      "text": "Then three sailed home.",
+      "hash": "be050f324a",
+      "kind": "whole",
+      "file": "voice/k-woods/frogBoats-b/n=3.mp3"
+    },
+    "k-woods/frogBoats-b/n=4": {
+      "text": "Then four sailed home.",
+      "hash": "42ceddbc0a",
+      "kind": "whole",
+      "file": "voice/k-woods/frogBoats-b/n=4.mp3"
+    },
+    "k-woods/owlPencils-a/n=3": {
+      "text": "Owl had three pencils.",
+      "hash": "0343105d52",
+      "kind": "whole",
+      "file": "voice/k-woods/owlPencils-a/n=3.mp3"
+    },
+    "k-woods/owlPencils-a/n=4": {
+      "text": "Owl had four pencils.",
+      "hash": "83720165cf",
+      "kind": "whole",
+      "file": "voice/k-woods/owlPencils-a/n=4.mp3"
+    },
+    "k-woods/owlPencils-a/n=5": {
+      "text": "Owl had five pencils.",
+      "hash": "8965ab5c19",
+      "kind": "whole",
+      "file": "voice/k-woods/owlPencils-a/n=5.mp3"
+    },
+    "k-woods/owlPencils-a/n=6": {
+      "text": "Owl had six pencils.",
+      "hash": "adc20c9f3f",
+      "kind": "whole",
+      "file": "voice/k-woods/owlPencils-a/n=6.mp3"
+    },
+    "k-woods/owlPencils-a/n=7": {
+      "text": "Owl had seven pencils.",
+      "hash": "d013c7788a",
+      "kind": "whole",
+      "file": "voice/k-woods/owlPencils-a/n=7.mp3"
+    },
+    "k-woods/owlPencils-a/n=8": {
+      "text": "Owl had eight pencils.",
+      "hash": "15749a465e",
+      "kind": "whole",
+      "file": "voice/k-woods/owlPencils-a/n=8.mp3"
+    },
+    "k-woods/owlPencils-b/n=1": {
+      "text": "She gave one to Mouse.",
+      "hash": "011ee28384",
+      "kind": "whole",
+      "file": "voice/k-woods/owlPencils-b/n=1.mp3"
+    },
+    "k-woods/owlPencils-b/n=2": {
+      "text": "She gave two to Mouse.",
+      "hash": "83542afa74",
+      "kind": "whole",
+      "file": "voice/k-woods/owlPencils-b/n=2.mp3"
+    },
+    "k-woods/owlPencils-b/n=3": {
+      "text": "She gave three to Mouse.",
+      "hash": "3164b62dec",
+      "kind": "whole",
+      "file": "voice/k-woods/owlPencils-b/n=3.mp3"
+    },
+    "k-woods/owlPencils-b/n=4": {
+      "text": "She gave four to Mouse.",
+      "hash": "e8a24ae2d2",
+      "kind": "whole",
+      "file": "voice/k-woods/owlPencils-b/n=4.mp3"
+    },
+    "k-woods/foxLeaves-a/n=3": {
+      "text": "Fox raked three leaves into a pile.",
+      "hash": "381f5e2822",
+      "kind": "whole",
+      "file": "voice/k-woods/foxLeaves-a/n=3.mp3"
+    },
+    "k-woods/foxLeaves-a/n=4": {
+      "text": "Fox raked four leaves into a pile.",
+      "hash": "3461714458",
+      "kind": "whole",
+      "file": "voice/k-woods/foxLeaves-a/n=4.mp3"
+    },
+    "k-woods/foxLeaves-a/n=5": {
+      "text": "Fox raked five leaves into a pile.",
+      "hash": "2c4ebc1761",
+      "kind": "whole",
+      "file": "voice/k-woods/foxLeaves-a/n=5.mp3"
+    },
+    "k-woods/foxLeaves-a/n=6": {
+      "text": "Fox raked six leaves into a pile.",
+      "hash": "9ac5e7d3b8",
+      "kind": "whole",
+      "file": "voice/k-woods/foxLeaves-a/n=6.mp3"
+    },
+    "k-woods/foxLeaves-a/n=7": {
+      "text": "Fox raked seven leaves into a pile.",
+      "hash": "30b28b28dd",
+      "kind": "whole",
+      "file": "voice/k-woods/foxLeaves-a/n=7.mp3"
+    },
+    "k-woods/foxLeaves-a/n=8": {
+      "text": "Fox raked eight leaves into a pile.",
+      "hash": "d1d1c03b3b",
+      "kind": "whole",
+      "file": "voice/k-woods/foxLeaves-a/n=8.mp3"
+    },
+    "k-woods/foxLeaves-b/n=1": {
+      "text": "Then the wind blew one away.",
+      "hash": "fcd2db3203",
+      "kind": "whole",
+      "file": "voice/k-woods/foxLeaves-b/n=1.mp3"
+    },
+    "k-woods/foxLeaves-b/n=2": {
+      "text": "Then the wind blew two away.",
+      "hash": "27baa6b366",
+      "kind": "whole",
+      "file": "voice/k-woods/foxLeaves-b/n=2.mp3"
+    },
+    "k-woods/foxLeaves-b/n=3": {
+      "text": "Then the wind blew three away.",
+      "hash": "cc30c4bc0e",
+      "kind": "whole",
+      "file": "voice/k-woods/foxLeaves-b/n=3.mp3"
+    },
+    "k-woods/foxLeaves-b/n=4": {
+      "text": "Then the wind blew four away.",
+      "hash": "44cf97a991",
+      "kind": "whole",
+      "file": "voice/k-woods/foxLeaves-b/n=4.mp3"
+    },
+    "k-woods/bearFruit-a/n=2": {
+      "text": "Bear put two apples in her basket.",
+      "hash": "0ac86d9642",
+      "kind": "whole",
+      "file": "voice/k-woods/bearFruit-a/n=2.mp3"
+    },
+    "k-woods/bearFruit-a/n=3": {
+      "text": "Bear put three apples in her basket.",
+      "hash": "2acf6c5e90",
+      "kind": "whole",
+      "file": "voice/k-woods/bearFruit-a/n=3.mp3"
+    },
+    "k-woods/bearFruit-a/n=4": {
+      "text": "Bear put four apples in her basket.",
+      "hash": "7358ebc63c",
+      "kind": "whole",
+      "file": "voice/k-woods/bearFruit-a/n=4.mp3"
+    },
+    "k-woods/bearFruit-a/n=5": {
+      "text": "Bear put five apples in her basket.",
+      "hash": "78aa49b7c8",
+      "kind": "whole",
+      "file": "voice/k-woods/bearFruit-a/n=5.mp3"
+    },
+    "k-woods/bearFruit-b/n=2": {
+      "text": "Then she put in two pears.",
+      "hash": "2217851bca",
+      "kind": "whole",
+      "file": "voice/k-woods/bearFruit-b/n=2.mp3"
+    },
+    "k-woods/bearFruit-b/n=3": {
+      "text": "Then she put in three pears.",
+      "hash": "438df03548",
+      "kind": "whole",
+      "file": "voice/k-woods/bearFruit-b/n=3.mp3"
+    },
+    "k-woods/bearFruit-b/n=4": {
+      "text": "Then she put in four pears.",
+      "hash": "599af46c1c",
+      "kind": "whole",
+      "file": "voice/k-woods/bearFruit-b/n=4.mp3"
+    },
+    "k-woods/bearFruit-b/n=5": {
+      "text": "Then she put in five pears.",
+      "hash": "88cb1834b2",
+      "kind": "whole",
+      "file": "voice/k-woods/bearFruit-b/n=5.mp3"
+    },
+    "k-woods/foxFruit-a/n=2": {
+      "text": "Fox picked two strawberries.",
+      "hash": "b24bc4006b",
+      "kind": "whole",
+      "file": "voice/k-woods/foxFruit-a/n=2.mp3"
+    },
+    "k-woods/foxFruit-a/n=3": {
+      "text": "Fox picked three strawberries.",
+      "hash": "fa918d772f",
+      "kind": "whole",
+      "file": "voice/k-woods/foxFruit-a/n=3.mp3"
+    },
+    "k-woods/foxFruit-a/n=4": {
+      "text": "Fox picked four strawberries.",
+      "hash": "38ba7d19f4",
+      "kind": "whole",
+      "file": "voice/k-woods/foxFruit-a/n=4.mp3"
+    },
+    "k-woods/foxFruit-a/n=5": {
+      "text": "Fox picked five strawberries.",
+      "hash": "47682f9add",
+      "kind": "whole",
+      "file": "voice/k-woods/foxFruit-a/n=5.mp3"
+    },
+    "k-woods/foxFruit-b/n=2": {
+      "text": "Then he picked two peaches.",
+      "hash": "7fa5803b30",
+      "kind": "whole",
+      "file": "voice/k-woods/foxFruit-b/n=2.mp3"
+    },
+    "k-woods/foxFruit-b/n=3": {
+      "text": "Then he picked three peaches.",
+      "hash": "3cba3348e8",
+      "kind": "whole",
+      "file": "voice/k-woods/foxFruit-b/n=3.mp3"
+    },
+    "k-woods/foxFruit-b/n=4": {
+      "text": "Then he picked four peaches.",
+      "hash": "8a067334e4",
+      "kind": "whole",
+      "file": "voice/k-woods/foxFruit-b/n=4.mp3"
+    },
+    "k-woods/foxFruit-b/n=5": {
+      "text": "Then he picked five peaches.",
+      "hash": "a96bf9fa6f",
+      "kind": "whole",
+      "file": "voice/k-woods/foxFruit-b/n=5.mp3"
+    },
+    "k-woods/monkeyFruit-a/n=2": {
+      "text": "Monkey found two bananas.",
+      "hash": "1a2760c01f",
+      "kind": "whole",
+      "file": "voice/k-woods/monkeyFruit-a/n=2.mp3"
+    },
+    "k-woods/monkeyFruit-a/n=3": {
+      "text": "Monkey found three bananas.",
+      "hash": "6bb291a0ce",
+      "kind": "whole",
+      "file": "voice/k-woods/monkeyFruit-a/n=3.mp3"
+    },
+    "k-woods/monkeyFruit-a/n=4": {
+      "text": "Monkey found four bananas.",
+      "hash": "883706a212",
+      "kind": "whole",
+      "file": "voice/k-woods/monkeyFruit-a/n=4.mp3"
+    },
+    "k-woods/monkeyFruit-a/n=5": {
+      "text": "Monkey found five bananas.",
+      "hash": "27e07984cb",
+      "kind": "whole",
+      "file": "voice/k-woods/monkeyFruit-a/n=5.mp3"
+    },
+    "k-woods/monkeyFruit-b/n=2": {
+      "text": "Then she found two oranges.",
+      "hash": "626fc8cb74",
+      "kind": "whole",
+      "file": "voice/k-woods/monkeyFruit-b/n=2.mp3"
+    },
+    "k-woods/monkeyFruit-b/n=3": {
+      "text": "Then she found three oranges.",
+      "hash": "a6ba485cf2",
+      "kind": "whole",
+      "file": "voice/k-woods/monkeyFruit-b/n=3.mp3"
+    },
+    "k-woods/monkeyFruit-b/n=4": {
+      "text": "Then she found four oranges.",
+      "hash": "a78a08127c",
+      "kind": "whole",
+      "file": "voice/k-woods/monkeyFruit-b/n=4.mp3"
+    },
+    "k-woods/monkeyFruit-b/n=5": {
+      "text": "Then she found five oranges.",
+      "hash": "36b6b003e9",
+      "kind": "whole",
+      "file": "voice/k-woods/monkeyFruit-b/n=5.mp3"
+    },
+    "k-woods/bunnyFlowers-a/n=2": {
+      "text": "Bunny picked two tulips.",
+      "hash": "30957481fe",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyFlowers-a/n=2.mp3"
+    },
+    "k-woods/bunnyFlowers-a/n=3": {
+      "text": "Bunny picked three tulips.",
+      "hash": "854d826edd",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyFlowers-a/n=3.mp3"
+    },
+    "k-woods/bunnyFlowers-a/n=4": {
+      "text": "Bunny picked four tulips.",
+      "hash": "708135b5e3",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyFlowers-a/n=4.mp3"
+    },
+    "k-woods/bunnyFlowers-a/n=5": {
+      "text": "Bunny picked five tulips.",
+      "hash": "7a709fc6ab",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyFlowers-a/n=5.mp3"
+    },
+    "k-woods/bunnyFlowers-b/n=2": {
+      "text": "Then she picked two sunflowers.",
+      "hash": "082bc5587e",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyFlowers-b/n=2.mp3"
+    },
+    "k-woods/bunnyFlowers-b/n=3": {
+      "text": "Then she picked three sunflowers.",
+      "hash": "f121bf65f5",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyFlowers-b/n=3.mp3"
+    },
+    "k-woods/bunnyFlowers-b/n=4": {
+      "text": "Then she picked four sunflowers.",
+      "hash": "bd9bac806a",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyFlowers-b/n=4.mp3"
+    },
+    "k-woods/bunnyFlowers-b/n=5": {
+      "text": "Then she picked five sunflowers.",
+      "hash": "6411a1b1e0",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyFlowers-b/n=5.mp3"
+    },
+    "k-woods/puppyToys-a/n=2": {
+      "text": "Puppy put two balls in his toy box.",
+      "hash": "f5bad49ff1",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyToys-a/n=2.mp3"
+    },
+    "k-woods/puppyToys-a/n=3": {
+      "text": "Puppy put three balls in his toy box.",
+      "hash": "4c32e54928",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyToys-a/n=3.mp3"
+    },
+    "k-woods/puppyToys-a/n=4": {
+      "text": "Puppy put four balls in his toy box.",
+      "hash": "b837a8e5a2",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyToys-a/n=4.mp3"
+    },
+    "k-woods/puppyToys-a/n=5": {
+      "text": "Puppy put five balls in his toy box.",
+      "hash": "7b7176f47d",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyToys-a/n=5.mp3"
+    },
+    "k-woods/puppyToys-b/n=2": {
+      "text": "Then he put in two cars.",
+      "hash": "c2aefc9028",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyToys-b/n=2.mp3"
+    },
+    "k-woods/puppyToys-b/n=3": {
+      "text": "Then he put in three cars.",
+      "hash": "986907c0ae",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyToys-b/n=3.mp3"
+    },
+    "k-woods/puppyToys-b/n=4": {
+      "text": "Then he put in four cars.",
+      "hash": "c63c27b5ba",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyToys-b/n=4.mp3"
+    },
+    "k-woods/puppyToys-b/n=5": {
+      "text": "Then he put in five cars.",
+      "hash": "f220196a35",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyToys-b/n=5.mp3"
+    },
+    "k-woods/pigPicnic-a/n=2": {
+      "text": "Pig packed two lemons for a picnic.",
+      "hash": "b6ecde2fb2",
+      "kind": "whole",
+      "file": "voice/k-woods/pigPicnic-a/n=2.mp3"
+    },
+    "k-woods/pigPicnic-a/n=3": {
+      "text": "Pig packed three lemons for a picnic.",
+      "hash": "a38538d3f0",
+      "kind": "whole",
+      "file": "voice/k-woods/pigPicnic-a/n=3.mp3"
+    },
+    "k-woods/pigPicnic-a/n=4": {
+      "text": "Pig packed four lemons for a picnic.",
+      "hash": "00983cd357",
+      "kind": "whole",
+      "file": "voice/k-woods/pigPicnic-a/n=4.mp3"
+    },
+    "k-woods/pigPicnic-a/n=5": {
+      "text": "Pig packed five lemons for a picnic.",
+      "hash": "b013b139e6",
+      "kind": "whole",
+      "file": "voice/k-woods/pigPicnic-a/n=5.mp3"
+    },
+    "k-woods/pigPicnic-b/n=2": {
+      "text": "Then he packed two green apples.",
+      "hash": "b437aea3ac",
+      "kind": "whole",
+      "file": "voice/k-woods/pigPicnic-b/n=2.mp3"
+    },
+    "k-woods/pigPicnic-b/n=3": {
+      "text": "Then he packed three green apples.",
+      "hash": "643e965932",
+      "kind": "whole",
+      "file": "voice/k-woods/pigPicnic-b/n=3.mp3"
+    },
+    "k-woods/pigPicnic-b/n=4": {
+      "text": "Then he packed four green apples.",
+      "hash": "9c664157b6",
+      "kind": "whole",
+      "file": "voice/k-woods/pigPicnic-b/n=4.mp3"
+    },
+    "k-woods/pigPicnic-b/n=5": {
+      "text": "Then he packed five green apples.",
+      "hash": "66e2947858",
+      "kind": "whole",
+      "file": "voice/k-woods/pigPicnic-b/n=5.mp3"
+    },
+    "k-woods/logFriends-a/n=2": {
+      "text": "two frogs sat on a log.",
+      "hash": "fb7e18fb99",
+      "kind": "whole",
+      "file": "voice/k-woods/logFriends-a/n=2.mp3"
+    },
+    "k-woods/logFriends-a/n=3": {
+      "text": "three frogs sat on a log.",
+      "hash": "860c7b8d4e",
+      "kind": "whole",
+      "file": "voice/k-woods/logFriends-a/n=3.mp3"
+    },
+    "k-woods/logFriends-a/n=4": {
+      "text": "four frogs sat on a log.",
+      "hash": "439f7f30dc",
+      "kind": "whole",
+      "file": "voice/k-woods/logFriends-a/n=4.mp3"
+    },
+    "k-woods/logFriends-a/n=5": {
+      "text": "five frogs sat on a log.",
+      "hash": "bf0287900b",
+      "kind": "whole",
+      "file": "voice/k-woods/logFriends-a/n=5.mp3"
+    },
+    "k-woods/logFriends-b/n=2": {
+      "text": "Then two turtles climbed on.",
+      "hash": "fc25edced4",
+      "kind": "whole",
+      "file": "voice/k-woods/logFriends-b/n=2.mp3"
+    },
+    "k-woods/logFriends-b/n=3": {
+      "text": "Then three turtles climbed on.",
+      "hash": "1b37c1a0c2",
+      "kind": "whole",
+      "file": "voice/k-woods/logFriends-b/n=3.mp3"
+    },
+    "k-woods/logFriends-b/n=4": {
+      "text": "Then four turtles climbed on.",
+      "hash": "72f674b530",
+      "kind": "whole",
+      "file": "voice/k-woods/logFriends-b/n=4.mp3"
+    },
+    "k-woods/logFriends-b/n=5": {
+      "text": "Then five turtles climbed on.",
+      "hash": "a629476f43",
+      "kind": "whole",
+      "file": "voice/k-woods/logFriends-b/n=5.mp3"
+    },
+    "k-woods/bunnyLunch-a/n=3": {
+      "text": "three bunnies came for lunch.",
+      "hash": "dd7c892a31",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyLunch-a/n=3.mp3"
+    },
+    "k-woods/bunnyLunch-a/n=4": {
+      "text": "four bunnies came for lunch.",
+      "hash": "9e3aa2b10a",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyLunch-a/n=4.mp3"
+    },
+    "k-woods/bunnyLunch-a/n=5": {
+      "text": "five bunnies came for lunch.",
+      "hash": "e03dda1a0a",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyLunch-a/n=5.mp3"
+    },
+    "k-woods/bunnyLunch-a/n=6": {
+      "text": "six bunnies came for lunch.",
+      "hash": "5186a7b982",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyLunch-a/n=6.mp3"
+    },
+    "k-woods/bunnyLunch-b/n=2": {
+      "text": "There were only two carrots.",
+      "hash": "8a87b3796c",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyLunch-b/n=2.mp3"
+    },
+    "k-woods/bunnyLunch-b/n=3": {
+      "text": "There were only three carrots.",
+      "hash": "bf0b9666b1",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyLunch-b/n=3.mp3"
+    },
+    "k-woods/bunnyLunch-b/n=4": {
+      "text": "There were only four carrots.",
+      "hash": "d8cc2f1ff8",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyLunch-b/n=4.mp3"
+    },
+    "k-woods/bunnyLunch-b/n=5": {
+      "text": "There were only five carrots.",
+      "hash": "783fcb044c",
+      "kind": "whole",
+      "file": "voice/k-woods/bunnyLunch-b/n=5.mp3"
+    },
+    "k-woods/kittenBalls-a/n=3": {
+      "text": "three kittens wanted to play ball.",
+      "hash": "43a2630d7b",
+      "kind": "whole",
+      "file": "voice/k-woods/kittenBalls-a/n=3.mp3"
+    },
+    "k-woods/kittenBalls-a/n=4": {
+      "text": "four kittens wanted to play ball.",
+      "hash": "69391031e1",
+      "kind": "whole",
+      "file": "voice/k-woods/kittenBalls-a/n=4.mp3"
+    },
+    "k-woods/kittenBalls-a/n=5": {
+      "text": "five kittens wanted to play ball.",
+      "hash": "b885d7c328",
+      "kind": "whole",
+      "file": "voice/k-woods/kittenBalls-a/n=5.mp3"
+    },
+    "k-woods/kittenBalls-a/n=6": {
+      "text": "six kittens wanted to play ball.",
+      "hash": "226fd213e6",
+      "kind": "whole",
+      "file": "voice/k-woods/kittenBalls-a/n=6.mp3"
+    },
+    "k-woods/kittenBalls-b/n=2": {
+      "text": "There were only two balls.",
+      "hash": "481b0f9696",
+      "kind": "whole",
+      "file": "voice/k-woods/kittenBalls-b/n=2.mp3"
+    },
+    "k-woods/kittenBalls-b/n=3": {
+      "text": "There were only three balls.",
+      "hash": "497f64d592",
+      "kind": "whole",
+      "file": "voice/k-woods/kittenBalls-b/n=3.mp3"
+    },
+    "k-woods/kittenBalls-b/n=4": {
+      "text": "There were only four balls.",
+      "hash": "9936a6460d",
+      "kind": "whole",
+      "file": "voice/k-woods/kittenBalls-b/n=4.mp3"
+    },
+    "k-woods/kittenBalls-b/n=5": {
+      "text": "There were only five balls.",
+      "hash": "66520b5319",
+      "kind": "whole",
+      "file": "voice/k-woods/kittenBalls-b/n=5.mp3"
+    },
+    "k-woods/monkeyShare-a/n=3": {
+      "text": "three monkeys wanted a banana.",
+      "hash": "abcd333d5b",
+      "kind": "whole",
+      "file": "voice/k-woods/monkeyShare-a/n=3.mp3"
+    },
+    "k-woods/monkeyShare-a/n=4": {
+      "text": "four monkeys wanted a banana.",
+      "hash": "222ae99805",
+      "kind": "whole",
+      "file": "voice/k-woods/monkeyShare-a/n=4.mp3"
+    },
+    "k-woods/monkeyShare-a/n=5": {
+      "text": "five monkeys wanted a banana.",
+      "hash": "153846fac4",
+      "kind": "whole",
+      "file": "voice/k-woods/monkeyShare-a/n=5.mp3"
+    },
+    "k-woods/monkeyShare-a/n=6": {
+      "text": "six monkeys wanted a banana.",
+      "hash": "53586917c2",
+      "kind": "whole",
+      "file": "voice/k-woods/monkeyShare-a/n=6.mp3"
+    },
+    "k-woods/monkeyShare-b/n=2": {
+      "text": "There were only two bananas.",
+      "hash": "2b2ca9e51a",
+      "kind": "whole",
+      "file": "voice/k-woods/monkeyShare-b/n=2.mp3"
+    },
+    "k-woods/monkeyShare-b/n=3": {
+      "text": "There were only three bananas.",
+      "hash": "689e2b5549",
+      "kind": "whole",
+      "file": "voice/k-woods/monkeyShare-b/n=3.mp3"
+    },
+    "k-woods/monkeyShare-b/n=4": {
+      "text": "There were only four bananas.",
+      "hash": "7d5fce6090",
+      "kind": "whole",
+      "file": "voice/k-woods/monkeyShare-b/n=4.mp3"
+    },
+    "k-woods/monkeyShare-b/n=5": {
+      "text": "There were only five bananas.",
+      "hash": "6606762ad7",
+      "kind": "whole",
+      "file": "voice/k-woods/monkeyShare-b/n=5.mp3"
+    },
+    "k-woods/bearHoney-a/n=3": {
+      "text": "three bears came to the picnic.",
+      "hash": "abc316e24d",
+      "kind": "whole",
+      "file": "voice/k-woods/bearHoney-a/n=3.mp3"
+    },
+    "k-woods/bearHoney-a/n=4": {
+      "text": "four bears came to the picnic.",
+      "hash": "f445437c87",
+      "kind": "whole",
+      "file": "voice/k-woods/bearHoney-a/n=4.mp3"
+    },
+    "k-woods/bearHoney-a/n=5": {
+      "text": "five bears came to the picnic.",
+      "hash": "e2b52e02c4",
+      "kind": "whole",
+      "file": "voice/k-woods/bearHoney-a/n=5.mp3"
+    },
+    "k-woods/bearHoney-a/n=6": {
+      "text": "six bears came to the picnic.",
+      "hash": "fb239a5cb4",
+      "kind": "whole",
+      "file": "voice/k-woods/bearHoney-a/n=6.mp3"
+    },
+    "k-woods/bearHoney-b/n=2": {
+      "text": "There were only two honey pots.",
+      "hash": "bcd334ace0",
+      "kind": "whole",
+      "file": "voice/k-woods/bearHoney-b/n=2.mp3"
+    },
+    "k-woods/bearHoney-b/n=3": {
+      "text": "There were only three honey pots.",
+      "hash": "d7f64e8443",
+      "kind": "whole",
+      "file": "voice/k-woods/bearHoney-b/n=3.mp3"
+    },
+    "k-woods/bearHoney-b/n=4": {
+      "text": "There were only four honey pots.",
+      "hash": "66080426e1",
+      "kind": "whole",
+      "file": "voice/k-woods/bearHoney-b/n=4.mp3"
+    },
+    "k-woods/bearHoney-b/n=5": {
+      "text": "There were only five honey pots.",
+      "hash": "2335f5f689",
+      "kind": "whole",
+      "file": "voice/k-woods/bearHoney-b/n=5.mp3"
+    },
+    "k-woods/puppyHats-a/n=3": {
+      "text": "three puppies came to the party.",
+      "hash": "f518904646",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyHats-a/n=3.mp3"
+    },
+    "k-woods/puppyHats-a/n=4": {
+      "text": "four puppies came to the party.",
+      "hash": "b90e1413c2",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyHats-a/n=4.mp3"
+    },
+    "k-woods/puppyHats-a/n=5": {
+      "text": "five puppies came to the party.",
+      "hash": "d36f80565b",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyHats-a/n=5.mp3"
+    },
+    "k-woods/puppyHats-a/n=6": {
+      "text": "six puppies came to the party.",
+      "hash": "7624068948",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyHats-a/n=6.mp3"
+    },
+    "k-woods/puppyHats-b/n=2": {
+      "text": "There were only two party hats.",
+      "hash": "8779ab8ba3",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyHats-b/n=2.mp3"
+    },
+    "k-woods/puppyHats-b/n=3": {
+      "text": "There were only three party hats.",
+      "hash": "3bc4ca5686",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyHats-b/n=3.mp3"
+    },
+    "k-woods/puppyHats-b/n=4": {
+      "text": "There were only four party hats.",
+      "hash": "2f0d3c74a0",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyHats-b/n=4.mp3"
+    },
+    "k-woods/puppyHats-b/n=5": {
+      "text": "There were only five party hats.",
+      "hash": "c0ce2b00ff",
+      "kind": "whole",
+      "file": "voice/k-woods/puppyHats-b/n=5.mp3"
+    },
+    "k-woods/mouseSnack-a/n=3": {
+      "text": "three mice came for a snack.",
+      "hash": "700836bad8",
+      "kind": "whole",
+      "file": "voice/k-woods/mouseSnack-a/n=3.mp3"
+    },
+    "k-woods/mouseSnack-a/n=4": {
+      "text": "four mice came for a snack.",
+      "hash": "f943443dba",
+      "kind": "whole",
+      "file": "voice/k-woods/mouseSnack-a/n=4.mp3"
+    },
+    "k-woods/mouseSnack-a/n=5": {
+      "text": "five mice came for a snack.",
+      "hash": "260f8c956c",
+      "kind": "whole",
+      "file": "voice/k-woods/mouseSnack-a/n=5.mp3"
+    },
+    "k-woods/mouseSnack-a/n=6": {
+      "text": "six mice came for a snack.",
+      "hash": "36579bebc1",
+      "kind": "whole",
+      "file": "voice/k-woods/mouseSnack-a/n=6.mp3"
+    },
+    "k-woods/mouseSnack-b/n=2": {
+      "text": "There were only two pieces of cheese.",
+      "hash": "6face4973a",
+      "kind": "whole",
+      "file": "voice/k-woods/mouseSnack-b/n=2.mp3"
+    },
+    "k-woods/mouseSnack-b/n=3": {
+      "text": "There were only three pieces of cheese.",
+      "hash": "c37f61c45d",
+      "kind": "whole",
+      "file": "voice/k-woods/mouseSnack-b/n=3.mp3"
+    },
+    "k-woods/mouseSnack-b/n=4": {
+      "text": "There were only four pieces of cheese.",
+      "hash": "7a90ca2dde",
+      "kind": "whole",
+      "file": "voice/k-woods/mouseSnack-b/n=4.mp3"
+    },
+    "k-woods/mouseSnack-b/n=5": {
+      "text": "There were only five pieces of cheese.",
+      "hash": "d8a5244664",
+      "kind": "whole",
+      "file": "voice/k-woods/mouseSnack-b/n=5.mp3"
     },
     "k-words/youCanRead": {
       "text": "You can read that word!",
