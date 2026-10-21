@@ -279,6 +279,29 @@ Owner request (2026-10-20): rhyming, finishing nursery rhymes, clapping syllable
   - never a timer, and never failing out.
 - **Store build:** unchanged. K stays behind `VITE_K1`.
 
+## Kindergarten complete (phase 2a) contract
+
+Owner request (2026-10-21): finish the remaining K zones, then grade 1, then grade 5, in that order. This phase wakes up the eight zones still sleeping for K. Each one gets a K title, a `k1` stage set of three stages (concept, practice, mastery), a K voice lesson, `k-nav` lines and stage pictures, and its pet hatches from that lesson.
+
+| Zone | K title | Stage ids | Lesson | Content (CCSS / NGSS) |
+|---|---|---|---|---|
+| `division-dunes` | Number Dunes | `k-dunes-1..3` | `kCompare` | More, fewer, same; compare numerals to 10 (K.CC.6–7) |
+| `place-value-plateau` | Ten Frame Plateau | `k-teens-1..3` | `kTeens` | Teen numbers as ten and some ones, with ten-frames (K.NBT.1); counting to 20 |
+| `fraction-falls` | Add-and-Take Falls | `k-addsub-1..3` | `kAddTake` | Add and take away within 5, then 10 (K.OA.1, K.OA.5); make 10 (K.OA.4) |
+| `word-problem-woods` | Story Woods | `k-woods-1..3` | `kStoryMath` | Spoken story problems within 10 (K.OA.2) |
+| `measurement-marsh` | Measure Marsh | `k-measure-1..3` | `kMeasure` | Longer / shorter, taller / shorter, heavier / lighter (K.MD.1–2) |
+| `data-delta` | Sorting Delta | `k-sort-1..3` | `kSorting` | Sort into groups and count each group (K.MD.3) |
+| `science-summit` | Nature Summit | `k-science-1..3` | `kScience` | Weather and what to wear; what plants and animals need; push and pull (K-ESS2, K-LS1, K-PS2) |
+| `tower-battlefront` | Counting Towers | `k-towers-1..3` | `kTowers` | Tower defense powered by counting and more / fewer questions, answered with pictures |
+
+**Rules, the same as the pilot and phase 1b:**
+- Every question is said aloud.
+- Answers are pictures, numerals or the Listen & Play activities (`ListenProblem.activity`). A new activity is registered in `src/games/listenPlay/activities/`.
+- Nothing to read, no timers, no failing out.
+- Emoji are Unicode 9 or older, and no microphone is used.
+- New lines go in their own voice packs, and `voiceLines.json` comes only from `npm run voice:dump`. No existing narration string changes.
+- **Store build:** unchanged. K stays behind `VITE_K1`.
+
 ## Phases
 
 | Phase | What ships | Notes |
