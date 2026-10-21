@@ -302,6 +302,53 @@ Owner request (2026-10-21): finish the remaining K zones, then grade 1, then gra
 - New lines go in their own voice packs, and `voiceLines.json` comes only from `npm run voice:dump`. No existing narration string changes.
 - **Store build:** unchanged. K stays behind `VITE_K1`.
 
+## Grade 1 (phase 2b) contract
+
+1st grade has its own content band, `g1` (`src/lib/gradeBand.ts`).
+- **Fallback:** a zone's `stagesByBand.g1`, `titleByBand.g1` and band-`g1` lessons are used where they exist; otherwise 1st grade gets kindergarten's (`bandFallbacks`).
+- **Zone lines:** zone name and welcome lines can have a 1st-grade variant (`k-nav` `name-g1-<zoneId>` / `welcome-g1-<zoneId>`).
+- **Experience:** 1st grade is still voice-first (`listen`): every question is said aloud, with pictures, numerals and big choices, no timers and no failing out.
+- **On-screen text:** single short words and short read-along sentences may appear when reading them IS the skill (Word Reef, Writing Workshop) or as labels a 1st grader reads (≤ 3 words elsewhere). Number symbols (+ − = < >) are fine from 1st grade.
+
+| Zone | 1st-grade title | Stage ids | Lesson | Content (CCSS / NGSS) |
+|---|---|---|---|---|
+| `multiplication-mesa` | Adding Mesa | `g1-add-1`, `g1-add-parade` (Critter Parade, + gates within 20), `g1-add-3` | `g1Adding` | Add within 20: count on, doubles, make 10 (1.OA.3, 1.OA.6) |
+| `division-dunes` | Take-Away Dunes | `g1-sub-1`, `g1-sub-parade` (Critter Parade, − gates), `g1-sub-3` | `g1Subtract` | Subtract within 20; think addition; fact families (1.OA.4, 1.OA.6) |
+| `word-problem-woods` | (Story Woods) | `g1-woods-1..3` | `g1StoryMath` | Story problems within 20: add-to, take-from, put-together, compare; three addends (1.OA.1–2) |
+| `place-value-plateau` | Tens Plateau | `g1-tens-1..3` | `g1Tens` | Tens and ones; count to 120; compare two-digit numbers with > < = (1.NBT.1–3); 10 more / 10 less (1.NBT.5) |
+| `fraction-falls` | Fair Share Falls | `g1-shares-1..3` | `g1Shares` | Equal shares: halves and fourths of circles and rectangles (1.G.3) |
+| `geometry-grove` | (Shape Grove) | `g1-shapes-1..3` | `g1Shapes` | Defining vs non-defining attributes; compose shapes from shapes (1.G.1–2) |
+| `measurement-marsh` | (Measure Marsh) | `g1-measure-1..3` | `g1Measure` | Order three by length; length in same-size units (1.MD.1–2); time to the hour and half hour (1.MD.3) |
+| `data-delta` | Graph Delta | `g1-graphs-1..3` | `g1Graphs` | Picture graphs with up to 3 categories: how many, how many more or fewer (1.MD.4) |
+| `science-summit` | Sky Summit | `g1-science-1..3` | `g1Science` | Light and sound (1-PS4); sun, moon, stars, day and night, daylight through the year (1-ESS1); how parents and young are alike (1-LS1/LS3) |
+| `reading-reef` | Word Reef | `g1-vowels-1`, `g1-digraphs-1`, `g1-words-1`, `g1-sentences-1`, `g1-sight-1` | `g1Reading` | Short vowels and CVC words, digraphs (sh ch th), reading words and read-along sentences, 1st-grade sight words (RF.1.2–4) |
+| `writing-workshop` | (Writing Workshop) | `g1-trace-1` (lowercase a–z), `g1-spell-1` (build words from letter tiles), `g1-sentence-1` (build a sentence from word tiles) | `g1Writing` | Lowercase letters (L.1.1a); spell CVC words (L.1.2); a sentence starts with a capital and ends with a period |
+| `tower-battlefront` | (Counting Towers) | `g1-towers-1..3` | (kindergarten's `kTowers`) | Tower defense with + and − within 20 |
+
+A title in parentheses means the zone keeps kindergarten's name.
+
+## Grade 5 (phase 3) contract
+
+5th grade (`g5`) is `own` mode: today's 2–4 screens and games (`conceptPlay`, `speedRun`, `bossBattle`, `critterParade`, the 3D games), with grade-5 providers, banks, lessons and game tiers.
+- **Stage sets:** each zone's `stagesByBand.g5` mirrors the shape of its 2–4 set: a concept stage, a practice stage, a mastery boss, plus the zone's 3D game where it has one.
+- **Lessons:** `band: 'g5'` lessons go in the `g5Lessons` list.
+- **Store build:** unchanged. Grade 5 stays behind `VITE_G5`.
+
+| Zone | Stage ids | Lesson | Content (CCSS / NGSS) | Game tier |
+|---|---|---|---|---|
+| `multiplication-mesa` | `g5-mult-1..3` | `g5Multiplication` | Multi-digit multiplication; powers of 10 and exponents (5.NBT.2, 5.NBT.5) | Times Grove: area models |
+| `division-dunes` | `g5-div-1`, `g5-div-arena`, `g5-div-2`, `g5-div-3` | `g5Division` | Long division, up to 4-digit by 2-digit; interpreting remainders (5.NBT.6) | Division Arena: two-digit divisors |
+| `word-problem-woods` | `g5-woods-1..3` | `g5Expressions` | Multi-step problems; order of operations with parentheses; writing expressions; patterns (5.OA.1–3) | |
+| `fraction-falls` | `g5-frac-1..3` | `g5Fractions` | Add and subtract unlike denominators; multiply fractions; fractions as division (5.NF.1–4) | Fraction Forge: unlike denominators |
+| `place-value-plateau` | `g5-dec-1..3` | `g5Decimals` | Decimals to thousandths: read, write, compare, round; operate to hundredths; powers of 10 (5.NBT.1, 5.NBT.3–4, 5.NBT.7) | |
+| `tower-battlefront` | `g5-td-1` | (none) | Tower defense with fraction and decimal gates | Tower defense: grade-5 gates |
+| `measurement-marsh` | `g5-measure-1..3` | `g5Volume` | Volume of rectangular prisms and composed figures (5.MD.3–5); unit conversion within a system (5.MD.1) | |
+| `geometry-grove` | `g5-geo-1..3` | `g5Coordinates` | The coordinate plane, first quadrant (5.G.1–2); classifying two-dimensional figures in a hierarchy (5.G.3–4) | |
+| `data-delta` | `g5-data-1..3` | `g5LinePlots` | Line plots with fractions of a unit (5.MD.2); graphing patterns on the coordinate plane (5.OA.3) | |
+| `reading-reef` | `g5-read-1..3` | `g5Reading` | Level-5 passages: theme, comparing texts, figurative language, text structure, point of view (RL.5, RI.5) | |
+| `writing-workshop` | `g5-write-1..3` | `g5Writing` | Opinion, informative and narrative writing (W.5.1–3) | |
+| `science-summit` | `g5-sci-1`, `g5-sci-cycle`, `g5-sci-2`, `g5-sci-3` | `g5Science` | Matter and its conservation (5-PS1); food webs and matter cycling (5-LS2); Earth's spheres (5-ESS2); shadows, sun and stars (5-ESS1) | Cloud Keeper: Earth's spheres |
+
 ## Phases
 
 | Phase | What ships | Notes |
