@@ -3,6 +3,7 @@ import type { Zone } from './types'
 export const divisionZone: Zone = {
   id: 'division-dunes',
   title: 'Division Dunes',
+  titleByBand: { k1: 'Number Dunes' },
   subtitle: 'Sharing and division facts',
   emoji: '🐪',
   themeColor: 'quest',
@@ -78,4 +79,43 @@ export const divisionZone: Zone = {
       starsToEarn: 3,
     },
   ],
+  stagesByBand: {
+    // K–1 "Number Dunes" (K.CC.6–7, K.CC.4c): match two rows one to one (more,
+    // fewer or the same) → compare two written numbers, one more and one less
+    // → numbers in order, with a little of each. Within 10. Every question is
+    // answered through a number activity (src/games/listenPlay/activities).
+    // Titles and descriptions are said aloud.
+    k1: [
+      {
+        id: 'k-dunes-1',
+        kind: 'concept',
+        title: 'Line them up',
+        description: 'Match them up. More, fewer, or the same?',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kCompare', mode: 'match' },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-dunes-2',
+        kind: 'practice',
+        title: 'Which is more?',
+        description: 'Which number is more? What is one more?',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kCompare', mode: 'numbers' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-dunes-3',
+        kind: 'mastery',
+        title: 'Numbers in order',
+        description: 'Put the numbers in order, smallest first!',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kCompare', mode: 'lineUp' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+    ],
+  },
 }

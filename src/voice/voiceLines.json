@@ -1,6 +1,2418 @@
 {
   "voice": "higgs-audio-v2-mlx-q8:clone:calm-teacher-v1:k",
   "clips": {
+    "k-compare/ask-more-bees": {
+      "text": "Are there more bees or more flowers? Or are they the same?",
+      "hash": "8329fb07f9",
+      "kind": "line",
+      "file": "voice/k-compare/ask-more-bees.mp3"
+    },
+    "k-compare/ask-fewer-bees": {
+      "text": "Are there fewer bees or fewer flowers? Or are they the same?",
+      "hash": "5d57f1d92c",
+      "kind": "line",
+      "file": "voice/k-compare/ask-fewer-bees.mp3"
+    },
+    "k-compare/ask-more-bunnies": {
+      "text": "Are there more bunnies or more carrots? Or are they the same?",
+      "hash": "9c36c0915f",
+      "kind": "line",
+      "file": "voice/k-compare/ask-more-bunnies.mp3"
+    },
+    "k-compare/ask-fewer-bunnies": {
+      "text": "Are there fewer bunnies or fewer carrots? Or are they the same?",
+      "hash": "3354e8f784",
+      "kind": "line",
+      "file": "voice/k-compare/ask-fewer-bunnies.mp3"
+    },
+    "k-compare/ask-more-monkeys": {
+      "text": "Are there more monkeys or more bananas? Or are they the same?",
+      "hash": "26184020b4",
+      "kind": "line",
+      "file": "voice/k-compare/ask-more-monkeys.mp3"
+    },
+    "k-compare/ask-fewer-monkeys": {
+      "text": "Are there fewer monkeys or fewer bananas? Or are they the same?",
+      "hash": "e5bfe077cb",
+      "kind": "line",
+      "file": "voice/k-compare/ask-fewer-monkeys.mp3"
+    },
+    "k-compare/ask-more-cats": {
+      "text": "Are there more cats or more fish? Or are they the same?",
+      "hash": "09a7d1c64c",
+      "kind": "line",
+      "file": "voice/k-compare/ask-more-cats.mp3"
+    },
+    "k-compare/ask-fewer-cats": {
+      "text": "Are there fewer cats or fewer fish? Or are they the same?",
+      "hash": "1bd160f05e",
+      "kind": "line",
+      "file": "voice/k-compare/ask-fewer-cats.mp3"
+    },
+    "k-compare/ask-more-bears": {
+      "text": "Are there more bears or more balls? Or are they the same?",
+      "hash": "4a687011dd",
+      "kind": "line",
+      "file": "voice/k-compare/ask-more-bears.mp3"
+    },
+    "k-compare/ask-fewer-bears": {
+      "text": "Are there fewer bears or fewer balls? Or are they the same?",
+      "hash": "57ea0ecc27",
+      "kind": "line",
+      "file": "voice/k-compare/ask-fewer-bears.mp3"
+    },
+    "k-compare/ask-more-hens": {
+      "text": "Are there more hens or more eggs? Or are they the same?",
+      "hash": "2c7432950c",
+      "kind": "line",
+      "file": "voice/k-compare/ask-more-hens.mp3"
+    },
+    "k-compare/ask-fewer-hens": {
+      "text": "Are there fewer hens or fewer eggs? Or are they the same?",
+      "hash": "784acd8d2b",
+      "kind": "line",
+      "file": "voice/k-compare/ask-fewer-hens.mp3"
+    },
+    "k-compare/ask-more-babies": {
+      "text": "Are there more babies or more bottles? Or are they the same?",
+      "hash": "1f777bd6e8",
+      "kind": "line",
+      "file": "voice/k-compare/ask-more-babies.mp3"
+    },
+    "k-compare/ask-fewer-babies": {
+      "text": "Are there fewer babies or fewer bottles? Or are they the same?",
+      "hash": "c81a2acb4e",
+      "kind": "line",
+      "file": "voice/k-compare/ask-fewer-babies.mp3"
+    },
+    "k-compare/ask-more-horses": {
+      "text": "Are there more horses or more apples? Or are they the same?",
+      "hash": "837fb348c3",
+      "kind": "line",
+      "file": "voice/k-compare/ask-more-horses.mp3"
+    },
+    "k-compare/ask-fewer-horses": {
+      "text": "Are there fewer horses or fewer apples? Or are they the same?",
+      "hash": "35851ea950",
+      "kind": "line",
+      "file": "voice/k-compare/ask-fewer-horses.mp3"
+    },
+    "k-compare/thing-bees": {
+      "text": "Bees!",
+      "hash": "ece480f16a",
+      "kind": "line",
+      "file": "voice/k-compare/thing-bees.mp3"
+    },
+    "k-compare/thing-flowers": {
+      "text": "Flowers!",
+      "hash": "b74ea16411",
+      "kind": "line",
+      "file": "voice/k-compare/thing-flowers.mp3"
+    },
+    "k-compare/thing-bunnies": {
+      "text": "Bunnies!",
+      "hash": "48f6835f35",
+      "kind": "line",
+      "file": "voice/k-compare/thing-bunnies.mp3"
+    },
+    "k-compare/thing-carrots": {
+      "text": "Carrots!",
+      "hash": "fc8ce3942c",
+      "kind": "line",
+      "file": "voice/k-compare/thing-carrots.mp3"
+    },
+    "k-compare/thing-monkeys": {
+      "text": "Monkeys!",
+      "hash": "f505743010",
+      "kind": "line",
+      "file": "voice/k-compare/thing-monkeys.mp3"
+    },
+    "k-compare/thing-bananas": {
+      "text": "Bananas!",
+      "hash": "c9ef8c266d",
+      "kind": "line",
+      "file": "voice/k-compare/thing-bananas.mp3"
+    },
+    "k-compare/thing-cats": {
+      "text": "Cats!",
+      "hash": "024de37bd2",
+      "kind": "line",
+      "file": "voice/k-compare/thing-cats.mp3"
+    },
+    "k-compare/thing-fish": {
+      "text": "Fish!",
+      "hash": "e085510562",
+      "kind": "line",
+      "file": "voice/k-compare/thing-fish.mp3"
+    },
+    "k-compare/thing-bears": {
+      "text": "Bears!",
+      "hash": "0333f9df46",
+      "kind": "line",
+      "file": "voice/k-compare/thing-bears.mp3"
+    },
+    "k-compare/thing-balls": {
+      "text": "Balls!",
+      "hash": "09f40c88d4",
+      "kind": "line",
+      "file": "voice/k-compare/thing-balls.mp3"
+    },
+    "k-compare/thing-hens": {
+      "text": "Hens!",
+      "hash": "8675d9bdbd",
+      "kind": "line",
+      "file": "voice/k-compare/thing-hens.mp3"
+    },
+    "k-compare/thing-eggs": {
+      "text": "Eggs!",
+      "hash": "7042e9fcf9",
+      "kind": "line",
+      "file": "voice/k-compare/thing-eggs.mp3"
+    },
+    "k-compare/thing-babies": {
+      "text": "Babies!",
+      "hash": "01499933c9",
+      "kind": "line",
+      "file": "voice/k-compare/thing-babies.mp3"
+    },
+    "k-compare/thing-bottles": {
+      "text": "Bottles!",
+      "hash": "15ad0f2558",
+      "kind": "line",
+      "file": "voice/k-compare/thing-bottles.mp3"
+    },
+    "k-compare/thing-horses": {
+      "text": "Horses!",
+      "hash": "c0ab494826",
+      "kind": "line",
+      "file": "voice/k-compare/thing-horses.mp3"
+    },
+    "k-compare/thing-apples": {
+      "text": "Apples!",
+      "hash": "16bd75601e",
+      "kind": "line",
+      "file": "voice/k-compare/thing-apples.mp3"
+    },
+    "k-compare/same": {
+      "text": "The same!",
+      "hash": "1c3214b7b3",
+      "kind": "line",
+      "file": "voice/k-compare/same.mp3"
+    },
+    "k-compare/lineUp": {
+      "text": "Let's line them up!",
+      "hash": "c19092e20e",
+      "kind": "line",
+      "file": "voice/k-compare/lineUp.mp3"
+    },
+    "k-compare/same-bees": {
+      "text": "Every bee has a flower. They are the same!",
+      "hash": "603bf1b78c",
+      "kind": "line",
+      "file": "voice/k-compare/same-bees.mp3"
+    },
+    "k-compare/left-bees-top": {
+      "text": "Some bees have no flower.",
+      "hash": "8bc96a6be7",
+      "kind": "line",
+      "file": "voice/k-compare/left-bees-top.mp3"
+    },
+    "k-compare/left-bees-bottom": {
+      "text": "Some flowers have no bee.",
+      "hash": "99c2cba43a",
+      "kind": "line",
+      "file": "voice/k-compare/left-bees-bottom.mp3"
+    },
+    "k-compare/more-bees": {
+      "text": "There are more bees!",
+      "hash": "5e0ecf6ac3",
+      "kind": "line",
+      "file": "voice/k-compare/more-bees.mp3"
+    },
+    "k-compare/more-flowers": {
+      "text": "There are more flowers!",
+      "hash": "b94a10e1bc",
+      "kind": "line",
+      "file": "voice/k-compare/more-flowers.mp3"
+    },
+    "k-compare/fewer-bees": {
+      "text": "There are fewer bees!",
+      "hash": "fba7dc1e1d",
+      "kind": "line",
+      "file": "voice/k-compare/fewer-bees.mp3"
+    },
+    "k-compare/fewer-flowers": {
+      "text": "There are fewer flowers!",
+      "hash": "753e7a7a87",
+      "kind": "line",
+      "file": "voice/k-compare/fewer-flowers.mp3"
+    },
+    "k-compare/same-bunnies": {
+      "text": "Every bunny has a carrot. They are the same!",
+      "hash": "847515f770",
+      "kind": "line",
+      "file": "voice/k-compare/same-bunnies.mp3"
+    },
+    "k-compare/left-bunnies-top": {
+      "text": "Some bunnies have no carrot.",
+      "hash": "c6dcdf0522",
+      "kind": "line",
+      "file": "voice/k-compare/left-bunnies-top.mp3"
+    },
+    "k-compare/left-bunnies-bottom": {
+      "text": "Some carrots have no bunny.",
+      "hash": "ba9f3c88e2",
+      "kind": "line",
+      "file": "voice/k-compare/left-bunnies-bottom.mp3"
+    },
+    "k-compare/more-bunnies": {
+      "text": "There are more bunnies!",
+      "hash": "ad6c1082c1",
+      "kind": "line",
+      "file": "voice/k-compare/more-bunnies.mp3"
+    },
+    "k-compare/more-carrots": {
+      "text": "There are more carrots!",
+      "hash": "d83674330d",
+      "kind": "line",
+      "file": "voice/k-compare/more-carrots.mp3"
+    },
+    "k-compare/fewer-bunnies": {
+      "text": "There are fewer bunnies!",
+      "hash": "7e88908c7f",
+      "kind": "line",
+      "file": "voice/k-compare/fewer-bunnies.mp3"
+    },
+    "k-compare/fewer-carrots": {
+      "text": "There are fewer carrots!",
+      "hash": "10e7e641d0",
+      "kind": "line",
+      "file": "voice/k-compare/fewer-carrots.mp3"
+    },
+    "k-compare/same-monkeys": {
+      "text": "Every monkey has a banana. They are the same!",
+      "hash": "ecba9a6c9e",
+      "kind": "line",
+      "file": "voice/k-compare/same-monkeys.mp3"
+    },
+    "k-compare/left-monkeys-top": {
+      "text": "Some monkeys have no banana.",
+      "hash": "3cd1347bd2",
+      "kind": "line",
+      "file": "voice/k-compare/left-monkeys-top.mp3"
+    },
+    "k-compare/left-monkeys-bottom": {
+      "text": "Some bananas have no monkey.",
+      "hash": "53f633082d",
+      "kind": "line",
+      "file": "voice/k-compare/left-monkeys-bottom.mp3"
+    },
+    "k-compare/more-monkeys": {
+      "text": "There are more monkeys!",
+      "hash": "3cf1549f59",
+      "kind": "line",
+      "file": "voice/k-compare/more-monkeys.mp3"
+    },
+    "k-compare/more-bananas": {
+      "text": "There are more bananas!",
+      "hash": "076f1d1ba4",
+      "kind": "line",
+      "file": "voice/k-compare/more-bananas.mp3"
+    },
+    "k-compare/fewer-monkeys": {
+      "text": "There are fewer monkeys!",
+      "hash": "d95825766e",
+      "kind": "line",
+      "file": "voice/k-compare/fewer-monkeys.mp3"
+    },
+    "k-compare/fewer-bananas": {
+      "text": "There are fewer bananas!",
+      "hash": "bb21341f60",
+      "kind": "line",
+      "file": "voice/k-compare/fewer-bananas.mp3"
+    },
+    "k-compare/same-cats": {
+      "text": "Every cat has a fish. They are the same!",
+      "hash": "84a4adc07e",
+      "kind": "line",
+      "file": "voice/k-compare/same-cats.mp3"
+    },
+    "k-compare/left-cats-top": {
+      "text": "Some cats have no fish.",
+      "hash": "06d98436a0",
+      "kind": "line",
+      "file": "voice/k-compare/left-cats-top.mp3"
+    },
+    "k-compare/left-cats-bottom": {
+      "text": "Some fish have no cat.",
+      "hash": "5021307cf6",
+      "kind": "line",
+      "file": "voice/k-compare/left-cats-bottom.mp3"
+    },
+    "k-compare/more-cats": {
+      "text": "There are more cats!",
+      "hash": "54c6a365e1",
+      "kind": "line",
+      "file": "voice/k-compare/more-cats.mp3"
+    },
+    "k-compare/more-fish": {
+      "text": "There are more fish!",
+      "hash": "b7c3396768",
+      "kind": "line",
+      "file": "voice/k-compare/more-fish.mp3"
+    },
+    "k-compare/fewer-cats": {
+      "text": "There are fewer cats!",
+      "hash": "cdcddf5488",
+      "kind": "line",
+      "file": "voice/k-compare/fewer-cats.mp3"
+    },
+    "k-compare/fewer-fish": {
+      "text": "There are fewer fish!",
+      "hash": "bea7406121",
+      "kind": "line",
+      "file": "voice/k-compare/fewer-fish.mp3"
+    },
+    "k-compare/same-bears": {
+      "text": "Every bear has a ball. They are the same!",
+      "hash": "f4134b959e",
+      "kind": "line",
+      "file": "voice/k-compare/same-bears.mp3"
+    },
+    "k-compare/left-bears-top": {
+      "text": "Some bears have no ball.",
+      "hash": "aff3ca0cb2",
+      "kind": "line",
+      "file": "voice/k-compare/left-bears-top.mp3"
+    },
+    "k-compare/left-bears-bottom": {
+      "text": "Some balls have no bear.",
+      "hash": "6baa98ecd9",
+      "kind": "line",
+      "file": "voice/k-compare/left-bears-bottom.mp3"
+    },
+    "k-compare/more-bears": {
+      "text": "There are more bears!",
+      "hash": "d7f02bde85",
+      "kind": "line",
+      "file": "voice/k-compare/more-bears.mp3"
+    },
+    "k-compare/more-balls": {
+      "text": "There are more balls!",
+      "hash": "5fb87f56a6",
+      "kind": "line",
+      "file": "voice/k-compare/more-balls.mp3"
+    },
+    "k-compare/fewer-bears": {
+      "text": "There are fewer bears!",
+      "hash": "8f0c4d0290",
+      "kind": "line",
+      "file": "voice/k-compare/fewer-bears.mp3"
+    },
+    "k-compare/fewer-balls": {
+      "text": "There are fewer balls!",
+      "hash": "e8abc90b79",
+      "kind": "line",
+      "file": "voice/k-compare/fewer-balls.mp3"
+    },
+    "k-compare/same-hens": {
+      "text": "Every hen has an egg. They are the same!",
+      "hash": "28449bf766",
+      "kind": "line",
+      "file": "voice/k-compare/same-hens.mp3"
+    },
+    "k-compare/left-hens-top": {
+      "text": "Some hens have no egg.",
+      "hash": "b1966aac4f",
+      "kind": "line",
+      "file": "voice/k-compare/left-hens-top.mp3"
+    },
+    "k-compare/left-hens-bottom": {
+      "text": "Some eggs have no hen.",
+      "hash": "32c3f20c0a",
+      "kind": "line",
+      "file": "voice/k-compare/left-hens-bottom.mp3"
+    },
+    "k-compare/more-hens": {
+      "text": "There are more hens!",
+      "hash": "e0e5d0efd1",
+      "kind": "line",
+      "file": "voice/k-compare/more-hens.mp3"
+    },
+    "k-compare/more-eggs": {
+      "text": "There are more eggs!",
+      "hash": "68580f8ddc",
+      "kind": "line",
+      "file": "voice/k-compare/more-eggs.mp3"
+    },
+    "k-compare/fewer-hens": {
+      "text": "There are fewer hens!",
+      "hash": "f793ad4f77",
+      "kind": "line",
+      "file": "voice/k-compare/fewer-hens.mp3"
+    },
+    "k-compare/fewer-eggs": {
+      "text": "There are fewer eggs!",
+      "hash": "c677d65ffd",
+      "kind": "line",
+      "file": "voice/k-compare/fewer-eggs.mp3"
+    },
+    "k-compare/same-babies": {
+      "text": "Every baby has a bottle. They are the same!",
+      "hash": "f7dfdec385",
+      "kind": "line",
+      "file": "voice/k-compare/same-babies.mp3"
+    },
+    "k-compare/left-babies-top": {
+      "text": "Some babies have no bottle.",
+      "hash": "b30ef31571",
+      "kind": "line",
+      "file": "voice/k-compare/left-babies-top.mp3"
+    },
+    "k-compare/left-babies-bottom": {
+      "text": "Some bottles have no baby.",
+      "hash": "912874f07e",
+      "kind": "line",
+      "file": "voice/k-compare/left-babies-bottom.mp3"
+    },
+    "k-compare/more-babies": {
+      "text": "There are more babies!",
+      "hash": "0a47ac3eea",
+      "kind": "line",
+      "file": "voice/k-compare/more-babies.mp3"
+    },
+    "k-compare/more-bottles": {
+      "text": "There are more bottles!",
+      "hash": "37e44378d3",
+      "kind": "line",
+      "file": "voice/k-compare/more-bottles.mp3"
+    },
+    "k-compare/fewer-babies": {
+      "text": "There are fewer babies!",
+      "hash": "547312d4b5",
+      "kind": "line",
+      "file": "voice/k-compare/fewer-babies.mp3"
+    },
+    "k-compare/fewer-bottles": {
+      "text": "There are fewer bottles!",
+      "hash": "a3f7b1d95d",
+      "kind": "line",
+      "file": "voice/k-compare/fewer-bottles.mp3"
+    },
+    "k-compare/same-horses": {
+      "text": "Every horse has an apple. They are the same!",
+      "hash": "01de95d6e6",
+      "kind": "line",
+      "file": "voice/k-compare/same-horses.mp3"
+    },
+    "k-compare/left-horses-top": {
+      "text": "Some horses have no apple.",
+      "hash": "023375177b",
+      "kind": "line",
+      "file": "voice/k-compare/left-horses-top.mp3"
+    },
+    "k-compare/left-horses-bottom": {
+      "text": "Some apples have no horse.",
+      "hash": "3e8a2ebb28",
+      "kind": "line",
+      "file": "voice/k-compare/left-horses-bottom.mp3"
+    },
+    "k-compare/more-horses": {
+      "text": "There are more horses!",
+      "hash": "b7a01cfb1b",
+      "kind": "line",
+      "file": "voice/k-compare/more-horses.mp3"
+    },
+    "k-compare/more-apples": {
+      "text": "There are more apples!",
+      "hash": "bce50ac4a2",
+      "kind": "line",
+      "file": "voice/k-compare/more-apples.mp3"
+    },
+    "k-compare/fewer-horses": {
+      "text": "There are fewer horses!",
+      "hash": "46de119c28",
+      "kind": "line",
+      "file": "voice/k-compare/fewer-horses.mp3"
+    },
+    "k-compare/fewer-apples": {
+      "text": "There are fewer apples!",
+      "hash": "9cfbbd6557",
+      "kind": "line",
+      "file": "voice/k-compare/fewer-apples.mp3"
+    },
+    "k-compare/more-1-2": {
+      "text": "Which number is more, one or two?",
+      "hash": "64f31a5fcc",
+      "kind": "line",
+      "file": "voice/k-compare/more-1-2.mp3"
+    },
+    "k-compare/less-1-2": {
+      "text": "Which number is less, one or two?",
+      "hash": "6a32c8c77f",
+      "kind": "line",
+      "file": "voice/k-compare/less-1-2.mp3"
+    },
+    "k-compare/more-1-3": {
+      "text": "Which number is more, one or three?",
+      "hash": "c169f6fafa",
+      "kind": "line",
+      "file": "voice/k-compare/more-1-3.mp3"
+    },
+    "k-compare/less-1-3": {
+      "text": "Which number is less, one or three?",
+      "hash": "4cf4084bb3",
+      "kind": "line",
+      "file": "voice/k-compare/less-1-3.mp3"
+    },
+    "k-compare/more-1-4": {
+      "text": "Which number is more, one or four?",
+      "hash": "be43baad39",
+      "kind": "line",
+      "file": "voice/k-compare/more-1-4.mp3"
+    },
+    "k-compare/less-1-4": {
+      "text": "Which number is less, one or four?",
+      "hash": "baec5d071e",
+      "kind": "line",
+      "file": "voice/k-compare/less-1-4.mp3"
+    },
+    "k-compare/more-1-5": {
+      "text": "Which number is more, one or five?",
+      "hash": "b41041a33a",
+      "kind": "line",
+      "file": "voice/k-compare/more-1-5.mp3"
+    },
+    "k-compare/less-1-5": {
+      "text": "Which number is less, one or five?",
+      "hash": "e467907239",
+      "kind": "line",
+      "file": "voice/k-compare/less-1-5.mp3"
+    },
+    "k-compare/more-1-6": {
+      "text": "Which number is more, one or six?",
+      "hash": "a03bebd910",
+      "kind": "line",
+      "file": "voice/k-compare/more-1-6.mp3"
+    },
+    "k-compare/less-1-6": {
+      "text": "Which number is less, one or six?",
+      "hash": "a4dfe4fb0c",
+      "kind": "line",
+      "file": "voice/k-compare/less-1-6.mp3"
+    },
+    "k-compare/more-1-7": {
+      "text": "Which number is more, one or seven?",
+      "hash": "f0b515f96c",
+      "kind": "line",
+      "file": "voice/k-compare/more-1-7.mp3"
+    },
+    "k-compare/less-1-7": {
+      "text": "Which number is less, one or seven?",
+      "hash": "a3aa2b5f1e",
+      "kind": "line",
+      "file": "voice/k-compare/less-1-7.mp3"
+    },
+    "k-compare/more-1-8": {
+      "text": "Which number is more, one or eight?",
+      "hash": "dad4cd21e7",
+      "kind": "line",
+      "file": "voice/k-compare/more-1-8.mp3"
+    },
+    "k-compare/less-1-8": {
+      "text": "Which number is less, one or eight?",
+      "hash": "3ab20fe898",
+      "kind": "line",
+      "file": "voice/k-compare/less-1-8.mp3"
+    },
+    "k-compare/more-1-9": {
+      "text": "Which number is more, one or nine?",
+      "hash": "19612a28ea",
+      "kind": "line",
+      "file": "voice/k-compare/more-1-9.mp3"
+    },
+    "k-compare/less-1-9": {
+      "text": "Which number is less, one or nine?",
+      "hash": "1b3c38b7a8",
+      "kind": "line",
+      "file": "voice/k-compare/less-1-9.mp3"
+    },
+    "k-compare/more-1-10": {
+      "text": "Which number is more, one or ten?",
+      "hash": "725c5d56ff",
+      "kind": "line",
+      "file": "voice/k-compare/more-1-10.mp3"
+    },
+    "k-compare/less-1-10": {
+      "text": "Which number is less, one or ten?",
+      "hash": "ab7a2114f9",
+      "kind": "line",
+      "file": "voice/k-compare/less-1-10.mp3"
+    },
+    "k-compare/more-2-1": {
+      "text": "Which number is more, two or one?",
+      "hash": "9f1c4ef1f8",
+      "kind": "line",
+      "file": "voice/k-compare/more-2-1.mp3"
+    },
+    "k-compare/less-2-1": {
+      "text": "Which number is less, two or one?",
+      "hash": "3a08f81596",
+      "kind": "line",
+      "file": "voice/k-compare/less-2-1.mp3"
+    },
+    "k-compare/more-2-3": {
+      "text": "Which number is more, two or three?",
+      "hash": "e635a8a689",
+      "kind": "line",
+      "file": "voice/k-compare/more-2-3.mp3"
+    },
+    "k-compare/less-2-3": {
+      "text": "Which number is less, two or three?",
+      "hash": "757a7ce914",
+      "kind": "line",
+      "file": "voice/k-compare/less-2-3.mp3"
+    },
+    "k-compare/more-2-4": {
+      "text": "Which number is more, two or four?",
+      "hash": "9499710c8a",
+      "kind": "line",
+      "file": "voice/k-compare/more-2-4.mp3"
+    },
+    "k-compare/less-2-4": {
+      "text": "Which number is less, two or four?",
+      "hash": "79898d85aa",
+      "kind": "line",
+      "file": "voice/k-compare/less-2-4.mp3"
+    },
+    "k-compare/more-2-5": {
+      "text": "Which number is more, two or five?",
+      "hash": "ebf9b77168",
+      "kind": "line",
+      "file": "voice/k-compare/more-2-5.mp3"
+    },
+    "k-compare/less-2-5": {
+      "text": "Which number is less, two or five?",
+      "hash": "89d1c0f26b",
+      "kind": "line",
+      "file": "voice/k-compare/less-2-5.mp3"
+    },
+    "k-compare/more-2-6": {
+      "text": "Which number is more, two or six?",
+      "hash": "f7937e637a",
+      "kind": "line",
+      "file": "voice/k-compare/more-2-6.mp3"
+    },
+    "k-compare/less-2-6": {
+      "text": "Which number is less, two or six?",
+      "hash": "15871f375f",
+      "kind": "line",
+      "file": "voice/k-compare/less-2-6.mp3"
+    },
+    "k-compare/more-2-7": {
+      "text": "Which number is more, two or seven?",
+      "hash": "e3994cde9a",
+      "kind": "line",
+      "file": "voice/k-compare/more-2-7.mp3"
+    },
+    "k-compare/less-2-7": {
+      "text": "Which number is less, two or seven?",
+      "hash": "5d594c1ed1",
+      "kind": "line",
+      "file": "voice/k-compare/less-2-7.mp3"
+    },
+    "k-compare/more-2-8": {
+      "text": "Which number is more, two or eight?",
+      "hash": "543ffc8d04",
+      "kind": "line",
+      "file": "voice/k-compare/more-2-8.mp3"
+    },
+    "k-compare/less-2-8": {
+      "text": "Which number is less, two or eight?",
+      "hash": "4ec38a4fff",
+      "kind": "line",
+      "file": "voice/k-compare/less-2-8.mp3"
+    },
+    "k-compare/more-2-9": {
+      "text": "Which number is more, two or nine?",
+      "hash": "cdb9ac6596",
+      "kind": "line",
+      "file": "voice/k-compare/more-2-9.mp3"
+    },
+    "k-compare/less-2-9": {
+      "text": "Which number is less, two or nine?",
+      "hash": "6312f11dea",
+      "kind": "line",
+      "file": "voice/k-compare/less-2-9.mp3"
+    },
+    "k-compare/more-2-10": {
+      "text": "Which number is more, two or ten?",
+      "hash": "544b828479",
+      "kind": "line",
+      "file": "voice/k-compare/more-2-10.mp3"
+    },
+    "k-compare/less-2-10": {
+      "text": "Which number is less, two or ten?",
+      "hash": "5e1c1ab8f2",
+      "kind": "line",
+      "file": "voice/k-compare/less-2-10.mp3"
+    },
+    "k-compare/more-3-1": {
+      "text": "Which number is more, three or one?",
+      "hash": "16c5866528",
+      "kind": "line",
+      "file": "voice/k-compare/more-3-1.mp3"
+    },
+    "k-compare/less-3-1": {
+      "text": "Which number is less, three or one?",
+      "hash": "fa7b7c7356",
+      "kind": "line",
+      "file": "voice/k-compare/less-3-1.mp3"
+    },
+    "k-compare/more-3-2": {
+      "text": "Which number is more, three or two?",
+      "hash": "8f8c300f1a",
+      "kind": "line",
+      "file": "voice/k-compare/more-3-2.mp3"
+    },
+    "k-compare/less-3-2": {
+      "text": "Which number is less, three or two?",
+      "hash": "3efaf33141",
+      "kind": "line",
+      "file": "voice/k-compare/less-3-2.mp3"
+    },
+    "k-compare/more-3-4": {
+      "text": "Which number is more, three or four?",
+      "hash": "ebca7be31e",
+      "kind": "line",
+      "file": "voice/k-compare/more-3-4.mp3"
+    },
+    "k-compare/less-3-4": {
+      "text": "Which number is less, three or four?",
+      "hash": "5e61d07548",
+      "kind": "line",
+      "file": "voice/k-compare/less-3-4.mp3"
+    },
+    "k-compare/more-3-5": {
+      "text": "Which number is more, three or five?",
+      "hash": "f5d6983402",
+      "kind": "line",
+      "file": "voice/k-compare/more-3-5.mp3"
+    },
+    "k-compare/less-3-5": {
+      "text": "Which number is less, three or five?",
+      "hash": "19f7925615",
+      "kind": "line",
+      "file": "voice/k-compare/less-3-5.mp3"
+    },
+    "k-compare/more-3-6": {
+      "text": "Which number is more, three or six?",
+      "hash": "d25b99f4d3",
+      "kind": "line",
+      "file": "voice/k-compare/more-3-6.mp3"
+    },
+    "k-compare/less-3-6": {
+      "text": "Which number is less, three or six?",
+      "hash": "7e1534b7b3",
+      "kind": "line",
+      "file": "voice/k-compare/less-3-6.mp3"
+    },
+    "k-compare/more-3-7": {
+      "text": "Which number is more, three or seven?",
+      "hash": "2a1a91fed8",
+      "kind": "line",
+      "file": "voice/k-compare/more-3-7.mp3"
+    },
+    "k-compare/less-3-7": {
+      "text": "Which number is less, three or seven?",
+      "hash": "23cc3bb42d",
+      "kind": "line",
+      "file": "voice/k-compare/less-3-7.mp3"
+    },
+    "k-compare/more-3-8": {
+      "text": "Which number is more, three or eight?",
+      "hash": "6f215d6dc6",
+      "kind": "line",
+      "file": "voice/k-compare/more-3-8.mp3"
+    },
+    "k-compare/less-3-8": {
+      "text": "Which number is less, three or eight?",
+      "hash": "be7f92de29",
+      "kind": "line",
+      "file": "voice/k-compare/less-3-8.mp3"
+    },
+    "k-compare/more-3-9": {
+      "text": "Which number is more, three or nine?",
+      "hash": "3010c9324f",
+      "kind": "line",
+      "file": "voice/k-compare/more-3-9.mp3"
+    },
+    "k-compare/less-3-9": {
+      "text": "Which number is less, three or nine?",
+      "hash": "5a4b7f3964",
+      "kind": "line",
+      "file": "voice/k-compare/less-3-9.mp3"
+    },
+    "k-compare/more-3-10": {
+      "text": "Which number is more, three or ten?",
+      "hash": "a034684518",
+      "kind": "line",
+      "file": "voice/k-compare/more-3-10.mp3"
+    },
+    "k-compare/less-3-10": {
+      "text": "Which number is less, three or ten?",
+      "hash": "c805917092",
+      "kind": "line",
+      "file": "voice/k-compare/less-3-10.mp3"
+    },
+    "k-compare/more-4-1": {
+      "text": "Which number is more, four or one?",
+      "hash": "8992a9c77f",
+      "kind": "line",
+      "file": "voice/k-compare/more-4-1.mp3"
+    },
+    "k-compare/less-4-1": {
+      "text": "Which number is less, four or one?",
+      "hash": "eaaeb99b91",
+      "kind": "line",
+      "file": "voice/k-compare/less-4-1.mp3"
+    },
+    "k-compare/more-4-2": {
+      "text": "Which number is more, four or two?",
+      "hash": "5259542220",
+      "kind": "line",
+      "file": "voice/k-compare/more-4-2.mp3"
+    },
+    "k-compare/less-4-2": {
+      "text": "Which number is less, four or two?",
+      "hash": "f54e9e9238",
+      "kind": "line",
+      "file": "voice/k-compare/less-4-2.mp3"
+    },
+    "k-compare/more-4-3": {
+      "text": "Which number is more, four or three?",
+      "hash": "4e7b0dbddd",
+      "kind": "line",
+      "file": "voice/k-compare/more-4-3.mp3"
+    },
+    "k-compare/less-4-3": {
+      "text": "Which number is less, four or three?",
+      "hash": "f6a489bd74",
+      "kind": "line",
+      "file": "voice/k-compare/less-4-3.mp3"
+    },
+    "k-compare/more-4-5": {
+      "text": "Which number is more, four or five?",
+      "hash": "2156006bec",
+      "kind": "line",
+      "file": "voice/k-compare/more-4-5.mp3"
+    },
+    "k-compare/less-4-5": {
+      "text": "Which number is less, four or five?",
+      "hash": "1021016c1e",
+      "kind": "line",
+      "file": "voice/k-compare/less-4-5.mp3"
+    },
+    "k-compare/more-4-6": {
+      "text": "Which number is more, four or six?",
+      "hash": "be82f0fbb1",
+      "kind": "line",
+      "file": "voice/k-compare/more-4-6.mp3"
+    },
+    "k-compare/less-4-6": {
+      "text": "Which number is less, four or six?",
+      "hash": "e379f304cd",
+      "kind": "line",
+      "file": "voice/k-compare/less-4-6.mp3"
+    },
+    "k-compare/more-4-7": {
+      "text": "Which number is more, four or seven?",
+      "hash": "e11e51cce8",
+      "kind": "line",
+      "file": "voice/k-compare/more-4-7.mp3"
+    },
+    "k-compare/less-4-7": {
+      "text": "Which number is less, four or seven?",
+      "hash": "1f609b334a",
+      "kind": "line",
+      "file": "voice/k-compare/less-4-7.mp3"
+    },
+    "k-compare/more-4-8": {
+      "text": "Which number is more, four or eight?",
+      "hash": "2b521a032a",
+      "kind": "line",
+      "file": "voice/k-compare/more-4-8.mp3"
+    },
+    "k-compare/less-4-8": {
+      "text": "Which number is less, four or eight?",
+      "hash": "bca4737faa",
+      "kind": "line",
+      "file": "voice/k-compare/less-4-8.mp3"
+    },
+    "k-compare/more-4-9": {
+      "text": "Which number is more, four or nine?",
+      "hash": "be5085b56e",
+      "kind": "line",
+      "file": "voice/k-compare/more-4-9.mp3"
+    },
+    "k-compare/less-4-9": {
+      "text": "Which number is less, four or nine?",
+      "hash": "83538d610e",
+      "kind": "line",
+      "file": "voice/k-compare/less-4-9.mp3"
+    },
+    "k-compare/more-4-10": {
+      "text": "Which number is more, four or ten?",
+      "hash": "b2e8779762",
+      "kind": "line",
+      "file": "voice/k-compare/more-4-10.mp3"
+    },
+    "k-compare/less-4-10": {
+      "text": "Which number is less, four or ten?",
+      "hash": "1a28ef32f7",
+      "kind": "line",
+      "file": "voice/k-compare/less-4-10.mp3"
+    },
+    "k-compare/more-5-1": {
+      "text": "Which number is more, five or one?",
+      "hash": "bf177bb94e",
+      "kind": "line",
+      "file": "voice/k-compare/more-5-1.mp3"
+    },
+    "k-compare/less-5-1": {
+      "text": "Which number is less, five or one?",
+      "hash": "3271f6529a",
+      "kind": "line",
+      "file": "voice/k-compare/less-5-1.mp3"
+    },
+    "k-compare/more-5-2": {
+      "text": "Which number is more, five or two?",
+      "hash": "db3d5a1226",
+      "kind": "line",
+      "file": "voice/k-compare/more-5-2.mp3"
+    },
+    "k-compare/less-5-2": {
+      "text": "Which number is less, five or two?",
+      "hash": "f8fe03140e",
+      "kind": "line",
+      "file": "voice/k-compare/less-5-2.mp3"
+    },
+    "k-compare/more-5-3": {
+      "text": "Which number is more, five or three?",
+      "hash": "2de9496345",
+      "kind": "line",
+      "file": "voice/k-compare/more-5-3.mp3"
+    },
+    "k-compare/less-5-3": {
+      "text": "Which number is less, five or three?",
+      "hash": "a4cce8ef91",
+      "kind": "line",
+      "file": "voice/k-compare/less-5-3.mp3"
+    },
+    "k-compare/more-5-4": {
+      "text": "Which number is more, five or four?",
+      "hash": "d2436962fb",
+      "kind": "line",
+      "file": "voice/k-compare/more-5-4.mp3"
+    },
+    "k-compare/less-5-4": {
+      "text": "Which number is less, five or four?",
+      "hash": "cc84456242",
+      "kind": "line",
+      "file": "voice/k-compare/less-5-4.mp3"
+    },
+    "k-compare/more-5-6": {
+      "text": "Which number is more, five or six?",
+      "hash": "6c428ff590",
+      "kind": "line",
+      "file": "voice/k-compare/more-5-6.mp3"
+    },
+    "k-compare/less-5-6": {
+      "text": "Which number is less, five or six?",
+      "hash": "9f6e483976",
+      "kind": "line",
+      "file": "voice/k-compare/less-5-6.mp3"
+    },
+    "k-compare/more-5-7": {
+      "text": "Which number is more, five or seven?",
+      "hash": "36de91dd51",
+      "kind": "line",
+      "file": "voice/k-compare/more-5-7.mp3"
+    },
+    "k-compare/less-5-7": {
+      "text": "Which number is less, five or seven?",
+      "hash": "e9229ed6a6",
+      "kind": "line",
+      "file": "voice/k-compare/less-5-7.mp3"
+    },
+    "k-compare/more-5-8": {
+      "text": "Which number is more, five or eight?",
+      "hash": "095bfaeeb5",
+      "kind": "line",
+      "file": "voice/k-compare/more-5-8.mp3"
+    },
+    "k-compare/less-5-8": {
+      "text": "Which number is less, five or eight?",
+      "hash": "291de89ed1",
+      "kind": "line",
+      "file": "voice/k-compare/less-5-8.mp3"
+    },
+    "k-compare/more-5-9": {
+      "text": "Which number is more, five or nine?",
+      "hash": "ea822b7a50",
+      "kind": "line",
+      "file": "voice/k-compare/more-5-9.mp3"
+    },
+    "k-compare/less-5-9": {
+      "text": "Which number is less, five or nine?",
+      "hash": "3aec923d89",
+      "kind": "line",
+      "file": "voice/k-compare/less-5-9.mp3"
+    },
+    "k-compare/more-5-10": {
+      "text": "Which number is more, five or ten?",
+      "hash": "95a8e49edf",
+      "kind": "line",
+      "file": "voice/k-compare/more-5-10.mp3"
+    },
+    "k-compare/less-5-10": {
+      "text": "Which number is less, five or ten?",
+      "hash": "82c790babf",
+      "kind": "line",
+      "file": "voice/k-compare/less-5-10.mp3"
+    },
+    "k-compare/more-6-1": {
+      "text": "Which number is more, six or one?",
+      "hash": "3c882b42c1",
+      "kind": "line",
+      "file": "voice/k-compare/more-6-1.mp3"
+    },
+    "k-compare/less-6-1": {
+      "text": "Which number is less, six or one?",
+      "hash": "98dd3291b7",
+      "kind": "line",
+      "file": "voice/k-compare/less-6-1.mp3"
+    },
+    "k-compare/more-6-2": {
+      "text": "Which number is more, six or two?",
+      "hash": "20adbbd405",
+      "kind": "line",
+      "file": "voice/k-compare/more-6-2.mp3"
+    },
+    "k-compare/less-6-2": {
+      "text": "Which number is less, six or two?",
+      "hash": "b65a8d029a",
+      "kind": "line",
+      "file": "voice/k-compare/less-6-2.mp3"
+    },
+    "k-compare/more-6-3": {
+      "text": "Which number is more, six or three?",
+      "hash": "015040214b",
+      "kind": "line",
+      "file": "voice/k-compare/more-6-3.mp3"
+    },
+    "k-compare/less-6-3": {
+      "text": "Which number is less, six or three?",
+      "hash": "3cc5fdefbe",
+      "kind": "line",
+      "file": "voice/k-compare/less-6-3.mp3"
+    },
+    "k-compare/more-6-4": {
+      "text": "Which number is more, six or four?",
+      "hash": "f47f3916e8",
+      "kind": "line",
+      "file": "voice/k-compare/more-6-4.mp3"
+    },
+    "k-compare/less-6-4": {
+      "text": "Which number is less, six or four?",
+      "hash": "d6e00d710d",
+      "kind": "line",
+      "file": "voice/k-compare/less-6-4.mp3"
+    },
+    "k-compare/more-6-5": {
+      "text": "Which number is more, six or five?",
+      "hash": "62cd0b80bc",
+      "kind": "line",
+      "file": "voice/k-compare/more-6-5.mp3"
+    },
+    "k-compare/less-6-5": {
+      "text": "Which number is less, six or five?",
+      "hash": "7b7d49d22b",
+      "kind": "line",
+      "file": "voice/k-compare/less-6-5.mp3"
+    },
+    "k-compare/more-6-7": {
+      "text": "Which number is more, six or seven?",
+      "hash": "3f55edab6c",
+      "kind": "line",
+      "file": "voice/k-compare/more-6-7.mp3"
+    },
+    "k-compare/less-6-7": {
+      "text": "Which number is less, six or seven?",
+      "hash": "1e1369ea59",
+      "kind": "line",
+      "file": "voice/k-compare/less-6-7.mp3"
+    },
+    "k-compare/more-6-8": {
+      "text": "Which number is more, six or eight?",
+      "hash": "a1143f37f9",
+      "kind": "line",
+      "file": "voice/k-compare/more-6-8.mp3"
+    },
+    "k-compare/less-6-8": {
+      "text": "Which number is less, six or eight?",
+      "hash": "a1b65c9b26",
+      "kind": "line",
+      "file": "voice/k-compare/less-6-8.mp3"
+    },
+    "k-compare/more-6-9": {
+      "text": "Which number is more, six or nine?",
+      "hash": "03bb51e753",
+      "kind": "line",
+      "file": "voice/k-compare/more-6-9.mp3"
+    },
+    "k-compare/less-6-9": {
+      "text": "Which number is less, six or nine?",
+      "hash": "f94ead657a",
+      "kind": "line",
+      "file": "voice/k-compare/less-6-9.mp3"
+    },
+    "k-compare/more-6-10": {
+      "text": "Which number is more, six or ten?",
+      "hash": "af820c6e29",
+      "kind": "line",
+      "file": "voice/k-compare/more-6-10.mp3"
+    },
+    "k-compare/less-6-10": {
+      "text": "Which number is less, six or ten?",
+      "hash": "f32215296d",
+      "kind": "line",
+      "file": "voice/k-compare/less-6-10.mp3"
+    },
+    "k-compare/more-7-1": {
+      "text": "Which number is more, seven or one?",
+      "hash": "c388352933",
+      "kind": "line",
+      "file": "voice/k-compare/more-7-1.mp3"
+    },
+    "k-compare/less-7-1": {
+      "text": "Which number is less, seven or one?",
+      "hash": "c7ea5db261",
+      "kind": "line",
+      "file": "voice/k-compare/less-7-1.mp3"
+    },
+    "k-compare/more-7-2": {
+      "text": "Which number is more, seven or two?",
+      "hash": "11e57414fb",
+      "kind": "line",
+      "file": "voice/k-compare/more-7-2.mp3"
+    },
+    "k-compare/less-7-2": {
+      "text": "Which number is less, seven or two?",
+      "hash": "ed1b1cd800",
+      "kind": "line",
+      "file": "voice/k-compare/less-7-2.mp3"
+    },
+    "k-compare/more-7-3": {
+      "text": "Which number is more, seven or three?",
+      "hash": "69cfd6edfc",
+      "kind": "line",
+      "file": "voice/k-compare/more-7-3.mp3"
+    },
+    "k-compare/less-7-3": {
+      "text": "Which number is less, seven or three?",
+      "hash": "01df38c517",
+      "kind": "line",
+      "file": "voice/k-compare/less-7-3.mp3"
+    },
+    "k-compare/more-7-4": {
+      "text": "Which number is more, seven or four?",
+      "hash": "aec0c9ca7d",
+      "kind": "line",
+      "file": "voice/k-compare/more-7-4.mp3"
+    },
+    "k-compare/less-7-4": {
+      "text": "Which number is less, seven or four?",
+      "hash": "b9ffc34221",
+      "kind": "line",
+      "file": "voice/k-compare/less-7-4.mp3"
+    },
+    "k-compare/more-7-5": {
+      "text": "Which number is more, seven or five?",
+      "hash": "dd0fecfae0",
+      "kind": "line",
+      "file": "voice/k-compare/more-7-5.mp3"
+    },
+    "k-compare/less-7-5": {
+      "text": "Which number is less, seven or five?",
+      "hash": "ff0bcc64e6",
+      "kind": "line",
+      "file": "voice/k-compare/less-7-5.mp3"
+    },
+    "k-compare/more-7-6": {
+      "text": "Which number is more, seven or six?",
+      "hash": "6f062d521c",
+      "kind": "line",
+      "file": "voice/k-compare/more-7-6.mp3"
+    },
+    "k-compare/less-7-6": {
+      "text": "Which number is less, seven or six?",
+      "hash": "e107ed66e2",
+      "kind": "line",
+      "file": "voice/k-compare/less-7-6.mp3"
+    },
+    "k-compare/more-7-8": {
+      "text": "Which number is more, seven or eight?",
+      "hash": "820c2ae8d6",
+      "kind": "line",
+      "file": "voice/k-compare/more-7-8.mp3"
+    },
+    "k-compare/less-7-8": {
+      "text": "Which number is less, seven or eight?",
+      "hash": "e9e348b766",
+      "kind": "line",
+      "file": "voice/k-compare/less-7-8.mp3"
+    },
+    "k-compare/more-7-9": {
+      "text": "Which number is more, seven or nine?",
+      "hash": "a56e3f581e",
+      "kind": "line",
+      "file": "voice/k-compare/more-7-9.mp3"
+    },
+    "k-compare/less-7-9": {
+      "text": "Which number is less, seven or nine?",
+      "hash": "d0d53115b0",
+      "kind": "line",
+      "file": "voice/k-compare/less-7-9.mp3"
+    },
+    "k-compare/more-7-10": {
+      "text": "Which number is more, seven or ten?",
+      "hash": "d6d3ba93f9",
+      "kind": "line",
+      "file": "voice/k-compare/more-7-10.mp3"
+    },
+    "k-compare/less-7-10": {
+      "text": "Which number is less, seven or ten?",
+      "hash": "bd2173f129",
+      "kind": "line",
+      "file": "voice/k-compare/less-7-10.mp3"
+    },
+    "k-compare/more-8-1": {
+      "text": "Which number is more, eight or one?",
+      "hash": "fbd15c67cb",
+      "kind": "line",
+      "file": "voice/k-compare/more-8-1.mp3"
+    },
+    "k-compare/less-8-1": {
+      "text": "Which number is less, eight or one?",
+      "hash": "14272c852d",
+      "kind": "line",
+      "file": "voice/k-compare/less-8-1.mp3"
+    },
+    "k-compare/more-8-2": {
+      "text": "Which number is more, eight or two?",
+      "hash": "525c089b14",
+      "kind": "line",
+      "file": "voice/k-compare/more-8-2.mp3"
+    },
+    "k-compare/less-8-2": {
+      "text": "Which number is less, eight or two?",
+      "hash": "150d29ede1",
+      "kind": "line",
+      "file": "voice/k-compare/less-8-2.mp3"
+    },
+    "k-compare/more-8-3": {
+      "text": "Which number is more, eight or three?",
+      "hash": "70c6a966ad",
+      "kind": "line",
+      "file": "voice/k-compare/more-8-3.mp3"
+    },
+    "k-compare/less-8-3": {
+      "text": "Which number is less, eight or three?",
+      "hash": "f589172923",
+      "kind": "line",
+      "file": "voice/k-compare/less-8-3.mp3"
+    },
+    "k-compare/more-8-4": {
+      "text": "Which number is more, eight or four?",
+      "hash": "279bd6153f",
+      "kind": "line",
+      "file": "voice/k-compare/more-8-4.mp3"
+    },
+    "k-compare/less-8-4": {
+      "text": "Which number is less, eight or four?",
+      "hash": "a4ce0cae02",
+      "kind": "line",
+      "file": "voice/k-compare/less-8-4.mp3"
+    },
+    "k-compare/more-8-5": {
+      "text": "Which number is more, eight or five?",
+      "hash": "fb823c22c6",
+      "kind": "line",
+      "file": "voice/k-compare/more-8-5.mp3"
+    },
+    "k-compare/less-8-5": {
+      "text": "Which number is less, eight or five?",
+      "hash": "fb6facb642",
+      "kind": "line",
+      "file": "voice/k-compare/less-8-5.mp3"
+    },
+    "k-compare/more-8-6": {
+      "text": "Which number is more, eight or six?",
+      "hash": "f03c039e9c",
+      "kind": "line",
+      "file": "voice/k-compare/more-8-6.mp3"
+    },
+    "k-compare/less-8-6": {
+      "text": "Which number is less, eight or six?",
+      "hash": "b05d7c36f0",
+      "kind": "line",
+      "file": "voice/k-compare/less-8-6.mp3"
+    },
+    "k-compare/more-8-7": {
+      "text": "Which number is more, eight or seven?",
+      "hash": "f79874b57c",
+      "kind": "line",
+      "file": "voice/k-compare/more-8-7.mp3"
+    },
+    "k-compare/less-8-7": {
+      "text": "Which number is less, eight or seven?",
+      "hash": "98416078bd",
+      "kind": "line",
+      "file": "voice/k-compare/less-8-7.mp3"
+    },
+    "k-compare/more-8-9": {
+      "text": "Which number is more, eight or nine?",
+      "hash": "2f1bbc8a08",
+      "kind": "line",
+      "file": "voice/k-compare/more-8-9.mp3"
+    },
+    "k-compare/less-8-9": {
+      "text": "Which number is less, eight or nine?",
+      "hash": "02d080f72e",
+      "kind": "line",
+      "file": "voice/k-compare/less-8-9.mp3"
+    },
+    "k-compare/more-8-10": {
+      "text": "Which number is more, eight or ten?",
+      "hash": "9ab96a7217",
+      "kind": "line",
+      "file": "voice/k-compare/more-8-10.mp3"
+    },
+    "k-compare/less-8-10": {
+      "text": "Which number is less, eight or ten?",
+      "hash": "7488bb6190",
+      "kind": "line",
+      "file": "voice/k-compare/less-8-10.mp3"
+    },
+    "k-compare/more-9-1": {
+      "text": "Which number is more, nine or one?",
+      "hash": "3a2cd27b69",
+      "kind": "line",
+      "file": "voice/k-compare/more-9-1.mp3"
+    },
+    "k-compare/less-9-1": {
+      "text": "Which number is less, nine or one?",
+      "hash": "d291b3281a",
+      "kind": "line",
+      "file": "voice/k-compare/less-9-1.mp3"
+    },
+    "k-compare/more-9-2": {
+      "text": "Which number is more, nine or two?",
+      "hash": "54c8cc67ed",
+      "kind": "line",
+      "file": "voice/k-compare/more-9-2.mp3"
+    },
+    "k-compare/less-9-2": {
+      "text": "Which number is less, nine or two?",
+      "hash": "2b4a31c87e",
+      "kind": "line",
+      "file": "voice/k-compare/less-9-2.mp3"
+    },
+    "k-compare/more-9-3": {
+      "text": "Which number is more, nine or three?",
+      "hash": "0fa8f0507f",
+      "kind": "line",
+      "file": "voice/k-compare/more-9-3.mp3"
+    },
+    "k-compare/less-9-3": {
+      "text": "Which number is less, nine or three?",
+      "hash": "e6a14385ae",
+      "kind": "line",
+      "file": "voice/k-compare/less-9-3.mp3"
+    },
+    "k-compare/more-9-4": {
+      "text": "Which number is more, nine or four?",
+      "hash": "d8c349e905",
+      "kind": "line",
+      "file": "voice/k-compare/more-9-4.mp3"
+    },
+    "k-compare/less-9-4": {
+      "text": "Which number is less, nine or four?",
+      "hash": "a4a2e498a4",
+      "kind": "line",
+      "file": "voice/k-compare/less-9-4.mp3"
+    },
+    "k-compare/more-9-5": {
+      "text": "Which number is more, nine or five?",
+      "hash": "21ebe1ed51",
+      "kind": "line",
+      "file": "voice/k-compare/more-9-5.mp3"
+    },
+    "k-compare/less-9-5": {
+      "text": "Which number is less, nine or five?",
+      "hash": "6199d8b1dd",
+      "kind": "line",
+      "file": "voice/k-compare/less-9-5.mp3"
+    },
+    "k-compare/more-9-6": {
+      "text": "Which number is more, nine or six?",
+      "hash": "79bf1f98eb",
+      "kind": "line",
+      "file": "voice/k-compare/more-9-6.mp3"
+    },
+    "k-compare/less-9-6": {
+      "text": "Which number is less, nine or six?",
+      "hash": "2097ad6c69",
+      "kind": "line",
+      "file": "voice/k-compare/less-9-6.mp3"
+    },
+    "k-compare/more-9-7": {
+      "text": "Which number is more, nine or seven?",
+      "hash": "238696b9c4",
+      "kind": "line",
+      "file": "voice/k-compare/more-9-7.mp3"
+    },
+    "k-compare/less-9-7": {
+      "text": "Which number is less, nine or seven?",
+      "hash": "b34e65c801",
+      "kind": "line",
+      "file": "voice/k-compare/less-9-7.mp3"
+    },
+    "k-compare/more-9-8": {
+      "text": "Which number is more, nine or eight?",
+      "hash": "fe9183f631",
+      "kind": "line",
+      "file": "voice/k-compare/more-9-8.mp3"
+    },
+    "k-compare/less-9-8": {
+      "text": "Which number is less, nine or eight?",
+      "hash": "b7a43d081c",
+      "kind": "line",
+      "file": "voice/k-compare/less-9-8.mp3"
+    },
+    "k-compare/more-9-10": {
+      "text": "Which number is more, nine or ten?",
+      "hash": "e287800ef5",
+      "kind": "line",
+      "file": "voice/k-compare/more-9-10.mp3"
+    },
+    "k-compare/less-9-10": {
+      "text": "Which number is less, nine or ten?",
+      "hash": "f3a4663315",
+      "kind": "line",
+      "file": "voice/k-compare/less-9-10.mp3"
+    },
+    "k-compare/more-10-1": {
+      "text": "Which number is more, ten or one?",
+      "hash": "88a0cc47a7",
+      "kind": "line",
+      "file": "voice/k-compare/more-10-1.mp3"
+    },
+    "k-compare/less-10-1": {
+      "text": "Which number is less, ten or one?",
+      "hash": "df904f93e6",
+      "kind": "line",
+      "file": "voice/k-compare/less-10-1.mp3"
+    },
+    "k-compare/more-10-2": {
+      "text": "Which number is more, ten or two?",
+      "hash": "5c26fdc4f9",
+      "kind": "line",
+      "file": "voice/k-compare/more-10-2.mp3"
+    },
+    "k-compare/less-10-2": {
+      "text": "Which number is less, ten or two?",
+      "hash": "c9da9e6fdf",
+      "kind": "line",
+      "file": "voice/k-compare/less-10-2.mp3"
+    },
+    "k-compare/more-10-3": {
+      "text": "Which number is more, ten or three?",
+      "hash": "d4c684d0c1",
+      "kind": "line",
+      "file": "voice/k-compare/more-10-3.mp3"
+    },
+    "k-compare/less-10-3": {
+      "text": "Which number is less, ten or three?",
+      "hash": "a88f0836f0",
+      "kind": "line",
+      "file": "voice/k-compare/less-10-3.mp3"
+    },
+    "k-compare/more-10-4": {
+      "text": "Which number is more, ten or four?",
+      "hash": "f17fb0ad11",
+      "kind": "line",
+      "file": "voice/k-compare/more-10-4.mp3"
+    },
+    "k-compare/less-10-4": {
+      "text": "Which number is less, ten or four?",
+      "hash": "d2e22a9031",
+      "kind": "line",
+      "file": "voice/k-compare/less-10-4.mp3"
+    },
+    "k-compare/more-10-5": {
+      "text": "Which number is more, ten or five?",
+      "hash": "efe73be050",
+      "kind": "line",
+      "file": "voice/k-compare/more-10-5.mp3"
+    },
+    "k-compare/less-10-5": {
+      "text": "Which number is less, ten or five?",
+      "hash": "909da43e05",
+      "kind": "line",
+      "file": "voice/k-compare/less-10-5.mp3"
+    },
+    "k-compare/more-10-6": {
+      "text": "Which number is more, ten or six?",
+      "hash": "f6b48e68a7",
+      "kind": "line",
+      "file": "voice/k-compare/more-10-6.mp3"
+    },
+    "k-compare/less-10-6": {
+      "text": "Which number is less, ten or six?",
+      "hash": "14ce4a171b",
+      "kind": "line",
+      "file": "voice/k-compare/less-10-6.mp3"
+    },
+    "k-compare/more-10-7": {
+      "text": "Which number is more, ten or seven?",
+      "hash": "e3337d2cc3",
+      "kind": "line",
+      "file": "voice/k-compare/more-10-7.mp3"
+    },
+    "k-compare/less-10-7": {
+      "text": "Which number is less, ten or seven?",
+      "hash": "bc276f78bf",
+      "kind": "line",
+      "file": "voice/k-compare/less-10-7.mp3"
+    },
+    "k-compare/more-10-8": {
+      "text": "Which number is more, ten or eight?",
+      "hash": "1553f99104",
+      "kind": "line",
+      "file": "voice/k-compare/more-10-8.mp3"
+    },
+    "k-compare/less-10-8": {
+      "text": "Which number is less, ten or eight?",
+      "hash": "076e47a524",
+      "kind": "line",
+      "file": "voice/k-compare/less-10-8.mp3"
+    },
+    "k-compare/more-10-9": {
+      "text": "Which number is more, ten or nine?",
+      "hash": "742262f38a",
+      "kind": "line",
+      "file": "voice/k-compare/more-10-9.mp3"
+    },
+    "k-compare/less-10-9": {
+      "text": "Which number is less, ten or nine?",
+      "hash": "2d2690ea09",
+      "kind": "line",
+      "file": "voice/k-compare/less-10-9.mp3"
+    },
+    "k-compare/countEach": {
+      "text": "Let's count the dots on each one.",
+      "hash": "826e87b2ab",
+      "kind": "line",
+      "file": "voice/k-compare/countEach.mp3"
+    },
+    "k-compare/isLess-1-2": {
+      "text": "One is less than two.",
+      "hash": "c5d742c8c2",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-1-2.mp3"
+    },
+    "k-compare/isLess-1-3": {
+      "text": "One is less than three.",
+      "hash": "733b80114b",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-1-3.mp3"
+    },
+    "k-compare/isLess-1-4": {
+      "text": "One is less than four.",
+      "hash": "48f3be4dce",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-1-4.mp3"
+    },
+    "k-compare/isLess-1-5": {
+      "text": "One is less than five.",
+      "hash": "a1b11871cb",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-1-5.mp3"
+    },
+    "k-compare/isLess-1-6": {
+      "text": "One is less than six.",
+      "hash": "90f447bb93",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-1-6.mp3"
+    },
+    "k-compare/isLess-1-7": {
+      "text": "One is less than seven.",
+      "hash": "59aaba1361",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-1-7.mp3"
+    },
+    "k-compare/isLess-1-8": {
+      "text": "One is less than eight.",
+      "hash": "0636cf7567",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-1-8.mp3"
+    },
+    "k-compare/isLess-1-9": {
+      "text": "One is less than nine.",
+      "hash": "ede19dfea5",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-1-9.mp3"
+    },
+    "k-compare/isLess-1-10": {
+      "text": "One is less than ten.",
+      "hash": "800dc8d932",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-1-10.mp3"
+    },
+    "k-compare/isMore-2-1": {
+      "text": "Two is more than one.",
+      "hash": "8a308149b0",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-2-1.mp3"
+    },
+    "k-compare/isLess-2-3": {
+      "text": "Two is less than three.",
+      "hash": "45ac91782c",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-2-3.mp3"
+    },
+    "k-compare/isLess-2-4": {
+      "text": "Two is less than four.",
+      "hash": "ea37bd8e9e",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-2-4.mp3"
+    },
+    "k-compare/isLess-2-5": {
+      "text": "Two is less than five.",
+      "hash": "f8e6068c38",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-2-5.mp3"
+    },
+    "k-compare/isLess-2-6": {
+      "text": "Two is less than six.",
+      "hash": "0ffe297277",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-2-6.mp3"
+    },
+    "k-compare/isLess-2-7": {
+      "text": "Two is less than seven.",
+      "hash": "3c9c16e0c2",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-2-7.mp3"
+    },
+    "k-compare/isLess-2-8": {
+      "text": "Two is less than eight.",
+      "hash": "ccaccf44ce",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-2-8.mp3"
+    },
+    "k-compare/isLess-2-9": {
+      "text": "Two is less than nine.",
+      "hash": "c6a0aa2e57",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-2-9.mp3"
+    },
+    "k-compare/isLess-2-10": {
+      "text": "Two is less than ten.",
+      "hash": "3839fb4a41",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-2-10.mp3"
+    },
+    "k-compare/isMore-3-1": {
+      "text": "Three is more than one.",
+      "hash": "f852086633",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-3-1.mp3"
+    },
+    "k-compare/isMore-3-2": {
+      "text": "Three is more than two.",
+      "hash": "f334e9e9f0",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-3-2.mp3"
+    },
+    "k-compare/isLess-3-4": {
+      "text": "Three is less than four.",
+      "hash": "f82993c6e4",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-3-4.mp3"
+    },
+    "k-compare/isLess-3-5": {
+      "text": "Three is less than five.",
+      "hash": "da9acfe24a",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-3-5.mp3"
+    },
+    "k-compare/isLess-3-6": {
+      "text": "Three is less than six.",
+      "hash": "6daf485355",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-3-6.mp3"
+    },
+    "k-compare/isLess-3-7": {
+      "text": "Three is less than seven.",
+      "hash": "64df5d2a42",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-3-7.mp3"
+    },
+    "k-compare/isLess-3-8": {
+      "text": "Three is less than eight.",
+      "hash": "131bb6a329",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-3-8.mp3"
+    },
+    "k-compare/isLess-3-9": {
+      "text": "Three is less than nine.",
+      "hash": "47c887aa50",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-3-9.mp3"
+    },
+    "k-compare/isLess-3-10": {
+      "text": "Three is less than ten.",
+      "hash": "4198d6402b",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-3-10.mp3"
+    },
+    "k-compare/isMore-4-1": {
+      "text": "Four is more than one.",
+      "hash": "41ffb4c024",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-4-1.mp3"
+    },
+    "k-compare/isMore-4-2": {
+      "text": "Four is more than two.",
+      "hash": "f87c95e77d",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-4-2.mp3"
+    },
+    "k-compare/isMore-4-3": {
+      "text": "Four is more than three.",
+      "hash": "53d0518a83",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-4-3.mp3"
+    },
+    "k-compare/isLess-4-5": {
+      "text": "Four is less than five.",
+      "hash": "dbcd1cde39",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-4-5.mp3"
+    },
+    "k-compare/isLess-4-6": {
+      "text": "Four is less than six.",
+      "hash": "c2a93e4b74",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-4-6.mp3"
+    },
+    "k-compare/isLess-4-7": {
+      "text": "Four is less than seven.",
+      "hash": "778f8491ff",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-4-7.mp3"
+    },
+    "k-compare/isLess-4-8": {
+      "text": "Four is less than eight.",
+      "hash": "02f5fa50b7",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-4-8.mp3"
+    },
+    "k-compare/isLess-4-9": {
+      "text": "Four is less than nine.",
+      "hash": "7c01c39fbc",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-4-9.mp3"
+    },
+    "k-compare/isLess-4-10": {
+      "text": "Four is less than ten.",
+      "hash": "e7ecf07727",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-4-10.mp3"
+    },
+    "k-compare/isMore-5-1": {
+      "text": "Five is more than one.",
+      "hash": "0c6aa2b406",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-5-1.mp3"
+    },
+    "k-compare/isMore-5-2": {
+      "text": "Five is more than two.",
+      "hash": "77ea8cb5c0",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-5-2.mp3"
+    },
+    "k-compare/isMore-5-3": {
+      "text": "Five is more than three.",
+      "hash": "669d3886dc",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-5-3.mp3"
+    },
+    "k-compare/isMore-5-4": {
+      "text": "Five is more than four.",
+      "hash": "3720ec7c4a",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-5-4.mp3"
+    },
+    "k-compare/isLess-5-6": {
+      "text": "Five is less than six.",
+      "hash": "559c253d1f",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-5-6.mp3"
+    },
+    "k-compare/isLess-5-7": {
+      "text": "Five is less than seven.",
+      "hash": "2e9a421a2e",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-5-7.mp3"
+    },
+    "k-compare/isLess-5-8": {
+      "text": "Five is less than eight.",
+      "hash": "7008bcb03b",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-5-8.mp3"
+    },
+    "k-compare/isLess-5-9": {
+      "text": "Five is less than nine.",
+      "hash": "f81dd06189",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-5-9.mp3"
+    },
+    "k-compare/isLess-5-10": {
+      "text": "Five is less than ten.",
+      "hash": "e4dc7837af",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-5-10.mp3"
+    },
+    "k-compare/isMore-6-1": {
+      "text": "Six is more than one.",
+      "hash": "633edd831d",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-6-1.mp3"
+    },
+    "k-compare/isMore-6-2": {
+      "text": "Six is more than two.",
+      "hash": "9d92221e93",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-6-2.mp3"
+    },
+    "k-compare/isMore-6-3": {
+      "text": "Six is more than three.",
+      "hash": "b8a17306fc",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-6-3.mp3"
+    },
+    "k-compare/isMore-6-4": {
+      "text": "Six is more than four.",
+      "hash": "8bace60b89",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-6-4.mp3"
+    },
+    "k-compare/isMore-6-5": {
+      "text": "Six is more than five.",
+      "hash": "c8f414abf8",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-6-5.mp3"
+    },
+    "k-compare/isLess-6-7": {
+      "text": "Six is less than seven.",
+      "hash": "5b479e961c",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-6-7.mp3"
+    },
+    "k-compare/isLess-6-8": {
+      "text": "Six is less than eight.",
+      "hash": "273d5d818d",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-6-8.mp3"
+    },
+    "k-compare/isLess-6-9": {
+      "text": "Six is less than nine.",
+      "hash": "cc1b06b8a1",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-6-9.mp3"
+    },
+    "k-compare/isLess-6-10": {
+      "text": "Six is less than ten.",
+      "hash": "e1695cbf63",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-6-10.mp3"
+    },
+    "k-compare/isMore-7-1": {
+      "text": "Seven is more than one.",
+      "hash": "1e6bb43146",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-7-1.mp3"
+    },
+    "k-compare/isMore-7-2": {
+      "text": "Seven is more than two.",
+      "hash": "2619444c09",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-7-2.mp3"
+    },
+    "k-compare/isMore-7-3": {
+      "text": "Seven is more than three.",
+      "hash": "c2cecb317a",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-7-3.mp3"
+    },
+    "k-compare/isMore-7-4": {
+      "text": "Seven is more than four.",
+      "hash": "52f08152c9",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-7-4.mp3"
+    },
+    "k-compare/isMore-7-5": {
+      "text": "Seven is more than five.",
+      "hash": "a5ed211c73",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-7-5.mp3"
+    },
+    "k-compare/isMore-7-6": {
+      "text": "Seven is more than six.",
+      "hash": "209fedec6d",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-7-6.mp3"
+    },
+    "k-compare/isLess-7-8": {
+      "text": "Seven is less than eight.",
+      "hash": "1747de9aff",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-7-8.mp3"
+    },
+    "k-compare/isLess-7-9": {
+      "text": "Seven is less than nine.",
+      "hash": "d7f6790efd",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-7-9.mp3"
+    },
+    "k-compare/isLess-7-10": {
+      "text": "Seven is less than ten.",
+      "hash": "682b3d241b",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-7-10.mp3"
+    },
+    "k-compare/isMore-8-1": {
+      "text": "Eight is more than one.",
+      "hash": "6364913659",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-8-1.mp3"
+    },
+    "k-compare/isMore-8-2": {
+      "text": "Eight is more than two.",
+      "hash": "ae3222688c",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-8-2.mp3"
+    },
+    "k-compare/isMore-8-3": {
+      "text": "Eight is more than three.",
+      "hash": "2411a17b91",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-8-3.mp3"
+    },
+    "k-compare/isMore-8-4": {
+      "text": "Eight is more than four.",
+      "hash": "add3e6cc6d",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-8-4.mp3"
+    },
+    "k-compare/isMore-8-5": {
+      "text": "Eight is more than five.",
+      "hash": "b90fd63046",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-8-5.mp3"
+    },
+    "k-compare/isMore-8-6": {
+      "text": "Eight is more than six.",
+      "hash": "785fab3e95",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-8-6.mp3"
+    },
+    "k-compare/isMore-8-7": {
+      "text": "Eight is more than seven.",
+      "hash": "95da3c53e1",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-8-7.mp3"
+    },
+    "k-compare/isLess-8-9": {
+      "text": "Eight is less than nine.",
+      "hash": "3cb92dd19d",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-8-9.mp3"
+    },
+    "k-compare/isLess-8-10": {
+      "text": "Eight is less than ten.",
+      "hash": "ab439ab9c4",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-8-10.mp3"
+    },
+    "k-compare/isMore-9-1": {
+      "text": "Nine is more than one.",
+      "hash": "7446f7adca",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-9-1.mp3"
+    },
+    "k-compare/isMore-9-2": {
+      "text": "Nine is more than two.",
+      "hash": "bfba2b3363",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-9-2.mp3"
+    },
+    "k-compare/isMore-9-3": {
+      "text": "Nine is more than three.",
+      "hash": "19363b27a8",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-9-3.mp3"
+    },
+    "k-compare/isMore-9-4": {
+      "text": "Nine is more than four.",
+      "hash": "d3e7906b8e",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-9-4.mp3"
+    },
+    "k-compare/isMore-9-5": {
+      "text": "Nine is more than five.",
+      "hash": "312666b81b",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-9-5.mp3"
+    },
+    "k-compare/isMore-9-6": {
+      "text": "Nine is more than six.",
+      "hash": "9fecb8a429",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-9-6.mp3"
+    },
+    "k-compare/isMore-9-7": {
+      "text": "Nine is more than seven.",
+      "hash": "9bc6a41a32",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-9-7.mp3"
+    },
+    "k-compare/isMore-9-8": {
+      "text": "Nine is more than eight.",
+      "hash": "f7285c760a",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-9-8.mp3"
+    },
+    "k-compare/isLess-9-10": {
+      "text": "Nine is less than ten.",
+      "hash": "2ebe69aec6",
+      "kind": "line",
+      "file": "voice/k-compare/isLess-9-10.mp3"
+    },
+    "k-compare/isMore-10-1": {
+      "text": "Ten is more than one.",
+      "hash": "110707b6ba",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-10-1.mp3"
+    },
+    "k-compare/isMore-10-2": {
+      "text": "Ten is more than two.",
+      "hash": "15b89f1968",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-10-2.mp3"
+    },
+    "k-compare/isMore-10-3": {
+      "text": "Ten is more than three.",
+      "hash": "186d5b8032",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-10-3.mp3"
+    },
+    "k-compare/isMore-10-4": {
+      "text": "Ten is more than four.",
+      "hash": "44683010a4",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-10-4.mp3"
+    },
+    "k-compare/isMore-10-5": {
+      "text": "Ten is more than five.",
+      "hash": "e353f6bf89",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-10-5.mp3"
+    },
+    "k-compare/isMore-10-6": {
+      "text": "Ten is more than six.",
+      "hash": "a35e16a982",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-10-6.mp3"
+    },
+    "k-compare/isMore-10-7": {
+      "text": "Ten is more than seven.",
+      "hash": "fe832c0fe9",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-10-7.mp3"
+    },
+    "k-compare/isMore-10-8": {
+      "text": "Ten is more than eight.",
+      "hash": "113b7df467",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-10-8.mp3"
+    },
+    "k-compare/isMore-10-9": {
+      "text": "Ten is more than nine.",
+      "hash": "f49662059c",
+      "kind": "line",
+      "file": "voice/k-compare/isMore-10-9.mp3"
+    },
+    "k-compare/oneMore-1": {
+      "text": "Here is one dot. One more comes! How many now?",
+      "hash": "f2e85054cc",
+      "kind": "line",
+      "file": "voice/k-compare/oneMore-1.mp3"
+    },
+    "k-compare/oneMoreIs-1": {
+      "text": "One and one more is two.",
+      "hash": "13d76ba17e",
+      "kind": "line",
+      "file": "voice/k-compare/oneMoreIs-1.mp3"
+    },
+    "k-compare/oneMore-2": {
+      "text": "Here are two dots. One more comes! How many now?",
+      "hash": "c190b24390",
+      "kind": "line",
+      "file": "voice/k-compare/oneMore-2.mp3"
+    },
+    "k-compare/oneMoreIs-2": {
+      "text": "Two and one more is three.",
+      "hash": "ae1ef7b30b",
+      "kind": "line",
+      "file": "voice/k-compare/oneMoreIs-2.mp3"
+    },
+    "k-compare/oneMore-3": {
+      "text": "Here are three dots. One more comes! How many now?",
+      "hash": "765712b42c",
+      "kind": "line",
+      "file": "voice/k-compare/oneMore-3.mp3"
+    },
+    "k-compare/oneMoreIs-3": {
+      "text": "Three and one more is four.",
+      "hash": "65ee8e9d4c",
+      "kind": "line",
+      "file": "voice/k-compare/oneMoreIs-3.mp3"
+    },
+    "k-compare/oneMore-4": {
+      "text": "Here are four dots. One more comes! How many now?",
+      "hash": "81e341b4b3",
+      "kind": "line",
+      "file": "voice/k-compare/oneMore-4.mp3"
+    },
+    "k-compare/oneMoreIs-4": {
+      "text": "Four and one more is five.",
+      "hash": "f47974f765",
+      "kind": "line",
+      "file": "voice/k-compare/oneMoreIs-4.mp3"
+    },
+    "k-compare/oneMore-5": {
+      "text": "Here are five dots. One more comes! How many now?",
+      "hash": "d526134385",
+      "kind": "line",
+      "file": "voice/k-compare/oneMore-5.mp3"
+    },
+    "k-compare/oneMoreIs-5": {
+      "text": "Five and one more is six.",
+      "hash": "e01dc2d6a6",
+      "kind": "line",
+      "file": "voice/k-compare/oneMoreIs-5.mp3"
+    },
+    "k-compare/oneMore-6": {
+      "text": "Here are six dots. One more comes! How many now?",
+      "hash": "2ed29ee387",
+      "kind": "line",
+      "file": "voice/k-compare/oneMore-6.mp3"
+    },
+    "k-compare/oneMoreIs-6": {
+      "text": "Six and one more is seven.",
+      "hash": "d1201d1915",
+      "kind": "line",
+      "file": "voice/k-compare/oneMoreIs-6.mp3"
+    },
+    "k-compare/oneMore-7": {
+      "text": "Here are seven dots. One more comes! How many now?",
+      "hash": "7baa46975e",
+      "kind": "line",
+      "file": "voice/k-compare/oneMore-7.mp3"
+    },
+    "k-compare/oneMoreIs-7": {
+      "text": "Seven and one more is eight.",
+      "hash": "6c10c0e43d",
+      "kind": "line",
+      "file": "voice/k-compare/oneMoreIs-7.mp3"
+    },
+    "k-compare/oneMore-8": {
+      "text": "Here are eight dots. One more comes! How many now?",
+      "hash": "ff427de59a",
+      "kind": "line",
+      "file": "voice/k-compare/oneMore-8.mp3"
+    },
+    "k-compare/oneMoreIs-8": {
+      "text": "Eight and one more is nine.",
+      "hash": "38d572ff6b",
+      "kind": "line",
+      "file": "voice/k-compare/oneMoreIs-8.mp3"
+    },
+    "k-compare/oneMore-9": {
+      "text": "Here are nine dots. One more comes! How many now?",
+      "hash": "692f26f50b",
+      "kind": "line",
+      "file": "voice/k-compare/oneMore-9.mp3"
+    },
+    "k-compare/oneMoreIs-9": {
+      "text": "Nine and one more is ten.",
+      "hash": "55a7a7dd1e",
+      "kind": "line",
+      "file": "voice/k-compare/oneMoreIs-9.mp3"
+    },
+    "k-compare/oneLess-2": {
+      "text": "Here are two dots. One hops away! How many now?",
+      "hash": "fb57ab6831",
+      "kind": "line",
+      "file": "voice/k-compare/oneLess-2.mp3"
+    },
+    "k-compare/oneLessIs-2": {
+      "text": "Two, take away one, is one.",
+      "hash": "1829417d0b",
+      "kind": "line",
+      "file": "voice/k-compare/oneLessIs-2.mp3"
+    },
+    "k-compare/oneLess-3": {
+      "text": "Here are three dots. One hops away! How many now?",
+      "hash": "b217f67c09",
+      "kind": "line",
+      "file": "voice/k-compare/oneLess-3.mp3"
+    },
+    "k-compare/oneLessIs-3": {
+      "text": "Three, take away one, is two.",
+      "hash": "eefc4ee3a1",
+      "kind": "line",
+      "file": "voice/k-compare/oneLessIs-3.mp3"
+    },
+    "k-compare/oneLess-4": {
+      "text": "Here are four dots. One hops away! How many now?",
+      "hash": "801d46765b",
+      "kind": "line",
+      "file": "voice/k-compare/oneLess-4.mp3"
+    },
+    "k-compare/oneLessIs-4": {
+      "text": "Four, take away one, is three.",
+      "hash": "763bafd50f",
+      "kind": "line",
+      "file": "voice/k-compare/oneLessIs-4.mp3"
+    },
+    "k-compare/oneLess-5": {
+      "text": "Here are five dots. One hops away! How many now?",
+      "hash": "8adfb39909",
+      "kind": "line",
+      "file": "voice/k-compare/oneLess-5.mp3"
+    },
+    "k-compare/oneLessIs-5": {
+      "text": "Five, take away one, is four.",
+      "hash": "f00934dfd7",
+      "kind": "line",
+      "file": "voice/k-compare/oneLessIs-5.mp3"
+    },
+    "k-compare/oneLess-6": {
+      "text": "Here are six dots. One hops away! How many now?",
+      "hash": "b6a89db468",
+      "kind": "line",
+      "file": "voice/k-compare/oneLess-6.mp3"
+    },
+    "k-compare/oneLessIs-6": {
+      "text": "Six, take away one, is five.",
+      "hash": "045eef71b0",
+      "kind": "line",
+      "file": "voice/k-compare/oneLessIs-6.mp3"
+    },
+    "k-compare/oneLess-7": {
+      "text": "Here are seven dots. One hops away! How many now?",
+      "hash": "0cbd76484e",
+      "kind": "line",
+      "file": "voice/k-compare/oneLess-7.mp3"
+    },
+    "k-compare/oneLessIs-7": {
+      "text": "Seven, take away one, is six.",
+      "hash": "2a8a2d5ccd",
+      "kind": "line",
+      "file": "voice/k-compare/oneLessIs-7.mp3"
+    },
+    "k-compare/oneLess-8": {
+      "text": "Here are eight dots. One hops away! How many now?",
+      "hash": "eda9806639",
+      "kind": "line",
+      "file": "voice/k-compare/oneLess-8.mp3"
+    },
+    "k-compare/oneLessIs-8": {
+      "text": "Eight, take away one, is seven.",
+      "hash": "4840162ee4",
+      "kind": "line",
+      "file": "voice/k-compare/oneLessIs-8.mp3"
+    },
+    "k-compare/oneLess-9": {
+      "text": "Here are nine dots. One hops away! How many now?",
+      "hash": "22e186ffb7",
+      "kind": "line",
+      "file": "voice/k-compare/oneLess-9.mp3"
+    },
+    "k-compare/oneLessIs-9": {
+      "text": "Nine, take away one, is eight.",
+      "hash": "0952cce88d",
+      "kind": "line",
+      "file": "voice/k-compare/oneLessIs-9.mp3"
+    },
+    "k-compare/oneLess-10": {
+      "text": "Here are ten dots. One hops away! How many now?",
+      "hash": "a2cd0df2a6",
+      "kind": "line",
+      "file": "voice/k-compare/oneLess-10.mp3"
+    },
+    "k-compare/oneLessIs-10": {
+      "text": "Ten, take away one, is nine.",
+      "hash": "d7da318241",
+      "kind": "line",
+      "file": "voice/k-compare/oneLessIs-10.mp3"
+    },
+    "k-compare/orderAsk": {
+      "text": "Put the numbers in order! Tap the smallest number first.",
+      "hash": "4aa89bc83b",
+      "kind": "line",
+      "file": "voice/k-compare/orderAsk.mp3"
+    },
+    "k-compare/orderNext": {
+      "text": "Which number comes next? Tap it!",
+      "hash": "8f44327b78",
+      "kind": "line",
+      "file": "voice/k-compare/orderNext.mp3"
+    },
+    "k-compare/orderHelp": {
+      "text": "Let's count them in order.",
+      "hash": "32ef23f078",
+      "kind": "line",
+      "file": "voice/k-compare/orderHelp.mp3"
+    },
+    "k-compare/greatMatching": {
+      "text": "Great matching!",
+      "hash": "aee5713496",
+      "kind": "line",
+      "file": "voice/k-compare/greatMatching.mp3"
+    },
+    "k-compare/inOrder": {
+      "text": "You put them in order!",
+      "hash": "8a2f36bccd",
+      "kind": "line",
+      "file": "voice/k-compare/inOrder.mp3"
+    },
     "k-lessons/kShapes-circle": {
       "text": "Which shape has three sides? Tap it!",
       "hash": "fb0742ac07",
@@ -3373,6 +5785,66 @@
       "kind": "line",
       "file": "voice/k-nav/stage-k-story-1.mp3"
     },
+    "k-nav/name-division-dunes": {
+      "text": "Number Dunes!",
+      "hash": "7ac42913fc",
+      "kind": "line",
+      "file": "voice/k-nav/name-division-dunes.mp3"
+    },
+    "k-nav/welcome-division-dunes": {
+      "text": "Number Dunes! Tap a star to play!",
+      "hash": "c2140527fc",
+      "kind": "line",
+      "file": "voice/k-nav/welcome-division-dunes.mp3"
+    },
+    "k-nav/stage-k-dunes-1": {
+      "text": "Line them up!",
+      "hash": "c3036e499c",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-dunes-1.mp3"
+    },
+    "k-nav/stage-k-dunes-2": {
+      "text": "Which is more?",
+      "hash": "1665188904",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-dunes-2.mp3"
+    },
+    "k-nav/stage-k-dunes-3": {
+      "text": "Numbers in order!",
+      "hash": "ff3f748fd9",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-dunes-3.mp3"
+    },
+    "k-nav/name-place-value-plateau": {
+      "text": "Ten Frame Plateau!",
+      "hash": "67edeccd0c",
+      "kind": "line",
+      "file": "voice/k-nav/name-place-value-plateau.mp3"
+    },
+    "k-nav/welcome-place-value-plateau": {
+      "text": "Ten Frame Plateau! Tap a star to play!",
+      "hash": "f07d11b738",
+      "kind": "line",
+      "file": "voice/k-nav/welcome-place-value-plateau.mp3"
+    },
+    "k-nav/stage-k-teens-1": {
+      "text": "Ten and more!",
+      "hash": "264b28c8ca",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-teens-1.mp3"
+    },
+    "k-nav/stage-k-teens-2": {
+      "text": "Fill the frames!",
+      "hash": "a4bd8567d3",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-teens-2.mp3"
+    },
+    "k-nav/stage-k-teens-3": {
+      "text": "Count to twenty!",
+      "hash": "0b4f33ebd4",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-teens-3.mp3"
+    },
     "k-rhymes/youHearRhyme": {
       "text": "You can hear the rhyme!",
       "hash": "bf6b701bbe",
@@ -5814,6 +8286,474 @@
       "hash": "ee840719a6",
       "kind": "line",
       "file": "voice/k-stories/popcorn-3.mp3"
+    },
+    "k-teens/tenAnd-1": {
+      "text": "A full ten and one more. How many dots?",
+      "hash": "1648c6abf5",
+      "kind": "line",
+      "file": "voice/k-teens/tenAnd-1.mp3"
+    },
+    "k-teens/tenAnd-2": {
+      "text": "A full ten and two more. How many dots?",
+      "hash": "f367b2c9fb",
+      "kind": "line",
+      "file": "voice/k-teens/tenAnd-2.mp3"
+    },
+    "k-teens/tenAnd-3": {
+      "text": "A full ten and three more. How many dots?",
+      "hash": "869eac01dc",
+      "kind": "line",
+      "file": "voice/k-teens/tenAnd-3.mp3"
+    },
+    "k-teens/tenAnd-4": {
+      "text": "A full ten and four more. How many dots?",
+      "hash": "bb92959357",
+      "kind": "line",
+      "file": "voice/k-teens/tenAnd-4.mp3"
+    },
+    "k-teens/tenAnd-5": {
+      "text": "A full ten and five more. How many dots?",
+      "hash": "7a025e20d3",
+      "kind": "line",
+      "file": "voice/k-teens/tenAnd-5.mp3"
+    },
+    "k-teens/tenAnd-6": {
+      "text": "A full ten and six more. How many dots?",
+      "hash": "243093de3f",
+      "kind": "line",
+      "file": "voice/k-teens/tenAnd-6.mp3"
+    },
+    "k-teens/tenAnd-7": {
+      "text": "A full ten and seven more. How many dots?",
+      "hash": "e2a6872cfb",
+      "kind": "line",
+      "file": "voice/k-teens/tenAnd-7.mp3"
+    },
+    "k-teens/tenAnd-8": {
+      "text": "A full ten and eight more. How many dots?",
+      "hash": "1900182386",
+      "kind": "line",
+      "file": "voice/k-teens/tenAnd-8.mp3"
+    },
+    "k-teens/tenAnd-9": {
+      "text": "A full ten and nine more. How many dots?",
+      "hash": "cef569d554",
+      "kind": "line",
+      "file": "voice/k-teens/tenAnd-9.mp3"
+    },
+    "k-teens/twoTens": {
+      "text": "Two full tens. How many dots?",
+      "hash": "81da549f0c",
+      "kind": "line",
+      "file": "voice/k-teens/twoTens.mp3"
+    },
+    "k-teens/howManyDots": {
+      "text": "How many dots? Tap the number.",
+      "hash": "0c1d23987d",
+      "kind": "line",
+      "file": "voice/k-teens/howManyDots.mp3"
+    },
+    "k-teens/shows-11": {
+      "text": "Which one shows eleven?",
+      "hash": "b61c8e3b02",
+      "kind": "line",
+      "file": "voice/k-teens/shows-11.mp3"
+    },
+    "k-teens/shows-12": {
+      "text": "Which one shows twelve?",
+      "hash": "c745577d22",
+      "kind": "line",
+      "file": "voice/k-teens/shows-12.mp3"
+    },
+    "k-teens/shows-13": {
+      "text": "Which one shows thirteen?",
+      "hash": "1cd18b78cc",
+      "kind": "line",
+      "file": "voice/k-teens/shows-13.mp3"
+    },
+    "k-teens/shows-14": {
+      "text": "Which one shows fourteen?",
+      "hash": "3e0a3f8e5c",
+      "kind": "line",
+      "file": "voice/k-teens/shows-14.mp3"
+    },
+    "k-teens/shows-15": {
+      "text": "Which one shows fifteen?",
+      "hash": "af5127c98f",
+      "kind": "line",
+      "file": "voice/k-teens/shows-15.mp3"
+    },
+    "k-teens/shows-16": {
+      "text": "Which one shows sixteen?",
+      "hash": "1afc724df3",
+      "kind": "line",
+      "file": "voice/k-teens/shows-16.mp3"
+    },
+    "k-teens/shows-17": {
+      "text": "Which one shows seventeen?",
+      "hash": "e20404532b",
+      "kind": "line",
+      "file": "voice/k-teens/shows-17.mp3"
+    },
+    "k-teens/shows-18": {
+      "text": "Which one shows eighteen?",
+      "hash": "5c0d1ab195",
+      "kind": "line",
+      "file": "voice/k-teens/shows-18.mp3"
+    },
+    "k-teens/shows-19": {
+      "text": "Which one shows nineteen?",
+      "hash": "3f0d0b2ce2",
+      "kind": "line",
+      "file": "voice/k-teens/shows-19.mp3"
+    },
+    "k-teens/shows-20": {
+      "text": "Which one shows twenty?",
+      "hash": "d82533f4e1",
+      "kind": "line",
+      "file": "voice/k-teens/shows-20.mp3"
+    },
+    "k-teens/make-11": {
+      "text": "Make eleven: a full ten and one more! Then tap the check.",
+      "hash": "828c7be1d3",
+      "kind": "line",
+      "file": "voice/k-teens/make-11.mp3"
+    },
+    "k-teens/makeJust-11": {
+      "text": "Make eleven! Then tap the check.",
+      "hash": "456650f0cc",
+      "kind": "line",
+      "file": "voice/k-teens/makeJust-11.mp3"
+    },
+    "k-teens/make-12": {
+      "text": "Make twelve: a full ten and two more! Then tap the check.",
+      "hash": "7438394333",
+      "kind": "line",
+      "file": "voice/k-teens/make-12.mp3"
+    },
+    "k-teens/makeJust-12": {
+      "text": "Make twelve! Then tap the check.",
+      "hash": "372148901d",
+      "kind": "line",
+      "file": "voice/k-teens/makeJust-12.mp3"
+    },
+    "k-teens/make-13": {
+      "text": "Make thirteen: a full ten and three more! Then tap the check.",
+      "hash": "c71e1b7232",
+      "kind": "line",
+      "file": "voice/k-teens/make-13.mp3"
+    },
+    "k-teens/makeJust-13": {
+      "text": "Make thirteen! Then tap the check.",
+      "hash": "299a5b7f9e",
+      "kind": "line",
+      "file": "voice/k-teens/makeJust-13.mp3"
+    },
+    "k-teens/make-14": {
+      "text": "Make fourteen: a full ten and four more! Then tap the check.",
+      "hash": "f25c8261f2",
+      "kind": "line",
+      "file": "voice/k-teens/make-14.mp3"
+    },
+    "k-teens/makeJust-14": {
+      "text": "Make fourteen! Then tap the check.",
+      "hash": "94ecb77538",
+      "kind": "line",
+      "file": "voice/k-teens/makeJust-14.mp3"
+    },
+    "k-teens/make-15": {
+      "text": "Make fifteen: a full ten and five more! Then tap the check.",
+      "hash": "3974cd492e",
+      "kind": "line",
+      "file": "voice/k-teens/make-15.mp3"
+    },
+    "k-teens/makeJust-15": {
+      "text": "Make fifteen! Then tap the check.",
+      "hash": "1b00fea80c",
+      "kind": "line",
+      "file": "voice/k-teens/makeJust-15.mp3"
+    },
+    "k-teens/make-16": {
+      "text": "Make sixteen: a full ten and six more! Then tap the check.",
+      "hash": "b5f2d092d3",
+      "kind": "line",
+      "file": "voice/k-teens/make-16.mp3"
+    },
+    "k-teens/makeJust-16": {
+      "text": "Make sixteen! Then tap the check.",
+      "hash": "a8383b7405",
+      "kind": "line",
+      "file": "voice/k-teens/makeJust-16.mp3"
+    },
+    "k-teens/make-17": {
+      "text": "Make seventeen: a full ten and seven more! Then tap the check.",
+      "hash": "5d88f1427c",
+      "kind": "line",
+      "file": "voice/k-teens/make-17.mp3"
+    },
+    "k-teens/makeJust-17": {
+      "text": "Make seventeen! Then tap the check.",
+      "hash": "62410584db",
+      "kind": "line",
+      "file": "voice/k-teens/makeJust-17.mp3"
+    },
+    "k-teens/make-18": {
+      "text": "Make eighteen: a full ten and eight more! Then tap the check.",
+      "hash": "60638a230a",
+      "kind": "line",
+      "file": "voice/k-teens/make-18.mp3"
+    },
+    "k-teens/makeJust-18": {
+      "text": "Make eighteen! Then tap the check.",
+      "hash": "3e351fca92",
+      "kind": "line",
+      "file": "voice/k-teens/makeJust-18.mp3"
+    },
+    "k-teens/make-19": {
+      "text": "Make nineteen: a full ten and nine more! Then tap the check.",
+      "hash": "1371eef4c8",
+      "kind": "line",
+      "file": "voice/k-teens/make-19.mp3"
+    },
+    "k-teens/makeJust-19": {
+      "text": "Make nineteen! Then tap the check.",
+      "hash": "1164d11cd7",
+      "kind": "line",
+      "file": "voice/k-teens/makeJust-19.mp3"
+    },
+    "k-teens/make-20": {
+      "text": "Make twenty: two full tens! Then tap the check.",
+      "hash": "89bec389d5",
+      "kind": "line",
+      "file": "voice/k-teens/make-20.mp3"
+    },
+    "k-teens/makeJust-20": {
+      "text": "Make twenty! Then tap the check.",
+      "hash": "f25f6366b9",
+      "kind": "line",
+      "file": "voice/k-teens/makeJust-20.mp3"
+    },
+    "k-teens/next-6": {
+      "text": "Six, seven, eight. What comes next?",
+      "hash": "f87159d9b4",
+      "kind": "line",
+      "file": "voice/k-teens/next-6.mp3"
+    },
+    "k-teens/next-7": {
+      "text": "Seven, eight, nine. What comes next?",
+      "hash": "14aeb7d4fe",
+      "kind": "line",
+      "file": "voice/k-teens/next-7.mp3"
+    },
+    "k-teens/next-8": {
+      "text": "Eight, nine, ten. What comes next?",
+      "hash": "42b7e7378e",
+      "kind": "line",
+      "file": "voice/k-teens/next-8.mp3"
+    },
+    "k-teens/next-9": {
+      "text": "Nine, ten, eleven. What comes next?",
+      "hash": "7f628da773",
+      "kind": "line",
+      "file": "voice/k-teens/next-9.mp3"
+    },
+    "k-teens/next-10": {
+      "text": "Ten, eleven, twelve. What comes next?",
+      "hash": "fd6f589b24",
+      "kind": "line",
+      "file": "voice/k-teens/next-10.mp3"
+    },
+    "k-teens/next-11": {
+      "text": "Eleven, twelve, thirteen. What comes next?",
+      "hash": "c2de4214c2",
+      "kind": "line",
+      "file": "voice/k-teens/next-11.mp3"
+    },
+    "k-teens/next-12": {
+      "text": "Twelve, thirteen, fourteen. What comes next?",
+      "hash": "8b59942f69",
+      "kind": "line",
+      "file": "voice/k-teens/next-12.mp3"
+    },
+    "k-teens/next-13": {
+      "text": "Thirteen, fourteen, fifteen. What comes next?",
+      "hash": "a5b52be6ff",
+      "kind": "line",
+      "file": "voice/k-teens/next-13.mp3"
+    },
+    "k-teens/next-14": {
+      "text": "Fourteen, fifteen, sixteen. What comes next?",
+      "hash": "a87dd632e8",
+      "kind": "line",
+      "file": "voice/k-teens/next-14.mp3"
+    },
+    "k-teens/next-15": {
+      "text": "Fifteen, sixteen, seventeen. What comes next?",
+      "hash": "5b89f6b392",
+      "kind": "line",
+      "file": "voice/k-teens/next-15.mp3"
+    },
+    "k-teens/next-16": {
+      "text": "Sixteen, seventeen, eighteen. What comes next?",
+      "hash": "77d2d8dc56",
+      "kind": "line",
+      "file": "voice/k-teens/next-16.mp3"
+    },
+    "k-teens/next-17": {
+      "text": "Seventeen, eighteen, nineteen. What comes next?",
+      "hash": "2e0fc760f1",
+      "kind": "line",
+      "file": "voice/k-teens/next-17.mp3"
+    },
+    "k-teens/fullTen": {
+      "text": "A full ten!",
+      "hash": "a7553423b9",
+      "kind": "line",
+      "file": "voice/k-teens/fullTen.mp3"
+    },
+    "k-teens/fillTen": {
+      "text": "Let's fill a full ten.",
+      "hash": "b6cdbae05b",
+      "kind": "line",
+      "file": "voice/k-teens/fillTen.mp3"
+    },
+    "k-teens/is-10": {
+      "text": "A full ten: ten!",
+      "hash": "31b5063d52",
+      "kind": "line",
+      "file": "voice/k-teens/is-10.mp3"
+    },
+    "k-teens/is-11": {
+      "text": "Ten and one more: eleven.",
+      "hash": "bd617f9a3d",
+      "kind": "line",
+      "file": "voice/k-teens/is-11.mp3"
+    },
+    "k-teens/is-12": {
+      "text": "Ten and two more: twelve.",
+      "hash": "da003ff082",
+      "kind": "line",
+      "file": "voice/k-teens/is-12.mp3"
+    },
+    "k-teens/is-13": {
+      "text": "Ten and three more: thirteen.",
+      "hash": "b20967bca4",
+      "kind": "line",
+      "file": "voice/k-teens/is-13.mp3"
+    },
+    "k-teens/is-14": {
+      "text": "Ten and four more: fourteen.",
+      "hash": "bd529c678c",
+      "kind": "line",
+      "file": "voice/k-teens/is-14.mp3"
+    },
+    "k-teens/is-15": {
+      "text": "Ten and five more: fifteen.",
+      "hash": "7d3a6bfea3",
+      "kind": "line",
+      "file": "voice/k-teens/is-15.mp3"
+    },
+    "k-teens/is-16": {
+      "text": "Ten and six more: sixteen.",
+      "hash": "bdafb9f26d",
+      "kind": "line",
+      "file": "voice/k-teens/is-16.mp3"
+    },
+    "k-teens/is-17": {
+      "text": "Ten and seven more: seventeen.",
+      "hash": "84d3a9cb83",
+      "kind": "line",
+      "file": "voice/k-teens/is-17.mp3"
+    },
+    "k-teens/is-18": {
+      "text": "Ten and eight more: eighteen.",
+      "hash": "0881c7701f",
+      "kind": "line",
+      "file": "voice/k-teens/is-18.mp3"
+    },
+    "k-teens/is-19": {
+      "text": "Ten and nine more: nineteen.",
+      "hash": "ca2bda2a68",
+      "kind": "line",
+      "file": "voice/k-teens/is-19.mp3"
+    },
+    "k-teens/is-20": {
+      "text": "Two full tens: twenty!",
+      "hash": "0eeeef71f0",
+      "kind": "line",
+      "file": "voice/k-teens/is-20.mp3"
+    },
+    "k-teens/onlyOnes-1": {
+      "text": "That's only one. There's no full ten!",
+      "hash": "49c975f13d",
+      "kind": "line",
+      "file": "voice/k-teens/onlyOnes-1.mp3"
+    },
+    "k-teens/onlyOnes-2": {
+      "text": "That's only two. There's no full ten!",
+      "hash": "49de0cb4a1",
+      "kind": "line",
+      "file": "voice/k-teens/onlyOnes-2.mp3"
+    },
+    "k-teens/onlyOnes-3": {
+      "text": "That's only three. There's no full ten!",
+      "hash": "75dffc1633",
+      "kind": "line",
+      "file": "voice/k-teens/onlyOnes-3.mp3"
+    },
+    "k-teens/onlyOnes-4": {
+      "text": "That's only four. There's no full ten!",
+      "hash": "c428cebcca",
+      "kind": "line",
+      "file": "voice/k-teens/onlyOnes-4.mp3"
+    },
+    "k-teens/onlyOnes-5": {
+      "text": "That's only five. There's no full ten!",
+      "hash": "6666b5ae53",
+      "kind": "line",
+      "file": "voice/k-teens/onlyOnes-5.mp3"
+    },
+    "k-teens/onlyOnes-6": {
+      "text": "That's only six. There's no full ten!",
+      "hash": "777d5660ff",
+      "kind": "line",
+      "file": "voice/k-teens/onlyOnes-6.mp3"
+    },
+    "k-teens/onlyOnes-7": {
+      "text": "That's only seven. There's no full ten!",
+      "hash": "ee8d270060",
+      "kind": "line",
+      "file": "voice/k-teens/onlyOnes-7.mp3"
+    },
+    "k-teens/onlyOnes-8": {
+      "text": "That's only eight. There's no full ten!",
+      "hash": "c647861dd5",
+      "kind": "line",
+      "file": "voice/k-teens/onlyOnes-8.mp3"
+    },
+    "k-teens/onlyOnes-9": {
+      "text": "That's only nine. There's no full ten!",
+      "hash": "4cf46e2a1c",
+      "kind": "line",
+      "file": "voice/k-teens/onlyOnes-9.mp3"
+    },
+    "k-teens/countOn": {
+      "text": "Let's count on.",
+      "hash": "274d88d1ca",
+      "kind": "line",
+      "file": "voice/k-teens/countOn.mp3"
+    },
+    "k-teens/youKnowTens": {
+      "text": "You know your tens!",
+      "hash": "dbfbc91665",
+      "kind": "line",
+      "file": "voice/k-teens/youKnowTens.mp3"
+    },
+    "k-teens/bigCounting": {
+      "text": "Wow, big counting!",
+      "hash": "5120124c3e",
+      "kind": "line",
+      "file": "voice/k-teens/bigCounting.mp3"
     },
     "k-trace/warm-down": {
       "text": "Let's trace a big line down!",

@@ -65,6 +65,15 @@ export const SKILLS: Record<string, SkillMeta> = {
   'k-trace-numbers': { label: 'writing numbers', zoneId: 'writing-workshop', lessonId: 'kTracing', practiceStageId: 'k-trace-2' },
   'k-trace-letters': { label: 'writing capital letters', zoneId: 'writing-workshop', lessonId: 'kTracing', practiceStageId: 'k-trace-3' },
   'k-story-order':   { label: 'telling a story in order', zoneId: 'writing-workshop', lessonId: 'kTracing', practiceStageId: 'k-story-1' },
+  // Number Dunes (K, phase 2a; lesson kCompare)
+  'k-match':           { label: 'matching: more, fewer and the same', zoneId: 'division-dunes', lessonId: 'kCompare', practiceStageId: 'k-dunes-1' },
+  'k-compare-numbers': { label: 'comparing numbers to 10', zoneId: 'division-dunes', lessonId: 'kCompare', practiceStageId: 'k-dunes-2' },
+  'k-one-more':        { label: 'one more and one less', zoneId: 'division-dunes', lessonId: 'kCompare', practiceStageId: 'k-dunes-2' },
+  'k-number-order':    { label: 'putting numbers in order', zoneId: 'division-dunes', lessonId: 'kCompare', practiceStageId: 'k-dunes-3' },
+  // Ten Frame Plateau (K, phase 2a; lesson kTeens)
+  'k-teens':       { label: 'teen numbers: ten and some more', zoneId: 'place-value-plateau', lessonId: 'kTeens', practiceStageId: 'k-teens-1' },
+  'k-teens-build': { label: 'making teen numbers', zoneId: 'place-value-plateau', lessonId: 'kTeens', practiceStageId: 'k-teens-2' },
+  'k-count-20':    { label: 'counting on to 20', zoneId: 'place-value-plateau', lessonId: 'kTeens', practiceStageId: 'k-teens-3' },
 }
 
 export interface Skill { id: string; label: string }

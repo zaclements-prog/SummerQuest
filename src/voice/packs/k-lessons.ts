@@ -4,6 +4,8 @@ import { kShapesLesson } from '../../tutoring/lessons/kShapes'
 import { kLettersLesson } from '../../tutoring/lessons/kLetters'
 import { kRhymesLesson } from '../../tutoring/lessons/kRhymes'
 import { kTracingLesson } from '../../tutoring/lessons/kTracing'
+import { kCompareLesson } from '../../tutoring/lessons/kCompare'
+import { kTeensLesson } from '../../tutoring/lessons/kTeens'
 import { K_LESSON_PACK } from '../../tutoring/lessons/k1Voice'
 
 /**
@@ -16,7 +18,16 @@ import { K_LESSON_PACK } from '../../tutoring/lessons/k1Voice'
  * - the lesson-complete line.
  */
 const asked: Record<string, string> = {}
-for (const lesson of [kCountingLesson, kShapesLesson, kLettersLesson, kRhymesLesson, kTracingLesson]) {
+for (const lesson of [
+  kCountingLesson,
+  kShapesLesson,
+  kLettersLesson,
+  kRhymesLesson,
+  kTracingLesson,
+  // K complete (phase 2a)
+  kCompareLesson,
+  kTeensLesson,
+]) {
   for (const step of lesson.steps) {
     const ref = step.check?.speech
     if (ref && 'line' in ref && ref.line.startsWith(`${K_LESSON_PACK}/`)) asked[ref.line.slice(K_LESSON_PACK.length + 1)] = step.check!.question

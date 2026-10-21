@@ -18,6 +18,8 @@ import { isSolidShape, shapeSides } from '../../../games/listenPlay/shapeGeometr
 import { glyph } from '../../trace/glyphs'
 import { isTraceSpec } from '../../trace/spec'
 import { isOrderSpec, STORY_PICTURES } from '../kStories'
+import { answerOf, isNumberSpec, type NumberActivitySpec } from '../../../games/listenPlay/activities/numberSpecs'
+import { K_PAIRS } from '../../../voice/packs/k-compare'
 
 /**
  * Generator fuzz suite: every stage in the curriculum, at every grade tier, plus
@@ -419,6 +421,76 @@ function answerProblems(config: ProviderConfig, grade: GradeLevel, p: Problem): 
     case 'kStories':
       errs.push(...activityProblems(p as ListenProblem))
       break
+    // (K complete, phase 2a: Number Dunes and Ten Frame Plateau, answered through the number activities)
+    case 'kCompare':
+    case 'kTeens':
+      errs.push(...numberActivityProblems(config.kind, p as ListenProblem))
+      break
+  }
+  return errs
+}
+
+// ── K–1 number activities (Number Dunes, Ten Frame Plateau) ──────────────────
+
+function numberActivityProblems(kind: 'kCompare' | 'kTeens', p: ListenProblem): string[] {
+  const a = p.activity
+  if (!isNumberSpec(a)) return [`not a number activity: ${JSON.stringify(a)}`]
+  const s: NumberActivitySpec = a
+  const errs: string[] = []
+  if (p.answer !== answerOf(s)) errs.push(`answer ${JSON.stringify(p.answer)}, the activity says ${JSON.stringify(answerOf(s))}`)
+  const whole = (n: number, lo: number, hi: number, what: string) => {
+    if (!(Number.isInteger(n) && n >= lo && n <= hi)) errs.push(`${what} ${n} outside [${lo}, ${hi}]`)
+  }
+  const fairCards = (cards: readonly number[], lo: number, hi: number) => {
+    if (cards.length < 2 || cards.length > 3) errs.push(`${cards.length} cards`)
+    if (new Set(cards).size !== cards.length) errs.push(`duplicate cards ${JSON.stringify(cards)}`)
+    if (cards.filter((c) => c === p.answer).length !== 1) errs.push(`answer ${p.answer} is not on exactly one card ${JSON.stringify(cards)}`)
+    cards.forEach((c) => whole(c, lo, hi, 'card'))
+  }
+  if (kind === 'kCompare') {
+    // within 10 (K.CC.6–7)
+    switch (s.kind) {
+      case 'matchRows':
+        if (!K_PAIRS.some((x) => x.id === s.pair)) errs.push(`no pair ${s.pair}`)
+        whole(s.top, 1, 10, 'top row')
+        whole(s.bottom, 1, 10, 'bottom row')
+        break
+      case 'compareNumbers':
+        fairCards(s.cards, 1, 10)
+        if (s.ask === 'more' || s.ask === 'less') {
+          if (s.a === s.b) errs.push('the same number twice')
+          if (JSON.stringify(s.cards) !== JSON.stringify([s.a, s.b])) errs.push('the cards are not in the order said')
+        } else {
+          whole(s.a, s.ask === 'oneMore' ? 1 : 2, s.ask === 'oneMore' ? 9 : 10, 'dots')
+          if (!s.cards.includes(s.a) && !s.cards.includes(s.a + (s.ask === 'oneMore' ? 2 : -2))) errs.push('no near miss among the cards')
+        }
+        break
+      case 'numberOrder': {
+        const n = s.numbers
+        if (n.length < 3 || n.length > 5) errs.push(`${n.length} numbers to order`)
+        n.forEach((v, i) => {
+          whole(v, 1, 10, 'number')
+          if (i && v !== n[i - 1] + 1) errs.push(`not counting order ${JSON.stringify(n)}`)
+        })
+        if ([...s.mixed].sort().join() !== n.map((_, i) => i).join() || s.mixed.every((x, i) => x === i)) errs.push(`mixed ${JSON.stringify(s.mixed)} isn't a real mix-up`)
+        break
+      }
+      default:
+        errs.push(`Number Dunes asks a ${s.kind}`)
+    }
+  } else {
+    // teen numbers to 20 (K.NBT.1, K.CC.2)
+    switch (s.kind) {
+      case 'teenFrames':
+        whole(s.n, 11, 20, 'the number')
+        fairCards(s.cards, 1, 20)
+        break
+      case 'buildTeen':
+        whole(s.n, 11, 20, 'the number to make')
+        break
+      default:
+        errs.push(`Ten Frame Plateau asks a ${s.kind}`)
+    }
   }
   return errs
 }

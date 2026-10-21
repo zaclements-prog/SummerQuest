@@ -290,5 +290,41 @@
       "stepId": "yourTurn",
       "text": "Your turn! Start at the dot, and follow the arrow. You can do it!"
     }
+  ],
+  "kCompare": [
+    {
+      "stepId": "lineUp",
+      "text": "Is there a cookie for every friend? Let's line them up. One, two, three."
+    },
+    {
+      "stepId": "more",
+      "text": "One friend has no cookie. More friends, fewer cookies. Now one more cookie. They are the same!"
+    },
+    {
+      "stepId": "bears",
+      "text": "Your turn! Here come bears and balls. Does every bear get a ball?"
+    },
+    {
+      "stepId": "numbers",
+      "text": "Numbers can be more, too. Four dots, seven dots. Seven is more!"
+    }
+  ],
+  "kTeens": [
+    {
+      "stepId": "ten",
+      "text": "This is a ten-frame. It has ten boxes. When every box is full, that's a full ten!"
+    },
+    {
+      "stepId": "more",
+      "text": "A full ten, and three more. Ten, eleven, twelve, thirteen. Ten and three more is thirteen!"
+    },
+    {
+      "stepId": "fifteen",
+      "text": "Your turn! Look at the full ten. Then count on."
+    },
+    {
+      "stepId": "twelve",
+      "text": "Every teen number is ten and some more. Let's find twelve!"
+    }
   ]
 }

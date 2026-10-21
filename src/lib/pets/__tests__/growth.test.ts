@@ -45,10 +45,10 @@ describe('pet catalog', () => {
       ['owl', 'word-problem-woods', ['wordProblem']],
       ['panda', 'geometry-grove', ['geometry', 'kShapes']],
       ['lion', 'multiplication-mesa', ['multiplication', 'kCounting']],
-      ['trex', 'division-dunes', ['division']],
+      ['trex', 'division-dunes', ['division', 'kCompare']],
       ['bear', 'measurement-marsh', ['measurement']],
       ['fox', 'data-delta', ['dataGraph']],
-      ['unicorn', 'place-value-plateau', ['placeValue']],
+      ['unicorn', 'place-value-plateau', ['placeValue', 'kTeens']],
       ['dragonet', 'writing-workshop', ['writing', 'kTracing']],
       ['tiger', 'science-summit', ['science']],
       ['dragon', 'tower-battlefront', []],
@@ -79,7 +79,10 @@ describe('pet catalog', () => {
     }
     expect(zoneLessonFor('multiplication-mesa', 0)?.id).toBe('kCounting')
     expect(zoneLessonFor('multiplication-mesa', 3)?.id).toBe('multiplication')
-    expect(zoneLessonFor('division-dunes', 0)).toBeUndefined() // a sleeping zone: no lesson button
+    // (K complete, phase 2a: the trex and the unicorn hatch from Number Dunes' and Ten Frame Plateau's K lessons)
+    expect(zoneLessonFor('division-dunes', 0)?.id).toBe('kCompare')
+    expect(zoneLessonFor('place-value-plateau', 0)?.id).toBe('kTeens')
+    expect(zoneLessonFor('no-such-zone', 0)).toBeUndefined() // no lesson button
   })
 
   it('every egg has its own colors', () => {

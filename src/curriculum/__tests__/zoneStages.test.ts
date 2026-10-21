@@ -225,11 +225,17 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
     'reading-reef': ['k-letters-1', 'k-rhyme-1', 'k-letters-2', 'k-syllables-1', 'k-letters-3', 'k-rhyme-2', 'k-blend-1', 'k-sight-1'],
     // (K literacy, phase 1b: Writing Workshop wakes up as the fourth K zone)
     'writing-workshop': ['k-trace-1', 'k-trace-2', 'k-trace-3', 'k-story-1'],
+    // (K complete, phase 2a: Number Dunes, Ten Frame Plateau)
+    'division-dunes': ['k-dunes-1', 'k-dunes-2', 'k-dunes-3'],
+    'place-value-plateau': ['k-teens-1', 'k-teens-2', 'k-teens-3'],
   }
   const K1_TITLES: Record<string, string> = {
     'multiplication-mesa': 'Counting Mesa',
     'geometry-grove': 'Shape Grove',
     'reading-reef': 'Letter Reef',
+    // (K complete, phase 2a)
+    'division-dunes': 'Number Dunes',
+    'place-value-plateau': 'Ten Frame Plateau',
   }
 
   it('kindergarten and 1st grade see the K–1 stage sets; 2nd–5th grade still see today’s', () => {
@@ -271,6 +277,8 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
       ...['kCounting', 'kCounting', 'kCounting', 'kShapes', 'kShapes', 'kShapes'],
       ...['kLetters', 'kLiteracy', 'kLetters', 'kLiteracy', 'kLetters', 'kLiteracy', 'kLiteracy', 'kLiteracy'],
       ...['kTrace', 'kTrace', 'kTrace', 'kStories'],
+      // (K complete, phase 2a)
+      ...['kCompare', 'kCompare', 'kCompare', 'kTeens', 'kTeens', 'kTeens'],
     ])
     // the counting stages climb: count to 10, count on to 20 (the parade), then compare
     expect(all.slice(0, 3).map((s) => s.providerConfig)).toMatchObject([
@@ -349,5 +357,62 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
       expect(zoneTitle(zone, null)).toBe(zone.title)
     }
     expect(['multiplication-mesa', 'geometry-grove', 'reading-reef'].map((id) => getZone(id)!.title)).toEqual(['Multiplication Mesa', 'Geometry Grove', 'Reading Reef'])
+  })
+})
+
+describe('K complete (phase-2a contract): Number Dunes and Ten Frame Plateau', () => {
+  it('Number Dunes: concept, practice, mastery: line them up, which is more, numbers in order', () => {
+    const dunes = getZone('division-dunes')!
+    const set = zoneStages(dunes, 0)
+    expect(set.map((s) => [s.id, s.kind, s.title])).toEqual([
+      ['k-dunes-1', 'concept', 'Line them up'],
+      ['k-dunes-2', 'practice', 'Which is more?'],
+      ['k-dunes-3', 'mastery', 'Numbers in order'],
+    ])
+    expect(set.map((s) => s.providerConfig)).toEqual([
+      { kind: 'kCompare', mode: 'match' },
+      { kind: 'kCompare', mode: 'numbers' },
+      { kind: 'kCompare', mode: 'lineUp' },
+    ])
+    expect(zoneTitle(dunes, 0)).toBe('Number Dunes')
+    expect(isZoneSleeping(dunes, 0)).toBe(false)
+    // grades 2–4 keep Division Dunes
+    expect(zoneTitle(dunes, 3)).toBe('Division Dunes')
+    expect(dunes.stages.map((s) => s.id)).toEqual(['div-concept', 'div-arena', 'div-practice', 'div-mastery'])
+  })
+
+  it('Ten Frame Plateau: ten and more, fill the frames, count to twenty', () => {
+    const plateau = getZone('place-value-plateau')!
+    const set = zoneStages(plateau, 1)
+    expect(set.map((s) => [s.id, s.kind, s.title])).toEqual([
+      ['k-teens-1', 'concept', 'Ten and more'],
+      ['k-teens-2', 'practice', 'Fill the frames'],
+      ['k-teens-3', 'mastery', 'Count to twenty'],
+    ])
+    expect(set.map((s) => s.providerConfig)).toEqual([
+      { kind: 'kTeens', mode: 'tenAnd' },
+      { kind: 'kTeens', mode: 'build' },
+      { kind: 'kTeens', mode: 'twenty' },
+    ])
+    expect(zoneTitle(plateau, 1)).toBe('Ten Frame Plateau')
+    expect(isZoneSleeping(plateau, 0)).toBe(false)
+    expect(zoneTitle(plateau, 4)).toBe('Place Value Plateau')
+    expect(plateau.stages.map((s) => s.id)).toEqual(['pv-concept', 'pv-practice', 'pv-mastery'])
+  })
+
+  it('every question is answered by doing a number activity (no plain cards), and each unlocks after the one before', () => {
+    for (const zoneId of ['division-dunes', 'place-value-plateau']) {
+      const zone = getZone(zoneId)!
+      const set = zoneStages(zone, 0)
+      for (const s of set) {
+        const p = createProvider(s.providerConfig)
+        for (let i = 0; i < 6; i++) expect((p.next() as ListenProblem).activity, `${s.id} #${i}`).toBeDefined()
+      }
+      const stars = (ids: string[]) => ({ stages: Object.fromEntries(ids.map((id) => [id, { stars: 1 }])) })
+      set.forEach((s, i) => {
+        expect(isStageUnlocked(zone, s.id, stars(set.slice(0, i).map((x) => x.id)), 0), s.id).toBe(true)
+        if (i > 0) expect(isStageUnlocked(zone, s.id, stars(set.slice(0, i - 1).map((x) => x.id)), 0), s.id).toBe(false)
+      })
+    }
   })
 })

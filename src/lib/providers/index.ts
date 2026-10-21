@@ -31,6 +31,8 @@ import { makeKLettersProvider, type KLettersConfig } from './kLetters'
 import { makeKLiteracyProvider, type KLiteracyConfig } from './kLiteracy'
 import { makeKTraceProvider, type KTraceConfig } from './kTrace'
 import { makeKStoriesProvider } from './kStories'
+import { makeKCompareProvider, type KCompareConfig } from './kCompare'
+import { makeKTeensProvider, type KTeensConfig } from './kTeens'
 
 export type ProviderConfig =
   | { kind: 'multiplication'; factorMin: number; factorMax: number }
@@ -61,6 +63,10 @@ export type ProviderConfig =
   | ({ kind: 'kTrace' } & KTraceConfig)
   /** Writing Workshop: a three-picture story, then first, next, last (the `order` activity). */
   | { kind: 'kStories' }
+  /** Number Dunes: more, fewer and the same, comparing numbers, one more and one less, numbers in order. */
+  | ({ kind: 'kCompare' } & KCompareConfig)
+  /** Ten Frame Plateau: teen numbers as a full ten and some more; counting to 20. */
+  | ({ kind: 'kTeens' } & KTeensConfig)
 
 export function createProvider(config: ProviderConfig): ProblemProvider {
   switch (config.kind) {
@@ -106,5 +112,9 @@ export function createProvider(config: ProviderConfig): ProblemProvider {
       return makeKTraceProvider(config)
     case 'kStories':
       return makeKStoriesProvider()
+    case 'kCompare':
+      return makeKCompareProvider(config)
+    case 'kTeens':
+      return makeKTeensProvider(config)
   }
 }
