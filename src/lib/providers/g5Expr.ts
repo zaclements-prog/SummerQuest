@@ -36,12 +36,28 @@ const TOPIC = 'g5-expressions'
 /** The expression with its grouping symbols taken out (a kid who skips them). */
 const stripGroups = (s: string) => s.replace(/[()[\]]/g, '')
 
+/**
+ * More wrong expressions from the right one, each one slip away: one operator
+ * swapped for its partner (+ for ×, − for ÷, and back), or the grouping left out.
+ */
+export function slipExprs(right: string): string[] {
+  const out: string[] = [stripGroups(right)]
+  const swap: Record<string, string> = { '+': '×', '×': '+', '−': '÷', '÷': '−' }
+  for (let i = 0; i < right.length; i++) if (swap[right[i]]) out.push(right.slice(0, i) + swap[right[i]] + right.slice(i + 1))
+  return out
+}
+
 /** Wrong expressions to show: only those that really mean something else (another value). */
 function differentExprs(right: string, wrong: string[]): string[] {
   const want = evalExpr(right)
+  const seen = new Set<number>()
   return wrong.filter((w) => {
     const v = evalExpr(w)
-    return Number.isFinite(v) && Math.abs(v - want) > 1e-9
+    // a different value from the answer and from every other wrong choice
+    const key = Math.round(v * 1e6)
+    if (!Number.isFinite(v) || Math.abs(v - want) < 1e-9 || seen.has(key)) return false
+    seen.add(key)
+    return true
   })
 }
 
@@ -84,9 +100,11 @@ function evaluateProblem(id: string): Problem {
 
 function writeProblem(id: string): Problem {
   const ph = pick(EXPR_PHRASES)
-  const n = ph.make()
+  // every number different, so each choice reads clearly
+  let n = ph.make()
+  for (let i = 0; i < 30 && new Set(Object.values(n)).size < Object.values(n).length; i++) n = ph.make()
   const right = ph.right(n)
-  const wrong = differentExprs(right, [...ph.wrong(n), stripGroups(right)])
+  const wrong = differentExprs(right, [...ph.wrong(n), ...slipExprs(right)])
   const { options, answer } = textOptions(right, wrong)
   return {
     id,
@@ -197,7 +215,7 @@ function storyProblem(id: string, asExpression: boolean): Problem {
     return {
       ...base,
       prompt: `${story.text(n)} Which expression solves it?`,
-      ...textOptions(expr, differentExprs(expr, story.wrong(n))),
+      ...textOptions(expr, differentExprs(expr, [...story.wrong(n), ...slipExprs(expr)])),
       hint: 'Find the two steps in the story. The first step goes first in the expression.',
     }
   }

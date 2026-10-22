@@ -87,7 +87,7 @@ export const WOODS_STORIES: WoodsStory[] = [
       const c = randInt(12, 24)
       const total = t * c
       let s = randInt(10, Math.floor(total / 2))
-      s -= (total - s) % b
+      s += (total - s) % b
       return { t, c, s, b }
     },
     text: (n) => `A bakery bakes ${n.t} trays of ${n.c} cookies. It sells ${n.s} cookies and packs the rest in bags of ${n.b}. How many bags does it fill?`,
