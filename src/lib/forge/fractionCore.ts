@@ -17,6 +17,17 @@ export interface FracRound {
   /** How many `1/targetDenom` slabs equal `baseNum/baseDenom` — the answer. */
   targetNum: number
   factId?: string
+  /**
+   * Grade 5's unlike-denominators mode only: the recipe's two parts (`a/b + c/d`,
+   * drawn end to end) and the slab sizes the gauge offers. The classic mode never sets them.
+   */
+  parts?: readonly [FracPart, FracPart]
+  gauges?: readonly number[]
+}
+
+export interface FracPart {
+  num: number
+  denom: number
 }
 
 /** A provider Problem (prompt `${a}/${b} = ?/${d}`) → forge round numbers. */
@@ -173,4 +184,78 @@ export function forgeScore({ firstTry, streak, patienceLeft }: { firstTry: boole
   const s = firstTry ? Math.min(SCORE.streakCap, SCORE.streakStep * Math.max(0, streak - 1)) : 0
   const speed = Math.round(SCORE.speedMax * Math.min(1, Math.max(0, patienceLeft)))
   return { base, streak: s, speed, total: base + s + speed }
+}
+
+// ── Grade 5: unlike denominators on the gauge (5.NF.1) ───────────────────────
+//
+// A grade-5 stage (`params.mode: 'unlike'`) orders `a/b + c/d`: two flavours of
+// candy laid end to end on the recipe bar, the mold exactly as long as both.
+// Before stamping, the kid sets the press's GAUGE to a slab size `1/D`: only a
+// common denominator cuts both parts into whole slabs. The least one is the one
+// right chip; the others are the classic slips (adding the denominators, or
+// keeping one of them). Then the round plays as the classic one in `D`ths:
+// `a/b + c/d = (aD/b + cD/d)/D`.
+
+export type ForgeMode = 'equiv' | 'unlike'
+
+/** Which forge a stage plays: grade 5's `params.mode: 'unlike'`, else the classic equivalence forge (grades 2–4). */
+export function forgeModeOf(params: Record<string, unknown> | undefined): ForgeMode {
+  return params?.mode === 'unlike' ? 'unlike' : 'equiv'
+}
+
+const gcd = (a: number, b: number): number => (b ? gcd(b, a % b) : a)
+export const lcmOf = (a: number, b: number) => (a / gcd(a, b)) * b
+
+/** Does `1/D` cut both `1/b` and `1/d` into whole slabs? */
+export const isCommonDenominator = (D: number, b: number, d: number) => D % b === 0 && D % d === 0
+
+/**
+ * The gauge's three chips for `b` and `d` (unlike), sorted: the least common
+ * denominator (the one right chip), `b + d` (adding the bottoms: never a common
+ * multiple), and whichever of `b`, `d` is NOT a multiple of the other.
+ */
+export function gaugeChoices(b: number, d: number): number[] {
+  const L = lcmOf(b, d)
+  const hi = Math.max(b, d)
+  const lo = Math.min(b, d)
+  const third = hi === L ? lo : hi
+  return [L, b + d, third].sort((x, y) => x - y)
+}
+
+/** A grade-5 forge order (prompt `a/b + c/d = ?`) → forge round numbers, in least-common-denominator slabs. */
+export function parseUnlikeRound(p: Pick<Problem, 'prompt' | 'answer' | 'factId'>): FracRound {
+  const m = /^(\d+)\/(\d+) \+ (\d+)\/(\d+) = \?$/.exec(p.prompt)
+  if (!m) throw new Error(`not a forge sum: ${p.prompt}`)
+  const [a, b, c, d] = m.slice(1).map(Number)
+  if (b === d) throw new Error(`like denominators: ${p.prompt}`)
+  const L = lcmOf(b, d)
+  const S = (a * L) / b + (c * L) / d
+  if (S >= L) throw new Error(`sum is not under one bar: ${p.prompt}`)
+  // the answer the provider printed (simplest form) must be the same amount
+  const ans = /^(\d+)\/(\d+)$/.exec(String(p.answer))
+  if (!ans || Number(ans[1]) * L !== S * Number(ans[2])) throw new Error(`answer ${p.answer} is not ${S}/${L}`)
+  return {
+    baseNum: S,
+    baseDenom: L,
+    targetDenom: L,
+    targetNum: S,
+    factId: p.factId,
+    parts: [
+      { num: a, denom: b },
+      { num: c, denom: d },
+    ],
+    gauges: gaugeChoices(b, d),
+  }
+}
+
+/** The renamed sum on the board once the gauge is set: "3/6 + 2/6". */
+export function renamedParts(r: FracRound): string {
+  if (!r.parts) return `${r.baseNum}/${r.baseDenom}`
+  const D = r.targetDenom
+  return r.parts.map((q) => `${(q.num * D) / q.denom}/${D}`).join(' + ')
+}
+
+/** The order as written: "1/2 + 1/3" (the classic order: "2/3"). */
+export function recipeText(r: FracRound): string {
+  return r.parts ? r.parts.map((q) => `${q.num}/${q.denom}`).join(' + ') : `${r.baseNum}/${r.baseDenom}`
 }

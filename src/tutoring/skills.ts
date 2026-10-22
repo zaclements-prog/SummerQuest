@@ -131,6 +131,16 @@ export const SKILLS: Record<string, SkillMeta> = {
   'g1-science-light-sound': { label: 'light, shadows and sound', zoneId: 'science-summit', lessonId: 'g1Science', practiceStageId: 'g1-science-1' },
   'g1-science-sky':         { label: 'the sun, the moon and the stars', zoneId: 'science-summit', lessonId: 'g1Science', practiceStageId: 'g1-science-2' },
   'g1-science-families':    { label: 'animal parents and babies', zoneId: 'science-summit', lessonId: 'g1Science', practiceStageId: 'g1-science-3' },
+  // ── 5th grade (phase 3): Fraction Falls (lesson g5Fractions), Place Value Plateau (g5Decimals); Tower Battlefront's gates drill both ──
+  'g5-frac-addsub':  { label: 'adding and subtracting fractions', zoneId: 'fraction-falls', lessonId: 'g5Fractions', practiceStageId: 'g5-frac-1' },
+  'g5-frac-mult':    { label: 'multiplying fractions', zoneId: 'fraction-falls', lessonId: 'g5Fractions', practiceStageId: 'g5-frac-2' },
+  'g5-frac-divide':  { label: 'fractions as division', zoneId: 'fraction-falls', lessonId: 'g5Fractions', practiceStageId: 'g5-frac-2' },
+  'g5-frac-compare': { label: 'comparing fractions', zoneId: 'fraction-falls', lessonId: 'g5Fractions', practiceStageId: 'g5-frac-3' },
+  'g5-dec-place':    { label: 'reading and writing decimals', zoneId: 'place-value-plateau', lessonId: 'g5Decimals', practiceStageId: 'g5-dec-1' },
+  'g5-dec-compare':  { label: 'comparing decimals', zoneId: 'place-value-plateau', lessonId: 'g5Decimals', practiceStageId: 'g5-dec-1' },
+  'g5-dec-round':    { label: 'rounding decimals', zoneId: 'place-value-plateau', lessonId: 'g5Decimals', practiceStageId: 'g5-dec-2' },
+  'g5-dec-ops':      { label: 'adding, subtracting, multiplying and dividing decimals', zoneId: 'place-value-plateau', lessonId: 'g5Decimals', practiceStageId: 'g5-dec-2' },
+  'g5-dec-pow10':    { label: 'multiplying and dividing by powers of 10', zoneId: 'place-value-plateau', lessonId: 'g5Decimals', practiceStageId: 'g5-dec-2' },
 }
 
 export interface Skill { id: string; label: string }

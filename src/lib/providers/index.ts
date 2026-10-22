@@ -51,6 +51,10 @@ import { makeG1ShapesProvider, type G1ShapesConfig } from './g1Shapes'
 import { makeG1MeasureProvider, type G1MeasureConfig } from './g1Measure'
 import { makeG1GraphsProvider, type G1GraphsConfig } from './g1Graphs'
 import { makeG1ScienceProvider, type G1ScienceConfig } from './g1Science'
+// 5th grade (phase 3): Fraction Falls, Place Value Plateau, Tower Battlefront
+import { makeG5FractionsProvider, type G5FractionsConfig } from './g5Fractions'
+import { makeG5DecimalsProvider, type G5DecimalsConfig } from './g5Decimals'
+import { makeG5GatesProvider } from './g5Gates'
 
 export type ProviderConfig =
   | { kind: 'multiplication'; factorMin: number; factorMax: number }
@@ -117,6 +121,13 @@ export type ProviderConfig =
   | ({ kind: 'g1Graphs' } & G1GraphsConfig)
   /** Sky Summit: light and sound, the day and night sky, animal families. */
   | ({ kind: 'g1Science' } & G1ScienceConfig)
+  // ── 5th grade (phase 3): Fraction Falls, Place Value Plateau, Tower Battlefront ──
+  /** Fraction Falls (5th grade): unlike denominators, multiplying fractions, fractions as division. */
+  | ({ kind: 'g5Fractions' } & G5FractionsConfig)
+  /** Place Value Plateau (5th grade): decimals to thousandths: read, compare, round, operate, powers of 10. */
+  | ({ kind: 'g5Decimals' } & G5DecimalsConfig)
+  /** Tower Battlefront (5th grade): the fraction and decimal questions that buy a tower. */
+  | { kind: 'g5Gates' }
 
 export function createProvider(config: ProviderConfig): ProblemProvider {
   switch (config.kind) {
@@ -199,5 +210,12 @@ export function createProvider(config: ProviderConfig): ProblemProvider {
       return makeG1GraphsProvider(config)
     case 'g1Science':
       return makeG1ScienceProvider(config)
+    // 5th grade (phase 3): Fraction Falls, Place Value Plateau, Tower Battlefront
+    case 'g5Fractions':
+      return makeG5FractionsProvider(config)
+    case 'g5Decimals':
+      return makeG5DecimalsProvider(config)
+    case 'g5Gates':
+      return makeG5GatesProvider()
   }
 }

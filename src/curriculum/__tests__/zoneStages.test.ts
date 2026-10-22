@@ -57,7 +57,7 @@ afterEach(() => {
 describe('zoneStages', () => {
   it('falls back to the 2nd–4th grade stages while a band has no set (every zone, every grade)', () => {
     for (const zone of curriculum.zones) {
-      for (const g of GRADE_LEVELS) if (!zone.stagesByBand?.k1 || g >= 2) expect(zoneStages(zone, g)).toBe(zone.stages)
+      for (const g of GRADE_LEVELS) if ((!zone.stagesByBand?.k1 || g >= 2) && !(g === 5 && zone.stagesByBand?.g5)) expect(zoneStages(zone, g)).toBe(zone.stages)
       expect(zoneStages(zone, null)).toBe(zone.stages)
       expect(zoneStages(zone, undefined)).toBe(zone.stages)
     }
@@ -277,6 +277,14 @@ const G1_TITLES: Record<string, string> = {
   'science-summit': 'Sky Summit',
 }
 
+/** The zones with a 5th-grade set of their own (K–5 plan, grade 5 (phase 3) contract). */
+const G5_IDS: Record<string, string[]> = {
+  // Fraction Falls, Place Value Plateau, Tower Battlefront (phase 3)
+  'fraction-falls': ['g5-frac-1', 'g5-frac-2', 'g5-frac-3'],
+  'place-value-plateau': ['g5-dec-1', 'g5-dec-2', 'g5-dec-3'],
+  'tower-battlefront': ['g5-td-1'],
+}
+
 describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
   // (the top-level beforeEach puts Multiplication Mesa's set aside: bring it back)
   beforeEach(() => {
@@ -326,7 +334,9 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
         // 1st grade plays its own set where the zone has one: G1_IDS)
         expect(ids, `${zone.id} at grade ${g}`).toEqual((g === 1 ? G1_IDS[zone.id] : undefined) ?? K1_IDS[zone.id] ?? zone.stages.map((s) => s.id))
       }
-      for (const g of [2, 3, 4, 5] as const) expect(zoneStages(zone, g)).toBe(zone.stages)
+      for (const g of [2, 3, 4] as const) expect(zoneStages(zone, g)).toBe(zone.stages)
+      // (5th grade plays its own set where the zone has one: G5_IDS)
+      expect(zoneStages(zone, 5).map((s) => s.id), `${zone.id} at grade 5`).toEqual(G5_IDS[zone.id] ?? zone.stages.map((s) => s.id))
     }
     // today's 2–4 stage ids, unchanged
     expect(getZone('multiplication-mesa')!.stages.map((s) => s.id)).toEqual(['mult-concept', 'mult-practice', 'mult-mastery'])

@@ -8,7 +8,7 @@ describe('coach practice routing', () => {
   for (const [skillId, meta] of Object.entries(SKILLS)) {
     it(`${skillId} → ${meta.zoneId}/${meta.practiceStageId} drills ${skillId}`, async () => {
       // (a skill's practice stage is in its own band's set: 2nd–4th grade, K–1 for the k-* skills, 1st grade for the g1-* ones)
-      const stage = getStage(meta.zoneId, meta.practiceStageId, 3) ?? getStage(meta.zoneId, meta.practiceStageId, 0) ?? getStage(meta.zoneId, meta.practiceStageId, 1)
+      const stage = getStage(meta.zoneId, meta.practiceStageId, 3) ?? getStage(meta.zoneId, meta.practiceStageId, 0) ?? getStage(meta.zoneId, meta.practiceStageId, 1) ?? getStage(meta.zoneId, meta.practiceStageId, 5)
       expect(stage).toBeDefined()
       const provider = createProvider(stage!.providerConfig)
       const seen = new Set<string>()
