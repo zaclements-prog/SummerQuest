@@ -1,6 +1,9 @@
 /* eslint-disable react-refresh/only-export-components -- a registry of drawings (data), not an HMR boundary */
 import type { ReactNode } from 'react'
 import { M } from '../../tutoring/motion/palette'
+// 1st grade (phase 2b): Fair Share Falls' and Shape Grove's drawings, by generated name
+import { G1_SHARE_DRAWINGS } from './sharesArt'
+import { G1_SHAPE_DRAWINGS } from './g1ShapesArt'
 
 /**
  * Drawn pictures for the Listen & Play cards (`Picture` kind `art`): things
@@ -468,6 +471,9 @@ export const DRAWINGS: Record<string, () => ReactNode> = {
     </Backdrop>
   ),
 }
+
+// 1st grade (phase 2b): Fair Share Falls' shares and Shape Grove's shapes (each module names its own)
+Object.assign(DRAWINGS, G1_SHARE_DRAWINGS, G1_SHAPE_DRAWINGS)
 
 /** A drawing by name, filling its box (nothing drawn for an unknown name). */
 export function DrawingArt({ name, className }: { name: string; className: string }) {

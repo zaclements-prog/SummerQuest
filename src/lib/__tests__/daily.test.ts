@@ -5,6 +5,14 @@ import { createProvider } from '../providers'
 import { effectiveConfigForStage } from '../gradeTiers'
 import type { ListenProblem } from '../../games/listenPlay/types'
 
+/** The zones with a 1st-grade set of their own (phase 2b). */
+const G1_OWN = new Set([
+  // Tens Plateau, Fair Share Falls, Shape Grove
+  'place-value-plateau',
+  'fraction-falls',
+  'geometry-grove',
+])
+
 describe('daily challenge pick', () => {
   it('never lands on a writing (no answer options) stage, over a full year', () => {
     const start = new Date(2026, 0, 1)
@@ -45,7 +53,8 @@ describe('daily challenge pick', () => {
       for (let d = 0; d < 120; d++) {
         const { zone, stage } = pickTodaysChallenge(grade, localDayKey(new Date(2026, 0, 1 + d)))
         expect(open.has(zone.id)).toBe(true)
-        expect(stage.id).toMatch(/^k-/)
+        // (1st grade plays its own stage where the zone has a 1st-grade set: phase 2b)
+        expect(stage.id).toMatch(grade === 1 && G1_OWN.has(zone.id) ? /^g1-/ : /^k-/)
         zonesSeen.add(zone.id)
       }
       expect(zonesSeen.size).toBe(open.size)
@@ -91,5 +100,29 @@ describe('daily challenge pick', () => {
       expect(q.activity, stage.id).toBeUndefined()
     }
     expect([...seen].sort()).toEqual(['science-summit', 'tower-battlefront'])
+  })
+
+  it('1st grade: Tens Plateau, Fair Share Falls and Shape Grove play their own first stage, a Listen & Play round', () => {
+    const first: Record<string, string> = {
+      'place-value-plateau': 'g1-tens-1',
+      'fraction-falls': 'g1-shares-1',
+      'geometry-grove': 'g1-shapes-1',
+    }
+    const seen = new Set<string>()
+    for (let d = 0; d < 366; d++) {
+      const { zone, stage } = pickTodaysChallenge(1, localDayKey(new Date(2026, 0, 1 + d)))
+      if (!first[zone.id]) continue
+      seen.add(zone.id)
+      expect(stage.id).toBe(first[zone.id])
+      expect(stage.gameId).toBe('listenPlay')
+      const q = createProvider(effectiveConfigForStage(stage, 0, 1)).next() as ListenProblem
+      expect(q.speech, stage.id).toBeDefined()
+    }
+    expect([...seen].sort()).toEqual(Object.keys(first).sort())
+    // …and kindergarten still plays its own
+    for (let d = 0; d < 120; d++) {
+      const { zone, stage } = pickTodaysChallenge(0, localDayKey(new Date(2026, 0, 1 + d)))
+      if (first[zone.id]) expect(stage.id).toMatch(/^k-/)
+    }
   })
 })

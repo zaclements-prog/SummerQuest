@@ -12,6 +12,10 @@ import { kMeasureLesson } from '../../tutoring/lessons/kMeasure'
 import { kSortingLesson } from '../../tutoring/lessons/kSorting'
 import { kScienceLesson } from '../../tutoring/lessons/kScience'
 import { kTowersLesson } from '../../tutoring/lessons/kTowers'
+// 1st grade (phase 2b): Tens Plateau, Fair Share Falls, Shape Grove
+import { g1TensLesson } from '../../tutoring/lessons/g1Tens'
+import { g1SharesLesson } from '../../tutoring/lessons/g1Shares'
+import { g1ShapesLesson } from '../../tutoring/lessons/g1Shapes'
 import { K_LESSON_PACK } from '../../tutoring/lessons/k1Voice'
 
 /**
@@ -39,6 +43,10 @@ for (const lesson of [
   kSortingLesson,
   kScienceLesson,
   kTowersLesson,
+  // 1st grade (phase 2b): Tens Plateau, Fair Share Falls, Shape Grove
+  g1TensLesson,
+  g1SharesLesson,
+  g1ShapesLesson,
 ]) {
   for (const step of lesson.steps) {
     const ref = step.check?.speech

@@ -26,6 +26,8 @@ import { boxCounts, isSortSpec, mostBox } from '../kSort'
 import { K_TOWERS_MAX } from '../kTowers'
 import { K_ACTIONS, K_FOOD, K_GEAR, K_HOME_OF, type KAction, type KGear } from '../kScience'
 import { DRAWINGS } from '../../../games/listenPlay/drawings'
+// 1st grade (phase 2b): Tens Plateau, Fair Share Falls, Shape Grove
+import { g1ShapesProblems, g1SharesProblems, g1TensProblems } from './g1Checks'
 
 /**
  * Generator fuzz suite: every stage in the curriculum, at every grade tier, plus
@@ -448,6 +450,16 @@ function answerProblems(config: ProviderConfig, grade: GradeLevel, p: Problem): 
       break
     case 'kScience':
       errs.push(...kScienceProblems(p as ListenProblem))
+      break
+    // 1st grade (phase 2b): the answer worked out again from the blocks, the drawings and the pieces (./g1Checks)
+    case 'g1Tens':
+      errs.push(...g1TensProblems(p as ListenProblem))
+      break
+    case 'g1Shares':
+      errs.push(...g1SharesProblems(p as ListenProblem))
+      break
+    case 'g1Shapes':
+      errs.push(...g1ShapesProblems(p as ListenProblem))
       break
   }
   return errs

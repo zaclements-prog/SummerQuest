@@ -79,5 +79,41 @@ export const geometryZone: Zone = {
         starsToEarn: 3,
       },
     ],
+    // 1st grade, still "Shape Grove" (1.G.1–2): what makes a triangle a triangle
+    // (closed, three straight sides and corners) and what doesn't (colour, size, which
+    // way it turns) → put shapes together (the `snap` activity) → solids that roll
+    // and stack. Said aloud.
+    g1: [
+      {
+        id: 'g1-shapes-1',
+        kind: 'concept',
+        title: 'Still a triangle?',
+        description: 'Turned or tiny, a triangle is still a triangle!',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Shapes', mode: 'attributes' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-shapes-2',
+        kind: 'practice',
+        title: 'Put shapes together',
+        description: 'Snap two shapes together to make a new one.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Shapes', mode: 'compose' },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-shapes-3',
+        kind: 'mastery',
+        title: 'Roll or stack',
+        description: 'Which shapes can roll? Which shapes can stack?',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Shapes', mode: 'solids' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+    ],
   },
 }

@@ -11,6 +11,11 @@ import { tenFramesActivity } from './TenFramesQuiz'
 import { buildActivity } from './BuildTeen'
 import { measureActivity } from './Measure'
 import { sortActivity } from './Sort'
+// Tens Plateau, Fair Share Falls and Shape Grove (1st grade, phase 2b)
+import { tensActivity } from './TensQuiz'
+import { buildTensActivity } from './BuildTens'
+import { shareTapActivity } from './ShareTap'
+import { snapActivity } from './SnapShapes'
 
 /**
  * Listen & Play activities by `kind` (see `ListenProblem.activity`): the
@@ -31,6 +36,11 @@ export const LISTEN_ACTIVITIES: Record<string, ListenActivityDef<any>> = {
   buildTeen: buildActivity,
   measure: measureActivity,
   sort: sortActivity,
+  // Tens Plateau, Fair Share Falls and Shape Grove (1st grade, phase 2b)
+  tens: tensActivity,
+  buildTens: buildTensActivity,
+  shareTap: shareTapActivity,
+  snap: snapActivity,
 }
 
 export function activityDef(spec: ListenActivitySpec | undefined): ListenActivityDef | null {

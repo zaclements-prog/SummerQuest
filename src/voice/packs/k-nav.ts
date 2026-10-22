@@ -144,5 +144,20 @@ export default defineVoicePack({
     'stage-k-towers-1': 'How many?',
     'stage-k-towers-2': 'More or fewer!',
     'stage-k-towers-3': 'Tower count!',
+
+    // ── 1st grade (phase 2b): Tens Plateau, Fair Share Falls and Shape Grove ──
+    'name-g1-place-value-plateau': 'Tens Plateau!',
+    'welcome-g1-place-value-plateau': 'Tens Plateau! Tap a star to play!',
+    'stage-g1-tens-1': 'Tens and ones!',
+    'stage-g1-tens-2': 'Bigger or smaller!',
+    'stage-g1-tens-3': 'Count to one hundred twenty!',
+    'name-g1-fraction-falls': 'Fair Share Falls!',
+    'welcome-g1-fraction-falls': 'Fair Share Falls! Tap a star to play!',
+    'stage-g1-shares-1': 'Equal shares!',
+    'stage-g1-shares-2': 'Halves and fourths!',
+    'stage-g1-shares-3': 'Smaller shares!',
+    'stage-g1-shapes-1': 'Still a triangle?',
+    'stage-g1-shapes-2': 'Put shapes together!',
+    'stage-g1-shapes-3': 'Roll or stack!',
   },
 })

@@ -249,6 +249,23 @@ describe('changing grade', () => {
   })
 })
 
+/**
+ * The zones with a 1st-grade set of their own (K–5 plan, phase-2b contract), and
+ * the ones with a 1st-grade name of their own. Every other zone plays (and is
+ * called) what kindergarten does at grade 1.
+ */
+const G1_IDS: Record<string, string[]> = {
+  // Tens Plateau, Fair Share Falls, Shape Grove (phase 2b)
+  'place-value-plateau': ['g1-tens-1', 'g1-tens-2', 'g1-tens-3'],
+  'fraction-falls': ['g1-shares-1', 'g1-shares-2', 'g1-shares-3'],
+  'geometry-grove': ['g1-shapes-1', 'g1-shapes-2', 'g1-shapes-3'],
+}
+const G1_TITLES: Record<string, string> = {
+  // Tens Plateau, Fair Share Falls (phase 2b; Shape Grove keeps its name)
+  'place-value-plateau': 'Tens Plateau',
+  'fraction-falls': 'Fair Share Falls',
+}
+
 describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
   // (the top-level beforeEach puts Multiplication Mesa's set aside: bring it back)
   beforeEach(() => {
@@ -294,8 +311,9 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
     for (const zone of curriculum.zones) {
       for (const g of [0, 1] as const) {
         const ids = zoneStages(zone, g).map((s) => s.id)
-        // (zones without a K–1 set fall back to their 2–4 stages; the World shows them as still sleeping)
-        expect(ids, `${zone.id} at grade ${g}`).toEqual(K1_IDS[zone.id] ?? zone.stages.map((s) => s.id))
+        // (zones without a K–1 set fall back to their 2–4 stages; the World shows them as still sleeping;
+        // 1st grade plays its own set where the zone has one: G1_IDS)
+        expect(ids, `${zone.id} at grade ${g}`).toEqual((g === 1 ? G1_IDS[zone.id] : undefined) ?? K1_IDS[zone.id] ?? zone.stages.map((s) => s.id))
       }
       for (const g of [2, 3, 4, 5] as const) expect(zoneStages(zone, g)).toBe(zone.stages)
     }
@@ -440,7 +458,7 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
 
   it('names the three zones for K–1 only (zoneTitle)', () => {
     for (const zone of curriculum.zones) {
-      for (const g of [0, 1] as const) expect(zoneTitle(zone, g)).toBe(K1_TITLES[zone.id] ?? zone.title)
+      for (const g of [0, 1] as const) expect(zoneTitle(zone, g)).toBe((g === 1 ? G1_TITLES[zone.id] : undefined) ?? K1_TITLES[zone.id] ?? zone.title)
       for (const g of [2, 3, 4, 5] as const) expect(zoneTitle(zone, g)).toBe(zone.title)
       expect(zoneTitle(zone, null)).toBe(zone.title)
     }
@@ -471,7 +489,8 @@ describe('K complete (phase-2a contract): Number Dunes and Ten Frame Plateau', (
 
   it('Ten Frame Plateau: ten and more, fill the frames, count to twenty', () => {
     const plateau = getZone('place-value-plateau')!
-    const set = zoneStages(plateau, 1)
+    // (kindergarten's: 1st grade has Tens Plateau now, phase 2b)
+    const set = zoneStages(plateau, 0)
     expect(set.map((s) => [s.id, s.kind, s.title])).toEqual([
       ['k-teens-1', 'concept', 'Ten and more'],
       ['k-teens-2', 'practice', 'Fill the frames'],
@@ -482,7 +501,7 @@ describe('K complete (phase-2a contract): Number Dunes and Ten Frame Plateau', (
       { kind: 'kTeens', mode: 'build' },
       { kind: 'kTeens', mode: 'twenty' },
     ])
-    expect(zoneTitle(plateau, 1)).toBe('Ten Frame Plateau')
+    expect(zoneTitle(plateau, 0)).toBe('Ten Frame Plateau')
     expect(isZoneSleeping(plateau, 0)).toBe(false)
     expect(zoneTitle(plateau, 4)).toBe('Place Value Plateau')
     expect(plateau.stages.map((s) => s.id)).toEqual(['pv-concept', 'pv-practice', 'pv-mastery'])
@@ -557,5 +576,80 @@ describe('Nature Summit and Counting Towers (phase-2a contract)', () => {
     expect(zone.stages[0]).toMatchObject({ id: 'td-arena', gameId: 'towerDefense', providerConfig: { kind: 'multiplication', factorMin: 2, factorMax: 10 } })
     expect(zone.stages[0].params).toBeUndefined()
     for (const g of [2, 3, 4] as const) expect(zoneStages(zone, g).map((s) => s.id)).toEqual(['td-arena'])
+  })
+})
+
+describe('1st grade (phase-2b contract): Tens Plateau, Fair Share Falls, Shape Grove', () => {
+  const stars = (ids: string[]) => ({ stages: Object.fromEntries(ids.map((id) => [id, { stars: 1 }])) })
+  const SETS = [
+    {
+      zoneId: 'place-value-plateau',
+      title: 'Tens Plateau',
+      k: 'Ten Frame Plateau',
+      g24: 'Place Value Plateau',
+      stages: [
+        ['g1-tens-1', 'concept', 'Tens and ones', { kind: 'g1Tens', mode: 'tensOnes' }],
+        ['g1-tens-2', 'practice', 'Bigger or smaller', { kind: 'g1Tens', mode: 'compare' }],
+        ['g1-tens-3', 'mastery', 'Count to 120', { kind: 'g1Tens', mode: 'to120' }],
+      ],
+    },
+    {
+      zoneId: 'fraction-falls',
+      title: 'Fair Share Falls',
+      k: 'Add-and-Take Falls',
+      g24: 'Fraction Falls',
+      stages: [
+        ['g1-shares-1', 'concept', 'Equal shares', { kind: 'g1Shares', mode: 'equal' }],
+        ['g1-shares-2', 'practice', 'Halves and fourths', { kind: 'g1Shares', mode: 'halvesFourths' }],
+        ['g1-shares-3', 'mastery', 'Smaller shares', { kind: 'g1Shares', mode: 'size' }],
+      ],
+    },
+    {
+      zoneId: 'geometry-grove',
+      title: 'Shape Grove',
+      k: 'Shape Grove',
+      g24: 'Geometry Grove',
+      stages: [
+        ['g1-shapes-1', 'concept', 'Still a triangle?', { kind: 'g1Shapes', mode: 'attributes' }],
+        ['g1-shapes-2', 'practice', 'Put shapes together', { kind: 'g1Shapes', mode: 'compose' }],
+        ['g1-shapes-3', 'mastery', 'Roll or stack', { kind: 'g1Shapes', mode: 'solids' }],
+      ],
+    },
+  ] as const
+
+  it('their 1st-grade titles, stage ids, kinds and providers; kindergarten and 2nd–4th grade unchanged', () => {
+    for (const z of SETS) {
+      const zone = getZone(z.zoneId)!
+      const set = zoneStages(zone, 1)
+      expect(set.map((s) => [s.id, s.kind, s.title, s.providerConfig]), z.zoneId).toEqual(z.stages.map((s) => [...s]))
+      expect(set.map((s) => s.id)).toEqual(G1_IDS[z.zoneId])
+      expect(zoneTitle(zone, 1)).toBe(z.title)
+      expect(zoneTitle(zone, 0)).toBe(z.k)
+      expect(zoneTitle(zone, 3)).toBe(z.g24)
+      expect(isZoneSleeping(zone, 1)).toBe(false)
+      // kindergarten never sees 1st grade's stages
+      for (const s of zoneStages(zone, 0)) expect(s.id, z.zoneId).toMatch(/^k-/)
+      for (const s of set) expect(getStage(z.zoneId, s.id, 0), s.id).toBeUndefined()
+    }
+  })
+
+  it('every stage is a spoken Listen & Play round of 5–6 with 3 stars, each unlocking the next', () => {
+    for (const z of SETS) {
+      const zone = getZone(z.zoneId)!
+      const set = zoneStages(zone, 1)
+      set.forEach((s, i) => {
+        expect(s.gameId, s.id).toBe('listenPlay')
+        expect(s.starsToEarn, s.id).toBe(3)
+        expect(s.params?.questionCount, s.id).toBeGreaterThanOrEqual(5)
+        expect(s.params?.questionCount, s.id).toBeLessThanOrEqual(6)
+        expect(s.description.split(' ').length, s.id).toBeLessThanOrEqual(10)
+        expect(s.description, s.id).toMatch(/[.!?]$/)
+        expect(isStageUnlocked(zone, s.id, stars(set.slice(0, i).map((x) => x.id)), 1), s.id).toBe(true)
+        if (i > 0) expect(isStageUnlocked(zone, s.id, stars(set.slice(0, i - 1).map((x) => x.id)), 1), s.id).toBe(false)
+        // every question is said, and comes from the stage's own provider
+        const p = createProvider(s.providerConfig)
+        for (let k = 0; k < 6; k++) expect((p.next() as ListenProblem).speech, `${s.id} #${k}`).toBeDefined()
+      })
+    }
   })
 })

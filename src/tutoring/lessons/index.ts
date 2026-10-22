@@ -25,6 +25,10 @@ import { kMeasureLesson } from './kMeasure'
 import { kSortingLesson } from './kSorting'
 import { kScienceLesson } from './kScience'
 import { kTowersLesson } from './kTowers'
+// 1st grade (phase 2b): Tens Plateau, Fair Share Falls, Shape Grove
+import { g1TensLesson } from './g1Tens'
+import { g1SharesLesson } from './g1Shares'
+import { g1ShapesLesson } from './g1Shapes'
 
 /**
  * The lessons, by content band (lib/gradeBand; K–5 plan §2): kindergarten and
@@ -68,7 +72,12 @@ export const k1Lessons: Lesson[] = [
 ]
 
 /** 1st grade (band `g1`): its own voice lessons. */
-export const g1Lessons: Lesson[] = []
+export const g1Lessons: Lesson[] = [
+  // Tens Plateau, Fair Share Falls, Shape Grove (phase 2b)
+  g1TensLesson,
+  g1SharesLesson,
+  g1ShapesLesson,
+]
 
 /** 5th grade (band `g5`). */
 export const g5Lessons: Lesson[] = []
