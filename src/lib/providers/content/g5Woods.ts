@@ -49,7 +49,11 @@ export const WOODS_STORIES: WoodsStory[] = [
   },
   {
     id: 'savings',
-    make: () => ({ s: randInt(6, 15), w: randInt(8, 20), c: randInt(25, 60) }),
+    make: () => {
+      const s = randInt(6, 15)
+      const w = randInt(8, 20)
+      return { s, w, c: randInt(25, Math.min(60, s * w - 10)) }
+    },
     text: (n) => `Leo saves $${n.s} each week for ${n.w} weeks. Then he spends $${n.c} on a bike helmet. How many dollars does he have left?`,
     expr: (n) => `${n.s} × ${n.w} − ${n.c}`,
     wrong: (n) => [`${n.s} × ${n.w} + ${n.c}`, `${n.s} + ${n.w} − ${n.c}`, `${n.s} × ${n.w}`],
