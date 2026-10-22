@@ -347,7 +347,7 @@ describe('Tap the half (shareTap)', () => {
 
 describe('Fair Share Falls and Shape Grove cards (the shell, with drawings)', () => {
   it('"Which pizza is cut in half?": a wrong card gets its word before we try again; nothing to read', async () => {
-    const p = createProvider({ kind: 'g1Shares', mode: 'halvesFourths' }) as ProblemProvider & { next(): ListenProblem }
+    const p = createProvider({ kind: 'g1Shares', mode: 'halvesFourths' }) as unknown as { next(): ListenProblem }
     const first = p.next()
     mount(only(first))
     await advance(100)
@@ -363,7 +363,7 @@ describe('Fair Share Falls and Shape Grove cards (the shell, with drawings)', ()
   })
 
   it('"Is the blue share a half or a fourth?": the only printed words are the two on the cards, each named as it lights', async () => {
-    const p = createProvider({ kind: 'g1Shares', mode: 'size' }) as ProblemProvider & { next(): ListenProblem }
+    const p = createProvider({ kind: 'g1Shares', mode: 'size' }) as unknown as { next(): ListenProblem }
     const first = p.next()
     expect(first.subtopic).toBe('nameShare')
     mount(only(first))
@@ -379,7 +379,7 @@ describe('Fair Share Falls and Shape Grove cards (the shell, with drawings)', ()
 
   it('"Which one is still a triangle?": an open one tapped: "That one is not closed. It has an opening."', async () => {
     let first: ListenProblem
-    const p = createProvider({ kind: 'g1Shapes', mode: 'attributes' }) as ProblemProvider & { next(): ListenProblem }
+    const p = createProvider({ kind: 'g1Shapes', mode: 'attributes' }) as unknown as { next(): ListenProblem }
     do first = p.next()
     while (!/still a triangle/.test(first.prompt) || !first.options.some((o) => String(o).includes('-open-')))
     mount(only(first))

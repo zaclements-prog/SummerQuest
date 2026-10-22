@@ -4,7 +4,7 @@ import { seededRng } from '../../random'
 import type { ListenProblem } from '../../../games/listenPlay/types'
 import { CUT_INFO, SHARE_THINGS, THING_BASE, allShareArt, area, cutsFor, outline, parseShareArt, shareArtName, shares, type ShareBase } from '../../../games/listenPlay/shareGeometry'
 import { DRAWINGS } from '../../../games/listenPlay/drawings'
-import { isShareTapSpec, shareTapLines } from '../../../games/listenPlay/activities/shareTapSpec'
+import { isShareTapSpec, shareTapLines, type ShareTapSpec } from '../../../games/listenPlay/activities/shareTapSpec'
 import { voiceText } from '../../../voice/registry'
 import { SKILLS } from '../../../tutoring/skills'
 import { g1SharesProblems } from './g1Checks'
@@ -119,7 +119,7 @@ describe('Fair Share Falls: each stage as planned', () => {
   it('a tap question puts the half somewhere new each time', () => {
     const turns = round('halvesFourths', 'taps', 30)
       .filter((q) => isShareTapSpec(q.activity) && q.activity.thing !== 'cake' && q.activity.thing !== 'garden')
-      .map((q) => (q.activity as { turn: number }).turn)
+      .map((q) => (q.activity as ShareTapSpec).turn)
     for (let i = 1; i < turns.length; i++) expect(turns[i]).not.toBe(turns[i - 1])
   })
 })
