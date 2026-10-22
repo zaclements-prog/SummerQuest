@@ -96,5 +96,19 @@ export const towerDefenseZone: Zone = {
         starsToEarn: 3,
       },
     ],
+    // 5th grade: the classic tower defense (unchanged), with fraction and
+    // decimal gates: compare, equivalent, add like / unlike, decimal place
+    // value, rounding, fractions as decimals (lib/providers/g5Gates).
+    g5: [
+      {
+        id: 'g5-td-1',
+        kind: 'mastery',
+        title: 'Fraction & Decimal Front',
+        description: 'Every tower costs gold AND a fraction or decimal answer. Survive 10 waves!',
+        gameId: 'towerDefense',
+        providerConfig: { kind: 'g5Gates' },
+        starsToEarn: 3,
+      },
+    ],
   },
 }

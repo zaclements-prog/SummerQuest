@@ -44,6 +44,9 @@ import { g1StoryMathLesson } from './g1StoryMath'
 import { g5ReadingLesson } from './g5Reading'
 import { g5WritingLesson } from './g5Writing'
 import { g5ScienceLesson } from './g5Science'
+// 5th grade (phase 3): Fraction Falls, Place Value Plateau
+import { g5FractionsLesson } from './g5Fractions'
+import { g5DecimalsLesson } from './g5Decimals'
 
 /**
  * The lessons, by content band (lib/gradeBand; K–5 plan §2): kindergarten and
@@ -111,6 +114,9 @@ export const g5Lessons: Lesson[] = [
   g5ReadingLesson,
   g5WritingLesson,
   g5ScienceLesson,
+  // Fraction Falls, Place Value Plateau (phase 3)
+  g5FractionsLesson,
+  g5DecimalsLesson,
 ]
 
 /** Every lesson of every band: what `getLesson` finds, and what the narration dump and scene tests cover. */

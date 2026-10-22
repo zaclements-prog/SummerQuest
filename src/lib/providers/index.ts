@@ -60,6 +60,10 @@ import { makeG5ReadingProvider, type G5ReadingConfig } from './g5Reading'
 import { makeG5WritingProvider, type G5WritingConfig } from './g5Writing'
 import { makeG5ScienceProvider, type G5ScienceConfig } from './g5Science'
 import { makeG5SpheresProvider } from './g5Spheres'
+// 5th grade (phase 3): Fraction Falls, Place Value Plateau, Tower Battlefront
+import { makeG5FractionsProvider, type G5FractionsConfig } from './g5Fractions'
+import { makeG5DecimalsProvider, type G5DecimalsConfig } from './g5Decimals'
+import { makeG5GatesProvider } from './g5Gates'
 
 export type ProviderConfig =
   | { kind: 'multiplication'; factorMin: number; factorMax: number }
@@ -142,6 +146,13 @@ export type ProviderConfig =
   | ({ kind: 'g5Science' } & G5ScienceConfig)
   /** Cloud Keeper's grade-5 tier: carry water, carbon dioxide and minerals between Earth's spheres. */
   | { kind: 'g5Spheres' }
+  // ── 5th grade (phase 3): Fraction Falls, Place Value Plateau, Tower Battlefront ──
+  /** Fraction Falls (5th grade): unlike denominators, multiplying fractions, fractions as division. */
+  | ({ kind: 'g5Fractions' } & G5FractionsConfig)
+  /** Place Value Plateau (5th grade): decimals to thousandths: read, compare, round, operate, powers of 10. */
+  | ({ kind: 'g5Decimals' } & G5DecimalsConfig)
+  /** Tower Battlefront (5th grade): the fraction and decimal questions that buy a tower. */
+  | { kind: 'g5Gates' }
 
 export function createProvider(config: ProviderConfig): ProblemProvider {
   switch (config.kind) {
@@ -240,5 +251,12 @@ export function createProvider(config: ProviderConfig): ProblemProvider {
       return makeG5ScienceProvider(config)
     case 'g5Spheres':
       return makeG5SpheresProvider()
+    // 5th grade (phase 3): Fraction Falls, Place Value Plateau, Tower Battlefront
+    case 'g5Fractions':
+      return makeG5FractionsProvider(config)
+    case 'g5Decimals':
+      return makeG5DecimalsProvider(config)
+    case 'g5Gates':
+      return makeG5GatesProvider()
   }
 }

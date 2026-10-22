@@ -57,7 +57,56 @@ export default function VisualRenderer({
       return <MoneyVisual visual={visual} />
     case 'barGraph':
       return <BarGraphVisual visual={visual} />
+    case 'fractionArea':
+      return <FractionAreaVisual visual={visual} size={size} />
   }
+}
+
+/**
+ * Grade 5's area model (5.NF.4): `a` shades columns (blue), `b` shades rows
+ * (gold); the cells in both are the product, drawn darker and outlined.
+ */
+function FractionAreaVisual({
+  visual,
+  size,
+}: {
+  visual: Extract<ProblemVisual, { kind: 'fractionArea' }>
+  size: 'sm' | 'md' | 'lg'
+}) {
+  const px = size === 'sm' ? 120 : size === 'md' ? 170 : 210
+  const { a, b } = visual
+  const cw = px / a.denominator
+  const rh = px / b.denominator
+  const cells = []
+  for (let c = 0; c < a.denominator; c++) {
+    for (let r = 0; r < b.denominator; r++) {
+      const inA = c < a.numerator
+      const inB = r < b.numerator
+      cells.push(
+        <rect
+          key={`${c}-${r}`}
+          x={2 + c * cw}
+          y={2 + r * rh}
+          width={cw}
+          height={rh}
+          fill={inA && inB ? TOON.flowerPurple : inA ? TOON.sky : inB ? SHADE : EMPTY}
+          stroke={INK}
+          strokeWidth={inA && inB ? 2.5 : 1.5}
+        />,
+      )
+    }
+  }
+  return (
+    <Surface className="inline-flex flex-col items-center">
+      <svg width={px + 4} height={px + 4} role="img" aria-label={`${a.numerator}/${a.denominator} of the columns and ${b.numerator}/${b.denominator} of the rows`}>
+        {cells}
+        <rect x={2} y={2} width={px} height={px} fill="none" stroke={INK} strokeWidth={3.5} />
+      </svg>
+      <div className="kid-text font-bold text-xl mt-2 text-ink-900">
+        {a.numerator}/{a.denominator} × {b.numerator}/{b.denominator}
+      </div>
+    </Surface>
+  )
 }
 
 function BarGraphVisual({

@@ -9,12 +9,15 @@ import { DRAWINGS } from '../../games/listenPlay/drawings'
 import { shareArtName } from '../../games/listenPlay/shareGeometry'
 // 5th grade (phase 3): Reading Reef, Writing Workshop, Science Summit
 import { G5_REEF_WORKSHOP_SUMMIT_POSTERS } from './posters/g5ReefWorkshopSummit'
+// 5th grade (phase 3): Fraction Falls, Place Value Plateau
+import { G5_FALLS_PLATEAU_POSTERS } from './posters/g5FallsPlateau'
 
 const PW = 320
 const PH = 150
 
 /** Poster background + motif per lesson (flat vector, the lesson stage's look). */
 const POSTERS: Record<string, { bg: string; motif: () => ReactNode }> = {
+  ...G5_FALLS_PLATEAU_POSTERS,
   fractions: {
     bg: '#ffe7c2',
     motif: () => (

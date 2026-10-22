@@ -44,6 +44,12 @@ const G1_OWN: Record<string, string> = {
   g1Subtract: 'division-dunes',
   g1StoryMath: 'word-problem-woods',
 }
+/** 5th grade's own lessons (phase 3), each for a zone 5th grade has its own set for. */
+const G5_OWN: Record<string, string> = {
+  // Fraction Falls, Place Value Plateau
+  g5Fractions: 'fraction-falls',
+  g5Decimals: 'place-value-plateau',
+}
 /** 1st grade's lessons: its own, then kindergarten's for the zones it has none of its own for. */
 const G1_LESSONS = [...Object.keys(G1_OWN), ...K_PILOT.filter((id) => !Object.values(G1_OWN).includes(getLesson(id)!.zoneId))]
 
@@ -83,6 +89,18 @@ describe('lessons by grade band', () => {
     for (const l of g24Lessons) expect(g5Zones.has(l.zoneId), l.zoneId).toBe(true)
     // (until it has any of its own, exactly today's eleven)
     if (own.size === 0) expect(ids(g5)).toEqual(TODAY)
+  })
+
+  it('5th grade’s own lessons (phase 3): band g5, their zones, practised in the zone’s first 5th-grade stage, never offered to 2–4', () => {
+    for (const [id, zoneId] of Object.entries(G5_OWN)) {
+      const l = getLesson(id)!
+      expect(l, id).toBeDefined()
+      expect(l).toMatchObject({ band: 'g5', zoneId })
+      expect(zoneLessonFor(zoneId, 5)?.id).toBe(id)
+      expect(zoneStages(getZone(zoneId)!, 5)[0].id).toBe(l.practiceStageId)
+      expect(practiceHref(l, undefined, 5)).toBe(`/play/${zoneId}/${l.practiceStageId}`)
+      for (const g of [0, 1, 2, 3, 4]) expect(isLessonFor(id, g), `${id} @ ${g}`).toBe(false)
+    }
   })
 
   it('a missing grade counts as the default grade', () => {

@@ -40,7 +40,7 @@ describe('pet catalog', () => {
 
   it('matches the plan’s pet ↔ zone ↔ lessons table (2–4 lesson, then the K–1 pilot’s, then 1st grade’s)', () => {
     const table: [string, string, string[]][] = [
-      ['frog', 'fraction-falls', ['fractions', 'kAddTake', 'g1Shares']],
+      ['frog', 'fraction-falls', ['fractions', 'kAddTake', 'g1Shares', 'g5Fractions']],
       ['octopus', 'reading-reef', ['reading', 'kLetters', 'kRhymes', 'g1Reading', 'g5Reading']],
       ['owl', 'word-problem-woods', ['wordProblem', 'kStoryMath', 'g1StoryMath']],
       ['panda', 'geometry-grove', ['geometry', 'kShapes', 'g1Shapes']],
@@ -48,7 +48,7 @@ describe('pet catalog', () => {
       ['trex', 'division-dunes', ['division', 'kCompare', 'g1Subtract']],
       ['bear', 'measurement-marsh', ['measurement', 'kMeasure', 'g1Measure']],
       ['fox', 'data-delta', ['dataGraph', 'kSorting', 'g1Graphs']],
-      ['unicorn', 'place-value-plateau', ['placeValue', 'kTeens', 'g1Tens']],
+      ['unicorn', 'place-value-plateau', ['placeValue', 'kTeens', 'g1Tens', 'g5Decimals']],
       ['dragonet', 'writing-workshop', ['writing', 'kTracing', 'g1Writing', 'g5Writing']],
       ['tiger', 'science-summit', ['science', 'kScience', 'g1Science', 'g5Science']],
       ['dragon', 'tower-battlefront', ['kTowers']],

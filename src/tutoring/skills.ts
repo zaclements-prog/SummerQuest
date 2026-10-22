@@ -156,6 +156,16 @@ export const SKILLS: Record<string, SkillMeta> = {
   'g5-sci-foodwebs': { label: 'food webs: energy and matter', zoneId: 'science-summit', lessonId: 'g5Science', practiceStageId: 'g5-sci-1' },
   'g5-sci-spheres':  { label: 'Earth’s spheres and its water', zoneId: 'science-summit', lessonId: 'g5Science', practiceStageId: 'g5-sci-cycle' },
   'g5-sci-sky':      { label: 'shadows, the sun and the stars', zoneId: 'science-summit', lessonId: 'g5Science', practiceStageId: 'g5-sci-2' },
+  // ── 5th grade (phase 3): Fraction Falls (lesson g5Fractions), Place Value Plateau (g5Decimals); Tower Battlefront's gates drill both ──
+  'g5-frac-addsub':  { label: 'adding and subtracting fractions', zoneId: 'fraction-falls', lessonId: 'g5Fractions', practiceStageId: 'g5-frac-1' },
+  'g5-frac-mult':    { label: 'multiplying fractions', zoneId: 'fraction-falls', lessonId: 'g5Fractions', practiceStageId: 'g5-frac-2' },
+  'g5-frac-divide':  { label: 'fractions as division', zoneId: 'fraction-falls', lessonId: 'g5Fractions', practiceStageId: 'g5-frac-2' },
+  'g5-frac-compare': { label: 'comparing fractions', zoneId: 'fraction-falls', lessonId: 'g5Fractions', practiceStageId: 'g5-frac-3' },
+  'g5-dec-place':    { label: 'reading and writing decimals', zoneId: 'place-value-plateau', lessonId: 'g5Decimals', practiceStageId: 'g5-dec-1' },
+  'g5-dec-compare':  { label: 'comparing decimals', zoneId: 'place-value-plateau', lessonId: 'g5Decimals', practiceStageId: 'g5-dec-1' },
+  'g5-dec-round':    { label: 'rounding decimals', zoneId: 'place-value-plateau', lessonId: 'g5Decimals', practiceStageId: 'g5-dec-2' },
+  'g5-dec-ops':      { label: 'adding, subtracting, multiplying and dividing decimals', zoneId: 'place-value-plateau', lessonId: 'g5Decimals', practiceStageId: 'g5-dec-2' },
+  'g5-dec-pow10':    { label: 'multiplying and dividing by powers of 10', zoneId: 'place-value-plateau', lessonId: 'g5Decimals', practiceStageId: 'g5-dec-2' },
 }
 
 export interface Skill { id: string; label: string }

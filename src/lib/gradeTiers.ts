@@ -266,6 +266,11 @@ export function effectiveConfig(
     case 'g5Science':
     case 'g5Spheres':
       return config
+    // 5th grade (phase 3): Fraction Falls, Place Value Plateau, Tower Battlefront (their own ramps, as written)
+    case 'g5Fractions':
+    case 'g5Decimals':
+    case 'g5Gates':
+      return config
   }
 }
 

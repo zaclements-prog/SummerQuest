@@ -250,19 +250,23 @@ describe('changing grade', () => {
   })
 })
 
-/**
- * The zones with a 1st-grade set of their own (K–5 plan, phase-2b contract), and
- * the ones with a 1st-grade name of their own. Every other zone plays (and is
- * called) what kindergarten does at grade 1.
- */
 /** The zones with a 5th-grade set of their own (K–5 plan, phase-3 contract). */
 const G5_IDS: Record<string, string[]> = {
   // Reading Reef, Writing Workshop, Science Summit (phase 3)
   'reading-reef': ['g5-read-1', 'g5-read-2', 'g5-read-3'],
   'writing-workshop': ['g5-write-1', 'g5-write-2', 'g5-write-3'],
   'science-summit': ['g5-sci-1', 'g5-sci-cycle', 'g5-sci-2', 'g5-sci-3'],
+  // Fraction Falls, Place Value Plateau, Tower Battlefront (phase 3)
+  'fraction-falls': ['g5-frac-1', 'g5-frac-2', 'g5-frac-3'],
+  'place-value-plateau': ['g5-dec-1', 'g5-dec-2', 'g5-dec-3'],
+  'tower-battlefront': ['g5-td-1'],
 }
 
+/**
+ * The zones with a 1st-grade set of their own (K–5 plan, phase-2b contract), and
+ * the ones with a 1st-grade name of their own. Every other zone plays (and is
+ * called) what kindergarten does at grade 1.
+ */
 const G1_IDS: Record<string, string[]> = {
   // Word Reef, Writing Workshop, Counting Towers (phase 2b)
   'reading-reef': ['g1-vowels-1', 'g1-digraphs-1', 'g1-words-1', 'g1-sentences-1', 'g1-sight-1'],

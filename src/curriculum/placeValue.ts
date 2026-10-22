@@ -120,5 +120,40 @@ export const placeValueZone: Zone = {
         starsToEarn: 3,
       },
     ],
+    // 5th grade (5.NBT.1, 5.NBT.3–4, 5.NBT.7; powers of 10): decimals to
+    // thousandths read, written and compared, then rounding, powers of ten and
+    // the four operations to hundredths, then a mixed boss.
+    g5: [
+      {
+        id: 'g5-dec-1',
+        kind: 'concept',
+        title: 'Decimal Detective',
+        description: 'Read, write and compare decimals to the thousandths.',
+        gameId: 'conceptPlay',
+        providerConfig: { kind: 'g5Decimals', mode: 'place' },
+        params: { questionCount: 8 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g5-dec-2',
+        kind: 'practice',
+        title: 'Decimal Dash',
+        description: 'Round, slide the point by powers of ten, and compute — fast!',
+        gameId: 'speedRun',
+        providerConfig: { kind: 'g5Decimals', mode: 'roundOps' },
+        params: { timeLimitSec: 120, starThresholds: [6, 10, 14] },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g5-dec-3',
+        kind: 'mastery',
+        title: 'Thousandths Summit',
+        description: 'Every decimal skill at once to defeat the Peak Eagle!',
+        gameId: 'bossBattle',
+        providerConfig: { kind: 'g5Decimals', mode: 'mixed' },
+        params: { questionCount: 10, bossEmoji: '🦅', bossName: 'Peak Eagle' },
+        starsToEarn: 3,
+      },
+    ],
   },
 }

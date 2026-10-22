@@ -116,5 +116,40 @@ export const fractionZone: Zone = {
         starsToEarn: 3,
       },
     ],
+    // 5th grade (5.NF.1–4): the Candy Forge in its unlike-denominators mode (set
+    // the gauge to a common denominator, then stamp the sum), then multiplying
+    // fractions (area model) and fractions as division, then a mixed boss.
+    g5: [
+      {
+        id: 'g5-frac-1',
+        kind: 'concept',
+        title: 'Common Denominator Forge',
+        description: 'Set the gauge to a common denominator, then forge the sum!',
+        gameId: 'fractionForge',
+        providerConfig: { kind: 'g5Fractions', mode: 'addSub' },
+        params: { rounds: 5, mode: 'unlike' },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g5-frac-2',
+        kind: 'practice',
+        title: 'Pieces and Shares',
+        description: 'Multiply fractions with area models and share things fairly.',
+        gameId: 'conceptPlay',
+        providerConfig: { kind: 'g5Fractions', mode: 'timesShare' },
+        params: { questionCount: 8 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g5-frac-3',
+        kind: 'mastery',
+        title: 'Cascade Showdown',
+        description: 'Add, subtract, multiply and share fractions to beat the Cascade Croc!',
+        gameId: 'bossBattle',
+        providerConfig: { kind: 'g5Fractions', mode: 'mixed' },
+        params: { questionCount: 10, bossEmoji: '🐊', bossName: 'Cascade Croc' },
+        starsToEarn: 3,
+      },
+    ],
   },
 }

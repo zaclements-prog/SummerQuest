@@ -84,6 +84,16 @@ export type ProblemVisual =
       unit?: string
       bars: { label: string; value: number; emoji?: string }[]
     }
+  /**
+   * Grade 5 (5.NF.4): the area model of a fraction × a fraction. A unit square
+   * cut into `a.denominator` columns (`a.numerator` shaded) and
+   * `b.denominator` rows (`b.numerator` shaded); the overlap is the product.
+   */
+  | {
+      kind: 'fractionArea'
+      a: { numerator: number; denominator: number }
+      b: { numerator: number; denominator: number }
+    }
 
 export interface Problem {
   id: string
