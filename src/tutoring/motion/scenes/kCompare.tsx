@@ -4,7 +4,7 @@ import { Burst, Draw, Glow, Paper, Pop, T } from '../kit'
 import { M } from '../palette'
 import { Cookie, Friend } from '../shapes'
 import type { Scene, SceneProps } from '../types'
-import { Ball, Bear, NumDisc, STICKER } from './_kart'
+import { Bear, NumDisc, STICKER } from './_kart'
 
 /*
  * Kindergarten "more, fewer, same" colour code (whole lesson):
@@ -18,8 +18,8 @@ import { Ball, Bear, NumDisc, STICKER } from './_kart'
 const COLS = [210, 370, 530, 690]
 const TOP_Y = 150
 const BOT_Y = 410
-const FR = 40
-const CR = 36
+const FR = 46
+const CR = 40
 const SHIRTS = [STICKER.blue, STICKER.coral, STICKER.mint, STICKER.lilac]
 
 /** 0 → 1 → 0 over `dur` from `at` (a hop). */
@@ -54,6 +54,28 @@ function Band({ t, at, y, h, color, out }: { t: number; at: number; y: number; h
   if (out !== undefined) k *= 1 - progress(t, out, 0.35)
   if (k <= 0.001) return null
   return <rect x={120} y={y - h / 2} width={660 * k} height={h} rx={h / 2} fill={color} opacity={0.4 * k} />
+}
+
+/** A football like the ⚽ card: white, a black patch in the middle and five at the rim (radius r). */
+function SoccerBall({ r = 40 }: { r?: number }) {
+  const pent = (cx: number, cy: number, s: number, rot: number) =>
+    Array.from({ length: 5 }, (_, i) => {
+      const a = ((rot + i * 72 - 90) * Math.PI) / 180
+      return `${(cx + Math.cos(a) * s).toFixed(1)},${(cy + Math.sin(a) * s).toFixed(1)}`
+    }).join(' ')
+  return (
+    <g>
+      <circle r={r} fill={M.white} stroke={M.ink} strokeWidth={4} />
+      <polygon points={pent(0, 0, r * 0.36, 0)} fill={M.ink} />
+      {[0, 1, 2, 3, 4].map((i) => {
+        const a = ((i * 72 + 90) * Math.PI) / 180
+        return (
+          <polygon key={i} points={pent(Math.cos(a) * r * 0.8, Math.sin(a) * r * 0.8, r * 0.24, i * 72 + 36)} fill={M.ink} />
+        )
+      })}
+      <circle r={r} fill="none" stroke={M.ink} strokeWidth={4} />
+    </g>
+  )
 }
 
 /** A balance that sits level: the same on both sides (the ⚖️ card). */
@@ -169,12 +191,12 @@ const more: Scene = ({ t, cue }: SceneProps) => {
       {/* one more cookie rolls in, and is joined */}
       {t >= oneMore && <Cookie x={cx} y={BOT_Y} r={CR} rot={(1 - roll) * 360} />}
       <PairString t={t} at={oneMore + 1.25} k={3} />
-      <Pop t={t} at={same} x={868} y={290} bounce={10}>
-        <T x={868} y={290 - bump(t, same + 0.5, 0.4) * 10} r={wobble(t, same + 0.3, { amp: 4, freq: 2, decay: 4 })}>
+      <Pop t={t} at={same} x={872} y={290} bounce={10}>
+        <T x={872} y={290 - bump(t, same + 0.5, 0.4) * 10} s={0.8} r={wobble(t, same + 0.3, { amp: 4, freq: 2, decay: 4 })}>
           <Balance />
         </T>
       </Pop>
-      <Burst t={t} at={same + 0.3} x={868} y={260} r={110} />
+      <Burst t={t} at={same + 0.3} x={872} y={260} r={100} />
     </>
   )
 }
@@ -204,7 +226,7 @@ const bears: Scene = ({ t, cue }: SceneProps) => {
       {COLS.map((x, k) => (
         <Pop key={k} t={t} at={l + k * 0.18} x={x} y={BOT_Y} bounce={11}>
           <T x={x} y={BOT_Y}>
-            <Ball r={42} />
+            <SoccerBall r={42} />
           </T>
         </Pop>
       ))}

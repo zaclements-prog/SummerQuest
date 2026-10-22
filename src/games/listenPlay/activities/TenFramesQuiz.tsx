@@ -8,7 +8,7 @@ import { M } from '../../../tutoring/motion/palette'
 import { voiceText } from '../../../voice/registry'
 import type { ListenActivityDef, ListenActivityProps, ListenProblem } from '../types'
 import { frameCardLines, sayNumber, type TenFramesSpec } from './numberSpecs'
-import { NumberCard, Numeral, TenFrames, nkCard, sweepCards, tenAndMoreSteps, useChoice, type CellMarks, type ChoiceCard } from './numberKit'
+import { NumberCard, Numeral, NumeralGlyph, TenFrames, nkCard, sweepCards, tenAndMoreSteps, useChoice, type CellMarks, type ChoiceCard } from './numberKit'
 
 /**
  * The `tenFrames` activity (Ten Frame Plateau, K.NBT.1 and K.CC.2): teen
@@ -95,29 +95,30 @@ function TenFramesQuiz({ problem, spec, phase, active, onAttempt, registerHelp }
   if (spec.ask === 'howMany') {
     picture = <TenFrames count={spec.n} frames={2} emoji={spec.emoji} marks={marks.picture} glow={glowAt('picture')} />
   } else if (spec.ask === 'shows') {
-    picture = (
-      <span className="block h-full aspect-square max-w-full">
-        <Numeral n={spec.n} />
-      </span>
-    )
+    // (the drawing keeps its shape inside whatever box it gets)
+    picture = <Numeral n={spec.n} />
   } else {
     const run = [spec.n - 3, spec.n - 2, spec.n - 1]
+    // one drawing, so the four squares stay square on any screen
     picture = (
-      <div className="w-full h-full flex items-center justify-center gap-[3%]">
+      <svg viewBox="0 0 470 116" className="block w-full h-full" aria-hidden="true">
         {[...run, null].map((v, k) => (
-          <div
-            key={k}
-            data-guide={`teen-tile-${k}`}
-            className={[
-              'relative h-[86%] max-w-[23%] aspect-square rounded-[1.5rem] border-[3px]',
-              v === null ? 'border-dashed border-line/45 bg-paper/70' : 'border-line bg-ocean-100 shadow-ledge-sm',
-              lit === k ? 'nk-lit' : '',
-            ].join(' ')}
-          >
-            <span className="absolute inset-[8%]">{v === null ? <Blank /> : <Numeral n={v} />}</span>
-          </div>
+          <g key={k} data-guide={`teen-tile-${k}`} data-lit={lit === k ? '' : undefined} transform={`translate(${8 + k * 116} 8)`}>
+            {lit === k && <rect x={-6} y={-6} width={112} height={112} rx={26} fill="#ffe594" stroke="#ffcf4d" strokeWidth={6} />}
+            {v === null ? (
+              <rect x={2} y={2} width={96} height={96} rx={22} fill="#fffaf0" stroke={M.ink} strokeOpacity={0.45} strokeWidth={4} strokeDasharray="10 8" />
+            ) : (
+              <>
+                <rect x={2} y={6} width={96} height={96} rx={22} fill={M.ink} opacity={0.25} />
+                <rect x={2} y={2} width={96} height={96} rx={22} fill="#dff1fb" stroke={M.ink} strokeWidth={4} />
+              </>
+            )}
+            <svg x={10} y={10} width={80} height={80} viewBox="0 0 100 100">
+              {v === null ? <Blank /> : <NumeralGlyph n={v} />}
+            </svg>
+          </g>
         ))}
-      </div>
+      </svg>
     )
   }
 
@@ -141,7 +142,7 @@ function TenFramesQuiz({ problem, spec, phase, active, onAttempt, registerHelp }
     // a wide row of numbers on top, the cards under it
     return (
       <div className="flex-1 min-h-0 min-w-0 flex flex-col justify-center gap-4 short:gap-3 roomy:gap-6" data-teen={spec.ask}>
-        <div data-guide={TEEN_PICTURE} className="lp-picture-panel relative w-full flex-1 min-h-28 max-h-[22rem] bg-paper border-[3px] border-line rounded-[2rem] shadow-card overflow-hidden">
+        <div data-guide={TEEN_PICTURE} className="lp-picture-panel relative w-full flex-1 min-h-28 max-h-[16rem] bg-paper border-[3px] border-line rounded-[2rem] shadow-card overflow-hidden">
           <div className="absolute inset-[5%]">{picture}</div>
         </div>
         <div className="shrink-0 flex items-center justify-center gap-4 short:gap-3 roomy:gap-6 px-1 pb-1" role="group" aria-label="answers">
@@ -173,11 +174,9 @@ function TenFramesQuiz({ problem, spec, phase, active, onAttempt, registerHelp }
 /** The blank in "what comes next?": a question mark (a symbol, not a word). */
 function Blank() {
   return (
-    <svg viewBox="0 0 100 100" className="block w-full h-full" aria-hidden="true">
-      <text x={50} y={54} fontFamily={M.font} fontWeight={700} fontSize={70} textAnchor="middle" dominantBaseline="central" fill="#3a2c38" opacity={0.3}>
-        ?
-      </text>
-    </svg>
+    <text x={50} y={54} fontFamily={M.font} fontWeight={700} fontSize={70} textAnchor="middle" dominantBaseline="central" fill="#3a2c38" opacity={0.3}>
+      ?
+    </text>
   )
 }
 

@@ -157,14 +157,21 @@ export function TenFrames({ count, start = 0, frames, marks, glow = null, fresh 
 
 /** A big numeral (the kit's numeral sticker: pastel fill, ink outline). */
 export function Numeral({ n, className = '' }: { n: number; className?: string }) {
+  return (
+    <svg viewBox="0 0 100 100" className={`block w-full h-full ${className}`} aria-hidden="true">
+      <NumeralGlyph n={n} />
+    </svg>
+  )
+}
+
+/** The numeral alone, for a 100 × 100 box inside another drawing. */
+export function NumeralGlyph({ n }: { n: number }) {
   const s = String(n)
   const size = s.length > 1 ? 66 : 84
   return (
-    <svg viewBox="0 0 100 100" className={`block w-full h-full ${className}`} aria-hidden="true">
-      <text x={50} y={53} fontFamily={FONT} fontWeight={700} fontSize={size} textAnchor="middle" dominantBaseline="central" fill={STICKER[((n % 8) + 8) % 8]} stroke={INK} strokeWidth={size / 17} strokeLinejoin="round" paintOrder="stroke fill">
-        {s}
-      </text>
-    </svg>
+    <text x={50} y={53} fontFamily={FONT} fontWeight={700} fontSize={size} textAnchor="middle" dominantBaseline="central" fill={STICKER[((n % 8) + 8) % 8]} stroke={INK} strokeWidth={size / 17} strokeLinejoin="round" paintOrder="stroke fill">
+      {s}
+    </text>
   )
 }
 

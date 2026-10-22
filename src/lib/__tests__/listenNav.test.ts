@@ -139,3 +139,23 @@ describe('World gateways', () => {
     }
   })
 })
+
+describe('every open K zone (the real K–1 stage sets)', () => {
+  it('has its name and welcome said aloud, and each stage its title and its own picture', () => {
+    let open = 0
+    for (const [zone, sets] of original) {
+      const k1 = sets?.k1
+      if (!k1?.length) continue
+      open++
+      const title = zone.titleByBand?.k1 ?? zone.title
+      expect(voiceText(zoneNameVoice(zone.id)!), zone.id).toBe(`${title}!`)
+      expect(voiceText(zoneWelcomeVoice(zone.id)), zone.id).toBe(`${title}! Tap a star to play!`)
+      for (const s of k1) {
+        expect(stageVoice(s.id), s.id).not.toBeNull()
+        expect(stagePicture(s), s.id).not.toMatch(/^[💡⚡🏆⭐]$/u)
+      }
+    }
+    // (the pilot's three, Writing Workshop, Number Dunes, Ten Frame Plateau, …)
+    expect(open).toBeGreaterThanOrEqual(6)
+  })
+})

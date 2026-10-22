@@ -74,6 +74,8 @@ const ten: Scene = ({ t, cue }: SceneProps) => {
   return (
     <>
       <Paper />
+      {/* (one frame alone: drawn a third bigger, around its middle) */}
+      <g transform={`translate(480 ${y0 + FH / 2}) scale(1.35) translate(-480 ${-(y0 + FH / 2)})`}>
       <Pop t={t} at={frameAt - 0.3} x={480} y={y0 + FH / 2} bounce={13}>
         <Frame t={t} x0={x0} y0={y0} glowAt={full} />
       </Pop>
@@ -89,12 +91,13 @@ const ten: Scene = ({ t, cue }: SceneProps) => {
         const [cx, cy] = cellAt(x0, y0, k)
         return <Counter key={k} t={t} at={every + k * 0.13} x={cx} y={cy} />
       })}
-      <Pop t={t} at={full + 0.15} x={480} y={128} bounce={9}>
-        <T x={480} y={128 - bump(t, full + 0.6, 0.4) * 14}>
+      </g>
+      <Pop t={t} at={full + 0.15} x={480} y={104} bounce={9}>
+        <T x={480} y={104 - bump(t, full + 0.6, 0.4) * 14}>
           <NumDisc n={10} r={50} />
         </T>
       </Pop>
-      <Burst t={t} at={full + 0.3} x={480} y={128} r={110} />
+      <Burst t={t} at={full + 0.3} x={480} y={104} r={110} />
     </>
   )
 }
@@ -145,9 +148,9 @@ const more: Scene = ({ t, cue }: SceneProps) => {
         return (
           <g key={k}>
             {t < at - 0.6 ? <circle cx={waiting[k][0]} cy={waiting[k][1]} r={CELL * 0.33 * shown} fill={M.coral} stroke={M.ink} strokeWidth={3.5} /> : <Counter t={t} at={at - 0.2} x={cx} y={cy} from={waiting[k]} />}
-            <Pop t={t} at={at + 0.2} x={cx} y={cy + CELL / 2 + 26} bounce={10}>
-              <T x={cx} y={cy + CELL / 2 + 26}>
-                <NumDisc n={11 + k} r={21} fill={M.white} />
+            <Pop t={t} at={at + 0.2} x={cx + 24} y={cy - 24} bounce={10}>
+              <T x={cx + 24} y={cy - 24}>
+                <NumDisc n={11 + k} r={17} fill={M.white} />
               </T>
             </Pop>
           </g>
@@ -185,7 +188,7 @@ const fifteen: Scene = ({ t, cue }: SceneProps) => {
         return <Counter key={k} t={t} at={turn + 0.2 + k * 0.07} x={cx} y={cy} />
       })}
       {t >= on && (
-        <T x={lerp(980, x0 + FW + 70, handIn)} y={BY + FH / 2 + 40 - bump(t, on + 0.7, 0.4) * 18} r={-60}>
+        <T x={lerp(1000, x0 + FW + 14, handIn) + bump(t, on + 0.7, 0.4) * 14} y={BY + CELL / 2} r={90}>
           <PointerHand press={bump(t, on + 0.7, 0.4)} />
         </T>
       )}
@@ -197,9 +200,10 @@ const TEENS = [11, 12, 13, 14, 15, 16, 17, 18, 19]
 
 /**
  * kTeens/twelve — "Every teen number is ten and some more. Let's find
- * twelve!" The teen numbers hop in along a row; on "ten and some" each gets a
- * little gold 10 under it; on "find twelve" the 12 grows big in the middle
- * and the others fade back. (The check: which ten-frames show twelve?)
+ * twelve!" The teen numbers hop in along a row, each on its own sticker; on
+ * "ten and some" each gets a little gold 10 under it; on "find twelve" the 12
+ * grows big in the middle and the others fade back. (The check: which
+ * ten-frames show twelve?)
  */
 const twelve: Scene = ({ t, cue }: SceneProps) => {
   const teen = cue('teen number')
@@ -209,24 +213,25 @@ const twelve: Scene = ({ t, cue }: SceneProps) => {
   return (
     <>
       <Paper />
-      <Glow t={t} at={find + 0.4} x={480} y={290} r={150} breathe={false} />
+      <Glow t={t} at={find + 0.4} x={480} y={330} r={150} breathe={false} />
       {TEENS.map((n, k) => {
-        const x = 120 + k * 90
+        const x = 80 + k * 100
         const s = spring(t, teen + k * 0.1, { stiffness: 230, damping: 12 })
         if (s <= 0.001) return null
         const me = n === 12
         const fade = me ? 1 : 1 - 0.7 * grow
         const tx = me ? lerp(x, 480, grow) : x
-        const ty = me ? lerp(180, 290, grow) : 180
-        const size = me ? lerp(64, 200, grow) : 64
+        const ty = me ? lerp(150, 330, grow) : 150
+        const r = me ? lerp(42, 112, grow) : 42
         return (
           <g key={n}>
             <T x={tx} y={ty} s={s} o={fade}>
-              <BigNumeral n={n} size={size} color={me ? STICKER.blue : STICKER.gold} />
+              <circle r={r} fill={M.white} stroke={M.ink} strokeWidth={4} />
+              <BigNumeral n={n} size={r * 1.02} color={me ? STICKER.blue : STICKER.gold} />
             </T>
             {!me && (
-              <Pop t={t} at={tenAnd + k * 0.06} x={x} y={250} bounce={10}>
-                <T x={x} y={250} o={fade}>
+              <Pop t={t} at={tenAnd + k * 0.06} x={x} y={222} bounce={10}>
+                <T x={x} y={222} o={fade}>
                   <NumDisc n={10} r={17} />
                 </T>
               </Pop>
