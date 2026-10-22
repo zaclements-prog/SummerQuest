@@ -18,6 +18,7 @@ import {
 } from '../divisionCore'
 import { GRADE_LEVELS, GRADE_TIERS } from '../../gradeTiers'
 import { seededRng } from '../../random'
+import type { Problem } from '../../problem'
 import { makeDivisionProvider } from '../../providers/division'
 import { CRYSTAL_COLORS, crystalColor, golemChalkSize } from '../../../games/DivisionArena.layout'
 import { curriculum, zoneStages } from '../../../curriculum'
@@ -70,11 +71,11 @@ describe('grades 2–4: the arena rules are exactly the old ones', () => {
       const t = GRADE_TIERS[g].divMax
       seeded('facts')
       const a = makeDivisionProvider(arenaRules(1, t).facts)
-      const mine = Array.from({ length: 50 }, () => a.next().prompt)
+      const mine = Array.from({ length: 50 }, () => (a.next() as Problem).prompt)
       vi.restoreAllMocks()
       seeded('facts')
       const b = makeDivisionProvider(arenaFactConfig(t))
-      expect(Array.from({ length: 50 }, () => b.next().prompt)).toEqual(mine)
+      expect(Array.from({ length: 50 }, () => (b.next() as Problem).prompt)).toEqual(mine)
     }
   })
 
@@ -97,7 +98,7 @@ describe('grade 5: two-digit crystals', () => {
     for (const cfg of [r.facts, r.warm]) {
       const p = makeDivisionProvider(cfg)
       for (let i = 0; i < 300; i++) {
-        const m = /^(\d+) ÷ (\d+) = \?$/.exec(p.next().prompt)!
+        const m = /^(\d+) ÷ (\d+) = \?$/.exec((p.next() as Problem).prompt)!
         const [dividend, divisor] = [Number(m[1]), Number(m[2])]
         expect(divisor).toBeGreaterThanOrEqual(11)
         expect(divisor).toBeLessThanOrEqual(TWO_DIGIT_ARENA.divisorMax)
