@@ -58,7 +58,6 @@ export const G1_WORDS = {
   pen: ['p', 'e', 'n'],
   net: ['n', 'e', 't'],
   web: ['w', 'e', 'b'],
-  jet: ['j', 'e', 't'],
   egg: ['e', 'gg'],
   bell: ['b', 'e', 'll'],
   // short i
@@ -108,7 +107,7 @@ export type G1Word = keyof typeof G1_WORDS
 /** Each short-vowel picture word's vowel (the "Which one has the short a sound?" bank). */
 export const VOWEL_OF: Partial<Record<G1Word, ShortVowel>> = {
   cat: 'a', hat: 'a', bat: 'a', map: 'a', van: 'a', rat: 'a', bag: 'a',
-  bed: 'e', hen: 'e', pen: 'e', net: 'e', web: 'e', jet: 'e', egg: 'e', bell: 'e',
+  bed: 'e', hen: 'e', pen: 'e', net: 'e', web: 'e', egg: 'e', bell: 'e',
   pig: 'i', pin: 'i', milk: 'i', gift: 'i', fish: 'i', ship: 'i', chick: 'i',
   dog: 'o', fox: 'o', box: 'o', lock: 'o', clock: 'o', frog: 'o',
   sun: 'u', bus: 'u', bug: 'u', nut: 'u', tub: 'u', cup: 'u', duck: 'u', drum: 'u', truck: 'u',
@@ -116,7 +115,7 @@ export const VOWEL_OF: Partial<Record<G1Word, ShortVowel>> = {
 export const VOWEL_WORDS = Object.keys(VOWEL_OF) as G1Word[]
 
 /** Three-letter words, one sound per letter, no letter twice: the "c _ t" gaps, and the words spelled from tiles. */
-export const CVC_WORDS = ['cat', 'hat', 'bat', 'map', 'van', 'rat', 'bag', 'bed', 'hen', 'pen', 'net', 'web', 'jet', 'pig', 'pin', 'dog', 'fox', 'box', 'sun', 'bus', 'bug', 'nut', 'tub', 'cup'] as const satisfies readonly G1Word[]
+export const CVC_WORDS = ['cat', 'hat', 'bat', 'map', 'van', 'rat', 'bag', 'bed', 'hen', 'pen', 'net', 'web', 'pig', 'pin', 'dog', 'fox', 'box', 'sun', 'bus', 'bug', 'nut', 'tub', 'cup'] as const satisfies readonly G1Word[]
 export type CvcWord = (typeof CVC_WORDS)[number]
 
 /** Words read and then matched to their picture ("Read a word"): the CVC words and the letter-team words a 1st grader decodes. */

@@ -108,20 +108,20 @@ function TileBuild({ spec, active, misses, onAttempt, registerHelp }: ListenActi
     if (mounted.current) setLitSlot(-1)
   }
 
-  // the help after a miss: the rule or "let's spell it together", then it said slowly, each slot lighting with its tile
+  // the help after a miss: the tiles in the wrong place go back to the tray, the rule or "let's spell it
+  // together", then it said slowly, each slot lighting with its tile (a faint one where the slot is empty)
   useEffect(() => {
     registerHelp(async () => {
       if (!mounted.current) return
       setWrong([])
+      setPlaced((p) => p.map((i, k) => (i !== null && spec.tiles[i] === spec.units[k] ? i : null)))
       setGhost(true)
       if (spec.helpIntro) await guide.show({ voice: spec.helpIntro, target: TILES_SLOTS, hand: false, pad: 8 }, { repeatable: false })
       if (!mounted.current) return
       await sayLit(spec.help)
       if (!mounted.current) return
       await wait(250)
-      // the tiles in the wrong place go back to the tray
       setGhost(false)
-      setPlaced((p) => p.map((i, k) => (i !== null && spec.tiles[i] === spec.units[k] ? i : null)))
       setCheck('build')
     })
     return () => registerHelp(null)
@@ -196,8 +196,9 @@ function TileBuild({ spec, active, misses, onAttempt, registerHelp }: ListenActi
         >
           {spec.units.map((u, k) => {
             const t = tileAt(k)
-            const period = u === '.'
-            const w = letters || period ? `var(--tile)` : `max(calc(var(--tile) * 1.2), calc(${u.length + 1.2} * ${font} * 0.62))`
+            // a slot is as wide as its word, or as the (wrong) tile put in it when that is longer
+            const shown = t !== null && t.length > u.length ? t : u
+            const w = letters ? `var(--tile)` : shown === '.' ? `calc(${unit} * 0.7)` : `max(calc(var(--tile) * 1.2), calc(${shown.length + 1.2} * ${font} * 0.62))`
             return (
               <button
                 key={k}
@@ -214,7 +215,7 @@ function TileBuild({ spec, active, misses, onAttempt, registerHelp }: ListenActi
                   t !== null ? 'bg-paper border-line shadow-ledge-sm' : 'bg-ocean-50 border-dashed border-ocean-300',
                   locked[k] ? 'cursor-default' : 'cursor-pointer',
                 ].join(' ')}
-                style={{ width: period ? `calc(${unit} * 0.7)` : w, height: unit, fontSize: font }}
+                style={{ width: w, height: unit, fontSize: font }}
               >
                 {t !== null ? (
                   <span className="tiles-in" key={`${k}-${placed[k]}`}>

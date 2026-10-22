@@ -38,7 +38,7 @@ export const G1_SENTENCES = {
   dadPen: { text: 'Dad has a pen.', ask: 'What does Dad have?', answer: 'pen', others: ['cup', 'hat'] },
   frogHop: { text: 'A frog can hop.', ask: 'What can hop?', answer: 'frog', others: ['bed', 'cup'] },
   fishSwim: { text: 'The fish can swim.', ask: 'What can swim?', answer: 'fish', others: ['bus', 'bed'] },
-  hatRed: { text: 'My hat is red.', ask: 'What is red?', answer: 'hat', others: ['frog', 'sheep'] },
+  likeHat: { text: 'I like my hat.', ask: 'What do I like?', answer: 'hat', others: ['frog', 'sheep'] },
   catNap: { text: 'The cat had a nap.', ask: 'Who had a nap?', answer: 'cat', others: ['dog', 'pig'] },
   redHen: { text: 'I see a red hen.', ask: 'What do I see?', answer: 'hen', others: ['bus', 'cup'] },
   getBus: { text: 'We get on the bus.', ask: 'What do we get on?', answer: 'bus', others: ['cup', 'nut'] },

@@ -103,12 +103,6 @@
       "kind": "line",
       "file": "voice/g1-phonics/vowelIn-web.mp3"
     },
-    "g1-phonics/vowelIn-jet": {
-      "text": "Jet has the short E sound.",
-      "hash": "a7d9cba6e4",
-      "kind": "line",
-      "file": "voice/g1-phonics/vowelIn-jet.mp3"
-    },
     "g1-phonics/vowelIn-egg": {
       "text": "Egg has the short E sound.",
       "hash": "4fbacbd208",
@@ -354,12 +348,6 @@
       "hash": "499e87e4b5",
       "kind": "line",
       "file": "voice/g1-phonics/starts-web.mp3"
-    },
-    "g1-phonics/starts-jet": {
-      "text": "Jet starts with juh.",
-      "hash": "207255d2e0",
-      "kind": "line",
-      "file": "voice/g1-phonics/starts-jet.mp3"
     },
     "g1-phonics/starts-egg": {
       "text": "Egg starts with eh.",
@@ -757,12 +745,6 @@
       "kind": "line",
       "file": "voice/g1-phonics/sounds-web.mp3"
     },
-    "g1-phonics/sounds-jet": {
-      "text": "Juh… eh… tuh. Jet!",
-      "hash": "c04bec1025",
-      "kind": "line",
-      "file": "voice/g1-phonics/sounds-jet.mp3"
-    },
     "g1-phonics/sounds-pig": {
       "text": "Puh… ih… guh. Pig!",
       "hash": "270f78bad7",
@@ -960,12 +942,6 @@
       "hash": "e26ecff7dc",
       "kind": "whole",
       "file": "voice/g1-phonics/middle/word=web.mp3"
-    },
-    "g1-phonics/middle/word=jet": {
-      "text": "Jet! What sound is in the middle? Tap the letter.",
-      "hash": "0c003cd186",
-      "kind": "whole",
-      "file": "voice/g1-phonics/middle/word=jet.mp3"
     },
     "g1-phonics/middle/word=pig": {
       "text": "Pig! What sound is in the middle? Tap the letter.",
@@ -1410,12 +1386,6 @@
       "hash": "643af18ab7",
       "kind": "whole",
       "file": "voice/g1-phonics/word/word=web.mp3"
-    },
-    "g1-phonics/word/word=jet": {
-      "text": "jet!",
-      "hash": "0c60129276",
-      "kind": "whole",
-      "file": "voice/g1-phonics/word/word=jet.mp3"
     },
     "g1-phonics/word/word=egg": {
       "text": "egg!",
@@ -3949,11 +3919,11 @@
       "kind": "line",
       "file": "voice/g1-words/sent-fishSwim.mp3"
     },
-    "g1-words/sent-hatRed": {
-      "text": "My hat is red.",
-      "hash": "1331897236",
+    "g1-words/sent-likeHat": {
+      "text": "I like my hat.",
+      "hash": "d416ae0932",
       "kind": "line",
-      "file": "voice/g1-words/sent-hatRed.mp3"
+      "file": "voice/g1-words/sent-likeHat.mp3"
     },
     "g1-words/sent-catNap": {
       "text": "The cat had a nap.",
@@ -4057,11 +4027,11 @@
       "kind": "line",
       "file": "voice/g1-words/ask-fishSwim.mp3"
     },
-    "g1-words/ask-hatRed": {
-      "text": "What is red?",
-      "hash": "c4cc2d3f59",
+    "g1-words/ask-likeHat": {
+      "text": "What do I like?",
+      "hash": "459956fd0e",
       "kind": "line",
-      "file": "voice/g1-words/ask-hatRed.mp3"
+      "file": "voice/g1-words/ask-likeHat.mp3"
     },
     "g1-words/ask-catNap": {
       "text": "Who had a nap?",
@@ -5148,12 +5118,6 @@
       "hash": "29b98ea249",
       "kind": "whole",
       "file": "voice/g1-writing/spell/word=web.mp3"
-    },
-    "g1-writing/spell/word=jet": {
-      "text": "Spell Jet. Tap the letters.",
-      "hash": "44ff3a3010",
-      "kind": "whole",
-      "file": "voice/g1-writing/spell/word=jet.mp3"
     },
     "g1-writing/spell/word=pig": {
       "text": "Spell Pig. Tap the letters.",
