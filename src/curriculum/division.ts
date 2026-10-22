@@ -157,5 +157,50 @@ export const divisionZone: Zone = {
         starsToEarn: 3,
       },
     ],
+    // 5th grade (phase 3; 5.NBT.6): long division to 4-digit by 2-digit →
+    // Crystal Golems with two-digit crystals (its grade-5 mode) → what a
+    // remainder means in a story → the boss, everything in words.
+    g5: [
+      {
+        id: 'g5-div-1',
+        kind: 'concept',
+        title: 'Long Division Trail',
+        description: 'Divide numbers up to 4 digits by 2-digit numbers, one step at a time.',
+        gameId: 'conceptPlay',
+        providerConfig: { kind: 'g5Div', mode: 'long' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g5-div-arena',
+        kind: 'practice',
+        title: 'Crystal Golems',
+        description: 'Two-digit crystals now! Grab the divisor that splits each golem into the pen.',
+        gameId: 'divisionArena',
+        providerConfig: { kind: 'g5Div', mode: 'arena' },
+        params: { rounds: 5, divisorDigits: 2 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g5-div-2',
+        kind: 'practice',
+        title: 'Remainder Rescue',
+        description: 'Round up, leave it, or answer with it? Decide what the remainder means.',
+        gameId: 'conceptPlay',
+        providerConfig: { kind: 'g5Div', mode: 'remainders' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g5-div-3',
+        kind: 'mastery',
+        title: 'Sand Serpent Battle',
+        description: 'Defeat the Sand Serpent with long division and remainders!',
+        gameId: 'bossBattle',
+        providerConfig: { kind: 'g5Div', mode: 'mastery' },
+        params: { questionCount: 10, bossEmoji: '🐍', bossName: 'Sand Serpent' },
+        starsToEarn: 3,
+      },
+    ],
   },
 }

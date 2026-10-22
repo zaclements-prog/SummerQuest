@@ -137,6 +137,15 @@ export type ProblemVisual =
       title?: string
       unit?: string
     }
+  /**
+   * 5th grade (Multiplication Mesa): an area model of a product, each factor
+   * split by place value (23 × 14: rows 20 and 3, columns 10 and 4). A cell is
+   * its partial product, or null for the "?" being asked; `total` sits under
+   * the model (null = "?", left out = not shown).
+   */
+  | { kind: 'areaModel'; rows: number[]; cols: number[]; cells: (number | null)[][]; total?: number | null }
+  /** 5th grade (Division Dunes): a long division set up; `highlight` lights the dividend's first digits. */
+  | { kind: 'longDivision'; dividend: number; divisor: number; highlight?: number }
 
 export interface Problem {
   id: string

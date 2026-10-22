@@ -23,6 +23,8 @@ const CloudKeeperGame = lazyWithRetry(() => import('./CloudKeeper'))
 // Cloud Keeper's grade-5 tier (Earth's spheres): its own module, so the 2–4 water cycle is untouched.
 const CloudKeeperSpheresGame = lazyWithRetry(() => import('./CloudKeeperSpheres'))
 const TimesGroveGame = lazyWithRetry(() => import('./TimesGrove'))
+// Times Grove's 5th-grade mode (area models): its own module, so grades 2–4's grove is untouched.
+const TimesGroveAreaGame = lazyWithRetry(() => import('./TimesGroveArea'))
 // The K–1 Listen & Play shell (2D, but only K–1 stages need it).
 const ListenPlayGame = lazyWithRetry(() => import('./listenPlay/ListenPlay'))
 const CritterParadeGame = lazyWithRetry(() => import('./CritterParade'))
@@ -62,11 +64,7 @@ export function CloudKeeper(props: GameProps) {
 }
 
 export function TimesGrove(props: GameProps) {
-  return (
-    <Loader>
-      <TimesGroveGame {...props} />
-    </Loader>
-  )
+  return <Loader>{props.params?.mode === 'area' ? <TimesGroveAreaGame {...props} /> : <TimesGroveGame {...props} />}</Loader>
 }
 
 export function ListenPlay(props: GameProps) {

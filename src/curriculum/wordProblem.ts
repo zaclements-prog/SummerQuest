@@ -118,5 +118,40 @@ export const wordProblemZone: Zone = {
         starsToEarn: 3,
       },
     ],
+    // 5th grade (phase 3; 5.OA.1–3): write and read expressions, two-rule
+    // patterns → work out expressions against the clock → multi-step stories
+    // in the boss.
+    g5: [
+      {
+        id: 'g5-woods-1',
+        kind: 'concept',
+        title: 'Expression Trail',
+        description: 'Write and read expressions with parentheses and brackets, and follow two-rule patterns.',
+        gameId: 'conceptPlay',
+        providerConfig: { kind: 'g5Expr', mode: 'expressions' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g5-woods-2',
+        kind: 'practice',
+        title: 'Trail Race',
+        description: 'Grouping first! How many expressions can you solve in 2 minutes?',
+        gameId: 'speedRun',
+        providerConfig: { kind: 'g5Expr', mode: 'evaluate' },
+        params: { timeLimitSec: 120, starThresholds: [3, 6, 9] },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g5-woods-3',
+        kind: 'mastery',
+        title: 'Riddle Wolf Trial',
+        description: 'Solve multi-step problems to outwit the Riddle Wolf!',
+        gameId: 'bossBattle',
+        providerConfig: { kind: 'g5Expr', mode: 'mastery' },
+        params: { questionCount: 8, bossEmoji: '🐺', bossName: 'Riddle Wolf' },
+        starsToEarn: 3,
+      },
+    ],
   },
 }

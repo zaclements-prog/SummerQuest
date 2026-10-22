@@ -251,4 +251,27 @@ describe('5th grade in the daily challenge (phase 3)', () => {
     }
     expect([...seen].sort()).toEqual(Object.keys(G5_FIRST).sort())
   })
+
+  it('5th grade plays its own first stage where a zone has a 5th-grade set (phase 3), as multiple choice', () => {
+    const G5_FIRST: Record<string, string> = {
+      'multiplication-mesa': 'g5-mult-1',
+      'division-dunes': 'g5-div-1',
+      'word-problem-woods': 'g5-woods-1',
+    }
+    const seen = new Set<string>()
+    for (let d = 0; d < 366; d++) {
+      const { zone, stage } = pickTodaysChallenge(5, localDayKey(new Date(2026, 0, 1 + d)))
+      if (!G5_FIRST[zone.id]) continue
+      seen.add(zone.id)
+      expect(stage.id).toBe(G5_FIRST[zone.id])
+      const q = createProvider(effectiveConfigForStage(stage, 0, 5)).next() as { options: unknown[]; answer: unknown }
+      expect(q.options.filter((o) => o === q.answer)).toHaveLength(1)
+    }
+    expect([...seen].sort()).toEqual(Object.keys(G5_FIRST).sort())
+    // 2nd–4th grade still play their own
+    for (let d = 0; d < 120; d++) {
+      const { zone, stage } = pickTodaysChallenge(3, localDayKey(new Date(2026, 0, 1 + d)))
+      if (G5_FIRST[zone.id]) expect(stage.id).not.toMatch(/^g5-/)
+    }
+  })
 })

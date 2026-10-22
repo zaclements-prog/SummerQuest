@@ -68,6 +68,10 @@ import { makeG5GatesProvider } from './g5Gates'
 import { makeG5MeasureProvider, type G5MeasureConfig } from './g5Measure'
 import { makeG5GeometryProvider, type G5GeometryConfig } from './g5Geometry'
 import { makeG5DataProvider, type G5DataConfig } from './g5Data'
+// 5th grade (phase 3): Multiplication Mesa, Division Dunes, Word Problem Woods
+import { makeG5MultProvider, type G5MultConfig } from './g5Mult'
+import { makeG5DivProvider, type G5DivConfig } from './g5Div'
+import { makeG5ExprProvider, type G5ExprConfig } from './g5Expr'
 
 export type ProviderConfig =
   | { kind: 'multiplication'; factorMin: number; factorMax: number }
@@ -164,6 +168,13 @@ export type ProviderConfig =
   | ({ kind: 'g5Geometry' } & G5GeometryConfig)
   /** Line plots in fractions of a unit; graphing two number patterns. */
   | ({ kind: 'g5Data' } & G5DataConfig)
+  // ── 5th grade (phase 3): Multiplication Mesa, Division Dunes, Word Problem Woods ──
+  /** Multiplication Mesa (5th grade): area models, the standard algorithm, powers of 10 and exponents. */
+  | ({ kind: 'g5Mult' } & G5MultConfig)
+  /** Division Dunes (5th grade): long division to 4-digit by 2-digit, two-digit divisors, remainders in stories. */
+  | ({ kind: 'g5Div' } & G5DivConfig)
+  /** Word Problem Woods (5th grade): writing and working out expressions, two-rule patterns, multi-step stories. */
+  | ({ kind: 'g5Expr' } & G5ExprConfig)
 
 export function createProvider(config: ProviderConfig): ProblemProvider {
   switch (config.kind) {
@@ -276,5 +287,12 @@ export function createProvider(config: ProviderConfig): ProblemProvider {
       return makeG5GeometryProvider(config)
     case 'g5Data':
       return makeG5DataProvider(config)
+    // 5th grade (phase 3): Multiplication Mesa, Division Dunes, Word Problem Woods
+    case 'g5Mult':
+      return makeG5MultProvider(config)
+    case 'g5Div':
+      return makeG5DivProvider(config)
+    case 'g5Expr':
+      return makeG5ExprProvider(config)
   }
 }

@@ -42,10 +42,10 @@ describe('pet catalog', () => {
     const table: [string, string, string[]][] = [
       ['frog', 'fraction-falls', ['fractions', 'kAddTake', 'g1Shares', 'g5Fractions']],
       ['octopus', 'reading-reef', ['reading', 'kLetters', 'kRhymes', 'g1Reading', 'g5Reading']],
-      ['owl', 'word-problem-woods', ['wordProblem', 'kStoryMath', 'g1StoryMath']],
+      ['owl', 'word-problem-woods', ['wordProblem', 'kStoryMath', 'g1StoryMath', 'g5Expressions']],
       ['panda', 'geometry-grove', ['geometry', 'kShapes', 'g1Shapes', 'g5Coordinates']],
-      ['lion', 'multiplication-mesa', ['multiplication', 'kCounting', 'g1Adding']],
-      ['trex', 'division-dunes', ['division', 'kCompare', 'g1Subtract']],
+      ['lion', 'multiplication-mesa', ['multiplication', 'kCounting', 'g1Adding', 'g5Multiplication']],
+      ['trex', 'division-dunes', ['division', 'kCompare', 'g1Subtract', 'g5Division']],
       ['bear', 'measurement-marsh', ['measurement', 'kMeasure', 'g1Measure', 'g5Volume']],
       ['fox', 'data-delta', ['dataGraph', 'kSorting', 'g1Graphs', 'g5LinePlots']],
       ['unicorn', 'place-value-plateau', ['placeValue', 'kTeens', 'g1Tens', 'g5Decimals']],
@@ -99,6 +99,10 @@ describe('pet catalog', () => {
     expect(zoneLessonFor('measurement-marsh', 5)?.id).toBe('g5Volume')
     expect(zoneLessonFor('geometry-grove', 5)?.id).toBe('g5Coordinates')
     expect(zoneLessonFor('data-delta', 5)?.id).toBe('g5LinePlots')
+    // (5th grade, phase 3: the lion, the trex and the owl hatch from their zones' 5th-grade lessons)
+    expect(zoneLessonFor('multiplication-mesa', 5)?.id).toBe('g5Multiplication')
+    expect(zoneLessonFor('division-dunes', 5)?.id).toBe('g5Division')
+    expect(zoneLessonFor('word-problem-woods', 5)?.id).toBe('g5Expressions')
   })
 
   it('every egg has its own colors', () => {

@@ -18,7 +18,7 @@ import { juice } from './_juice/juice'
 import { useSquash } from './_juice/useSquash'
 import { SpeechBubble } from './_juice/JuiceHud'
 import { sfx } from '../lib/sound'
-import { PEN, crystalColor, wpos, type GolemSim } from './DivisionArena.layout'
+import { PEN, crystalColor, golemChalkSize, wpos, type GolemSim } from './DivisionArena.layout'
 
 /**
  * Visual pieces for Crystal Golems (DivisionArena.tsx). All dumb: they take
@@ -53,8 +53,7 @@ export function Golem({ simRef, dividend, giant }: { simRef: RefObject<GolemSim>
   const lastStep = useRef(0)
   const chalk = useMemo(() => {
     const label = String(dividend)
-    const w = label.length > 1 ? 0.3 : 0.36
-    return chalkText(label, { y: 0, z: 0, w, h: 0.5, t: 0.075, gap: 0.1, color: CHALK })
+    return chalkText(label, { y: 0, z: 0, ...golemChalkSize(label.length), h: 0.5, t: 0.075, color: CHALK })
   }, [dividend])
 
   useFrame(({ clock }, rawDt) => {

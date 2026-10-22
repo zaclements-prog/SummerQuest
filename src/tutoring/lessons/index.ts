@@ -51,6 +51,10 @@ import { g5DecimalsLesson } from './g5Decimals'
 import { g5VolumeLesson } from './g5Volume'
 import { g5CoordinatesLesson } from './g5Coordinates'
 import { g5LinePlotsLesson } from './g5LinePlots'
+// 5th grade (phase 3): Multiplication Mesa, Division Dunes, Word Problem Woods
+import { g5MultiplicationLesson } from './g5Multiplication'
+import { g5DivisionLesson } from './g5Division'
+import { g5ExpressionsLesson } from './g5Expressions'
 
 /**
  * The lessons, by content band (lib/gradeBand; K–5 plan §2): kindergarten and
@@ -125,6 +129,10 @@ export const g5Lessons: Lesson[] = [
   g5VolumeLesson,
   g5CoordinatesLesson,
   g5LinePlotsLesson,
+  // Multiplication Mesa, Division Dunes, Word Problem Woods (phase 3)
+  g5MultiplicationLesson,
+  g5DivisionLesson,
+  g5ExpressionsLesson,
 ]
 
 /** Every lesson of every band: what `getLesson` finds, and what the narration dump and scene tests cover. */

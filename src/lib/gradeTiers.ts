@@ -276,6 +276,11 @@ export function effectiveConfig(
     case 'g5Geometry':
     case 'g5Data':
       return config
+    // 5th grade (phase 3): Multiplication Mesa, Division Dunes, Word Problem Woods play as written
+    case 'g5Mult':
+    case 'g5Div':
+    case 'g5Expr':
+      return config
   }
 }
 

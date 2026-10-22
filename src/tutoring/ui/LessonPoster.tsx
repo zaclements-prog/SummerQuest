@@ -13,6 +13,8 @@ import { G5_REEF_WORKSHOP_SUMMIT_POSTERS } from './posters/g5ReefWorkshopSummit'
 import { G5_FALLS_PLATEAU_POSTERS } from './posters/g5FallsPlateau'
 // 5th grade (phase 3): Measurement Marsh, Geometry Grove, Data Delta
 import { G5_MGD_POSTERS } from './posters/g5MeasureGeoData'
+// 5th grade (phase 3): Multiplication Mesa, Division Dunes, Word Problem Woods
+import { G5_MESA_DUNES_WOODS_POSTERS } from './posters/g5MesaDunesWoods'
 
 const PW = 320
 const PH = 150
@@ -631,6 +633,7 @@ const POSTERS: Record<string, { bg: string; motif: () => ReactNode }> = {
   ...G5_REEF_WORKSHOP_SUMMIT_POSTERS,
   // 5th grade (phase 3): Measurement Marsh, Geometry Grove, Data Delta
   ...G5_MGD_POSTERS,
+  ...G5_MESA_DUNES_WOODS_POSTERS,
 }
 
 /**
