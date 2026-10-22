@@ -240,6 +240,11 @@ export function effectiveConfig(
     case 'kTowers':
     case 'kScience':
       return config
+    // 1st grade (phase 2b): Adding Mesa, Take-Away Dunes, Story Woods (their stages carry their own ranges)
+    case 'g1Adding':
+    case 'g1Subtract':
+    case 'g1StoryMath':
+      return config
   }
 }
 

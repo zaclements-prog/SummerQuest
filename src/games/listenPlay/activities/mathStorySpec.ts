@@ -15,8 +15,27 @@ import type { ListenActivitySpec } from '../types'
  * - `compare` (how many more): a row of `a` friends, `b` treats (`emoji2`),
  *   one under each friend in turn → a − b friends still waiting;
  * - `frame` (make ten): `a` in a ten-frame → 10 − a empty spots.
+ *
+ * 1st grade (Story Woods, 1.OA.1–2) adds the other unknowns, taking apart
+ * and three groups, all acted out:
+ *
+ * - `joinChange` (add to, the change unknown): `a` at home, then "some more",
+ *   then "now there are a + b": dashed spots up to the total; the child brings
+ *   newcomers in (counting on) until they are full → b (the side holds
+ *   `extra` more than are needed, so it's the spots that say when to stop);
+ * - `leaveChange` (take from, the change unknown): `a` at home, "some went
+ *   away", "now there are a − b": the child taps them away (counting back)
+ *   until that many are left; the leavers wait at the side → b;
+ * - `joinStart` (add to, the start unknown): "some" at home (unseen), `b`
+ *   more come in, "now there are a + b": the spots the newcomers didn't
+ *   fill are dashed → a (they pop in once it's found);
+ * - `apart` (take apart): `a` of one kind and `b` of another (`emoji2`) at
+ *   home, "a + b in all; a are this kind": the child takes the `a` out to the
+ *   side → b;
+ * - `three` (three addends): `a` at home, then `b` (`emoji2`) and `c`
+ *   (`emoji3`) are put in → a + b + c.
  */
-export type MathPlot = 'join' | 'leave' | 'together' | 'compare' | 'frame'
+export type MathPlot = 'join' | 'leave' | 'together' | 'compare' | 'frame' | 'joinChange' | 'leaveChange' | 'joinStart' | 'apart' | 'three'
 
 /** The backdrop. */
 export type MathPlace = 'falls' | 'woods' | 'farm' | 'park' | 'beach' | 'garden' | 'snow' | 'tree' | 'kitchen' | 'night' | 'river' | 'lake' | 'room'
@@ -55,12 +74,25 @@ export interface MathStorySpec extends ListenActivitySpec {
    * comes once they've all moved. Without it, they move by themselves.
    */
   act?: VoiceRef
+  // ── 1st grade (Story Woods, phase 2b) ──
+  /** `three`: the third group (`emoji3`). */
+  c?: number
+  /** `three`: the third kind. */
+  emoji3?: string
+  /** `joinChange`: more newcomers wait at the side than are needed (the dashed spots say when to stop). */
+  extra?: number
+  /** Written once the answer is found ("8 + 5 = 13"), the answer's number lit, and read aloud (`sentenceSaid`). */
+  sentence?: readonly (number | '+' | '−' | '=')[]
+  /** Where the answer is in `sentence`. */
+  sentenceAnswerAt?: number
+  /** The sentence read aloud as it appears ("Eight plus five equals thirteen."). */
+  sentenceSaid?: VoiceRef
 }
 
 export const isMathStorySpec = (s: { kind: string } | undefined | null): s is MathStorySpec => s?.kind === 'mathStory'
 
 /** The answer the scene shows. */
-export function storyAnswer(s: Pick<MathStorySpec, 'plot' | 'a' | 'b'>): number {
+export function storyAnswer(s: Pick<MathStorySpec, 'plot' | 'a' | 'b'> & { c?: number }): number {
   switch (s.plot) {
     case 'join':
     case 'together':
@@ -70,13 +102,36 @@ export function storyAnswer(s: Pick<MathStorySpec, 'plot' | 'a' | 'b'>): number 
       return s.a - s.b
     case 'frame':
       return 10 - s.a
+    // 1st grade
+    case 'joinChange':
+    case 'leaveChange':
+    case 'apart':
+      return s.b
+    case 'joinStart':
+      return s.a
+    case 'three':
+      return s.a + s.b + (s.c ?? 0)
   }
+}
+
+/** How many things the child moves acting the story out (the change; taking apart: the known part; three groups: both). */
+export function storyMoves(s: Pick<MathStorySpec, 'plot' | 'a' | 'b'> & { c?: number }): number {
+  if (s.plot === 'apart') return s.a
+  if (s.plot === 'three') return s.b + (s.c ?? 0)
+  return s.b
+}
+
+/** How many lines tell the story before it's acted out (1st grade's unknowns and three groups say a third). */
+export function storyLines(s: Pick<MathStorySpec, 'plot'>): number {
+  return s.plot === 'joinChange' || s.plot === 'leaveChange' || s.plot === 'joinStart' || s.plot === 'three' ? 3 : 2
 }
 
 /** Guide ids inside the activity. */
 export const MS_SCENE = 'ms-scene'
 export const MS_HOME = 'ms-home'
 export const MS_SIDE = 'ms-side'
+/** 1st grade: the number sentence written once the answer is found. */
+export const MS_SENTENCE = 'ms-sentence'
 export const msObj = (k: number) => `ms-obj-${k}`
 
 // ── layout (px in the scene's own box) ───────────────────────────────────────
@@ -112,21 +167,25 @@ export interface StoryLayout {
 }
 
 /** The home's spots: five to a row (the ten-frame's rows), or a row of friends over their treats. */
-export function homeGrid(s: Pick<MathStorySpec, 'plot' | 'a' | 'b'>): { cols: number; rows: number } {
+export function homeGrid(s: Pick<MathStorySpec, 'plot' | 'a' | 'b'> & { c?: number }): { cols: number; rows: number } {
   if (s.plot === 'frame') return { cols: 5, rows: 2 }
   if (s.plot === 'compare') return { cols: Math.max(1, s.a), rows: 2 }
-  const n = Math.max(1, s.plot === 'leave' ? s.a : s.a + s.b)
+  const n = Math.max(1, s.plot === 'leave' || s.plot === 'leaveChange' ? s.a : s.plot === 'three' ? s.a + s.b + (s.c ?? 0) : s.a + s.b)
   return { cols: Math.min(5, n), rows: Math.ceil(n / 5) }
 }
 
 /** Is there a side area: newcomers waiting to be tapped in, or a friend at the side? */
 export function hasSide(s: Pick<MathStorySpec, 'plot' | 'act' | 'friend'>): boolean {
   if (s.friend) return true
+  // (1st grade: the ones that went away, or were taken out, wait at the side to be counted)
+  if (s.plot === 'leaveChange' || s.plot === 'apart') return true
   return !!s.act && s.plot !== 'leave' && s.plot !== 'frame'
 }
 
 /** How many spots the side holds (the newcomers waiting, or the leavers arriving at the friend). */
-export function sideCount(s: Pick<MathStorySpec, 'plot' | 'b'>): number {
+export function sideCount(s: Pick<MathStorySpec, 'plot' | 'a' | 'b'> & { c?: number; extra?: number }): number {
+  if (s.plot === 'joinChange') return Math.max(0, s.b + (s.extra ?? 0))
+  if (s.plot === 'apart' || s.plot === 'three') return storyMoves(s)
   return s.plot === 'frame' ? 0 : Math.max(0, s.b)
 }
 
@@ -167,7 +226,7 @@ function bestCols(n: number, w: number, h: number, maxCols: number, space: numbe
  * character on the left, the group in the middle and the side on the right;
  * tall ones put the character and the side in a band over the group.
  */
-export function storyLayout(s: Pick<MathStorySpec, 'plot' | 'a' | 'b' | 'act' | 'who' | 'friend'>, w: number, h: number): StoryLayout {
+export function storyLayout(s: Pick<MathStorySpec, 'plot' | 'a' | 'b' | 'act' | 'who' | 'friend' | 'c' | 'extra'>, w: number, h: number): StoryLayout {
   const { cols, rows } = homeGrid(s)
   const side = hasSide(s)
   const nSide = side ? Math.max(1, sideCount(s)) : 0

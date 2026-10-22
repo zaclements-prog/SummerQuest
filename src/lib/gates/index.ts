@@ -6,6 +6,6 @@
  */
 export * from './types'
 export * from './ops'
-export { OP_SETS, detectTrap, maxFactorFor, opSetFor, wholeResult, type OpFamily, type OpSetConfig } from './opSets'
+export { OP_SETS, detectTrap, isListenSet, maxFactorFor, opSetFor, showsDots, wholeResult, type OpFamily, type OpSetConfig } from './opSets'
 export { bestSide, makeGatePair, minGap, pairKey, resultOf } from './generate'
 export { SCAFFOLD, decide, scaffoldCheck, smartTally } from './tally'

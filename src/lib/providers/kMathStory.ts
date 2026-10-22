@@ -37,6 +37,9 @@ function mixUps({ plot, a, b }: Numbers): number[] {
       return [a, b]
     case 'frame':
       return [a, 10]
+    default:
+      // (1st grade's stories: lib/providers/g1StoryMath)
+      return []
   }
 }
 
@@ -74,6 +77,9 @@ export function storyNote(s: Numbers, v: number): VoiceRef | null {
       return v === s.a ? kit('noteFriends') : v === s.b ? kit('noteHave') : null
     case 'frame':
       return v === s.a ? kit('noteFull') : v === 10 ? kit('noteTen') : null
+    default:
+      // (1st grade's stories: lib/providers/g1StoryMath)
+      return null
   }
 }
 

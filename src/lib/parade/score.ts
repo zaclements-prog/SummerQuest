@@ -36,6 +36,10 @@ export function lossHint(ds: readonly Decision[], opSet: OpSetId): string {
   switch (opSet) {
     case 'addSub':
       return 'Count on from our number for each gate, then pick the bigger one!'
+    case 'add20':
+      return 'Add each gate to our number, then pick the bigger one!'
+    case 'sub20':
+      return 'Take each gate away from our number. Keep the bigger one!'
     case 'mulAdd':
       return `${TIMES} is great for a big crowd. For a small crowd, a big + can win!`
     case 'divSub':

@@ -34,6 +34,7 @@ const SETUPS: [OpFamily, number][] = [
   ['mul', 3],
   ['mul', 4],
   ['mul', 5],
+  ['div', 1],
   ['div', 2],
   ['div', 3],
   ['div', 4],
@@ -117,7 +118,8 @@ describe('parade levels', () => {
     }
     // most levels separate smart from weak play
     expect(losses / levels).toBeGreaterThan(0.6)
-  })
+    // (thousands of played levels: generous on a busy machine)
+  }, 30000)
 
   it('random play keeps every guarantee: floor, cap, wholeness, no repeats, cages that fit', () => {
     const r = seededRng('random-play')
@@ -139,7 +141,7 @@ describe('parade levels', () => {
         }
       }
     }
-  })
+  }, 30000)
 
   it('in play, ties and traps show up at about their set rates and the better gate is on either side', () => {
     const r = seededRng('in-play')
@@ -171,7 +173,7 @@ describe('parade levels', () => {
         expect(left / (n - ties), ctx).toBeLessThan(0.6)
       }
     }
-  })
+  }, 30000)
 
   it('is a pure function of the seed', () => {
     expect(planLevel({ family: 'mul', grade: 3, seed: 'x' }, 1)).toEqual(planLevel({ family: 'mul', grade: 3, seed: 'x' }, 1))
@@ -241,10 +243,10 @@ describe('voice lines', () => {
           voiceText(introLine('keep', listen))
           const { pairs, cages, state } = play(plan, () => (r() < 0.5 ? 'left' : 'right'))
           for (const p of pairs) {
-            const ref = gatePrompt(p, listen)
+            const ref = gatePrompt(p, listen, plan.opSet)
             expect(voiceText(ref).length).toBeGreaterThan(0)
             if (listen && p.left.op.kind === 'add' && p.right.op.kind === 'add') expect(ref).toHaveProperty('template', 'parade/plusOrPlus')
-            for (const side of ['left', 'right'] as const) voiceText(afterPick(decide(p, side), listen, s))
+            for (const side of ['left', 'right'] as const) voiceText(afterPick(decide(p, side), listen, s, plan.opSet))
           }
           for (const c of cages) voiceText(cageLine(c))
           const f = finaleOutcome(state)

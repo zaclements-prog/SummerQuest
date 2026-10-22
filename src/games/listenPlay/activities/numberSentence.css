@@ -1,0 +1,93 @@
+/*
+ * The `numberSentence` activity (1st grade: Adding Mesa, Take-Away Dunes): a
+ * number sentence over a picture of the strategy. Transform and opacity
+ * animations only, so they run on the compositor on a low-end tablet.
+ */
+
+.ns-model {
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* a counter or dot that just arrived (moved into the ten, filled, counted on) */
+.ns-pop {
+  animation: lp-pop-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* a counter taken away: it lifts and fades, leaving its crossed-out ring */
+.ns-gone {
+  animation: ns-lift 0.55s ease-in forwards;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@keyframes ns-lift {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-40%) scale(0.6);
+    opacity: 0;
+  }
+}
+
+/* something the voice is talking about */
+.ns-lit {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.ns-lit[data-on] {
+  opacity: 0.9;
+}
+
+/* rows that swap places (a turn-around fact), the frog hopping along the stones */
+.ns-slide {
+  transition: transform 0.7s cubic-bezier(0.3, 0.8, 0.25, 1);
+}
+
+/* a tap target the child should use now (acting the strategy out) */
+.ns-tap {
+  cursor: pointer;
+}
+.ns-tap .ns-ring {
+  animation: ns-ring 1.3s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@keyframes ns-ring {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.94);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.06);
+  }
+}
+
+/* the unknown's box: dashed while it waits, the answer pops in once found */
+.ns-box[data-solved] .ns-answer {
+  animation: lp-pop-in 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ns-pop,
+  .ns-gone,
+  .ns-tap .ns-ring,
+  .ns-box[data-solved] .ns-answer {
+    animation: none;
+  }
+  .ns-gone {
+    opacity: 0;
+  }
+  .ns-slide {
+    transition: none;
+  }
+}

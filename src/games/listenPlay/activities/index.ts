@@ -11,6 +11,8 @@ import { tenFramesActivity } from './TenFramesQuiz'
 import { buildActivity } from './BuildTeen'
 import { measureActivity } from './Measure'
 import { sortActivity } from './Sort'
+// 1st grade (phase 2b): Adding Mesa and Take-Away Dunes
+import { numberSentenceActivity } from './NumberSentence'
 
 /**
  * Listen & Play activities by `kind` (see `ListenProblem.activity`): the
@@ -31,6 +33,8 @@ export const LISTEN_ACTIVITIES: Record<string, ListenActivityDef<any>> = {
   buildTeen: buildActivity,
   measure: measureActivity,
   sort: sortActivity,
+  // 1st grade (phase 2b): Adding Mesa and Take-Away Dunes
+  numberSentence: numberSentenceActivity,
 }
 
 export function activityDef(spec: ListenActivitySpec | undefined): ListenActivityDef | null {

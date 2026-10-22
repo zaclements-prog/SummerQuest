@@ -45,7 +45,8 @@ describe('daily challenge pick', () => {
       for (let d = 0; d < 120; d++) {
         const { zone, stage } = pickTodaysChallenge(grade, localDayKey(new Date(2026, 0, 1 + d)))
         expect(open.has(zone.id)).toBe(true)
-        expect(stage.id).toMatch(/^k-/)
+        // (1st grade plays its own stages where a zone has them: phase 2b)
+        expect(stage.id).toMatch(grade === 0 ? /^k-/ : /^(k|g1)-/)
         zonesSeen.add(zone.id)
       }
       expect(zonesSeen.size).toBe(open.size)
@@ -66,6 +67,31 @@ describe('daily challenge pick', () => {
       // (Counting Towers' first stage is the tower game; the K daily plays its counting questions in Listen & Play)
       if (zone.id === 'tower-battlefront') expect(stage.id).toBe('k-towers-1')
       else expect(stage.gameId).toBe('listenPlay')
+    }
+  })
+
+  // ── 1st grade (phase 2b): Adding Mesa, Take-Away Dunes and Story Woods play their own first stage ──
+  it('1st grade: Adding Mesa, Take-Away Dunes and Story Woods play their own first stage (a number sentence or a story round)', () => {
+    const first: Record<string, string> = {
+      'multiplication-mesa': 'g1-add-1',
+      'division-dunes': 'g1-sub-1',
+      'word-problem-woods': 'g1-woods-1',
+    }
+    const seen = new Set<string>()
+    for (let d = 0; d < 366; d++) {
+      const { zone, stage } = pickTodaysChallenge(1, localDayKey(new Date(2026, 0, 1 + d)))
+      if (!(zone.id in first)) continue
+      seen.add(zone.id)
+      expect(stage.id).toBe(first[zone.id])
+      expect(stage.gameId).toBe('listenPlay')
+      const q = createProvider(effectiveConfigForStage(stage, 0, 1)).next() as ListenProblem
+      expect(q.activity?.kind, stage.id).toBe(zone.id === 'word-problem-woods' ? 'mathStory' : 'numberSentence')
+    }
+    expect([...seen].sort()).toEqual(Object.keys(first).sort())
+    // kindergarten still plays its own
+    for (let d = 0; d < 366; d++) {
+      const { zone, stage } = pickTodaysChallenge(0, localDayKey(new Date(2026, 0, 1 + d)))
+      if (zone.id in first) expect(stage.id).toMatch(/^k-/)
     }
   })
 

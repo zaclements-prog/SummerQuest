@@ -13,7 +13,7 @@ import { useVoice } from '../voice/useVoice'
 import type { VoiceRef } from '../voice/types'
 import { guide, useGuideCaption } from '../guide/store'
 import { GuideMarker } from '../guide/GuideMarker'
-import { bestSide, scaffoldCheck, type Decision, type OpFamily, type Side } from '../lib/gates'
+import { bestSide, scaffoldCheck, showsDots, type Decision, type OpFamily, type OpSetId, type Side } from '../lib/gates'
 import {
   LEVELS,
   afterPick,
@@ -130,6 +130,12 @@ function gateColors(seed: string): [string, string] {
 /** What the HUD calls an operation's result ("+12 → 20"). */
 const resultText = (label: string, n: number) => `${label} → ${n}`
 
+/** 1st grade's gates (+ and − written as numerals): the result as a number sentence ("8 + 5 = 13"). */
+const sentenceText = (count: number, label: string, n: number) => `${count} ${label.charAt(0)} ${label.slice(1)} = ${n}`
+
+/** The 1st-grade sets, whose results read as number sentences. */
+const isG1Set = (opSet: OpSetId | undefined) => opSet === 'add20' || opSet === 'sub20'
+
 /** The skill bucket a gate decision practises (× and ÷ facts), for the coach's analytics. */
 function skillOf(d: Decision): { id: string; label: string } | undefined {
   const p = d.pair
@@ -154,8 +160,9 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
   const [devGrade] = useState(() => (import.meta.env.DEV && typeof location !== 'undefined' ? new URLSearchParams(location.search).get('grade') : null))
   const grade = devGrade && /^[0-5]$/.test(devGrade) ? Number(devGrade) : typeof rawGrade === 'number' ? rawGrade : DEFAULT_GRADE
   const listen = isListenMode(grade)
-  // × for Multiplication Mesa, ÷ and − for Division Dunes (the grade picks the band's operators)
-  const family: OpFamily = params?.ops === 'div' ? 'div' : 'mul'
+  // × for Multiplication Mesa, ÷ and − for Division Dunes (the grade picks the band's operators;
+  // 1st grade's Take-Away Dunes parade names its − gates `sub`)
+  const family: OpFamily = params?.ops === 'div' || params?.ops === 'sub' ? 'div' : 'mul'
   const theme: ThemeKey = family
   const activeCreature = useProgress((s) => s.activeCreature)
   const recordAnswer = useProgress((s) => s.recordAnswer)
@@ -165,6 +172,9 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
   const [seed] = useState(() => `parade-${Date.now().toString(36)}-${Math.floor(Math.random() * 1e6)}`)
   const plans = useMemo(() => planRun({ family, grade, seed }), [family, grade, seed])
   const opSet = plans[0].opSet
+  // kindergarten's gates show dots; 1st grade's are written as numerals, their results as number sentences
+  const dots = listen && showsDots(opSet)
+  const sentences = listen && isG1Set(opSet)
 
   const worldRef = useRef<World | null>(null)
   if (worldRef.current === null) worldRef.current = makeWorld()
@@ -299,7 +309,7 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
       setPhase('intro')
       setLevelIdx(idx)
       showUpcoming(st)
-      say(introLine(plan.opSet === 'divSub' ? 'keep' : 'more', listen))
+      say(introLine(plan.opSet === 'divSub' || plan.opSet === 'sub20' ? 'keep' : 'more', listen))
       flash(idx === 0 ? 'Critter Parade!' : `Parade ${idx + 1}!`, '#ffe58a', 1700)
       later(2000, () => {
         worldRef.current!.sim.phase = 'march'
@@ -365,7 +375,9 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
       setCount(state.count)
       run.biggest = Math.max(run.biggest, state.count)
       setGates((g) => g.map((x) => (x.at === up.ev.at ? { ...x, picked: side } : x)))
-      juice.text({ pos: [laneX, 3.6, gz + 1], text: resultText(picked.label, d.result), size: 'lg', color: d.smart ? '#ffe58a' : '#ffffff' })
+      // (1st grade: "8 + 5 = 13")
+      const result = (label: string, n: number) => (sentences ? sentenceText(st.count, label, n) : resultText(label, n))
+      juice.text({ pos: [laneX, 3.6, gz + 1], text: result(picked.label, d.result), size: 'lg', color: d.smart ? '#ffe58a' : '#ffffff' })
       if (d.result > st.count) {
         juice.burst({ pos: [laneX, 1.2, gz + 1], color: [...RICH], count: 14 + Math.min(30, (d.result - st.count) * 2), speed: 3, up: 3.5, size: 0.08, life: 0.8 })
         sfx.pop()
@@ -377,10 +389,10 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
       // the ghost parade on the other lane: what the other gate would have given
       w.ghost.restartGhost()
       s.ghost = { n: Math.min(other.result, w.caps.ghost), x: -laneX, t: 0, life: d.smart && !d.tie ? 2.4 : 3.6 }
-      later(400, () => juice.text({ pos: [-laneX, 3.2, gz + 2.5], text: `👻 ${resultText(other.label, other.result)}`, size: 'lg', color: '#e6f3ff' }))
+      later(400, () => juice.text({ pos: [-laneX, 3.2, gz + 2.5], text: `👻 ${result(other.label, other.result)}`, size: 'lg', color: '#e6f3ff' }))
       setReveal({
-        got: resultText(picked.label, d.result),
-        other: d.tie ? `${other.label} makes ${other.result} too!` : `${other.label} would have ${pair.goal === 'keep' ? 'kept' : 'made'} ${other.result}`,
+        got: result(picked.label, d.result),
+        other: sentences ? result(other.label, other.result) : d.tie ? `${other.label} makes ${other.result} too!` : `${other.label} would have ${pair.goal === 'keep' ? 'kept' : 'made'} ${other.result}`,
         tone: d.tie ? 'tie' : d.smart ? 'smart' : 'weak',
         key: n,
       })
@@ -394,7 +406,7 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
         sfx.tick()
       }
       setStreak(run.streak)
-      say(afterPick(d, listen, run.cheer++))
+      say(afterPick(d, listen, run.cheer++, st.plan.opSet))
       // scaffold: near chance over the last 10 → slower, with pictures on the gates
       const sc = scaffoldCheck(run.decisions).scaffold
       s.scaffold = sc
@@ -410,7 +422,7 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
       }
       showUpcoming(state)
     },
-    [listen, credit, later, say, showUpcoming, flash],
+    [listen, sentences, credit, later, say, showUpcoming, flash],
   )
 
   const onCage = useCallback(() => {
@@ -455,7 +467,7 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
     const up = runRef.current.level?.upcoming
     if (!up || up.kind !== 'gate') return
     setWaiting(true)
-    const prompt = gatePrompt(up.pair, true)
+    const prompt = gatePrompt(up.pair, true, runRef.current.level?.plan.opSet)
     askRef.current = prompt
     say(null)
     askAtGates(prompt)
@@ -752,6 +764,7 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
           theme={theme}
           finaleAt={plan.finaleAt}
           listen={listen}
+          dots={dots}
           scaffold={scaffold}
           gates={gates}
           cage={cage}
@@ -811,7 +824,7 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
         </div>
       )}
 
-      {listen && waiting && upGate && <GateButtons pair={upGate.pair} colors={gates.find((g) => g.at === upGate.ev.at)?.colors ?? null} onTap={tapGate} />}
+      {listen && waiting && upGate && <GateButtons pair={upGate.pair} colors={gates.find((g) => g.at === upGate.ev.at)?.colors ?? null} onTap={tapGate} dots={dots} />}
 
       {levelEnd && phase === 'levelEnd' && <LevelEndCard end={levelEnd} level={levelIdx} last={levelIdx + 1 >= LEVELS} onNext={nextLevel} onRematch={rematch} />}
 
