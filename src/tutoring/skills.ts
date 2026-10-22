@@ -131,6 +131,13 @@ export const SKILLS: Record<string, SkillMeta> = {
   'g1-science-light-sound': { label: 'light, shadows and sound', zoneId: 'science-summit', lessonId: 'g1Science', practiceStageId: 'g1-science-1' },
   'g1-science-sky':         { label: 'the sun, the moon and the stars', zoneId: 'science-summit', lessonId: 'g1Science', practiceStageId: 'g1-science-2' },
   'g1-science-families':    { label: 'animal parents and babies', zoneId: 'science-summit', lessonId: 'g1Science', practiceStageId: 'g1-science-3' },
+  // ── 5th grade (phase 3): Measurement Marsh (lesson g5Volume), Geometry Grove (g5Coordinates), Data Delta (g5LinePlots) ──
+  'g5-volume':      { label: 'volume of prisms', zoneId: 'measurement-marsh', lessonId: 'g5Volume', practiceStageId: 'g5-measure-1' },
+  'g5-convert':     { label: 'converting units', zoneId: 'measurement-marsh', lessonId: 'g5Volume', practiceStageId: 'g5-measure-2' },
+  'g5-coordinates': { label: 'the coordinate plane', zoneId: 'geometry-grove', lessonId: 'g5Coordinates', practiceStageId: 'g5-geo-1' },
+  'g5-classify':    { label: 'classifying shapes', zoneId: 'geometry-grove', lessonId: 'g5Coordinates', practiceStageId: 'g5-geo-2' },
+  'g5-lineplots':   { label: 'line plots with fractions', zoneId: 'data-delta', lessonId: 'g5LinePlots', practiceStageId: 'g5-data-1' },
+  'g5-patterns':    { label: 'graphing number patterns', zoneId: 'data-delta', lessonId: 'g5LinePlots', practiceStageId: 'g5-data-2' },
 }
 
 export interface Skill { id: string; label: string }

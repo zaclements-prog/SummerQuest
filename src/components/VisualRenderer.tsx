@@ -3,6 +3,8 @@ import type { ReactNode } from 'react'
 import type { ProblemVisual } from '../lib/problem'
 import { TOON } from '../toon/palette'
 import BarChart from './BarChart'
+// 5th grade (phase 3): Measurement Marsh, Geometry Grove, Data Delta
+import { CoordPlaneVisual, LinePlotVisual, PrismVisual } from './g5Visuals'
 
 /**
  * Renders the topic-specific visualization that accompanies a problem.
@@ -57,6 +59,13 @@ export default function VisualRenderer({
       return <MoneyVisual visual={visual} />
     case 'barGraph':
       return <BarGraphVisual visual={visual} />
+    // 5th grade (phase 3): Measurement Marsh, Geometry Grove, Data Delta
+    case 'prism':
+      return <PrismVisual visual={visual} size={size} />
+    case 'coordPlane':
+      return <CoordPlaneVisual visual={visual} size={size} />
+    case 'linePlot':
+      return <LinePlotVisual visual={visual} size={size} />
   }
 }
 

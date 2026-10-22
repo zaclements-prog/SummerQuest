@@ -51,6 +51,10 @@ import { makeG1ShapesProvider, type G1ShapesConfig } from './g1Shapes'
 import { makeG1MeasureProvider, type G1MeasureConfig } from './g1Measure'
 import { makeG1GraphsProvider, type G1GraphsConfig } from './g1Graphs'
 import { makeG1ScienceProvider, type G1ScienceConfig } from './g1Science'
+// 5th grade (phase 3): Measurement Marsh, Geometry Grove, Data Delta
+import { makeG5MeasureProvider, type G5MeasureConfig } from './g5Measure'
+import { makeG5GeometryProvider, type G5GeometryConfig } from './g5Geometry'
+import { makeG5DataProvider, type G5DataConfig } from './g5Data'
 
 export type ProviderConfig =
   | { kind: 'multiplication'; factorMin: number; factorMax: number }
@@ -117,6 +121,13 @@ export type ProviderConfig =
   | ({ kind: 'g1Graphs' } & G1GraphsConfig)
   /** Sky Summit: light and sound, the day and night sky, animal families. */
   | ({ kind: 'g1Science' } & G1ScienceConfig)
+  // ── 5th grade (phase 3): Measurement Marsh, Geometry Grove, Data Delta ──
+  /** Volume of prisms and composed figures; converting units within a system. */
+  | ({ kind: 'g5Measure' } & G5MeasureConfig)
+  /** The coordinate plane (first quadrant); classifying two-dimensional figures. */
+  | ({ kind: 'g5Geometry' } & G5GeometryConfig)
+  /** Line plots in fractions of a unit; graphing two number patterns. */
+  | ({ kind: 'g5Data' } & G5DataConfig)
 
 export function createProvider(config: ProviderConfig): ProblemProvider {
   switch (config.kind) {
@@ -199,5 +210,12 @@ export function createProvider(config: ProviderConfig): ProblemProvider {
       return makeG1GraphsProvider(config)
     case 'g1Science':
       return makeG1ScienceProvider(config)
+    // 5th grade (phase 3): Measurement Marsh, Geometry Grove, Data Delta
+    case 'g5Measure':
+      return makeG5MeasureProvider(config)
+    case 'g5Geometry':
+      return makeG5GeometryProvider(config)
+    case 'g5Data':
+      return makeG5DataProvider(config)
   }
 }
