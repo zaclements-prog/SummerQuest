@@ -165,3 +165,27 @@ describe('every open K zone (the real K–1 stage sets)', () => {
     expect(open).toBeGreaterThanOrEqual(6)
   })
 })
+
+describe('every open 1st-grade zone (the real g1 stage sets, phase 2b)', () => {
+  it('says its 1st-grade name and welcome (its own, or kindergarten’s), and each stage its title, with its own picture', () => {
+    let open = 0
+    for (const [zone, sets] of original) {
+      const g1 = sets?.g1
+      if (!g1?.length) continue
+      open++
+      zone.stagesByBand = sets
+      const title = zoneTitle(zone, 1)
+      expect(voiceText(zoneNameVoice(zone.id, 1)!), zone.id).toBe(`${title}!`)
+      expect(voiceText(zoneWelcomeVoice(zone.id, 1)), zone.id).toBe(`${title}! Tap a star to play!`)
+      // (kindergarten still hears its own)
+      expect(voiceText(zoneNameVoice(zone.id, 0)!), zone.id).toBe(`${zoneTitle(zone, 0)}!`)
+      for (const s of g1) {
+        expect(stageVoice(s.id), s.id).not.toBeNull()
+        expect(stagePicture(s), s.id).not.toMatch(/^[💡⚡🏆⭐]$/u)
+      }
+      expect(isZoneSleeping(zone, 1), zone.id).toBe(false)
+    }
+    // (Tens Plateau, Fair Share Falls, Shape Grove, …)
+    expect(open).toBeGreaterThanOrEqual(3)
+  })
+})

@@ -15,6 +15,10 @@ import { kTowersLesson } from '../../tutoring/lessons/kTowers'
 // 1st grade (phase 2b): Word Reef, Writing Workshop
 import { g1ReadingLesson } from '../../tutoring/lessons/g1Reading'
 import { g1WritingLesson } from '../../tutoring/lessons/g1Writing'
+// 1st grade (phase 2b): Tens Plateau, Fair Share Falls, Shape Grove
+import { g1TensLesson } from '../../tutoring/lessons/g1Tens'
+import { g1SharesLesson } from '../../tutoring/lessons/g1Shares'
+import { g1ShapesLesson } from '../../tutoring/lessons/g1Shapes'
 import { K_LESSON_PACK } from '../../tutoring/lessons/k1Voice'
 
 /**
@@ -45,6 +49,10 @@ for (const lesson of [
   // 1st grade (phase 2b): Word Reef, Writing Workshop
   g1ReadingLesson,
   g1WritingLesson,
+  // 1st grade (phase 2b): Tens Plateau, Fair Share Falls, Shape Grove
+  g1TensLesson,
+  g1SharesLesson,
+  g1ShapesLesson,
 ]) {
   for (const step of lesson.steps) {
     const ref = step.check?.speech

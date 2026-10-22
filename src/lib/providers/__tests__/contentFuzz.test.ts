@@ -29,6 +29,8 @@ import { DRAWINGS } from '../../../games/listenPlay/drawings'
 // 1st grade (phase 2b)
 import type { ReadAlongSpec } from '../../../games/listenPlay/activities/readAlongSpec'
 import type { TilesSpec } from '../../../games/listenPlay/activities/tilesSpec'
+// 1st grade (phase 2b): Tens Plateau, Fair Share Falls, Shape Grove
+import { g1ShapesProblems, g1SharesProblems, g1TensProblems } from './g1Checks'
 
 /**
  * Generator fuzz suite: every stage in the curriculum, at every grade tier, plus
@@ -459,6 +461,16 @@ function answerProblems(config: ProviderConfig, grade: GradeLevel, p: Problem): 
       break
     case 'g1Towers':
       errs.push(...g1TowersProblems(p as ListenProblem))
+      break
+    // 1st grade (phase 2b): the answer worked out again from the blocks, the drawings and the pieces (./g1Checks)
+    case 'g1Tens':
+      errs.push(...g1TensProblems(p as ListenProblem))
+      break
+    case 'g1Shares':
+      errs.push(...g1SharesProblems(p as ListenProblem))
+      break
+    case 'g1Shapes':
+      errs.push(...g1ShapesProblems(p as ListenProblem))
       break
   }
   return errs

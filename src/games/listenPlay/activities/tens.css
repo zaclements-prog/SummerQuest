@@ -1,0 +1,94 @@
+/*
+ * Tens Plateau's activities (1st grade): rods that roll in and away, a sign
+ * that drops into its box, blocks that land on the mat. Transform and opacity
+ * animations only, so they run on the compositor on a low-end tablet.
+ */
+
+/* ten more: a rod rolls in from the right */
+.tq-rod-in {
+  animation: tq-rod-in 0.8s cubic-bezier(0.3, 0.8, 0.25, 1) both;
+}
+/* ten less: a rod rolls away (and stays gone) */
+.tq-rod-out {
+  animation: tq-rod-out 0.8s ease-in forwards;
+}
+/* the right sign lands in its box */
+.tq-sign-in {
+  animation: lp-pop-in 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+/* a block lands on the mat */
+.tq-land {
+  animation: tq-land 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+/* ten cubes snap into a rod */
+.tq-snap {
+  animation: tq-snap 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+/* comparing: the number being said */
+.tq-lit {
+  outline: 5px solid #ffcf4d;
+  outline-offset: 4px;
+}
+.tq-mat {
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@keyframes tq-rod-in {
+  0% {
+    transform: translateX(60px);
+    opacity: 0;
+  }
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes tq-rod-out {
+  0% {
+    transform: none;
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(60px);
+    opacity: 0;
+  }
+}
+
+@keyframes tq-land {
+  0% {
+    transform: translateY(-24px);
+    opacity: 0;
+  }
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes tq-snap {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.4;
+  }
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tq-rod-in,
+  .tq-sign-in,
+  .tq-land,
+  .tq-snap {
+    animation: none !important;
+  }
+  .tq-rod-out {
+    animation: none !important;
+    opacity: 0;
+  }
+}

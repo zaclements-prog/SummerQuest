@@ -26,6 +26,10 @@ import { kTowersScenes } from './kTowers'
 // 1st grade (phase 2b): Word Reef, Writing Workshop
 import { g1ReadingScenes } from './g1Reading'
 import { g1WritingScenes } from './g1Writing'
+// 1st grade (phase 2b): Tens Plateau, Fair Share Falls, Shape Grove
+import { g1TensScenes } from './g1Tens'
+import { g1SharesScenes } from './g1Shares'
+import { g1ShapesScenes } from './g1Shapes'
 
 /**
  * Motion graphics by lesson → step id. A step without a scene falls back to
@@ -62,6 +66,10 @@ const SCENES: Record<string, Record<string, Scene>> = {
   // 1st grade (phase 2b): Word Reef, Writing Workshop
   g1Reading: g1ReadingScenes,
   g1Writing: g1WritingScenes,
+  // 1st grade (phase 2b): Tens Plateau, Fair Share Falls, Shape Grove
+  g1Tens: g1TensScenes,
+  g1Shares: g1SharesScenes,
+  g1Shapes: g1ShapesScenes,
 }
 
 export function sceneFor(lessonId: string, stepId: string): Scene | undefined {

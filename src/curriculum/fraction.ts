@@ -3,7 +3,7 @@ import type { Zone } from './types'
 export const fractionZone: Zone = {
   id: 'fraction-falls',
   title: 'Fraction Falls',
-  titleByBand: { k1: 'Add-and-Take Falls' },
+  titleByBand: { k1: 'Add-and-Take Falls', g1: 'Fair Share Falls' },
   subtitle: 'Equivalent and comparing',
   emoji: '💧',
   themeColor: 'ocean',
@@ -77,6 +77,42 @@ export const fractionZone: Zone = {
         gameId: 'listenPlay',
         providerConfig: { kind: 'kAddTake', mode: 'make10' },
         params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+    ],
+    // 1st grade "Fair Share Falls" (1.G.3): circles and rectangles (pizzas, pies,
+    // sandwiches, cakes, gardens) cut into shares, drawn exactly: equal or not, how
+    // many → halves and fourths, tap the half → is it a half or a fourth, more
+    // shares make smaller shares. Said aloud.
+    g1: [
+      {
+        id: 'g1-shares-1',
+        kind: 'concept',
+        title: 'Equal shares',
+        description: 'Fair shares are all the same size.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Shares', mode: 'equal' },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-shares-2',
+        kind: 'practice',
+        title: 'Halves and fourths',
+        description: 'Cut it in two, or cut it in four.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Shares', mode: 'halvesFourths' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-shares-3',
+        kind: 'mastery',
+        title: 'Smaller shares',
+        description: 'More shares make smaller shares!',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Shares', mode: 'size' },
+        params: { questionCount: 6 },
         starsToEarn: 3,
       },
     ],

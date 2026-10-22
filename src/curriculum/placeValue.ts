@@ -3,7 +3,7 @@ import type { Zone } from './types'
 export const placeValueZone: Zone = {
   id: 'place-value-plateau',
   title: 'Place Value Plateau',
-  titleByBand: { k1: 'Ten Frame Plateau' },
+  titleByBand: { k1: 'Ten Frame Plateau', g1: 'Tens Plateau' },
   subtitle: 'Place value and rounding',
   emoji: '🏔️',
   themeColor: 'quest',
@@ -79,6 +79,43 @@ export const placeValueZone: Zone = {
         description: 'Count all the way to twenty!',
         gameId: 'listenPlay',
         providerConfig: { kind: 'kTeens', mode: 'twenty' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+    ],
+    // 1st grade "Tens Plateau" (1.NBT.1–3, 1.NBT.5): a rod is a ten and a cube is a
+    // one (base-ten blocks): how many, make a number, which blocks show it, how many
+    // tens → compare two numbers (the bigger one, the sign > < = that fits), ten more
+    // and ten less → count past 100 to 120, with a little of each. Every question is
+    // answered through the `tens` and `buildTens` activities. Said aloud.
+    g1: [
+      {
+        id: 'g1-tens-1',
+        kind: 'concept',
+        title: 'Tens and ones',
+        description: 'A rod is ten. A cube is one.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Tens', mode: 'tensOnes' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-tens-2',
+        kind: 'practice',
+        title: 'Bigger or smaller',
+        description: 'Compare numbers, then add or take a ten.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Tens', mode: 'compare' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-tens-3',
+        kind: 'mastery',
+        title: 'Count to 120',
+        description: 'Count all the way past one hundred!',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Tens', mode: 'to120' },
         params: { questionCount: 6 },
         starsToEarn: 3,
       },

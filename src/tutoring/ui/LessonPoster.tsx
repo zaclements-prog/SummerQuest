@@ -5,6 +5,8 @@ import { PV, starPath } from '../motion/layout'
 import { M } from '../motion/palette'
 import { Apple, Cookie, Flat, Rod, UnitCube } from '../motion/shapes'
 import { DRAWINGS } from '../../games/listenPlay/drawings'
+// 1st grade (phase 2b): Fair Share Falls' pizza drawings
+import { shareArtName } from '../../games/listenPlay/shareGeometry'
 
 const PW = 320
 const PH = 150
@@ -455,6 +457,49 @@ const POSTERS: Record<string, { bg: string; motif: () => ReactNode }> = {
         <path d="M 152 76 A 17 18 0 1 0 157 88" stroke="#3f6fd1" strokeWidth={8} />
         <circle cx={152} cy={76} r={6} fill="#36c35a" stroke={M.ink} strokeWidth={2} />
         <circle cx={218} cy={100} r={9} fill={M.ink} stroke="none" />
+      </g>
+    ),
+  },
+  // ── 1st grade (phase 2b): Tens Plateau, Fair Share Falls, Shape Grove ──
+  g1Tens: {
+    bg: '#e3f6ee',
+    motif: () => (
+      <g>
+        {/* three rods and six cubes, and the 36 they make (the 3 in the rods' mint, the 6 in the cubes' gold) */}
+        {[0, 1, 2].map((k) => (
+          <Rod key={k} x={64 + k * 20} y={26} s={10} />
+        ))}
+        {[0, 1, 2, 3, 4, 5].map((k) => (
+          <UnitCube key={k} x={130 + Math.floor(k / 3) * 15} y={110 - (k % 3) * 15} s={10} />
+        ))}
+        <text x={232} y={84} fontFamily={M.font} fontWeight={700} fontSize={64} textAnchor="middle" dominantBaseline="middle" stroke={M.ink} strokeWidth={4} paintOrder="stroke fill">
+          <tspan fill="#74d3bd">3</tspan>
+          <tspan fill="#ffcf4d">6</tspan>
+        </text>
+      </g>
+    ),
+  },
+  g1Shares: {
+    bg: '#ffe9dc',
+    motif: () => (
+      <g>
+        {/* a pizza cut in half and one cut in fourths, one share of each coloured in */}
+        <g transform="translate(58 30) scale(0.95)">{DRAWINGS[shareArtName({ thing: 'pizza', cut: 'h2', colored: 0 })]?.()}</g>
+        <g transform="translate(166 30) scale(0.95)">{DRAWINGS[shareArtName({ thing: 'pizza', cut: 'q4', colored: 1 })]?.()}</g>
+      </g>
+    ),
+  },
+  g1Shapes: {
+    bg: '#ece4ff',
+    motif: () => (
+      <g strokeLinejoin="round">
+        {/* two triangles snapped into a square, and a triangle turned and painted */}
+        <path d="M 70 40 L 140 40 L 140 110 Z" fill="#f2766b" stroke={M.ink} strokeWidth={3.5} />
+        <path d="M 70 40 L 140 110 L 70 110 Z" fill="#74d3bd" stroke={M.ink} strokeWidth={3.5} />
+        <g transform="translate(222 78) rotate(160)">
+          <path d="M 0 -40 L 40 30 L -40 30 Z" fill="#c9dcff" stroke={M.ink} strokeWidth={7} />
+          <path d="M 0 -40 L 40 30 L -40 30 Z" fill="none" stroke="#8ab8ff" strokeWidth={3.5} />
+        </g>
       </g>
     ),
   },

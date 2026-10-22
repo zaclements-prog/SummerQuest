@@ -245,6 +245,11 @@ export function effectiveConfig(
     case 'g1Writing':
     case 'g1Towers':
       return config
+    // 1st grade (phase 2b): Tens Plateau, Fair Share Falls, Shape Grove (each stage carries its own mode)
+    case 'g1Tens':
+    case 'g1Shares':
+    case 'g1Shapes':
+      return config
   }
 }
 

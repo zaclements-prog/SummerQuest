@@ -470,5 +470,63 @@
       "stepId": "sentence",
       "text": "A sentence starts with a capital letter. It ends with a period. The dog ran."
     }
+  ],
+  "g1Tens": [
+    {
+      "stepId": "bundle",
+      "text": "Here are ten little cubes. Snap them together, and they make one rod. One rod is a ten!"
+    },
+    {
+      "stepId": "build",
+      "text": "Three rods and six cubes. Ten, twenty, thirty. Thirty-one, thirty-two, thirty-three, thirty-four, thirty-five, thirty-six! Three tens and six ones make thirty-six."
+    },
+    {
+      "stepId": "count",
+      "text": "Your turn! Count the tens first. Then count on the ones."
+    },
+    {
+      "stepId": "compare",
+      "text": "Forty-one or fourteen: which is bigger? Look at the tens first. Four tens beat one ten. Forty-one is bigger!"
+    },
+    {
+      "stepId": "sign",
+      "text": "This sign means greater than. Its open side faces the bigger number. Your turn!"
+    }
+  ],
+  "g1Shares": [
+    {
+      "stepId": "fair",
+      "text": "Two friends share one pizza. Is this fair? No! One share is too big. Fair shares are the same size. They are equal shares!"
+    },
+    {
+      "stepId": "halves",
+      "text": "Two equal shares are called halves. Each share is one half. Your turn!"
+    },
+    {
+      "stepId": "fourths",
+      "text": "Now cut each half again. Four equal shares! They are called fourths, or quarters."
+    },
+    {
+      "stepId": "smaller",
+      "text": "More shares make smaller shares. A fourth is smaller than a half. Your turn!"
+    }
+  ],
+  "g1Shapes": [
+    {
+      "stepId": "triangle",
+      "text": "A triangle has three straight sides and three corners. It is closed, with no gaps."
+    },
+    {
+      "stepId": "still",
+      "text": "Make it big or small. Paint it blue. Turn it around. It is still a triangle! Your turn!"
+    },
+    {
+      "stepId": "snap",
+      "text": "Shapes can make new shapes. Two triangles snap together. Now they make a square!"
+    },
+    {
+      "stepId": "solids",
+      "text": "A sphere can roll. A cube can stack. A cylinder can roll and stack! Your turn!"
+    }
   ]
 }

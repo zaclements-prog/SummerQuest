@@ -107,6 +107,20 @@ export const SKILLS: Record<string, SkillMeta> = {
   // Counting Towers (1st grade, phase 2b; kindergarten's lesson kTowers)
   'g1-towers-add': { label: 'adding within 20', zoneId: 'tower-battlefront', lessonId: 'kTowers', practiceStageId: 'g1-towers-1' },
   'g1-towers-sub': { label: 'taking away within 20', zoneId: 'tower-battlefront', lessonId: 'kTowers', practiceStageId: 'g1-towers-2' },
+  // ── 1st grade (phase 2b: the `g1` stage sets) ──
+  // Tens Plateau (lesson g1Tens)
+  'g1-tens-ones':      { label: 'tens and ones', zoneId: 'place-value-plateau', lessonId: 'g1Tens', practiceStageId: 'g1-tens-1' },
+  'g1-compare-2digit': { label: 'comparing two-digit numbers', zoneId: 'place-value-plateau', lessonId: 'g1Tens', practiceStageId: 'g1-tens-2' },
+  'g1-ten-more-less':  { label: 'ten more and ten less', zoneId: 'place-value-plateau', lessonId: 'g1Tens', practiceStageId: 'g1-tens-2' },
+  'g1-count-120':      { label: 'counting to 120', zoneId: 'place-value-plateau', lessonId: 'g1Tens', practiceStageId: 'g1-tens-3' },
+  // Fair Share Falls (lesson g1Shares)
+  'g1-shares-equal':  { label: 'equal shares', zoneId: 'fraction-falls', lessonId: 'g1Shares', practiceStageId: 'g1-shares-1' },
+  'g1-shares-halves': { label: 'halves and fourths', zoneId: 'fraction-falls', lessonId: 'g1Shares', practiceStageId: 'g1-shares-2' },
+  'g1-shares-size':   { label: 'more shares, smaller shares', zoneId: 'fraction-falls', lessonId: 'g1Shares', practiceStageId: 'g1-shares-3' },
+  // Shape Grove, 1st grade (lesson g1Shapes)
+  'g1-shapes-attributes': { label: 'what makes a shape', zoneId: 'geometry-grove', lessonId: 'g1Shapes', practiceStageId: 'g1-shapes-1' },
+  'g1-shapes-compose':    { label: 'putting shapes together', zoneId: 'geometry-grove', lessonId: 'g1Shapes', practiceStageId: 'g1-shapes-2' },
+  'g1-shapes-solids':     { label: 'solids that roll and stack', zoneId: 'geometry-grove', lessonId: 'g1Shapes', practiceStageId: 'g1-shapes-3' },
 }
 
 export interface Skill { id: string; label: string }

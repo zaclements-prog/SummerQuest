@@ -132,6 +132,16 @@ const STAGE_PICTURE: Record<string, string> = {
   'g1-towers-1': '➕',
   'g1-towers-2': '➖',
   'g1-towers-3': '🏰',
+  // 1st grade (phase 2b): Tens Plateau, Fair Share Falls, Shape Grove
+  'g1-tens-1': '🔟',
+  'g1-tens-2': '⚖️',
+  'g1-tens-3': '💯',
+  'g1-shares-1': '🍕',
+  'g1-shares-2': '🍰',
+  'g1-shares-3': '🎂',
+  'g1-shapes-1': '🔺',
+  'g1-shapes-2': '🏠',
+  'g1-shapes-3': '⚽',
 }
 const KIND_PICTURE: Record<Stage['kind'], string> = { concept: '💡', practice: '⚡', mastery: '🏆' }
 

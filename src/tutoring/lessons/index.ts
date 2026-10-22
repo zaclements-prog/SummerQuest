@@ -28,6 +28,10 @@ import { kTowersLesson } from './kTowers'
 // 1st grade (phase 2b): Word Reef, Writing Workshop
 import { g1ReadingLesson } from './g1Reading'
 import { g1WritingLesson } from './g1Writing'
+// 1st grade (phase 2b): Tens Plateau, Fair Share Falls, Shape Grove
+import { g1TensLesson } from './g1Tens'
+import { g1SharesLesson } from './g1Shares'
+import { g1ShapesLesson } from './g1Shapes'
 
 /**
  * The lessons, by content band (lib/gradeBand; K–5 plan §2): kindergarten and
@@ -75,6 +79,10 @@ export const g1Lessons: Lesson[] = [
   // Word Reef, Writing Workshop (phase 2b)
   g1ReadingLesson,
   g1WritingLesson,
+  // Tens Plateau, Fair Share Falls, Shape Grove (phase 2b)
+  g1TensLesson,
+  g1SharesLesson,
+  g1ShapesLesson,
 ]
 
 /** 5th grade (band `g5`). */

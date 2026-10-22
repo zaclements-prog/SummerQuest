@@ -397,3 +397,50 @@ describe('ListenQuitDialog', () => {
     expect(leave).toHaveBeenCalledTimes(1)
   })
 })
+
+// ── 1st grade (phase 2b): Tens Plateau, Fair Share Falls, Shape Grove ──────
+
+describe('ZoneDetail, 1st grade (phase 2b)', () => {
+  /** Put a zone's real stage sets back (the pilot stand-ins replace them before each test). */
+  const real = (zoneId: string) => {
+    const z = getZone(zoneId)!
+    z.stagesByBand = original.get(z)
+  }
+
+  it('Tens Plateau, Fair Share Falls and Shape Grove: their 1st-grade picture buttons, name and welcome; no paragraphs', () => {
+    for (const [zoneId, title, welcome, ids] of [
+      ['place-value-plateau', 'Tens Plateau', 'k-nav/welcome-g1-place-value-plateau', ['g1-tens-1', 'g1-tens-2', 'g1-tens-3']],
+      ['fraction-falls', 'Fair Share Falls', 'k-nav/welcome-g1-fraction-falls', ['g1-shares-1', 'g1-shares-2', 'g1-shares-3']],
+      ['geometry-grove', 'Shape Grove', 'k-nav/welcome-geometry-grove', ['g1-shapes-1', 'g1-shapes-2', 'g1-shapes-3']],
+    ] as const) {
+      real(zoneId)
+      player(1)
+      resetGuideForTests()
+      render(`/zone/${zoneId}`, <ZoneDetail />, '/zone/:zoneId')
+      expect(qa('[data-stage]').map((b) => b.dataset.stage), zoneId).toEqual(ids)
+      expect(container.textContent).toContain(title)
+      expect(container.textContent).not.toContain(getZone(zoneId)!.description)
+      expect(lines(), zoneId).toEqual([welcome])
+      expect(targets(), zoneId).toEqual([`stage-${ids[0]}`])
+      // the second and third wait for the one before
+      expect(qa('[data-stage][data-locked]').map((b) => b.dataset.stage)).toEqual(ids.slice(1))
+      act(() => root.render(<></>))
+    }
+  })
+
+  it('kindergarten still sees Ten Frame Plateau and Add-and-Take Falls there', () => {
+    for (const [zoneId, title, first] of [
+      ['place-value-plateau', 'Ten Frame Plateau', 'k-teens-1'],
+      ['fraction-falls', 'Add-and-Take Falls', 'k-addsub-1'],
+    ] as const) {
+      real(zoneId)
+      player(0)
+      resetGuideForTests()
+      render(`/zone/${zoneId}`, <ZoneDetail />, '/zone/:zoneId')
+      expect(qa('[data-stage]')[0].dataset.stage).toBe(first)
+      expect(container.textContent).toContain(title)
+      expect(lines()).toEqual([`k-nav/welcome-${zoneId}`])
+      act(() => root.render(<></>))
+    }
+  })
+})

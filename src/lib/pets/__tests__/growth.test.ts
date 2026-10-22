@@ -40,15 +40,15 @@ describe('pet catalog', () => {
 
   it('matches the plan’s pet ↔ zone ↔ lessons table (2–4 lesson, then the K–1 pilot’s)', () => {
     const table: [string, string, string[]][] = [
-      ['frog', 'fraction-falls', ['fractions', 'kAddTake']],
+      ['frog', 'fraction-falls', ['fractions', 'kAddTake', 'g1Shares']],
       ['octopus', 'reading-reef', ['reading', 'kLetters', 'kRhymes', 'g1Reading']],
       ['owl', 'word-problem-woods', ['wordProblem', 'kStoryMath']],
-      ['panda', 'geometry-grove', ['geometry', 'kShapes']],
+      ['panda', 'geometry-grove', ['geometry', 'kShapes', 'g1Shapes']],
       ['lion', 'multiplication-mesa', ['multiplication', 'kCounting']],
       ['trex', 'division-dunes', ['division', 'kCompare']],
       ['bear', 'measurement-marsh', ['measurement', 'kMeasure']],
       ['fox', 'data-delta', ['dataGraph', 'kSorting']],
-      ['unicorn', 'place-value-plateau', ['placeValue', 'kTeens']],
+      ['unicorn', 'place-value-plateau', ['placeValue', 'kTeens', 'g1Tens']],
       ['dragonet', 'writing-workshop', ['writing', 'kTracing', 'g1Writing']],
       ['tiger', 'science-summit', ['science', 'kScience']],
       ['dragon', 'tower-battlefront', ['kTowers']],
@@ -82,6 +82,10 @@ describe('pet catalog', () => {
     // (K complete, phase 2a: the trex and the unicorn hatch from Number Dunes' and Ten Frame Plateau's K lessons)
     expect(zoneLessonFor('division-dunes', 0)?.id).toBe('kCompare')
     expect(zoneLessonFor('place-value-plateau', 0)?.id).toBe('kTeens')
+    // (1st grade, phase 2b: the unicorn, the frog and the panda hatch from Tens Plateau's, Fair Share Falls' and Shape Grove's g1 lessons)
+    expect(zoneLessonFor('place-value-plateau', 1)?.id).toBe('g1Tens')
+    expect(zoneLessonFor('fraction-falls', 1)?.id).toBe('g1Shares')
+    expect(zoneLessonFor('geometry-grove', 1)?.id).toBe('g1Shapes')
     expect(zoneLessonFor('no-such-zone', 0)).toBeUndefined() // no lesson button
   })
 

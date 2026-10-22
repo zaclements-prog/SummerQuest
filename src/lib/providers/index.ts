@@ -43,6 +43,10 @@ import { makeKScienceProvider, type KScienceConfig } from './kScience'
 import { makeG1ReadingProvider, type G1ReadingConfig } from './g1Reading'
 import { makeG1WritingProvider, type G1WritingConfig } from './g1Writing'
 import { makeG1TowersProvider, type G1TowersConfig } from './g1Towers'
+// 1st grade (phase 2b): Tens Plateau, Fair Share Falls, Shape Grove
+import { makeG1TensProvider, type G1TensConfig } from './g1Tens'
+import { makeG1SharesProvider, type G1SharesConfig } from './g1Shares'
+import { makeG1ShapesProvider, type G1ShapesConfig } from './g1Shapes'
 
 export type ProviderConfig =
   | { kind: 'multiplication'; factorMin: number; factorMax: number }
@@ -96,6 +100,13 @@ export type ProviderConfig =
   | ({ kind: 'g1Writing' } & G1WritingConfig)
   /** Counting Towers (1st grade): add and take away within 20, the questions that build the towers. */
   | ({ kind: 'g1Towers' } & G1TowersConfig)
+  // ── 1st grade (phase 2b): Tens Plateau, Fair Share Falls, Shape Grove ──
+  /** Tens Plateau: tens and ones on base-ten blocks, comparing with > < =, ten more / less, counting to 120. */
+  | ({ kind: 'g1Tens' } & G1TensConfig)
+  /** Fair Share Falls: equal shares, halves and fourths of circles and rectangles. */
+  | ({ kind: 'g1Shares' } & G1SharesConfig)
+  /** Shape Grove (1st grade): what makes a shape, putting shapes together, solids that roll and stack. */
+  | ({ kind: 'g1Shapes' } & G1ShapesConfig)
 
 export function createProvider(config: ProviderConfig): ProblemProvider {
   switch (config.kind) {
@@ -164,5 +175,12 @@ export function createProvider(config: ProviderConfig): ProblemProvider {
       return makeG1WritingProvider(config)
     case 'g1Towers':
       return makeG1TowersProvider(config)
+    // 1st grade (phase 2b): Tens Plateau, Fair Share Falls, Shape Grove
+    case 'g1Tens':
+      return makeG1TensProvider(config)
+    case 'g1Shares':
+      return makeG1SharesProvider(config)
+    case 'g1Shapes':
+      return makeG1ShapesProvider(config)
   }
 }
