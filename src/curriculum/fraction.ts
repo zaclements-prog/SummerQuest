@@ -5,10 +5,14 @@ export const fractionZone: Zone = {
   title: 'Fraction Falls',
   titleByBand: { k1: 'Add-and-Take Falls', g1: 'Fair Share Falls' },
   subtitle: 'Equivalent and comparing',
+  subtitleByBand: { g5: 'Adding, subtracting and multiplying fractions' },
   emoji: '💧',
   themeColor: 'ocean',
   description:
     'Fractions are pieces of a whole. Learn which pieces are equivalent and how to tell which fraction is bigger.',
+  descriptionByBand: {
+    g5: "Find common denominators to add and subtract unlike fractions, multiply fractions with area models, and see a fraction as a division.",
+  },
   estimatedMinutes: 18,
   available: true,
   position: { x: 61, y: 15 },

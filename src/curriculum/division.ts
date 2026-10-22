@@ -5,10 +5,14 @@ export const divisionZone: Zone = {
   title: 'Division Dunes',
   titleByBand: { k1: 'Number Dunes', g1: 'Take-Away Dunes' },
   subtitle: 'Sharing and division facts',
+  subtitleByBand: { g5: 'Long division' },
   emoji: '🐪',
   themeColor: 'quest',
   description:
     'Division is multiplication played backwards. If you know your times tables, you already know most of your division facts!',
+  descriptionByBand: {
+    g5: "Divide four-digit numbers by two-digit divisors, one step at a time, and decide what a remainder means in the story.",
+  },
   estimatedMinutes: 20,
   available: true,
   position: { x: 37, y: 15 },

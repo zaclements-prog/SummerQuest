@@ -5,10 +5,14 @@ export const wordProblemZone: Zone = {
   title: 'Word Problem Woods',
   titleByBand: { k1: 'Story Woods' },
   subtitle: 'Read, plan, solve',
+  subtitleByBand: { g5: 'Expressions and multi-step problems' },
   emoji: '🌲',
   themeColor: 'island',
   description:
     'Word problems are math hiding inside stories. Read carefully, figure out what to do, then solve.',
+  descriptionByBand: {
+    g5: "Write and work out expressions with parentheses and brackets, follow two-rule patterns, and plan multi-step word problems.",
+  },
   estimatedMinutes: 20,
   available: true,
   position: { x: 13, y: 48 },

@@ -5,10 +5,14 @@ export const towerDefenseZone: Zone = {
   title: 'Tower Battlefront',
   titleByBand: { k1: 'Counting Towers' },
   subtitle: 'Math-powered tower defense',
+  subtitleByBand: { g5: 'Fraction and decimal tower defense' },
   emoji: '🏰',
   themeColor: 'monster',
   description:
     'Build towers to stop the invading space critters! Every tower you buy costs gold AND a correct multiplication answer. Survive 10 waves to win.',
+  descriptionByBand: {
+    g5: "Build towers to stop the invading space critters! Every tower costs gold AND a correct fraction or decimal answer. Survive 10 waves to win.",
+  },
   estimatedMinutes: 15,
   available: true,
   position: { x: 85, y: 81 },

@@ -4,10 +4,14 @@ export const writingZone: Zone = {
   id: 'writing-workshop',
   title: 'Writing Workshop',
   subtitle: 'Sentences, paragraphs, stories',
+  subtitleByBand: { g5: 'Opinion, informative and narrative writing' },
   emoji: '✍️',
   themeColor: 'monster',
   description:
     'Write your own sentences, paragraphs, and stories. Earn stars and get tips on what you did well and what to try next time.',
+  descriptionByBand: {
+    g5: "Write opinion pieces with reasons and evidence, informative pieces with facts and linking words, and stories with dialogue and transitions.",
+  },
   estimatedMinutes: 25,
   available: true,
   position: { x: 37, y: 81 },

@@ -1,6 +1,6 @@
 # SummerQuest: project status
 
-_Last updated 2026-10-22 on branch `claude/sweet-ptolemy-96x364` (draft PR #17)._
+_Last updated 2026-10-22 (5th grade merged) on branch `claude/sweet-ptolemy-96x364` (draft PR #17)._
 
 This page says what is built, what is in flight, and what is left. Design and
 contracts are in [`docs/superpowers/specs/2026-10-19-k5-expansion-plan.md`](superpowers/specs/2026-10-19-k5-expansion-plan.md).
@@ -13,7 +13,7 @@ Rendering the voice is in [`docs/narration-handoff.md`](narration-handoff.md).
 | K | `k1` | voice-first (`listen`) | **Complete:** 12 zones, 13 lessons | No (behind `VITE_K1`) |
 | 1 | `g1` | voice-first (`listen`) | **Complete:** 12 zones, 11 lessons | No (behind `VITE_K1`) |
 | 2–4 | `g24` | read + hear | Complete (the original game) | **Yes** |
-| 5 | `g5` | own | **In progress:** 4 builders, see below | No (behind `VITE_G5`) |
+| 5 | `g5` | own | **Complete:** 12 zones, 11 lessons, 4 game tiers | No (behind `VITE_G5`) |
 
 - **Dev builds** (`npm run dev`) show every grade.
 - **The store build** (`npm run build:store`) offers only grades 2–4. Its check proves the bundle makes no network calls.
@@ -68,25 +68,33 @@ Stage ids and lesson ids for every zone and band are fixed in the expansion plan
   | Kindergarten | 4 bots, all pass; the only failures are checks for zones that are still asleep, which no longer exist |
   | 1st grade | 51/51, 60/60, 41/41 and 62/62 |
 
-## In flight: 5th grade
+## How 5th grade plays
 
-Four builders each work in their own worktree, then are merged one at a time:
+5th grade uses the 2nd–4th grade screens and games, with its own providers, lessons and pictures:
 
-| Builder | Zones |
-|---|---|
-| A | Mesa, Dunes, Woods (plus the Times Grove and Division Arena tiers) |
-| B | Falls, Plateau, Battlefront (plus the Fraction Forge tier and tower gates) |
-| C | Marsh, Grove, Delta (plus the coordinate-plane and line-plot visuals) |
-| D | Reef, Workshop, Summit (plus the Cloud Keeper Earth's-spheres tier) |
+- **Its own stage set in every zone.** Each set has a concept stage, a practice stage, a mastery boss, and the zone's 3D game where it has one.
+- **Every zone has its own 5th-grade subtitle and description**, read through `zoneSubtitle` and `zoneDescription`.
+- **Providers:** `g5Mult`, `g5Div`, `g5Expr`, `g5Fractions`, `g5Decimals`, `g5Gates`, `g5Measure`, `g5Geometry`, `g5Data`, `g5Reading`, `g5Writing`, `g5Science` and `g5Spheres`.
+  - The math providers generate questions procedurally, with exact answers and wrong choices built from real mistakes.
+  - Reading uses a bank of 24 original passages; science uses 16 passages plus generated items.
+- **Game tiers.** Each is chosen by the stage's params; the 2nd–4th grade versions are unchanged, which isolation tests prove.
 
-Grade 5 is "own" mode, so it adds lesson narration but very few voice lines.
+  | Game | 5th-grade tier |
+  |---|---|
+  | Times Grove | Area models: plant each partial product, then the total |
+  | Division Arena | Two-digit divisors |
+  | Fraction Forge | Unlike denominators: pick the common slab size |
+  | Cloud Keeper | Earth's four spheres |
+  | Tower Battlefront | Fraction and decimal gates |
+- **New pictures:** `areaModel`, `longDivision`, `fractionArea`, `prism`, `coordPlane` and `linePlot`.
+- **Writing Workshop** grades against a 5th-grade checklist offline (`src/lib/g5WritingGrader.ts`).
 
 ## Open items
 
 1. **Voice rendering (local Mac):**
    - 97 K/1st-grade lesson steps;
    - 7,330 voice-line clips;
-   - the 5th-grade lessons after they merge.
+   - 56 5th-grade lesson steps (11 lessons).
 
    See the narration handoff, section 0. Until clips exist, the app uses the device's speech.
 2. **Listening pass** after rendering: phonics sounds, stitched number sentences, and "minus" vs "−". This is also the plan's phonics decision (owner decision 4): keep the Higgs sounds or record the 44 sounds.

@@ -73,6 +73,24 @@ export function zoneTitle(zone: Pick<Zone, 'title' | 'titleByBand'>, grade: Grad
   return zone.title
 }
 
+/** A zone's subtitle at a grade: its band's own (5th grade's), else `zone.subtitle`. */
+export function zoneSubtitle(zone: Pick<Zone, 'subtitle' | 'subtitleByBand'>, grade: GradeLevel | null | undefined): string {
+  for (const b of bandFallbacks(contentBand(grade ?? DEFAULT_GRADE))) {
+    const t = zone.subtitleByBand?.[b]
+    if (t) return t
+  }
+  return zone.subtitle
+}
+
+/** A zone's description at a grade: its band's own (5th grade's), else `zone.description`. */
+export function zoneDescription(zone: Pick<Zone, 'description' | 'descriptionByBand'>, grade: GradeLevel | null | undefined): string {
+  for (const b of bandFallbacks(contentBand(grade ?? DEFAULT_GRADE))) {
+    const t = zone.descriptionByBand?.[b]
+    if (t) return t
+  }
+  return zone.description
+}
+
 /** A stage of the zone's set for this grade (another band's stage isn't found). */
 export function getStage(zoneId: string, stageId: string, grade: GradeLevel | null | undefined) {
   const zone = getZone(zoneId)

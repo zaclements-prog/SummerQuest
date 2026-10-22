@@ -5,10 +5,14 @@ export const placeValueZone: Zone = {
   title: 'Place Value Plateau',
   titleByBand: { k1: 'Ten Frame Plateau', g1: 'Tens Plateau' },
   subtitle: 'Place value and rounding',
+  subtitleByBand: { g5: 'Decimals to thousandths' },
   emoji: '🏔️',
   themeColor: 'quest',
   description:
     'Big numbers are built from ones, tens, hundreds, and thousands stacked on top of each other. Learn what each digit is worth and how to round.',
+  descriptionByBand: {
+    g5: "Read, compare and round decimals to the thousandths, multiply and divide by powers of 10, and add, subtract, multiply and divide to the hundredths.",
+  },
   estimatedMinutes: 18,
   available: true,
   position: { x: 85, y: 15 },

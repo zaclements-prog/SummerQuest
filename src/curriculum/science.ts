@@ -5,10 +5,14 @@ export const scienceZone: Zone = {
   title: 'Science Summit',
   titleByBand: { k1: 'Nature Summit', g1: 'Sky Summit' },
   subtitle: 'Plants, life cycles & nature',
+  subtitleByBand: { g5: 'Matter, ecosystems, Earth and space' },
   emoji: '🔬',
   themeColor: 'island',
   description:
     'Climb the Science Summit! Read short passages about plants, animals, weather, and how the world works, then answer questions about what you learned.',
+  descriptionByBand: {
+    g5: "Discover how matter is conserved, how energy and matter move through food webs, how Earth's four spheres work together, and why shadows and stars change.",
+  },
   estimatedMinutes: 20,
   available: true,
   position: { x: 61, y: 81 },

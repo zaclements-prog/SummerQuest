@@ -5,10 +5,14 @@ export const geometryZone: Zone = {
   title: 'Geometry Grove',
   titleByBand: { k1: 'Shape Grove' },
   subtitle: 'Shapes, lines & angles',
+  subtitleByBand: { g5: 'The coordinate plane and shape families' },
   emoji: '🔷',
   themeColor: 'island',
   description:
     'Explore the Geometry Grove! Name shapes by their sides and corners, then climb to lines and angles — right, acute, obtuse, parallel, and perpendicular.',
+  descriptionByBand: {
+    g5: "Plot and read points on the coordinate plane, and sort shapes into families: every square is a rectangle, but is every rectangle a square?",
+  },
   estimatedMinutes: 18,
   available: true,
   position: { x: 61, y: 48 },

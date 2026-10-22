@@ -5,10 +5,14 @@ export const measurementZone: Zone = {
   title: 'Measurement Marsh',
   titleByBand: { k1: 'Measure Marsh' },
   subtitle: 'Area, perimeter, time, money',
+  subtitleByBand: { g5: 'Volume and unit conversions' },
   emoji: '📐',
   themeColor: 'island',
   description:
     'Measure the world! Find the area and perimeter of shapes, tell time and figure out elapsed time, and count change at the marsh market.',
+  descriptionByBand: {
+    g5: "Fill boxes with unit cubes to find volume, use V = l × w × h and V = B × h, and convert between units in multi-step problems.",
+  },
   estimatedMinutes: 22,
   available: true,
   position: { x: 85, y: 48 },

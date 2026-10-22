@@ -5,10 +5,14 @@ export const multiplicationZone: Zone = {
   title: 'Multiplication Mesa',
   titleByBand: { k1: 'Counting Mesa', g1: 'Adding Mesa' },
   subtitle: 'Times tables',
+  subtitleByBand: { g5: 'Multi-digit multiplication' },
   emoji: '🏜️',
   themeColor: 'quest',
   description:
     'Master your multiplication facts so they feel automatic. Strong multiplication helps with division, fractions, and almost every other kind of math.',
+  descriptionByBand: {
+    g5: "Multiply big numbers with area models and the standard algorithm, and see how powers of 10 move every digit over.",
+  },
   estimatedMinutes: 20,
   available: true,
   position: { x: 13, y: 15 },

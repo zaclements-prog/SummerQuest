@@ -5,10 +5,14 @@ export const readingZone: Zone = {
   title: 'Reading Reef',
   titleByBand: { k1: 'Letter Reef', g1: 'Word Reef' },
   subtitle: 'Comprehension passages',
+  subtitleByBand: { g5: 'Theme, structure and point of view' },
   emoji: '🐠',
   themeColor: 'ocean',
   description:
     'Dive into short stories and science passages. Read carefully, then answer questions about what you read.',
+  descriptionByBand: {
+    g5: "Read stories, poems and articles at a 5th-grade level, compare two texts, and dig into theme, figurative language, structure and point of view.",
+  },
   estimatedMinutes: 20,
   available: true,
   position: { x: 13, y: 81 },

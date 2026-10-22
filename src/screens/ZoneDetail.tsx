@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { getZone, zoneStages } from '../curriculum'
+import { getZone, zoneDescription, zoneStages, zoneSubtitle } from '../curriculum'
 import { useProgress } from '../store/progress'
 import { sfx } from '../lib/sound'
 import {
@@ -129,10 +129,10 @@ export default function ZoneDetail() {
             </Medallion>
             <div className="min-w-0">
               <h1 className="kid-text font-bold text-3xl sm:text-5xl text-ink-900 leading-tight">{zone.title}</h1>
-              <p className={`kid-text text-lg sm:text-xl ${t.text}`}>{zone.subtitle}</p>
+              <p className={`kid-text text-lg sm:text-xl ${t.text}`}>{zoneSubtitle(zone, grade)}</p>
             </div>
           </div>
-          <p className="relative mt-4 text-lg leading-relaxed text-ink-800">{zone.description}</p>
+          <p className="relative mt-4 text-lg leading-relaxed text-ink-800">{zoneDescription(zone, grade)}</p>
         </div>
 
         {/* Zone-level progress */}

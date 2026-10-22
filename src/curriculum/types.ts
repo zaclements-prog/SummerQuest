@@ -41,9 +41,13 @@ export interface Zone {
    */
   titleByBand?: Partial<Record<ContentBand, string>>
   subtitle: string
+  /** The subtitle for another content band, where the zone teaches something else (5th grade's "Multi-digit multiplication"). Read it through `zoneSubtitle(zone, grade)`. */
+  subtitleByBand?: Partial<Record<ContentBand, string>>
   emoji: string
   themeColor: 'island' | 'monster' | 'ocean' | 'quest'
   description: string
+  /** The description for another content band, as `subtitleByBand`. Read it through `zoneDescription(zone, grade)`. */
+  descriptionByBand?: Partial<Record<ContentBand, string>>
   /** The 2nd–4th grade stages (difficulty scaled per grade by lib/gradeTiers). */
   stages: Stage[]
   /**

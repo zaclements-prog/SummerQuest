@@ -5,10 +5,14 @@ export const dataGraphZone: Zone = {
   title: 'Data Delta',
   titleByBand: { k1: 'Sorting Delta', g1: 'Graph Delta' },
   subtitle: 'Reading bar graphs',
+  subtitleByBand: { g5: 'Line plots and patterns' },
   emoji: '📊',
   themeColor: 'ocean',
   description:
     'Explore the Data Delta! Read bar graphs to answer questions — find the most and fewest, then add and compare the bars.',
+  descriptionByBand: {
+    g5: "Read line plots with fractions of a unit, share their totals equally, and graph two number patterns as ordered pairs.",
+  },
   estimatedMinutes: 18,
   available: true,
   position: { x: 37, y: 48 },

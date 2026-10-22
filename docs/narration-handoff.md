@@ -20,7 +20,7 @@ grade 2–4 lessons are already recorded and need nothing.
 
 | Set | Fresh | To render | Voice id |
 |---|---|---|---|
-| Lessons (`npm run tts:check`) | 45 steps (the 11 grade 2–4 lessons) | **97 steps**: 13 K lessons (`k*`) and 11 1st-grade lessons (`g1*`) | `narrationVoice.json`: `…calm-teacher-v1` (unchanged) |
+| Lessons (`npm run tts:check`) | 45 steps (the 11 grade 2–4 lessons) | **97 steps**: 13 K lessons (`k*`) and 11 1st-grade lessons (`g1*`), with the K reference. **56 steps**: 11 5th-grade lessons (`g5*`), with the normal lesson reference | `narrationVoice.json`: `…calm-teacher-v1` (unchanged) |
 | Voice lines (`npm run voice:check`) | 0 | **7,330 clips** in 36 packs | `voiceId.json`: `…calm-teacher-v1:k` |
 
 **1. The K delivery reference first.** K–1 should sound slower and warmer (§7.2, "K delivery").
@@ -63,10 +63,11 @@ Commit `public/tts/**` and `public/voice/**` with their manifests.
 
 **Size:** 7,330 short clips at 56 kbps is roughly 25–35 MB in `public/voice`. That is well over the 8 MB lesson budget, so tell the integrator the real total. If needed, the store build can ship K–1 packs separately later.
 
-**Still coming:** 5th grade is being built now.
-- Its lessons are grade-5 "own" mode, so they use the normal lesson voice and reference, not the K one.
-- It adds lesson steps but almost no voice lines.
-- After it merges: `git pull`, `npm run tts:dump`, then re-run the lesson render. Only the new `g5*` steps render.
+**5th grade (merged).** Its 11 lessons are in "own" mode. Render them with the normal lesson reference (`sq_teacher_v2`), not the K one:
+```bash
+$PY scripts/tts/render_local.py --engine higgs --ref-audio $REF --only g5Reading,g5Writing,g5Science,g5Fractions,g5Decimals,g5Volume,g5Coordinates,g5LinePlots,g5Multiplication,g5Division,g5Expressions
+```
+5th grade adds no voice lines.
 
 ---
 
