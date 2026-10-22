@@ -98,6 +98,13 @@ const STAGE_PICTURE: Record<string, string> = {
   'k-woods-1': '🐻',
   'k-woods-2': '🍐',
   'k-woods-3': '🥕',
+  // Number Dunes and Ten Frame Plateau (K, phase 2a)
+  'k-dunes-1': '🐰',
+  'k-dunes-2': '🎲',
+  'k-dunes-3': '🚂',
+  'k-teens-1': '🔟',
+  'k-teens-2': '🔴',
+  'k-teens-3': '⛰️',
 }
 const KIND_PICTURE: Record<Stage['kind'], string> = { concept: '💡', practice: '⚡', mastery: '🏆' }
 

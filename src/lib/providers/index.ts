@@ -33,6 +33,8 @@ import { makeKTraceProvider, type KTraceConfig } from './kTrace'
 import { makeKStoriesProvider } from './kStories'
 import { makeKAddTakeProvider, type KAddTakeConfig } from './kAddTake'
 import { makeKStoryMathProvider, type KStoryMathConfig } from './kStoryMath'
+import { makeKCompareProvider, type KCompareConfig } from './kCompare'
+import { makeKTeensProvider, type KTeensConfig } from './kTeens'
 
 export type ProviderConfig =
   | { kind: 'multiplication'; factorMin: number; factorMax: number }
@@ -67,6 +69,10 @@ export type ProviderConfig =
   | ({ kind: 'kAddTake' } & KAddTakeConfig)
   /** Story Woods: spoken story problems within 10, acted out (the `mathStory` activity). */
   | ({ kind: 'kStoryMath' } & KStoryMathConfig)
+  /** Number Dunes: more, fewer and the same, comparing numbers, one more and one less, numbers in order. */
+  | ({ kind: 'kCompare' } & KCompareConfig)
+  /** Ten Frame Plateau: teen numbers as a full ten and some more; counting to 20. */
+  | ({ kind: 'kTeens' } & KTeensConfig)
 
 export function createProvider(config: ProviderConfig): ProblemProvider {
   switch (config.kind) {
@@ -116,5 +122,9 @@ export function createProvider(config: ProviderConfig): ProblemProvider {
       return makeKAddTakeProvider(config)
     case 'kStoryMath':
       return makeKStoryMathProvider(config)
+    case 'kCompare':
+      return makeKCompareProvider(config)
+    case 'kTeens':
+      return makeKTeensProvider(config)
   }
 }

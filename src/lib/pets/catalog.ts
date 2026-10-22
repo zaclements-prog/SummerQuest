@@ -25,9 +25,9 @@ export interface PetDef {
 
 export const PETS: readonly PetDef[] = [
   { creatureId: 'lion', zoneId: 'multiplication-mesa', lessonIds: ['multiplication', 'kCounting'], egg: { shell: '#ffe594', spot: '#f2a65a' } },
-  { creatureId: 'trex', zoneId: 'division-dunes', lessonIds: ['division'], egg: { shell: '#f6e3b4', spot: '#c7955f' } },
+  { creatureId: 'trex', zoneId: 'division-dunes', lessonIds: ['division', 'kCompare'], egg: { shell: '#f6e3b4', spot: '#c7955f' } },
   { creatureId: 'frog', zoneId: 'fraction-falls', lessonIds: ['fractions', 'kAddTake'], egg: { shell: '#b4ebdc', spot: '#4aa6d6' } },
-  { creatureId: 'unicorn', zoneId: 'place-value-plateau', lessonIds: ['placeValue'], egg: { shell: '#fcd3e2', spot: '#b79af0' } },
+  { creatureId: 'unicorn', zoneId: 'place-value-plateau', lessonIds: ['placeValue', 'kTeens'], egg: { shell: '#fcd3e2', spot: '#b79af0' } },
   { creatureId: 'bear', zoneId: 'measurement-marsh', lessonIds: ['measurement'], egg: { shell: '#c9e7b8', spot: '#6fbb63' } },
   { creatureId: 'panda', zoneId: 'geometry-grove', lessonIds: ['geometry', 'kShapes'], egg: { shell: '#ddcdf7', spot: '#8461b6' } },
   { creatureId: 'fox', zoneId: 'data-delta', lessonIds: ['dataGraph'], egg: { shell: '#ffd9c7', spot: '#f2766b' } },

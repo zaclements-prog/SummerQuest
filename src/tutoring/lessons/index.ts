@@ -19,6 +19,8 @@ import { kRhymesLesson } from './kRhymes'
 import { kTracingLesson } from './kTracing'
 import { kAddTakeLesson } from './kAddTake'
 import { kStoryMathLesson } from './kStoryMath'
+import { kCompareLesson } from './kCompare'
+import { kTeensLesson } from './kTeens'
 
 /**
  * The lessons, by content band (lib/gradeBand; K–5 plan §2): kindergarten and
@@ -43,10 +45,19 @@ export const g24Lessons: Lesson[] = [
   scienceLesson,
 ]
 
-/** Kindergarten (band `k1`; 1st grade too where it has none of its own): the kindergarten pilot's voice lessons, then K literacy's. */
-export const k1Lessons: Lesson[] = [kCountingLesson, kShapesLesson, kLettersLesson, kRhymesLesson, kTracingLesson]
-// K complete (phase 2a): Add-and-Take Falls, Story Woods
-k1Lessons.push(kAddTakeLesson, kStoryMathLesson)
+/** Kindergarten (band `k1`; 1st grade too where it has none of its own): the kindergarten voice lessons. */
+export const k1Lessons: Lesson[] = [
+  kCountingLesson,
+  kShapesLesson,
+  kLettersLesson,
+  kRhymesLesson,
+  kTracingLesson,
+  // K complete (phase 2a)
+  kAddTakeLesson,
+  kStoryMathLesson,
+  kCompareLesson,
+  kTeensLesson,
+]
 
 /** 1st grade (band `g1`): its own voice lessons. */
 export const g1Lessons: Lesson[] = []

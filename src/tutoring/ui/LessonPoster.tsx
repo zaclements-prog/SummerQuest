@@ -270,6 +270,49 @@ const POSTERS: Record<string, { bg: string; motif: () => ReactNode }> = {
       </g>
     ),
   },
+  kCompare: {
+    bg: '#fdecc8',
+    motif: () => (
+      <g strokeLinecap="round" strokeLinejoin="round">
+        {/* four over three, joined one to one; the last one left over (gold) */}
+        {[0, 1, 2, 3].map((i) => (
+          <circle key={`t${i}`} cx={84 + i * 52} cy={50} r={16} fill={i === 3 ? M.gold : '#8ab8ff'} stroke={M.ink} strokeWidth={3} />
+        ))}
+        {[0, 1, 2].map((i) => (
+          <g key={`b${i}`}>
+            <line x1={84 + i * 52} y1={68} x2={84 + i * 52} y2={96} stroke={M.coral} strokeWidth={5} />
+            <circle cx={84 + i * 52} cy={112} r={14} fill="#e9b46a" stroke={M.ink} strokeWidth={3} />
+          </g>
+        ))}
+        <circle cx={240} cy={112} r={14} fill="none" stroke={M.ink} strokeOpacity={0.4} strokeWidth={3} strokeDasharray="6 5" />
+        {/* the level balance: the same */}
+        <path d="M 270 128 L 302 128 L 292 120 L 280 120 Z" fill={M.wood} stroke={M.ink} strokeWidth={2.5} />
+        <line x1={286} y1={120} x2={286} y2={70} stroke={M.ink} strokeWidth={4} />
+        <line x1={262} y1={70} x2={310} y2={70} stroke={M.ink} strokeWidth={4} />
+        <path d="M 252 86 Q 262 98 272 86 Z M 300 86 Q 310 98 320 86 Z" fill={M.gold} stroke={M.ink} strokeWidth={2.5} />
+      </g>
+    ),
+  },
+  kTeens: {
+    bg: '#e9e2ff',
+    motif: () => (
+      <g>
+        {/* a full ten over three more, and the 13 they make */}
+        {[0, 1].map((f) => (
+          <g key={f}>
+            <rect x={70} y={28 + f * 54} width={140} height={48} rx={5} fill="#fffaf0" stroke={M.ink} strokeWidth={3} />
+            <path d={`M 70 ${52 + f * 54} H 210 M 98 ${28 + f * 54} V ${76 + f * 54} M 126 ${28 + f * 54} V ${76 + f * 54} M 154 ${28 + f * 54} V ${76 + f * 54} M 182 ${28 + f * 54} V ${76 + f * 54}`} stroke={M.ink} strokeWidth={2} />
+            {Array.from({ length: f === 0 ? 10 : 3 }, (_, k) => (
+              <circle key={k} cx={84 + (k % 5) * 28} cy={40 + f * 54 + Math.floor(k / 5) * 24} r={8.5} fill="#f2766b" stroke={M.ink} strokeWidth={2} />
+            ))}
+          </g>
+        ))}
+        <text x={262} y={92} fontFamily={M.font} fontWeight={700} fontSize={58} textAnchor="middle" dominantBaseline="middle" fill="#8ab8ff" stroke={M.ink} strokeWidth={4} paintOrder="stroke fill">
+          13
+        </text>
+      </g>
+    ),
+  },
   kStoryMath: {
     bg: '#e1f5d9',
     motif: () => (

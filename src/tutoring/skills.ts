@@ -71,6 +71,15 @@ export const SKILLS: Record<string, SkillMeta> = {
   // Story Woods (K complete, phase 2a; lesson kStoryMath)
   'k-story-problems': { label: 'story problems', zoneId: 'word-problem-woods', lessonId: 'kStoryMath', practiceStageId: 'k-woods-1' },
   'k-story-more':     { label: 'how many more', zoneId: 'word-problem-woods', lessonId: 'kStoryMath', practiceStageId: 'k-woods-3' },
+  // Number Dunes (K, phase 2a; lesson kCompare)
+  'k-match':           { label: 'matching: more, fewer and the same', zoneId: 'division-dunes', lessonId: 'kCompare', practiceStageId: 'k-dunes-1' },
+  'k-compare-numbers': { label: 'comparing numbers to 10', zoneId: 'division-dunes', lessonId: 'kCompare', practiceStageId: 'k-dunes-2' },
+  'k-one-more':        { label: 'one more and one less', zoneId: 'division-dunes', lessonId: 'kCompare', practiceStageId: 'k-dunes-2' },
+  'k-number-order':    { label: 'putting numbers in order', zoneId: 'division-dunes', lessonId: 'kCompare', practiceStageId: 'k-dunes-3' },
+  // Ten Frame Plateau (K, phase 2a; lesson kTeens)
+  'k-teens':       { label: 'teen numbers: ten and some more', zoneId: 'place-value-plateau', lessonId: 'kTeens', practiceStageId: 'k-teens-1' },
+  'k-teens-build': { label: 'making teen numbers', zoneId: 'place-value-plateau', lessonId: 'kTeens', practiceStageId: 'k-teens-2' },
+  'k-count-20':    { label: 'counting on to 20', zoneId: 'place-value-plateau', lessonId: 'kTeens', practiceStageId: 'k-teens-3' },
 }
 
 export interface Skill { id: string; label: string }

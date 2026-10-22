@@ -3,6 +3,12 @@ import { drumActivity } from './Drum'
 import { traceActivity } from './Trace'
 import { storyOrderActivity } from './StoryOrder'
 import { mathStoryActivity } from './MathStory'
+// Number Dunes and Ten Frame Plateau (K, phase 2a)
+import { matchActivity } from './Match'
+import { compareNumbersActivity } from './CompareNumbers'
+import { numberOrderActivity } from './NumberOrder'
+import { tenFramesActivity } from './TenFramesQuiz'
+import { buildActivity } from './BuildTeen'
 
 /**
  * Listen & Play activities by `kind` (see `ListenProblem.activity`): the
@@ -15,6 +21,12 @@ export const LISTEN_ACTIVITIES: Record<string, ListenActivityDef<any>> = {
   trace: traceActivity,
   order: storyOrderActivity,
   mathStory: mathStoryActivity,
+  // Number Dunes and Ten Frame Plateau (K, phase 2a)
+  matchRows: matchActivity,
+  compareNumbers: compareNumbersActivity,
+  numberOrder: numberOrderActivity,
+  teenFrames: tenFramesActivity,
+  buildTeen: buildActivity,
 }
 
 export function activityDef(spec: ListenActivitySpec | undefined): ListenActivityDef | null {

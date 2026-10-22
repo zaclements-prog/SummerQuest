@@ -232,6 +232,8 @@ export function effectiveConfig(
     case 'kStories':
     case 'kAddTake':
     case 'kStoryMath':
+    case 'kCompare':
+    case 'kTeens':
       return config
   }
 }

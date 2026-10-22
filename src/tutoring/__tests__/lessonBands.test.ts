@@ -9,9 +9,18 @@ import { focusRows, lessonRows } from '../../world/hubContent'
 
 /** Today's eleven lessons, in their order: grades 2–4 must see exactly these. */
 const TODAY = ['multiplication', 'division', 'fractions', 'placeValue', 'measurement', 'geometry', 'dataGraph', 'wordProblem', 'reading', 'writing', 'science']
-const K_PILOT = ['kCounting', 'kShapes', 'kLetters', 'kRhymes', 'kTracing']
-// (K complete, phase 2a)
-K_PILOT.push('kAddTake', 'kStoryMath')
+const K_PILOT = [
+  'kCounting',
+  'kShapes',
+  'kLetters',
+  'kRhymes',
+  'kTracing',
+  // (K complete, phase 2a)
+  'kAddTake',
+  'kStoryMath',
+  'kCompare',
+  'kTeens',
+]
 const ids = (ls: { id: string }[]) => ls.map((l) => l.id)
 
 describe('lessons by grade band', () => {
@@ -63,7 +72,10 @@ describe('lessons by grade band', () => {
     expect(isLessonFor('division', 5)).toBe(true)
     expect(zoneLessonFor('reading-reef', 0)?.id).toBe('kLetters')
     expect(zoneLessonFor('reading-reef', 3)?.id).toBe('reading')
-    expect(zoneLessonFor('division-dunes', 1)).toBeUndefined()
+    // (K complete, phase 2a: Number Dunes has its own K lesson)
+    expect(zoneLessonFor('division-dunes', 1)?.id).toBe('kCompare')
+    expect(zoneLessonFor('place-value-plateau', 0)?.id).toBe('kTeens')
+    expect(zoneLessonFor('no-such-zone', 1)).toBeUndefined()
   })
 })
 
@@ -130,6 +142,8 @@ describe('practice links stay in the band', () => {
       // (K complete, phase 2a)
       kAddTake: ['k-addsub-1', 'k-addsub-2', 'k-addsub-3'],
       kStoryMath: ['k-woods-1', 'k-woods-2', 'k-woods-3'],
+      kCompare: ['k-dunes-1', 'k-dunes-2', 'k-dunes-3'],
+      kTeens: ['k-teens-1', 'k-teens-2', 'k-teens-3'],
     }
     for (const l of k1Lessons.filter((x) => fixed[x.id])) {
       const zone = withK1(getZone(l.zoneId)!, fixed[l.id])

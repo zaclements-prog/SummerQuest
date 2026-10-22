@@ -107,5 +107,17 @@ export default defineVoicePack({
     'stage-k-woods-1': 'Act it out!',
     'stage-k-woods-2': 'Story time!',
     'stage-k-woods-3': 'Story puzzles!',
+
+    // ── Number Dunes and Ten Frame Plateau (K, phase 2a): names, welcomes and stage buttons ──
+    'name-division-dunes': 'Number Dunes!',
+    'welcome-division-dunes': 'Number Dunes! Tap a star to play!',
+    'stage-k-dunes-1': 'Line them up!',
+    'stage-k-dunes-2': 'Which is more?',
+    'stage-k-dunes-3': 'Numbers in order!',
+    'name-place-value-plateau': 'Ten Frame Plateau!',
+    'welcome-place-value-plateau': 'Ten Frame Plateau! Tap a star to play!',
+    'stage-k-teens-1': 'Ten and more!',
+    'stage-k-teens-2': 'Fill the frames!',
+    'stage-k-teens-3': 'Count to twenty!',
   },
 })

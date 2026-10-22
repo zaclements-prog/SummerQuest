@@ -55,7 +55,8 @@ describe('zones for a K–1 child', () => {
       for (const g of [2, 3, 4, 5] as const) expect(zoneTitle(zone, g)).toBe(zone.title)
       expect(zoneTitle(zone, null)).toBe(zone.title)
     }
-    expect(zoneTitle(getZone('division-dunes')!, 0)).toBe('Division Dunes')
+    // (a zone with no K title of its own keeps its name: Writing Workshop)
+    expect(zoneTitle(getZone('writing-workshop')!, 0)).toBe('Writing Workshop')
   })
 
   it('a zone sleeps for K–1 until it has a K–1 stage set, and never for grades 2–5', () => {
@@ -97,8 +98,9 @@ describe('what the voice says (k-nav)', () => {
       expect(voiceText(zoneWelcomeVoice(zoneId))).toBe(`${p.title}! Tap a star to play!`)
       for (const id of p.stages) expect(stageVoice(id), id).not.toBeNull()
     }
-    expect(zoneNameVoice('division-dunes')).toBeNull()
-    expect(voiceText(zoneWelcomeVoice('division-dunes'))).toBe('Tap a star to play!')
+    // (a zone with no lines of its own: the general welcome)
+    expect(zoneNameVoice('no-such-zone')).toBeNull()
+    expect(voiceText(zoneWelcomeVoice('no-such-zone'))).toBe('Tap a star to play!')
     expect(voiceText(stageVoice('k-count-1')!)).toBe('Count with me!')
   })
 
@@ -135,5 +137,25 @@ describe('World gateways', () => {
       expect(npcSleeping(npc(undefined, 'schoolhouse'), g)).toBe(false)
       expect(npcTitle(npc('multiplication-mesa', undefined, 'Multiplication Mesa'), g)).toBe('Multiplication Mesa')
     }
+  })
+})
+
+describe('every open K zone (the real K–1 stage sets)', () => {
+  it('has its name and welcome said aloud, and each stage its title and its own picture', () => {
+    let open = 0
+    for (const [zone, sets] of original) {
+      const k1 = sets?.k1
+      if (!k1?.length) continue
+      open++
+      const title = zone.titleByBand?.k1 ?? zone.title
+      expect(voiceText(zoneNameVoice(zone.id)!), zone.id).toBe(`${title}!`)
+      expect(voiceText(zoneWelcomeVoice(zone.id)), zone.id).toBe(`${title}! Tap a star to play!`)
+      for (const s of k1) {
+        expect(stageVoice(s.id), s.id).not.toBeNull()
+        expect(stagePicture(s), s.id).not.toMatch(/^[💡⚡🏆⭐]$/u)
+      }
+    }
+    // (the pilot's three, Writing Workshop, Number Dunes, Ten Frame Plateau, …)
+    expect(open).toBeGreaterThanOrEqual(6)
   })
 })
