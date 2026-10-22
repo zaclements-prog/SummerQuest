@@ -876,7 +876,7 @@ async function fuzz(c: Case): Promise<string[]> {
   for (let i = 0; i < DRAWS && failures.length < 12; i++) {
     const p = c.draw ? await c.draw(provider, i) : await nextProblem(provider)
     // (a question answered by an activity has no options to choose from)
-    const mc = c.config.kind !== 'writingPrompt' && !(p as ListenProblem).activity
+    const mc = c.config.kind !== 'writingPrompt' && c.config.kind !== 'g5Writing' && !(p as ListenProblem).activity
     const errs = [...genericProblems(p, mc), ...answerProblems(c.config, c.grade, p)]
     for (const e of errs) failures.push(`${e}\n    ↳ ${p.prompt} | ${JSON.stringify(p.options)} → ${JSON.stringify(p.answer)}`)
   }

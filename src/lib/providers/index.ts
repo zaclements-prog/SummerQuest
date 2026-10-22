@@ -51,6 +51,11 @@ import { makeG1ShapesProvider, type G1ShapesConfig } from './g1Shapes'
 import { makeG1MeasureProvider, type G1MeasureConfig } from './g1Measure'
 import { makeG1GraphsProvider, type G1GraphsConfig } from './g1Graphs'
 import { makeG1ScienceProvider, type G1ScienceConfig } from './g1Science'
+// 5th grade (phase 3): Reading Reef, Writing Workshop, Science Summit (and Cloud Keeper's spheres tier)
+import { makeG5ReadingProvider, type G5ReadingConfig } from './g5Reading'
+import { makeG5WritingProvider, type G5WritingConfig } from './g5Writing'
+import { makeG5ScienceProvider, type G5ScienceConfig } from './g5Science'
+import { makeG5SpheresProvider } from './g5Spheres'
 
 export type ProviderConfig =
   | { kind: 'multiplication'; factorMin: number; factorMax: number }
@@ -117,6 +122,15 @@ export type ProviderConfig =
   | ({ kind: 'g1Graphs' } & G1GraphsConfig)
   /** Sky Summit: light and sound, the day and night sky, animal families. */
   | ({ kind: 'g1Science' } & G1ScienceConfig)
+  // ── 5th grade (phase 3): Reading Reef, Writing Workshop, Science Summit ──
+  /** Reading Reef (5th grade): level-5 stories, poems and articles, a passage at a time. */
+  | ({ kind: 'g5Reading' } & G5ReadingConfig)
+  /** Writing Workshop (5th grade): opinion, informative and narrative prompts with a checklist (the writing pad). */
+  | ({ kind: 'g5Writing' } & G5WritingConfig)
+  /** Science Summit (5th grade): matter, food webs, Earth's spheres, shadows and stars. */
+  | ({ kind: 'g5Science' } & G5ScienceConfig)
+  /** Cloud Keeper's grade-5 tier: carry water, carbon dioxide and minerals between Earth's spheres. */
+  | { kind: 'g5Spheres' }
 
 export function createProvider(config: ProviderConfig): ProblemProvider {
   switch (config.kind) {
@@ -199,5 +213,14 @@ export function createProvider(config: ProviderConfig): ProblemProvider {
       return makeG1GraphsProvider(config)
     case 'g1Science':
       return makeG1ScienceProvider(config)
+    // 5th grade (phase 3): Reading Reef, Writing Workshop, Science Summit
+    case 'g5Reading':
+      return makeG5ReadingProvider(config)
+    case 'g5Writing':
+      return makeG5WritingProvider(config)
+    case 'g5Science':
+      return makeG5ScienceProvider(config)
+    case 'g5Spheres':
+      return makeG5SpheresProvider()
   }
 }

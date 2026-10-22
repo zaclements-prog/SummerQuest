@@ -255,6 +255,12 @@ export function effectiveConfig(
     case 'g1Graphs':
     case 'g1Science':
       return config
+    // 5th grade (phase 3): Reading Reef, Writing Workshop, Science Summit play as written
+    case 'g5Reading':
+    case 'g5Writing':
+    case 'g5Science':
+    case 'g5Spheres':
+      return config
   }
 }
 

@@ -128,5 +128,51 @@ export const scienceZone: Zone = {
         starsToEarn: 3,
       },
     ],
+    // 5th grade (phase-3 contract): matter and food webs (5-PS1, 5-LS2) → Cloud
+    // Keeper's spheres tier (5-ESS2: carry water, carbon dioxide and minerals
+    // between the four spheres) → Earth's spheres and the sky (5-ESS2, 5-ESS1)
+    // → the boss, every strand.
+    g5: [
+      {
+        id: 'g5-sci-1',
+        kind: 'concept',
+        title: 'Matter Camp',
+        description: 'Particles, conserving weight and food webs.',
+        gameId: 'conceptPlay',
+        providerConfig: { kind: 'g5Science', strands: ['matter', 'foodWebs'] },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g5-sci-cycle',
+        kind: 'practice',
+        title: 'Sphere Keeper',
+        description: 'Carry water, carbon dioxide and minerals between Earth’s four spheres.',
+        gameId: 'cloudKeeper',
+        providerConfig: { kind: 'g5Spheres' },
+        params: { rounds: 5, mode: 'spheres' },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g5-sci-2',
+        kind: 'practice',
+        title: 'Sky Ridge',
+        description: 'Earth’s spheres and water, shadows, the sun and the stars.',
+        gameId: 'conceptPlay',
+        providerConfig: { kind: 'g5Science', strands: ['spheres', 'sky'] },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g5-sci-3',
+        kind: 'mastery',
+        title: 'Professor Comet',
+        description: 'Answer science questions from every strand to outshine Professor Comet!',
+        gameId: 'bossBattle',
+        providerConfig: { kind: 'g5Science', strands: ['matter', 'foodWebs', 'spheres', 'sky'] },
+        params: { questionCount: 6, bossEmoji: '☄️', bossName: 'Professor Comet' },
+        starsToEarn: 3,
+      },
+    ],
   },
 }
