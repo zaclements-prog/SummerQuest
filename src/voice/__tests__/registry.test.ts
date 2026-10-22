@@ -32,7 +32,8 @@ describe('grade bands', () => {
     expect([0, 1, 2, 3, 4, 5].map(contentBand)).toEqual(['k1', 'g1', 'g24', 'g24', 'g24', 'g5'])
     // 1st grade plays kindergarten's stage sets, names and lessons wherever it has none of its own
     expect(bandFallbacks('g1')).toEqual(['g1', 'k1'])
-    for (const b of ['k1', 'g24', 'g5'] as const) expect(bandFallbacks(b)).toEqual([b])
+    expect(bandFallbacks('g5')).toEqual(['g5', 'g24'])
+    for (const b of ['k1', 'g24'] as const) expect(bandFallbacks(b)).toEqual([b])
     expect((['k1', 'g1', 'g24', 'g5'] as const).filter(isListenBand)).toEqual(['k1', 'g1'])
     expect([0, 1, 2, 3, 4, 5].map(experienceMode)).toEqual(['listen', 'listen', 'readHear', 'readHear', 'own', 'own'])
     expect(isListenMode(0) && isListenMode(1) && !isListenMode(2)).toBe(true)

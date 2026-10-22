@@ -118,8 +118,8 @@ const DEFAULT_BAND: ContentBand = 'g24'
 /**
  * The lessons a child of this grade sees: their band's, or grades 2–4's when
  * the band has none yet. 1st grade gets its own lesson(s) for each zone that
- * has some, and kindergarten's for the others (`bandFallbacks`). A missing
- * grade counts as grade 4.
+ * has some, and kindergarten's for the others; 5th grade its own, and 2–4's
+ * for the others (`bandFallbacks`). A missing grade counts as grade 4.
  */
 export function lessonsFor(grade: number | null | undefined): Lesson[] {
   const band = grade == null ? DEFAULT_BAND : contentBand(grade)

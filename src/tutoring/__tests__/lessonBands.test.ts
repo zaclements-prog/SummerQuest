@@ -69,8 +69,16 @@ describe('lessons by grade band', () => {
     expect(ids(allLessons)).toEqual(TODAY)
   })
 
-  it("grade 5 borrows the 2–4 lessons until it has its own", () => {
-    expect(ids(lessonsFor(5))).toEqual(TODAY)
+  it("grade 5: its own lesson for a zone where it has one, else the 2–4 one", () => {
+    const g5 = lessonsFor(5)
+    const own = new Set(g5.filter((l) => lessonBand(l) === 'g5').map((l) => l.zoneId))
+    for (const l of g5) expect(['g5', 'g24'], l.id).toContain(lessonBand(l))
+    for (const l of g5) if (lessonBand(l) === 'g24') expect(own.has(l.zoneId), l.id).toBe(false)
+    // every zone grades 2–4 have a lesson for, grade 5 has one for too
+    const g5Zones = new Set(g5.map((l) => l.zoneId))
+    for (const l of g24Lessons) expect(g5Zones.has(l.zoneId), l.zoneId).toBe(true)
+    // (until it has any of its own, exactly today's eleven)
+    if (own.size === 0) expect(ids(g5)).toEqual(TODAY)
   })
 
   it('a missing grade counts as the default grade', () => {
