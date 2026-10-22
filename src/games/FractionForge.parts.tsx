@@ -62,6 +62,8 @@ export function slotWorld(k: number, denom: number): [number, number, number] {
 
 export const CANDY = '#efb15f'
 export const CANDY_GOLD = '#ffcf4d'
+/** Grade 5's second flavour (the `c/d` part of an `a/b + c/d` order). */
+export const CANDY_BERRY = '#f59fb5'
 const CREAM = '#f7e7c6'
 const SLATE = '#3c4657'
 const WRAP = '#f7a1c4'
@@ -154,7 +156,7 @@ export function SpotRing({ x, z, r, color = '#fff6cf', glow = false, opacity = 0
  * piston lifts (wind-up) then slams (impact) on every new `stamp` token. Its
  * slate plate names the slab it makes.
  */
-export function Press({ denom, stamp, active }: { denom: number; stamp: number; active: boolean }) {
+export function Press({ denom, stamp, active }: { denom: number | null; stamp: number; active: boolean }) {
   const head = useRef<Group>(null)
   const t = useRef(99)
   const slammed = useRef(true)
@@ -201,9 +203,9 @@ export function Press({ denom, stamp, active }: { denom: number; stamp: number; 
           <TBox size={[0.9, 0.26, 0.56]} radius={0.06} color={active ? TOON.gold : TOON.flowerYellow} outline emissive={active ? TOON.gold : undefined} emissiveIntensity={active ? 0.25 : undefined} />
         </group>
         {/* the slab this press makes: 1/d, big on the base front */}
-        <ChalkPlate text={`1/${denom}`} w={1.3} h={0.5} position={[0, 0.2, 0.69]} rotation={[-0.15, 0, 0]} />
-        {/* a sample slab on the shelf, its true size */}
-        <Slab w={cellW(denom) - 0.03} color={CANDY} position={[0, 0.54, 0.42]} />
+        <ChalkPlate text={denom === null ? '1/?' : `1/${denom}`} w={1.3} h={0.5} position={[0, 0.2, 0.69]} rotation={[-0.15, 0, 0]} />
+        {/* a sample slab on the shelf, its true size (grade 5: none until the gauge is set) */}
+        {denom !== null && <Slab w={cellW(denom) - 0.03} color={CANDY} position={[0, 0.54, 0.42]} />}
       </group>
     </group>
   )
@@ -230,6 +232,7 @@ export function MoldTable({
   ruler,
   fx,
   fxToken,
+  parts,
 }: {
   baseNum: number
   baseDenom: number
@@ -240,6 +243,8 @@ export function MoldTable({
   ruler: boolean
   fx: MoldFx
   fxToken: number
+  /** Grade 5 (`a/b + c/d`): the recipe bar shows the two parts end to end, in two flavours. */
+  parts?: readonly { num: number; denom: number }[]
 }) {
   const chunk = cellW(baseDenom)
   const step = cellW(targetDenom)
@@ -301,8 +306,9 @@ export function MoldTable({
         <group position={[0, 1.45, 0.06]}>
           <Instances geometry={geo.box(1, 1, 1, 0.2)} color={TOON.white} items={chalkItems} />
         </group>
-        {/* the recipe bar: baseDenom chunks, baseNum shaded */}
-        {Array.from({ length: baseDenom }, (_, i) => (
+        {/* the recipe bar: baseDenom chunks, baseNum shaded (grade 5: its two parts end to end) */}
+        {parts && <RecipeParts parts={parts} x0={x0} />}
+        {!parts && Array.from({ length: baseDenom }, (_, i) => (
           <TBox
             key={i}
             size={[chunk - 0.06, 0.38, 0.08]}
@@ -341,7 +347,7 @@ export function MoldTable({
           <Slab
             key={k}
             w={step - 0.035}
-            color={fx === 'exact' ? CANDY_GOLD : k >= target ? TOON.flowerRed : CANDY}
+            color={fx === 'exact' ? CANDY_GOLD : k >= target ? TOON.flowerRed : parts && k >= (parts[0].num * targetDenom) / parts[0].denom ? CANDY_BERRY : CANDY}
             position={[x0 + (k + 0.5) * step, SLAB_Y + (k >= target ? 0.06 : 0), MOLD_Z]}
           />
         ))}
@@ -365,6 +371,27 @@ export function MoldTable({
         <TCyl radiusTop={0.07} height={TABLE_TOP - 0.1} position={[1.15, (TABLE_TOP - 0.1) / 2, 0]} color={TOON.woodDark} segments={6} />
       </group>
     </group>
+  )
+}
+
+/** Grade 5's recipe bar: `a` chunks of `1/b` (caramel), then `c` chunks of `1/d` (berry), then the empty rest. */
+function RecipeParts({ parts, x0 }: { parts: readonly { num: number; denom: number }[]; x0: number }) {
+  const chunks: { x: number; w: number; color: string }[] = []
+  let at = 0
+  parts.forEach((q, j) => {
+    const w = cellW(q.denom)
+    for (let i = 0; i < q.num; i++) {
+      chunks.push({ x: at + w / 2, w, color: j === 0 ? CANDY : CANDY_BERRY })
+      at += w
+    }
+  })
+  if (BAR - at > 0.02) chunks.push({ x: at + (BAR - at) / 2, w: BAR - at, color: CREAM })
+  return (
+    <>
+      {chunks.map((c, i) => (
+        <TBox key={i} size={[c.w - 0.06, 0.38, 0.08]} radius={0.04} position={[x0 + c.x, 0.72, 0.07]} color={c.color} castShadow={false} />
+      ))}
+    </>
   )
 }
 

@@ -3,12 +3,16 @@ import type { Zone } from './types'
 export const multiplicationZone: Zone = {
   id: 'multiplication-mesa',
   title: 'Multiplication Mesa',
-  titleByBand: { k1: 'Counting Mesa' },
+  titleByBand: { k1: 'Counting Mesa', g1: 'Adding Mesa' },
   subtitle: 'Times tables',
+  subtitleByBand: { g5: 'Multi-digit multiplication' },
   emoji: '🏜️',
   themeColor: 'quest',
   description:
     'Master your multiplication facts so they feel automatic. Strong multiplication helps with division, fractions, and almost every other kind of math.',
+  descriptionByBand: {
+    g5: "Multiply big numbers with area models and the standard algorithm, and see how powers of 10 move every digit over.",
+  },
   estimatedMinutes: 20,
   available: true,
   position: { x: 13, y: 15 },
@@ -80,6 +84,81 @@ export const multiplicationZone: Zone = {
         gameId: 'listenPlay',
         providerConfig: { kind: 'kCounting', mode: 'compare', min: 1, max: 10 },
         params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+    ],
+    // 1st grade "Adding Mesa" (1.OA.3, 1.OA.6): add within 20 with a number
+    // sentence on screen ("8 + 5 = ?") and a picture of the strategy under it:
+    // count on from the bigger number and turn-around facts → the parade's +
+    // gates as numerals → doubles, near doubles and making ten. Answered with
+    // numeral cards (the `numberSentence` activity). Said aloud.
+    g1: [
+      {
+        id: 'g1-add-1',
+        kind: 'concept',
+        title: 'Count on',
+        description: 'Start with the bigger number. Count on!',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Adding', mode: 'countOn' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-add-parade',
+        kind: 'practice',
+        title: 'Critter Parade',
+        description: 'Add the gates. Pick the one with more!',
+        gameId: 'critterParade',
+        // (the parade makes its own gates; the provider only names the topic)
+        providerConfig: { kind: 'g1Adding', mode: 'facts' },
+        // 1st grade's + gates within 20, written as numerals (lib/gates opSetFor: `add20`)
+        params: { ops: 'add' },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-add-3',
+        kind: 'mastery',
+        title: 'Doubles and tens',
+        description: 'Use doubles and make a ten to add!',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Adding', mode: 'facts' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+    ],
+    // 5th grade (phase 3; 5.NBT.2, 5.NBT.5): area models in Times Grove (its
+    // grade-5 mode: plant the partial products, then the total) → the standard
+    // algorithm up to 4-digit by 2-digit with powers of 10 and exponents → the
+    // boss, everything in words.
+    g5: [
+      {
+        id: 'g5-mult-1',
+        kind: 'concept',
+        title: 'Area Model Grove',
+        description: 'Split both numbers by place value, then plant each partial product.',
+        gameId: 'timesGrove',
+        providerConfig: { kind: 'g5Mult', mode: 'area' },
+        params: { mode: 'area', rounds: 3 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g5-mult-2',
+        kind: 'practice',
+        title: 'Powers & Products',
+        description: 'Multiply big numbers with the standard algorithm and powers of 10.',
+        gameId: 'conceptPlay',
+        providerConfig: { kind: 'g5Mult', mode: 'practice' },
+        params: { questionCount: 8 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g5-mult-3',
+        kind: 'mastery',
+        title: 'Scorpion King Battle',
+        description: 'Defeat the Scorpion King with 4-digit by 2-digit products!',
+        gameId: 'bossBattle',
+        providerConfig: { kind: 'g5Mult', mode: 'mastery' },
+        params: { questionCount: 10, bossEmoji: '🦂', bossName: 'Scorpion King' },
         starsToEarn: 3,
       },
     ],

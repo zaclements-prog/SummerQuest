@@ -12,6 +12,65 @@ you produce is checked by `npm run tts:check` and the test suite.
 
 ---
 
+## 0. The current render job (2026-10-22)
+
+Kindergarten and 1st grade are complete in code (see `docs/PROJECT_STATUS.md`), and none of
+their audio is recorded yet. They are voice-first, so these clips matter most. The
+grade 2–4 lessons are already recorded and need nothing.
+
+| Set | Fresh | To render | Voice id |
+|---|---|---|---|
+| Lessons (`npm run tts:check`) | 45 steps (the 11 grade 2–4 lessons) | **97 steps**: 13 K lessons (`k*`) and 11 1st-grade lessons (`g1*`), with the K reference. **56 steps**: 11 5th-grade lessons (`g5*`), with the normal lesson reference | `narrationVoice.json`: `…calm-teacher-v1` (unchanged) |
+| Voice lines (`npm run voice:check`) | 0 | **7,330 clips** in 36 packs | `voiceId.json`: `…calm-teacher-v1:k` |
+
+**1. The K delivery reference first.** K–1 should sound slower and warmer (§7.2, "K delivery").
+- If you don't have one yet, make the K reference pair with the same `calm-teacher-v1` persona.
+- Use it for both the K–1 voice lines and the K–1 lesson steps.
+- The reference is not part of the hash, so the K–1 lesson steps keep the lesson voice id and still render with the K reference.
+
+**2. Pilot.** Render, then listen in the app:
+```bash
+$PY scripts/tts/render_local.py --set voice --engine higgs --ref-audio $K_REF --only ui,listen,k-nav,slots
+$PY scripts/tts/render_local.py --engine higgs --ref-audio $K_REF --only kCounting,g1Adding
+```
+- Check the slot words for level list intonation (§7.4) before rendering any big stitched pack.
+- Open `npm run dev`, make a kindergarten and a 1st-grade player, and walk the map, one zone and one lesson for each.
+
+**3. Everything else:**
+- Voice lines: the K packs (`k-*`), then the 1st-grade packs (`g1-*`), then `parade`.
+- Lessons: the rest of the `k*` and `g1*` lessons:
+  ```bash
+  --only kShapes,kLetters,kRhymes,kTracing,kAddTake,kStoryMath,kCompare,kTeens,kMeasure,kSorting,kScience,kTowers,g1Reading,g1Writing,g1Tens,g1Shares,g1Shapes,g1Measure,g1Graphs,g1Science,g1Subtract,g1StoryMath
+  ```
+- Everything is idempotent, so an interrupted run just resumes.
+- The biggest packs are `g1-facts` (1,118), `g1-tens` (750), `g1-woods` (628), `parade` (505), `g1-towers` (403), `k-compare` (402) and `k-woods` (348).
+
+**4. Listen for these in particular** (flagged by the builders):
+
+| Lines | What to listen for |
+|---|---|
+| Phonics sounds (`k-sounds`, `g1-phonics`) | Isolated letter sounds are hard for a TTS. This is also the plan's owner decision 4: keep them, or record the 44 sounds by hand. |
+| Stitched 1st-grade sentences: `g1-facts` `sayPlus`/`sayMinus`/`sayPlus3`, the `subB-*` "minus what…" questions, the 114 `minusWouldHave` lines | Seams between pieces, and "minus" spoken for "−" |
+| Numbers up to 120 (`g1-tens`, `slots/number`) | Clear and level |
+
+**5. Verify and commit** as in §4 step 8–9 and §7.2:
+- `npm run tts:check`
+- `npm run voice:check -- --strict`
+- `VOICE_STRICT=1 npx vitest run src/voice`
+- `npx vitest run src/tutoring`
+
+Commit `public/tts/**` and `public/voice/**` with their manifests.
+
+**Size:** 7,330 short clips at 56 kbps is roughly 25–35 MB in `public/voice`. That is well over the 8 MB lesson budget, so tell the integrator the real total. If needed, the store build can ship K–1 packs separately later.
+
+**5th grade (merged).** Its 11 lessons are in "own" mode. Render them with the normal lesson reference (`sq_teacher_v2`), not the K one:
+```bash
+$PY scripts/tts/render_local.py --engine higgs --ref-audio $REF --only g5Reading,g5Writing,g5Science,g5Fractions,g5Decimals,g5Volume,g5Coordinates,g5LinePlots,g5Multiplication,g5Division,g5Expressions
+```
+5th grade adds no voice lines.
+
+---
+
 ## 1. What the app expects (the contract)
 
 Source of truth for the words: the lessons in `src/tutoring/lessons/*.ts`. Each lesson

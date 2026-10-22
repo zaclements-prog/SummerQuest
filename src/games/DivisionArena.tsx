@@ -17,25 +17,18 @@ import CreatureAccessories from '../home/world/CreatureAccessories'
 import { useStarterCreature } from '../home/starterCreature'
 import { collidesAt } from '../world/collision'
 import {
-  BOSS_CRACKED_SPEED,
   BOSS_FINISH_BONUS,
   BOSS_REDRAWS,
   KNOCKBACK,
   ROUNDS,
   advanceProgress,
-  arenaFactConfig,
-  arenaPlan,
+  arenaRules,
   arenaStarsOf,
-  bossChain,
-  bossKMax,
   herdSpots,
-  isBossFact,
   laneZ,
-  makePedestalOptions,
   parseDivRound,
   shatterPoints,
   throwOutcome,
-  warmFactConfig,
   type BossChain,
   type DivRound,
   type RoundPlan,
@@ -180,15 +173,19 @@ export default function DivisionArena({ params, onComplete, meta, paused: hostPa
   const gfx = canvasQuality(useLowGraphics())
   useStarterCreature()
   const totalRounds = Math.max(1, (params?.rounds as number | undefined) ?? ROUNDS)
-  const plan = useMemo(() => arenaPlan(totalRounds), [totalRounds])
   const grade = useProgress((s) => s.player?.grade)
   const tierDivMax = GRADE_TIERS[grade ?? DEFAULT_GRADE].divMax
+  // 5th grade's stage asks for two-digit crystals (`divisorDigits: 2`); every
+  // other stage plays the arena's own rules, exactly as before (divisionCore `arenaRules`).
+  const digits: 1 | 2 = params?.divisorDigits === 2 ? 2 : 1
+  const rules = useMemo(() => arenaRules(digits, tierDivMax), [digits, tierDivMax])
+  const plan = useMemo(() => rules.plan(totalRounds), [rules, totalRounds])
   // The arena draws its OWN bounded facts: the grade tier widens division to
   // ÷12 (dividends to 144), which the pen (rows of five) and the chalk can't
   // model legibly. Never harder than the grade, never wider than the model.
   // Warm-ups come from the friendly corner of the same range.
-  const facts = useMemo(() => makeDivisionProvider(arenaFactConfig(tierDivMax)), [tierDivMax])
-  const warmFacts = useMemo(() => makeDivisionProvider(warmFactConfig(tierDivMax)), [tierDivMax])
+  const facts = useMemo(() => makeDivisionProvider(rules.facts), [rules])
+  const warmFacts = useMemo(() => makeDivisionProvider(rules.warm), [rules])
 
   const spawnWorld = useMemo(() => toWorld(...SPAWN_LOCAL), [])
   const posRef = useRef(new Vector3(spawnWorld[0], 0, spawnWorld[1]))
@@ -249,9 +246,9 @@ export default function DivisionArena({ params, onComplete, meta, paused: hostPa
     (problem: Problem, index: number) => {
       const p = plan[index]
       const base = parseDivRound(problem)
-      problemRef.current = problem
+      problemRef.current = rules.skill ? { ...problem, skill: { ...rules.skill } } : problem
       triedRef.current = false
-      const chain = p.kind === 'boss' ? bossChain(base, bossKMax(tierDivMax)) : null
+      const chain = p.kind === 'boss' ? rules.bossChain(base) : null
       const round = chain ? chain.steps[0] : base
       const s = simRef.current
       s.progress = 0
@@ -268,7 +265,7 @@ export default function DivisionArena({ params, onComplete, meta, paused: hostPa
         step: chain ? 0 : 1,
         round,
         chain,
-        options: makePedestalOptions(round.dividend, round.divisor, p.crystals),
+        options: rules.pedestals(round.dividend, round.divisor, p.crystals),
         phase: 'march',
         held: null,
         flight: null,
@@ -288,7 +285,7 @@ export default function DivisionArena({ params, onComplete, meta, paused: hostPa
       }
       if (index === 0) banner('Crystal Golems!', '#ffcf4d', 1800)
     },
-    [plan, tierDivMax, patchHud, react, banner],
+    [plan, rules, patchHud, react, banner],
   )
 
   // the giant is built over a meaty fact (see isBossFact): re-draw until one
@@ -297,10 +294,10 @@ export default function DivisionArena({ params, onComplete, meta, paused: hostPa
     async (index: number) => {
       const kind = plan[index].kind
       let p = await nextProblem(kind === 'warm' ? warmFacts : facts)
-      for (let i = 0; kind === 'boss' && i < BOSS_REDRAWS && !isBossFact(parseDivRound(p), tierDivMax); i++) p = await nextProblem(facts)
+      for (let i = 0; kind === 'boss' && i < BOSS_REDRAWS && !rules.isBossFact(parseDivRound(p)); i++) p = await nextProblem(facts)
       return p
     },
-    [plan, warmFacts, facts, tierDivMax],
+    [plan, warmFacts, facts, rules],
   )
 
   // first round (setState only in the .then)
@@ -409,7 +406,7 @@ export default function DivisionArena({ params, onComplete, meta, paused: hostPa
       // the giant's first crack is its own small step (no factId); the fact
       // itself — and every normal golem — goes to factStats
       const asked: Problem = crack
-        ? { ...problem, id: `${problem.id}-crack`, prompt: `${v.round.dividend} ÷ ${v.round.divisor} = ?`, answer: v.round.quotient, factId: undefined, skill: { id: 'div-basic', label: 'basic division facts' } }
+        ? { ...problem, id: `${problem.id}-crack`, prompt: `${v.round.dividend} ÷ ${v.round.divisor} = ?`, answer: v.round.quotient, factId: undefined, skill: { ...rules.crackSkill } }
         : problem
       credit(right, asked)
       const hitAt = wpos(s.x, 1.5 * s.scale, s.z + 0.5)
@@ -432,9 +429,9 @@ export default function DivisionArena({ params, onComplete, meta, paused: hostPa
         const next = v.chain.steps[1]
         setView({ ...v, phase: 'crack', held: null, flight: null })
         later(950, () => {
-          s.speed = BOSS_CRACKED_SPEED
+          s.speed = rules.crackedSpeed
           setGolemAnim(s, 'march')
-          setView((w) => (w ? { ...w, phase: 'march', step: 1, round: next, options: makePedestalOptions(next.dividend, next.divisor, w.plan.crystals) } : w))
+          setView((w) => (w ? { ...w, phase: 'march', step: 1, round: next, options: rules.pedestals(next.dividend, next.divisor, w.plan.crystals) } : w))
           patchHud({ eq: 'open', solved: null })
           react('idle', `${next.quotient} 🐪`)
         })
@@ -494,7 +491,7 @@ export default function DivisionArena({ params, onComplete, meta, paused: hostPa
       const home = PEDESTALS[v.plan.crystals][Math.max(0, slot)]
       setView({ ...v, phase: 'bounce', held: null, flight: { id: ++flightId.current, n: picked, from: [s.x, s.z + 0.5], back: home } })
     },
-    [credit, scoreHit, miss, react, banner, patchHud, later],
+    [credit, scoreHit, miss, react, banner, patchHud, later, rules],
   )
 
   /** The bounced crystal is home again: back to marching. */

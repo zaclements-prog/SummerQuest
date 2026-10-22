@@ -24,18 +24,18 @@ export interface PetDef {
 }
 
 export const PETS: readonly PetDef[] = [
-  { creatureId: 'lion', zoneId: 'multiplication-mesa', lessonIds: ['multiplication', 'kCounting'], egg: { shell: '#ffe594', spot: '#f2a65a' } },
-  { creatureId: 'trex', zoneId: 'division-dunes', lessonIds: ['division'], egg: { shell: '#f6e3b4', spot: '#c7955f' } },
-  { creatureId: 'frog', zoneId: 'fraction-falls', lessonIds: ['fractions'], egg: { shell: '#b4ebdc', spot: '#4aa6d6' } },
-  { creatureId: 'unicorn', zoneId: 'place-value-plateau', lessonIds: ['placeValue'], egg: { shell: '#fcd3e2', spot: '#b79af0' } },
-  { creatureId: 'bear', zoneId: 'measurement-marsh', lessonIds: ['measurement'], egg: { shell: '#c9e7b8', spot: '#6fbb63' } },
-  { creatureId: 'panda', zoneId: 'geometry-grove', lessonIds: ['geometry', 'kShapes'], egg: { shell: '#ddcdf7', spot: '#8461b6' } },
-  { creatureId: 'fox', zoneId: 'data-delta', lessonIds: ['dataGraph'], egg: { shell: '#ffd9c7', spot: '#f2766b' } },
-  { creatureId: 'owl', zoneId: 'word-problem-woods', lessonIds: ['wordProblem'], egg: { shell: '#e9dcc4', spot: '#9a6a46' } },
-  { creatureId: 'octopus', zoneId: 'reading-reef', lessonIds: ['reading', 'kLetters', 'kRhymes'], egg: { shell: '#ffc9b8', spot: '#f7a1c4' } },
-  { creatureId: 'dragonet', zoneId: 'writing-workshop', lessonIds: ['writing', 'kTracing'], egg: { shell: '#cfe8fb', spot: '#8ab8ff' } },
-  { creatureId: 'tiger', zoneId: 'science-summit', lessonIds: ['science'], egg: { shell: '#fff0c2', spot: '#f2a65a' } },
-  { creatureId: 'dragon', zoneId: 'tower-battlefront', lessonIds: [], egg: { shell: '#ffd0c4', spot: '#c94c42' } },
+  { creatureId: 'lion', zoneId: 'multiplication-mesa', lessonIds: ['multiplication', 'kCounting', 'g1Adding', 'g5Multiplication'], egg: { shell: '#ffe594', spot: '#f2a65a' } },
+  { creatureId: 'trex', zoneId: 'division-dunes', lessonIds: ['division', 'kCompare', 'g1Subtract', 'g5Division'], egg: { shell: '#f6e3b4', spot: '#c7955f' } },
+  { creatureId: 'frog', zoneId: 'fraction-falls', lessonIds: ['fractions', 'kAddTake', 'g1Shares', 'g5Fractions'], egg: { shell: '#b4ebdc', spot: '#4aa6d6' } },
+  { creatureId: 'unicorn', zoneId: 'place-value-plateau', lessonIds: ['placeValue', 'kTeens', 'g1Tens', 'g5Decimals'], egg: { shell: '#fcd3e2', spot: '#b79af0' } },
+  { creatureId: 'bear', zoneId: 'measurement-marsh', lessonIds: ['measurement', 'kMeasure', 'g1Measure', 'g5Volume'], egg: { shell: '#c9e7b8', spot: '#6fbb63' } },
+  { creatureId: 'panda', zoneId: 'geometry-grove', lessonIds: ['geometry', 'kShapes', 'g1Shapes', 'g5Coordinates'], egg: { shell: '#ddcdf7', spot: '#8461b6' } },
+  { creatureId: 'fox', zoneId: 'data-delta', lessonIds: ['dataGraph', 'kSorting', 'g1Graphs', 'g5LinePlots'], egg: { shell: '#ffd9c7', spot: '#f2766b' } },
+  { creatureId: 'owl', zoneId: 'word-problem-woods', lessonIds: ['wordProblem', 'kStoryMath', 'g1StoryMath', 'g5Expressions'], egg: { shell: '#e9dcc4', spot: '#9a6a46' } },
+  { creatureId: 'octopus', zoneId: 'reading-reef', lessonIds: ['reading', 'kLetters', 'kRhymes', 'g1Reading', 'g5Reading'], egg: { shell: '#ffc9b8', spot: '#f7a1c4' } },
+  { creatureId: 'dragonet', zoneId: 'writing-workshop', lessonIds: ['writing', 'kTracing', 'g1Writing', 'g5Writing'], egg: { shell: '#cfe8fb', spot: '#8ab8ff' } },
+  { creatureId: 'tiger', zoneId: 'science-summit', lessonIds: ['science', 'kScience', 'g1Science', 'g5Science'], egg: { shell: '#fff0c2', spot: '#f2a65a' } },
+  { creatureId: 'dragon', zoneId: 'tower-battlefront', lessonIds: ['kTowers'], egg: { shell: '#ffd0c4', spot: '#c94c42' } },
 ]
 
 /** The pet that grows into this creature (every creature is one zone's pet). */

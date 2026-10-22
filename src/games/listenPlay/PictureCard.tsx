@@ -5,6 +5,7 @@ import { M } from '../../tutoring/motion/palette'
 import { groupLayout } from './groupLayout'
 import { shapeCorners, type Point, type ShapeName } from './shapeGeometry'
 import { pictureLabel } from './pictureLabel'
+import { DrawingArt } from './drawings'
 import './listenPlay.css'
 
 /**
@@ -75,6 +76,8 @@ export function PictureArt({ picture, marks, onObjectTap, aspect = 4 / 3, badges
       )
     case 'clock':
       return <ClockArt hour={picture.hour} minute={picture.minute} className={cls} />
+    case 'art':
+      return <DrawingArt name={picture.name} className={cls} />
   }
 }
 
@@ -556,16 +559,17 @@ function ClockArt({ hour, minute, className }: { hour: number; minute: number; c
         const r0 = big ? 35 : 37.5
         return <line key={i} x1={50 + Math.sin(a) * r0} y1={50 - Math.cos(a) * r0} x2={50 + Math.sin(a) * 41} y2={50 - Math.cos(a) * 41} stroke={INK} strokeWidth={big ? 3.5 : 2} strokeLinecap="round" />
       })}
-      {[12, 3, 6, 9].map((n) => {
+      {/* all twelve numbers (1st grade reads the hour from them), the hands inside them pointing out at them */}
+      {Array.from({ length: 12 }, (_, i) => i + 1).map((n) => {
         const a = ((n % 12) / 12) * Math.PI * 2
         return (
-          <text key={n} x={50 + Math.sin(a) * 26} y={51 - Math.cos(a) * 26} fontFamily={FONT} fontWeight={700} fontSize={12} textAnchor="middle" dominantBaseline="central" fill={INK}>
+          <text key={n} x={50 + Math.sin(a) * 30.5} y={51 - Math.cos(a) * 30.5} fontFamily={FONT} fontWeight={700} fontSize={n % 3 === 0 ? 11.5 : 10} textAnchor="middle" dominantBaseline="central" fill={INK}>
             {n}
           </text>
         )
       })}
-      <line x1={50} y1={50} {...hand(hA, 20)} stroke={INK} strokeWidth={6.5} strokeLinecap="round" />
-      <line x1={50} y1={50} {...hand(mA, 32)} stroke={FILLS[0]} strokeWidth={4.5} strokeLinecap="round" />
+      <line x1={50} y1={50} {...hand(hA, 16)} stroke={INK} strokeWidth={6.5} strokeLinecap="round" />
+      <line x1={50} y1={50} {...hand(mA, 23.5)} stroke={FILLS[0]} strokeWidth={4.5} strokeLinecap="round" />
       <circle cx={50} cy={50} r={5} fill="#ffcf4d" stroke={INK} strokeWidth={2.5} />
     </svg>
   )

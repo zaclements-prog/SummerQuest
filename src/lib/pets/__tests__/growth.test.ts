@@ -38,20 +38,20 @@ describe('pet catalog', () => {
     expect(new Set(PETS.map((p) => p.zoneId))).toEqual(new Set(curriculum.zones.map((z) => z.id)))
   })
 
-  it('matches the plan’s pet ↔ zone ↔ lessons table (2–4 lesson, then the K–1 pilot’s)', () => {
+  it('matches the plan’s pet ↔ zone ↔ lessons table (2–4 lesson, then the K–1 pilot’s, then 1st grade’s)', () => {
     const table: [string, string, string[]][] = [
-      ['frog', 'fraction-falls', ['fractions']],
-      ['octopus', 'reading-reef', ['reading', 'kLetters', 'kRhymes']],
-      ['owl', 'word-problem-woods', ['wordProblem']],
-      ['panda', 'geometry-grove', ['geometry', 'kShapes']],
-      ['lion', 'multiplication-mesa', ['multiplication', 'kCounting']],
-      ['trex', 'division-dunes', ['division']],
-      ['bear', 'measurement-marsh', ['measurement']],
-      ['fox', 'data-delta', ['dataGraph']],
-      ['unicorn', 'place-value-plateau', ['placeValue']],
-      ['dragonet', 'writing-workshop', ['writing', 'kTracing']],
-      ['tiger', 'science-summit', ['science']],
-      ['dragon', 'tower-battlefront', []],
+      ['frog', 'fraction-falls', ['fractions', 'kAddTake', 'g1Shares', 'g5Fractions']],
+      ['octopus', 'reading-reef', ['reading', 'kLetters', 'kRhymes', 'g1Reading', 'g5Reading']],
+      ['owl', 'word-problem-woods', ['wordProblem', 'kStoryMath', 'g1StoryMath', 'g5Expressions']],
+      ['panda', 'geometry-grove', ['geometry', 'kShapes', 'g1Shapes', 'g5Coordinates']],
+      ['lion', 'multiplication-mesa', ['multiplication', 'kCounting', 'g1Adding', 'g5Multiplication']],
+      ['trex', 'division-dunes', ['division', 'kCompare', 'g1Subtract', 'g5Division']],
+      ['bear', 'measurement-marsh', ['measurement', 'kMeasure', 'g1Measure', 'g5Volume']],
+      ['fox', 'data-delta', ['dataGraph', 'kSorting', 'g1Graphs', 'g5LinePlots']],
+      ['unicorn', 'place-value-plateau', ['placeValue', 'kTeens', 'g1Tens', 'g5Decimals']],
+      ['dragonet', 'writing-workshop', ['writing', 'kTracing', 'g1Writing', 'g5Writing']],
+      ['tiger', 'science-summit', ['science', 'kScience', 'g1Science', 'g5Science']],
+      ['dragon', 'tower-battlefront', ['kTowers']],
     ]
     for (const [id, zoneId, lessonIds] of table) {
       expect(pet(id)).toMatchObject({ creatureId: id, zoneId, lessonIds })
@@ -79,7 +79,30 @@ describe('pet catalog', () => {
     }
     expect(zoneLessonFor('multiplication-mesa', 0)?.id).toBe('kCounting')
     expect(zoneLessonFor('multiplication-mesa', 3)?.id).toBe('multiplication')
-    expect(zoneLessonFor('division-dunes', 0)).toBeUndefined() // a sleeping zone: no lesson button
+    // (K complete, phase 2a: the trex and the unicorn hatch from Number Dunes' and Ten Frame Plateau's K lessons)
+    expect(zoneLessonFor('division-dunes', 0)?.id).toBe('kCompare')
+    expect(zoneLessonFor('place-value-plateau', 0)?.id).toBe('kTeens')
+    // (1st grade, phase 2b: the unicorn, the frog and the panda hatch from Tens Plateau's, Fair Share Falls' and Shape Grove's g1 lessons)
+    expect(zoneLessonFor('place-value-plateau', 1)?.id).toBe('g1Tens')
+    expect(zoneLessonFor('fraction-falls', 1)?.id).toBe('g1Shares')
+    expect(zoneLessonFor('geometry-grove', 1)?.id).toBe('g1Shapes')
+    expect(zoneLessonFor('no-such-zone', 0)).toBeUndefined() // no lesson button
+    // (1st grade, phase 2b: the bear, the fox and the tiger hatch from their zones' 1st-grade lessons)
+    expect(zoneLessonFor('measurement-marsh', 1)?.id).toBe('g1Measure')
+    expect(zoneLessonFor('data-delta', 1)?.id).toBe('g1Graphs')
+    expect(zoneLessonFor('science-summit', 1)?.id).toBe('g1Science')
+    // (5th grade, phase 3: the octopus, the dragonet and the tiger hatch from their zones' grade-5 lessons)
+    expect(zoneLessonFor('reading-reef', 5)?.id).toBe('g5Reading')
+    expect(zoneLessonFor('writing-workshop', 5)?.id).toBe('g5Writing')
+    expect(zoneLessonFor('science-summit', 5)?.id).toBe('g5Science')
+    // (5th grade, phase 3: the bear, the panda and the fox hatch from their zones' 5th-grade lessons)
+    expect(zoneLessonFor('measurement-marsh', 5)?.id).toBe('g5Volume')
+    expect(zoneLessonFor('geometry-grove', 5)?.id).toBe('g5Coordinates')
+    expect(zoneLessonFor('data-delta', 5)?.id).toBe('g5LinePlots')
+    // (5th grade, phase 3: the lion, the trex and the owl hatch from their zones' 5th-grade lessons)
+    expect(zoneLessonFor('multiplication-mesa', 5)?.id).toBe('g5Multiplication')
+    expect(zoneLessonFor('division-dunes', 5)?.id).toBe('g5Division')
+    expect(zoneLessonFor('word-problem-woods', 5)?.id).toBe('g5Expressions')
   })
 
   it('every egg has its own colors', () => {
@@ -184,8 +207,10 @@ describe('petStatus', () => {
     expect(petStatus(pet('trex'), zonesWith('division-dunes', [3, 3, 3, 3]), {}, 3).stage).toBe('adult')
   })
 
-  it('Tower Battlefront: the dragon has no lesson and grows on 1, 2 and 3 stars', () => {
+  it('Tower Battlefront: the dragon has no 2–4 lesson (K–1 hatches it with kTowers) and grows on 1, 2 and 3 stars', () => {
     expect(petStatus(pet('dragon'), {}, {}, 3).next).toEqual({ stage: 'baby', more: 1, lesson: false })
+    expect(petStatus(pet('dragon'), {}, {}, 0).next).toEqual({ stage: 'baby', more: 1, lesson: true })
+    expect(petStatus(pet('dragon'), {}, { kTowers: 1 }, 0).stage).toBe('baby')
     expect(petStatus(pet('dragon'), zonesWith('tower-battlefront', [1]), {}, 3).stage).toBe('baby')
     expect(petStatus(pet('dragon'), zonesWith('tower-battlefront', [2]), {}, 3)).toMatchObject({ stage: 'kid', next: { stage: 'adult', more: 1 } })
     expect(petStatus(pet('dragon'), zonesWith('tower-battlefront', [3]), {}, 3).stage).toBe('adult')

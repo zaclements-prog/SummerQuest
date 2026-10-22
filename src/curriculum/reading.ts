@@ -3,12 +3,16 @@ import type { Zone } from './types'
 export const readingZone: Zone = {
   id: 'reading-reef',
   title: 'Reading Reef',
-  titleByBand: { k1: 'Letter Reef' },
+  titleByBand: { k1: 'Letter Reef', g1: 'Word Reef' },
   subtitle: 'Comprehension passages',
+  subtitleByBand: { g5: 'Theme, structure and point of view' },
   emoji: '🐠',
   themeColor: 'ocean',
   description:
     'Dive into short stories and science passages. Read carefully, then answer questions about what you read.',
+  descriptionByBand: {
+    g5: "Read stories, poems and articles at a 5th-grade level, compare two texts, and dig into theme, figurative language, structure and point of view.",
+  },
   estimatedMinutes: 20,
   available: true,
   position: { x: 13, y: 81 },
@@ -130,6 +134,99 @@ export const readingZone: Zone = {
         gameId: 'listenPlay',
         providerConfig: { kind: 'kLiteracy', mode: 'sight', closeAfter: 3 },
         params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+    ],
+    // 1st grade "Word Reef" (RF.1.2–4, phase 2b), in unlock order: short vowels
+    // (pictures, then the middle-sound gap) → letter teams (sh, ch, th, wh, ck)
+    // → reading a word (the voice says it only after it is read) → read-along
+    // sentences → 1st-grade sight words. The words being taught are printed (in
+    // Andika); everything else is said. Titles and descriptions are said aloud.
+    g1: [
+      {
+        id: 'g1-vowels-1',
+        kind: 'concept',
+        title: 'Short vowels',
+        description: 'Listen for the sound in the middle.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Reading', mode: 'vowels', closeAfter: 3 },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-digraphs-1',
+        kind: 'practice',
+        title: 'Letter teams',
+        description: 'Two letters, one sound. Find it!',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Reading', mode: 'digraphs', closeAfter: 3 },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-words-1',
+        kind: 'practice',
+        title: 'Read a word',
+        description: 'Read the word. Then tap its picture.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Reading', mode: 'decode' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-sentences-1',
+        kind: 'practice',
+        title: 'Read along',
+        description: 'Read along, then answer the question.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Reading', mode: 'sentences' },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-sight-1',
+        kind: 'mastery',
+        title: 'Sight words',
+        description: 'Listen, then find the word.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Reading', mode: 'sight', closeAfter: 3 },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+    ],
+    // 5th grade (phase-3 contract, RL.5 / RI.5): level-5 passages, a passage at
+    // a time. Stories, poems and fables (theme, characters, figurative language,
+    // narrator) → articles and accounts (main ideas, text structure, evidence) →
+    // the boss, both shelves together. Paired texts on both shelves.
+    g5: [
+      {
+        id: 'g5-read-1',
+        kind: 'concept',
+        title: 'Story Shoals',
+        description: 'Stories and poems: find the theme, the narrator and the figurative language.',
+        gameId: 'conceptPlay',
+        providerConfig: { kind: 'g5Reading', shelf: 'literature' },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g5-read-2',
+        kind: 'practice',
+        title: 'Fact Current',
+        description: 'Articles and accounts: main ideas, text structure and evidence.',
+        gameId: 'conceptPlay',
+        providerConfig: { kind: 'g5Reading', shelf: 'informational' },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g5-read-3',
+        kind: 'mastery',
+        title: 'Squid Scholar',
+        description: 'Read closely and compare texts to outwit the Squid Scholar!',
+        gameId: 'bossBattle',
+        providerConfig: { kind: 'g5Reading', shelf: 'mixed' },
+        params: { questionCount: 6, bossEmoji: '🦑', bossName: 'Squid Scholar' },
         starsToEarn: 3,
       },
     ],

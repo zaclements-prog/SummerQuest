@@ -19,5 +19,7 @@ export function pictureLabel(p: Picture): string {
       return p.emoji
     case 'clock':
       return `${p.hour}:${String(p.minute).padStart(2, '0')}`
+    case 'art':
+      return p.name
   }
 }

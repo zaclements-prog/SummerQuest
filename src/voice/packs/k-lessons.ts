@@ -4,7 +4,30 @@ import { kShapesLesson } from '../../tutoring/lessons/kShapes'
 import { kLettersLesson } from '../../tutoring/lessons/kLetters'
 import { kRhymesLesson } from '../../tutoring/lessons/kRhymes'
 import { kTracingLesson } from '../../tutoring/lessons/kTracing'
+import { kAddTakeLesson } from '../../tutoring/lessons/kAddTake'
+import { kStoryMathLesson } from '../../tutoring/lessons/kStoryMath'
+import { kCompareLesson } from '../../tutoring/lessons/kCompare'
+import { kTeensLesson } from '../../tutoring/lessons/kTeens'
+import { kMeasureLesson } from '../../tutoring/lessons/kMeasure'
+import { kSortingLesson } from '../../tutoring/lessons/kSorting'
+import { kScienceLesson } from '../../tutoring/lessons/kScience'
+import { kTowersLesson } from '../../tutoring/lessons/kTowers'
+// 1st grade (phase 2b): Word Reef, Writing Workshop
+import { g1ReadingLesson } from '../../tutoring/lessons/g1Reading'
+import { g1WritingLesson } from '../../tutoring/lessons/g1Writing'
+// 1st grade (phase 2b): Tens Plateau, Fair Share Falls, Shape Grove
+import { g1TensLesson } from '../../tutoring/lessons/g1Tens'
+import { g1SharesLesson } from '../../tutoring/lessons/g1Shares'
+import { g1ShapesLesson } from '../../tutoring/lessons/g1Shapes'
 import { K_LESSON_PACK } from '../../tutoring/lessons/k1Voice'
+// 1st grade (phase 2b): Measure Marsh, Graph Delta, Sky Summit
+import { g1MeasureLesson } from '../../tutoring/lessons/g1Measure'
+import { g1GraphsLesson } from '../../tutoring/lessons/g1Graphs'
+import { g1ScienceLesson } from '../../tutoring/lessons/g1Science'
+// 1st grade (phase 2b): Adding Mesa, Take-Away Dunes, Story Woods
+import { g1AddingLesson } from '../../tutoring/lessons/g1Adding'
+import { g1SubtractLesson } from '../../tutoring/lessons/g1Subtract'
+import { g1StoryMathLesson } from '../../tutoring/lessons/g1StoryMath'
 
 /**
  * What the K–1 lessons say besides their narration (src/tutoring/lessons/k*.ts):
@@ -16,7 +39,37 @@ import { K_LESSON_PACK } from '../../tutoring/lessons/k1Voice'
  * - the lesson-complete line.
  */
 const asked: Record<string, string> = {}
-for (const lesson of [kCountingLesson, kShapesLesson, kLettersLesson, kRhymesLesson, kTracingLesson]) {
+for (const lesson of [
+  kCountingLesson,
+  kShapesLesson,
+  kLettersLesson,
+  kRhymesLesson,
+  kTracingLesson,
+  // K complete (phase 2a)
+  kAddTakeLesson,
+  kStoryMathLesson,
+  kCompareLesson,
+  kTeensLesson,
+  kMeasureLesson,
+  kSortingLesson,
+  kScienceLesson,
+  kTowersLesson,
+  // 1st grade (phase 2b): Word Reef, Writing Workshop
+  g1ReadingLesson,
+  g1WritingLesson,
+  // 1st grade (phase 2b): Tens Plateau, Fair Share Falls, Shape Grove
+  g1TensLesson,
+  g1SharesLesson,
+  g1ShapesLesson,
+  // 1st grade (phase 2b): Measure Marsh, Graph Delta, Sky Summit
+  g1MeasureLesson,
+  g1GraphsLesson,
+  g1ScienceLesson,
+  // 1st grade (phase 2b): Adding Mesa, Take-Away Dunes, Story Woods
+  g1AddingLesson,
+  g1SubtractLesson,
+  g1StoryMathLesson,
+]) {
   for (const step of lesson.steps) {
     const ref = step.check?.speech
     if (ref && 'line' in ref && ref.line.startsWith(`${K_LESSON_PACK}/`)) asked[ref.line.slice(K_LESSON_PACK.length + 1)] = step.check!.question

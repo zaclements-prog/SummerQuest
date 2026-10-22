@@ -40,6 +40,8 @@ export type Picture =
   | { kind: 'word'; text: string }
   | { kind: 'emoji'; emoji: string }
   | { kind: 'clock'; hour: number; minute: number }
+  /** A drawing from the Listen & Play kit's set, by name (src/games/listenPlay/drawings.tsx): a push, a kite, the weather. */
+  | { kind: 'art'; name: string }
 
 export interface PictureOption {
   /** The answer this picture stands for: one of the problem's `options`. */
@@ -82,6 +84,68 @@ export type ProblemVisual =
       unit?: string
       bars: { label: string; value: number; emoji?: string }[]
     }
+  /**
+   * Grade 5 (5.NF.4): the area model of a fraction × a fraction. A unit square
+   * cut into `a.denominator` columns (`a.numerator` shaded) and
+   * `b.denominator` rows (`b.numerator` shaded); the overlap is the product.
+   */
+  | {
+      kind: 'fractionArea'
+      a: { numerator: number; denominator: number }
+      b: { numerator: number; denominator: number }
+    }
+  // ── 5th grade (phase 3): Measurement Marsh, Geometry Grove, Data Delta (src/components/g5Visuals.tsx) ──
+  /**
+   * Rectangular prisms drawn in isometric unit cubes (5.MD.3–5): one box, or
+   * two set side by side along the length (a figure made of two prisms, the
+   * same width, back faces lined up).
+   */
+  | {
+      kind: 'prism'
+      boxes: { l: number; w: number; h: number }[]
+      unit?: string
+      /** Draw every unit cube's edges (counting cubes); else plain faces. */
+      cubes?: boolean
+      /** 'edges': each box's length, width and height; 'base': the base area (B) and the height; 'none'. */
+      labels?: 'edges' | 'base' | 'none'
+    }
+  /** The first quadrant of a coordinate plane (5.G.1–2, 5.OA.3): numbered axes and labelled points. */
+  | {
+      kind: 'coordPlane'
+      xMax: number
+      yMax: number
+      /** Grid line (and axis number) every `step` units (default 1). */
+      xStep?: number
+      yStep?: number
+      points: { x: number; y: number; label?: string }[]
+      /** Join the points in order (a pattern's straight line). */
+      line?: boolean
+      xLabel?: string
+      yLabel?: string
+    }
+  /**
+   * A line plot in fractions of a unit (5.MD.2): a number line with a tick
+   * every 1/`denominator` from `min` to `max` (counted in those ticks) and an
+   * X over a tick for each measurement: `counts[i]` Xs over tick `min + i`.
+   */
+  | {
+      kind: 'linePlot'
+      denominator: 2 | 4 | 8
+      min: number
+      max: number
+      counts: number[]
+      title?: string
+      unit?: string
+    }
+  /**
+   * 5th grade (Multiplication Mesa): an area model of a product, each factor
+   * split by place value (23 × 14: rows 20 and 3, columns 10 and 4). A cell is
+   * its partial product, or null for the "?" being asked; `total` sits under
+   * the model (null = "?", left out = not shown).
+   */
+  | { kind: 'areaModel'; rows: number[]; cols: number[]; cells: (number | null)[][]; total?: number | null }
+  /** 5th grade (Division Dunes): a long division set up; `highlight` lights the dividend's first digits. */
+  | { kind: 'longDivision'; dividend: number; divisor: number; highlight?: number }
 
 export interface Problem {
   id: string

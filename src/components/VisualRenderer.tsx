@@ -3,6 +3,8 @@ import type { ReactNode } from 'react'
 import type { ProblemVisual } from '../lib/problem'
 import { TOON } from '../toon/palette'
 import BarChart from './BarChart'
+// 5th grade (phase 3): Measurement Marsh, Geometry Grove, Data Delta
+import { CoordPlaneVisual, LinePlotVisual, PrismVisual } from './g5Visuals'
 
 /**
  * Renders the topic-specific visualization that accompanies a problem.
@@ -57,7 +59,68 @@ export default function VisualRenderer({
       return <MoneyVisual visual={visual} />
     case 'barGraph':
       return <BarGraphVisual visual={visual} />
+    case 'fractionArea':
+      return <FractionAreaVisual visual={visual} size={size} />
+    // 5th grade (phase 3): Measurement Marsh, Geometry Grove, Data Delta
+    case 'prism':
+      return <PrismVisual visual={visual} size={size} />
+    case 'coordPlane':
+      return <CoordPlaneVisual visual={visual} size={size} />
+    case 'linePlot':
+      return <LinePlotVisual visual={visual} size={size} />
+    // 5th grade (Multiplication Mesa, Division Dunes)
+    case 'areaModel':
+      return <AreaModelVisual visual={visual} size={size} />
+    case 'longDivision':
+      return <LongDivisionVisual visual={visual} size={size} />
   }
+}
+
+/**
+ * Grade 5's area model (5.NF.4): `a` shades columns (blue), `b` shades rows
+ * (gold); the cells in both are the product, drawn darker and outlined.
+ */
+function FractionAreaVisual({
+  visual,
+  size,
+}: {
+  visual: Extract<ProblemVisual, { kind: 'fractionArea' }>
+  size: 'sm' | 'md' | 'lg'
+}) {
+  const px = size === 'sm' ? 120 : size === 'md' ? 170 : 210
+  const { a, b } = visual
+  const cw = px / a.denominator
+  const rh = px / b.denominator
+  const cells = []
+  for (let c = 0; c < a.denominator; c++) {
+    for (let r = 0; r < b.denominator; r++) {
+      const inA = c < a.numerator
+      const inB = r < b.numerator
+      cells.push(
+        <rect
+          key={`${c}-${r}`}
+          x={2 + c * cw}
+          y={2 + r * rh}
+          width={cw}
+          height={rh}
+          fill={inA && inB ? TOON.flowerPurple : inA ? TOON.sky : inB ? SHADE : EMPTY}
+          stroke={INK}
+          strokeWidth={inA && inB ? 2.5 : 1.5}
+        />,
+      )
+    }
+  }
+  return (
+    <Surface className="inline-flex flex-col items-center">
+      <svg width={px + 4} height={px + 4} role="img" aria-label={`${a.numerator}/${a.denominator} of the columns and ${b.numerator}/${b.denominator} of the rows`}>
+        {cells}
+        <rect x={2} y={2} width={px} height={px} fill="none" stroke={INK} strokeWidth={3.5} />
+      </svg>
+      <div className="kid-text font-bold text-xl mt-2 text-ink-900">
+        {a.numerator}/{a.denominator} × {b.numerator}/{b.denominator}
+      </div>
+    </Surface>
+  )
 }
 
 function BarGraphVisual({
@@ -351,7 +414,8 @@ function PassageVisual({
   return (
     <Surface className="max-w-2xl !p-5 sm:!p-6">
       <div className="kid-text font-bold text-2xl mb-2 text-ocean-800">{visual.passageTitle}</div>
-      <p className="text-lg leading-relaxed mb-3">{visual.passageText}</p>
+      {/* (grade-5 passages keep their paragraph and line breaks; 2–4 passages have none) */}
+      <p className="text-lg leading-relaxed mb-3 whitespace-pre-line">{visual.passageText}</p>
       <div className="border-t-2 border-line/15 pt-3 kid-text text-xl text-ink-900">{visual.question}</div>
     </Surface>
   )
@@ -472,6 +536,89 @@ function MoneyVisual({
   return (
     <Surface className="kid-text font-bold text-3xl">
       💰 ${dollars}.{String(cents).padStart(2, '0')}
+    </Surface>
+  )
+}
+
+// ── 5th grade: area models and long division ────────────────────────────────
+
+/** Soft fills for an area model's parts: one per row, so a row's partial products read as a group. */
+const AREA_FILLS = ['#ffe3a6', '#cdeccf', '#d9e4ff']
+
+/**
+ * An area model: each factor split by place value along the edges (rows down
+ * the left, columns across the top), each box its partial product. Bigger
+ * places get bigger boxes (not to scale: a 20 next to a 3 would be a sliver).
+ */
+function AreaModelVisual({ visual, size }: { visual: Extract<ProblemVisual, { kind: 'areaModel' }>; size: 'sm' | 'md' | 'lg' }) {
+  const unit = size === 'sm' ? 0.78 : 1
+  const span = (n: number) => (String(n).length >= 3 ? 1.5 : String(n).length === 2 ? 1.25 : 0.95)
+  const cw = visual.cols.map((c) => Math.round(span(c) * 92 * unit))
+  const rh = visual.rows.map((r) => Math.round(span(r) * 54 * unit))
+  const label = Math.round(46 * unit)
+  const fs = Math.round(21 * unit)
+  const W = label + cw.reduce((a, b) => a + b, 0) + 4
+  const H = Math.round(34 * unit) + rh.reduce((a, b) => a + b, 0) + 4
+  const top = Math.round(34 * unit)
+  const xs = cw.map((_, j) => label + cw.slice(0, j).reduce((a, b) => a + b, 0))
+  const ys = rh.map((_, i) => top + rh.slice(0, i).reduce((a, b) => a + b, 0))
+  const num = (n: number) => n.toLocaleString('en-US')
+  return (
+    <Surface className="inline-flex flex-col items-center !p-3">
+      <svg width={W} height={H} role="img" aria-label="area model">
+        {visual.cols.map((c, j) => (
+          <text key={`c${j}`} x={xs[j] + cw[j] / 2} y={top - 10} textAnchor="middle" fontSize={fs} fontWeight={700} fill="#3f6fd1" className="kid-text">
+            {num(c)}
+          </text>
+        ))}
+        {visual.rows.map((r, i) => (
+          <text key={`r${i}`} x={label - 8} y={ys[i] + rh[i] / 2 + fs * 0.35} textAnchor="end" fontSize={fs} fontWeight={700} fill="#e0564a" className="kid-text">
+            {num(r)}
+          </text>
+        ))}
+        {visual.rows.map((_, i) =>
+          visual.cols.map((__, j) => {
+            const v = visual.cells[i]?.[j]
+            const ask = v === null
+            return (
+              <g key={`${i}-${j}`}>
+                <rect x={xs[j] + 1.5} y={ys[i] + 1.5} width={cw[j] - 3} height={rh[i] - 3} rx={6} fill={ask ? '#ffffff' : AREA_FILLS[i % AREA_FILLS.length]} stroke={INK} strokeWidth={2.5} strokeDasharray={ask ? '7 5' : undefined} />
+                {v !== undefined && (
+                  <text x={xs[j] + cw[j] / 2} y={ys[i] + rh[i] / 2 + fs * 0.35} textAnchor="middle" fontSize={ask ? fs * 1.25 : fs} fontWeight={700} fill={ask ? '#e0564a' : INK} className="kid-text">
+                    {ask ? '?' : num(v)}
+                  </text>
+                )}
+              </g>
+            )
+          }),
+        )}
+      </svg>
+      {visual.total !== undefined && (
+        <div className="kid-text font-bold text-xl mt-1 text-ink-900">
+          Total: {visual.total === null ? <span style={{ color: '#e0564a' }}>?</span> : num(visual.total)}
+        </div>
+      )}
+    </Surface>
+  )
+}
+
+/** Long division set up the way it is written: the divisor, then the dividend under the bar; `highlight` lights its first digits. */
+function LongDivisionVisual({ visual, size }: { visual: Extract<ProblemVisual, { kind: 'longDivision' }>; size: 'sm' | 'md' | 'lg' }) {
+  const digits = String(visual.dividend).split('')
+  const hl = visual.highlight ?? 0
+  const text = size === 'sm' ? 'text-3xl' : 'text-4xl'
+  return (
+    <Surface className="inline-flex !px-6 !py-4">
+      <div className={`kid-text font-bold ${text} text-ink-900 flex items-end tabular-nums`} aria-label={`${visual.dividend} divided by ${visual.divisor}`}>
+        <span className="pr-1.5 pb-0.5">{visual.divisor}</span>
+        <span className="border-l-[3px] border-t-[3px] border-line rounded-tl-lg pl-2 pr-1 pt-1 flex">
+          {digits.map((d, i) => (
+            <span key={i} className={i < hl ? 'rounded-md px-0.5 bg-quest-300' : 'px-0.5'}>
+              {d}
+            </span>
+          ))}
+        </span>
+      </div>
     </Surface>
   )
 }

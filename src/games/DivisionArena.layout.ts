@@ -60,7 +60,21 @@ export const CRYSTAL_COLORS: Record<number, string> = {
   12: '#ffc6a0',
 }
 export function crystalColor(n: number): string {
-  return CRYSTAL_COLORS[n] ?? '#cfe3ff'
+  return CRYSTAL_COLORS[n] ?? (n > 12 && n < 100 ? TWO_DIGIT_COLORS[n % TWO_DIGIT_COLORS.length] : '#cfe3ff')
+}
+
+/** 5th grade's two-digit crystals (13–99; 10–12 keep theirs): neighbours get different pastels. */
+export const TWO_DIGIT_COLORS = ['#8fd0ff', '#c3a8f5', '#8ee6c0', '#f7a1c4', '#ffd36b', '#ff9f80', '#9fb6ff', '#b7e07a', '#f5b6f0', '#a7e8e8', '#ffc6a0']
+
+/**
+ * Chalk stick width and gap for a golem's chest number: one and two digits as
+ * always (grades 2–4 never chalk more); three and four digits (5th grade's
+ * two-digit golems and their giant) narrower, so they stay on the plaque.
+ */
+export function golemChalkSize(digits: number): { w: number; gap: number } {
+  if (digits >= 4) return { w: 0.17, gap: 0.07 }
+  if (digits === 3) return { w: 0.22, gap: 0.085 }
+  return { w: digits > 1 ? 0.3 : 0.36, gap: 0.1 }
 }
 
 /**

@@ -3,11 +3,16 @@ import type { Zone } from './types'
 export const measurementZone: Zone = {
   id: 'measurement-marsh',
   title: 'Measurement Marsh',
+  titleByBand: { k1: 'Measure Marsh' },
   subtitle: 'Area, perimeter, time, money',
+  subtitleByBand: { g5: 'Volume and unit conversions' },
   emoji: '📐',
   themeColor: 'island',
   description:
     'Measure the world! Find the area and perimeter of shapes, tell time and figure out elapsed time, and count change at the marsh market.',
+  descriptionByBand: {
+    g5: "Fill boxes with unit cubes to find volume, use V = l × w × h and V = B × h, and convert between units in multi-step problems.",
+  },
   estimatedMinutes: 22,
   available: true,
   position: { x: 85, y: 48 },
@@ -43,4 +48,115 @@ export const measurementZone: Zone = {
       starsToEarn: 3,
     },
   ],
+  stagesByBand: {
+    // K "Measure Marsh" (K.MD.1–2): longer and taller, lined up at the start →
+    // heavier and lighter on a balance scale → a mix that lines up first, with
+    // a big-but-light thing or two. The child taps the thing itself (the
+    // `measure` activity). Titles and descriptions are said aloud.
+    k1: [
+      {
+        id: 'k-measure-1',
+        kind: 'concept',
+        title: 'Long and tall',
+        description: 'Which one is longer? Which one is taller?',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kMeasure', mode: 'length' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-measure-2',
+        kind: 'practice',
+        title: 'Heavy and light',
+        description: 'The heavy side of the scale goes down!',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kMeasure', mode: 'weight' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-measure-3',
+        kind: 'mastery',
+        title: 'Measure mix',
+        description: 'Line them up first. Then compare them!',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kMeasure', mode: 'mix' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+    ],
+    // 1st grade (phase 2b), still "Measure Marsh" (1.MD.1–3): put three things in
+    // order by length, and compare two through a string (the `lengthOrder`
+    // activity) → measure with paper clips and cubes laid end to end (the `units`
+    // activity, and "which one is measured the right way?") → tell time to the
+    // hour and half hour, analog and digital (the `clockMatch` activity).
+    g1: [
+      {
+        id: 'g1-measure-1',
+        kind: 'concept',
+        title: 'Longest to shortest',
+        description: 'Put them in order. Then use a string!',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Measure', mode: 'order' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-measure-2',
+        kind: 'practice',
+        title: 'Paper clip ruler',
+        description: 'How many paper clips long is it?',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Measure', mode: 'units' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-measure-3',
+        kind: 'mastery',
+        title: 'What time is it?',
+        description: 'Tell time to the hour and half hour.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Measure', mode: 'time' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+    ],
+    // 5th grade (phase 3; 5.MD.1, 5.MD.3–5): volume of rectangular prisms (unit
+    // cubes, l × w × h, B × h, two prisms joined) → converting units within one
+    // system, a speed round → the boss mixes volume (and a missing edge) with
+    // multi-step conversion story problems.
+    g5: [
+      {
+        id: 'g5-measure-1',
+        kind: 'concept',
+        title: 'Cube Builders',
+        description: 'Find the volume of boxes by counting cubes and by multiplying.',
+        gameId: 'conceptPlay',
+        providerConfig: { kind: 'g5Measure', mode: 'volume' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g5-measure-2',
+        kind: 'practice',
+        title: 'Unit Swap Sprint',
+        description: 'Convert meters, grams, liters, feet, pounds and hours — speed round.',
+        gameId: 'speedRun',
+        providerConfig: { kind: 'g5Measure', mode: 'convert' },
+        params: { timeLimitSec: 90, starThresholds: [5, 8, 11] },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g5-measure-3',
+        kind: 'mastery',
+        title: 'The Bog Builder',
+        description: 'Volume puzzles and multi-step unit problems — out-build the Bog Builder!',
+        gameId: 'bossBattle',
+        providerConfig: { kind: 'g5Measure', mode: 'mixed' },
+        params: { questionCount: 10, bossEmoji: '🐊', bossName: 'The Bog Builder' },
+        starsToEarn: 3,
+      },
+    ],
+  },
 }

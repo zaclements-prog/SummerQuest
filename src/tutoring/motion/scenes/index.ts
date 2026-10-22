@@ -15,6 +15,44 @@ import { kLettersScenes } from './kLetters'
 import { kShapesScenes } from './kShapes'
 import { kRhymesScenes } from './kRhymes'
 import { kTracingScenes } from './kTracing'
+import { kAddTakeScenes } from './kAddTake'
+import { kStoryMathScenes } from './kStoryMath'
+import { kCompareScenes } from './kCompare'
+import { kTeensScenes } from './kTeens'
+import { kMeasureScenes } from './kMeasure'
+import { kSortingScenes } from './kSorting'
+import { kScienceScenes } from './kScience'
+import { kTowersScenes } from './kTowers'
+// 1st grade (phase 2b): Word Reef, Writing Workshop
+import { g1ReadingScenes } from './g1Reading'
+import { g1WritingScenes } from './g1Writing'
+// 1st grade (phase 2b): Tens Plateau, Fair Share Falls, Shape Grove
+import { g1TensScenes } from './g1Tens'
+import { g1SharesScenes } from './g1Shares'
+import { g1ShapesScenes } from './g1Shapes'
+// 1st grade (phase 2b): Measure Marsh, Graph Delta, Sky Summit
+import { g1MeasureScenes } from './g1Measure'
+import { g1GraphsScenes } from './g1Graphs'
+import { g1ScienceScenes } from './g1Science'
+// 1st grade (phase 2b): Adding Mesa, Take-Away Dunes, Story Woods
+import { g1AddingScenes } from './g1Adding'
+import { g1SubtractScenes } from './g1Subtract'
+import { g1StoryMathScenes } from './g1StoryMath'
+// 5th grade (phase 3): Reading Reef, Writing Workshop, Science Summit
+import { g5ReadingScenes } from './g5Reading'
+import { g5WritingScenes } from './g5Writing'
+import { g5ScienceScenes } from './g5Science'
+// 5th grade (phase 3): Fraction Falls, Place Value Plateau
+import { g5FractionsScenes } from './g5Fractions'
+import { g5DecimalsScenes } from './g5Decimals'
+// 5th grade (phase 3): Measurement Marsh, Geometry Grove, Data Delta
+import { g5VolumeScenes } from './g5Volume'
+import { g5CoordinatesScenes } from './g5Coordinates'
+import { g5LinePlotsScenes } from './g5LinePlots'
+// 5th grade (phase 3): Multiplication Mesa, Division Dunes, Word Problem Woods
+import { g5MultiplicationScenes } from './g5Multiplication'
+import { g5DivisionScenes } from './g5Division'
+import { g5ExpressionsScenes } from './g5Expressions'
 
 /**
  * Motion graphics by lesson → step id. A step without a scene falls back to
@@ -39,6 +77,45 @@ const SCENES: Record<string, Record<string, Scene>> = {
   kLetters: kLettersScenes,
   kRhymes: kRhymesScenes,
   kTracing: kTracingScenes,
+  kAddTake: kAddTakeScenes,
+  kStoryMath: kStoryMathScenes,
+  // K complete (phase 2a)
+  kCompare: kCompareScenes,
+  kTeens: kTeensScenes,
+  kMeasure: kMeasureScenes,
+  kSorting: kSortingScenes,
+  kScience: kScienceScenes,
+  kTowers: kTowersScenes,
+  // 1st grade (phase 2b): Word Reef, Writing Workshop
+  g1Reading: g1ReadingScenes,
+  g1Writing: g1WritingScenes,
+  // 1st grade (phase 2b): Tens Plateau, Fair Share Falls, Shape Grove
+  g1Tens: g1TensScenes,
+  g1Shares: g1SharesScenes,
+  g1Shapes: g1ShapesScenes,
+  // 1st grade (phase 2b): Measure Marsh, Graph Delta, Sky Summit
+  g1Measure: g1MeasureScenes,
+  g1Graphs: g1GraphsScenes,
+  g1Science: g1ScienceScenes,
+  // 1st grade (phase 2b): Adding Mesa, Take-Away Dunes, Story Woods
+  g1Adding: g1AddingScenes,
+  g1Subtract: g1SubtractScenes,
+  g1StoryMath: g1StoryMathScenes,
+  // 5th grade (phase 3): Reading Reef, Writing Workshop, Science Summit
+  g5Reading: g5ReadingScenes,
+  g5Writing: g5WritingScenes,
+  g5Science: g5ScienceScenes,
+  // 5th grade (phase 3): Fraction Falls, Place Value Plateau
+  g5Fractions: g5FractionsScenes,
+  g5Decimals: g5DecimalsScenes,
+  // 5th grade (phase 3): Measurement Marsh, Geometry Grove, Data Delta
+  g5Volume: g5VolumeScenes,
+  g5Coordinates: g5CoordinatesScenes,
+  g5LinePlots: g5LinePlotsScenes,
+  // 5th grade (phase 3): Multiplication Mesa, Division Dunes, Word Problem Woods
+  g5Multiplication: g5MultiplicationScenes,
+  g5Division: g5DivisionScenes,
+  g5Expressions: g5ExpressionsScenes,
 }
 
 export function sceneFor(lessonId: string, stepId: string): Scene | undefined {

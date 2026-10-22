@@ -2,6 +2,30 @@ import type { ListenActivityDef, ListenActivitySpec } from '../types'
 import { drumActivity } from './Drum'
 import { traceActivity } from './Trace'
 import { storyOrderActivity } from './StoryOrder'
+import { mathStoryActivity } from './MathStory'
+// Number Dunes and Ten Frame Plateau (K, phase 2a)
+import { matchActivity } from './Match'
+import { compareNumbersActivity } from './CompareNumbers'
+import { numberOrderActivity } from './NumberOrder'
+import { tenFramesActivity } from './TenFramesQuiz'
+import { buildActivity } from './BuildTeen'
+import { measureActivity } from './Measure'
+import { sortActivity } from './Sort'
+// Word Reef and Writing Workshop (1st grade, phase 2b)
+import { readAlongActivity } from './ReadAlong'
+import { tilesActivity } from './TileBuild'
+// Tens Plateau, Fair Share Falls and Shape Grove (1st grade, phase 2b)
+import { tensActivity } from './TensQuiz'
+import { buildTensActivity } from './BuildTens'
+import { shareTapActivity } from './ShareTap'
+import { snapActivity } from './SnapShapes'
+// 1st grade (phase 2b): Measure Marsh and Graph Delta
+import { lengthOrderActivity } from './LengthOrder'
+import { unitsActivity } from './Units'
+import { clockMatchActivity } from './ClockMatch'
+import { graphActivity } from './Graph'
+// 1st grade (phase 2b): Adding Mesa and Take-Away Dunes
+import { numberSentenceActivity } from './NumberSentence'
 
 /**
  * Listen & Play activities by `kind` (see `ListenProblem.activity`): the
@@ -13,6 +37,30 @@ export const LISTEN_ACTIVITIES: Record<string, ListenActivityDef<any>> = {
   drum: drumActivity,
   trace: traceActivity,
   order: storyOrderActivity,
+  mathStory: mathStoryActivity,
+  // Number Dunes and Ten Frame Plateau (K, phase 2a)
+  matchRows: matchActivity,
+  compareNumbers: compareNumbersActivity,
+  numberOrder: numberOrderActivity,
+  teenFrames: tenFramesActivity,
+  buildTeen: buildActivity,
+  measure: measureActivity,
+  sort: sortActivity,
+  // Word Reef and Writing Workshop (1st grade, phase 2b)
+  readAlong: readAlongActivity,
+  tiles: tilesActivity,
+  // Tens Plateau, Fair Share Falls and Shape Grove (1st grade, phase 2b)
+  tens: tensActivity,
+  buildTens: buildTensActivity,
+  shareTap: shareTapActivity,
+  snap: snapActivity,
+  // 1st grade (phase 2b): Measure Marsh and Graph Delta
+  lengthOrder: lengthOrderActivity,
+  units: unitsActivity,
+  clockMatch: clockMatchActivity,
+  graph: graphActivity,
+  // 1st grade (phase 2b): Adding Mesa and Take-Away Dunes
+  numberSentence: numberSentenceActivity,
 }
 
 export function activityDef(spec: ListenActivitySpec | undefined): ListenActivityDef | null {

@@ -68,7 +68,32 @@ export interface Wave {
   hpScale: number
 }
 
+/**
+ * The rules a game is played by. Grades 2–4 play `CLASSIC_RULES` (config.ts:
+ * today's numbers, unchanged); kindergarten's Counting Towers plays gentler
+ * ones (kRules.ts): fewer, slower critters, no clock between waves, towers
+ * that grow stronger, and a base that never falls.
+ */
+export interface TdRules {
+  waves: Wave[]
+  startingGold: number
+  startingLives: number
+  /** The pause before the next wave starts on its own (Infinity: it waits for the start button). */
+  betweenWaveMs: number
+  /** Critters walk at this share of their speed (1: as `ENEMY_STATS` says). */
+  speedScale: number
+  /** A tower's stats at a level (1: as built). */
+  tower(kind: TowerKind, level: number): TowerStats
+  /**
+   * When the last life goes: `gameOver` (classic), or `endWave` (K–1, no
+   * failing out): the critters still out go home, the lives fill up again,
+   * and the same wave waits to be tried again, a little easier each time.
+   */
+  baseFalls: 'gameOver' | 'endWave'
+}
+
 export interface GameState {
+  rules: TdRules
   width: number
   height: number
   pathPoints: Vec2[]
@@ -87,6 +112,10 @@ export interface GameState {
   floats: FloatingText[]
   nextId: number
   kills: number
+  /** Times the base would have fallen and the wave ended instead (`baseFalls: 'endWave'`). */
+  setbacks: number
+  /** Failed tries of the wave now being played (eases it: one critter fewer, a little less sturdy). */
+  retries: number
   isGameOver: boolean
   hasWon: boolean
 }

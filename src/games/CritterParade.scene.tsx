@@ -166,6 +166,7 @@ export function ParadeScene({
   theme,
   finaleAt,
   listen,
+  dots,
   scaffold,
   gates,
   cage,
@@ -182,6 +183,8 @@ export function ParadeScene({
   theme: ThemeKey
   finaleAt: number
   listen: boolean
+  /** The gates and cages show their numbers as dots (kindergarten), else numerals. */
+  dots: boolean
   scaffold: boolean
   gates: ShownGate[]
   cage: { at: number; amount: number; open: boolean } | null
@@ -433,9 +436,9 @@ export function ParadeScene({
         </group>
       ))}
       {gates.map((gt) => (
-        <GatePair3D key={`${gt.at}`} pair={gt.pair} z={-gt.at} colors={gt.colors} listen={listen} helper={scaffold} picked={gt.picked} onTap={onTap} />
+        <GatePair3D key={`${gt.at}`} pair={gt.pair} z={-gt.at} colors={gt.colors} listen={dots} helper={scaffold} picked={gt.picked} onTap={onTap} />
       ))}
-      {cage && <Cage3D key={cage.at} z={-cage.at} amount={cage.amount} open={cage.open} listen={listen} />}
+      {cage && <Cage3D key={cage.at} z={-cage.at} amount={cage.amount} open={cage.open} listen={dots} />}
       <group visible={gangShown}>
         <FinaleProps z={-finaleAt} />
         <Rope ropeRef={ropeRef} ribbonRef={ribbonRef} length={6.6} />

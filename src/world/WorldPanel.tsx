@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
-import { getZone } from '../curriculum'
+import { getZone, zoneDescription } from '../curriculum'
 import { useProgress } from '../store/progress'
 import { todayStr } from '../lib/daily'
 import { Button, Pill, StarRating } from '../components/ui'
@@ -28,7 +28,8 @@ export default function WorldPanel({
   onClose: () => void
 }) {
   const reduced = useReducedMotion()
-  const listen = listenGrade(useProgress((s) => s.player?.grade))
+  const grade = useProgress((s) => s.player?.grade)
+  const listen = listenGrade(grade)
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
@@ -78,7 +79,7 @@ export default function WorldPanel({
         </>
       ) : npc.zoneId ? (
         <>
-          {zone && <p className="text-ink-700 text-sm mb-3">{zone.description}</p>}
+          {zone && <p className="text-ink-700 text-sm mb-3">{zoneDescription(zone, grade)}</p>}
           <StageList zoneId={npc.zoneId} onLaunch={onLaunch} />
           <button
             type="button"

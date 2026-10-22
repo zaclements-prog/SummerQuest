@@ -3,11 +3,16 @@ import type { Zone } from './types'
 export const dataGraphZone: Zone = {
   id: 'data-delta',
   title: 'Data Delta',
+  titleByBand: { k1: 'Sorting Delta', g1: 'Graph Delta' },
   subtitle: 'Reading bar graphs',
+  subtitleByBand: { g5: 'Line plots and patterns' },
   emoji: '📊',
   themeColor: 'ocean',
   description:
     'Explore the Data Delta! Read bar graphs to answer questions — find the most and fewest, then add and compare the bars.',
+  descriptionByBand: {
+    g5: "Read line plots with fractions of a unit, share their totals equally, and graph two number patterns as ordered pairs.",
+  },
   estimatedMinutes: 18,
   available: true,
   position: { x: 37, y: 48 },
@@ -43,4 +48,114 @@ export const dataGraphZone: Zone = {
       starsToEarn: 3,
     },
   ],
+  stagesByBand: {
+    // K "Sorting Delta" (K.MD.3): sort into boxes marked with pictures (animals,
+    // food) → by colour and by size, then which group has more → three boxes,
+    // count a group and compare. The `sort` activity: drag or tap each thing into
+    // its box, then numeral cards. Titles and descriptions are said aloud.
+    k1: [
+      {
+        id: 'k-sort-1',
+        kind: 'concept',
+        title: 'Animals or food',
+        description: 'Sort the animals and the food into boxes.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kSort', mode: 'kind' },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-sort-2',
+        kind: 'practice',
+        title: 'Colors and sizes',
+        description: 'Sort by color and by size, then count!',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kSort', mode: 'colorSize' },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-sort-3',
+        kind: 'mastery',
+        title: 'Sort and count',
+        description: 'Sort, count, and find the group with more!',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kSort', mode: 'mix' },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+    ],
+    // 1st grade (phase 2b) "Graph Delta" (1.MD.4): sort what our friends picked
+    // into a picture graph, one picture each → read picture graphs: how many,
+    // the most and the fewest, how many in all → tally graphs, and how many
+    // more or fewer. Up to three rows, each marked with a picture (never a word):
+    // the `graph` activity.
+    g1: [
+      {
+        id: 'g1-graphs-1',
+        kind: 'concept',
+        title: 'Make a graph',
+        description: 'Put each one in its row. Then count!',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Graphs', mode: 'build' },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-graphs-2',
+        kind: 'practice',
+        title: 'Read the graph',
+        description: 'Which has the most? How many in all?',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Graphs', mode: 'read' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-graphs-3',
+        kind: 'mastery',
+        title: 'Tally marks',
+        description: 'Count the tally marks. How many more?',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Graphs', mode: 'tally' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+    ],
+    // 5th grade (phase 3; 5.MD.2, 5.OA.3): line plots of measurements in halves,
+    // fourths and eighths (read, total, share equally) → two number patterns as
+    // ordered pairs on the coordinate plane → the boss mixes both.
+    g5: [
+      {
+        id: 'g5-data-1',
+        kind: 'concept',
+        title: 'Line Plot Lab',
+        description: 'Read line plots in halves, fourths and eighths, then total and share.',
+        gameId: 'conceptPlay',
+        providerConfig: { kind: 'g5Data', mode: 'linePlot' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g5-data-2',
+        kind: 'practice',
+        title: 'Pattern Plotter',
+        description: 'Turn two number patterns into ordered pairs and graph them.',
+        gameId: 'conceptPlay',
+        providerConfig: { kind: 'g5Data', mode: 'patterns' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g5-data-3',
+        kind: 'mastery',
+        title: 'The Data Dragon',
+        description: 'Line plots and patterns to defeat the Data Dragon!',
+        gameId: 'bossBattle',
+        providerConfig: { kind: 'g5Data', mode: 'mixed' },
+        params: { questionCount: 8, bossEmoji: '🐉', bossName: 'The Data Dragon' },
+        starsToEarn: 3,
+      },
+    ],
+  },
 }

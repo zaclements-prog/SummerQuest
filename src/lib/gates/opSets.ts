@@ -1,5 +1,5 @@
 import { compare, decimalText, fromDecimal, isInteger, mul, rat, int, ONE, type Rational } from '../numbers'
-import { contentBand } from '../gradeBand'
+import { contentBand, isListenBand } from '../gradeBand'
 import type { GateOp } from './ops'
 import { applyOp } from './ops'
 import type { OpSetId, TrapKind } from './types'
@@ -127,6 +127,20 @@ const addVsSub: Maker = {
     if (a === null) return null
     const b = ri(c, a + 1, Math.min(c.subMax, c.n - c.floor))
     return b === null ? null : [A(a), S(b)]
+  },
+}
+
+/** 1st grade (keep more): one gate takes a teen parade back to exactly 10 ("−3 at 13"), the other takes something else. */
+const backToTen: Maker = {
+  id: 'backToTen',
+  weight: 3,
+  modes: ['normal'],
+  make(c) {
+    if (c.n <= 10 || 10 < c.floor) return null
+    const a = c.n - 10
+    if (a > c.subMax) return null
+    const b = ri(c, 1, Math.min(c.subMax, c.n - c.floor))
+    return b === null || b === a ? null : [S(a), S(b)]
   },
 }
 
@@ -425,6 +439,34 @@ export const OP_SETS: Record<OpSetId, OpSetConfig> = {
     maxRel: [1, 1, 1],
     makers: [{ ...addAdd, weight: 6 }, makeTen, addVsSub],
   },
+  // 1st grade: + within 20, the gates written as numerals (Adding Mesa)
+  add20: {
+    id: 'add20',
+    cap: 20,
+    maxFactor: 2,
+    addMax: 6,
+    subMax: 9,
+    tieRate: 0,
+    trapRate: 0.15,
+    gapAbs: [2, 1, 1],
+    gapRel: [0, 0, 0],
+    maxRel: [1, 1, 1],
+    makers: [{ ...addAdd, weight: 6 }, makeTen, addVsSub],
+  },
+  // 1st grade: − within 20, which keeps more (Take-Away Dunes)
+  sub20: {
+    id: 'sub20',
+    cap: 20,
+    maxFactor: 2,
+    addMax: 6,
+    subMax: 6,
+    tieRate: 0,
+    trapRate: 0,
+    gapAbs: [2, 1, 1],
+    gapRel: [0, 0, 0],
+    maxRel: [1, 1, 1],
+    makers: [{ ...subSub, weight: 6 }, backToTen],
+  },
   mulAdd: {
     id: 'mulAdd',
     // within 100 for 2nd grade (the plan passes the lower cap); 3rd graders double past it
@@ -485,20 +527,32 @@ export type OpFamily = 'mul' | 'div'
 
 /**
  * The operation set for a zone family and a grade (0 = K … 5):
- * K–1 → dots add/sub; 2–3 → × and + (or ÷ and −); 4 → harder × plus fraction
- * operators (or harder ÷); 5 → fraction and decimal operators.
+ * K → dots add/sub; 1st grade → + gates within 20 (Mesa) or − gates (Dunes),
+ * written as numerals; 2–3 → × and + (or ÷ and −); 4 → harder × plus
+ * fraction operators (or harder ÷); 5 → fraction and decimal operators.
  */
 export function opSetFor(family: OpFamily, grade: number): OpSetId {
   const band = contentBand(grade)
-  if (band === 'k1') return 'addSub'
+  if (band === 'g1') return family === 'div' ? 'sub20' : 'add20'
+  if (isListenBand(band)) return 'addSub'
   if (band === 'g5') return 'fracDec'
   if (family === 'div') return 'divSub'
   return grade >= 4 ? 'mulFrac' : 'mulAdd'
 }
 
+/** The K–1 sets: the parade waits at each gate pair and asks it aloud (no steering, no clock). */
+export function isListenSet(opSet: OpSetId): boolean {
+  return opSet === 'addSub' || opSet === 'add20' || opSet === 'sub20'
+}
+
+/** Kindergarten's gates show their numbers as dots in ten-frame rows; 1st grade's as numerals. */
+export function showsDots(opSet: OpSetId): boolean {
+  return opSet === 'addSub'
+}
+
 /** Largest × / ÷ factor by grade (2nd graders stay with 2–5). */
 export function maxFactorFor(opSet: OpSetId, grade: number): number {
-  if (opSet === 'addSub') return OP_SETS.addSub.maxFactor
+  if (opSet === 'addSub' || opSet === 'add20' || opSet === 'sub20') return OP_SETS[opSet].maxFactor
   if (grade <= 2) return 5
   if (opSet === 'divSub' && grade >= 4) return 12
   return OP_SETS[opSet].maxFactor

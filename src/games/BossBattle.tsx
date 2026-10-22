@@ -14,7 +14,11 @@ import { SHORT_SCREEN, WIDE_SHORT, useMediaQuery } from '../components/useViewpo
 // Visuals the question can't be answered without (a reading passage, a bar graph).
 // Teaching aids like multiplication arrays or fraction bars stay hidden in the boss
 // fight so mastery isn't just counting the picture.
-const REQUIRED_VISUALS = new Set(['passage', 'barGraph'])
+const REQUIRED_VISUALS = new Set(['passage', 'barGraph',
+  // 5th grade (phase 3): Measurement Marsh, Geometry Grove, Data Delta
+  'prism', 'coordPlane', 'linePlot',
+  // 5th grade (phase 3): Fraction Falls (the area model of a fraction × a fraction)
+  'fractionArea'])
 
 /**
  * Boss Battle — a multiple-choice duel against a monster boss.

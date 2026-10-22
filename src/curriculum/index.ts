@@ -11,7 +11,7 @@ import { readingZone } from './reading'
 import { writingZone } from './writing'
 import { scienceZone } from './science'
 import { towerDefenseZone } from './towerDefense'
-import { contentBand } from '../lib/gradeBand'
+import { bandFallbacks, contentBand } from '../lib/gradeBand'
 import { DEFAULT_GRADE, gradeSpanText, type GradeLevel } from '../lib/gradeTiers'
 import { OFFERED_GRADES } from '../lib/features'
 
@@ -42,9 +42,10 @@ export function getZone(id: string) {
 
 /**
  * The stages a zone plays at a grade — THE way to read a zone's stages. The
- * grade's content band (lib/gradeBand) picks the set: K–1 and 5th grade play
- * their own (`zone.stagesByBand`) once one is authored, everything else (and
- * a band with no set yet) plays `zone.stages`, the 2nd–4th grade set. A
+ * grade's content band (lib/gradeBand) picks the set: kindergarten, 1st and
+ * 5th grade play their own (`zone.stagesByBand`) once one is authored (1st
+ * grade with none plays kindergarten's), everything else (and a band with no
+ * set yet) plays `zone.stages`, the 2nd–4th grade set. A
  * missing grade counts as DEFAULT_GRADE. Stars live under stage ids, which
  * differ per band, so a child who changes grade keeps every star and sees
  * each band's again on switching back.
@@ -52,8 +53,11 @@ export function getZone(id: string) {
 export function zoneStages(zone: Pick<Zone, 'stages' | 'stagesByBand'>, grade: GradeLevel | null | undefined): Stage[] {
   const band = contentBand(grade ?? DEFAULT_GRADE)
   if (band === 'g24') return zone.stages
-  const set = zone.stagesByBand?.[band]
-  return set && set.length > 0 ? set : zone.stages
+  for (const b of bandFallbacks(band)) {
+    const set = b === 'g24' ? undefined : zone.stagesByBand?.[b]
+    if (set && set.length > 0) return set
+  }
+  return zone.stages
 }
 
 /**
@@ -62,7 +66,29 @@ export function zoneStages(zone: Pick<Zone, 'stages' | 'stagesByBand'>, grade: G
  * counts as DEFAULT_GRADE.
  */
 export function zoneTitle(zone: Pick<Zone, 'title' | 'titleByBand'>, grade: GradeLevel | null | undefined): string {
-  return zone.titleByBand?.[contentBand(grade ?? DEFAULT_GRADE)] ?? zone.title
+  for (const b of bandFallbacks(contentBand(grade ?? DEFAULT_GRADE))) {
+    const t = zone.titleByBand?.[b]
+    if (t) return t
+  }
+  return zone.title
+}
+
+/** A zone's subtitle at a grade: its band's own (5th grade's), else `zone.subtitle`. */
+export function zoneSubtitle(zone: Pick<Zone, 'subtitle' | 'subtitleByBand'>, grade: GradeLevel | null | undefined): string {
+  for (const b of bandFallbacks(contentBand(grade ?? DEFAULT_GRADE))) {
+    const t = zone.subtitleByBand?.[b]
+    if (t) return t
+  }
+  return zone.subtitle
+}
+
+/** A zone's description at a grade: its band's own (5th grade's), else `zone.description`. */
+export function zoneDescription(zone: Pick<Zone, 'description' | 'descriptionByBand'>, grade: GradeLevel | null | undefined): string {
+  for (const b of bandFallbacks(contentBand(grade ?? DEFAULT_GRADE))) {
+    const t = zone.descriptionByBand?.[b]
+    if (t) return t
+  }
+  return zone.description
 }
 
 /** A stage of the zone's set for this grade (another band's stage isn't found). */

@@ -1,0 +1,34 @@
+/*
+ * Fair Share Falls' share-tap activity: a share that was tapped and isn't
+ * the one asked for wobbles while we look again. Opacity only (an SVG path
+ * has no box to transform around on every WebView).
+ */
+.st-look {
+  animation: st-look 0.5s ease-in-out 2;
+}
+.st-region:focus,
+.st-region:focus-visible {
+  outline: none;
+}
+.st-figure {
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@keyframes st-look {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .st-look {
+    animation: none !important;
+  }
+}

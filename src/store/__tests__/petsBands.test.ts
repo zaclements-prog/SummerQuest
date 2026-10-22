@@ -182,3 +182,35 @@ describe('a migrated save keeps everything', () => {
     expect(s().buddyPet).toBe('panda')
   })
 })
+
+// ── 1st grade (phase 2b): the lion, the trex and the owl hatch from the 1st-grade lessons too ──
+describe('a 1st grader and the Adding Mesa, Take-Away Dunes and Story Woods pets', () => {
+  // the real stage sets (taken at collection, before the tests above take them off)
+  const MESA_BANDS = mesa.stagesByBand
+  beforeEach(() => {
+    mesa.stagesByBand = MESA_BANDS
+    start(1)
+  })
+
+  it('each hatches from its zone’s 1st-grade lesson', () => {
+    for (const [lesson, pet] of [
+      ['g1Adding', 'lion'],
+      ['g1Subtract', 'trex'],
+      ['g1StoryMath', 'owl'],
+    ] as const) {
+      expect(petById(pet)!.lessonIds, pet).toContain(lesson)
+      expect(petStages(s().zones, s().lessonsDone, 1)[pet], pet).toBe('egg')
+      s().markLessonDone(lesson)
+      expect(petStages(s().zones, s().lessonsDone, 1)[pet], pet).toBe('baby')
+    }
+  })
+
+  it('the lion grows up from 1st-grade stars, and stays grown up in kindergarten and 3rd grade', () => {
+    for (const id of ['g1-add-1', 'g1-add-parade', 'g1-add-3']) s().awardStage(MESA, id, 3, 10)
+    expect(lion()).toBe('adult')
+    s().setGrade(0)
+    expect(lion()).toBe('adult')
+    s().setGrade(3)
+    expect(lion()).toBe('adult')
+  })
+})

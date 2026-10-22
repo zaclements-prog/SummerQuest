@@ -19,9 +19,14 @@ import { useStarterCreature } from '../home/starterCreature'
 import { collidesAt } from '../world/collision'
 import Beaver from '../world/areas/fraction-falls/Beaver'
 import {
+  FORGE_LIMITS,
   MAX_STACK,
   ROUNDS,
   forgeFactConfig,
+  forgeModeOf,
+  parseUnlikeRound,
+  recipeText,
+  renamedParts,
   forgeProblemCount,
   forgeRunPlan,
   forgeScore,
@@ -33,6 +38,9 @@ import {
   type FracRound,
 } from '../lib/forge/fractionCore'
 import { makeFractionEquivalenceProvider } from '../lib/providers/fractionEquivalence'
+// grade 5: the unlike-denominators orders
+import { makeForgeSumProvider } from '../lib/providers/g5Fractions'
+import { shuffle } from '../lib/random'
 import { DEFAULT_GRADE, GRADE_TIERS } from '../lib/gradeTiers'
 import {
   ANVIL,
@@ -109,7 +117,8 @@ const CUSTOMER_COLORS = ['#f6d3e4', '#d6e8ff', '#dff3cf', '#fff0c2', '#e8dcff']
 const BEAR_COLOR = '#c99063'
 const ROUND_BANNER: Record<ForgeRoundSpec['kind'], string> = { warmup: 'Warm-up! 🍬', rush: 'Rush order! ⚡', finale: '👑 BIG ORDER!' }
 
-export type ForgePhase = 'intro' | 'build' | 'pour' | 'resolve' | 'served' | 'results'
+/** `gauge` is grade 5's only: setting the press to a common denominator before stamping. */
+export type ForgePhase = 'intro' | 'gauge' | 'build' | 'pour' | 'resolve' | 'served' | 'results'
 
 interface Order {
   round: FracRound
@@ -132,6 +141,9 @@ export interface ForgeView {
   /** this order's candy is made: the board keeps the answer up */
   solved: boolean
   customer: { key: number; kind: CritterKind; color: string; mood: CritterMood }
+  /** Grade 5: the gauge's chips for this order (shuffled), and a wrong one being shown on the ruler. */
+  gauges?: number[]
+  gaugeTry?: number | null
 }
 
 interface Tally {
@@ -155,11 +167,16 @@ export default function FractionForge({ params, onComplete, meta, paused: hostPa
   const plan = useMemo(() => forgeRunPlan(totalRounds), [totalRounds])
   const problems = useMemo(() => forgeProblemCount(plan), [plan])
   const grade = useProgress((s) => s.player?.grade)
+  // Grade 5's stage (`params.mode: 'unlike'`) orders `a/b + c/d`; grades 2–4 play the classic forge.
+  const unlike = forgeModeOf(params) === 'unlike'
   // The forge draws its OWN bounded facts: the mold must show `targetDenom`
   // cells a child can count at play distance (G4 widens equivalence to /16).
   const facts = useMemo(
-    () => makeFractionEquivalenceProvider(forgeFactConfig(GRADE_TIERS[grade ?? DEFAULT_GRADE].fracEquivMaxDenom)),
-    [grade],
+    () =>
+      unlike
+        ? makeForgeSumProvider(FORGE_LIMITS.denomMax)
+        : makeFractionEquivalenceProvider(forgeFactConfig(GRADE_TIERS[grade ?? DEFAULT_GRADE].fracEquivMaxDenom)),
+    [grade, unlike],
   )
   const recordAnswer = useProgress((s) => s.recordAnswer)
   const recordAttempt = useProgress((s) => s.recordAttempt)
@@ -192,7 +209,7 @@ export default function FractionForge({ params, onComplete, meta, paused: hostPa
   const [delivery, setDelivery] = useState<{ len: number; startX: number; token: number } | null>(null)
   // the hook opens on these: the Beaver waves the shop open
   const [cue, setCue] = useState<HostCue>({ mood: 'wave', token: 1 })
-  const [speech, setSpeech] = useState<{ text: string; tone: 'plain' | 'good' | 'bad' } | null>({ text: 'Stamp slabs. Fill the mold!', tone: 'plain' })
+  const [speech, setSpeech] = useState<{ text: string; tone: 'plain' | 'good' | 'bad' } | null>({ text: unlike ? 'Set the gauge. Fill the mold!' : 'Stamp slabs. Fill the mold!', tone: 'plain' })
   const [banner, setBanner] = useState<string | null>('🍬 Candy Forge!')
   const [hud, setHud] = useState({ score: 0, streak: 0 })
   // (the clock itself ticks in <PatienceClock>: a state update here re-renders the whole 3D scene)
@@ -240,7 +257,7 @@ export default function FractionForge({ params, onComplete, meta, paused: hostPa
     (roundIndex: number, orderIndex: number) => {
       const spec = plan[roundIndex]
       nextProblem(facts).then((problem) => {
-        const round = parseFracEqRound(problem)
+        const round = unlike ? parseUnlikeRound(problem) : parseFracEqRound(problem)
         triedRef.current = false
         if (orderIndex === 0) {
           patienceRef.current = { left: spec.patienceSec, total: spec.patienceSec }
@@ -255,7 +272,7 @@ export default function FractionForge({ params, onComplete, meta, paused: hostPa
           roundIndex,
           orderIndex,
           order: { round, problem },
-          phase: 'build',
+          phase: unlike ? 'gauge' : 'build',
           stack: 0,
           mold: 0,
           fx: 'none',
@@ -267,13 +284,15 @@ export default function FractionForge({ params, onComplete, meta, paused: hostPa
             orderIndex === 0
               ? { key: v.customer.key + 1, kind, color: kind === 'bear' ? BEAR_COLOR : CUSTOMER_COLORS[roundIndex % CUSTOMER_COLORS.length], mood: 'wait' }
               : { ...v.customer, mood: 'wait' },
+          ...(unlike ? { gauges: shuffle(round.gauges ?? []), gaugeTry: null } : {}),
         }))
         const who = kind === 'bear' ? '🐻' : '🐰'
-        say(`${who} wants ${round.baseNum}/${round.baseDenom} of a bar!`)
+        if (unlike) say(`${who} wants ${recipeText(round)} of a bar! Pick the slab size.`)
+        else say(`${who} wants ${round.baseNum}/${round.baseDenom} of a bar!`)
         react(roundIndex === 0 && orderIndex === 0 ? 'point' : 'wave')
       })
     },
-    [facts, plan, flash, say, react],
+    [facts, plan, flash, say, react, unlike],
   )
 
   // the hook: shop opens, the Beaver waves, then the first customer hops in
@@ -316,6 +335,38 @@ export default function FractionForge({ params, onComplete, meta, paused: hostPa
   }, [plan, loadOrder, later, finishRun])
 
   // ── verbs ─────────────────────────────────────────────────────────────────
+
+  // grade 5: set the press's gauge. Only a common denominator cuts both parts
+  // into whole slabs; a wrong size shows its ticks on the ruler (they miss a
+  // part's end) and counts as a miss for this order.
+  const pickGauge = useCallback(
+    (D: number) => {
+      const v = viewRef.current
+      if (v.phase !== 'gauge' || !v.order || v.gaugeTry) return
+      const { round, problem } = v.order
+      const right = D === round.targetDenom
+      recordAnswer(right, problem)
+      const sk = problem.skill
+      if (meta && sk) recordAttempt({ zoneId: meta.zoneId, topic: facts.topic, skillId: sk.id, skillLabel: sk.label, correct: right })
+      if (right) {
+        setView((w) => ({ ...w, phase: 'build', gaugeTry: null }))
+        sfx.correct()
+        react('cheer')
+        const renamed = renamedParts(round).split(' + ')
+        say(`Yes! ${(round.parts ?? []).map((q, i) => `${q.num}/${q.denom} = ${renamed[i]}`).join(' and ')}`, 'good')
+        return
+      }
+      triedRef.current = true
+      tally.current.streak = 0
+      setHud((h) => ({ ...h, streak: 0 }))
+      setView((w) => ({ ...w, gaugeTry: D }))
+      sfx.wrong()
+      react('oops')
+      say(`1/${D} slabs don't fit both parts. Try another size!`, 'bad')
+      later(1700, () => setView((w) => (w.gaugeTry === D ? { ...w, gaugeTry: null } : w)))
+    },
+    [facts.topic, later, meta, recordAnswer, recordAttempt, react, say],
+  )
 
   const stamp = useCallback(() => {
     const v = viewRef.current
@@ -414,7 +465,8 @@ export default function FractionForge({ params, onComplete, meta, paused: hostPa
       juice.text({ pos: [TABLE[0], 2.4, TABLE[1] + 0.4], text: `+${pts.total}`, color: TOON.gold, size: 'lg' })
       if (pts.speed >= 25) later(350, () => juice.text({ pos: [TABLE[0] + 1.3, 2.0, TABLE[1] + 0.4], text: 'Speedy! ⚡', color: TOON.flowerBlue, size: 'sm' }))
       react('cheer')
-      say(`Perfect fit! ${round.baseNum}/${round.baseDenom} = ${round.targetNum}/${round.targetDenom}`, 'good')
+      if (round.parts) say(`Perfect fit! ${recipeText(round)} = ${round.targetNum}/${round.targetDenom}${simplest(round.targetNum, round.targetDenom)}`, 'good')
+      else say(`Perfect fit! ${round.baseNum}/${round.baseDenom} = ${round.targetNum}/${round.targetDenom}`, 'good')
       const len = (BAR * round.baseNum) / round.baseDenom
       later(900, () => {
         setDelivery({ len, startX: TABLE[0] - BAR / 2 + len / 2, token: Date.now() })
@@ -518,7 +570,7 @@ export default function FractionForge({ params, onComplete, meta, paused: hostPa
   useEffect(() => {
     const id = window.setInterval(() => {
       const v = viewRef.current
-      if (paused || !v.order || (v.phase !== 'build' && v.phase !== 'pour' && v.phase !== 'resolve')) return
+      if (paused || !v.order || (v.phase !== 'gauge' && v.phase !== 'build' && v.phase !== 'pour' && v.phase !== 'resolve')) return
       const p = patienceRef.current
       p.left = Math.max(0, p.left - 0.25)
       // only the change the scene shows (the customer gets impatient) re-renders it
@@ -552,8 +604,11 @@ export default function FractionForge({ params, onComplete, meta, paused: hostPa
             patience: +(patienceRef.current.left / patienceRef.current.total).toFixed(2),
             ...t,
             results: finished.current,
+            mode: unlike ? 'unlike' : 'equiv',
+            gauges: v.gauges ?? null,
           }
         },
+        pickGauge,
         spots: { pad: PAD, chomp: CHOMP, pour: POUR, spawn: SPAWN, press: PRESS, table: TABLE },
         walk: (x: number, z: number) => {
           avatarRef.current?.position.set(x, 0, z)
@@ -565,12 +620,13 @@ export default function FractionForge({ params, onComplete, meta, paused: hostPa
         },
       },
     })
-  }, [plan, problems])
+  }, [plan, problems, unlike, pickGauge])
 
   const order = view.order
   const spec = plan[view.roundIndex]
   const prompt = (() => {
     if (view.phase === 'intro' || !order) return '🍬 Candy Forge is open!'
+    if (view.phase === 'gauge') return view.gaugeTry ? '❌ Those slabs miss! 🔧' : '🔧 Pick the slab size'
     if (view.phase === 'pour') return 'Pouring… ⬇️'
     if (view.phase === 'served') return 'Perfect fit! 🎉'
     if (view.phase === 'resolve') return view.last === 'short' ? 'Need more! 🔨' : 'Too many! 🔨 again'
@@ -620,7 +676,7 @@ export default function FractionForge({ params, onComplete, meta, paused: hostPa
             <div className="flex items-center gap-2 rounded-2xl px-3 py-1" style={{ background: UI.paper, border: `3px solid ${UI.line}`, boxShadow: UI.ledge }}>
               <span className="text-2xl leading-none">{view.customer.kind === 'bear' ? '🐻' : '🐰'}</span>
               <span className="kid-text text-2xl" style={{ color: '#3a2c38' }}>
-                {order.round.baseNum}/{order.round.baseDenom}
+                {unlike ? recipeText(order.round) : <>{order.round.baseNum}/{order.round.baseDenom}</>}
               </span>
               {spec?.orders > 1 && (
                 <span className="kid-text text-sm" style={{ color: '#3a2c38' }}>
@@ -642,6 +698,8 @@ export default function FractionForge({ params, onComplete, meta, paused: hostPa
       </div>
 
       <Banner text={banner} />
+
+      {unlike && view.phase === 'gauge' && order && <GaugeChips gauges={view.gauges ?? []} tried={view.gaugeTry ?? null} onPick={pickGauge} />}
 
       {view.phase !== 'results' && (
         <div className={`absolute ${SAFE.bottom3} inset-x-0 flex justify-center pointer-events-none`}>
@@ -667,6 +725,52 @@ export default function FractionForge({ params, onComplete, meta, paused: hostPa
         />
       )}
       <style>{`@keyframes ffpop{from{transform:scale(1.6)}to{transform:scale(1)}}`}</style>
+    </div>
+  )
+}
+
+// ── grade 5: the gauge ──────────────────────────────────────────────────────
+
+/** " = 2/3" when n/d reduces, else "". */
+function simplest(n: number, d: number): string {
+  let a = n
+  let b = d
+  while (b) [a, b] = [b, a % b]
+  return a > 1 ? ` = ${n / a}/${d / a}` : ''
+}
+
+/** The board in grade 5: "1/2 + 1/3 = ?" until the gauge is set, then "3/6 + 2/6 = ?/6", the stack's count, the answer. */
+function unlikeEquation(view: ForgeView, round: FracRound): string {
+  if (view.phase === 'gauge') return `${recipeText(round)} = ?`
+  const D = round.targetDenom
+  const lhs = renamedParts(round)
+  if (view.solved) return `${lhs} = ${round.targetNum}/${D}`
+  if (view.mold + view.stack > 0 && view.phase !== 'resolve') return `${lhs} = ${view.mold + view.stack}/${D}`
+  return `${lhs} = ?/${D}`
+}
+
+/** The gauge's chips: three slab sizes, one a common denominator. */
+function GaugeChips({ gauges, tried, onPick }: { gauges: number[]; tried: number | null; onPick: (d: number) => void }) {
+  return (
+    <div className="absolute inset-x-0 bottom-[calc(7.4rem+var(--safe-bottom,env(safe-area-inset-bottom,0px)))] flex justify-center pointer-events-none" data-forge-gauge>
+      <div className="pointer-events-auto flex items-center gap-2 rounded-2xl px-3 py-2" style={{ background: UI.paper, border: `3px solid ${UI.line}`, boxShadow: UI.ledge }}>
+        <span className="kid-text text-base" style={{ color: '#3a2c38' }}>
+          🔧 Slab size:
+        </span>
+        {gauges.map((d) => (
+          <button
+            key={d}
+            type="button"
+            onClick={() => onPick(d)}
+            disabled={tried !== null}
+            data-gauge={d}
+            className="kid-text text-2xl min-w-[64px] min-h-[52px] rounded-xl px-3 active:translate-y-[2px] disabled:opacity-60"
+            style={{ background: tried === d ? '#ffb4a8' : '#fff3c4', border: `3px solid ${UI.line}`, color: '#3a2c38' }}
+          >
+            1/{d}
+          </button>
+        ))}
+      </div>
     </div>
   )
 }
@@ -787,7 +891,9 @@ function ForgeScene({
   const b = useMemo(() => ({ Builder: creatureBuilder(activeCreature) }), [activeCreature])
   const build = view.phase === 'build'
   const tutorial = view.roundIndex === 0 && build && !!order
-  const equation = order
+  const equation = order?.round.parts
+    ? unlikeEquation(view, order.round)
+    : order
     ? view.solved
       ? `${order.round.baseNum}/${order.round.baseDenom} = ${order.round.targetNum}/${order.round.targetDenom}`
       : view.mold + view.stack > 0 && view.phase !== 'resolve'
@@ -806,16 +912,17 @@ function ForgeScene({
       <SpotBadge x={CHOMP.x + 0.15} z={CHOMP.z + 0.75} y={0.25} icon="😋" dim={!build || view.stack === 0} />
       {tutorial && (view.stack === 0 ? <GuideArrow x={PAD.x} z={PAD.z} y={2.2} /> : <GuideArrow x={POUR.x} z={POUR.z} y={2.2} color={TOON.mint} />)}
 
-      <Press denom={order?.round.targetDenom ?? 4} stamp={stampToken} active={build} />
+      <Press denom={order?.round.parts && view.phase === 'gauge' ? (view.gaugeTry ?? null) : (order?.round.targetDenom ?? 4)} stamp={stampToken} active={build} />
       {order && (
         <MoldTable
           baseNum={order.round.baseNum}
           baseDenom={order.round.baseDenom}
-          targetDenom={order.round.targetDenom}
+          targetDenom={order.round.parts && view.gaugeTry ? view.gaugeTry : order.round.targetDenom}
           mold={view.mold}
           target={order.round.targetNum}
           equation={equation}
-          ruler={!!spec?.grid || view.hint}
+          ruler={order.round.parts && view.phase === 'gauge' ? !!view.gaugeTry : !!spec?.grid || view.hint}
+          parts={order.round.parts}
           fx={view.fx}
           fxToken={view.fxToken}
         />

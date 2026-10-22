@@ -324,7 +324,22 @@ describe('World HUD', () => {
     near('', 'Schoolhouse', 'schoolhouse')
     expect(lines()).toEqual(['k-nav/lessonTime'])
     click(q('[data-guide="world-visit"]'))
-    expect(qa('[data-guide^="lesson-"]').map((b) => b.dataset.guide)).toEqual(['lesson-kCounting', 'lesson-kShapes', 'lesson-kLetters', 'lesson-kRhymes', 'lesson-kTracing'])
+    expect(qa('[data-guide^="lesson-"]').map((b) => b.dataset.guide)).toEqual([
+      'lesson-kCounting',
+      'lesson-kShapes',
+      'lesson-kLetters',
+      'lesson-kRhymes',
+      'lesson-kTracing',
+      // (K complete, phase 2a)
+      'lesson-kAddTake',
+      'lesson-kStoryMath',
+      'lesson-kCompare',
+      'lesson-kTeens',
+      'lesson-kMeasure',
+      'lesson-kSorting',
+      'lesson-kScience',
+      'lesson-kTowers',
+    ])
     expect(lines()).toEqual(['k-lessons/pickLesson'])
     click(q('[data-guide="lesson-kShapes"]'))
     expect(at.path).toBe('/tutor/kShapes')
@@ -380,5 +395,89 @@ describe('ListenQuitDialog', () => {
     expect(stay).toHaveBeenCalledTimes(1)
     click(document.querySelector('[data-guide="quit-leave"]'))
     expect(leave).toHaveBeenCalledTimes(1)
+  })
+})
+
+// ── 1st grade (phase 2b): Tens Plateau, Fair Share Falls, Shape Grove ──────
+
+describe('ZoneDetail, 1st grade (phase 2b)', () => {
+  /** Put a zone's real stage sets back (the pilot stand-ins replace them before each test). */
+  const real = (zoneId: string) => {
+    const z = getZone(zoneId)!
+    z.stagesByBand = original.get(z)
+  }
+
+  it('Tens Plateau, Fair Share Falls and Shape Grove: their 1st-grade picture buttons, name and welcome; no paragraphs', () => {
+    for (const [zoneId, title, welcome, ids] of [
+      ['place-value-plateau', 'Tens Plateau', 'k-nav/welcome-g1-place-value-plateau', ['g1-tens-1', 'g1-tens-2', 'g1-tens-3']],
+      ['fraction-falls', 'Fair Share Falls', 'k-nav/welcome-g1-fraction-falls', ['g1-shares-1', 'g1-shares-2', 'g1-shares-3']],
+      ['geometry-grove', 'Shape Grove', 'k-nav/welcome-geometry-grove', ['g1-shapes-1', 'g1-shapes-2', 'g1-shapes-3']],
+    ] as const) {
+      real(zoneId)
+      player(1)
+      resetGuideForTests()
+      render(`/zone/${zoneId}`, <ZoneDetail />, '/zone/:zoneId')
+      expect(qa('[data-stage]').map((b) => b.dataset.stage), zoneId).toEqual(ids)
+      expect(container.textContent).toContain(title)
+      expect(container.textContent).not.toContain(getZone(zoneId)!.description)
+      expect(lines(), zoneId).toEqual([welcome])
+      expect(targets(), zoneId).toEqual([`stage-${ids[0]}`])
+      // the second and third wait for the one before
+      expect(qa('[data-stage][data-locked]').map((b) => b.dataset.stage)).toEqual(ids.slice(1))
+      act(() => root.render(<></>))
+    }
+  })
+
+  it('kindergarten still sees Ten Frame Plateau and Add-and-Take Falls there', () => {
+    for (const [zoneId, title, first] of [
+      ['place-value-plateau', 'Ten Frame Plateau', 'k-teens-1'],
+      ['fraction-falls', 'Add-and-Take Falls', 'k-addsub-1'],
+    ] as const) {
+      real(zoneId)
+      player(0)
+      resetGuideForTests()
+      render(`/zone/${zoneId}`, <ZoneDetail />, '/zone/:zoneId')
+      expect(qa('[data-stage]')[0].dataset.stage).toBe(first)
+      expect(container.textContent).toContain(title)
+      expect(lines()).toEqual([`k-nav/welcome-${zoneId}`])
+      act(() => root.render(<></>))
+    }
+  })
+})
+
+describe('1st grade (phase 2b): Measure Marsh, Graph Delta, Sky Summit', () => {
+  const G1 = {
+    'measurement-marsh': { title: 'Measure Marsh', welcome: 'k-nav/welcome-measurement-marsh', stages: ['g1-measure-1', 'g1-measure-2', 'g1-measure-3'] },
+    'data-delta': { title: 'Graph Delta', welcome: 'k-nav/welcome-g1-data-delta', stages: ['g1-graphs-1', 'g1-graphs-2', 'g1-graphs-3'] },
+    'science-summit': { title: 'Sky Summit', welcome: 'k-nav/welcome-g1-science-summit', stages: ['g1-science-1', 'g1-science-2', 'g1-science-3'] },
+  }
+
+  it('the zone page: the 1st-grade name and welcome, three picture buttons, nothing else to read; the map says the 1st-grade name', async () => {
+    // (the real stage sets, not the pilot's)
+    for (const [z, sets] of original) if (sets) z.stagesByBand = sets
+    for (const [zoneId, z] of Object.entries(G1)) {
+      player(1)
+      render(`/zone/${zoneId}`, <ZoneDetail />, '/zone/:zoneId')
+      expect(qa('[data-stage]').map((b) => b.dataset.stage)).toEqual(z.stages)
+      expect(container.textContent).toContain(z.title)
+      expect(container.textContent).not.toContain(getZone(zoneId)!.description)
+      expect(lines()).toEqual([z.welcome])
+      expect(targets()).toEqual([`stage-${z.stages[0]}`])
+      // each button a picture of its own (not the generic 💡 ⚡ 🏆), said aloud when tapped
+      for (const id of z.stages) expect(q(`[data-stage="${id}"]`)!.textContent).not.toMatch(/[💡⚡🏆]/u)
+      click(q(`[data-stage="${z.stages[0]}"]`))
+      expect(lines()).toEqual([`k-nav/stage-${z.stages[0]}`])
+      act(() => root.render(<></>))
+      resetGuideForTests()
+    }
+    player(1)
+    render('/map', <WorldMap />)
+    for (const [zoneId, z] of Object.entries(G1)) {
+      const marker = q(`[data-guide="map-${zoneId}"]`)!
+      expect(marker.hasAttribute('data-sleeping')).toBe(false)
+      expect(marker.getAttribute('aria-label')).toMatch(new RegExp(`^${z.title}:`))
+    }
+    click(q('[data-guide="map-data-delta"]'))
+    expect(lines()).toEqual(['k-nav/name-g1-data-delta'])
   })
 })

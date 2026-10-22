@@ -36,10 +36,12 @@ const PER_SET = 4000
 function randomState(set: OpSetId, r: () => number, i: number): GateState {
   const cfg = OP_SETS[set]
   const ri = (lo: number, hi: number) => lo + Math.floor(r() * (hi - lo + 1))
-  const floor = set === 'addSub' ? ri(1, 3) : ri(2, 6)
-  const hi: Record<OpSetId, number> = { addSub: 17, mulAdd: 100, divSub: 96, mulFrac: 150, fracDec: 499 }
+  const floor = set === 'addSub' ? ri(1, 3) : set === 'add20' || set === 'sub20' ? ri(2, 4) : ri(2, 6)
+  const hi: Record<OpSetId, number> = { addSub: 17, mulAdd: 100, divSub: 96, mulFrac: 150, fracDec: 499, add20: 17, sub20: 17 }
   const top = Math.min(cfg.cap - 3, hi[set])
-  const count = Math.min(top, Math.max(floor, Math.round(floor * Math.pow(top / floor, r()))))
+  // (1st grade's − parade is refilled by its cages: its gates meet a few friends over the floor at least)
+  const lo = set === 'sub20' ? floor + 4 : floor
+  const count = Math.min(top, Math.max(lo, Math.round(lo * Math.pow(top / lo, r()))))
   return {
     count,
     opSet: set,
@@ -141,13 +143,17 @@ describe('gate engine: rates and balance', () => {
         expect(tieRate).toBeGreaterThan(cfg.tieRate * 0.4)
         expect(tieRate).toBeLessThan(cfg.tieRate * 1.25)
       }
-      expect(trapRate).toBeGreaterThan(cfg.trapRate * 0.2)
-      expect(trapRate).toBeLessThan(cfg.trapRate * 1.25)
+      // (1st grade's − set has no trap: "−3 or −8" is honest subtracting)
+      if (cfg.trapRate === 0) expect(traps).toBe(0)
+      else {
+        expect(trapRate).toBeGreaterThan(cfg.trapRate * 0.2)
+        expect(trapRate).toBeLessThan(cfg.trapRate * 1.25)
+      }
       expect(left / decided).toBeGreaterThan(0.46)
       expect(left / decided).toBeLessThan(0.54)
       // fallbacks ("+1 or +3") are rare; a keep-more set falls back more near its floor,
       // where nothing is left to keep
-      expect(fallbacks / PER_SET).toBeLessThan(set === 'divSub' ? 0.2 : 0.1)
+      expect(fallbacks / PER_SET).toBeLessThan(set === 'divSub' || set === 'sub20' ? 0.2 : 0.1)
     })
   }
 
@@ -234,16 +240,20 @@ describe('gate engine: sequences', () => {
           count = r() < 0.5 ? p.left.result : p.right.result
           if (count > cfg.cap * 0.85) count = Math.max(floor, Math.floor(cfg.cap * 0.3))
           if (set === 'divSub' && count < floor + 6) count += 18
+          // (1st grade's − parade: a cage refills it)
+          if (set === 'sub20' && count < floor + 6) count += 10
         }
       }
     }
-  })
+    // (a property test over every set: generous on a busy machine)
+  }, 30000)
 })
 
 describe('bands and bookkeeping', () => {
   it('picks the operation set by grade and zone', () => {
-    expect([0, 1, 2, 3, 4, 5].map((g) => opSetFor('mul', g))).toEqual(['addSub', 'addSub', 'mulAdd', 'mulAdd', 'mulFrac', 'fracDec'])
-    expect([0, 1, 2, 3, 4, 5].map((g) => opSetFor('div', g))).toEqual(['addSub', 'addSub', 'divSub', 'divSub', 'divSub', 'fracDec'])
+    // (1st grade: its own + and − sets, written as numerals; kindergarten and 2nd–5th grade unchanged)
+    expect([0, 1, 2, 3, 4, 5].map((g) => opSetFor('mul', g))).toEqual(['addSub', 'add20', 'mulAdd', 'mulAdd', 'mulFrac', 'fracDec'])
+    expect([0, 1, 2, 3, 4, 5].map((g) => opSetFor('div', g))).toEqual(['addSub', 'sub20', 'divSub', 'divSub', 'divSub', 'fracDec'])
     expect(maxFactorFor('mulAdd', 2)).toBe(5)
     expect(maxFactorFor('mulAdd', 3)).toBe(9)
   })

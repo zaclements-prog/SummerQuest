@@ -165,3 +165,20 @@ export function checkTrace(stroke: SampledStroke, trace: readonly Pt[], tol: Tra
   if (coverage < tol.coverage || nearEnd > tol.end) return fail('short', coverage, startDist)
   return { ok: true, miss: null, coverage, startDist }
 }
+
+/**
+ * A dot (i's and j's, 1st grade): a tap, or a little touch, near it passes. It
+ * may not be a long line (that is a stroke somewhere else), and a touch far
+ * from it is a "start at the green dot".
+ */
+export function checkDot(stroke: SampledStroke, trace: readonly Pt[], tol: TraceTolerance = TOLERANCE): TraceResult {
+  const pts = trace.filter((p) => Number.isFinite(p.x) && Number.isFinite(p.y))
+  if (!pts.length || !stroke.pts.length) return { ok: false, miss: 'short', coverage: 0, startDist: Infinity }
+  const at = stroke.pts[Math.floor(stroke.pts.length / 2)]
+  const startDist = dist(pts[0], at)
+  if (startDist > tol.start) return { ok: false, miss: 'start', coverage: 0, startDist }
+  let len = 0
+  for (let i = 1; i < pts.length; i++) len += dist(pts[i - 1], pts[i])
+  if (len > tol.far) return { ok: false, miss: 'wander', coverage: 0, startDist }
+  return { ok: true, miss: null, coverage: 1, startDist }
+}

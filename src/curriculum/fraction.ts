@@ -3,11 +3,16 @@ import type { Zone } from './types'
 export const fractionZone: Zone = {
   id: 'fraction-falls',
   title: 'Fraction Falls',
+  titleByBand: { k1: 'Add-and-Take Falls', g1: 'Fair Share Falls' },
   subtitle: 'Equivalent and comparing',
+  subtitleByBand: { g5: 'Adding, subtracting and multiplying fractions' },
   emoji: '💧',
   themeColor: 'ocean',
   description:
     'Fractions are pieces of a whole. Learn which pieces are equivalent and how to tell which fraction is bigger.',
+  descriptionByBand: {
+    g5: "Find common denominators to add and subtract unlike fractions, multiply fractions with area models, and see a fraction as a division.",
+  },
   estimatedMinutes: 18,
   available: true,
   position: { x: 61, y: 15 },
@@ -43,4 +48,112 @@ export const fractionZone: Zone = {
       starsToEarn: 3,
     },
   ],
+  stagesByBand: {
+    // K "Add-and-Take Falls" (K.OA.1, K.OA.5, K.OA.4): things join and leave on screen as
+    // the voice says so (the `mathStory` activity), answered with numeral cards: within 5,
+    // then within 10, then make ten on a ten-frame. Titles and descriptions are said aloud.
+    k1: [
+      {
+        id: 'k-addsub-1',
+        kind: 'concept',
+        title: 'Hop in, hop out',
+        description: 'Watch them come and go. How many now?',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kAddTake', mode: 'within5' },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-addsub-2',
+        kind: 'practice',
+        title: 'Up to ten',
+        description: 'Add and take away, all the way to ten.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kAddTake', mode: 'within10' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-addsub-3',
+        kind: 'mastery',
+        title: 'Make ten',
+        description: 'Fill the ten frame. How many more make ten?',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kAddTake', mode: 'make10' },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+    ],
+    // 1st grade "Fair Share Falls" (1.G.3): circles and rectangles (pizzas, pies,
+    // sandwiches, cakes, gardens) cut into shares, drawn exactly: equal or not, how
+    // many → halves and fourths, tap the half → is it a half or a fourth, more
+    // shares make smaller shares. Said aloud.
+    g1: [
+      {
+        id: 'g1-shares-1',
+        kind: 'concept',
+        title: 'Equal shares',
+        description: 'Fair shares are all the same size.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Shares', mode: 'equal' },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-shares-2',
+        kind: 'practice',
+        title: 'Halves and fourths',
+        description: 'Cut it in two, or cut it in four.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Shares', mode: 'halvesFourths' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-shares-3',
+        kind: 'mastery',
+        title: 'Smaller shares',
+        description: 'More shares make smaller shares!',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Shares', mode: 'size' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+    ],
+    // 5th grade (5.NF.1–4): the Candy Forge in its unlike-denominators mode (set
+    // the gauge to a common denominator, then stamp the sum), then multiplying
+    // fractions (area model) and fractions as division, then a mixed boss.
+    g5: [
+      {
+        id: 'g5-frac-1',
+        kind: 'concept',
+        title: 'Common Denominator Forge',
+        description: 'Set the gauge to a common denominator, then forge the sum!',
+        gameId: 'fractionForge',
+        providerConfig: { kind: 'g5Fractions', mode: 'addSub' },
+        params: { rounds: 5, mode: 'unlike' },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g5-frac-2',
+        kind: 'practice',
+        title: 'Pieces and Shares',
+        description: 'Multiply fractions with area models and share things fairly.',
+        gameId: 'conceptPlay',
+        providerConfig: { kind: 'g5Fractions', mode: 'timesShare' },
+        params: { questionCount: 8 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g5-frac-3',
+        kind: 'mastery',
+        title: 'Cascade Showdown',
+        description: 'Add, subtract, multiply and share fractions to beat the Cascade Croc!',
+        gameId: 'bossBattle',
+        providerConfig: { kind: 'g5Fractions', mode: 'mixed' },
+        params: { questionCount: 10, bossEmoji: '🐊', bossName: 'Cascade Croc' },
+        starsToEarn: 3,
+      },
+    ],
+  },
 }

@@ -230,6 +230,56 @@ export function effectiveConfig(
     case 'kLiteracy':
     case 'kTrace':
     case 'kStories':
+    case 'kAddTake':
+    case 'kStoryMath':
+    case 'kCompare':
+    case 'kTeens':
+      return config
+    case 'kMeasure':
+    case 'kSort':
+    case 'kTowers':
+    case 'kScience':
+      return config
+    // 1st grade (phase 2b): Word Reef, Writing Workshop, Tower Battlefront (their own ramps, as written)
+    case 'g1Reading':
+    case 'g1Writing':
+    case 'g1Towers':
+      return config
+    // 1st grade (phase 2b): Tens Plateau, Fair Share Falls, Shape Grove (each stage carries its own mode)
+    case 'g1Tens':
+    case 'g1Shares':
+    case 'g1Shapes':
+      return config
+    // 1st grade (phase 2b): Measure Marsh, Graph Delta, Sky Summit play as written
+    case 'g1Measure':
+    case 'g1Graphs':
+    case 'g1Science':
+      return config
+    // 1st grade (phase 2b): Adding Mesa, Take-Away Dunes, Story Woods (their stages carry their own ranges)
+    case 'g1Adding':
+    case 'g1Subtract':
+    case 'g1StoryMath':
+      return config
+    // 5th grade (phase 3): Reading Reef, Writing Workshop, Science Summit play as written
+    case 'g5Reading':
+    case 'g5Writing':
+    case 'g5Science':
+    case 'g5Spheres':
+      return config
+    // 5th grade (phase 3): Fraction Falls, Place Value Plateau, Tower Battlefront (their own ramps, as written)
+    case 'g5Fractions':
+    case 'g5Decimals':
+    case 'g5Gates':
+      return config
+    // 5th grade (phase 3): Measurement Marsh, Geometry Grove, Data Delta (5th grade's own kinds, as written)
+    case 'g5Measure':
+    case 'g5Geometry':
+    case 'g5Data':
+      return config
+    // 5th grade (phase 3): Multiplication Mesa, Division Dunes, Word Problem Woods play as written
+    case 'g5Mult':
+    case 'g5Div':
+    case 'g5Expr':
       return config
   }
 }

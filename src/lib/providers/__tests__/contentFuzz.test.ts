@@ -18,6 +18,25 @@ import { isSolidShape, shapeSides } from '../../../games/listenPlay/shapeGeometr
 import { glyph } from '../../trace/glyphs'
 import { isTraceSpec } from '../../trace/spec'
 import { isOrderSpec, STORY_PICTURES } from '../kStories'
+import { isMathStorySpec } from '../../../games/listenPlay/activities/mathStorySpec'
+import { answerOf, isNumberSpec, type NumberActivitySpec } from '../../../games/listenPlay/activities/numberSpecs'
+import { K_PAIRS } from '../../../voice/packs/k-compare'
+import { isMeasureSpec } from '../kMeasure'
+import { boxCounts, isSortSpec, mostBox } from '../kSort'
+import { K_TOWERS_MAX } from '../kTowers'
+import { K_ACTIONS, K_FOOD, K_GEAR, K_HOME_OF, type KAction, type KGear } from '../kScience'
+import { DRAWINGS } from '../../../games/listenPlay/drawings'
+// 1st grade (phase 2b)
+import type { ReadAlongSpec } from '../../../games/listenPlay/activities/readAlongSpec'
+import type { TilesSpec } from '../../../games/listenPlay/activities/tilesSpec'
+// 1st grade (phase 2b): Tens Plateau, Fair Share Falls, Shape Grove
+import { g1ShapesProblems, g1SharesProblems, g1TensProblems } from './g1Checks'
+// 1st grade (phase 2b): Measure Marsh, Graph Delta, Sky Summit
+import { digital, isClockSpec, isLengthOrderSpec, isUnitsSpec, orderOf, sameTime } from '../g1Measure'
+import { asksRow, graphAnswer, isGraphSpec } from '../g1Graphs'
+// 1st grade (phase 2b): number sentences and stories within 20
+import { isNumberSentenceSpec, sentenceHolds, solveSentence, type SentenceToken } from '../../../games/listenPlay/activities/numberSentenceSpec'
+import { storyAnswer as mathStoryAnswer } from '../../../games/listenPlay/activities/mathStorySpec'
 
 /**
  * Generator fuzz suite: every stage in the curriculum, at every grade tier, plus
@@ -419,7 +438,258 @@ function answerProblems(config: ProviderConfig, grade: GradeLevel, p: Problem): 
     case 'kStories':
       errs.push(...activityProblems(p as ListenProblem))
       break
+    // (K complete, phase 2a: Add-and-Take Falls and Story Woods, the `mathStory` activity)
+    case 'kAddTake':
+    case 'kStoryMath':
+      errs.push(...mathStoryProblems(config, p as ListenProblem))
+      break
+    // (K complete, phase 2a: Number Dunes and Ten Frame Plateau, answered through the number activities)
+    case 'kCompare':
+    case 'kTeens':
+      errs.push(...numberActivityProblems(config.kind, p as ListenProblem))
+      break
+    // K complete (phase 2a): answered by the measure and sort activities
+    case 'kMeasure':
+    case 'kSort':
+      errs.push(...activityProblems(p as ListenProblem))
+      break
+    // Counting Towers: Counting Mesa's question shapes, in the stage's range
+    case 'kTowers':
+      errs.push(...kAnswerProblems({ kind: 'kCounting', min: 1, max: K_TOWERS_MAX[config.mode] }, p as ListenProblem))
+      break
+    case 'kScience':
+      errs.push(...kScienceProblems(p as ListenProblem))
+      break
+    // 1st grade (phase 2b): Word Reef, Writing Workshop, Counting Towers
+    case 'g1Reading':
+    case 'g1Writing':
+      errs.push(...g1LiteracyProblems(p as ListenProblem))
+      break
+    case 'g1Towers':
+      errs.push(...g1TowersProblems(p as ListenProblem))
+      break
+    // 1st grade (phase 2b): the answer worked out again from the blocks, the drawings and the pieces (./g1Checks)
+    case 'g1Tens':
+      errs.push(...g1TensProblems(p as ListenProblem))
+      break
+    case 'g1Shares':
+      errs.push(...g1SharesProblems(p as ListenProblem))
+      break
+    case 'g1Shapes':
+      errs.push(...g1ShapesProblems(p as ListenProblem))
+      break
+    // 1st grade (phase 2b): Measure Marsh, Graph Delta, Sky Summit (each has its own deeper suite: g1*.test.ts)
+    case 'g1Measure':
+    case 'g1Graphs':
+    case 'g1Science':
+      errs.push(...g1Problems(p as ListenProblem))
+      break
+    // 1st grade (phase 2b): Adding Mesa and Take-Away Dunes (number sentences), Story Woods (stories within 20)
+    case 'g1Adding':
+    case 'g1Subtract':
+      errs.push(...g1SentenceProblems(p as ListenProblem))
+      break
+    case 'g1StoryMath':
+      errs.push(...g1StoryProblems(p as ListenProblem))
+      break
   }
+  return errs
+}
+
+// ── 1st grade (Measure Marsh, Graph Delta, Sky Summit): the answer, from the question's own data ──
+
+function g1Problems(p: ListenProblem): string[] {
+  const a = p.activity
+  const errs: string[] = []
+  const want = (x: unknown) => {
+    if (p.answer !== x) errs.push(`answer is ${JSON.stringify(p.answer)}, the question says ${JSON.stringify(x)}`)
+  }
+  if (isLengthOrderSpec(a)) want(a.mode === 'order' ? orderOf(a.sizes, a.ask).join('-') : String(a.answer[0]))
+  else if (isUnitsSpec(a)) {
+    want(a.n)
+    if (a.cards.filter((c) => c === a.n).length !== 1) errs.push(`the cards ${a.cards.join(',')} don't hold ${a.n} once`)
+  } else if (isClockSpec(a)) {
+    want(digital(a.time))
+    if (a.cards.filter((c) => sameTime(c, a.time)).length !== 1) errs.push('the right time is not on exactly one card')
+  } else if (isGraphSpec(a)) {
+    const n = graphAnswer(a)
+    want(asksRow(a) ? a.rows[n] : n)
+    if (!asksRow(a) && a.cards?.filter((c) => c === n).length !== 1) errs.push(`the cards ${a.cards?.join(',')} don't hold ${n} once`)
+  } else if (a) errs.push(`unknown 1st-grade activity ${a.kind}`)
+  else {
+    const cards = p.pictureOptions ?? []
+    if (cards.length !== p.options.length || cards.some((c, i) => c.value !== p.options[i])) errs.push("picture cards don't match the options")
+    for (const c of [p.picture, ...cards.map((x) => x.picture)]) if (c?.kind === 'art' && !DRAWINGS[c.name]) errs.push(`no drawing "${c.name}"`)
+  }
+  return errs
+}
+
+// ── 1st grade (phase 2b): the answer, worked out from the sentence or the story's numbers ──
+
+function g1Cards(p: ListenProblem): string[] {
+  const errs: string[] = []
+  const cards = p.pictureOptions ?? []
+  if (cards.length !== 3 || cards.some((c, i) => c.value !== p.options[i] || c.picture.kind !== 'numeral')) errs.push('three numeral cards, one per option')
+  if (p.options.filter((o) => o === p.answer).length !== 1) errs.push('the answer is not exactly one card')
+  for (const o of p.options) if (!(Number.isInteger(o) && (o as number) >= 1 && (o as number) <= 20)) errs.push(`card ${o} is not 1–20`)
+  return errs
+}
+
+function g1SentenceProblems(p: ListenProblem): string[] {
+  const s = p.activity
+  if (!isNumberSentenceSpec(s)) return [`not a number sentence: ${JSON.stringify(s)}`]
+  const errs = g1Cards(p)
+  const solved = solveSentence(s.sentence)
+  if (solved !== p.answer) errs.push(`"${s.sentence.join(' ')}" makes ${solved}, the answer is ${p.answer}`)
+  if (!/^(What|\w+ (plus|minus) what)/.test(p.prompt)) errs.push(`the question isn't asked first: "${p.prompt}"`)
+  return errs
+}
+
+function g1StoryProblems(p: ListenProblem): string[] {
+  const s = p.activity
+  if (!isMathStorySpec(s)) return [`not a story: ${JSON.stringify(s)}`]
+  const errs = g1Cards(p)
+  if (mathStoryAnswer(s) !== p.answer) errs.push(`the scene shows ${mathStoryAnswer(s)}, the answer is ${p.answer}`)
+  const tokens = (s.sentence ?? []) as SentenceToken[]
+  if (!sentenceHolds(tokens, 0)) errs.push(`the written sentence "${tokens.join(' ')}" isn't true`)
+  if (tokens[s.sentenceAnswerAt ?? -1] !== p.answer) errs.push(`the sentence "${tokens.join(' ')}" doesn't hold the answer ${p.answer}`)
+  if (!s.act) errs.push('a story with nothing to act out')
+  return errs
+}
+
+// ── K–1 story math (Add-and-Take Falls, Story Woods): the answer, worked out from what is SAID ──
+
+function mathStoryProblems(config: Extract<ProviderConfig, { kind: 'kAddTake' | 'kStoryMath' }>, p: ListenProblem): string[] {
+  const s = p.activity
+  if (!isMathStorySpec(s)) return [`not a mathStory question: ${JSON.stringify(s)}`]
+  const errs: string[] = []
+  const want = (n: number) => {
+    if (p.answer !== n) errs.push(`answer is ${JSON.stringify(p.answer)}, the story says ${n}`)
+  }
+  const cards = p.pictureOptions ?? []
+  if (cards.length !== 3 || cards.some((c, i) => c.value !== p.options[i] || c.picture.kind !== 'numeral')) errs.push('three numeral cards, one per option')
+  if (p.options.filter((o) => o === p.answer).length !== 1) errs.push('the answer is not exactly one card')
+  for (const o of p.options) if (!(Number.isInteger(o) && (o as number) >= 1 && (o as number) <= 10)) errs.push(`card ${o} is not 1–10`)
+  const word = (x: string | undefined) => (x === undefined ? NaN : /^one$/i.test(x) ? 1 : Number(x))
+  if (config.kind === 'kAddTake') {
+    const a = word(/^Here (?:are (\d+)|is (one)) \w+\./.exec(p.prompt)?.slice(1).find(Boolean))
+    if (Number.isNaN(a)) return [...errs, `no start in "${p.prompt}"`]
+    if (/How many more make ten\?$/.test(p.prompt)) {
+      if (config.mode !== 'make10') errs.push(`make ten in ${config.mode}`)
+      want(10 - a)
+    } else {
+      const join = /(\d+|One) more \w+ in\./.exec(p.prompt)
+      const leave = /(\d+|One) \w+ away\./.exec(p.prompt)
+      const b = word((join ?? leave)?.[1])
+      if (Number.isNaN(b)) return [...errs, `no change in "${p.prompt}"`]
+      if (join && !/How many now\?$/.test(p.prompt)) errs.push('joining, but not asked how many now')
+      if (leave && !/How many are left\?$/.test(p.prompt)) errs.push('leaving, but not asked how many are left')
+      want(join ? a + b : a - b)
+      const top = join ? a + b : a
+      if (top > (config.mode === 'within5' ? 5 : 10)) errs.push(`${top} is past the stage's ${config.mode}`)
+    }
+    if (s.a !== a) errs.push(`the scene starts with ${s.a}, the voice says ${a}`)
+  } else {
+    const [a, b] = (p.prompt.match(/\d+/g) ?? []).map(Number)
+    if (s.a !== a || s.b !== b) errs.push(`the scene shows ${s.a} and ${s.b}, the story says ${a} and ${b}`)
+    if (!(config.plots as readonly string[] | undefined)?.includes(s.plot)) errs.push(`a ${s.plot} story in a stage of ${config.plots}`)
+    want(s.plot === 'join' || s.plot === 'together' ? a + b : a - b)
+    if ((s.plot === 'compare') !== /How many more /.test(p.prompt)) errs.push(`"how many more" for a ${s.plot} story`)
+    if (!s.act) errs.push('a Story Woods story with nothing to act out')
+  }
+  return errs
+}
+
+// ── K–1 number activities (Number Dunes, Ten Frame Plateau) ──────────────────
+
+function numberActivityProblems(kind: 'kCompare' | 'kTeens', p: ListenProblem): string[] {
+  const a = p.activity
+  if (!isNumberSpec(a)) return [`not a number activity: ${JSON.stringify(a)}`]
+  const s: NumberActivitySpec = a
+  const errs: string[] = []
+  if (p.answer !== answerOf(s)) errs.push(`answer ${JSON.stringify(p.answer)}, the activity says ${JSON.stringify(answerOf(s))}`)
+  const whole = (n: number, lo: number, hi: number, what: string) => {
+    if (!(Number.isInteger(n) && n >= lo && n <= hi)) errs.push(`${what} ${n} outside [${lo}, ${hi}]`)
+  }
+  const fairCards = (cards: readonly number[], lo: number, hi: number) => {
+    if (cards.length < 2 || cards.length > 3) errs.push(`${cards.length} cards`)
+    if (new Set(cards).size !== cards.length) errs.push(`duplicate cards ${JSON.stringify(cards)}`)
+    if (cards.filter((c) => c === p.answer).length !== 1) errs.push(`answer ${p.answer} is not on exactly one card ${JSON.stringify(cards)}`)
+    cards.forEach((c) => whole(c, lo, hi, 'card'))
+  }
+  if (kind === 'kCompare') {
+    // within 10 (K.CC.6–7)
+    switch (s.kind) {
+      case 'matchRows':
+        if (!K_PAIRS.some((x) => x.id === s.pair)) errs.push(`no pair ${s.pair}`)
+        whole(s.top, 1, 10, 'top row')
+        whole(s.bottom, 1, 10, 'bottom row')
+        break
+      case 'compareNumbers':
+        fairCards(s.cards, 1, 10)
+        if (s.ask === 'more' || s.ask === 'less') {
+          if (s.a === s.b) errs.push('the same number twice')
+          if (JSON.stringify(s.cards) !== JSON.stringify([s.a, s.b])) errs.push('the cards are not in the order said')
+        } else {
+          whole(s.a, s.ask === 'oneMore' ? 1 : 2, s.ask === 'oneMore' ? 9 : 10, 'dots')
+          if (!s.cards.includes(s.a) && !s.cards.includes(s.a + (s.ask === 'oneMore' ? 2 : -2))) errs.push('no near miss among the cards')
+        }
+        break
+      case 'numberOrder': {
+        const n = s.numbers
+        if (n.length < 3 || n.length > 5) errs.push(`${n.length} numbers to order`)
+        n.forEach((v, i) => {
+          whole(v, 1, 10, 'number')
+          if (i && v !== n[i - 1] + 1) errs.push(`not counting order ${JSON.stringify(n)}`)
+        })
+        if ([...s.mixed].sort().join() !== n.map((_, i) => i).join() || s.mixed.every((x, i) => x === i)) errs.push(`mixed ${JSON.stringify(s.mixed)} isn't a real mix-up`)
+        break
+      }
+      default:
+        errs.push(`Number Dunes asks a ${s.kind}`)
+    }
+  } else {
+    // teen numbers to 20 (K.NBT.1, K.CC.2)
+    switch (s.kind) {
+      case 'teenFrames':
+        whole(s.n, 11, 20, 'the number')
+        fairCards(s.cards, 1, 20)
+        break
+      case 'buildTeen':
+        whole(s.n, 11, 20, 'the number to make')
+        break
+      default:
+        errs.push(`Ten Frame Plateau asks a ${s.kind}`)
+    }
+  }
+  return errs
+}
+
+// ── K–1 Nature Summit: the answer, worked out from what is shown and said ────
+
+function kScienceProblems(p: ListenProblem): string[] {
+  const errs: string[] = []
+  const cards = p.pictureOptions ?? []
+  if (cards.length !== p.options.length || cards.some((c, i) => c.value !== p.options[i])) return ['picture cards don\'t match the options']
+  for (const pic of [p.picture, ...cards.map((c) => c.picture)]) if (pic?.kind === 'art' && !DRAWINGS[pic.name]) errs.push(`no drawing "${pic.name}"`)
+  const vals = p.options.map(String)
+  const animal = /^The (\w+) /.exec(p.prompt)?.[1] ?? ''
+  const right: Record<string, (v: string) => boolean> = {
+    whichWeather: (v) => p.prompt === `Tap the ${v} day.`,
+    wear: (v) => p.picture?.kind === 'art' && K_GEAR[v as KGear] === p.picture.name,
+    plant: (v) => v === 'sun' || v === 'water',
+    food: (v) => K_FOOD[animal as keyof typeof K_FOOD]?.name === v,
+    drink: (v) => v === 'water',
+    home: (v) => K_HOME_OF[animal as keyof typeof K_HOME_OF]?.home === v,
+    pushOrPull: (v) => p.picture?.kind === 'art' && K_ACTIONS[p.picture.name as KAction] === v,
+    tapAction: (v) => K_ACTIONS[v as KAction] === (p.prompt === 'Tap the push!' ? 'push' : 'pull'),
+    strength: (v) => v === (p.prompt.includes('far') ? 'bigPush' : 'littlePush'),
+  }
+  const ok = right[p.subtopic ?? '']
+  if (!ok) return [`unknown science question ${p.subtopic}`]
+  const hits = vals.filter(ok)
+  if (hits.length !== 1) errs.push(`${hits.length} cards answer "${p.prompt}"`)
+  else if (hits[0] !== p.answer) errs.push(`answer is ${JSON.stringify(p.answer)}, the pictures say ${hits[0]}`)
   return errs
 }
 
@@ -443,6 +713,28 @@ function activityProblems(p: ListenProblem): string[] {
     if (STORY_PICTURES[a.story]?.join('') !== a.pictures.join('')) errs.push(`story ${a.story} shows the wrong pictures`)
     if ([...a.mixed].sort().join('') !== '012' || a.mixed.join('') === '012') errs.push(`mixed ${JSON.stringify(a.mixed)} isn't a real mix-up`)
     if (p.answer !== a.pictures.join('')) errs.push('answer isn\'t the story order')
+    return errs
+  }
+  if (isMeasureSpec(a)) {
+    const errs: string[] = []
+    if (a.attr === 'weight') {
+      if (a.items?.length !== 2) errs.push('a scale needs two things')
+    } else {
+      const [x, y] = a.sizes ?? [0, 0]
+      if (Math.abs(x - y) < 2) errs.push(`sizes ${x} and ${y} are too close to see`)
+      const longer = x > y ? 0 : 1
+      if (a.answer !== (a.ask === 'more' ? longer : 1 - longer)) errs.push(`the answer isn't the ${a.ask === 'more' ? 'longer' : 'shorter'} one`)
+    }
+    if (p.answer !== (a.answer === 0 ? 'first' : 'second')) errs.push(`answer ${JSON.stringify(p.answer)} isn't thing ${a.answer}`)
+    return errs
+  }
+  if (isSortSpec(a)) {
+    const errs: string[] = []
+    const counts = boxCounts(a)
+    if (counts.some((n) => n < 1)) errs.push(`an empty box: ${counts.join('-')}`)
+    if (a.countCards.filter((n) => n === counts[a.countBox]).length !== 1) errs.push(`the count cards ${a.countCards.join(',')} don't hold ${counts[a.countBox]} once`)
+    if (a.more && mostBox(a) === null) errs.push(`"which group has more?" with a tie: ${counts.join('-')}`)
+    if (p.answer !== counts.join('-')) errs.push(`answer ${JSON.stringify(p.answer)} isn't the counts ${counts.join('-')}`)
     return errs
   }
   return [`unknown activity ${JSON.stringify(a)}`]
@@ -628,7 +920,7 @@ async function fuzz(c: Case): Promise<string[]> {
   for (let i = 0; i < DRAWS && failures.length < 12; i++) {
     const p = c.draw ? await c.draw(provider, i) : await nextProblem(provider)
     // (a question answered by an activity has no options to choose from)
-    const mc = c.config.kind !== 'writingPrompt' && !(p as ListenProblem).activity
+    const mc = c.config.kind !== 'writingPrompt' && c.config.kind !== 'g5Writing' && !(p as ListenProblem).activity
     const errs = [...genericProblems(p, mc), ...answerProblems(c.config, c.grade, p)]
     for (const e of errs) failures.push(`${e}\n    ↳ ${p.prompt} | ${JSON.stringify(p.options)} → ${JSON.stringify(p.answer)}`)
   }
@@ -704,3 +996,42 @@ describe('bar-graph solver', () => {
     expect(checked).toBeGreaterThanOrEqual(CHARTS.length)
   })
 })
+
+// ── 1st grade (phase 2b): Word Reef, Writing Workshop, Counting Towers ───────
+
+/** The answer, worked out from what is printed or built: the word read, the letter in the gap, the tiles in order. */
+function g1LiteracyProblems(p: ListenProblem): string[] {
+  const errs: string[] = []
+  const a = p.activity as (ReadAlongSpec | TilesSpec | undefined)
+  if (!a) {
+    const cards = p.pictureOptions ?? []
+    if (cards.length !== p.options.length || cards.some((c, i) => c.value !== p.options[i])) errs.push("picture cards don't match the options")
+    return errs
+  }
+  if (isTraceSpec(a)) return activityProblems(p)
+  if (a.kind === 'readAlong') {
+    if (a.cards.map((c) => c.value).join('|') !== p.options.join('|')) errs.push("the activity's cards aren't the options")
+    if (a.cards.filter((c) => c.value === p.answer).length !== 1) errs.push('the answer is not exactly one card')
+    if (a.layout === 'word' && a.units.join('') !== p.answer) errs.push(`printed ${a.units.join('')}, answer ${String(p.answer)}`)
+    if (a.layout === 'gap' && a.units[a.gap ?? -1] !== p.answer) errs.push(`the gap holds ${a.units[a.gap ?? -1]}, answer ${String(p.answer)}`)
+    if (a.layout === 'sentence' && !a.units.some((u) => u.toLowerCase().replace(/[^a-z]/g, '') === p.answer)) errs.push(`the sentence never says ${String(p.answer)}`)
+    return errs
+  }
+  if (a.kind === 'tiles') {
+    const built = a.mode === 'letters' ? a.units.join('') : `${a.units.slice(0, -1).join(' ')}.`
+    if (built !== p.answer) errs.push(`built ${built}, answer ${String(p.answer)}`)
+    for (const u of a.units) if (!a.tiles.includes(u)) errs.push(`no tile for ${u}`)
+    return errs
+  }
+  return [`unknown activity ${JSON.stringify(a)}`]
+}
+
+/** The number sentence on the card, worked out: the answer, and numeral cards 0–20. */
+function g1TowersProblems(p: ListenProblem): string[] {
+  const m = /^(\d+) ([+−]) (\d+)$/.exec(p.picture?.kind === 'word' ? p.picture.text : '')
+  if (!m) return [`no number sentence: ${JSON.stringify(p.picture)}`]
+  const want = m[2] === '+' ? Number(m[1]) + Number(m[3]) : Number(m[1]) - Number(m[3])
+  const errs = p.answer === want ? [] : [`answer ${String(p.answer)}, the sentence says ${want}`]
+  for (const o of p.options) if (typeof o !== 'number' || o < 0 || o > 20) errs.push(`card ${String(o)} outside 0–20`)
+  return errs
+}

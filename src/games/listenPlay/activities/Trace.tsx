@@ -3,9 +3,9 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import type { PointerEvent as ReactPointerEvent } from 'react'
 import { getGuideSnapshot, guide, type GuideStep } from '../../../guide/store'
 import { sfx } from '../../../lib/sound'
-import { checkTrace, tolerancesFor, type TraceMiss } from '../../../lib/trace/check'
+import { checkDot, checkTrace, tolerancesFor, type TraceMiss } from '../../../lib/trace/check'
 import { dist, pointAlong, polylinePath, type Pt } from '../../../lib/trace/geometry'
-import { BASE, DOT_R, MID, TOP, glyph as glyphOf, strokeArrows, type Glyph, type Stroke } from '../../../lib/trace/glyphs'
+import { BASE, DOT_R, MID, TOP, glyph as glyphOf, isDotStroke, strokeArrows, strokeLine, type Glyph, type Ruling, type Stroke } from '../../../lib/trace/glyphs'
 import type { TraceSpec } from '../../../lib/trace/spec'
 import { shade } from '../../../tutoring/motion/layout'
 import { DEEP, M } from '../../../tutoring/motion/palette'
@@ -57,7 +57,7 @@ const progress = new WeakMap<object, { stroke: number; begun: boolean }>()
  */
 const fingerAt = (p: Pt) => `translate(${p.x.toFixed(2)} ${p.y.toFixed(2)}) rotate(155) scale(0.16)`
 
-const phraseOf = (s: Stroke): VoiceRef => ({ line: `k-trace/say-${s.say}` })
+const phraseOf = (s: Stroke): VoiceRef => ({ line: strokeLine(s.say) })
 const HINT: Record<TraceMiss, { voice: VoiceRef; target: string }> = {
   start: { voice: { line: 'k-trace/hintStart' }, target: 'trace-start' },
   wander: { voice: { line: 'k-trace/hintArrow' }, target: 'trace-arrow' },
@@ -222,9 +222,11 @@ function TraceActivity({ problem, spec, active, onAttempt, registerHelp }: Liste
 
   function finishStroke(pts: Pt[]) {
     if (!active || done) return
+    // (1st grade's i and j: a dot is a tap)
+    const dot = isDotStroke(cur)
     // a tap, or a touch that barely moved: nothing to judge
-    if (lengthOf(pts) < 4) return
-    const res = checkTrace(cur.sampled, pts, tolerancesFor(unitPx()))
+    if (!dot && lengthOf(pts) < 4) return
+    const res = dot ? checkDot(cur.sampled, pts, tolerancesFor(unitPx())) : checkTrace(cur.sampled, pts, tolerancesFor(unitPx()))
     if (res.ok) {
       wrong.current = 0
       sfx.pop()
@@ -360,7 +362,7 @@ function TraceActivity({ problem, spec, active, onAttempt, registerHelp }: Liste
           onPointerCancel={onPointerCancel}
           onLostPointerCapture={onPointerCancel}
         >
-          {g.lines && <WritingLines />}
+          {g.lines && <WritingLines ruling={g.ruling} />}
           <GuidePaths g={g} current={done ? -1 : stroke} color={color} />
           <g className="trace-ink-done">
             {inks.map((pts, i) => (
@@ -433,26 +435,30 @@ function TraceActivity({ problem, spec, active, onAttempt, registerHelp }: Liste
   )
 }
 
-/** Handwriting paper: the top line, the dashed middle line, the base line. */
-function WritingLines() {
+/** Handwriting paper: the top line, the dashed middle line, the base line (lowercase: and the line its tails reach). */
+function WritingLines({ ruling }: { ruling?: Ruling }) {
+  const { top, mid, base, desc } = ruling ?? { top: TOP, mid: MID, base: BASE }
   return (
     <g pointerEvents="none">
-      <line x1={-3} x2={103} y1={TOP} y2={TOP} stroke="#a9cdea" strokeWidth={0.9} />
-      <line x1={-3} x2={103} y1={MID} y2={MID} stroke="#a9cdea" strokeWidth={0.9} strokeDasharray="3.2 2.6" />
-      <line x1={-3} x2={103} y1={BASE} y2={BASE} stroke="#7fb0da" strokeWidth={1.2} />
+      <line x1={-3} x2={103} y1={top} y2={top} stroke="#a9cdea" strokeWidth={0.9} />
+      <line x1={-3} x2={103} y1={mid} y2={mid} stroke="#a9cdea" strokeWidth={0.9} strokeDasharray="3.2 2.6" />
+      <line x1={-3} x2={103} y1={base} y2={base} stroke="#7fb0da" strokeWidth={1.2} />
+      {desc !== undefined && <line x1={-3} x2={103} y1={desc} y2={desc} stroke="#a9cdea" strokeWidth={0.9} />}
     </g>
   )
 }
 
 /** The glyph to trace: every stroke thick and light (the current one brighter, edged in the crayon), a dotted middle. */
 function GuidePaths({ g, current, color }: { g: Glyph; current: number; color: string }) {
+  // (lowercase letters are smaller on their lines: a slimmer path keeps their holes open)
+  const [outer, inner] = g.kind === 'lower' ? [12.5, 9.6] : [16, 12.6]
   return (
     <g pointerEvents="none" strokeLinecap="round" strokeLinejoin="round" fill="none">
       {g.strokes.map((s, i) => (
-        <path key={`o${i}`} d={s.path} stroke={i === current ? color : '#dccbb0'} strokeOpacity={i === current ? 0.45 : 1} strokeWidth={16} />
+        <path key={`o${i}`} d={s.path} stroke={i === current ? color : '#dccbb0'} strokeOpacity={i === current ? 0.45 : 1} strokeWidth={outer} />
       ))}
       {g.strokes.map((s, i) => (
-        <path key={`i${i}`} d={s.path} stroke={i === current ? '#ffffff' : '#f5ecdd'} strokeWidth={12.6} />
+        <path key={`i${i}`} d={s.path} stroke={i === current ? '#ffffff' : '#f5ecdd'} strokeWidth={inner} />
       ))}
       {g.strokes.map((s, i) => (
         <path key={`c${i}`} d={s.path} stroke="#c9b28d" strokeWidth={1.3} strokeDasharray="0.01 3.4" opacity={i === current ? 0.9 : 0.6} />

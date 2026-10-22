@@ -10,6 +10,7 @@ import type { VoiceRef } from '../../../voice/types'
 import { phraseIndex } from '../../../tutoring/motion/cues'
 import { SKILLS } from '../../../tutoring/skills'
 import { K_SHAPES } from '../../../voice/packs/k-shapes'
+import { DRAWINGS } from '../../../games/listenPlay/drawings'
 
 /**
  * The kindergarten (Listen & Play) contract, for every K–1 stage config in
@@ -26,6 +27,13 @@ function kConfigs(): { label: string; config: ProviderConfig }[] {
     for (const stage of zoneStages(zone, 0)) {
       const c = stage.providerConfig
       if (c.kind === 'kCounting' || c.kind === 'kShapes' || c.kind === 'kLetters') seen.set(JSON.stringify(c), { label: stage.id, config: c })
+      // (phase 2a: Nature Summit and Counting Towers)
+      if (c.kind === 'kScience' || c.kind === 'kTowers') seen.set(JSON.stringify(c), { label: stage.id, config: c })
+    }
+    // (1st grade, phase 2b: Sky Summit's picture cards keep the same contract)
+    for (const stage of zoneStages(zone, 1)) {
+      const c = stage.providerConfig
+      if (c.kind === 'g1Science') seen.set(JSON.stringify(c), { label: stage.id, config: c })
     }
   }
   const extra: ProviderConfig[] = [
@@ -76,6 +84,8 @@ function pictureProblems(pic: Picture): string[] {
     }
     case 'letter':
       return /^(?:[A-Za-z]|[A-Z][a-z])$/.test(pic.ch) ? [] : [`letter ${pic.ch}`]
+    case 'art':
+      return DRAWINGS[pic.name] ? [] : [`no drawing "${pic.name}"`]
     case 'emoji':
       // one picture, no ZWJ sequence or flag (they draw as several on older tablets)
       return pic.emoji && !/‍/.test(pic.emoji) && !/[\u{1F1E6}-\u{1F1FF}]/u.test(pic.emoji) && [...pic.emoji.replace(/️/g, '')].length === 1 ? [] : [`emoji ${pic.emoji}`]
@@ -154,8 +164,8 @@ describe.each(kConfigs())('Listen & Play content: $label', ({ config, label }) =
     }
     // never in the same place three times running (yes / no keeps 👍 first: the answer moves with it)
     for (let i = 2; i < at.length; i++) expect(at[i] === at[i - 1] && at[i] === at[i - 2], `positions ${at.slice(i - 2, i + 1)}`).toBe(false)
-    // and every place gets used
+    // and every place gets used (among the questions that have it: a stage can mix two- and three-card questions)
     const places = Math.max(...qs.map((q) => q.options.length))
-    for (let k = 0; k < places; k++) expect(at.filter((x) => x === k).length, `answer at card ${k}`).toBeGreaterThan(qs.length * 0.15)
+    for (let k = 0; k < places; k++) expect(at.filter((x) => x === k).length, `answer at card ${k}`).toBeGreaterThan(qs.filter((q) => q.options.length > k).length * 0.15)
   })
 })

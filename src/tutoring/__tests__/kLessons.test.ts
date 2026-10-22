@@ -14,6 +14,11 @@ const CONTRACT = {
   kRhymes: { zoneId: 'reading-reef', practiceStageId: 'k-rhyme-1' },
   // K literacy (phase 1b)
   kTracing: { zoneId: 'writing-workshop', practiceStageId: 'k-trace-1' },
+  // K complete (phase 2a)
+  kAddTake: { zoneId: 'fraction-falls', practiceStageId: 'k-addsub-1' },
+  kStoryMath: { zoneId: 'word-problem-woods', practiceStageId: 'k-woods-1' },
+  kScience: { zoneId: 'science-summit', practiceStageId: 'k-science-1' },
+  kTowers: { zoneId: 'tower-battlefront', practiceStageId: 'k-towers-1' },
 }
 
 const checks = k1Lessons.flatMap((l) => l.steps.filter((s) => s.check).map((s) => ({ lesson: l, step: s, check: s.check! })))
@@ -161,5 +166,43 @@ describe('kRhymes (phase-1b contract: rhymes and word parts)', () => {
     expect(claps.answer).toBe(3)
     expect(claps.pictures!.every((p) => p.picture.kind === 'numeral')).toBe(true)
     expect(claps.countAlong).toBe(3)
+  })
+})
+
+describe('kAddTake and kStoryMath (phase-2a contract: Add-and-Take Falls, Story Woods)', () => {
+  const lesson = (id: string) => k1Lessons.find((l) => l.id === id)!
+  const own = (id: string) => checks.filter((c) => c.lesson.id === id).map((c) => c.check)
+
+  it('are K lessons of about four steps for their zones, practised in each zone’s first stage', () => {
+    expect(lesson('kAddTake')).toMatchObject({ band: 'k1', zoneId: 'fraction-falls', practiceStageId: 'k-addsub-1', skillIds: ['k-add-take', 'k-make-ten'] })
+    expect(lesson('kStoryMath')).toMatchObject({ band: 'k1', zoneId: 'word-problem-woods', practiceStageId: 'k-woods-1', skillIds: ['k-story-problems', 'k-story-more'] })
+    for (const id of ['kAddTake', 'kStoryMath']) expect(lesson(id).steps).toHaveLength(4)
+  })
+
+  it('kAddTake: things come (more), things go (fewer), and a ten-frame shows how many more make ten', () => {
+    const told = lesson('kAddTake').steps.map((s) => s.narration).join(' ')
+    expect(told).toMatch(/hop on/i)
+    expect(told).toMatch(/swim away/i)
+    expect(told).toMatch(/ten frame/i)
+    expect(told).toMatch(/more make ten/i)
+    const [left, ten] = own('kAddTake')
+    expect(left.question).toBe('How many ducks are left? Tap the number.')
+    expect([left.answer, left.countAlong]).toEqual([3, 3])
+    expect(ten.question).toBe('How many more make ten? Tap the number.')
+    expect([ten.answer, ten.countAlong]).toEqual([4, 4])
+    for (const c of [left, ten]) expect(c.pictures!.every((p) => p.picture.kind === 'numeral')).toBe(true)
+  })
+
+  it('kStoryMath: listen to a story, act it out, count; a take-from check and a put-together check', () => {
+    const told = lesson('kStoryMath').steps.map((s) => s.narration).join(' ')
+    expect(told).toMatch(/story/i)
+    expect(told).toMatch(/act it out/i)
+    expect(told).toMatch(/together/i)
+    const [birds, fruit] = own('kStoryMath')
+    expect(birds.question).toMatch(/still in the tree\? Tap the number\.$/)
+    expect([birds.answer, birds.countAlong]).toEqual([4, 4])
+    expect(fruit.question).toMatch(/in the basket\? Tap the number\.$/)
+    expect([fruit.answer, fruit.countAlong]).toEqual([5, 5])
+    for (const c of [birds, fruit]) expect(c.pictures!.every((p) => p.picture.kind === 'numeral')).toBe(true)
   })
 })

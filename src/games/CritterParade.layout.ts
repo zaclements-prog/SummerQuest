@@ -44,7 +44,7 @@ export const GRUMP_SCALE = 1.05
 
 /** March speed (world units / s) by band: decisions ≥ ~5 s apart for grades 2–3. */
 export function marchSpeed(opSet: OpSetId): number {
-  if (opSet === 'addSub') return 4.6
+  if (opSet === 'addSub' || opSet === 'add20' || opSet === 'sub20') return 4.6
   if (opSet === 'mulAdd' || opSet === 'divSub') return 5.4
   return 6.2
 }
