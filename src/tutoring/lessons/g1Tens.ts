@@ -1,6 +1,7 @@
 import type { Lesson } from '../types'
 import type { PictureOption } from '../../lib/problem'
 import { sayCard } from '../../games/listenPlay/activities/tensSpecs'
+import { signArtName } from '../../games/listenPlay/activities/baseTen'
 
 /** Numeral cards up to 120, named as they are tapped ("fifty-two!"), from Tens Plateau's own clips. */
 const numeralCards = (ns: number[]): PictureOption[] => ns.map((n) => ({ value: n, picture: { kind: 'numeral', n }, speech: sayCard(n) }))
@@ -56,7 +57,7 @@ export const g1TensLesson: Lesson = {
         options: ['<', '>', '='],
         answer: '>',
         explain: 'Fifty-three is greater than thirty-five.',
-        pictures: (['<', '>', '='] as const).map((s) => ({ value: s, picture: { kind: 'word', text: s }, speech: sayCard(s) })),
+        pictures: (['<', '>', '='] as const).map((s) => ({ value: s, picture: { kind: 'art', name: signArtName(s) }, speech: sayCard(s) })),
       },
     },
   ],
