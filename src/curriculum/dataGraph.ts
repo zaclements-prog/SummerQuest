@@ -118,5 +118,40 @@ export const dataGraphZone: Zone = {
         starsToEarn: 3,
       },
     ],
+    // 5th grade (phase 3; 5.MD.2, 5.OA.3): line plots of measurements in halves,
+    // fourths and eighths (read, total, share equally) → two number patterns as
+    // ordered pairs on the coordinate plane → the boss mixes both.
+    g5: [
+      {
+        id: 'g5-data-1',
+        kind: 'concept',
+        title: 'Line Plot Lab',
+        description: 'Read line plots in halves, fourths and eighths, then total and share.',
+        gameId: 'conceptPlay',
+        providerConfig: { kind: 'g5Data', mode: 'linePlot' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g5-data-2',
+        kind: 'practice',
+        title: 'Pattern Plotter',
+        description: 'Turn two number patterns into ordered pairs and graph them.',
+        gameId: 'conceptPlay',
+        providerConfig: { kind: 'g5Data', mode: 'patterns' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g5-data-3',
+        kind: 'mastery',
+        title: 'The Data Dragon',
+        description: 'Line plots and patterns to defeat the Data Dragon!',
+        gameId: 'bossBattle',
+        providerConfig: { kind: 'g5Data', mode: 'mixed' },
+        params: { questionCount: 8, bossEmoji: '🐉', bossName: 'The Data Dragon' },
+        starsToEarn: 3,
+      },
+    ],
   },
 }

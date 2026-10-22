@@ -64,6 +64,10 @@ import { makeG5SpheresProvider } from './g5Spheres'
 import { makeG5FractionsProvider, type G5FractionsConfig } from './g5Fractions'
 import { makeG5DecimalsProvider, type G5DecimalsConfig } from './g5Decimals'
 import { makeG5GatesProvider } from './g5Gates'
+// 5th grade (phase 3): Measurement Marsh, Geometry Grove, Data Delta
+import { makeG5MeasureProvider, type G5MeasureConfig } from './g5Measure'
+import { makeG5GeometryProvider, type G5GeometryConfig } from './g5Geometry'
+import { makeG5DataProvider, type G5DataConfig } from './g5Data'
 
 export type ProviderConfig =
   | { kind: 'multiplication'; factorMin: number; factorMax: number }
@@ -153,6 +157,13 @@ export type ProviderConfig =
   | ({ kind: 'g5Decimals' } & G5DecimalsConfig)
   /** Tower Battlefront (5th grade): the fraction and decimal questions that buy a tower. */
   | { kind: 'g5Gates' }
+  // ── 5th grade (phase 3): Measurement Marsh, Geometry Grove, Data Delta ──
+  /** Volume of prisms and composed figures; converting units within a system. */
+  | ({ kind: 'g5Measure' } & G5MeasureConfig)
+  /** The coordinate plane (first quadrant); classifying two-dimensional figures. */
+  | ({ kind: 'g5Geometry' } & G5GeometryConfig)
+  /** Line plots in fractions of a unit; graphing two number patterns. */
+  | ({ kind: 'g5Data' } & G5DataConfig)
 
 export function createProvider(config: ProviderConfig): ProblemProvider {
   switch (config.kind) {
@@ -258,5 +269,12 @@ export function createProvider(config: ProviderConfig): ProblemProvider {
       return makeG5DecimalsProvider(config)
     case 'g5Gates':
       return makeG5GatesProvider()
+    // 5th grade (phase 3): Measurement Marsh, Geometry Grove, Data Delta
+    case 'g5Measure':
+      return makeG5MeasureProvider(config)
+    case 'g5Geometry':
+      return makeG5GeometryProvider(config)
+    case 'g5Data':
+      return makeG5DataProvider(config)
   }
 }

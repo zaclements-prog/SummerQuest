@@ -260,6 +260,10 @@ const G5_IDS: Record<string, string[]> = {
   'fraction-falls': ['g5-frac-1', 'g5-frac-2', 'g5-frac-3'],
   'place-value-plateau': ['g5-dec-1', 'g5-dec-2', 'g5-dec-3'],
   'tower-battlefront': ['g5-td-1'],
+  // Measurement Marsh, Geometry Grove, Data Delta (phase 3)
+  'measurement-marsh': ['g5-measure-1', 'g5-measure-2', 'g5-measure-3'],
+  'geometry-grove': ['g5-geo-1', 'g5-geo-2', 'g5-geo-3'],
+  'data-delta': ['g5-data-1', 'g5-data-2', 'g5-data-3'],
 }
 
 /**
@@ -942,5 +946,50 @@ describe('Grade 5 (phase-3 contract): Reading Reef, Writing Workshop, Science Su
     const cycle = zoneStages(getZone('science-summit')!, 5)[1]
     expect(cycle.providerConfig).toEqual({ kind: 'g5Spheres' })
     expect(cycle.params).toMatchObject({ mode: 'spheres' })
+  })
+})
+
+describe('Grade 5 (phase-3 contract): Measurement Marsh, Geometry Grove, Data Delta', () => {
+  const zones = ['measurement-marsh', 'geometry-grove', 'data-delta']
+
+  it('5th grade plays its own sets, in unlock order: concept, practice, then a boss; every other grade keeps its own', () => {
+    for (const id of zones) {
+      const zone = getZone(id)!
+      const set = zoneStages(zone, 5)
+      expect(set.map((s) => s.id)).toEqual(G5_IDS[id])
+      expect(set.map((s) => s.kind)).toEqual(['concept', 'practice', 'mastery'])
+      expect(set[2].gameId).toBe('bossBattle')
+      const stars = (xs: string[]) => ({ stages: Object.fromEntries(xs.map((x) => [x, { stars: 1 }])) })
+      set.forEach((s, i) => expect(isStageUnlocked(zone, s.id, stars(G5_IDS[id].slice(0, i)), 5), s.id).toBe(true))
+      expect(isStageUnlocked(zone, G5_IDS[id][2], stars([G5_IDS[id][0]]), 5)).toBe(false)
+      // a 5th-grade stage is no stage at any other grade, and 2nd–4th grade still play today's
+      for (const g of [0, 1, 2, 3, 4] as const) for (const s of set) expect(getStage(id, s.id, g), `${s.id} at grade ${g}`).toBeUndefined()
+      for (const g of [2, 3, 4] as const) expect(zoneStages(zone, g)).toBe(zone.stages)
+      // the zone keeps its name
+      expect(zoneTitle(zone, 5)).toBe(zone.title)
+    }
+  })
+
+  it('every stage is a 2nd–4th grade game with 3 stars, fed by 5th grade’s own provider kinds (no grade tier rewrites them)', () => {
+    const all = zones.flatMap((z) => zoneStages(getZone(z)!, 5))
+    expect(all.map((s) => s.gameId)).toEqual(['conceptPlay', 'speedRun', 'bossBattle', 'conceptPlay', 'conceptPlay', 'bossBattle', 'conceptPlay', 'conceptPlay', 'bossBattle'])
+    expect(all.map((s) => s.providerConfig)).toEqual([
+      { kind: 'g5Measure', mode: 'volume' },
+      { kind: 'g5Measure', mode: 'convert' },
+      { kind: 'g5Measure', mode: 'mixed' },
+      { kind: 'g5Geometry', mode: 'coordinates' },
+      { kind: 'g5Geometry', mode: 'classify' },
+      { kind: 'g5Geometry', mode: 'mixed' },
+      { kind: 'g5Data', mode: 'linePlot' },
+      { kind: 'g5Data', mode: 'patterns' },
+      { kind: 'g5Data', mode: 'mixed' },
+    ])
+    for (const s of all) {
+      expect(s.starsToEarn, s.id).toBe(3)
+      expect(s.title.length, s.id).toBeLessThanOrEqual(20)
+      expect(s.description, s.id).toMatch(/[.!?]$/)
+      const p = createProvider(s.providerConfig).next() as { options: unknown[] }
+      expect(p.options.length, s.id).toBeGreaterThanOrEqual(3)
+    }
   })
 })

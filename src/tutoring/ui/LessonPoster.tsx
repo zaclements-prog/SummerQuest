@@ -11,6 +11,8 @@ import { shareArtName } from '../../games/listenPlay/shareGeometry'
 import { G5_REEF_WORKSHOP_SUMMIT_POSTERS } from './posters/g5ReefWorkshopSummit'
 // 5th grade (phase 3): Fraction Falls, Place Value Plateau
 import { G5_FALLS_PLATEAU_POSTERS } from './posters/g5FallsPlateau'
+// 5th grade (phase 3): Measurement Marsh, Geometry Grove, Data Delta
+import { G5_MGD_POSTERS } from './posters/g5MeasureGeoData'
 
 const PW = 320
 const PH = 150
@@ -627,6 +629,8 @@ const POSTERS: Record<string, { bg: string; motif: () => ReactNode }> = {
     ),
   },
   ...G5_REEF_WORKSHOP_SUMMIT_POSTERS,
+  // 5th grade (phase 3): Measurement Marsh, Geometry Grove, Data Delta
+  ...G5_MGD_POSTERS,
 }
 
 /**

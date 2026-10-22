@@ -3,9 +3,10 @@ import { getZone, zoneStages } from '../../curriculum'
 import type { Stage, Zone } from '../../curriculum/types'
 import { DEFAULT_GRADE, GRADE_LEVELS } from '../../lib/gradeTiers'
 import { bandFallbacks, contentBand } from '../../lib/gradeBand'
-import { allLessons, everyLesson, g24Lessons, getLesson, isLessonFor, k1Lessons, lessonBand, lessonsFor, zoneLessonFor } from '../lessons'
+import { allLessons, everyLesson, g24Lessons, g5Lessons, getLesson, isLessonFor, k1Lessons, lessonBand, lessonsFor, zoneLessonFor } from '../lessons'
 import { practiceHref, practiceStageFor } from '../lessonLinks'
 import { focusRows, lessonRows } from '../../world/hubContent'
+import { SKILLS } from '../skills'
 
 /** Today's eleven lessons, in their order: grades 2–4 must see exactly these. */
 const TODAY = ['multiplication', 'division', 'fractions', 'placeValue', 'measurement', 'geometry', 'dataGraph', 'wordProblem', 'reading', 'writing', 'science']
@@ -283,5 +284,46 @@ describe('5th grade’s own lessons: Reading Reef, Writing Workshop, Science Sum
     expect(isLessonFor('writing', 5)).toBe(false)
     expect(isLessonFor('science', 5)).toBe(false)
     expect(isLessonFor('division', 5) || isLessonFor('g5Division', 5)).toBe(true)
+  })
+})
+
+describe('5th grade’s own lessons (phase 3): Measurement Marsh, Geometry Grove, Data Delta', () => {
+  const OWN: Record<string, [string, string]> = {
+    g5Volume: ['measurement-marsh', 'g5-measure-1'],
+    g5Coordinates: ['geometry-grove', 'g5-geo-1'],
+    g5LinePlots: ['data-delta', 'g5-data-1'],
+  }
+
+  it('band g5, in g5Lessons, practised in the zone’s first 5th-grade stage, offered to 5th grade only', () => {
+    for (const [id, [zoneId, first]] of Object.entries(OWN)) {
+      const l = getLesson(id)!
+      expect(l, id).toBeDefined()
+      expect(l).toMatchObject({ band: 'g5', zoneId, practiceStageId: first })
+      expect(ids(g5Lessons)).toContain(id)
+      expect(zoneLessonFor(zoneId, 5)?.id).toBe(id)
+      expect(zoneStages(getZone(zoneId)!, 5)[0].id).toBe(first)
+      expect(practiceHref(l, undefined, 5)).toBe(`/play/${zoneId}/${first}`)
+      for (const g of [0, 1, 2, 3, 4]) expect(isLessonFor(id, g), `${id} at grade ${g}`).toBe(false)
+      // a 3rd grader who opens it lands on a 2nd–4th grade stage
+      expect(getZone(zoneId)!.stages.map((s) => s.id)).toContain(practiceStageFor(l, undefined, 3))
+    }
+    // the 2nd–4th grade lessons of these zones are not 5th grade's any more
+    for (const old of ['measurement', 'geometry', 'dataGraph']) expect(isLessonFor(old, 5)).toBe(false)
+    expect(isLessonFor('measurement', 4)).toBe(true)
+  })
+
+  it('every step has a narration, the checks have one right answer among different options, and every skill is registered', () => {
+    for (const id of Object.keys(OWN)) {
+      const l = getLesson(id)!
+      expect(l.steps.length).toBeGreaterThanOrEqual(4)
+      expect(l.steps.filter((s) => s.check).length).toBeGreaterThanOrEqual(3)
+      for (const s of l.steps) {
+        expect(s.narration.length, s.id).toBeGreaterThan(40)
+        if (!s.check) continue
+        expect(new Set(s.check.options.map(String)).size, s.id).toBe(s.check.options.length)
+        expect(s.check.options.filter((o) => o === s.check!.answer), s.id).toHaveLength(1)
+      }
+      for (const sk of l.skillIds) expect(SKILLS[sk]?.lessonId, sk).toBe(id)
+    }
   })
 })

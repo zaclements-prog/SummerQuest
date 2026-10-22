@@ -47,6 +47,10 @@ import { g5ScienceLesson } from './g5Science'
 // 5th grade (phase 3): Fraction Falls, Place Value Plateau
 import { g5FractionsLesson } from './g5Fractions'
 import { g5DecimalsLesson } from './g5Decimals'
+// 5th grade (phase 3): Measurement Marsh, Geometry Grove, Data Delta
+import { g5VolumeLesson } from './g5Volume'
+import { g5CoordinatesLesson } from './g5Coordinates'
+import { g5LinePlotsLesson } from './g5LinePlots'
 
 /**
  * The lessons, by content band (lib/gradeBand; K–5 plan §2): kindergarten and
@@ -117,6 +121,10 @@ export const g5Lessons: Lesson[] = [
   // Fraction Falls, Place Value Plateau (phase 3)
   g5FractionsLesson,
   g5DecimalsLesson,
+  // Measurement Marsh, Geometry Grove, Data Delta (phase 3)
+  g5VolumeLesson,
+  g5CoordinatesLesson,
+  g5LinePlotsLesson,
 ]
 
 /** Every lesson of every band: what `getLesson` finds, and what the narration dump and scene tests cover. */

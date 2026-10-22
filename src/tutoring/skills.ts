@@ -166,6 +166,13 @@ export const SKILLS: Record<string, SkillMeta> = {
   'g5-dec-round':    { label: 'rounding decimals', zoneId: 'place-value-plateau', lessonId: 'g5Decimals', practiceStageId: 'g5-dec-2' },
   'g5-dec-ops':      { label: 'adding, subtracting, multiplying and dividing decimals', zoneId: 'place-value-plateau', lessonId: 'g5Decimals', practiceStageId: 'g5-dec-2' },
   'g5-dec-pow10':    { label: 'multiplying and dividing by powers of 10', zoneId: 'place-value-plateau', lessonId: 'g5Decimals', practiceStageId: 'g5-dec-2' },
+  // ── 5th grade (phase 3): Measurement Marsh (lesson g5Volume), Geometry Grove (g5Coordinates), Data Delta (g5LinePlots) ──
+  'g5-volume':      { label: 'volume of prisms', zoneId: 'measurement-marsh', lessonId: 'g5Volume', practiceStageId: 'g5-measure-1' },
+  'g5-convert':     { label: 'converting units', zoneId: 'measurement-marsh', lessonId: 'g5Volume', practiceStageId: 'g5-measure-2' },
+  'g5-coordinates': { label: 'the coordinate plane', zoneId: 'geometry-grove', lessonId: 'g5Coordinates', practiceStageId: 'g5-geo-1' },
+  'g5-classify':    { label: 'classifying shapes', zoneId: 'geometry-grove', lessonId: 'g5Coordinates', practiceStageId: 'g5-geo-2' },
+  'g5-lineplots':   { label: 'line plots with fractions', zoneId: 'data-delta', lessonId: 'g5LinePlots', practiceStageId: 'g5-data-1' },
+  'g5-patterns':    { label: 'graphing number patterns', zoneId: 'data-delta', lessonId: 'g5LinePlots', practiceStageId: 'g5-data-2' },
 }
 
 export interface Skill { id: string; label: string }

@@ -19,6 +19,10 @@ const G5_FIRST: Record<string, string> = {
   'fraction-falls': 'g5-frac-1',
   'place-value-plateau': 'g5-dec-1',
   'tower-battlefront': 'g5-td-1',
+  // Measurement Marsh, Geometry Grove, Data Delta
+  'measurement-marsh': 'g5-measure-1',
+  'geometry-grove': 'g5-geo-1',
+  'data-delta': 'g5-data-1',
 }
 
 describe('daily challenge pick', () => {
@@ -227,5 +231,24 @@ describe('daily challenge pick', () => {
       expect(q.options.filter((o) => o === q.answer)).toHaveLength(1)
     }
     expect([...seen].sort()).toEqual(Object.keys(FIRST).sort())
+  })
+})
+
+describe('5th grade in the daily challenge (phase 3)', () => {
+  it('plays its own first non-writing stage where a zone has a 5th-grade set (a multiple-choice round), and 2nd–4th grade keep theirs', () => {
+    const seen = new Set<string>()
+    for (let d = 0; d < 366; d++) {
+      const day = localDayKey(new Date(2026, 0, 1 + d))
+      const { zone, stage } = pickTodaysChallenge(5, day)
+      expect(stage.gameId).not.toBe('writingPad')
+      if (!G5_FIRST[zone.id]) continue
+      seen.add(zone.id)
+      expect(stage.id).toBe(G5_FIRST[zone.id])
+      const q = createProvider(effectiveConfigForStage(stage, 0, 5)).next() as { options: unknown[]; answer: unknown }
+      expect(q.options.filter((o) => o === q.answer)).toHaveLength(1)
+      const g4 = pickTodaysChallenge(4, day)
+      if (G5_FIRST[g4.zone.id]) expect(g4.stage.id).not.toMatch(/^g5-/)
+    }
+    expect([...seen].sort()).toEqual(Object.keys(G5_FIRST).sort())
   })
 })

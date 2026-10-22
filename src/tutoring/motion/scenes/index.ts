@@ -45,6 +45,10 @@ import { g5ScienceScenes } from './g5Science'
 // 5th grade (phase 3): Fraction Falls, Place Value Plateau
 import { g5FractionsScenes } from './g5Fractions'
 import { g5DecimalsScenes } from './g5Decimals'
+// 5th grade (phase 3): Measurement Marsh, Geometry Grove, Data Delta
+import { g5VolumeScenes } from './g5Volume'
+import { g5CoordinatesScenes } from './g5Coordinates'
+import { g5LinePlotsScenes } from './g5LinePlots'
 
 /**
  * Motion graphics by lesson → step id. A step without a scene falls back to
@@ -100,6 +104,10 @@ const SCENES: Record<string, Record<string, Scene>> = {
   // 5th grade (phase 3): Fraction Falls, Place Value Plateau
   g5Fractions: g5FractionsScenes,
   g5Decimals: g5DecimalsScenes,
+  // 5th grade (phase 3): Measurement Marsh, Geometry Grove, Data Delta
+  g5Volume: g5VolumeScenes,
+  g5Coordinates: g5CoordinatesScenes,
+  g5LinePlots: g5LinePlotsScenes,
 }
 
 export function sceneFor(lessonId: string, stepId: string): Scene | undefined {

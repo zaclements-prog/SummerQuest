@@ -271,6 +271,11 @@ export function effectiveConfig(
     case 'g5Decimals':
     case 'g5Gates':
       return config
+    // 5th grade (phase 3): Measurement Marsh, Geometry Grove, Data Delta (5th grade's own kinds, as written)
+    case 'g5Measure':
+    case 'g5Geometry':
+    case 'g5Data':
+      return config
   }
 }
 

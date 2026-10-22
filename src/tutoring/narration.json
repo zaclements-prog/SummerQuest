@@ -754,5 +754,71 @@
       "stepId": "operate",
       "text": "To add, line up the decimal points so tenths add to tenths: four point five plus two point three seven is six point eight seven. To multiply zero point six times zero point four, multiply six times four, which is twenty-four. Tenths times tenths make hundredths, so the answer is zero point two four."
     }
+  ],
+  "g5Volume": [
+    {
+      "stepId": "cubes",
+      "text": "Volume is the amount of space inside a solid. We measure it in cubes. Build the bottom layer: four cubes long and three cubes wide makes twelve cubes. Stack three layers, and the box holds thirty-six cubes. That is thirty-six cubic centimeters!"
+    },
+    {
+      "stepId": "formula",
+      "text": "Here is a shortcut. Length times width tells you the cubes in one layer. Multiply by the height to count every layer. Volume equals length times width times height: four times three times three is thirty-six."
+    },
+    {
+      "stepId": "base",
+      "text": "The bottom face is called the base. Its area, B, is the number of cubes in one layer. So volume also equals B times h. A base of twelve square centimeters and a height of three make thirty-six."
+    },
+    {
+      "stepId": "composed",
+      "text": "This figure is made of two boxes that do not overlap. Find the volume of each box, then add. Twenty-four plus twelve equals thirty-six cubic meters."
+    },
+    {
+      "stepId": "convert",
+      "text": "To change to a smaller unit, multiply: one meter is one hundred centimeters, so three meters is three hundred centimeters. To change to a bigger unit, divide: one hundred twenty minutes is two hours."
+    }
+  ],
+  "g5Coordinates": [
+    {
+      "stepId": "axes",
+      "text": "A coordinate plane is two number lines that meet at zero. The x-axis goes across. The y-axis goes up. They meet at the origin, the point zero, zero."
+    },
+    {
+      "stepId": "plot",
+      "text": "An ordered pair is a set of directions. Start at the origin. The first number tells how far to go across. The second number tells how far to go up. Three, five means across three, then up five."
+    },
+    {
+      "stepId": "map",
+      "text": "Grids help solve real problems. On this map, the library is at one, two, and the park is at one, seven. They share an x-coordinate, so count straight up: the park is five blocks from the library."
+    },
+    {
+      "stepId": "family",
+      "text": "Shapes belong to families. A quadrilateral has four sides. A parallelogram has two pairs of parallel sides. A rectangle is a parallelogram with four right angles. A rhombus is a parallelogram with four equal sides. A square is both!"
+    },
+    {
+      "stepId": "always",
+      "text": "So every square is a rectangle, because it has four right angles. But not every rectangle is a square, because its sides do not have to be equal."
+    }
+  ],
+  "g5LinePlots": [
+    {
+      "stepId": "plot",
+      "text": "Scientists measured ten bean sprouts to the nearest eighth of an inch. A line plot puts an X above the number line for each measurement."
+    },
+    {
+      "stepId": "read",
+      "text": "Count the Xs above a mark. Three sprouts were four eighths, or one half, of an inch tall. The tallest stack shows the most common height."
+    },
+    {
+      "stepId": "total",
+      "text": "To find a total, add the measurements. The two sprouts at five eighths of an inch add up to ten eighths, which is one and one fourth inches."
+    },
+    {
+      "stepId": "share",
+      "text": "Four beakers hold one fourth, one half, one half and three fourths of a liter. What if we shared the water equally? Add it all: two liters. Then divide by four beakers: each gets one half liter."
+    },
+    {
+      "stepId": "patterns",
+      "text": "Two patterns can make ordered pairs. Pattern A adds three: zero, three, six, nine. Pattern B adds six: zero, six, twelve, eighteen. Pair them up and plot them. The points make a line, and each B number is twice its A number."
+    }
   ]
 }

@@ -118,5 +118,41 @@ export const measurementZone: Zone = {
         starsToEarn: 3,
       },
     ],
+    // 5th grade (phase 3; 5.MD.1, 5.MD.3–5): volume of rectangular prisms (unit
+    // cubes, l × w × h, B × h, two prisms joined) → converting units within one
+    // system, a speed round → the boss mixes volume (and a missing edge) with
+    // multi-step conversion story problems.
+    g5: [
+      {
+        id: 'g5-measure-1',
+        kind: 'concept',
+        title: 'Cube Builders',
+        description: 'Find the volume of boxes by counting cubes and by multiplying.',
+        gameId: 'conceptPlay',
+        providerConfig: { kind: 'g5Measure', mode: 'volume' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g5-measure-2',
+        kind: 'practice',
+        title: 'Unit Swap Sprint',
+        description: 'Convert meters, grams, liters, feet, pounds and hours — speed round.',
+        gameId: 'speedRun',
+        providerConfig: { kind: 'g5Measure', mode: 'convert' },
+        params: { timeLimitSec: 90, starThresholds: [5, 8, 11] },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g5-measure-3',
+        kind: 'mastery',
+        title: 'The Bog Builder',
+        description: 'Volume puzzles and multi-step unit problems — out-build the Bog Builder!',
+        gameId: 'bossBattle',
+        providerConfig: { kind: 'g5Measure', mode: 'mixed' },
+        params: { questionCount: 10, bossEmoji: '🐊', bossName: 'The Bog Builder' },
+        starsToEarn: 3,
+      },
+    ],
   },
 }
