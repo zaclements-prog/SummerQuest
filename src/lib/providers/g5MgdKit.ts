@@ -71,7 +71,7 @@ export function mixedText(num: number, den: number): string {
   const whole = Math.floor(n / d)
   const r = n - whole * d
   if (r === 0) return String(whole)
-  return whole > 0 ? `${whole} ${r}/${d}` : `${r}/${d}`
+  return whole > 0 ? `${whole}\u00a0${r}/${d}` : `${r}/${d}`
 }
 
 /** "(3, 5)": an ordered pair, as the coordinate plane writes it. */

@@ -13,6 +13,14 @@ const G1_FIRST: Record<string, string> = {
   'science-summit': 'g1-science-1',
 }
 
+/** 5th grade's own first stage, by zone (phase-3 contract): what 5th grade plays in the daily there. */
+const G5_FIRST: Record<string, string> = {
+  // Measurement Marsh, Geometry Grove, Data Delta
+  'measurement-marsh': 'g5-measure-1',
+  'geometry-grove': 'g5-geo-1',
+  'data-delta': 'g5-data-1',
+}
+
 describe('daily challenge pick', () => {
   it('never lands on a writing (no answer options) stage, over a full year', () => {
     const start = new Date(2026, 0, 1)
@@ -164,5 +172,24 @@ describe('daily challenge pick', () => {
       if (G1_FIRST[k.zone.id]) expect(k.stage.id).toMatch(/^k-/)
     }
     expect([...seen].sort()).toEqual(['data-delta', 'measurement-marsh', 'science-summit'])
+  })
+})
+
+describe('5th grade in the daily challenge (phase 3)', () => {
+  it('plays its own first non-writing stage where a zone has a 5th-grade set (a multiple-choice round), and 2nd–4th grade keep theirs', () => {
+    const seen = new Set<string>()
+    for (let d = 0; d < 366; d++) {
+      const day = localDayKey(new Date(2026, 0, 1 + d))
+      const { zone, stage } = pickTodaysChallenge(5, day)
+      expect(stage.gameId).not.toBe('writingPad')
+      if (!G5_FIRST[zone.id]) continue
+      seen.add(zone.id)
+      expect(stage.id).toBe(G5_FIRST[zone.id])
+      const q = createProvider(effectiveConfigForStage(stage, 0, 5)).next() as { options: unknown[]; answer: unknown }
+      expect(q.options.filter((o) => o === q.answer)).toHaveLength(1)
+      const g4 = pickTodaysChallenge(4, day)
+      if (G5_FIRST[g4.zone.id]) expect(g4.stage.id).not.toMatch(/^g5-/)
+    }
+    expect([...seen].sort()).toEqual(Object.keys(G5_FIRST).sort())
   })
 })

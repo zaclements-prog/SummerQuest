@@ -7,6 +7,8 @@ import { Apple, Cookie, Flat, Rod, UnitCube } from '../motion/shapes'
 import { DRAWINGS } from '../../games/listenPlay/drawings'
 // 1st grade (phase 2b): Fair Share Falls' pizza drawings
 import { shareArtName } from '../../games/listenPlay/shareGeometry'
+// 5th grade (phase 3): Measurement Marsh, Geometry Grove, Data Delta
+import { G5_MGD_POSTERS } from './posters/g5MeasureGeoData'
 
 const PW = 320
 const PH = 150
@@ -559,6 +561,8 @@ const POSTERS: Record<string, { bg: string; motif: () => ReactNode }> = {
       </g>
     ),
   },
+  // 5th grade (phase 3): Measurement Marsh, Geometry Grove, Data Delta
+  ...G5_MGD_POSTERS,
 }
 
 /**

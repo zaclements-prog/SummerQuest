@@ -58,7 +58,7 @@ const num = (s: string) => Number(s.replace(/,/g, ''))
 const fmt = (n: number) => n.toLocaleString('en-US', { maximumFractionDigits: 3 })
 /** "3/8", "1 1/4" (no-break space), "2" → a number. */
 function frac(s: string): number {
-  const m = /^(?:(\d+)[  ])?(\d+)\/(\d+)$/.exec(s)
+  const m = /^(?:(\d+)[\u00a0 ])?(\d+)\/(\d+)$/.exec(s)
   if (m) return Number(m[1] ?? 0) + Number(m[2]) / Number(m[3])
   return /^\d+$/.test(s) ? Number(s) : NaN
 }
@@ -341,7 +341,6 @@ describe('g5Geometry (Geometry Grove)', () => {
 // ── Data Delta ───────────────────────────────────────────────────────────────
 
 function solveData(p: Problem): unknown {
-  let m: RegExpExecArray | null
   if (p.visual?.kind === 'linePlot') {
     const v = p.visual
     const values = v.counts.flatMap((k, i) => Array.from({ length: k }, () => (v.min + i) / v.denominator))
@@ -359,15 +358,15 @@ function solveData(p: Problem): unknown {
       const whole = Math.floor(t / d)
       const r = (t % d) / g
       const den = d / g
-      return r === 0 ? String(whole) : whole ? `${whole} ${r}/${den}` : `${r}/${den}`
+      return r === 0 ? String(whole) : whole ? `${whole}\u00a0${r}/${den}` : `${r}/${den}`
     }
     switch (p.subtopic) {
       case 'count': {
-        const at = tick(/were ([\d / ]+?) (?:inch|inches|cup|cups|yard|yards|liter|liters|pound|pounds) /.exec(p.prompt)![1])
+        const at = tick(/were ([\d\u00a0/ ]+?) (?:inch|inches|cup|cups|yard|yards|liter|liters|pound|pounds) /.exec(p.prompt)![1])
         return String(values.filter((x) => Math.abs(x - at) < 1e-9).length)
       }
       case 'moreThan': {
-        const at = tick(/more than ([\d / ]+?) (?:inch|inches|cup|cups|yard|yards|liter|liters|pound|pounds) /.exec(p.prompt)![1])
+        const at = tick(/more than ([\d\u00a0/ ]+?) (?:inch|inches|cup|cups|yard|yards|liter|liters|pound|pounds) /.exec(p.prompt)![1])
         return String(values.filter((x) => x > at + 1e-9).length)
       }
       case 'mode': {
@@ -378,7 +377,7 @@ function solveData(p: Problem): unknown {
       case 'spread':
         return asFrac(Math.max(...values) - Math.min(...values))
       case 'total': {
-        const at = tick(/that were ([\d / ]+?) (?:inch|inches|cup|cups|yard|yards|liter|liters|pound|pounds) /.exec(p.prompt)![1])
+        const at = tick(/that were ([\d\u00a0/ ]+?) (?:inch|inches|cup|cups|yard|yards|liter|liters|pound|pounds) /.exec(p.prompt)![1])
         return asFrac(values.filter((x) => Math.abs(x - at) < 1e-9).length * at)
       }
       case 'share': {
@@ -390,7 +389,7 @@ function solveData(p: Problem): unknown {
     throw new Error(`unknown line plot question ${p.subtopic}`)
   }
   // patterns: the rules from the words (or the listed terms)
-  m = /Pattern A starts at 0 and adds (\d+)\. Pattern B starts at 0 and adds (\d+)\./.exec(p.prompt)
+  const m = /Pattern A starts at 0 and adds (\d+)\. Pattern B starts at 0 and adds (\d+)\./.exec(p.prompt)
   const lists = /Pattern A: ([\d, ]+)\. Pattern B: ([\d, ]+)\./.exec(p.prompt)
   const [a, b] = m ? [Number(m[1]), Number(m[2])] : [1, 2].map((i) => lists![i].split(', ').map(Number)[1])
   expect(b % a).toBe(0)

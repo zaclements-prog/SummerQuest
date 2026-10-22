@@ -158,9 +158,9 @@ export function CoordPlaneVisual({ visual, size = 'md' }: { visual: Extract<Prob
   const { xMax, yMax, xStep = 1, yStep = 1, points, line, xLabel, yLabel } = visual
   const nx = Math.round(xMax / xStep)
   const ny = Math.round(yMax / yStep)
-  const room = size === 'sm' ? { w: 230, h: 190, c: 22 } : size === 'lg' ? { w: 360, h: 300, c: 32 } : { w: 300, h: 240, c: 27 }
+  const room = size === 'sm' ? { w: 250, h: 200, c: 24 } : size === 'lg' ? { w: 360, h: 300, c: 32 } : { w: 300, h: 240, c: 27 }
   const cell = Math.min(room.c, room.w / nx, room.h / ny)
-  const fs = size === 'sm' ? 11 : 13
+  const fs = size === 'sm' ? 12 : 13
   const padL = (yLabel ? 22 : 6) + fs * 1.6
   const padB = (xLabel ? 20 : 4) + fs * 1.6
   const padT = 16
@@ -251,9 +251,9 @@ function tickParts(n: number, d: number): { whole: number; num: number; den: num
 export function LinePlotVisual({ visual, size = 'md' }: { visual: Extract<ProblemVisual, { kind: 'linePlot' }>; size?: Size }) {
   const { denominator: d, min, max, counts, title, unit } = visual
   const ticks = max - min
-  const room = size === 'sm' ? 300 : size === 'lg' ? 440 : 380
-  const gap = Math.max(24, Math.min(44, room / Math.max(1, ticks)))
-  const fs = size === 'sm' ? 11 : 13
+  const room = size === 'sm' ? 330 : size === 'lg' ? 440 : 380
+  const gap = Math.max(26, Math.min(46, room / Math.max(1, ticks)))
+  const fs = size === 'sm' ? 13 : 14
   const xs = size === 'sm' ? 13 : 15
   const tall = Math.max(1, ...counts)
   const padX = 22

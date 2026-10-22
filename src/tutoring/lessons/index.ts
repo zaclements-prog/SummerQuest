@@ -36,6 +36,10 @@ import { g1ShapesLesson } from './g1Shapes'
 import { g1MeasureLesson } from './g1Measure'
 import { g1GraphsLesson } from './g1Graphs'
 import { g1ScienceLesson } from './g1Science'
+// 5th grade (phase 3): Measurement Marsh, Geometry Grove, Data Delta
+import { g5VolumeLesson } from './g5Volume'
+import { g5CoordinatesLesson } from './g5Coordinates'
+import { g5LinePlotsLesson } from './g5LinePlots'
 
 /**
  * The lessons, by content band (lib/gradeBand; K–5 plan §2): kindergarten and
@@ -94,7 +98,12 @@ export const g1Lessons: Lesson[] = [
 ]
 
 /** 5th grade (band `g5`). */
-export const g5Lessons: Lesson[] = []
+export const g5Lessons: Lesson[] = [
+  // Measurement Marsh, Geometry Grove, Data Delta (phase 3)
+  g5VolumeLesson,
+  g5CoordinatesLesson,
+  g5LinePlotsLesson,
+]
 
 /** Every lesson of every band: what `getLesson` finds, and what the narration dump and scene tests cover. */
 export const everyLesson: Lesson[] = [...g24Lessons, ...k1Lessons, ...g1Lessons, ...g5Lessons]

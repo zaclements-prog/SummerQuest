@@ -43,11 +43,11 @@ describe('pet catalog', () => {
       ['frog', 'fraction-falls', ['fractions', 'kAddTake', 'g1Shares']],
       ['octopus', 'reading-reef', ['reading', 'kLetters', 'kRhymes', 'g1Reading']],
       ['owl', 'word-problem-woods', ['wordProblem', 'kStoryMath']],
-      ['panda', 'geometry-grove', ['geometry', 'kShapes', 'g1Shapes']],
+      ['panda', 'geometry-grove', ['geometry', 'kShapes', 'g1Shapes', 'g5Coordinates']],
       ['lion', 'multiplication-mesa', ['multiplication', 'kCounting']],
       ['trex', 'division-dunes', ['division', 'kCompare']],
-      ['bear', 'measurement-marsh', ['measurement', 'kMeasure', 'g1Measure']],
-      ['fox', 'data-delta', ['dataGraph', 'kSorting', 'g1Graphs']],
+      ['bear', 'measurement-marsh', ['measurement', 'kMeasure', 'g1Measure', 'g5Volume']],
+      ['fox', 'data-delta', ['dataGraph', 'kSorting', 'g1Graphs', 'g5LinePlots']],
       ['unicorn', 'place-value-plateau', ['placeValue', 'kTeens', 'g1Tens']],
       ['dragonet', 'writing-workshop', ['writing', 'kTracing', 'g1Writing']],
       ['tiger', 'science-summit', ['science', 'kScience', 'g1Science']],
@@ -91,6 +91,10 @@ describe('pet catalog', () => {
     expect(zoneLessonFor('measurement-marsh', 1)?.id).toBe('g1Measure')
     expect(zoneLessonFor('data-delta', 1)?.id).toBe('g1Graphs')
     expect(zoneLessonFor('science-summit', 1)?.id).toBe('g1Science')
+    // (5th grade, phase 3: the bear, the panda and the fox hatch from their zones' 5th-grade lessons)
+    expect(zoneLessonFor('measurement-marsh', 5)?.id).toBe('g5Volume')
+    expect(zoneLessonFor('geometry-grove', 5)?.id).toBe('g5Coordinates')
+    expect(zoneLessonFor('data-delta', 5)?.id).toBe('g5LinePlots')
   })
 
   it('every egg has its own colors', () => {
