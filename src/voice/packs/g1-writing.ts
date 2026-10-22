@@ -52,10 +52,10 @@ export default defineVoicePack({
     /** The rule, said in the help after a miss (and taught in the lesson). */
     rule: 'A sentence starts with a capital letter. It ends with a period.',
     capitalPeriod: 'A capital at the start, and a period at the end!',
-    // the lesson's check: each way of writing the sentence, said as its card is tapped
-    cardRight: 'A capital and a period!',
-    cardNoCapital: 'No capital!',
-    cardNoPeriod: 'No period!',
+    // the lesson's check ("Which word can start a sentence?"): each card's first letter, said as it is tapped
+    cardCapitalT: 'The, with a capital T!',
+    cardLittleT: 'The, with a little t.',
+    cardLittleD: 'Dog, with a little d.',
   },
   templates: {
     /** 26 clips: a lowercase letter to trace (said by its name: "Let's trace little B!"). */

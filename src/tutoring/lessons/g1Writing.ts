@@ -10,16 +10,16 @@ import { askAloud } from './k1Voice'
  * slowly, one letter for each sound; and a sentence starts with a capital
  * letter and ends with a period. Voice-first: the stage shows the letters,
  * tiles and the sentence being built; the checks are answered with letter
- * tiles and the sentence written three ways. Its practice is "Little
+ * tiles and word cards (the word that can start a sentence). Its practice is "Little
  * letters" (`g1-trace-1`).
  */
 const letterCard = (ch: string): PictureOption => ({ value: ch, picture: { kind: 'letter', ch }, speech: { template: 'k-letters/letter', slots: { letter: ch.toUpperCase() } } })
 
-/** The sentence written three ways (a printed card each: the capital and the period are what is being learned). */
-const sentenceCards: PictureOption[] = [
-  { value: 'right', picture: { kind: 'word', text: 'The dog ran.' }, speech: { line: 'g1-writing/cardRight' } },
-  { value: 'noCapital', picture: { kind: 'word', text: 'the dog ran.' }, speech: { line: 'g1-writing/cardNoCapital' } },
-  { value: 'noPeriod', picture: { kind: 'word', text: 'The dog ran' }, speech: { line: 'g1-writing/cardNoPeriod' } },
+/** The word cards for "Which word can start a sentence?": each says what its first letter is when tapped. */
+const startCards: PictureOption[] = [
+  { value: 'the', picture: { kind: 'word', text: 'the' }, speech: { line: 'g1-writing/cardLittleT' } },
+  { value: 'The', picture: { kind: 'word', text: 'The' }, speech: { line: 'g1-writing/cardCapitalT' } },
+  { value: 'dog', picture: { kind: 'word', text: 'dog' }, speech: { line: 'g1-writing/cardLittleD' } },
 ]
 
 export const g1WritingLesson: Lesson = {
@@ -57,12 +57,12 @@ export const g1WritingLesson: Lesson = {
       id: 'sentence',
       narration: 'A sentence starts with a capital letter. It ends with a period. The dog ran.',
       check: {
-        question: 'Which one starts with a capital and ends with a period?',
+        question: 'Which word can start a sentence? Tap it.',
         speech: askAloud('g1Writing', 'sentence'),
-        options: ['noCapital', 'right', 'noPeriod'],
-        answer: 'right',
-        explain: 'The dog ran. A capital T to start, a period to end.',
-        pictures: [sentenceCards[1], sentenceCards[0], sentenceCards[2]],
+        options: ['the', 'The', 'dog'],
+        answer: 'The',
+        explain: 'The, with a capital T, can start a sentence.',
+        pictures: startCards,
       },
     },
   ],

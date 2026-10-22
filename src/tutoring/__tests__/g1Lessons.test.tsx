@@ -95,10 +95,10 @@ describe('the 1st-grade lessons (data)', () => {
     for (const w of ['middle', 'team up', 'S and H say shh', 'Sound it out', 'read along', 'each word lights up']) expect(told('g1Reading')).toContain(w)
     for (const w of ['Little letters live on the lines', 'Tall ones touch the top line', 'dashed line', 'Around like a C', 'spell a word', 'capital letter', 'period']) expect(told('g1Writing')).toContain(w)
     const [mid, team] = getLesson('g1Reading')!.steps.filter((s) => s.check).map((s) => s.check!)
-    expect([mid.answer, team.answer]).toEqual(['i', 'ship'])
+    expect([mid.answer, team.answer]).toEqual(['map', 'ship'])
     const [tail, sentence] = getLesson('g1Writing')!.steps.filter((s) => s.check).map((s) => s.check!)
-    expect([tail.answer, sentence.answer]).toEqual(['g', 'right'])
-    expect(sentence.pictures!.map((p) => (p.picture as { text: string }).text).sort()).toEqual(['The dog ran', 'The dog ran.', 'the dog ran.'])
+    expect([tail.answer, sentence.answer]).toEqual(['g', 'The'])
+    expect(sentence.pictures!.map((p) => (p.picture as { text: string }).text)).toEqual(['the', 'The', 'dog'])
   })
 
   it('each hatches its zone’s pet (the octopus, the dragonet); Counting Towers keeps kindergarten’s lesson (the dragon)', () => {

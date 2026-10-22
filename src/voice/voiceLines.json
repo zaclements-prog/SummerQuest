@@ -4903,23 +4903,23 @@
       "kind": "line",
       "file": "voice/g1-writing/capitalPeriod.mp3"
     },
-    "g1-writing/cardRight": {
-      "text": "A capital and a period!",
-      "hash": "d3ecc9c897",
+    "g1-writing/cardCapitalT": {
+      "text": "The, with a capital T!",
+      "hash": "19edff1bb9",
       "kind": "line",
-      "file": "voice/g1-writing/cardRight.mp3"
+      "file": "voice/g1-writing/cardCapitalT.mp3"
     },
-    "g1-writing/cardNoCapital": {
-      "text": "No capital!",
-      "hash": "d573576b53",
+    "g1-writing/cardLittleT": {
+      "text": "The, with a little t.",
+      "hash": "b117714dbf",
       "kind": "line",
-      "file": "voice/g1-writing/cardNoCapital.mp3"
+      "file": "voice/g1-writing/cardLittleT.mp3"
     },
-    "g1-writing/cardNoPeriod": {
-      "text": "No period!",
-      "hash": "8d6854b5e4",
+    "g1-writing/cardLittleD": {
+      "text": "Dog, with a little d.",
+      "hash": "f6c5210595",
       "kind": "line",
-      "file": "voice/g1-writing/cardNoPeriod.mp3"
+      "file": "voice/g1-writing/cardLittleD.mp3"
     },
     "g1-writing/lower/letter=a": {
       "text": "Let's trace little A!",
@@ -8612,14 +8612,14 @@
       "file": "voice/k-lessons/kScience-push.mp3"
     },
     "k-lessons/g1Reading-middle": {
-      "text": "Pig! Which letter is in the middle? Tap it.",
-      "hash": "f8f62a36d1",
+      "text": "Dog. Pig. Map. Which one has the short A, like cat?",
+      "hash": "8de584422f",
       "kind": "line",
       "file": "voice/k-lessons/g1Reading-middle.mp3"
     },
     "k-lessons/g1Reading-teams": {
-      "text": "Sun. Chick. Ship. Which one starts with shh?",
-      "hash": "80f4338bc1",
+      "text": "Ship. Sun. Chick. Which one starts with shh?",
+      "hash": "d0a7433814",
       "kind": "line",
       "file": "voice/k-lessons/g1Reading-teams.mp3"
     },
@@ -8630,8 +8630,8 @@
       "file": "voice/k-lessons/g1Writing-lines.mp3"
     },
     "k-lessons/g1Writing-sentence": {
-      "text": "Which one starts with a capital and ends with a period?",
-      "hash": "f0e09048b7",
+      "text": "Which word can start a sentence? Tap it.",
+      "hash": "6a626d58be",
       "kind": "line",
       "file": "voice/k-lessons/g1Writing-sentence.mp3"
     },

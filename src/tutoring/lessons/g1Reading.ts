@@ -1,4 +1,3 @@
-import type { PictureOption } from '../../lib/problem'
 import type { Lesson } from '../types'
 import { askAloud } from './k1Voice'
 import { g1Cards } from '../../lib/providers/g1Shared'
@@ -9,15 +8,13 @@ import { g1Cards } from '../../lib/providers/g1Shared'
  * out and putting the sounds together reads it (sh-i-p, ship); and when we
  * read along, each word lights up as it is said. Voice-first: the stage shows
  * the letters and words being learned (in Andika) and pictures; the checks
- * are answered with letter tiles and pictures. Its practice is "Short vowels"
+ * are answered with pictures. Its practice is "Short vowels"
  * (`g1-vowels-1`).
  *
  * ⚠ The narration sounds words out ("Kuh… aa… tuh"): like the phonics voice
  * lines (src/voice/packs/g1-phonics.ts), these steps need the owner's
  * listening pass once recorded.
  */
-const letterCard = (ch: string): PictureOption => ({ value: ch, picture: { kind: 'letter', ch }, speech: { template: 'k-letters/letter', slots: { letter: ch.toUpperCase() } } })
-
 export const g1ReadingLesson: Lesson = {
   id: 'g1Reading',
   band: 'g1',
@@ -33,12 +30,18 @@ export const g1ReadingLesson: Lesson = {
       // (a listening-pass line: "Kuh… aa… tuh." three clear sounds, the aa held)
       narration: 'Listen to the middle of a word. Cat. Kuh… aa… tuh. The A in the middle says aa!',
       check: {
-        question: 'Pig! Which letter is in the middle? Tap it.',
+        // (another word with cat's middle sound; the pictures named in the order they are shown)
+        question: 'Dog. Pig. Map. Which one has the short A, like cat?',
         speech: askAloud('g1Reading', 'middle'),
-        options: ['a', 'i', 'o'],
-        answer: 'i',
-        explain: 'Pig: p, i, g. The I is in the middle.',
-        pictures: ['a', 'i', 'o'].map(letterCard),
+        options: ['pig', 'map', 'dog'],
+        answer: 'map',
+        explain: 'Map has the short A in the middle, like cat.',
+        pictures: g1Cards(['pig', 'map', 'dog']),
+        namedAt: [
+          { option: 'pig', cue: 'Pig' },
+          { option: 'map', cue: 'Map' },
+          { option: 'dog', cue: 'Dog' },
+        ],
       },
     },
     {
@@ -47,7 +50,7 @@ export const g1ReadingLesson: Lesson = {
       narration: 'Some letters team up to make one sound. S and H say shh, like ship and shell!',
       check: {
         // (the question names the pictures in the order they are shown)
-        question: 'Sun. Chick. Ship. Which one starts with shh?',
+        question: 'Ship. Sun. Chick. Which one starts with shh?',
         speech: askAloud('g1Reading', 'teams'),
         options: ['sun', 'chick', 'ship'],
         answer: 'ship',

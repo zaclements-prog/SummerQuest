@@ -15,6 +15,7 @@ import type { ListenProblem } from '../types'
 import type { ReadAlongSpec } from '../activities/readAlongSpec'
 import type { TilesSpec } from '../activities/tilesSpec'
 import { soundsText, type G1Word } from '../../../voice/packs/g1-phonics'
+import { voiceText } from '../../../voice/registry'
 
 /**
  * Word Reef's and Writing Workshop's 1st-grade activities in the real Listen &
@@ -137,6 +138,28 @@ afterEach(() => {
   document.body.innerHTML = ''
   vi.restoreAllMocks()
   vi.useRealTimers()
+})
+
+describe('Word Reef’s card questions (the shell’s own cards)', { timeout: 60_000 }, () => {
+  it.each([
+    ['short vowel', { mode: 'vowels' as const }, (x: ListenProblem) => x.subtopic === 'whichVowel'],
+    ['letter team', { mode: 'digraphs' as const }, (x: ListenProblem) => x.subtopic === 'startsWith'],
+    ['tap the word', { mode: 'digraphs' as const }, (x: ListenProblem) => x.subtopic === 'tapWord'],
+    ['sight word', { mode: 'sight' as const }, () => true],
+  ])('%s: the print on screen is only what is being read (a letter tile, the word cards)', async (_label, cfg, ok) => {
+    const item = first(cfg, ok)
+    mount(these(item))
+    await advance(100)
+    expect(cards()).toHaveLength(3)
+    const clone = container.cloneNode(true) as HTMLElement
+    clone.querySelectorAll('[data-guide^="lp-card-"]').forEach((n) => n.remove())
+    expect(visibleWords(clone)).toEqual([])
+    const printed = visibleWords(container)
+    expect(printed.length).toBeLessThanOrEqual(3)
+    for (const w of printed) expect(item.options.map(String)).toContain(w)
+    await advance(6000)
+    expect(said[0]).toBe(voiceText(item.speech!))
+  })
 })
 
 describe('readAlong: Read a word', { timeout: 60_000 }, () => {

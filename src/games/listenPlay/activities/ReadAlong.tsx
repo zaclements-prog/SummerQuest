@@ -173,8 +173,9 @@ function ReadAlong({ problem, spec, phase, active, misses, onAttempt, registerHe
     sfx.pop()
     setPicked(i)
     setBusy(true)
-    if (card.speech) await guide.say(card.speech)
-    else await new Promise((r) => setTimeout(r, 300))
+    // (its name said; never waiting on it for long: the card must never stay stuck pressed)
+    const pause = new Promise((r) => setTimeout(r, card.speech ? 4000 : 300))
+    await (card.speech ? Promise.race([guide.say(card.speech), pause]) : pause)
     if (!mounted.current) return
     setBusy(false)
     const ok = card.value === problem.answer
