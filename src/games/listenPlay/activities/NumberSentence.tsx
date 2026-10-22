@@ -282,6 +282,7 @@ function Tap({ at, size, label, onTap, ring }: { at: Pt; size: number; label: st
   return (
     <g className="ns-tap" data-ns-tap="" role="button" tabIndex={0} aria-label={label} onClick={onTap} onKeyDown={key}>
       {ring && <circle className="ns-ring" cx={at.x} cy={at.y} r={size * 0.46} fill="none" stroke={GOLD} strokeWidth={4} />}
+      <circle className="ns-key" cx={at.x} cy={at.y} r={size * 0.48} fill="none" stroke="rgb(42 134 184)" strokeWidth={4} />
       <rect x={at.x - size / 2} y={at.y - size / 2} width={size} height={size} fill="transparent" />
     </g>
   )

@@ -53,6 +53,17 @@
 .ns-tap {
   cursor: pointer;
 }
+/* (a tapped target takes focus: no box around it; the keyboard gets its ring instead) */
+.ns-tap:focus,
+.ns-tap:focus-visible {
+  outline: none;
+}
+.ns-tap .ns-key {
+  opacity: 0;
+}
+.ns-tap:focus-visible .ns-key {
+  opacity: 0.8;
+}
 .ns-tap .ns-ring {
   animation: ns-ring 1.3s ease-in-out infinite;
   transform-box: fill-box;
