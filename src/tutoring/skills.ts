@@ -65,6 +65,13 @@ export const SKILLS: Record<string, SkillMeta> = {
   'k-trace-numbers': { label: 'writing numbers', zoneId: 'writing-workshop', lessonId: 'kTracing', practiceStageId: 'k-trace-2' },
   'k-trace-letters': { label: 'writing capital letters', zoneId: 'writing-workshop', lessonId: 'kTracing', practiceStageId: 'k-trace-3' },
   'k-story-order':   { label: 'telling a story in order', zoneId: 'writing-workshop', lessonId: 'kTracing', practiceStageId: 'k-story-1' },
+  // Measure Marsh (K, phase 2a; lesson kMeasure)
+  'k-measure-length': { label: 'longer and shorter', zoneId: 'measurement-marsh', lessonId: 'kMeasure', practiceStageId: 'k-measure-1' },
+  'k-measure-height': { label: 'taller and shorter', zoneId: 'measurement-marsh', lessonId: 'kMeasure', practiceStageId: 'k-measure-1' },
+  'k-measure-weight': { label: 'heavier and lighter', zoneId: 'measurement-marsh', lessonId: 'kMeasure', practiceStageId: 'k-measure-2' },
+  // Sorting Delta (K, phase 2a; lesson kSorting)
+  'k-sort':         { label: 'sorting into groups', zoneId: 'data-delta', lessonId: 'kSorting', practiceStageId: 'k-sort-1' },
+  'k-sort-compare': { label: 'counting and comparing groups', zoneId: 'data-delta', lessonId: 'kSorting', practiceStageId: 'k-sort-3' },
 }
 
 export interface Skill { id: string; label: string }

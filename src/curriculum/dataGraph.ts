@@ -3,6 +3,7 @@ import type { Zone } from './types'
 export const dataGraphZone: Zone = {
   id: 'data-delta',
   title: 'Data Delta',
+  titleByBand: { k1: 'Sorting Delta' },
   subtitle: 'Reading bar graphs',
   emoji: '📊',
   themeColor: 'ocean',
@@ -43,4 +44,42 @@ export const dataGraphZone: Zone = {
       starsToEarn: 3,
     },
   ],
+  stagesByBand: {
+    // K "Sorting Delta" (K.MD.3): sort into boxes marked with pictures (animals,
+    // food) → by colour and by size, then which group has more → three boxes,
+    // count a group and compare. The `sort` activity: drag or tap each thing into
+    // its box, then numeral cards. Titles and descriptions are said aloud.
+    k1: [
+      {
+        id: 'k-sort-1',
+        kind: 'concept',
+        title: 'Animals or food',
+        description: 'Sort the animals and the food into boxes.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kSort', mode: 'kind' },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-sort-2',
+        kind: 'practice',
+        title: 'Colors and sizes',
+        description: 'Sort by color and by size, then count!',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kSort', mode: 'colorSize' },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-sort-3',
+        kind: 'mastery',
+        title: 'Sort and count',
+        description: 'Sort, count, and find the group with more!',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kSort', mode: 'mix' },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+    ],
+  },
 }

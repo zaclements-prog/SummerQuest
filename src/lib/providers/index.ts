@@ -31,6 +31,8 @@ import { makeKLettersProvider, type KLettersConfig } from './kLetters'
 import { makeKLiteracyProvider, type KLiteracyConfig } from './kLiteracy'
 import { makeKTraceProvider, type KTraceConfig } from './kTrace'
 import { makeKStoriesProvider } from './kStories'
+import { makeKMeasureProvider, type KMeasureConfig } from './kMeasure'
+import { makeKSortProvider, type KSortConfig } from './kSort'
 
 export type ProviderConfig =
   | { kind: 'multiplication'; factorMin: number; factorMax: number }
@@ -61,6 +63,10 @@ export type ProviderConfig =
   | ({ kind: 'kTrace' } & KTraceConfig)
   /** Writing Workshop: a three-picture story, then first, next, last (the `order` activity). */
   | { kind: 'kStories' }
+  /** Measure Marsh: longer / shorter, taller / shorter, heavier / lighter (the `measure` activity). */
+  | ({ kind: 'kMeasure' } & KMeasureConfig)
+  /** Sorting Delta: sort into groups, count a group, which has more (the `sort` activity). */
+  | ({ kind: 'kSort' } & KSortConfig)
 
 export function createProvider(config: ProviderConfig): ProblemProvider {
   switch (config.kind) {
@@ -106,5 +112,9 @@ export function createProvider(config: ProviderConfig): ProblemProvider {
       return makeKTraceProvider(config)
     case 'kStories':
       return makeKStoriesProvider()
+    case 'kMeasure':
+      return makeKMeasureProvider(config)
+    case 'kSort':
+      return makeKSortProvider(config)
   }
 }

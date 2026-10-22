@@ -9,7 +9,11 @@ import { focusRows, lessonRows } from '../../world/hubContent'
 
 /** Today's eleven lessons, in their order: grades 2–4 must see exactly these. */
 const TODAY = ['multiplication', 'division', 'fractions', 'placeValue', 'measurement', 'geometry', 'dataGraph', 'wordProblem', 'reading', 'writing', 'science']
-const K_PILOT = ['kCounting', 'kShapes', 'kLetters', 'kRhymes', 'kTracing']
+const K_PILOT = [
+  ...['kCounting', 'kShapes', 'kLetters', 'kRhymes', 'kTracing'],
+  // K complete (phase 2a)
+  ...['kMeasure', 'kSorting'],
+]
 const ids = (ls: { id: string }[]) => ls.map((l) => l.id)
 
 describe('lessons by grade band', () => {
@@ -115,6 +119,9 @@ describe('practice links stay in the band', () => {
       // (Letter Reef's literacy stages sit between the letter ones: Rhyme time is second)
       kRhymes: ['k-letters-1', 'k-rhyme-1', 'k-letters-2', 'k-syllables-1', 'k-letters-3', 'k-rhyme-2', 'k-blend-1', 'k-sight-1'],
       kTracing: ['k-trace-1', 'k-trace-2', 'k-trace-3', 'k-story-1'],
+      // K complete (phase 2a)
+      kMeasure: ['k-measure-1', 'k-measure-2', 'k-measure-3'],
+      kSorting: ['k-sort-1', 'k-sort-2', 'k-sort-3'],
     }
     for (const l of k1Lessons.filter((x) => fixed[x.id])) {
       const zone = withK1(getZone(l.zoneId)!, fixed[l.id])

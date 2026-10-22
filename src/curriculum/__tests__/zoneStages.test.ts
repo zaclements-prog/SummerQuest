@@ -225,11 +225,17 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
     'reading-reef': ['k-letters-1', 'k-rhyme-1', 'k-letters-2', 'k-syllables-1', 'k-letters-3', 'k-rhyme-2', 'k-blend-1', 'k-sight-1'],
     // (K literacy, phase 1b: Writing Workshop wakes up as the fourth K zone)
     'writing-workshop': ['k-trace-1', 'k-trace-2', 'k-trace-3', 'k-story-1'],
+    // K complete (phase 2a)
+    'measurement-marsh': ['k-measure-1', 'k-measure-2', 'k-measure-3'],
+    'data-delta': ['k-sort-1', 'k-sort-2', 'k-sort-3'],
   }
   const K1_TITLES: Record<string, string> = {
     'multiplication-mesa': 'Counting Mesa',
     'geometry-grove': 'Shape Grove',
     'reading-reef': 'Letter Reef',
+    // K complete (phase 2a)
+    'measurement-marsh': 'Measure Marsh',
+    'data-delta': 'Sorting Delta',
   }
 
   it('kindergarten and 1st grade see the K–1 stage sets; 2nd–5th grade still see today’s', () => {
@@ -271,6 +277,8 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
       ...['kCounting', 'kCounting', 'kCounting', 'kShapes', 'kShapes', 'kShapes'],
       ...['kLetters', 'kLiteracy', 'kLetters', 'kLiteracy', 'kLetters', 'kLiteracy', 'kLiteracy', 'kLiteracy'],
       ...['kTrace', 'kTrace', 'kTrace', 'kStories'],
+      // K complete (phase 2a), in K1_IDS order
+      ...['kMeasure', 'kMeasure', 'kMeasure', 'kSort', 'kSort', 'kSort'],
     ])
     // the counting stages climb: count to 10, count on to 20 (the parade), then compare
     expect(all.slice(0, 3).map((s) => s.providerConfig)).toMatchObject([

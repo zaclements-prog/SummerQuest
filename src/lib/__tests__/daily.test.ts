@@ -22,7 +22,11 @@ describe('daily challenge pick', () => {
   })
 
   it('K–1 only picks a zone that is open to K–1, and plays its K stage', () => {
-    const open = new Set(['multiplication-mesa', 'geometry-grove', 'reading-reef', 'writing-workshop'])
+    const open = new Set([
+      ...['multiplication-mesa', 'geometry-grove', 'reading-reef', 'writing-workshop'],
+      // K complete (phase 2a)
+      ...['measurement-marsh', 'data-delta'],
+    ])
     for (const grade of [0, 1] as const) {
       const zonesSeen = new Set<string>()
       for (let d = 0; d < 120; d++) {

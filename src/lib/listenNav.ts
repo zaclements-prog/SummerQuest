@@ -74,6 +74,14 @@ const STAGE_PICTURE: Record<string, string> = {
   'k-trace-2': '🔢',
   'k-trace-3': '🔤',
   'k-story-1': '📖',
+  // Measure Marsh
+  'k-measure-1': '📏',
+  'k-measure-2': '🐘',
+  'k-measure-3': '📐',
+  // Sorting Delta
+  'k-sort-1': '🐶',
+  'k-sort-2': '🎨',
+  'k-sort-3': '📦',
 }
 const KIND_PICTURE: Record<Stage['kind'], string> = { concept: '💡', practice: '⚡', mastery: '🏆' }
 

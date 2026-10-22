@@ -49,6 +49,18 @@
       "kind": "line",
       "file": "voice/k-lessons/kTracing-lineL.mp3"
     },
+    "k-lessons/kMeasure-yourTurn": {
+      "text": "Which one is longer? Tap it!",
+      "hash": "0c1c963313",
+      "kind": "line",
+      "file": "voice/k-lessons/kMeasure-yourTurn.mp3"
+    },
+    "k-lessons/kSorting-count": {
+      "text": "How many animals are in the box? Tap the number.",
+      "hash": "33ea5a4228",
+      "kind": "line",
+      "file": "voice/k-lessons/kSorting-count.mp3"
+    },
     "k-lessons/triangle": {
       "text": "Triangle!",
       "hash": "da7385986c",
@@ -2995,6 +3007,246 @@
       "kind": "whole",
       "file": "voice/k-math/putInBowl/n=10,thing=frogs.mp3"
     },
+    "k-measure/lookScale": {
+      "text": "Look at the scale!",
+      "hash": "16cdb04b83",
+      "kind": "line",
+      "file": "voice/k-measure/lookScale.mp3"
+    },
+    "k-measure/whichHeavier": {
+      "text": "Which one is heavier? Tap it!",
+      "hash": "a339fc180e",
+      "kind": "line",
+      "file": "voice/k-measure/whichHeavier.mp3"
+    },
+    "k-measure/whichLighter": {
+      "text": "Which one is lighter? Tap it!",
+      "hash": "54971c5016",
+      "kind": "line",
+      "file": "voice/k-measure/whichLighter.mp3"
+    },
+    "k-measure/lineUp": {
+      "text": "Let's line them up at the start!",
+      "hash": "4291194355",
+      "kind": "line",
+      "file": "voice/k-measure/lineUp.mp3"
+    },
+    "k-measure/sameGround": {
+      "text": "Let's stand them on the same ground!",
+      "hash": "708753cfef",
+      "kind": "line",
+      "file": "voice/k-measure/sameGround.mp3"
+    },
+    "k-measure/isLonger": {
+      "text": "That one is longer.",
+      "hash": "09129680d0",
+      "kind": "line",
+      "file": "voice/k-measure/isLonger.mp3"
+    },
+    "k-measure/isShorter": {
+      "text": "That one is shorter.",
+      "hash": "3d5eec51a7",
+      "kind": "line",
+      "file": "voice/k-measure/isShorter.mp3"
+    },
+    "k-measure/isTaller": {
+      "text": "That one is taller.",
+      "hash": "4c9383047a",
+      "kind": "line",
+      "file": "voice/k-measure/isTaller.mp3"
+    },
+    "k-measure/isHeavier": {
+      "text": "That one is heavier.",
+      "hash": "b0f272b3e9",
+      "kind": "line",
+      "file": "voice/k-measure/isHeavier.mp3"
+    },
+    "k-measure/isLighter": {
+      "text": "That one is lighter.",
+      "hash": "703edc14cd",
+      "kind": "line",
+      "file": "voice/k-measure/isLighter.mp3"
+    },
+    "k-measure/helpLength": {
+      "text": "Line them up at the start. Then look at the ends!",
+      "hash": "517fadd089",
+      "kind": "line",
+      "file": "voice/k-measure/helpLength.mp3"
+    },
+    "k-measure/helpHeight": {
+      "text": "Stand them on the same ground. Then look at the tops!",
+      "hash": "2b2ad76cbc",
+      "kind": "line",
+      "file": "voice/k-measure/helpHeight.mp3"
+    },
+    "k-measure/helpWeight": {
+      "text": "The heavy side goes down. The light side goes up!",
+      "hash": "d75b01686a",
+      "kind": "line",
+      "file": "voice/k-measure/helpWeight.mp3"
+    },
+    "k-measure/bigLight": {
+      "text": "Big things can be light! Look at the scale.",
+      "hash": "b7d3599cfb",
+      "kind": "line",
+      "file": "voice/k-measure/bigLight.mp3"
+    },
+    "k-measure/greatMeasuring": {
+      "text": "Great measuring!",
+      "hash": "d4831e7d3b",
+      "kind": "line",
+      "file": "voice/k-measure/greatMeasuring.mp3"
+    },
+    "k-measure/youCompared": {
+      "text": "You compared them!",
+      "hash": "d551901b58",
+      "kind": "line",
+      "file": "voice/k-measure/youCompared.mp3"
+    },
+    "k-measure/snake": {
+      "text": "Snake!",
+      "hash": "d3b579a378",
+      "kind": "line",
+      "file": "voice/k-measure/snake.mp3"
+    },
+    "k-measure/caterpillar": {
+      "text": "Caterpillar!",
+      "hash": "b37d64db1b",
+      "kind": "line",
+      "file": "voice/k-measure/caterpillar.mp3"
+    },
+    "k-measure/watermelon": {
+      "text": "Watermelon!",
+      "hash": "df90b0fa47",
+      "kind": "line",
+      "file": "voice/k-measure/watermelon.mp3"
+    },
+    "k-measure/strawberry": {
+      "text": "Strawberry!",
+      "hash": "b0135959d0",
+      "kind": "line",
+      "file": "voice/k-measure/strawberry.mp3"
+    },
+    "k-measure/whichLonger/thing=pencil": {
+      "text": "Which pencil is longer? Tap it!",
+      "hash": "89ac3fe442",
+      "kind": "whole",
+      "file": "voice/k-measure/whichLonger/thing=pencil.mp3"
+    },
+    "k-measure/whichLonger/thing=ribbon": {
+      "text": "Which ribbon is longer? Tap it!",
+      "hash": "eb1de2efe0",
+      "kind": "whole",
+      "file": "voice/k-measure/whichLonger/thing=ribbon.mp3"
+    },
+    "k-measure/whichLonger/thing=snake": {
+      "text": "Which snake is longer? Tap it!",
+      "hash": "9f11442833",
+      "kind": "whole",
+      "file": "voice/k-measure/whichLonger/thing=snake.mp3"
+    },
+    "k-measure/whichLonger/thing=train": {
+      "text": "Which train is longer? Tap it!",
+      "hash": "9500f0b84f",
+      "kind": "whole",
+      "file": "voice/k-measure/whichLonger/thing=train.mp3"
+    },
+    "k-measure/whichLonger/thing=worm": {
+      "text": "Which worm is longer? Tap it!",
+      "hash": "582fa2c9a7",
+      "kind": "whole",
+      "file": "voice/k-measure/whichLonger/thing=worm.mp3"
+    },
+    "k-measure/whichTaller/thing=tower": {
+      "text": "Which tower is taller? Tap it!",
+      "hash": "db13a59fc4",
+      "kind": "whole",
+      "file": "voice/k-measure/whichTaller/thing=tower.mp3"
+    },
+    "k-measure/whichTaller/thing=tree": {
+      "text": "Which tree is taller? Tap it!",
+      "hash": "9fc5c83f5a",
+      "kind": "whole",
+      "file": "voice/k-measure/whichTaller/thing=tree.mp3"
+    },
+    "k-measure/whichTaller/thing=flower": {
+      "text": "Which flower is taller? Tap it!",
+      "hash": "fdec1cff2f",
+      "kind": "whole",
+      "file": "voice/k-measure/whichTaller/thing=flower.mp3"
+    },
+    "k-measure/whichTaller/thing=candle": {
+      "text": "Which candle is taller? Tap it!",
+      "hash": "f8e3d63c58",
+      "kind": "whole",
+      "file": "voice/k-measure/whichTaller/thing=candle.mp3"
+    },
+    "k-measure/whichTaller/thing=rocket": {
+      "text": "Which rocket is taller? Tap it!",
+      "hash": "b7d1f2d9a9",
+      "kind": "whole",
+      "file": "voice/k-measure/whichTaller/thing=rocket.mp3"
+    },
+    "k-measure/whichShorter/thing=pencil": {
+      "text": "Which pencil is shorter? Tap it!",
+      "hash": "a58d063d23",
+      "kind": "whole",
+      "file": "voice/k-measure/whichShorter/thing=pencil.mp3"
+    },
+    "k-measure/whichShorter/thing=ribbon": {
+      "text": "Which ribbon is shorter? Tap it!",
+      "hash": "43db8c91b1",
+      "kind": "whole",
+      "file": "voice/k-measure/whichShorter/thing=ribbon.mp3"
+    },
+    "k-measure/whichShorter/thing=snake": {
+      "text": "Which snake is shorter? Tap it!",
+      "hash": "a98fd13f0a",
+      "kind": "whole",
+      "file": "voice/k-measure/whichShorter/thing=snake.mp3"
+    },
+    "k-measure/whichShorter/thing=train": {
+      "text": "Which train is shorter? Tap it!",
+      "hash": "37c60325d3",
+      "kind": "whole",
+      "file": "voice/k-measure/whichShorter/thing=train.mp3"
+    },
+    "k-measure/whichShorter/thing=worm": {
+      "text": "Which worm is shorter? Tap it!",
+      "hash": "8d7a6925ba",
+      "kind": "whole",
+      "file": "voice/k-measure/whichShorter/thing=worm.mp3"
+    },
+    "k-measure/whichShorter/thing=tower": {
+      "text": "Which tower is shorter? Tap it!",
+      "hash": "6a32c039b9",
+      "kind": "whole",
+      "file": "voice/k-measure/whichShorter/thing=tower.mp3"
+    },
+    "k-measure/whichShorter/thing=tree": {
+      "text": "Which tree is shorter? Tap it!",
+      "hash": "ade2168208",
+      "kind": "whole",
+      "file": "voice/k-measure/whichShorter/thing=tree.mp3"
+    },
+    "k-measure/whichShorter/thing=flower": {
+      "text": "Which flower is shorter? Tap it!",
+      "hash": "53b74aeb90",
+      "kind": "whole",
+      "file": "voice/k-measure/whichShorter/thing=flower.mp3"
+    },
+    "k-measure/whichShorter/thing=candle": {
+      "text": "Which candle is shorter? Tap it!",
+      "hash": "37ccc0a36e",
+      "kind": "whole",
+      "file": "voice/k-measure/whichShorter/thing=candle.mp3"
+    },
+    "k-measure/whichShorter/thing=rocket": {
+      "text": "Which rocket is shorter? Tap it!",
+      "hash": "6597d90be5",
+      "kind": "whole",
+      "file": "voice/k-measure/whichShorter/thing=rocket.mp3"
+    },
     "k-nav/pickAnimal": {
       "text": "Pick your animal friend!",
       "hash": "0be121581a",
@@ -3372,6 +3624,66 @@
       "hash": "da7764c06c",
       "kind": "line",
       "file": "voice/k-nav/stage-k-story-1.mp3"
+    },
+    "k-nav/name-measurement-marsh": {
+      "text": "Measure Marsh!",
+      "hash": "a3ca9f0797",
+      "kind": "line",
+      "file": "voice/k-nav/name-measurement-marsh.mp3"
+    },
+    "k-nav/welcome-measurement-marsh": {
+      "text": "Measure Marsh! Tap a star to play!",
+      "hash": "ebd594afa9",
+      "kind": "line",
+      "file": "voice/k-nav/welcome-measurement-marsh.mp3"
+    },
+    "k-nav/stage-k-measure-1": {
+      "text": "Long and tall!",
+      "hash": "1dac4d9c98",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-measure-1.mp3"
+    },
+    "k-nav/stage-k-measure-2": {
+      "text": "Heavy and light!",
+      "hash": "2e188bf5a5",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-measure-2.mp3"
+    },
+    "k-nav/stage-k-measure-3": {
+      "text": "Measure mix!",
+      "hash": "249fc0936d",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-measure-3.mp3"
+    },
+    "k-nav/name-data-delta": {
+      "text": "Sorting Delta!",
+      "hash": "da79743226",
+      "kind": "line",
+      "file": "voice/k-nav/name-data-delta.mp3"
+    },
+    "k-nav/welcome-data-delta": {
+      "text": "Sorting Delta! Tap a star to play!",
+      "hash": "40244076fe",
+      "kind": "line",
+      "file": "voice/k-nav/welcome-data-delta.mp3"
+    },
+    "k-nav/stage-k-sort-1": {
+      "text": "Animals or food!",
+      "hash": "f74e85ff48",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-sort-1.mp3"
+    },
+    "k-nav/stage-k-sort-2": {
+      "text": "Colors and sizes!",
+      "hash": "94f2c383e1",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-sort-2.mp3"
+    },
+    "k-nav/stage-k-sort-3": {
+      "text": "Sort and count!",
+      "hash": "f0b57f340f",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-sort-3.mp3"
     },
     "k-rhymes/youHearRhyme": {
       "text": "You can hear the rhyme!",
@@ -4218,6 +4530,162 @@
       "hash": "5adf941330",
       "kind": "whole",
       "file": "voice/k-shapes/isSolid/shape=cylinder.mp3"
+    },
+    "k-sort/letsSort": {
+      "text": "Let's sort! Look at the boxes.",
+      "hash": "e998e75c14",
+      "kind": "line",
+      "file": "voice/k-sort/letsSort.mp3"
+    },
+    "k-sort/byColor": {
+      "text": "Let's sort by color! Look at the boxes.",
+      "hash": "9b190e8e66",
+      "kind": "line",
+      "file": "voice/k-sort/byColor.mp3"
+    },
+    "k-sort/bySize": {
+      "text": "Let's sort by size! Look at the boxes.",
+      "hash": "c4bef7a565",
+      "kind": "line",
+      "file": "voice/k-sort/bySize.mp3"
+    },
+    "k-sort/box-animals": {
+      "text": "Animals!",
+      "hash": "802363b660",
+      "kind": "line",
+      "file": "voice/k-sort/box-animals.mp3"
+    },
+    "k-sort/box-food": {
+      "text": "Food!",
+      "hash": "843e263414",
+      "kind": "line",
+      "file": "voice/k-sort/box-food.mp3"
+    },
+    "k-sort/box-toys": {
+      "text": "Toys!",
+      "hash": "23cc5f58b8",
+      "kind": "line",
+      "file": "voice/k-sort/box-toys.mp3"
+    },
+    "k-sort/box-red": {
+      "text": "Red!",
+      "hash": "0ef7a75cec",
+      "kind": "line",
+      "file": "voice/k-sort/box-red.mp3"
+    },
+    "k-sort/box-blue": {
+      "text": "Blue!",
+      "hash": "680dd89206",
+      "kind": "line",
+      "file": "voice/k-sort/box-blue.mp3"
+    },
+    "k-sort/box-yellow": {
+      "text": "Yellow!",
+      "hash": "f778176f70",
+      "kind": "line",
+      "file": "voice/k-sort/box-yellow.mp3"
+    },
+    "k-sort/box-green": {
+      "text": "Green!",
+      "hash": "ea1d1c96f7",
+      "kind": "line",
+      "file": "voice/k-sort/box-green.mp3"
+    },
+    "k-sort/box-big": {
+      "text": "Big ones!",
+      "hash": "f112f8ad4e",
+      "kind": "line",
+      "file": "voice/k-sort/box-big.mp3"
+    },
+    "k-sort/box-small": {
+      "text": "Small ones!",
+      "hash": "20305254ea",
+      "kind": "line",
+      "file": "voice/k-sort/box-small.mp3"
+    },
+    "k-sort/putEach": {
+      "text": "Put each one in its box!",
+      "hash": "0a44dba8be",
+      "kind": "line",
+      "file": "voice/k-sort/putEach.mp3"
+    },
+    "k-sort/is-animals": {
+      "text": "That one is an animal!",
+      "hash": "109d7c27e9",
+      "kind": "line",
+      "file": "voice/k-sort/is-animals.mp3"
+    },
+    "k-sort/is-food": {
+      "text": "That one is food!",
+      "hash": "9694de08cb",
+      "kind": "line",
+      "file": "voice/k-sort/is-food.mp3"
+    },
+    "k-sort/is-toys": {
+      "text": "That one is a toy!",
+      "hash": "243f4d4b4a",
+      "kind": "line",
+      "file": "voice/k-sort/is-toys.mp3"
+    },
+    "k-sort/is-red": {
+      "text": "That one is red!",
+      "hash": "5f48a01826",
+      "kind": "line",
+      "file": "voice/k-sort/is-red.mp3"
+    },
+    "k-sort/is-blue": {
+      "text": "That one is blue!",
+      "hash": "f9eed93e90",
+      "kind": "line",
+      "file": "voice/k-sort/is-blue.mp3"
+    },
+    "k-sort/is-yellow": {
+      "text": "That one is yellow!",
+      "hash": "27ba78e3c0",
+      "kind": "line",
+      "file": "voice/k-sort/is-yellow.mp3"
+    },
+    "k-sort/is-green": {
+      "text": "That one is green!",
+      "hash": "1b6424b268",
+      "kind": "line",
+      "file": "voice/k-sort/is-green.mp3"
+    },
+    "k-sort/is-big": {
+      "text": "That one is big!",
+      "hash": "ce2fc2a1a0",
+      "kind": "line",
+      "file": "voice/k-sort/is-big.mp3"
+    },
+    "k-sort/is-small": {
+      "text": "That one is small!",
+      "hash": "d85a387bc5",
+      "kind": "line",
+      "file": "voice/k-sort/is-small.mp3"
+    },
+    "k-sort/howMany": {
+      "text": "How many in this group? Tap the number!",
+      "hash": "349831575f",
+      "kind": "line",
+      "file": "voice/k-sort/howMany.mp3"
+    },
+    "k-sort/whichMore": {
+      "text": "Which group has more? Tap it!",
+      "hash": "6803d9cfd9",
+      "kind": "line",
+      "file": "voice/k-sort/whichMore.mp3"
+    },
+    "k-sort/greatSorting": {
+      "text": "Great sorting!",
+      "hash": "2872b60bfb",
+      "kind": "line",
+      "file": "voice/k-sort/greatSorting.mp3"
+    },
+    "k-sort/allSorted": {
+      "text": "All sorted!",
+      "hash": "9d7fea1f3a",
+      "kind": "line",
+      "file": "voice/k-sort/allSorted.mp3"
     },
     "k-sounds/youHeardParts": {
       "text": "You heard every part!",

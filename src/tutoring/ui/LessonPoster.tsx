@@ -249,6 +249,47 @@ const POSTERS: Record<string, { bg: string; motif: () => ReactNode }> = {
       </g>
     ),
   },
+  // K complete (phase 2a)
+  kMeasure: {
+    bg: '#e3f6dc',
+    motif: () => (
+      <g strokeLinejoin="round">
+        {/* two ribbons lined up at a green start line; a dashed line where the short one stops */}
+        <path d="M 66 30 V 128" stroke="#36c35a" strokeWidth={6} strokeLinecap="round" />
+        <path d="M 66 30 L 86 37 L 66 44 Z" fill="#36c35a" stroke={M.ink} strokeWidth={2.5} />
+        <path d="M 66 52 H 252 L 238 66 L 252 80 H 66 Z" fill="#8ab8ff" stroke={M.ink} strokeWidth={3} />
+        <path d="M 66 92 H 172 L 158 106 L 172 120 H 66 Z" fill="#f2766b" stroke={M.ink} strokeWidth={3} />
+        <rect x={172} y={50} width={80} height={32} rx={8} fill="#ffe594" opacity={0.6} />
+        <path d="M 172 44 V 128" stroke={M.ink} strokeWidth={3} strokeDasharray="7 6" strokeLinecap="round" />
+      </g>
+    ),
+  },
+  kSorting: {
+    bg: '#ffe9dc',
+    motif: () => (
+      <g strokeLinejoin="round">
+        {/* two boxes, a red group and a blue group */}
+        <rect x={56} y={58} width={96} height={72} rx={14} fill="#ffe0dc" stroke={M.ink} strokeWidth={3} />
+        <rect x={168} y={58} width={96} height={72} rx={14} fill="#dcebff" stroke={M.ink} strokeWidth={3} />
+        {[
+          [80, 82],
+          [104, 82],
+          [128, 82],
+          [92, 106],
+        ].map(([x, y], i) => (
+          <circle key={i} cx={x} cy={y} r={10} fill="#ef4b3f" stroke={M.ink} strokeWidth={2.5} />
+        ))}
+        {[
+          [204, 92],
+          [228, 92],
+        ].map(([x, y], i) => (
+          <circle key={i} cx={x} cy={y} r={10} fill="#3d8bf2" stroke={M.ink} strokeWidth={2.5} />
+        ))}
+        <circle cx={160} cy={34} r={12} fill="#ef4b3f" stroke={M.ink} strokeWidth={2.5} />
+        <path d="M 160 48 Q 132 52 118 62" fill="none" stroke={M.ink} strokeWidth={3} strokeDasharray="6 6" strokeLinecap="round" />
+      </g>
+    ),
+  },
 }
 
 /**

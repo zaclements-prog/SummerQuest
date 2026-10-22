@@ -93,5 +93,18 @@ export default defineVoicePack({
     'stage-k-trace-2': 'Trace numbers!',
     'stage-k-trace-3': 'Trace big letters!',
     'stage-k-story-1': 'Story order!',
+
+    // ── Measure Marsh (K, phase 2a): its name, welcome and stage buttons ──
+    'name-measurement-marsh': 'Measure Marsh!',
+    'welcome-measurement-marsh': 'Measure Marsh! Tap a star to play!',
+    'stage-k-measure-1': 'Long and tall!',
+    'stage-k-measure-2': 'Heavy and light!',
+    'stage-k-measure-3': 'Measure mix!',
+    // ── Sorting Delta (K, phase 2a) ──
+    'name-data-delta': 'Sorting Delta!',
+    'welcome-data-delta': 'Sorting Delta! Tap a star to play!',
+    'stage-k-sort-1': 'Animals or food!',
+    'stage-k-sort-2': 'Colors and sizes!',
+    'stage-k-sort-3': 'Sort and count!',
   },
 })

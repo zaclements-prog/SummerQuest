@@ -15,6 +15,8 @@ import { kLettersScenes } from './kLetters'
 import { kShapesScenes } from './kShapes'
 import { kRhymesScenes } from './kRhymes'
 import { kTracingScenes } from './kTracing'
+import { kMeasureScenes } from './kMeasure'
+import { kSortingScenes } from './kSorting'
 
 /**
  * Motion graphics by lesson → step id. A step without a scene falls back to
@@ -39,6 +41,8 @@ const SCENES: Record<string, Record<string, Scene>> = {
   kLetters: kLettersScenes,
   kRhymes: kRhymesScenes,
   kTracing: kTracingScenes,
+  kMeasure: kMeasureScenes,
+  kSorting: kSortingScenes,
 }
 
 export function sceneFor(lessonId: string, stepId: string): Scene | undefined {

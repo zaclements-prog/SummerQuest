@@ -231,6 +231,9 @@ export function effectiveConfig(
     case 'kTrace':
     case 'kStories':
       return config
+    case 'kMeasure':
+    case 'kSort':
+      return config
   }
 }
 
