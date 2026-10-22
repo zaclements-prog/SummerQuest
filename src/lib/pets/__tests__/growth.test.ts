@@ -38,14 +38,14 @@ describe('pet catalog', () => {
     expect(new Set(PETS.map((p) => p.zoneId))).toEqual(new Set(curriculum.zones.map((z) => z.id)))
   })
 
-  it('matches the plan’s pet ↔ zone ↔ lessons table (2–4 lesson, then the K–1 pilot’s)', () => {
+  it('matches the plan’s pet ↔ zone ↔ lessons table (2–4 lesson, then the K–1 pilot’s, then 1st grade’s)', () => {
     const table: [string, string, string[]][] = [
       ['frog', 'fraction-falls', ['fractions', 'kAddTake']],
       ['octopus', 'reading-reef', ['reading', 'kLetters', 'kRhymes']],
-      ['owl', 'word-problem-woods', ['wordProblem', 'kStoryMath']],
+      ['owl', 'word-problem-woods', ['wordProblem', 'kStoryMath', 'g1StoryMath']],
       ['panda', 'geometry-grove', ['geometry', 'kShapes']],
-      ['lion', 'multiplication-mesa', ['multiplication', 'kCounting']],
-      ['trex', 'division-dunes', ['division', 'kCompare']],
+      ['lion', 'multiplication-mesa', ['multiplication', 'kCounting', 'g1Adding']],
+      ['trex', 'division-dunes', ['division', 'kCompare', 'g1Subtract']],
       ['bear', 'measurement-marsh', ['measurement', 'kMeasure']],
       ['fox', 'data-delta', ['dataGraph', 'kSorting']],
       ['unicorn', 'place-value-plateau', ['placeValue', 'kTeens']],
