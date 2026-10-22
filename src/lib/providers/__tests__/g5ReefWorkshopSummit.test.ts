@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { nextProblem, type Problem } from '../../problem'
 import { seededRng } from '../../random'
-import { createProvider } from '..'
+import { createProvider, type ProviderConfig } from '..'
 import { effectiveConfig, GRADE_LEVELS } from '../../gradeTiers'
 import { G5_PASSAGES } from '../content/g5Reading'
 import { G5_QUESTIONS_PER_PASSAGE, g5ReadingPool, makeG5ReadingProvider } from '../g5Reading'
@@ -348,12 +348,12 @@ describe('Writing Workshop (5th grade): prompts, checklists and the offline grad
 
 describe('grade-5 kinds pass through the grade tiers as written', () => {
   it('every grade leaves them unchanged', () => {
-    const cfgs = [
+    const cfgs: ProviderConfig[] = [
       { kind: 'g5Reading', shelf: 'literature' },
       { kind: 'g5Writing', mode: 'opinion' },
       { kind: 'g5Science', strands: ['matter'] },
       { kind: 'g5Spheres' },
-    ] as const
+    ]
     for (const c of cfgs) for (const g of GRADE_LEVELS) for (const i of [0, 1, 2, 3]) expect(effectiveConfig(c, g, i)).toEqual(c)
     expect(createProvider({ kind: 'g5Spheres' }).topic).toBe('g5-science-spheres')
   })

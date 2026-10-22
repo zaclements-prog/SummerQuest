@@ -165,4 +165,20 @@ describe('daily challenge pick', () => {
     }
     expect([...seen].sort()).toEqual(['data-delta', 'measurement-marsh', 'science-summit'])
   })
+
+  it('5th grade: Reading Reef and Science Summit play their own first stage; Writing Workshop never comes up (phase 3)', () => {
+    const FIRST: Record<string, string> = { 'reading-reef': 'g5-read-1', 'science-summit': 'g5-sci-1' }
+    const seen = new Set<string>()
+    for (let d = 0; d < 366; d++) {
+      const { zone, stage } = pickTodaysChallenge(5, localDayKey(new Date(2026, 0, 1 + d)))
+      expect(stage.gameId).not.toBe('writingPad')
+      expect(zone.id).not.toBe('writing-workshop')
+      if (!(zone.id in FIRST)) continue
+      seen.add(zone.id)
+      expect(stage.id).toBe(FIRST[zone.id])
+      const q = createProvider(effectiveConfigForStage(stage, 0, 5)).next() as ListenProblem
+      expect(q.options.filter((o) => o === q.answer)).toHaveLength(1)
+    }
+    expect([...seen].sort()).toEqual(Object.keys(FIRST).sort())
+  })
 })

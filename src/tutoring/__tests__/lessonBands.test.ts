@@ -126,7 +126,8 @@ describe('the hub (World) lesson lists', () => {
     const p = { attempts: [], sessions: [] }
     expect(ids(lessonRows({ ...p, grade: 0 }))).toEqual(K_PILOT)
     expect(ids(lessonRows({ ...p, grade: 3 })).sort()).toEqual([...TODAY].sort())
-    expect(ids(lessonRows({ ...p, grade: 5 })).sort()).toEqual([...TODAY].sort())
+    // (5th grade: its own lessons where a zone has one, the 2–4 one elsewhere)
+    expect(ids(lessonRows({ ...p, grade: 5 })).sort()).toEqual(ids(lessonsFor(5)).sort())
     expect(lessonRows({ ...p, grade: 0 })[0].href).toBe('/tutor/kCounting')
   })
 
@@ -231,5 +232,33 @@ describe('practice links stay in the band', () => {
       expect(zoneStages(zone, 0).map((s) => s.id)).toContain(practiceStageFor(l, undefined, 0))
       expect(zone.stages.map((s) => s.id)).toContain(practiceStageFor(l, undefined, 3))
     }
+  })
+})
+
+/** 5th grade's own lessons (phase 3): each for a zone with a grade-5 set, practised in its first grade-5 stage. */
+const G5_REEF_WORKSHOP_SUMMIT: Record<string, string> = {
+  g5Reading: 'reading-reef',
+  g5Writing: 'writing-workshop',
+  g5Science: 'science-summit',
+}
+
+describe('5th grade’s own lessons: Reading Reef, Writing Workshop, Science Summit (phase 3)', () => {
+  it('band g5, their zones, practised in the zone’s first grade-5 stage; offered only to 5th grade', () => {
+    for (const [id, zoneId] of Object.entries(G5_REEF_WORKSHOP_SUMMIT)) {
+      const l = getLesson(id)!
+      expect(l, id).toBeDefined()
+      expect(l).toMatchObject({ band: 'g5', zoneId })
+      expect(zoneLessonFor(zoneId, 5)?.id).toBe(id)
+      expect(zoneStages(getZone(zoneId)!, 5)[0].id).toBe(l.practiceStageId)
+      expect(practiceHref(l, undefined, 5)).toBe(`/play/${zoneId}/${l.practiceStageId}`)
+      for (const g of [0, 1, 2, 3, 4]) expect(isLessonFor(id, g), `${id} at grade ${g}`).toBe(false)
+      // a 3rd grader who opens it lands on a 2–4 stage
+      expect(getZone(zoneId)!.stages.map((s) => s.id)).toContain(practiceStageFor(l, undefined, 3))
+    }
+    // the 2–4 lessons of these zones are not offered at grade 5; the other zones' still are
+    expect(isLessonFor('reading', 5)).toBe(false)
+    expect(isLessonFor('writing', 5)).toBe(false)
+    expect(isLessonFor('science', 5)).toBe(false)
+    expect(isLessonFor('division', 5) || isLessonFor('g5Division', 5)).toBe(true)
   })
 })

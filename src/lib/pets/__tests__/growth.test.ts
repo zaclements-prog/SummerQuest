@@ -41,7 +41,7 @@ describe('pet catalog', () => {
   it('matches the plan’s pet ↔ zone ↔ lessons table (2–4 lesson, then the K–1 pilot’s)', () => {
     const table: [string, string, string[]][] = [
       ['frog', 'fraction-falls', ['fractions', 'kAddTake', 'g1Shares']],
-      ['octopus', 'reading-reef', ['reading', 'kLetters', 'kRhymes', 'g1Reading']],
+      ['octopus', 'reading-reef', ['reading', 'kLetters', 'kRhymes', 'g1Reading', 'g5Reading']],
       ['owl', 'word-problem-woods', ['wordProblem', 'kStoryMath']],
       ['panda', 'geometry-grove', ['geometry', 'kShapes', 'g1Shapes']],
       ['lion', 'multiplication-mesa', ['multiplication', 'kCounting']],
@@ -49,8 +49,8 @@ describe('pet catalog', () => {
       ['bear', 'measurement-marsh', ['measurement', 'kMeasure', 'g1Measure']],
       ['fox', 'data-delta', ['dataGraph', 'kSorting', 'g1Graphs']],
       ['unicorn', 'place-value-plateau', ['placeValue', 'kTeens', 'g1Tens']],
-      ['dragonet', 'writing-workshop', ['writing', 'kTracing', 'g1Writing']],
-      ['tiger', 'science-summit', ['science', 'kScience', 'g1Science']],
+      ['dragonet', 'writing-workshop', ['writing', 'kTracing', 'g1Writing', 'g5Writing']],
+      ['tiger', 'science-summit', ['science', 'kScience', 'g1Science', 'g5Science']],
       ['dragon', 'tower-battlefront', ['kTowers']],
     ]
     for (const [id, zoneId, lessonIds] of table) {
@@ -91,6 +91,10 @@ describe('pet catalog', () => {
     expect(zoneLessonFor('measurement-marsh', 1)?.id).toBe('g1Measure')
     expect(zoneLessonFor('data-delta', 1)?.id).toBe('g1Graphs')
     expect(zoneLessonFor('science-summit', 1)?.id).toBe('g1Science')
+    // (5th grade, phase 3: the octopus, the dragonet and the tiger hatch from their zones' grade-5 lessons)
+    expect(zoneLessonFor('reading-reef', 5)?.id).toBe('g5Reading')
+    expect(zoneLessonFor('writing-workshop', 5)?.id).toBe('g5Writing')
+    expect(zoneLessonFor('science-summit', 5)?.id).toBe('g5Science')
   })
 
   it('every egg has its own colors', () => {
