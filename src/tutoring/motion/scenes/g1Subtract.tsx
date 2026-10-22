@@ -91,7 +91,7 @@ const takeAway: Scene = ({ t, cue }: SceneProps) => {
 }
 
 const STONES = [8, 9, 10, 11, 12, 13]
-const stoneX = (n: number) => 180 + (n - 8) * 120
+const stoneX = (n: number) => 150 + (n - 8) * 116
 const STONE_Y = 410
 
 /**

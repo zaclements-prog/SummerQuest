@@ -225,11 +225,29 @@
   pointer-events: none;
 }
 /* the story's number sentence, written once the answer is found */
+.ms-sentence-veil {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: rgb(255 250 240 / 0.62);
+  z-index: 3;
+  pointer-events: none;
+  animation: ms-veil-in 0.35s ease both;
+}
+@keyframes ms-veil-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 .ms-sentence {
   position: absolute;
-  top: 3%;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  /* (`translate`, not `transform`: the pop-in animates the transform) */
+  translate: -50% -50%;
   display: flex;
   gap: 0.32em;
   align-items: center;
@@ -242,7 +260,7 @@
   font-weight: 700;
   line-height: 1.15;
   white-space: nowrap;
-  z-index: 3;
+  z-index: 4;
   animation: lp-pop-in 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 .ms-sentence [data-answer] {
@@ -253,7 +271,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ms-sentence {
+  .ms-sentence,
+  .ms-sentence-veil {
     animation: none !important;
   }
 }

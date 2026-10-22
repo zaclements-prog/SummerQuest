@@ -753,13 +753,17 @@ function MathStory({ problem, spec, phase, active, onAttempt, registerHelp }: Li
         })}
         {/* 1st grade: the story's number sentence, written once the answer is found ("8 + 5 = 13") */}
         {sc.solved && spec.sentence && (
-          <div data-guide={MS_SENTENCE} data-ms-sentence="" className="ms-sentence kid-text" style={{ fontSize: Math.max(30, Math.min(64, H * 0.15, W / (spec.sentence.length * 0.9 + 1))) }}>
-            {spec.sentence.map((t, i) => (
-              <span key={i} data-answer={i === spec.sentenceAnswerAt ? '' : undefined}>
-                {t}
-              </span>
-            ))}
-          </div>
+          <>
+            {/* (the story fades back so the sentence stands out, and covers nothing by accident) */}
+            <div className="ms-sentence-veil" aria-hidden="true" />
+            <div data-guide={MS_SENTENCE} data-ms-sentence="" className="ms-sentence kid-text" style={{ fontSize: Math.max(30, Math.min(80, H * 0.24, W / (spec.sentence.length * 0.8 + 1.5))) }}>
+              {spec.sentence.map((t, i) => (
+                <span key={i} data-answer={i === spec.sentenceAnswerAt ? '' : undefined}>
+                  {t}
+                </span>
+              ))}
+            </div>
+          </>
         )}
       </div>
 

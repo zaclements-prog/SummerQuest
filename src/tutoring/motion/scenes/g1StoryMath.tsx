@@ -46,7 +46,7 @@ function Bloom({ x, y, r = 24, petal }: { x: number; y: number; r?: number; peta
   )
 }
 
-const BASKET = { x: 430, y: 420 }
+const BASKET = { x: 430, y: 372 }
 /** The basket's apple spots: rows of five, from the bottom up. */
 const appleSpot = (i: number): [number, number] => [BASKET.x - 104 + (i % 5) * 52, BASKET.y - 24 - Math.floor(i / 5) * 50]
 
@@ -240,7 +240,7 @@ const three: Scene = ({ t, cue }: SceneProps) => {
   )
 }
 
-const PEAR_X = (i: number) => 230 + i * 76
+const PEAR_X = (i: number) => 205 + i * 70
 const TOP = 210
 const BOTTOM = 400
 
