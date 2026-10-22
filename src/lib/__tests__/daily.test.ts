@@ -13,7 +13,29 @@ const G1_FIRST: Record<string, string> = {
   'science-summit': 'g1-science-1',
 }
 
+/** 5th grade's own first stage, by zone (phase 3): what 5th grade plays in the daily there. */
+const G5_FIRST: Record<string, string> = {
+  // Fraction Falls, Place Value Plateau, Tower Battlefront
+  'fraction-falls': 'g5-frac-1',
+  'place-value-plateau': 'g5-dec-1',
+  'tower-battlefront': 'g5-td-1',
+}
+
 describe('daily challenge pick', () => {
+  it('5th grade plays its own first stage where a zone has a 5th-grade set: a multiple-choice quiz', () => {
+    const seen = new Set<string>()
+    for (let d = 0; d < 366; d++) {
+      const { zone, stage } = pickTodaysChallenge(5, localDayKey(new Date(2026, 0, 1 + d)))
+      if (!G5_FIRST[zone.id]) continue
+      seen.add(zone.id)
+      expect(stage.id).toBe(G5_FIRST[zone.id])
+      const q = createProvider(effectiveConfigForStage(stage, 0, 5)).next() as { options: unknown[]; answer: unknown }
+      expect(q.options.length).toBeGreaterThanOrEqual(3)
+      expect(q.options).toContain(q.answer)
+    }
+    expect([...seen].sort()).toEqual(Object.keys(G5_FIRST).sort())
+  })
+
   it('never lands on a writing (no answer options) stage, over a full year', () => {
     const start = new Date(2026, 0, 1)
     const zonesSeen = new Set<string>()

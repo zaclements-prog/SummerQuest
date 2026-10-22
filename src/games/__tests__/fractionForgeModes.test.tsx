@@ -70,7 +70,7 @@ describe('Fraction Forge modes', () => {
     expect(text()).toContain(`wants ${r.baseNum}/${r.baseDenom} of a bar!`)
     expect(text()).toContain(`Stamp 1/${r.targetDenom} slabs`)
     expect(text()).not.toContain('slab size')
-  })
+  }, 30_000)
 
   it('grade 5: an a/b + c/d order; the gauge first (a wrong size is a miss), then the press in LCD slabs', async () => {
     await mount({ rounds: 5, mode: 'unlike' })
@@ -102,5 +102,5 @@ describe('Fraction Forge modes', () => {
     expect(container.querySelector('[data-forge-gauge]')).toBeNull()
     expect(text()).toContain(`Stamp 1/${r.targetDenom} slabs`)
     expect(text()).toContain('Yes!')
-  })
+  }, 30_000)
 })

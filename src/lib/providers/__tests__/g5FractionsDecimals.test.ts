@@ -29,8 +29,8 @@ function draw(config: ProviderConfig, n = DRAWS, seed = 'g5'): Problem[] {
 }
 
 /** A fraction / mixed number / whole as printed ("2 1/3" uses a no-break space). */
-const R = (s: string): Rational => parseRational(s.replace(/ /g, ' ').replace('−', '-'))
-const FRAC = String.raw`(\d+(?: \d+\/\d+)?|\d+\/\d+)`
+const R = (s: string): Rational => parseRational(s.replace(/\u00a0/g, ' ').replace('−', '-'))
+const FRAC = String.raw`(\d+(?:\u00a0\d+\/\d+)?|\d+\/\d+)`
 
 /** Decimal text → whole thousandths, exactly (no floats). */
 function milli(s: string): number {
@@ -117,7 +117,7 @@ function checkFraction(p: Problem) {
   // printed in simplest form: the text is exactly how the value prints
   const a = String(p.answer)
   if (a.includes('/')) {
-    const [n, d] = a.split(/ /).pop()!.split('/').map(Number)
+    const [n, d] = a.split(/\u00a0/).pop()!.split('/').map(Number)
     expect(gcd(n, d), `${a} not simplest`).toBe(1)
     expect(n).toBeLessThan(d)
   }
@@ -153,7 +153,7 @@ describe('g5Fractions', () => {
       const m = new RegExp(`^${FRAC} [+−] ${FRAC} = \\?$`).exec(p.prompt)
       if (!m) continue
       expect(R(m[1]).d, p.prompt).not.toBe(R(m[2]).d)
-      if (/ /.test(p.prompt)) mixed++
+      if (/\u00a0/.test(p.prompt)) mixed++
     }
     expect(mixed).toBeGreaterThan(50)
   })

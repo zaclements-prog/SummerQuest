@@ -752,7 +752,7 @@ function unlikeEquation(view: ForgeView, round: FracRound): string {
 /** The gauge's chips: three slab sizes, one a common denominator. */
 function GaugeChips({ gauges, tried, onPick }: { gauges: number[]; tried: number | null; onPick: (d: number) => void }) {
   return (
-    <div className="absolute inset-x-0 bottom-[calc(4.6rem+var(--safe-bottom,env(safe-area-inset-bottom,0px)))] flex justify-center pointer-events-none" data-forge-gauge>
+    <div className="absolute inset-x-0 bottom-[calc(7.4rem+var(--safe-bottom,env(safe-area-inset-bottom,0px)))] flex justify-center pointer-events-none" data-forge-gauge>
       <div className="pointer-events-auto flex items-center gap-2 rounded-2xl px-3 py-2" style={{ background: UI.paper, border: `3px solid ${UI.line}`, boxShadow: UI.ledge }}>
         <span className="kid-text text-base" style={{ color: '#3a2c38' }}>
           🔧 Slab size:

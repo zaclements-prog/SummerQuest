@@ -1,5 +1,5 @@
 import type { Problem, ProblemProvider } from '../problem'
-import { add, compare, rat } from '../numbers'
+import { add, compare, rat, type Rational } from '../numbers'
 import { randInt, shuffle } from '../random'
 import { decOptions, decText, fracOptions, fracText, lcm, pick, properOf, weighted } from './fracDecKit'
 import { G5_FRAC_SKILLS, compareItem as fractionCompare } from './g5Fractions'
@@ -56,8 +56,8 @@ function addFractions(): Item {
       hint: 'Same denominator: add the tops, keep the bottom.',
     }
   }
-  let a = rat(1, 2)
-  let b = rat(1, 3)
+  let a: Rational
+  let b: Rational
   do {
     const [p, q] = shuffle(pick([[2, 3], [2, 4], [2, 5], [2, 6], [3, 4], [3, 6], [4, 6], [4, 8], [2, 8]] as const))
     a = properOf(p)

@@ -582,5 +582,57 @@
       "stepId": "families",
       "text": "A puppy looks like its mom, but not just the same. Parents feed their babies and keep them warm. Your turn!"
     }
+  ],
+  "g5Fractions": [
+    {
+      "stepId": "common",
+      "text": "To add one half and one third, the pieces have to be the same size. Halves and thirds don't match. Cut both into sixths! One half is three sixths, and one third is two sixths. Three sixths plus two sixths is five sixths."
+    },
+    {
+      "stepId": "mixed",
+      "text": "With mixed numbers, add the whole numbers, then add the fractions. Two and one half plus one and one third is three, plus five sixths: three and five sixths. When you subtract and the first fraction is too small, trade one whole for more pieces."
+    },
+    {
+      "stepId": "estimate",
+      "text": "Check your answer with benchmarks. Two fifths is a little less than one half. Add one half, and the sum must be a little less than one whole. An answer like three sevenths is too small, so it can't be right."
+    },
+    {
+      "stepId": "area",
+      "text": "To multiply two thirds times three fourths, shade three fourths of a square one way, then two thirds of it the other way. The overlap is six of twelve equal pieces. Multiply the tops and multiply the bottoms: six twelfths, which is one half."
+    },
+    {
+      "stepId": "whole",
+      "text": "Three fourths times eight means three fourths of eight. Split eight into four equal groups of two. Three of those groups make six."
+    },
+    {
+      "stepId": "share",
+      "text": "A fraction is also a division. Three pizzas are shared by four friends. Cut each pizza into fourths. Every friend gets one fourth of each pizza, so three fourths in all. Three divided by four is three fourths."
+    }
+  ],
+  "g5Decimals": [
+    {
+      "stepId": "places",
+      "text": "Decimal places keep going to the right of the ones: tenths, hundredths, thousandths. Each place is worth ten times the place to its right. In three point four seven two, the four is four tenths, the seven is seven hundredths, and the two is two thousandths."
+    },
+    {
+      "stepId": "names",
+      "text": "Read three point four seven two as three and four hundred seventy-two thousandths. The word and stands for the decimal point, and the last digit's place names the fraction."
+    },
+    {
+      "stepId": "compare",
+      "text": "Compare decimals place by place from the left, not by how long they are. Which is bigger, zero point five or zero point four five? Five tenths beats four tenths, so zero point five is greater. Writing a zero helps: zero point five zero is more than zero point four five."
+    },
+    {
+      "stepId": "round",
+      "text": "To round three point four seven six to the nearest tenth, look one place to the right, at the hundredths digit. It's a seven, which is five or more, so round up: three point five."
+    },
+    {
+      "stepId": "powers",
+      "text": "Multiplying by ten makes every digit worth ten times more, so the digits slide one place to the left. Three point four five times ten is thirty-four point five, and times one hundred is three hundred forty-five. Dividing by ten slides them to the right."
+    },
+    {
+      "stepId": "operate",
+      "text": "To add, line up the decimal points so tenths add to tenths: four point five plus two point three seven is six point eight seven. To multiply zero point six times zero point four, multiply six times four, which is twenty-four. Tenths times tenths make hundredths, so the answer is zero point two four."
+    }
   ]
 }

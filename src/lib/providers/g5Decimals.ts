@@ -46,7 +46,7 @@ const PLACE = ['ones', 'tenths', 'hundredths', 'thousandths'] as const
 /** A decimal with exactly `places` places (its last digit not zero) and a whole part in [lo, hi]. */
 export function randDec(places: 1 | 2 | 3, hi: number, lo = 0): number {
   const top = 10 ** places
-  let f = 0
+  let f: number
   do f = randInt(1, top - 1)
   while (f % 10 === 0)
   return randInt(lo, hi) * 1000 + f * UNIT[places]
@@ -103,7 +103,7 @@ function nameToNumeral(): Item {
 const NAME_MAX = 36
 
 function numeralToName(): Item {
-  let m = 0
+  let m: number
   do m = randDec(pick([1, 2, 3] as const), 12)
   while (decName(m).length > NAME_MAX)
   const seen = new Set([m])
@@ -221,8 +221,8 @@ function tenTimes(): Item {
   // the same digit in the ones place and every decimal place: 4.44 or 4.444
   let m = d * 1000
   for (let p = 1; p <= places; p++) m += d * UNIT[p]
-  let a = 0
-  let b = 0
+  let a: number
+  let b: number
   do {
     a = randInt(0, places)
     b = randInt(0, places)
@@ -241,8 +241,8 @@ function tenTimes(): Item {
 
 /** "0.45 ? 0.405": which sign? (the longer decimal is NOT always bigger; trailing zeros change nothing). */
 function compareSign(): Item {
-  let a = 0
-  let b = 0
+  let a: number
+  let b: number
   let pa: number | undefined
   let pb: number | undefined
   const kind = weighted([
@@ -443,8 +443,8 @@ function addSubDecimals(): Item {
 /** "0.6 × 0.4 = ?", "3 × 1.5 = ?", "4 × 0.25 = ?", "2.4 × 3 = ?" (products to hundredths). */
 function multiplyDecimals(): Item {
   const kind = pick(['tt', 'wt', 'wh', 'tw'] as const)
-  let a = 0
-  let b = 0
+  let a: number
+  let b: number
   if (kind === 'tt') {
     a = randInt(1, 9) * 100
     b = randInt(1, 9) * 100
@@ -481,7 +481,7 @@ function multiplyDecimals(): Item {
 function divideDecimals(): Item {
   const kind = pick(['dw', 'dd', 'wd'] as const)
   let q = 0
-  let d = 0
+  let d: number
   if (kind === 'dw') {
     d = randInt(2, 9) * 1000
     q = randDec(pick([1, 2] as const), 3)

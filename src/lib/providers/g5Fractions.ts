@@ -364,8 +364,8 @@ function shareStory(): Item {
 
 /** "9 people share a 50-pound sack of rice equally. Between which two whole numbers…?" (the standard's own example). */
 function shareBetween(): Item {
-  let n = 0
-  let w = 0
+  let n: number
+  let w: number
   do {
     n = randInt(3, 9)
     w = randInt(20, 60)
