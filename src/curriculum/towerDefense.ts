@@ -60,5 +60,41 @@ export const towerDefenseZone: Zone = {
         starsToEarn: 3,
       },
     ],
+    // 1st grade (1.OA.6, phase 2b; the zone keeps the name "Counting Towers"):
+    // the same K–1 tower game, built with + and − questions: a number sentence
+    // said aloud, answered with numeral cards. Its lesson is kindergarten's
+    // kTowers (how to play). Titles and descriptions are said aloud.
+    g1: [
+      {
+        id: 'g1-towers-1',
+        kind: 'concept',
+        title: 'Add to build',
+        description: 'Add to build your towers!',
+        gameId: 'towerDefense',
+        providerConfig: { kind: 'g1Towers', mode: 'add10' },
+        params: { listen: true, waves: 3 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-towers-2',
+        kind: 'practice',
+        title: 'Take away',
+        description: 'Take away to build your towers!',
+        gameId: 'towerDefense',
+        providerConfig: { kind: 'g1Towers', mode: 'sub10' },
+        params: { listen: true, waves: 3 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-towers-3',
+        kind: 'mastery',
+        title: 'Tower math',
+        description: 'Add and take away to twenty!',
+        gameId: 'towerDefense',
+        providerConfig: { kind: 'g1Towers', mode: 'mix20' },
+        params: { listen: true, waves: 4 },
+        starsToEarn: 3,
+      },
+    ],
   },
 }

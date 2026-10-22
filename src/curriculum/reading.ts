@@ -3,7 +3,7 @@ import type { Zone } from './types'
 export const readingZone: Zone = {
   id: 'reading-reef',
   title: 'Reading Reef',
-  titleByBand: { k1: 'Letter Reef' },
+  titleByBand: { k1: 'Letter Reef', g1: 'Word Reef' },
   subtitle: 'Comprehension passages',
   emoji: '🐠',
   themeColor: 'ocean',
@@ -129,6 +129,63 @@ export const readingZone: Zone = {
         description: 'Listen, then find the word.',
         gameId: 'listenPlay',
         providerConfig: { kind: 'kLiteracy', mode: 'sight', closeAfter: 3 },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+    ],
+    // 1st grade "Word Reef" (RF.1.2–4, phase 2b), in unlock order: short vowels
+    // (pictures, then the middle-sound gap) → letter teams (sh, ch, th, wh, ck)
+    // → reading a word (the voice says it only after it is read) → read-along
+    // sentences → 1st-grade sight words. The words being taught are printed (in
+    // Andika); everything else is said. Titles and descriptions are said aloud.
+    g1: [
+      {
+        id: 'g1-vowels-1',
+        kind: 'concept',
+        title: 'Short vowels',
+        description: 'Listen for the sound in the middle.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Reading', mode: 'vowels', closeAfter: 3 },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-digraphs-1',
+        kind: 'practice',
+        title: 'Letter teams',
+        description: 'Two letters, one sound. Find it!',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Reading', mode: 'digraphs', closeAfter: 3 },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-words-1',
+        kind: 'practice',
+        title: 'Read a word',
+        description: 'Read the word. Then tap its picture.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Reading', mode: 'decode' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-sentences-1',
+        kind: 'practice',
+        title: 'Read along',
+        description: 'Read along, then answer the question.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Reading', mode: 'sentences' },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-sight-1',
+        kind: 'mastery',
+        title: 'Sight words',
+        description: 'Listen, then find the word.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Reading', mode: 'sight', closeAfter: 3 },
         params: { questionCount: 6 },
         starsToEarn: 3,
       },

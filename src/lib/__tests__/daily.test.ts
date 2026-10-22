@@ -45,7 +45,8 @@ describe('daily challenge pick', () => {
       for (let d = 0; d < 120; d++) {
         const { zone, stage } = pickTodaysChallenge(grade, localDayKey(new Date(2026, 0, 1 + d)))
         expect(open.has(zone.id)).toBe(true)
-        expect(stage.id).toMatch(/^k-/)
+        // (1st grade plays its own stage where a zone has a 1st-grade set: phase 2b)
+        expect(stage.id).toMatch(grade === 0 ? /^k-/ : /^(k|g1)-/)
         zonesSeen.add(zone.id)
       }
       expect(zonesSeen.size).toBe(open.size)
@@ -67,6 +68,28 @@ describe('daily challenge pick', () => {
       if (zone.id === 'tower-battlefront') expect(stage.id).toBe('k-towers-1')
       else expect(stage.gameId).toBe('listenPlay')
     }
+  })
+
+  it('1st grade: Word Reef, Writing Workshop and Counting Towers play their own first stage (phase 2b)', () => {
+    const FIRST: Record<string, string> = {
+      'reading-reef': 'g1-vowels-1',
+      'writing-workshop': 'g1-trace-1',
+      'tower-battlefront': 'g1-towers-1',
+    }
+    const seen = new Set<string>()
+    for (let d = 0; d < 366; d++) {
+      const { zone, stage } = pickTodaysChallenge(1, localDayKey(new Date(2026, 0, 1 + d)))
+      if (!(zone.id in FIRST)) continue
+      seen.add(zone.id)
+      expect(stage.id).toBe(FIRST[zone.id])
+      // the daily plays it in Listen & Play: a spoken question (towers' are cards; the others' may be an activity)
+      const q = createProvider(effectiveConfigForStage(stage, 0, 1)).next() as ListenProblem
+      expect(q.speech, stage.id).toBeDefined()
+      if (zone.id === 'tower-battlefront') expect(q.pictureOptions?.map((o) => o.value)).toEqual(q.options)
+    }
+    expect([...seen].sort()).toEqual(Object.keys(FIRST).sort())
+    // kindergarten keeps its own
+    for (let d = 0; d < 120; d++) expect(pickTodaysChallenge(0, localDayKey(new Date(2026, 0, 1 + d))).stage.id).toMatch(/^k-/)
   })
 
   it('grades 2–4 still pick across the whole map', () => {

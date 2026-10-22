@@ -39,6 +39,10 @@ import { makeKMeasureProvider, type KMeasureConfig } from './kMeasure'
 import { makeKSortProvider, type KSortConfig } from './kSort'
 import { makeKTowersProvider, type KTowersConfig } from './kTowers'
 import { makeKScienceProvider, type KScienceConfig } from './kScience'
+// 1st grade (phase 2b): Word Reef, Writing Workshop, Tower Battlefront
+import { makeG1ReadingProvider, type G1ReadingConfig } from './g1Reading'
+import { makeG1WritingProvider, type G1WritingConfig } from './g1Writing'
+import { makeG1TowersProvider, type G1TowersConfig } from './g1Towers'
 
 export type ProviderConfig =
   | { kind: 'multiplication'; factorMin: number; factorMax: number }
@@ -85,6 +89,13 @@ export type ProviderConfig =
   | ({ kind: 'kTowers' } & KTowersConfig)
   /** Nature Summit: the weather and what to wear, what plants and animals need, push and pull. */
   | ({ kind: 'kScience' } & KScienceConfig)
+  // ── 1st grade (phase 2b): Word Reef, Writing Workshop, Tower Battlefront ──
+  /** Word Reef: short vowels, letter teams, reading words, read-along sentences, sight words. */
+  | ({ kind: 'g1Reading' } & G1ReadingConfig)
+  /** Writing Workshop (1st grade): trace lowercase letters, spell words from letter tiles, build a sentence from word tiles. */
+  | ({ kind: 'g1Writing' } & G1WritingConfig)
+  /** Counting Towers (1st grade): add and take away within 20, the questions that build the towers. */
+  | ({ kind: 'g1Towers' } & G1TowersConfig)
 
 export function createProvider(config: ProviderConfig): ProblemProvider {
   switch (config.kind) {
@@ -146,5 +157,12 @@ export function createProvider(config: ProviderConfig): ProblemProvider {
       return makeKTowersProvider(config)
     case 'kScience':
       return makeKScienceProvider(config)
+    // 1st grade (phase 2b): Word Reef, Writing Workshop, Tower Battlefront
+    case 'g1Reading':
+      return makeG1ReadingProvider(config)
+    case 'g1Writing':
+      return makeG1WritingProvider(config)
+    case 'g1Towers':
+      return makeG1TowersProvider(config)
   }
 }

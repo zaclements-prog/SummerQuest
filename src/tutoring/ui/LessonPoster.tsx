@@ -414,6 +414,50 @@ const POSTERS: Record<string, { bg: string; motif: () => ReactNode }> = {
       </g>
     ),
   },
+  // ── 1st grade (phase 2b) ──
+  g1Reading: {
+    bg: '#dcf3f6',
+    motif: () => (
+      <g>
+        {/* c a t on letter tiles, the a lit marker yellow, and a ship (Word Reef's word to read) */}
+        {['c', 'a', 't'].map((ch, i) => {
+          const x = 70 + i * 62
+          return (
+            <g key={ch} transform={`translate(${x} 82)`}>
+              {i === 1 && <rect x={-32} y={-32} width={64} height={64} rx={14} fill="#ffe066" />}
+              <rect x={-26} y={-22} width={52} height={52} rx={11} fill="#ecc28f" stroke={M.ink} strokeWidth={3} />
+              <rect x={-26} y={-26} width={52} height={51} rx={11} fill="#fdf3dc" stroke={M.ink} strokeWidth={3} />
+              <text y={-1} fontFamily={M.letters} fontWeight={700} fontSize={38} textAnchor="middle" dominantBaseline="central" fill={i === 1 ? '#f2766b' : '#3f6fd1'}>
+                {ch}
+              </text>
+            </g>
+          )
+        })}
+        <text x={262} y={86} fontSize={58} textAnchor="middle" dominantBaseline="central" fontFamily="'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif">
+          🚢
+        </text>
+      </g>
+    ),
+  },
+  g1Writing: {
+    bg: '#e4f1ff',
+    motif: () => (
+      <g strokeLinecap="round" strokeLinejoin="round" fill="none">
+        {/* a little a on four writing lines, its bowl traced in crayon, and a period dot */}
+        <line x1={60} x2={260} y1={34} y2={34} stroke="#a9cdea" strokeWidth={2.5} />
+        <line x1={60} x2={260} y1={70} y2={70} stroke="#a9cdea" strokeWidth={2.5} strokeDasharray="8 6" />
+        <line x1={60} x2={260} y1={106} y2={106} stroke="#7fb0da" strokeWidth={3} />
+        <line x1={60} x2={260} y1={142} y2={142} stroke="#a9cdea" strokeWidth={2.5} />
+        <ellipse cx={140} cy={88} rx={17} ry={18} stroke="#dccbb0" strokeWidth={15} />
+        <ellipse cx={140} cy={88} rx={17} ry={18} stroke="#f5ecdd" strokeWidth={11} />
+        <path d="M 157 70 L 157 106" stroke="#dccbb0" strokeWidth={15} />
+        <path d="M 157 70 L 157 106" stroke="#f5ecdd" strokeWidth={11} />
+        <path d="M 152 76 A 17 18 0 1 0 157 88" stroke="#3f6fd1" strokeWidth={8} />
+        <circle cx={152} cy={76} r={6} fill="#36c35a" stroke={M.ink} strokeWidth={2} />
+        <circle cx={218} cy={100} r={9} fill={M.ink} stroke="none" />
+      </g>
+    ),
+  },
 }
 
 /**

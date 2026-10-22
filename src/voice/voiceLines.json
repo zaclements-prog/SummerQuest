@@ -1,6 +1,5226 @@
 {
   "voice": "higgs-audio-v2-mlx-q8:clone:calm-teacher-v1:k",
   "clips": {
+    "g1-phonics/vowelQ-a": {
+      "text": "Which one has the short A sound, like apple?",
+      "hash": "9e79f5d39f",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelQ-a.mp3"
+    },
+    "g1-phonics/vowelQ-e": {
+      "text": "Which one has the short E sound, like elephant?",
+      "hash": "65504f5484",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelQ-e.mp3"
+    },
+    "g1-phonics/vowelQ-i": {
+      "text": "Which one has the short I sound, like igloo?",
+      "hash": "ae07d9e70e",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelQ-i.mp3"
+    },
+    "g1-phonics/vowelQ-o": {
+      "text": "Which one has the short O sound, like octopus?",
+      "hash": "42ae018085",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelQ-o.mp3"
+    },
+    "g1-phonics/vowelQ-u": {
+      "text": "Which one has the short U sound, like umbrella?",
+      "hash": "c6a8c2aac2",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelQ-u.mp3"
+    },
+    "g1-phonics/vowelIn-cat": {
+      "text": "Cat has the short A sound.",
+      "hash": "38fd829798",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-cat.mp3"
+    },
+    "g1-phonics/vowelIn-hat": {
+      "text": "Hat has the short A sound.",
+      "hash": "ed32db0ff1",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-hat.mp3"
+    },
+    "g1-phonics/vowelIn-bat": {
+      "text": "Bat has the short A sound.",
+      "hash": "57216c2d8b",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-bat.mp3"
+    },
+    "g1-phonics/vowelIn-map": {
+      "text": "Map has the short A sound.",
+      "hash": "447ce93856",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-map.mp3"
+    },
+    "g1-phonics/vowelIn-van": {
+      "text": "Van has the short A sound.",
+      "hash": "5062ae8fd5",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-van.mp3"
+    },
+    "g1-phonics/vowelIn-rat": {
+      "text": "Rat has the short A sound.",
+      "hash": "d6a06c20e9",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-rat.mp3"
+    },
+    "g1-phonics/vowelIn-bag": {
+      "text": "Bag has the short A sound.",
+      "hash": "9cbfaea377",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-bag.mp3"
+    },
+    "g1-phonics/vowelIn-bed": {
+      "text": "Bed has the short E sound.",
+      "hash": "17676f6392",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-bed.mp3"
+    },
+    "g1-phonics/vowelIn-hen": {
+      "text": "Hen has the short E sound.",
+      "hash": "68430f950d",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-hen.mp3"
+    },
+    "g1-phonics/vowelIn-pen": {
+      "text": "Pen has the short E sound.",
+      "hash": "fa4d44cf32",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-pen.mp3"
+    },
+    "g1-phonics/vowelIn-net": {
+      "text": "Net has the short E sound.",
+      "hash": "e41beaa807",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-net.mp3"
+    },
+    "g1-phonics/vowelIn-web": {
+      "text": "Web has the short E sound.",
+      "hash": "e043b0ded2",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-web.mp3"
+    },
+    "g1-phonics/vowelIn-jet": {
+      "text": "Jet has the short E sound.",
+      "hash": "a7d9cba6e4",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-jet.mp3"
+    },
+    "g1-phonics/vowelIn-egg": {
+      "text": "Egg has the short E sound.",
+      "hash": "4fbacbd208",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-egg.mp3"
+    },
+    "g1-phonics/vowelIn-bell": {
+      "text": "Bell has the short E sound.",
+      "hash": "96eabd8483",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-bell.mp3"
+    },
+    "g1-phonics/vowelIn-pig": {
+      "text": "Pig has the short I sound.",
+      "hash": "196c952546",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-pig.mp3"
+    },
+    "g1-phonics/vowelIn-pin": {
+      "text": "Pin has the short I sound.",
+      "hash": "8b1ccb5e8b",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-pin.mp3"
+    },
+    "g1-phonics/vowelIn-milk": {
+      "text": "Milk has the short I sound.",
+      "hash": "6518558098",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-milk.mp3"
+    },
+    "g1-phonics/vowelIn-gift": {
+      "text": "Gift has the short I sound.",
+      "hash": "3f328f1593",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-gift.mp3"
+    },
+    "g1-phonics/vowelIn-fish": {
+      "text": "Fish has the short I sound.",
+      "hash": "a095dd94eb",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-fish.mp3"
+    },
+    "g1-phonics/vowelIn-ship": {
+      "text": "Ship has the short I sound.",
+      "hash": "079f6744cf",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-ship.mp3"
+    },
+    "g1-phonics/vowelIn-chick": {
+      "text": "Chick has the short I sound.",
+      "hash": "778878f9db",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-chick.mp3"
+    },
+    "g1-phonics/vowelIn-dog": {
+      "text": "Dog has the short O sound.",
+      "hash": "8486d3e0e6",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-dog.mp3"
+    },
+    "g1-phonics/vowelIn-fox": {
+      "text": "Fox has the short O sound.",
+      "hash": "14eb5a4c81",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-fox.mp3"
+    },
+    "g1-phonics/vowelIn-box": {
+      "text": "Box has the short O sound.",
+      "hash": "80f70fb618",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-box.mp3"
+    },
+    "g1-phonics/vowelIn-lock": {
+      "text": "Lock has the short O sound.",
+      "hash": "8deba7dca0",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-lock.mp3"
+    },
+    "g1-phonics/vowelIn-clock": {
+      "text": "Clock has the short O sound.",
+      "hash": "8970bf25eb",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-clock.mp3"
+    },
+    "g1-phonics/vowelIn-frog": {
+      "text": "Frog has the short O sound.",
+      "hash": "3b42b9b435",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-frog.mp3"
+    },
+    "g1-phonics/vowelIn-sun": {
+      "text": "Sun has the short U sound.",
+      "hash": "1c57c6a756",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-sun.mp3"
+    },
+    "g1-phonics/vowelIn-bus": {
+      "text": "Bus has the short U sound.",
+      "hash": "65e53936d6",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-bus.mp3"
+    },
+    "g1-phonics/vowelIn-bug": {
+      "text": "Bug has the short U sound.",
+      "hash": "3ec8d76ed7",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-bug.mp3"
+    },
+    "g1-phonics/vowelIn-nut": {
+      "text": "Nut has the short U sound.",
+      "hash": "5279f94915",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-nut.mp3"
+    },
+    "g1-phonics/vowelIn-tub": {
+      "text": "Tub has the short U sound.",
+      "hash": "3581ab756e",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-tub.mp3"
+    },
+    "g1-phonics/vowelIn-cup": {
+      "text": "Cup has the short U sound.",
+      "hash": "123c3283a1",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-cup.mp3"
+    },
+    "g1-phonics/vowelIn-duck": {
+      "text": "Duck has the short U sound.",
+      "hash": "0ca98209cc",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-duck.mp3"
+    },
+    "g1-phonics/vowelIn-drum": {
+      "text": "Drum has the short U sound.",
+      "hash": "cdeb568653",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-drum.mp3"
+    },
+    "g1-phonics/vowelIn-truck": {
+      "text": "Truck has the short U sound.",
+      "hash": "190df914b4",
+      "kind": "line",
+      "file": "voice/g1-phonics/vowelIn-truck.mp3"
+    },
+    "g1-phonics/startsQ-sh": {
+      "text": "S and H say shh. Which one starts with shh?",
+      "hash": "341da50060",
+      "kind": "line",
+      "file": "voice/g1-phonics/startsQ-sh.mp3"
+    },
+    "g1-phonics/startsQ-ch": {
+      "text": "C and H say ch. Which one starts with ch?",
+      "hash": "4bbc40b83b",
+      "kind": "line",
+      "file": "voice/g1-phonics/startsQ-ch.mp3"
+    },
+    "g1-phonics/startsQ-th": {
+      "text": "T and H say th. Which one starts with th?",
+      "hash": "a86b449499",
+      "kind": "line",
+      "file": "voice/g1-phonics/startsQ-th.mp3"
+    },
+    "g1-phonics/startsQ-wh": {
+      "text": "W and H say wuh. Which one starts with wuh?",
+      "hash": "f0d6c01583",
+      "kind": "line",
+      "file": "voice/g1-phonics/startsQ-wh.mp3"
+    },
+    "g1-phonics/endsQ-ck": {
+      "text": "C and K say kuh, at the end. Which one ends with kuh?",
+      "hash": "7a628482ff",
+      "kind": "line",
+      "file": "voice/g1-phonics/endsQ-ck.mp3"
+    },
+    "g1-phonics/starts-cat": {
+      "text": "Cat starts with kuh.",
+      "hash": "5526c21a11",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-cat.mp3"
+    },
+    "g1-phonics/starts-hat": {
+      "text": "Hat starts with hhhh.",
+      "hash": "340015ab66",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-hat.mp3"
+    },
+    "g1-phonics/starts-bat": {
+      "text": "Bat starts with buh.",
+      "hash": "e5c419fd0c",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-bat.mp3"
+    },
+    "g1-phonics/starts-map": {
+      "text": "Map starts with mmmm.",
+      "hash": "401139169e",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-map.mp3"
+    },
+    "g1-phonics/starts-van": {
+      "text": "Van starts with vvvv.",
+      "hash": "2c6e7a76ea",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-van.mp3"
+    },
+    "g1-phonics/starts-rat": {
+      "text": "Rat starts with rrrr.",
+      "hash": "409c182018",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-rat.mp3"
+    },
+    "g1-phonics/starts-bag": {
+      "text": "Bag starts with buh.",
+      "hash": "ff47bafde6",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-bag.mp3"
+    },
+    "g1-phonics/starts-bed": {
+      "text": "Bed starts with buh.",
+      "hash": "6cdbdcad2f",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-bed.mp3"
+    },
+    "g1-phonics/starts-hen": {
+      "text": "Hen starts with hhhh.",
+      "hash": "5ebccb3d75",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-hen.mp3"
+    },
+    "g1-phonics/starts-pen": {
+      "text": "Pen starts with puh.",
+      "hash": "3516ba41c1",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-pen.mp3"
+    },
+    "g1-phonics/starts-net": {
+      "text": "Net starts with nnnn.",
+      "hash": "2eb73badad",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-net.mp3"
+    },
+    "g1-phonics/starts-web": {
+      "text": "Web starts with wuh.",
+      "hash": "499e87e4b5",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-web.mp3"
+    },
+    "g1-phonics/starts-jet": {
+      "text": "Jet starts with juh.",
+      "hash": "207255d2e0",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-jet.mp3"
+    },
+    "g1-phonics/starts-egg": {
+      "text": "Egg starts with eh.",
+      "hash": "f85a17f489",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-egg.mp3"
+    },
+    "g1-phonics/starts-bell": {
+      "text": "Bell starts with buh.",
+      "hash": "e44659977b",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-bell.mp3"
+    },
+    "g1-phonics/starts-pig": {
+      "text": "Pig starts with puh.",
+      "hash": "8f1c69a6e0",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-pig.mp3"
+    },
+    "g1-phonics/starts-pin": {
+      "text": "Pin starts with puh.",
+      "hash": "ede6825c7e",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-pin.mp3"
+    },
+    "g1-phonics/starts-milk": {
+      "text": "Milk starts with mmmm.",
+      "hash": "c30da449b0",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-milk.mp3"
+    },
+    "g1-phonics/starts-gift": {
+      "text": "Gift starts with guh.",
+      "hash": "f53f3e4f97",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-gift.mp3"
+    },
+    "g1-phonics/starts-fish": {
+      "text": "Fish starts with ffff.",
+      "hash": "27d505a424",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-fish.mp3"
+    },
+    "g1-phonics/starts-ship": {
+      "text": "Ship starts with shhhh.",
+      "hash": "a12f46deb1",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-ship.mp3"
+    },
+    "g1-phonics/starts-chick": {
+      "text": "Chick starts with chuh.",
+      "hash": "ead4479bd1",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-chick.mp3"
+    },
+    "g1-phonics/starts-dog": {
+      "text": "Dog starts with duh.",
+      "hash": "22d0d6081a",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-dog.mp3"
+    },
+    "g1-phonics/starts-fox": {
+      "text": "Fox starts with ffff.",
+      "hash": "a99af5c415",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-fox.mp3"
+    },
+    "g1-phonics/starts-box": {
+      "text": "Box starts with buh.",
+      "hash": "f577932fc8",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-box.mp3"
+    },
+    "g1-phonics/starts-lock": {
+      "text": "Lock starts with llll.",
+      "hash": "e725913c5a",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-lock.mp3"
+    },
+    "g1-phonics/starts-clock": {
+      "text": "Clock starts with kuh.",
+      "hash": "3e08967f84",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-clock.mp3"
+    },
+    "g1-phonics/starts-frog": {
+      "text": "Frog starts with ffff.",
+      "hash": "3c646266b6",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-frog.mp3"
+    },
+    "g1-phonics/starts-sun": {
+      "text": "Sun starts with ssss.",
+      "hash": "a1dbc29be9",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-sun.mp3"
+    },
+    "g1-phonics/starts-bus": {
+      "text": "Bus starts with buh.",
+      "hash": "0ff5658508",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-bus.mp3"
+    },
+    "g1-phonics/starts-bug": {
+      "text": "Bug starts with buh.",
+      "hash": "cd706e1996",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-bug.mp3"
+    },
+    "g1-phonics/starts-nut": {
+      "text": "Nut starts with nnnn.",
+      "hash": "87757d68e2",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-nut.mp3"
+    },
+    "g1-phonics/starts-tub": {
+      "text": "Tub starts with tuh.",
+      "hash": "31290667d6",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-tub.mp3"
+    },
+    "g1-phonics/starts-cup": {
+      "text": "Cup starts with kuh.",
+      "hash": "b808fa70cc",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-cup.mp3"
+    },
+    "g1-phonics/starts-duck": {
+      "text": "Duck starts with duh.",
+      "hash": "59903ec534",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-duck.mp3"
+    },
+    "g1-phonics/starts-drum": {
+      "text": "Drum starts with duh.",
+      "hash": "d48120d6a5",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-drum.mp3"
+    },
+    "g1-phonics/starts-truck": {
+      "text": "Truck starts with tuh.",
+      "hash": "0c0efcb52f",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-truck.mp3"
+    },
+    "g1-phonics/starts-shell": {
+      "text": "Shell starts with shhhh.",
+      "hash": "6cd8964ce3",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-shell.mp3"
+    },
+    "g1-phonics/starts-sheep": {
+      "text": "Sheep starts with shhhh.",
+      "hash": "88e9817e19",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-sheep.mp3"
+    },
+    "g1-phonics/starts-shoe": {
+      "text": "Shoe starts with shhhh.",
+      "hash": "b311870257",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-shoe.mp3"
+    },
+    "g1-phonics/starts-shark": {
+      "text": "Shark starts with shhhh.",
+      "hash": "d3aa404780",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-shark.mp3"
+    },
+    "g1-phonics/starts-shirt": {
+      "text": "Shirt starts with shhhh.",
+      "hash": "1cd6c8aec7",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-shirt.mp3"
+    },
+    "g1-phonics/starts-cheese": {
+      "text": "Cheese starts with chuh.",
+      "hash": "43d3d00b70",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-cheese.mp3"
+    },
+    "g1-phonics/starts-cherry": {
+      "text": "Cherry starts with chuh.",
+      "hash": "1fdb3df6e5",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-cherry.mp3"
+    },
+    "g1-phonics/starts-church": {
+      "text": "Church starts with chuh.",
+      "hash": "2ae03a37cf",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-church.mp3"
+    },
+    "g1-phonics/starts-thumb": {
+      "text": "Thumb starts with thhhh.",
+      "hash": "662fd0cff9",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-thumb.mp3"
+    },
+    "g1-phonics/starts-three": {
+      "text": "Three starts with thhhh.",
+      "hash": "943e380d34",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-three.mp3"
+    },
+    "g1-phonics/starts-whale": {
+      "text": "Whale starts with wuh.",
+      "hash": "5f2017de75",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-whale.mp3"
+    },
+    "g1-phonics/starts-apple": {
+      "text": "Apple starts with aa.",
+      "hash": "b5f4b88844",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-apple.mp3"
+    },
+    "g1-phonics/starts-tree": {
+      "text": "Tree starts with tuh.",
+      "hash": "18441f28e7",
+      "kind": "line",
+      "file": "voice/g1-phonics/starts-tree.mp3"
+    },
+    "g1-phonics/ends-cat": {
+      "text": "Cat ends with tuh.",
+      "hash": "54cdce9b8a",
+      "kind": "line",
+      "file": "voice/g1-phonics/ends-cat.mp3"
+    },
+    "g1-phonics/ends-hen": {
+      "text": "Hen ends with nnnn.",
+      "hash": "aead51abbb",
+      "kind": "line",
+      "file": "voice/g1-phonics/ends-hen.mp3"
+    },
+    "g1-phonics/ends-pig": {
+      "text": "Pig ends with guh.",
+      "hash": "702890c291",
+      "kind": "line",
+      "file": "voice/g1-phonics/ends-pig.mp3"
+    },
+    "g1-phonics/ends-dog": {
+      "text": "Dog ends with guh.",
+      "hash": "21d27dfec8",
+      "kind": "line",
+      "file": "voice/g1-phonics/ends-dog.mp3"
+    },
+    "g1-phonics/ends-sun": {
+      "text": "Sun ends with nnnn.",
+      "hash": "545e4b58a2",
+      "kind": "line",
+      "file": "voice/g1-phonics/ends-sun.mp3"
+    },
+    "g1-phonics/ends-bus": {
+      "text": "Bus ends with ssss.",
+      "hash": "143da2f5d7",
+      "kind": "line",
+      "file": "voice/g1-phonics/ends-bus.mp3"
+    },
+    "g1-phonics/ends-fish": {
+      "text": "Fish ends with shhhh.",
+      "hash": "b07525f680",
+      "kind": "line",
+      "file": "voice/g1-phonics/ends-fish.mp3"
+    },
+    "g1-phonics/ends-bed": {
+      "text": "Bed ends with duh.",
+      "hash": "20b6b081e7",
+      "kind": "line",
+      "file": "voice/g1-phonics/ends-bed.mp3"
+    },
+    "g1-phonics/ends-web": {
+      "text": "Web ends with buh.",
+      "hash": "9f9910a93c",
+      "kind": "line",
+      "file": "voice/g1-phonics/ends-web.mp3"
+    },
+    "g1-phonics/ends-cup": {
+      "text": "Cup ends with puh.",
+      "hash": "3ef229a1b0",
+      "kind": "line",
+      "file": "voice/g1-phonics/ends-cup.mp3"
+    },
+    "g1-phonics/ends-drum": {
+      "text": "Drum ends with mmmm.",
+      "hash": "8ed890a438",
+      "kind": "line",
+      "file": "voice/g1-phonics/ends-drum.mp3"
+    },
+    "g1-phonics/ends-tub": {
+      "text": "Tub ends with buh.",
+      "hash": "08438c5049",
+      "kind": "line",
+      "file": "voice/g1-phonics/ends-tub.mp3"
+    },
+    "g1-phonics/ends-shell": {
+      "text": "Shell ends with llll.",
+      "hash": "83bfed4831",
+      "kind": "line",
+      "file": "voice/g1-phonics/ends-shell.mp3"
+    },
+    "g1-phonics/ends-bell": {
+      "text": "Bell ends with llll.",
+      "hash": "2784927c27",
+      "kind": "line",
+      "file": "voice/g1-phonics/ends-bell.mp3"
+    },
+    "g1-phonics/ends-van": {
+      "text": "Van ends with nnnn.",
+      "hash": "afdbb3dec0",
+      "kind": "line",
+      "file": "voice/g1-phonics/ends-van.mp3"
+    },
+    "g1-phonics/ends-map": {
+      "text": "Map ends with puh.",
+      "hash": "90962aad6d",
+      "kind": "line",
+      "file": "voice/g1-phonics/ends-map.mp3"
+    },
+    "g1-phonics/readWord": {
+      "text": "Read the word. Then tap its picture.",
+      "hash": "e6bddba826",
+      "kind": "line",
+      "file": "voice/g1-phonics/readWord.mp3"
+    },
+    "g1-phonics/sounds-cat": {
+      "text": "Kuh… aa… tuh. Cat!",
+      "hash": "84d2411407",
+      "kind": "line",
+      "file": "voice/g1-phonics/sounds-cat.mp3"
+    },
+    "g1-phonics/sounds-hat": {
+      "text": "Hhhh… aa… tuh. Hat!",
+      "hash": "fc3037adb3",
+      "kind": "line",
+      "file": "voice/g1-phonics/sounds-hat.mp3"
+    },
+    "g1-phonics/sounds-bat": {
+      "text": "Buh… aa… tuh. Bat!",
+      "hash": "3dd8a317d7",
+      "kind": "line",
+      "file": "voice/g1-phonics/sounds-bat.mp3"
+    },
+    "g1-phonics/sounds-map": {
+      "text": "Mmmm… aa… puh. Map!",
+      "hash": "9b729c1686",
+      "kind": "line",
+      "file": "voice/g1-phonics/sounds-map.mp3"
+    },
+    "g1-phonics/sounds-van": {
+      "text": "Vvvv… aa… nnnn. Van!",
+      "hash": "8035e12f29",
+      "kind": "line",
+      "file": "voice/g1-phonics/sounds-van.mp3"
+    },
+    "g1-phonics/sounds-rat": {
+      "text": "Rrrr… aa… tuh. Rat!",
+      "hash": "757e6169f0",
+      "kind": "line",
+      "file": "voice/g1-phonics/sounds-rat.mp3"
+    },
+    "g1-phonics/sounds-bag": {
+      "text": "Buh… aa… guh. Bag!",
+      "hash": "2b05219a31",
+      "kind": "line",
+      "file": "voice/g1-phonics/sounds-bag.mp3"
+    },
+    "g1-phonics/sounds-bed": {
+      "text": "Buh… eh… duh. Bed!",
+      "hash": "62245726ec",
+      "kind": "line",
+      "file": "voice/g1-phonics/sounds-bed.mp3"
+    },
+    "g1-phonics/sounds-hen": {
+      "text": "Hhhh… eh… nnnn. Hen!",
+      "hash": "c4508841a7",
+      "kind": "line",
+      "file": "voice/g1-phonics/sounds-hen.mp3"
+    },
+    "g1-phonics/sounds-pen": {
+      "text": "Puh… eh… nnnn. Pen!",
+      "hash": "0956b51457",
+      "kind": "line",
+      "file": "voice/g1-phonics/sounds-pen.mp3"
+    },
+    "g1-phonics/sounds-net": {
+      "text": "Nnnn… eh… tuh. Net!",
+      "hash": "3802e99d36",
+      "kind": "line",
+      "file": "voice/g1-phonics/sounds-net.mp3"
+    },
+    "g1-phonics/sounds-web": {
+      "text": "Wuh… eh… buh. Web!",
+      "hash": "fe9aa7dab1",
+      "kind": "line",
+      "file": "voice/g1-phonics/sounds-web.mp3"
+    },
+    "g1-phonics/sounds-jet": {
+      "text": "Juh… eh… tuh. Jet!",
+      "hash": "c04bec1025",
+      "kind": "line",
+      "file": "voice/g1-phonics/sounds-jet.mp3"
+    },
+    "g1-phonics/sounds-pig": {
+      "text": "Puh… ih… guh. Pig!",
+      "hash": "270f78bad7",
+      "kind": "line",
+      "file": "voice/g1-phonics/sounds-pig.mp3"
+    },
+    "g1-phonics/sounds-pin": {
+      "text": "Puh… ih… nnnn. Pin!",
+      "hash": "b65e667406",
+      "kind": "line",
+      "file": "voice/g1-phonics/sounds-pin.mp3"
+    },
+    "g1-phonics/sounds-dog": {
+      "text": "Duh… ah… guh. Dog!",
+      "hash": "414d423c36",
+      "kind": "line",
+      "file": "voice/g1-phonics/sounds-dog.mp3"
+    },
+    "g1-phonics/sounds-fox": {
+      "text": "Ffff… ah… ks. Fox!",
+      "hash": "0756d6d5e3",
+      "kind": "line",
+      "file": "voice/g1-phonics/sounds-fox.mp3"
+    },
+    "g1-phonics/sounds-box": {
+      "text": "Buh… ah… ks. Box!",
+      "hash": "c5ad8c0e41",
+      "kind": "line",
+      "file": "voice/g1-phonics/sounds-box.mp3"
+    },
+    "g1-phonics/sounds-sun": {
+      "text": "Ssss… uh… nnnn. Sun!",
+      "hash": "68e68631b6",
+      "kind": "line",
+      "file": "voice/g1-phonics/sounds-sun.mp3"
+    },
+    "g1-phonics/sounds-bus": {
+      "text": "Buh… uh… ssss. Bus!",
+      "hash": "bfd9477ff8",
+      "kind": "line",
+      "file": "voice/g1-phonics/sounds-bus.mp3"
+    },
+    "g1-phonics/sounds-bug": {
+      "text": "Buh… uh… guh. Bug!",
+      "hash": "a85846e572",
+      "kind": "line",
+      "file": "voice/g1-phonics/sounds-bug.mp3"
+    },
+    "g1-phonics/sounds-nut": {
+      "text": "Nnnn… uh… tuh. Nut!",
+      "hash": "e4d7009a21",
+      "kind": "line",
+      "file": "voice/g1-phonics/sounds-nut.mp3"
+    },
+    "g1-phonics/sounds-tub": {
+      "text": "Tuh… uh… buh. Tub!",
+      "hash": "937beaee42",
+      "kind": "line",
+      "file": "voice/g1-phonics/sounds-tub.mp3"
+    },
+    "g1-phonics/sounds-cup": {
+      "text": "Kuh… uh… puh. Cup!",
+      "hash": "c22e72b768",
+      "kind": "line",
+      "file": "voice/g1-phonics/sounds-cup.mp3"
+    },
+    "g1-phonics/sounds-fish": {
+      "text": "Ffff… ih… shhhh. Fish!",
+      "hash": "6c17b550ec",
+      "kind": "line",
+      "file": "voice/g1-phonics/sounds-fish.mp3"
+    },
+    "g1-phonics/sounds-ship": {
+      "text": "Shhhh… ih… puh. Ship!",
+      "hash": "1fc49fa776",
+      "kind": "line",
+      "file": "voice/g1-phonics/sounds-ship.mp3"
+    },
+    "g1-phonics/sounds-shell": {
+      "text": "Shhhh… eh… llll. Shell!",
+      "hash": "541041ee87",
+      "kind": "line",
+      "file": "voice/g1-phonics/sounds-shell.mp3"
+    },
+    "g1-phonics/sounds-chick": {
+      "text": "Chuh… ih… kuh. Chick!",
+      "hash": "7b28b4e4da",
+      "kind": "line",
+      "file": "voice/g1-phonics/sounds-chick.mp3"
+    },
+    "g1-phonics/sounds-duck": {
+      "text": "Duh… uh… kuh. Duck!",
+      "hash": "942253488d",
+      "kind": "line",
+      "file": "voice/g1-phonics/sounds-duck.mp3"
+    },
+    "g1-phonics/sounds-lock": {
+      "text": "Llll… ah… kuh. Lock!",
+      "hash": "8ea53b84d7",
+      "kind": "line",
+      "file": "voice/g1-phonics/sounds-lock.mp3"
+    },
+    "g1-phonics/soundItOut": {
+      "text": "Let's sound it out.",
+      "hash": "aaf38b4cf9",
+      "kind": "line",
+      "file": "voice/g1-phonics/soundItOut.mp3"
+    },
+    "g1-phonics/youReadIt": {
+      "text": "You read it!",
+      "hash": "6c47cc4898",
+      "kind": "line",
+      "file": "voice/g1-phonics/youReadIt.mp3"
+    },
+    "g1-phonics/greatSounding": {
+      "text": "Great sounding out!",
+      "hash": "5f6b3e6e4d",
+      "kind": "line",
+      "file": "voice/g1-phonics/greatSounding.mp3"
+    },
+    "g1-phonics/sharpEars": {
+      "text": "Sharp ears!",
+      "hash": "1770c46452",
+      "kind": "line",
+      "file": "voice/g1-phonics/sharpEars.mp3"
+    },
+    "g1-phonics/middle/word=cat": {
+      "text": "Cat! What sound is in the middle? Tap the letter.",
+      "hash": "8145e2caf2",
+      "kind": "whole",
+      "file": "voice/g1-phonics/middle/word=cat.mp3"
+    },
+    "g1-phonics/middle/word=hat": {
+      "text": "Hat! What sound is in the middle? Tap the letter.",
+      "hash": "1cd3bf6abc",
+      "kind": "whole",
+      "file": "voice/g1-phonics/middle/word=hat.mp3"
+    },
+    "g1-phonics/middle/word=bat": {
+      "text": "Bat! What sound is in the middle? Tap the letter.",
+      "hash": "7b6f94542d",
+      "kind": "whole",
+      "file": "voice/g1-phonics/middle/word=bat.mp3"
+    },
+    "g1-phonics/middle/word=map": {
+      "text": "Map! What sound is in the middle? Tap the letter.",
+      "hash": "696918cb83",
+      "kind": "whole",
+      "file": "voice/g1-phonics/middle/word=map.mp3"
+    },
+    "g1-phonics/middle/word=van": {
+      "text": "Van! What sound is in the middle? Tap the letter.",
+      "hash": "3baee83158",
+      "kind": "whole",
+      "file": "voice/g1-phonics/middle/word=van.mp3"
+    },
+    "g1-phonics/middle/word=rat": {
+      "text": "Rat! What sound is in the middle? Tap the letter.",
+      "hash": "f36c9f8d72",
+      "kind": "whole",
+      "file": "voice/g1-phonics/middle/word=rat.mp3"
+    },
+    "g1-phonics/middle/word=bag": {
+      "text": "Bag! What sound is in the middle? Tap the letter.",
+      "hash": "e14a84c747",
+      "kind": "whole",
+      "file": "voice/g1-phonics/middle/word=bag.mp3"
+    },
+    "g1-phonics/middle/word=bed": {
+      "text": "Bed! What sound is in the middle? Tap the letter.",
+      "hash": "efb1f62c4b",
+      "kind": "whole",
+      "file": "voice/g1-phonics/middle/word=bed.mp3"
+    },
+    "g1-phonics/middle/word=hen": {
+      "text": "Hen! What sound is in the middle? Tap the letter.",
+      "hash": "87f22f25cd",
+      "kind": "whole",
+      "file": "voice/g1-phonics/middle/word=hen.mp3"
+    },
+    "g1-phonics/middle/word=pen": {
+      "text": "Pen! What sound is in the middle? Tap the letter.",
+      "hash": "5e8434b32e",
+      "kind": "whole",
+      "file": "voice/g1-phonics/middle/word=pen.mp3"
+    },
+    "g1-phonics/middle/word=net": {
+      "text": "Net! What sound is in the middle? Tap the letter.",
+      "hash": "dee6f34205",
+      "kind": "whole",
+      "file": "voice/g1-phonics/middle/word=net.mp3"
+    },
+    "g1-phonics/middle/word=web": {
+      "text": "Web! What sound is in the middle? Tap the letter.",
+      "hash": "e26ecff7dc",
+      "kind": "whole",
+      "file": "voice/g1-phonics/middle/word=web.mp3"
+    },
+    "g1-phonics/middle/word=jet": {
+      "text": "Jet! What sound is in the middle? Tap the letter.",
+      "hash": "0c003cd186",
+      "kind": "whole",
+      "file": "voice/g1-phonics/middle/word=jet.mp3"
+    },
+    "g1-phonics/middle/word=pig": {
+      "text": "Pig! What sound is in the middle? Tap the letter.",
+      "hash": "ca0d96ce17",
+      "kind": "whole",
+      "file": "voice/g1-phonics/middle/word=pig.mp3"
+    },
+    "g1-phonics/middle/word=pin": {
+      "text": "Pin! What sound is in the middle? Tap the letter.",
+      "hash": "25df02a780",
+      "kind": "whole",
+      "file": "voice/g1-phonics/middle/word=pin.mp3"
+    },
+    "g1-phonics/middle/word=dog": {
+      "text": "Dog! What sound is in the middle? Tap the letter.",
+      "hash": "afa548046d",
+      "kind": "whole",
+      "file": "voice/g1-phonics/middle/word=dog.mp3"
+    },
+    "g1-phonics/middle/word=fox": {
+      "text": "Fox! What sound is in the middle? Tap the letter.",
+      "hash": "9e4b3e569f",
+      "kind": "whole",
+      "file": "voice/g1-phonics/middle/word=fox.mp3"
+    },
+    "g1-phonics/middle/word=box": {
+      "text": "Box! What sound is in the middle? Tap the letter.",
+      "hash": "5b3e46f61d",
+      "kind": "whole",
+      "file": "voice/g1-phonics/middle/word=box.mp3"
+    },
+    "g1-phonics/middle/word=sun": {
+      "text": "Sun! What sound is in the middle? Tap the letter.",
+      "hash": "915cd9635c",
+      "kind": "whole",
+      "file": "voice/g1-phonics/middle/word=sun.mp3"
+    },
+    "g1-phonics/middle/word=bus": {
+      "text": "Bus! What sound is in the middle? Tap the letter.",
+      "hash": "d4f65f1287",
+      "kind": "whole",
+      "file": "voice/g1-phonics/middle/word=bus.mp3"
+    },
+    "g1-phonics/middle/word=bug": {
+      "text": "Bug! What sound is in the middle? Tap the letter.",
+      "hash": "69dc5294a3",
+      "kind": "whole",
+      "file": "voice/g1-phonics/middle/word=bug.mp3"
+    },
+    "g1-phonics/middle/word=nut": {
+      "text": "Nut! What sound is in the middle? Tap the letter.",
+      "hash": "d3699af47c",
+      "kind": "whole",
+      "file": "voice/g1-phonics/middle/word=nut.mp3"
+    },
+    "g1-phonics/middle/word=tub": {
+      "text": "Tub! What sound is in the middle? Tap the letter.",
+      "hash": "a8a83ffa41",
+      "kind": "whole",
+      "file": "voice/g1-phonics/middle/word=tub.mp3"
+    },
+    "g1-phonics/middle/word=cup": {
+      "text": "Cup! What sound is in the middle? Tap the letter.",
+      "hash": "1dca5e4e0b",
+      "kind": "whole",
+      "file": "voice/g1-phonics/middle/word=cup.mp3"
+    },
+    "g1-phonics/tapWord/word=ship": {
+      "text": "Tap the word ship.",
+      "hash": "476a665c94",
+      "kind": "whole",
+      "file": "voice/g1-phonics/tapWord/word=ship.mp3"
+    },
+    "g1-phonics/tapWord/word=shop": {
+      "text": "Tap the word shop.",
+      "hash": "6b57567cf9",
+      "kind": "whole",
+      "file": "voice/g1-phonics/tapWord/word=shop.mp3"
+    },
+    "g1-phonics/tapWord/word=chin": {
+      "text": "Tap the word chin.",
+      "hash": "853053abd3",
+      "kind": "whole",
+      "file": "voice/g1-phonics/tapWord/word=chin.mp3"
+    },
+    "g1-phonics/tapWord/word=chop": {
+      "text": "Tap the word chop.",
+      "hash": "bc1e6a7b48",
+      "kind": "whole",
+      "file": "voice/g1-phonics/tapWord/word=chop.mp3"
+    },
+    "g1-phonics/tapWord/word=then": {
+      "text": "Tap the word then.",
+      "hash": "1f2930025e",
+      "kind": "whole",
+      "file": "voice/g1-phonics/tapWord/word=then.mp3"
+    },
+    "g1-phonics/tapWord/word=when": {
+      "text": "Tap the word when.",
+      "hash": "5dea6d308d",
+      "kind": "whole",
+      "file": "voice/g1-phonics/tapWord/word=when.mp3"
+    },
+    "g1-phonics/tapWord/word=that": {
+      "text": "Tap the word that.",
+      "hash": "8f4c160213",
+      "kind": "whole",
+      "file": "voice/g1-phonics/tapWord/word=that.mp3"
+    },
+    "g1-phonics/tapWord/word=thin": {
+      "text": "Tap the word thin.",
+      "hash": "35138ead57",
+      "kind": "whole",
+      "file": "voice/g1-phonics/tapWord/word=thin.mp3"
+    },
+    "g1-phonics/tapWord/word=with": {
+      "text": "Tap the word with.",
+      "hash": "fc7f7e9cad",
+      "kind": "whole",
+      "file": "voice/g1-phonics/tapWord/word=with.mp3"
+    },
+    "g1-phonics/tapWord/word=wish": {
+      "text": "Tap the word wish.",
+      "hash": "2df4ac851c",
+      "kind": "whole",
+      "file": "voice/g1-phonics/tapWord/word=wish.mp3"
+    },
+    "g1-phonics/tapWord/word=fish": {
+      "text": "Tap the word fish.",
+      "hash": "80e5d74a3b",
+      "kind": "whole",
+      "file": "voice/g1-phonics/tapWord/word=fish.mp3"
+    },
+    "g1-phonics/tapWord/word=bath": {
+      "text": "Tap the word bath.",
+      "hash": "e5acc40127",
+      "kind": "whole",
+      "file": "voice/g1-phonics/tapWord/word=bath.mp3"
+    },
+    "g1-phonics/tapWord/word=much": {
+      "text": "Tap the word much.",
+      "hash": "4a64129576",
+      "kind": "whole",
+      "file": "voice/g1-phonics/tapWord/word=much.mp3"
+    },
+    "g1-phonics/tapWord/word=back": {
+      "text": "Tap the word back.",
+      "hash": "44cc814401",
+      "kind": "whole",
+      "file": "voice/g1-phonics/tapWord/word=back.mp3"
+    },
+    "g1-phonics/tapWord/word=sick": {
+      "text": "Tap the word sick.",
+      "hash": "dccd2f9464",
+      "kind": "whole",
+      "file": "voice/g1-phonics/tapWord/word=sick.mp3"
+    },
+    "g1-phonics/tapWord/word=rock": {
+      "text": "Tap the word rock.",
+      "hash": "520ccee126",
+      "kind": "whole",
+      "file": "voice/g1-phonics/tapWord/word=rock.mp3"
+    },
+    "g1-phonics/tapWord/word=kick": {
+      "text": "Tap the word kick.",
+      "hash": "76b9b95cba",
+      "kind": "whole",
+      "file": "voice/g1-phonics/tapWord/word=kick.mp3"
+    },
+    "g1-phonics/thatWordIs/word=ship": {
+      "text": "That word is ship.",
+      "hash": "1454145bb7",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=ship.mp3"
+    },
+    "g1-phonics/thatWordIs/word=chip": {
+      "text": "That word is chip.",
+      "hash": "7408c5919e",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=chip.mp3"
+    },
+    "g1-phonics/thatWordIs/word=hip": {
+      "text": "That word is hip.",
+      "hash": "8d87645662",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=hip.mp3"
+    },
+    "g1-phonics/thatWordIs/word=shop": {
+      "text": "That word is shop.",
+      "hash": "bd490f82ae",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=shop.mp3"
+    },
+    "g1-phonics/thatWordIs/word=chop": {
+      "text": "That word is chop.",
+      "hash": "f073208419",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=chop.mp3"
+    },
+    "g1-phonics/thatWordIs/word=hop": {
+      "text": "That word is hop.",
+      "hash": "579c120d30",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=hop.mp3"
+    },
+    "g1-phonics/thatWordIs/word=chin": {
+      "text": "That word is chin.",
+      "hash": "30036446d1",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=chin.mp3"
+    },
+    "g1-phonics/thatWordIs/word=shin": {
+      "text": "That word is shin.",
+      "hash": "5c7be0a6fc",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=shin.mp3"
+    },
+    "g1-phonics/thatWordIs/word=thin": {
+      "text": "That word is thin.",
+      "hash": "02520fd190",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=thin.mp3"
+    },
+    "g1-phonics/thatWordIs/word=top": {
+      "text": "That word is top.",
+      "hash": "dcea738c93",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=top.mp3"
+    },
+    "g1-phonics/thatWordIs/word=then": {
+      "text": "That word is then.",
+      "hash": "967a413344",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=then.mp3"
+    },
+    "g1-phonics/thatWordIs/word=when": {
+      "text": "That word is when.",
+      "hash": "cf9da44389",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=when.mp3"
+    },
+    "g1-phonics/thatWordIs/word=hen": {
+      "text": "That word is hen.",
+      "hash": "177e051912",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=hen.mp3"
+    },
+    "g1-phonics/thatWordIs/word=wet": {
+      "text": "That word is wet.",
+      "hash": "7472bf9dd8",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=wet.mp3"
+    },
+    "g1-phonics/thatWordIs/word=that": {
+      "text": "That word is that.",
+      "hash": "bebba70e37",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=that.mp3"
+    },
+    "g1-phonics/thatWordIs/word=hat": {
+      "text": "That word is hat.",
+      "hash": "273d7375fd",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=hat.mp3"
+    },
+    "g1-phonics/thatWordIs/word=chat": {
+      "text": "That word is chat.",
+      "hash": "a9c52890ce",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=chat.mp3"
+    },
+    "g1-phonics/thatWordIs/word=tin": {
+      "text": "That word is tin.",
+      "hash": "b36ed7db0f",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=tin.mp3"
+    },
+    "g1-phonics/thatWordIs/word=with": {
+      "text": "That word is with.",
+      "hash": "61bb6f51a5",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=with.mp3"
+    },
+    "g1-phonics/thatWordIs/word=wish": {
+      "text": "That word is wish.",
+      "hash": "d63d0bfba8",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=wish.mp3"
+    },
+    "g1-phonics/thatWordIs/word=wig": {
+      "text": "That word is wig.",
+      "hash": "8b89a2ad9e",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=wig.mp3"
+    },
+    "g1-phonics/thatWordIs/word=win": {
+      "text": "That word is win.",
+      "hash": "d5e2442a37",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=win.mp3"
+    },
+    "g1-phonics/thatWordIs/word=fish": {
+      "text": "That word is fish.",
+      "hash": "c277333e75",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=fish.mp3"
+    },
+    "g1-phonics/thatWordIs/word=fit": {
+      "text": "That word is fit.",
+      "hash": "78d01a1101",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=fit.mp3"
+    },
+    "g1-phonics/thatWordIs/word=fin": {
+      "text": "That word is fin.",
+      "hash": "3b3b3de8bb",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=fin.mp3"
+    },
+    "g1-phonics/thatWordIs/word=bath": {
+      "text": "That word is bath.",
+      "hash": "6f053da15b",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=bath.mp3"
+    },
+    "g1-phonics/thatWordIs/word=bat": {
+      "text": "That word is bat.",
+      "hash": "93e756d740",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=bat.mp3"
+    },
+    "g1-phonics/thatWordIs/word=bash": {
+      "text": "That word is bash.",
+      "hash": "113f47a3cb",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=bash.mp3"
+    },
+    "g1-phonics/thatWordIs/word=much": {
+      "text": "That word is much.",
+      "hash": "362297c7cf",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=much.mp3"
+    },
+    "g1-phonics/thatWordIs/word=mud": {
+      "text": "That word is mud.",
+      "hash": "df6dba3ede",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=mud.mp3"
+    },
+    "g1-phonics/thatWordIs/word=mush": {
+      "text": "That word is mush.",
+      "hash": "3a826aebcb",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=mush.mp3"
+    },
+    "g1-phonics/thatWordIs/word=back": {
+      "text": "That word is back.",
+      "hash": "35ef9c3ab5",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=back.mp3"
+    },
+    "g1-phonics/thatWordIs/word=sick": {
+      "text": "That word is sick.",
+      "hash": "8dce2cb507",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=sick.mp3"
+    },
+    "g1-phonics/thatWordIs/word=sit": {
+      "text": "That word is sit.",
+      "hash": "d953be5a52",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=sit.mp3"
+    },
+    "g1-phonics/thatWordIs/word=sip": {
+      "text": "That word is sip.",
+      "hash": "11cfa9e596",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=sip.mp3"
+    },
+    "g1-phonics/thatWordIs/word=rock": {
+      "text": "That word is rock.",
+      "hash": "7abc2b8f81",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=rock.mp3"
+    },
+    "g1-phonics/thatWordIs/word=rot": {
+      "text": "That word is rot.",
+      "hash": "ee07e08abb",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=rot.mp3"
+    },
+    "g1-phonics/thatWordIs/word=rod": {
+      "text": "That word is rod.",
+      "hash": "db676c2698",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=rod.mp3"
+    },
+    "g1-phonics/thatWordIs/word=kick": {
+      "text": "That word is kick.",
+      "hash": "c4c4dbdac6",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=kick.mp3"
+    },
+    "g1-phonics/thatWordIs/word=kid": {
+      "text": "That word is kid.",
+      "hash": "a90b9fa776",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=kid.mp3"
+    },
+    "g1-phonics/thatWordIs/word=kit": {
+      "text": "That word is kit.",
+      "hash": "a33f7b64ce",
+      "kind": "whole",
+      "file": "voice/g1-phonics/thatWordIs/word=kit.mp3"
+    },
+    "g1-phonics/word/word=van": {
+      "text": "van!",
+      "hash": "29cb993c49",
+      "kind": "whole",
+      "file": "voice/g1-phonics/word/word=van.mp3"
+    },
+    "g1-phonics/word/word=rat": {
+      "text": "rat!",
+      "hash": "85c4a1e800",
+      "kind": "whole",
+      "file": "voice/g1-phonics/word/word=rat.mp3"
+    },
+    "g1-phonics/word/word=bag": {
+      "text": "bag!",
+      "hash": "bf36f5ff63",
+      "kind": "whole",
+      "file": "voice/g1-phonics/word/word=bag.mp3"
+    },
+    "g1-phonics/word/word=net": {
+      "text": "net!",
+      "hash": "26e048168e",
+      "kind": "whole",
+      "file": "voice/g1-phonics/word/word=net.mp3"
+    },
+    "g1-phonics/word/word=web": {
+      "text": "web!",
+      "hash": "643af18ab7",
+      "kind": "whole",
+      "file": "voice/g1-phonics/word/word=web.mp3"
+    },
+    "g1-phonics/word/word=jet": {
+      "text": "jet!",
+      "hash": "0c60129276",
+      "kind": "whole",
+      "file": "voice/g1-phonics/word/word=jet.mp3"
+    },
+    "g1-phonics/word/word=egg": {
+      "text": "egg!",
+      "hash": "9e1e0dfd79",
+      "kind": "whole",
+      "file": "voice/g1-phonics/word/word=egg.mp3"
+    },
+    "g1-phonics/word/word=pin": {
+      "text": "pin!",
+      "hash": "506d0f3b37",
+      "kind": "whole",
+      "file": "voice/g1-phonics/word/word=pin.mp3"
+    },
+    "g1-phonics/word/word=gift": {
+      "text": "gift!",
+      "hash": "f2ca3be82d",
+      "kind": "whole",
+      "file": "voice/g1-phonics/word/word=gift.mp3"
+    },
+    "g1-phonics/word/word=chick": {
+      "text": "chick!",
+      "hash": "3bd716d700",
+      "kind": "whole",
+      "file": "voice/g1-phonics/word/word=chick.mp3"
+    },
+    "g1-phonics/word/word=bug": {
+      "text": "bug!",
+      "hash": "6985616543",
+      "kind": "whole",
+      "file": "voice/g1-phonics/word/word=bug.mp3"
+    },
+    "g1-phonics/word/word=nut": {
+      "text": "nut!",
+      "hash": "baa55939aa",
+      "kind": "whole",
+      "file": "voice/g1-phonics/word/word=nut.mp3"
+    },
+    "g1-phonics/word/word=cup": {
+      "text": "cup!",
+      "hash": "72a0cb2262",
+      "kind": "whole",
+      "file": "voice/g1-phonics/word/word=cup.mp3"
+    },
+    "g1-phonics/word/word=drum": {
+      "text": "drum!",
+      "hash": "bfe6e0b51b",
+      "kind": "whole",
+      "file": "voice/g1-phonics/word/word=drum.mp3"
+    },
+    "g1-phonics/word/word=shark": {
+      "text": "shark!",
+      "hash": "aabe2a6893",
+      "kind": "whole",
+      "file": "voice/g1-phonics/word/word=shark.mp3"
+    },
+    "g1-phonics/word/word=shirt": {
+      "text": "shirt!",
+      "hash": "5afa100239",
+      "kind": "whole",
+      "file": "voice/g1-phonics/word/word=shirt.mp3"
+    },
+    "g1-phonics/word/word=cheese": {
+      "text": "cheese!",
+      "hash": "aa40786c0d",
+      "kind": "whole",
+      "file": "voice/g1-phonics/word/word=cheese.mp3"
+    },
+    "g1-phonics/word/word=cherry": {
+      "text": "cherry!",
+      "hash": "5c1a01ad1a",
+      "kind": "whole",
+      "file": "voice/g1-phonics/word/word=cherry.mp3"
+    },
+    "g1-phonics/word/word=church": {
+      "text": "church!",
+      "hash": "ec869442cb",
+      "kind": "whole",
+      "file": "voice/g1-phonics/word/word=church.mp3"
+    },
+    "g1-phonics/word/word=thumb": {
+      "text": "thumb!",
+      "hash": "b574ab6cdb",
+      "kind": "whole",
+      "file": "voice/g1-phonics/word/word=thumb.mp3"
+    },
+    "g1-towers/add-1-1": {
+      "text": "One plus one. Tap the answer.",
+      "hash": "de02e7274f",
+      "kind": "line",
+      "file": "voice/g1-towers/add-1-1.mp3"
+    },
+    "g1-towers/add-1-2": {
+      "text": "One plus two. Tap the answer.",
+      "hash": "275c178c4d",
+      "kind": "line",
+      "file": "voice/g1-towers/add-1-2.mp3"
+    },
+    "g1-towers/add-1-3": {
+      "text": "One plus three. Tap the answer.",
+      "hash": "f9abe6a6f0",
+      "kind": "line",
+      "file": "voice/g1-towers/add-1-3.mp3"
+    },
+    "g1-towers/add-1-4": {
+      "text": "One plus four. Tap the answer.",
+      "hash": "b2d5a50eb5",
+      "kind": "line",
+      "file": "voice/g1-towers/add-1-4.mp3"
+    },
+    "g1-towers/add-1-5": {
+      "text": "One plus five. Tap the answer.",
+      "hash": "b4cb73db3f",
+      "kind": "line",
+      "file": "voice/g1-towers/add-1-5.mp3"
+    },
+    "g1-towers/add-1-6": {
+      "text": "One plus six. Tap the answer.",
+      "hash": "08af5d2504",
+      "kind": "line",
+      "file": "voice/g1-towers/add-1-6.mp3"
+    },
+    "g1-towers/add-1-7": {
+      "text": "One plus seven. Tap the answer.",
+      "hash": "2f6f39605f",
+      "kind": "line",
+      "file": "voice/g1-towers/add-1-7.mp3"
+    },
+    "g1-towers/add-1-8": {
+      "text": "One plus eight. Tap the answer.",
+      "hash": "e46fa78494",
+      "kind": "line",
+      "file": "voice/g1-towers/add-1-8.mp3"
+    },
+    "g1-towers/add-1-9": {
+      "text": "One plus nine. Tap the answer.",
+      "hash": "deaa012193",
+      "kind": "line",
+      "file": "voice/g1-towers/add-1-9.mp3"
+    },
+    "g1-towers/add-2-1": {
+      "text": "Two plus one. Tap the answer.",
+      "hash": "b55cccfba7",
+      "kind": "line",
+      "file": "voice/g1-towers/add-2-1.mp3"
+    },
+    "g1-towers/add-2-2": {
+      "text": "Two plus two. Tap the answer.",
+      "hash": "1b528f98e8",
+      "kind": "line",
+      "file": "voice/g1-towers/add-2-2.mp3"
+    },
+    "g1-towers/add-2-3": {
+      "text": "Two plus three. Tap the answer.",
+      "hash": "1a3c32afa6",
+      "kind": "line",
+      "file": "voice/g1-towers/add-2-3.mp3"
+    },
+    "g1-towers/add-2-4": {
+      "text": "Two plus four. Tap the answer.",
+      "hash": "4b0751658b",
+      "kind": "line",
+      "file": "voice/g1-towers/add-2-4.mp3"
+    },
+    "g1-towers/add-2-5": {
+      "text": "Two plus five. Tap the answer.",
+      "hash": "0b3a15b913",
+      "kind": "line",
+      "file": "voice/g1-towers/add-2-5.mp3"
+    },
+    "g1-towers/add-2-6": {
+      "text": "Two plus six. Tap the answer.",
+      "hash": "123d8cea4a",
+      "kind": "line",
+      "file": "voice/g1-towers/add-2-6.mp3"
+    },
+    "g1-towers/add-2-7": {
+      "text": "Two plus seven. Tap the answer.",
+      "hash": "810255475b",
+      "kind": "line",
+      "file": "voice/g1-towers/add-2-7.mp3"
+    },
+    "g1-towers/add-2-8": {
+      "text": "Two plus eight. Tap the answer.",
+      "hash": "35990654d1",
+      "kind": "line",
+      "file": "voice/g1-towers/add-2-8.mp3"
+    },
+    "g1-towers/add-3-1": {
+      "text": "Three plus one. Tap the answer.",
+      "hash": "1277f72621",
+      "kind": "line",
+      "file": "voice/g1-towers/add-3-1.mp3"
+    },
+    "g1-towers/add-3-2": {
+      "text": "Three plus two. Tap the answer.",
+      "hash": "58ee412aa7",
+      "kind": "line",
+      "file": "voice/g1-towers/add-3-2.mp3"
+    },
+    "g1-towers/add-3-3": {
+      "text": "Three plus three. Tap the answer.",
+      "hash": "d4b3175f95",
+      "kind": "line",
+      "file": "voice/g1-towers/add-3-3.mp3"
+    },
+    "g1-towers/add-3-4": {
+      "text": "Three plus four. Tap the answer.",
+      "hash": "2444de9256",
+      "kind": "line",
+      "file": "voice/g1-towers/add-3-4.mp3"
+    },
+    "g1-towers/add-3-5": {
+      "text": "Three plus five. Tap the answer.",
+      "hash": "e638ae5d94",
+      "kind": "line",
+      "file": "voice/g1-towers/add-3-5.mp3"
+    },
+    "g1-towers/add-3-6": {
+      "text": "Three plus six. Tap the answer.",
+      "hash": "1f60e86dae",
+      "kind": "line",
+      "file": "voice/g1-towers/add-3-6.mp3"
+    },
+    "g1-towers/add-3-7": {
+      "text": "Three plus seven. Tap the answer.",
+      "hash": "5be8d59993",
+      "kind": "line",
+      "file": "voice/g1-towers/add-3-7.mp3"
+    },
+    "g1-towers/add-4-1": {
+      "text": "Four plus one. Tap the answer.",
+      "hash": "f55ae46b79",
+      "kind": "line",
+      "file": "voice/g1-towers/add-4-1.mp3"
+    },
+    "g1-towers/add-4-2": {
+      "text": "Four plus two. Tap the answer.",
+      "hash": "0f52126d87",
+      "kind": "line",
+      "file": "voice/g1-towers/add-4-2.mp3"
+    },
+    "g1-towers/add-4-3": {
+      "text": "Four plus three. Tap the answer.",
+      "hash": "2faf7d7ede",
+      "kind": "line",
+      "file": "voice/g1-towers/add-4-3.mp3"
+    },
+    "g1-towers/add-4-4": {
+      "text": "Four plus four. Tap the answer.",
+      "hash": "fd7ae5f469",
+      "kind": "line",
+      "file": "voice/g1-towers/add-4-4.mp3"
+    },
+    "g1-towers/add-4-5": {
+      "text": "Four plus five. Tap the answer.",
+      "hash": "875cb8ff94",
+      "kind": "line",
+      "file": "voice/g1-towers/add-4-5.mp3"
+    },
+    "g1-towers/add-4-6": {
+      "text": "Four plus six. Tap the answer.",
+      "hash": "dd80cd5722",
+      "kind": "line",
+      "file": "voice/g1-towers/add-4-6.mp3"
+    },
+    "g1-towers/add-5-1": {
+      "text": "Five plus one. Tap the answer.",
+      "hash": "82ffb91504",
+      "kind": "line",
+      "file": "voice/g1-towers/add-5-1.mp3"
+    },
+    "g1-towers/add-5-2": {
+      "text": "Five plus two. Tap the answer.",
+      "hash": "6cc1685e43",
+      "kind": "line",
+      "file": "voice/g1-towers/add-5-2.mp3"
+    },
+    "g1-towers/add-5-3": {
+      "text": "Five plus three. Tap the answer.",
+      "hash": "8fa07964a4",
+      "kind": "line",
+      "file": "voice/g1-towers/add-5-3.mp3"
+    },
+    "g1-towers/add-5-4": {
+      "text": "Five plus four. Tap the answer.",
+      "hash": "da47dc6beb",
+      "kind": "line",
+      "file": "voice/g1-towers/add-5-4.mp3"
+    },
+    "g1-towers/add-5-5": {
+      "text": "Five plus five. Tap the answer.",
+      "hash": "cb5624a5e0",
+      "kind": "line",
+      "file": "voice/g1-towers/add-5-5.mp3"
+    },
+    "g1-towers/add-6-1": {
+      "text": "Six plus one. Tap the answer.",
+      "hash": "e730c9bd36",
+      "kind": "line",
+      "file": "voice/g1-towers/add-6-1.mp3"
+    },
+    "g1-towers/add-6-2": {
+      "text": "Six plus two. Tap the answer.",
+      "hash": "a286d0c555",
+      "kind": "line",
+      "file": "voice/g1-towers/add-6-2.mp3"
+    },
+    "g1-towers/add-6-3": {
+      "text": "Six plus three. Tap the answer.",
+      "hash": "e345edc44f",
+      "kind": "line",
+      "file": "voice/g1-towers/add-6-3.mp3"
+    },
+    "g1-towers/add-6-4": {
+      "text": "Six plus four. Tap the answer.",
+      "hash": "878642728c",
+      "kind": "line",
+      "file": "voice/g1-towers/add-6-4.mp3"
+    },
+    "g1-towers/add-7-1": {
+      "text": "Seven plus one. Tap the answer.",
+      "hash": "5d621e24a6",
+      "kind": "line",
+      "file": "voice/g1-towers/add-7-1.mp3"
+    },
+    "g1-towers/add-7-2": {
+      "text": "Seven plus two. Tap the answer.",
+      "hash": "2339a13201",
+      "kind": "line",
+      "file": "voice/g1-towers/add-7-2.mp3"
+    },
+    "g1-towers/add-7-3": {
+      "text": "Seven plus three. Tap the answer.",
+      "hash": "ec8c6c27d8",
+      "kind": "line",
+      "file": "voice/g1-towers/add-7-3.mp3"
+    },
+    "g1-towers/add-8-1": {
+      "text": "Eight plus one. Tap the answer.",
+      "hash": "1db21a32db",
+      "kind": "line",
+      "file": "voice/g1-towers/add-8-1.mp3"
+    },
+    "g1-towers/add-8-2": {
+      "text": "Eight plus two. Tap the answer.",
+      "hash": "1fda69e7dc",
+      "kind": "line",
+      "file": "voice/g1-towers/add-8-2.mp3"
+    },
+    "g1-towers/add-9-1": {
+      "text": "Nine plus one. Tap the answer.",
+      "hash": "485d0cd6eb",
+      "kind": "line",
+      "file": "voice/g1-towers/add-9-1.mp3"
+    },
+    "g1-towers/sub-2-1": {
+      "text": "Two minus one. Tap the answer.",
+      "hash": "f6098dbecd",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-2-1.mp3"
+    },
+    "g1-towers/sub-3-1": {
+      "text": "Three minus one. Tap the answer.",
+      "hash": "57b2da0cf9",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-3-1.mp3"
+    },
+    "g1-towers/sub-3-2": {
+      "text": "Three minus two. Tap the answer.",
+      "hash": "fbc327cc5b",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-3-2.mp3"
+    },
+    "g1-towers/sub-4-1": {
+      "text": "Four minus one. Tap the answer.",
+      "hash": "85feb54dd1",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-4-1.mp3"
+    },
+    "g1-towers/sub-4-2": {
+      "text": "Four minus two. Tap the answer.",
+      "hash": "417b86ba61",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-4-2.mp3"
+    },
+    "g1-towers/sub-4-3": {
+      "text": "Four minus three. Tap the answer.",
+      "hash": "da15d46f4e",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-4-3.mp3"
+    },
+    "g1-towers/sub-5-1": {
+      "text": "Five minus one. Tap the answer.",
+      "hash": "3bbc6067d8",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-5-1.mp3"
+    },
+    "g1-towers/sub-5-2": {
+      "text": "Five minus two. Tap the answer.",
+      "hash": "5da394c9a7",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-5-2.mp3"
+    },
+    "g1-towers/sub-5-3": {
+      "text": "Five minus three. Tap the answer.",
+      "hash": "735bbd0ba7",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-5-3.mp3"
+    },
+    "g1-towers/sub-5-4": {
+      "text": "Five minus four. Tap the answer.",
+      "hash": "350a55255c",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-5-4.mp3"
+    },
+    "g1-towers/sub-6-1": {
+      "text": "Six minus one. Tap the answer.",
+      "hash": "91f0978756",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-6-1.mp3"
+    },
+    "g1-towers/sub-6-2": {
+      "text": "Six minus two. Tap the answer.",
+      "hash": "0856cc3e5d",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-6-2.mp3"
+    },
+    "g1-towers/sub-6-3": {
+      "text": "Six minus three. Tap the answer.",
+      "hash": "a4861da846",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-6-3.mp3"
+    },
+    "g1-towers/sub-6-4": {
+      "text": "Six minus four. Tap the answer.",
+      "hash": "e1dd49af62",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-6-4.mp3"
+    },
+    "g1-towers/sub-6-5": {
+      "text": "Six minus five. Tap the answer.",
+      "hash": "84623121cd",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-6-5.mp3"
+    },
+    "g1-towers/sub-7-1": {
+      "text": "Seven minus one. Tap the answer.",
+      "hash": "7ffcb6dd43",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-7-1.mp3"
+    },
+    "g1-towers/sub-7-2": {
+      "text": "Seven minus two. Tap the answer.",
+      "hash": "129f3de64b",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-7-2.mp3"
+    },
+    "g1-towers/sub-7-3": {
+      "text": "Seven minus three. Tap the answer.",
+      "hash": "a2ff9c1f92",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-7-3.mp3"
+    },
+    "g1-towers/sub-7-4": {
+      "text": "Seven minus four. Tap the answer.",
+      "hash": "33ed14f398",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-7-4.mp3"
+    },
+    "g1-towers/sub-7-5": {
+      "text": "Seven minus five. Tap the answer.",
+      "hash": "7a7fc2537d",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-7-5.mp3"
+    },
+    "g1-towers/sub-7-6": {
+      "text": "Seven minus six. Tap the answer.",
+      "hash": "e6e036e94d",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-7-6.mp3"
+    },
+    "g1-towers/sub-8-1": {
+      "text": "Eight minus one. Tap the answer.",
+      "hash": "ab0b44fb18",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-8-1.mp3"
+    },
+    "g1-towers/sub-8-2": {
+      "text": "Eight minus two. Tap the answer.",
+      "hash": "307fbb2f8a",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-8-2.mp3"
+    },
+    "g1-towers/sub-8-3": {
+      "text": "Eight minus three. Tap the answer.",
+      "hash": "d9a2aba7fb",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-8-3.mp3"
+    },
+    "g1-towers/sub-8-4": {
+      "text": "Eight minus four. Tap the answer.",
+      "hash": "675f8a9972",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-8-4.mp3"
+    },
+    "g1-towers/sub-8-5": {
+      "text": "Eight minus five. Tap the answer.",
+      "hash": "5939edea9c",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-8-5.mp3"
+    },
+    "g1-towers/sub-8-6": {
+      "text": "Eight minus six. Tap the answer.",
+      "hash": "16f11c8a7a",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-8-6.mp3"
+    },
+    "g1-towers/sub-8-7": {
+      "text": "Eight minus seven. Tap the answer.",
+      "hash": "adb5d4b83b",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-8-7.mp3"
+    },
+    "g1-towers/sub-9-1": {
+      "text": "Nine minus one. Tap the answer.",
+      "hash": "64f2533465",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-9-1.mp3"
+    },
+    "g1-towers/sub-9-2": {
+      "text": "Nine minus two. Tap the answer.",
+      "hash": "dcd8fe9716",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-9-2.mp3"
+    },
+    "g1-towers/sub-9-3": {
+      "text": "Nine minus three. Tap the answer.",
+      "hash": "2d2de6d096",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-9-3.mp3"
+    },
+    "g1-towers/sub-9-4": {
+      "text": "Nine minus four. Tap the answer.",
+      "hash": "06ea7dc052",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-9-4.mp3"
+    },
+    "g1-towers/sub-9-5": {
+      "text": "Nine minus five. Tap the answer.",
+      "hash": "cc906d8517",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-9-5.mp3"
+    },
+    "g1-towers/sub-9-6": {
+      "text": "Nine minus six. Tap the answer.",
+      "hash": "0cac6ff5e0",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-9-6.mp3"
+    },
+    "g1-towers/sub-9-7": {
+      "text": "Nine minus seven. Tap the answer.",
+      "hash": "19afb59cd5",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-9-7.mp3"
+    },
+    "g1-towers/sub-9-8": {
+      "text": "Nine minus eight. Tap the answer.",
+      "hash": "18e31f055e",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-9-8.mp3"
+    },
+    "g1-towers/sub-10-1": {
+      "text": "Ten minus one. Tap the answer.",
+      "hash": "ea2f94fb71",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-10-1.mp3"
+    },
+    "g1-towers/sub-10-2": {
+      "text": "Ten minus two. Tap the answer.",
+      "hash": "3abc76e5fa",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-10-2.mp3"
+    },
+    "g1-towers/sub-10-3": {
+      "text": "Ten minus three. Tap the answer.",
+      "hash": "9109a9ce11",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-10-3.mp3"
+    },
+    "g1-towers/sub-10-4": {
+      "text": "Ten minus four. Tap the answer.",
+      "hash": "ca92c03aec",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-10-4.mp3"
+    },
+    "g1-towers/sub-10-5": {
+      "text": "Ten minus five. Tap the answer.",
+      "hash": "2e9a6e0948",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-10-5.mp3"
+    },
+    "g1-towers/sub-10-6": {
+      "text": "Ten minus six. Tap the answer.",
+      "hash": "b87ebee544",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-10-6.mp3"
+    },
+    "g1-towers/sub-10-7": {
+      "text": "Ten minus seven. Tap the answer.",
+      "hash": "413bda9010",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-10-7.mp3"
+    },
+    "g1-towers/sub-10-8": {
+      "text": "Ten minus eight. Tap the answer.",
+      "hash": "58a2f0338f",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-10-8.mp3"
+    },
+    "g1-towers/sub-10-9": {
+      "text": "Ten minus nine. Tap the answer.",
+      "hash": "d28ee3c53f",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-10-9.mp3"
+    },
+    "g1-towers/add-1-10": {
+      "text": "One plus ten. Tap the answer.",
+      "hash": "f8df3af49f",
+      "kind": "line",
+      "file": "voice/g1-towers/add-1-10.mp3"
+    },
+    "g1-towers/add-2-9": {
+      "text": "Two plus nine. Tap the answer.",
+      "hash": "ea52e6a9ca",
+      "kind": "line",
+      "file": "voice/g1-towers/add-2-9.mp3"
+    },
+    "g1-towers/add-2-10": {
+      "text": "Two plus ten. Tap the answer.",
+      "hash": "2b890d91f3",
+      "kind": "line",
+      "file": "voice/g1-towers/add-2-10.mp3"
+    },
+    "g1-towers/add-3-8": {
+      "text": "Three plus eight. Tap the answer.",
+      "hash": "5170184475",
+      "kind": "line",
+      "file": "voice/g1-towers/add-3-8.mp3"
+    },
+    "g1-towers/add-3-9": {
+      "text": "Three plus nine. Tap the answer.",
+      "hash": "42e1017767",
+      "kind": "line",
+      "file": "voice/g1-towers/add-3-9.mp3"
+    },
+    "g1-towers/add-3-10": {
+      "text": "Three plus ten. Tap the answer.",
+      "hash": "05a88bc800",
+      "kind": "line",
+      "file": "voice/g1-towers/add-3-10.mp3"
+    },
+    "g1-towers/add-4-7": {
+      "text": "Four plus seven. Tap the answer.",
+      "hash": "598449d8bc",
+      "kind": "line",
+      "file": "voice/g1-towers/add-4-7.mp3"
+    },
+    "g1-towers/add-4-8": {
+      "text": "Four plus eight. Tap the answer.",
+      "hash": "e34a33ba97",
+      "kind": "line",
+      "file": "voice/g1-towers/add-4-8.mp3"
+    },
+    "g1-towers/add-4-9": {
+      "text": "Four plus nine. Tap the answer.",
+      "hash": "738f92348d",
+      "kind": "line",
+      "file": "voice/g1-towers/add-4-9.mp3"
+    },
+    "g1-towers/add-4-10": {
+      "text": "Four plus ten. Tap the answer.",
+      "hash": "29887eda0d",
+      "kind": "line",
+      "file": "voice/g1-towers/add-4-10.mp3"
+    },
+    "g1-towers/add-5-6": {
+      "text": "Five plus six. Tap the answer.",
+      "hash": "cc6d3f16e2",
+      "kind": "line",
+      "file": "voice/g1-towers/add-5-6.mp3"
+    },
+    "g1-towers/add-5-7": {
+      "text": "Five plus seven. Tap the answer.",
+      "hash": "48df636a26",
+      "kind": "line",
+      "file": "voice/g1-towers/add-5-7.mp3"
+    },
+    "g1-towers/add-5-8": {
+      "text": "Five plus eight. Tap the answer.",
+      "hash": "89d087a637",
+      "kind": "line",
+      "file": "voice/g1-towers/add-5-8.mp3"
+    },
+    "g1-towers/add-5-9": {
+      "text": "Five plus nine. Tap the answer.",
+      "hash": "563f522919",
+      "kind": "line",
+      "file": "voice/g1-towers/add-5-9.mp3"
+    },
+    "g1-towers/add-5-10": {
+      "text": "Five plus ten. Tap the answer.",
+      "hash": "50f447f85f",
+      "kind": "line",
+      "file": "voice/g1-towers/add-5-10.mp3"
+    },
+    "g1-towers/add-6-5": {
+      "text": "Six plus five. Tap the answer.",
+      "hash": "48cd4a2bdc",
+      "kind": "line",
+      "file": "voice/g1-towers/add-6-5.mp3"
+    },
+    "g1-towers/add-6-6": {
+      "text": "Six plus six. Tap the answer.",
+      "hash": "883839e45e",
+      "kind": "line",
+      "file": "voice/g1-towers/add-6-6.mp3"
+    },
+    "g1-towers/add-6-7": {
+      "text": "Six plus seven. Tap the answer.",
+      "hash": "f9bfdc6bdc",
+      "kind": "line",
+      "file": "voice/g1-towers/add-6-7.mp3"
+    },
+    "g1-towers/add-6-8": {
+      "text": "Six plus eight. Tap the answer.",
+      "hash": "d9bb115f24",
+      "kind": "line",
+      "file": "voice/g1-towers/add-6-8.mp3"
+    },
+    "g1-towers/add-6-9": {
+      "text": "Six plus nine. Tap the answer.",
+      "hash": "0871be5373",
+      "kind": "line",
+      "file": "voice/g1-towers/add-6-9.mp3"
+    },
+    "g1-towers/add-6-10": {
+      "text": "Six plus ten. Tap the answer.",
+      "hash": "50c0da20d9",
+      "kind": "line",
+      "file": "voice/g1-towers/add-6-10.mp3"
+    },
+    "g1-towers/add-7-4": {
+      "text": "Seven plus four. Tap the answer.",
+      "hash": "d2d6d43e08",
+      "kind": "line",
+      "file": "voice/g1-towers/add-7-4.mp3"
+    },
+    "g1-towers/add-7-5": {
+      "text": "Seven plus five. Tap the answer.",
+      "hash": "35b39d38fd",
+      "kind": "line",
+      "file": "voice/g1-towers/add-7-5.mp3"
+    },
+    "g1-towers/add-7-6": {
+      "text": "Seven plus six. Tap the answer.",
+      "hash": "3a34525edd",
+      "kind": "line",
+      "file": "voice/g1-towers/add-7-6.mp3"
+    },
+    "g1-towers/add-7-7": {
+      "text": "Seven plus seven. Tap the answer.",
+      "hash": "5a24563080",
+      "kind": "line",
+      "file": "voice/g1-towers/add-7-7.mp3"
+    },
+    "g1-towers/add-7-8": {
+      "text": "Seven plus eight. Tap the answer.",
+      "hash": "f87e5727e0",
+      "kind": "line",
+      "file": "voice/g1-towers/add-7-8.mp3"
+    },
+    "g1-towers/add-7-9": {
+      "text": "Seven plus nine. Tap the answer.",
+      "hash": "4a666a53b0",
+      "kind": "line",
+      "file": "voice/g1-towers/add-7-9.mp3"
+    },
+    "g1-towers/add-7-10": {
+      "text": "Seven plus ten. Tap the answer.",
+      "hash": "10655900c0",
+      "kind": "line",
+      "file": "voice/g1-towers/add-7-10.mp3"
+    },
+    "g1-towers/add-8-3": {
+      "text": "Eight plus three. Tap the answer.",
+      "hash": "22ce8b5574",
+      "kind": "line",
+      "file": "voice/g1-towers/add-8-3.mp3"
+    },
+    "g1-towers/add-8-4": {
+      "text": "Eight plus four. Tap the answer.",
+      "hash": "18d4e211e2",
+      "kind": "line",
+      "file": "voice/g1-towers/add-8-4.mp3"
+    },
+    "g1-towers/add-8-5": {
+      "text": "Eight plus five. Tap the answer.",
+      "hash": "c8ad792a95",
+      "kind": "line",
+      "file": "voice/g1-towers/add-8-5.mp3"
+    },
+    "g1-towers/add-8-6": {
+      "text": "Eight plus six. Tap the answer.",
+      "hash": "be23e80f40",
+      "kind": "line",
+      "file": "voice/g1-towers/add-8-6.mp3"
+    },
+    "g1-towers/add-8-7": {
+      "text": "Eight plus seven. Tap the answer.",
+      "hash": "7004ede804",
+      "kind": "line",
+      "file": "voice/g1-towers/add-8-7.mp3"
+    },
+    "g1-towers/add-8-8": {
+      "text": "Eight plus eight. Tap the answer.",
+      "hash": "41ef2ce0b2",
+      "kind": "line",
+      "file": "voice/g1-towers/add-8-8.mp3"
+    },
+    "g1-towers/add-8-9": {
+      "text": "Eight plus nine. Tap the answer.",
+      "hash": "41f30a13b0",
+      "kind": "line",
+      "file": "voice/g1-towers/add-8-9.mp3"
+    },
+    "g1-towers/add-8-10": {
+      "text": "Eight plus ten. Tap the answer.",
+      "hash": "acbb0d8164",
+      "kind": "line",
+      "file": "voice/g1-towers/add-8-10.mp3"
+    },
+    "g1-towers/add-9-2": {
+      "text": "Nine plus two. Tap the answer.",
+      "hash": "99b268e6e2",
+      "kind": "line",
+      "file": "voice/g1-towers/add-9-2.mp3"
+    },
+    "g1-towers/add-9-3": {
+      "text": "Nine plus three. Tap the answer.",
+      "hash": "54d92b8b01",
+      "kind": "line",
+      "file": "voice/g1-towers/add-9-3.mp3"
+    },
+    "g1-towers/add-9-4": {
+      "text": "Nine plus four. Tap the answer.",
+      "hash": "6192281c2f",
+      "kind": "line",
+      "file": "voice/g1-towers/add-9-4.mp3"
+    },
+    "g1-towers/add-9-5": {
+      "text": "Nine plus five. Tap the answer.",
+      "hash": "e603edf16b",
+      "kind": "line",
+      "file": "voice/g1-towers/add-9-5.mp3"
+    },
+    "g1-towers/add-9-6": {
+      "text": "Nine plus six. Tap the answer.",
+      "hash": "0ef6b9ef77",
+      "kind": "line",
+      "file": "voice/g1-towers/add-9-6.mp3"
+    },
+    "g1-towers/add-9-7": {
+      "text": "Nine plus seven. Tap the answer.",
+      "hash": "d49ae913b8",
+      "kind": "line",
+      "file": "voice/g1-towers/add-9-7.mp3"
+    },
+    "g1-towers/add-9-8": {
+      "text": "Nine plus eight. Tap the answer.",
+      "hash": "5c5438b455",
+      "kind": "line",
+      "file": "voice/g1-towers/add-9-8.mp3"
+    },
+    "g1-towers/add-9-9": {
+      "text": "Nine plus nine. Tap the answer.",
+      "hash": "a06119aad3",
+      "kind": "line",
+      "file": "voice/g1-towers/add-9-9.mp3"
+    },
+    "g1-towers/add-9-10": {
+      "text": "Nine plus ten. Tap the answer.",
+      "hash": "a1a3b1c9e4",
+      "kind": "line",
+      "file": "voice/g1-towers/add-9-10.mp3"
+    },
+    "g1-towers/add-10-1": {
+      "text": "Ten plus one. Tap the answer.",
+      "hash": "0c37e70fbe",
+      "kind": "line",
+      "file": "voice/g1-towers/add-10-1.mp3"
+    },
+    "g1-towers/add-10-2": {
+      "text": "Ten plus two. Tap the answer.",
+      "hash": "38a7e0d8ce",
+      "kind": "line",
+      "file": "voice/g1-towers/add-10-2.mp3"
+    },
+    "g1-towers/add-10-3": {
+      "text": "Ten plus three. Tap the answer.",
+      "hash": "01f1480367",
+      "kind": "line",
+      "file": "voice/g1-towers/add-10-3.mp3"
+    },
+    "g1-towers/add-10-4": {
+      "text": "Ten plus four. Tap the answer.",
+      "hash": "15fcb3bed2",
+      "kind": "line",
+      "file": "voice/g1-towers/add-10-4.mp3"
+    },
+    "g1-towers/add-10-5": {
+      "text": "Ten plus five. Tap the answer.",
+      "hash": "7f46e7388a",
+      "kind": "line",
+      "file": "voice/g1-towers/add-10-5.mp3"
+    },
+    "g1-towers/add-10-6": {
+      "text": "Ten plus six. Tap the answer.",
+      "hash": "a813e755fc",
+      "kind": "line",
+      "file": "voice/g1-towers/add-10-6.mp3"
+    },
+    "g1-towers/add-10-7": {
+      "text": "Ten plus seven. Tap the answer.",
+      "hash": "1691e15198",
+      "kind": "line",
+      "file": "voice/g1-towers/add-10-7.mp3"
+    },
+    "g1-towers/add-10-8": {
+      "text": "Ten plus eight. Tap the answer.",
+      "hash": "527540d741",
+      "kind": "line",
+      "file": "voice/g1-towers/add-10-8.mp3"
+    },
+    "g1-towers/add-10-9": {
+      "text": "Ten plus nine. Tap the answer.",
+      "hash": "dbc2022659",
+      "kind": "line",
+      "file": "voice/g1-towers/add-10-9.mp3"
+    },
+    "g1-towers/add-10-10": {
+      "text": "Ten plus ten. Tap the answer.",
+      "hash": "5a2fd51978",
+      "kind": "line",
+      "file": "voice/g1-towers/add-10-10.mp3"
+    },
+    "g1-towers/sub-11-1": {
+      "text": "Eleven minus one. Tap the answer.",
+      "hash": "81db1c9c54",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-11-1.mp3"
+    },
+    "g1-towers/sub-11-2": {
+      "text": "Eleven minus two. Tap the answer.",
+      "hash": "eff51c9eeb",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-11-2.mp3"
+    },
+    "g1-towers/sub-11-3": {
+      "text": "Eleven minus three. Tap the answer.",
+      "hash": "2bdb93edb6",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-11-3.mp3"
+    },
+    "g1-towers/sub-11-4": {
+      "text": "Eleven minus four. Tap the answer.",
+      "hash": "146389411c",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-11-4.mp3"
+    },
+    "g1-towers/sub-11-5": {
+      "text": "Eleven minus five. Tap the answer.",
+      "hash": "1ac9d88438",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-11-5.mp3"
+    },
+    "g1-towers/sub-11-6": {
+      "text": "Eleven minus six. Tap the answer.",
+      "hash": "6282e97b92",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-11-6.mp3"
+    },
+    "g1-towers/sub-11-7": {
+      "text": "Eleven minus seven. Tap the answer.",
+      "hash": "da9db02af9",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-11-7.mp3"
+    },
+    "g1-towers/sub-11-8": {
+      "text": "Eleven minus eight. Tap the answer.",
+      "hash": "e831830509",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-11-8.mp3"
+    },
+    "g1-towers/sub-11-9": {
+      "text": "Eleven minus nine. Tap the answer.",
+      "hash": "64ba70d716",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-11-9.mp3"
+    },
+    "g1-towers/sub-11-10": {
+      "text": "Eleven minus ten. Tap the answer.",
+      "hash": "ad7f52bdab",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-11-10.mp3"
+    },
+    "g1-towers/sub-12-2": {
+      "text": "Twelve minus two. Tap the answer.",
+      "hash": "13e0f69483",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-12-2.mp3"
+    },
+    "g1-towers/sub-12-3": {
+      "text": "Twelve minus three. Tap the answer.",
+      "hash": "c8f19035b0",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-12-3.mp3"
+    },
+    "g1-towers/sub-12-4": {
+      "text": "Twelve minus four. Tap the answer.",
+      "hash": "bf5502c5b1",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-12-4.mp3"
+    },
+    "g1-towers/sub-12-5": {
+      "text": "Twelve minus five. Tap the answer.",
+      "hash": "ebed5226ca",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-12-5.mp3"
+    },
+    "g1-towers/sub-12-6": {
+      "text": "Twelve minus six. Tap the answer.",
+      "hash": "6970ce60b2",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-12-6.mp3"
+    },
+    "g1-towers/sub-12-7": {
+      "text": "Twelve minus seven. Tap the answer.",
+      "hash": "9de2299eab",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-12-7.mp3"
+    },
+    "g1-towers/sub-12-8": {
+      "text": "Twelve minus eight. Tap the answer.",
+      "hash": "0a8fcd88fa",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-12-8.mp3"
+    },
+    "g1-towers/sub-12-9": {
+      "text": "Twelve minus nine. Tap the answer.",
+      "hash": "e5ae576d6b",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-12-9.mp3"
+    },
+    "g1-towers/sub-12-10": {
+      "text": "Twelve minus ten. Tap the answer.",
+      "hash": "6dc0a1fa59",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-12-10.mp3"
+    },
+    "g1-towers/sub-13-3": {
+      "text": "Thirteen minus three. Tap the answer.",
+      "hash": "dc6e3706a5",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-13-3.mp3"
+    },
+    "g1-towers/sub-13-4": {
+      "text": "Thirteen minus four. Tap the answer.",
+      "hash": "a7abeaf61b",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-13-4.mp3"
+    },
+    "g1-towers/sub-13-5": {
+      "text": "Thirteen minus five. Tap the answer.",
+      "hash": "7d8234e290",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-13-5.mp3"
+    },
+    "g1-towers/sub-13-6": {
+      "text": "Thirteen minus six. Tap the answer.",
+      "hash": "8ea6d951d0",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-13-6.mp3"
+    },
+    "g1-towers/sub-13-7": {
+      "text": "Thirteen minus seven. Tap the answer.",
+      "hash": "192e41a2af",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-13-7.mp3"
+    },
+    "g1-towers/sub-13-8": {
+      "text": "Thirteen minus eight. Tap the answer.",
+      "hash": "992593db30",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-13-8.mp3"
+    },
+    "g1-towers/sub-13-9": {
+      "text": "Thirteen minus nine. Tap the answer.",
+      "hash": "aba74062a4",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-13-9.mp3"
+    },
+    "g1-towers/sub-13-10": {
+      "text": "Thirteen minus ten. Tap the answer.",
+      "hash": "77e0227ec1",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-13-10.mp3"
+    },
+    "g1-towers/sub-14-4": {
+      "text": "Fourteen minus four. Tap the answer.",
+      "hash": "0076b5a40e",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-14-4.mp3"
+    },
+    "g1-towers/sub-14-5": {
+      "text": "Fourteen minus five. Tap the answer.",
+      "hash": "a45134dd6d",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-14-5.mp3"
+    },
+    "g1-towers/sub-14-6": {
+      "text": "Fourteen minus six. Tap the answer.",
+      "hash": "3b60ed41b1",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-14-6.mp3"
+    },
+    "g1-towers/sub-14-7": {
+      "text": "Fourteen minus seven. Tap the answer.",
+      "hash": "325b3de4f5",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-14-7.mp3"
+    },
+    "g1-towers/sub-14-8": {
+      "text": "Fourteen minus eight. Tap the answer.",
+      "hash": "5298d76af8",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-14-8.mp3"
+    },
+    "g1-towers/sub-14-9": {
+      "text": "Fourteen minus nine. Tap the answer.",
+      "hash": "c60c566460",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-14-9.mp3"
+    },
+    "g1-towers/sub-14-10": {
+      "text": "Fourteen minus ten. Tap the answer.",
+      "hash": "1851050254",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-14-10.mp3"
+    },
+    "g1-towers/sub-15-5": {
+      "text": "Fifteen minus five. Tap the answer.",
+      "hash": "85b3317bee",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-15-5.mp3"
+    },
+    "g1-towers/sub-15-6": {
+      "text": "Fifteen minus six. Tap the answer.",
+      "hash": "51ba954f97",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-15-6.mp3"
+    },
+    "g1-towers/sub-15-7": {
+      "text": "Fifteen minus seven. Tap the answer.",
+      "hash": "b6d0871d0d",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-15-7.mp3"
+    },
+    "g1-towers/sub-15-8": {
+      "text": "Fifteen minus eight. Tap the answer.",
+      "hash": "f9074d3d3d",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-15-8.mp3"
+    },
+    "g1-towers/sub-15-9": {
+      "text": "Fifteen minus nine. Tap the answer.",
+      "hash": "ff462f61f2",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-15-9.mp3"
+    },
+    "g1-towers/sub-15-10": {
+      "text": "Fifteen minus ten. Tap the answer.",
+      "hash": "f254c813b7",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-15-10.mp3"
+    },
+    "g1-towers/sub-16-6": {
+      "text": "Sixteen minus six. Tap the answer.",
+      "hash": "63edb09238",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-16-6.mp3"
+    },
+    "g1-towers/sub-16-7": {
+      "text": "Sixteen minus seven. Tap the answer.",
+      "hash": "84834b1023",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-16-7.mp3"
+    },
+    "g1-towers/sub-16-8": {
+      "text": "Sixteen minus eight. Tap the answer.",
+      "hash": "599d313cc0",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-16-8.mp3"
+    },
+    "g1-towers/sub-16-9": {
+      "text": "Sixteen minus nine. Tap the answer.",
+      "hash": "f3e259b0ba",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-16-9.mp3"
+    },
+    "g1-towers/sub-16-10": {
+      "text": "Sixteen minus ten. Tap the answer.",
+      "hash": "79237bd1d9",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-16-10.mp3"
+    },
+    "g1-towers/sub-17-7": {
+      "text": "Seventeen minus seven. Tap the answer.",
+      "hash": "7fa7e5c018",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-17-7.mp3"
+    },
+    "g1-towers/sub-17-8": {
+      "text": "Seventeen minus eight. Tap the answer.",
+      "hash": "3e0991bac5",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-17-8.mp3"
+    },
+    "g1-towers/sub-17-9": {
+      "text": "Seventeen minus nine. Tap the answer.",
+      "hash": "aaffc108bc",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-17-9.mp3"
+    },
+    "g1-towers/sub-17-10": {
+      "text": "Seventeen minus ten. Tap the answer.",
+      "hash": "1397a677e5",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-17-10.mp3"
+    },
+    "g1-towers/sub-18-8": {
+      "text": "Eighteen minus eight. Tap the answer.",
+      "hash": "243774da50",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-18-8.mp3"
+    },
+    "g1-towers/sub-18-9": {
+      "text": "Eighteen minus nine. Tap the answer.",
+      "hash": "5abf15f8ec",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-18-9.mp3"
+    },
+    "g1-towers/sub-18-10": {
+      "text": "Eighteen minus ten. Tap the answer.",
+      "hash": "0d32b08c65",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-18-10.mp3"
+    },
+    "g1-towers/sub-19-9": {
+      "text": "Nineteen minus nine. Tap the answer.",
+      "hash": "470e1a1dcf",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-19-9.mp3"
+    },
+    "g1-towers/sub-19-10": {
+      "text": "Nineteen minus ten. Tap the answer.",
+      "hash": "ee04e262d6",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-19-10.mp3"
+    },
+    "g1-towers/sub-20-10": {
+      "text": "Twenty minus ten. Tap the answer.",
+      "hash": "2eb8f141e0",
+      "kind": "line",
+      "file": "voice/g1-towers/sub-20-10.mp3"
+    },
+    "g1-towers/how-add-1-1": {
+      "text": "Start at one. Count on one: two!",
+      "hash": "af9a56d2f4",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-1-1.mp3"
+    },
+    "g1-towers/how-add-1-2": {
+      "text": "Start at two. Count on one: three!",
+      "hash": "a42a3e2e87",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-1-2.mp3"
+    },
+    "g1-towers/how-add-1-3": {
+      "text": "Start at three. Count on one: four!",
+      "hash": "c0cdb04132",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-1-3.mp3"
+    },
+    "g1-towers/how-add-1-4": {
+      "text": "Start at four. Count on one: five!",
+      "hash": "f7ca96b07c",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-1-4.mp3"
+    },
+    "g1-towers/how-add-1-5": {
+      "text": "Start at five. Count on one: six!",
+      "hash": "2713bfaf8a",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-1-5.mp3"
+    },
+    "g1-towers/how-add-1-6": {
+      "text": "Start at six. Count on one: seven!",
+      "hash": "483a923a36",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-1-6.mp3"
+    },
+    "g1-towers/how-add-1-7": {
+      "text": "Start at seven. Count on one: eight!",
+      "hash": "72fb097e9f",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-1-7.mp3"
+    },
+    "g1-towers/how-add-1-8": {
+      "text": "Start at eight. Count on one: nine!",
+      "hash": "9ad8d4acde",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-1-8.mp3"
+    },
+    "g1-towers/how-add-1-9": {
+      "text": "Start at nine. Count on one: ten!",
+      "hash": "c249c1feac",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-1-9.mp3"
+    },
+    "g1-towers/how-add-2-1": {
+      "text": "Start at two. Count on one: three!",
+      "hash": "a42a3e2e87",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-2-1.mp3"
+    },
+    "g1-towers/how-add-2-2": {
+      "text": "Start at two. Count on two: three, four!",
+      "hash": "c5206121c1",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-2-2.mp3"
+    },
+    "g1-towers/how-add-2-3": {
+      "text": "Start at three. Count on two: four, five!",
+      "hash": "cf4519c7dd",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-2-3.mp3"
+    },
+    "g1-towers/how-add-2-4": {
+      "text": "Start at four. Count on two: five, six!",
+      "hash": "d12d56d3f0",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-2-4.mp3"
+    },
+    "g1-towers/how-add-2-5": {
+      "text": "Start at five. Count on two: six, seven!",
+      "hash": "d5aba0b3a1",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-2-5.mp3"
+    },
+    "g1-towers/how-add-2-6": {
+      "text": "Start at six. Count on two: seven, eight!",
+      "hash": "94634546a9",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-2-6.mp3"
+    },
+    "g1-towers/how-add-2-7": {
+      "text": "Start at seven. Count on two: eight, nine!",
+      "hash": "2251f893e0",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-2-7.mp3"
+    },
+    "g1-towers/how-add-2-8": {
+      "text": "Start at eight. Count on two: nine, ten!",
+      "hash": "a5c9f2ad9e",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-2-8.mp3"
+    },
+    "g1-towers/how-add-3-1": {
+      "text": "Start at three. Count on one: four!",
+      "hash": "c0cdb04132",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-3-1.mp3"
+    },
+    "g1-towers/how-add-3-2": {
+      "text": "Start at three. Count on two: four, five!",
+      "hash": "cf4519c7dd",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-3-2.mp3"
+    },
+    "g1-towers/how-add-3-3": {
+      "text": "Start at three. Count on three: four, five, six!",
+      "hash": "25fa7f4b40",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-3-3.mp3"
+    },
+    "g1-towers/how-add-3-4": {
+      "text": "Start at four. Count on three: five, six, seven!",
+      "hash": "bea0b95ebd",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-3-4.mp3"
+    },
+    "g1-towers/how-add-3-5": {
+      "text": "Start at five. Count on three: six, seven, eight!",
+      "hash": "c57bb4a055",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-3-5.mp3"
+    },
+    "g1-towers/how-add-3-6": {
+      "text": "Start at six. Count on three: seven, eight, nine!",
+      "hash": "bac590cbd2",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-3-6.mp3"
+    },
+    "g1-towers/how-add-3-7": {
+      "text": "Start at seven. Count on three: eight, nine, ten!",
+      "hash": "273368890d",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-3-7.mp3"
+    },
+    "g1-towers/how-add-4-1": {
+      "text": "Start at four. Count on one: five!",
+      "hash": "f7ca96b07c",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-4-1.mp3"
+    },
+    "g1-towers/how-add-4-2": {
+      "text": "Start at four. Count on two: five, six!",
+      "hash": "d12d56d3f0",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-4-2.mp3"
+    },
+    "g1-towers/how-add-4-3": {
+      "text": "Start at four. Count on three: five, six, seven!",
+      "hash": "bea0b95ebd",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-4-3.mp3"
+    },
+    "g1-towers/how-add-4-4": {
+      "text": "Start at four. Count on four: five, six, seven, eight!",
+      "hash": "96d8e0bb4c",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-4-4.mp3"
+    },
+    "g1-towers/how-add-4-5": {
+      "text": "Start at five. Count on four: six, seven, eight, nine!",
+      "hash": "13ad930e8d",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-4-5.mp3"
+    },
+    "g1-towers/how-add-4-6": {
+      "text": "Start at six. Count on four: seven, eight, nine, ten!",
+      "hash": "d8cf065d9b",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-4-6.mp3"
+    },
+    "g1-towers/how-add-5-1": {
+      "text": "Start at five. Count on one: six!",
+      "hash": "2713bfaf8a",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-5-1.mp3"
+    },
+    "g1-towers/how-add-5-2": {
+      "text": "Start at five. Count on two: six, seven!",
+      "hash": "d5aba0b3a1",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-5-2.mp3"
+    },
+    "g1-towers/how-add-5-3": {
+      "text": "Start at five. Count on three: six, seven, eight!",
+      "hash": "c57bb4a055",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-5-3.mp3"
+    },
+    "g1-towers/how-add-5-4": {
+      "text": "Start at five. Count on four: six, seven, eight, nine!",
+      "hash": "13ad930e8d",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-5-4.mp3"
+    },
+    "g1-towers/how-add-5-5": {
+      "text": "Start at five. Count on five: six, seven, eight, nine, ten!",
+      "hash": "8d5ca7da19",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-5-5.mp3"
+    },
+    "g1-towers/how-add-6-1": {
+      "text": "Start at six. Count on one: seven!",
+      "hash": "483a923a36",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-6-1.mp3"
+    },
+    "g1-towers/how-add-6-2": {
+      "text": "Start at six. Count on two: seven, eight!",
+      "hash": "94634546a9",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-6-2.mp3"
+    },
+    "g1-towers/how-add-6-3": {
+      "text": "Start at six. Count on three: seven, eight, nine!",
+      "hash": "bac590cbd2",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-6-3.mp3"
+    },
+    "g1-towers/how-add-6-4": {
+      "text": "Start at six. Count on four: seven, eight, nine, ten!",
+      "hash": "d8cf065d9b",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-6-4.mp3"
+    },
+    "g1-towers/how-add-7-1": {
+      "text": "Start at seven. Count on one: eight!",
+      "hash": "72fb097e9f",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-7-1.mp3"
+    },
+    "g1-towers/how-add-7-2": {
+      "text": "Start at seven. Count on two: eight, nine!",
+      "hash": "2251f893e0",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-7-2.mp3"
+    },
+    "g1-towers/how-add-7-3": {
+      "text": "Start at seven. Count on three: eight, nine, ten!",
+      "hash": "273368890d",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-7-3.mp3"
+    },
+    "g1-towers/how-add-8-1": {
+      "text": "Start at eight. Count on one: nine!",
+      "hash": "9ad8d4acde",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-8-1.mp3"
+    },
+    "g1-towers/how-add-8-2": {
+      "text": "Start at eight. Count on two: nine, ten!",
+      "hash": "a5c9f2ad9e",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-8-2.mp3"
+    },
+    "g1-towers/how-add-9-1": {
+      "text": "Start at nine. Count on one: ten!",
+      "hash": "c249c1feac",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-9-1.mp3"
+    },
+    "g1-towers/how-sub-2-1": {
+      "text": "Start at two. Count back one: one!",
+      "hash": "606a6b3d25",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-2-1.mp3"
+    },
+    "g1-towers/how-sub-3-1": {
+      "text": "Start at three. Count back one: two!",
+      "hash": "e14cdf79ef",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-3-1.mp3"
+    },
+    "g1-towers/how-sub-3-2": {
+      "text": "Start at three. Count back two: two, one!",
+      "hash": "6a6549c551",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-3-2.mp3"
+    },
+    "g1-towers/how-sub-4-1": {
+      "text": "Start at four. Count back one: three!",
+      "hash": "85fc01aa5e",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-4-1.mp3"
+    },
+    "g1-towers/how-sub-4-2": {
+      "text": "Start at four. Count back two: three, two!",
+      "hash": "02db7a5115",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-4-2.mp3"
+    },
+    "g1-towers/how-sub-4-3": {
+      "text": "Start at four. Count back three: three, two, one!",
+      "hash": "23b19a113c",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-4-3.mp3"
+    },
+    "g1-towers/how-sub-5-1": {
+      "text": "Start at five. Count back one: four!",
+      "hash": "c7fc0003a6",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-5-1.mp3"
+    },
+    "g1-towers/how-sub-5-2": {
+      "text": "Start at five. Count back two: four, three!",
+      "hash": "3692fda3bd",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-5-2.mp3"
+    },
+    "g1-towers/how-sub-5-3": {
+      "text": "Start at five. Count back three: four, three, two!",
+      "hash": "caffd0f91c",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-5-3.mp3"
+    },
+    "g1-towers/how-sub-5-4": {
+      "text": "Count up from four to five: five. That's one!",
+      "hash": "f42b38ee47",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-5-4.mp3"
+    },
+    "g1-towers/how-sub-6-1": {
+      "text": "Start at six. Count back one: five!",
+      "hash": "e09b256871",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-6-1.mp3"
+    },
+    "g1-towers/how-sub-6-2": {
+      "text": "Start at six. Count back two: five, four!",
+      "hash": "04838a1234",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-6-2.mp3"
+    },
+    "g1-towers/how-sub-6-3": {
+      "text": "Start at six. Count back three: five, four, three!",
+      "hash": "b3d9388182",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-6-3.mp3"
+    },
+    "g1-towers/how-sub-6-4": {
+      "text": "Count up from four to six: five, six. That's two!",
+      "hash": "49dbbe0d4c",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-6-4.mp3"
+    },
+    "g1-towers/how-sub-6-5": {
+      "text": "Count up from five to six: six. That's one!",
+      "hash": "3eacf688ea",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-6-5.mp3"
+    },
+    "g1-towers/how-sub-7-1": {
+      "text": "Start at seven. Count back one: six!",
+      "hash": "d5d8a78828",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-7-1.mp3"
+    },
+    "g1-towers/how-sub-7-2": {
+      "text": "Start at seven. Count back two: six, five!",
+      "hash": "c111fe14c1",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-7-2.mp3"
+    },
+    "g1-towers/how-sub-7-3": {
+      "text": "Start at seven. Count back three: six, five, four!",
+      "hash": "dd444c65b4",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-7-3.mp3"
+    },
+    "g1-towers/how-sub-7-4": {
+      "text": "Count up from four to seven: five, six, seven. That's three!",
+      "hash": "67e3018f85",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-7-4.mp3"
+    },
+    "g1-towers/how-sub-7-5": {
+      "text": "Count up from five to seven: six, seven. That's two!",
+      "hash": "466f45677e",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-7-5.mp3"
+    },
+    "g1-towers/how-sub-7-6": {
+      "text": "Count up from six to seven: seven. That's one!",
+      "hash": "93ee9a3fb3",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-7-6.mp3"
+    },
+    "g1-towers/how-sub-8-1": {
+      "text": "Start at eight. Count back one: seven!",
+      "hash": "98175bd842",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-8-1.mp3"
+    },
+    "g1-towers/how-sub-8-2": {
+      "text": "Start at eight. Count back two: seven, six!",
+      "hash": "be77b240cd",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-8-2.mp3"
+    },
+    "g1-towers/how-sub-8-3": {
+      "text": "Start at eight. Count back three: seven, six, five!",
+      "hash": "19adde7cfc",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-8-3.mp3"
+    },
+    "g1-towers/how-sub-8-4": {
+      "text": "Start at eight. Count back four: seven, six, five, four!",
+      "hash": "9c8c393518",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-8-4.mp3"
+    },
+    "g1-towers/how-sub-8-5": {
+      "text": "Count up from five to eight: six, seven, eight. That's three!",
+      "hash": "263c39b85f",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-8-5.mp3"
+    },
+    "g1-towers/how-sub-8-6": {
+      "text": "Count up from six to eight: seven, eight. That's two!",
+      "hash": "5467fb109c",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-8-6.mp3"
+    },
+    "g1-towers/how-sub-8-7": {
+      "text": "Count up from seven to eight: eight. That's one!",
+      "hash": "ef5c437ba2",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-8-7.mp3"
+    },
+    "g1-towers/how-sub-9-1": {
+      "text": "Start at nine. Count back one: eight!",
+      "hash": "b0d1cdf237",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-9-1.mp3"
+    },
+    "g1-towers/how-sub-9-2": {
+      "text": "Start at nine. Count back two: eight, seven!",
+      "hash": "f7aa589f93",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-9-2.mp3"
+    },
+    "g1-towers/how-sub-9-3": {
+      "text": "Start at nine. Count back three: eight, seven, six!",
+      "hash": "0a78c646a7",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-9-3.mp3"
+    },
+    "g1-towers/how-sub-9-4": {
+      "text": "Start at nine. Count back four: eight, seven, six, five!",
+      "hash": "d186a3cfae",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-9-4.mp3"
+    },
+    "g1-towers/how-sub-9-5": {
+      "text": "Count up from five to nine: six, seven, eight, nine. That's four!",
+      "hash": "1cf82f4c1b",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-9-5.mp3"
+    },
+    "g1-towers/how-sub-9-6": {
+      "text": "Count up from six to nine: seven, eight, nine. That's three!",
+      "hash": "ed934680f5",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-9-6.mp3"
+    },
+    "g1-towers/how-sub-9-7": {
+      "text": "Count up from seven to nine: eight, nine. That's two!",
+      "hash": "3e8118a204",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-9-7.mp3"
+    },
+    "g1-towers/how-sub-9-8": {
+      "text": "Count up from eight to nine: nine. That's one!",
+      "hash": "421cc2bbdf",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-9-8.mp3"
+    },
+    "g1-towers/how-sub-10-1": {
+      "text": "Start at ten. Count back one: nine!",
+      "hash": "ea24af90cf",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-10-1.mp3"
+    },
+    "g1-towers/how-sub-10-2": {
+      "text": "Start at ten. Count back two: nine, eight!",
+      "hash": "e61d2c0d34",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-10-2.mp3"
+    },
+    "g1-towers/how-sub-10-3": {
+      "text": "Start at ten. Count back three: nine, eight, seven!",
+      "hash": "7d76af9cec",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-10-3.mp3"
+    },
+    "g1-towers/how-sub-10-4": {
+      "text": "Start at ten. Count back four: nine, eight, seven, six!",
+      "hash": "76017a0f9f",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-10-4.mp3"
+    },
+    "g1-towers/how-sub-10-5": {
+      "text": "Start at ten. Count back five: nine, eight, seven, six, five!",
+      "hash": "eb8861017a",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-10-5.mp3"
+    },
+    "g1-towers/how-sub-10-6": {
+      "text": "Count up from six to ten: seven, eight, nine, ten. That's four!",
+      "hash": "8a46d02b2b",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-10-6.mp3"
+    },
+    "g1-towers/how-sub-10-7": {
+      "text": "Count up from seven to ten: eight, nine, ten. That's three!",
+      "hash": "3ad3d40ca1",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-10-7.mp3"
+    },
+    "g1-towers/how-sub-10-8": {
+      "text": "Count up from eight to ten: nine, ten. That's two!",
+      "hash": "55562cbf07",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-10-8.mp3"
+    },
+    "g1-towers/how-sub-10-9": {
+      "text": "Count up from nine to ten: ten. That's one!",
+      "hash": "ede6c83056",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-10-9.mp3"
+    },
+    "g1-towers/how-add-1-10": {
+      "text": "Start at ten. Count on one: eleven!",
+      "hash": "95fc24686a",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-1-10.mp3"
+    },
+    "g1-towers/how-add-2-9": {
+      "text": "Start at nine. Count on two: ten, eleven!",
+      "hash": "4382223cfa",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-2-9.mp3"
+    },
+    "g1-towers/how-add-2-10": {
+      "text": "Start at ten. Count on two: eleven, twelve!",
+      "hash": "a9150d7eed",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-2-10.mp3"
+    },
+    "g1-towers/how-add-3-8": {
+      "text": "Start at eight. Count on three: nine, ten, eleven!",
+      "hash": "6ac2b46299",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-3-8.mp3"
+    },
+    "g1-towers/how-add-3-9": {
+      "text": "Start at nine. Count on three: ten, eleven, twelve!",
+      "hash": "62a4f51355",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-3-9.mp3"
+    },
+    "g1-towers/how-add-3-10": {
+      "text": "Start at ten. Count on three: eleven, twelve, thirteen!",
+      "hash": "38ec169af6",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-3-10.mp3"
+    },
+    "g1-towers/how-add-4-7": {
+      "text": "Start at seven. Count on four: eight, nine, ten, eleven!",
+      "hash": "ff85b6e607",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-4-7.mp3"
+    },
+    "g1-towers/how-add-4-8": {
+      "text": "Start at eight. Count on four: nine, ten, eleven, twelve!",
+      "hash": "f860bb4f1e",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-4-8.mp3"
+    },
+    "g1-towers/how-add-4-9": {
+      "text": "Start at nine. Count on four: ten, eleven, twelve, thirteen!",
+      "hash": "1392036d56",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-4-9.mp3"
+    },
+    "g1-towers/how-add-4-10": {
+      "text": "Start at ten. Count on four: eleven, twelve, thirteen, fourteen!",
+      "hash": "76faeeb616",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-4-10.mp3"
+    },
+    "g1-towers/how-add-5-6": {
+      "text": "Start at six. Count on five: seven, eight, nine, ten, eleven!",
+      "hash": "b28169ee41",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-5-6.mp3"
+    },
+    "g1-towers/how-add-5-7": {
+      "text": "Start at seven. Count on five: eight, nine, ten, eleven, twelve!",
+      "hash": "7085204f4b",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-5-7.mp3"
+    },
+    "g1-towers/how-add-5-8": {
+      "text": "Start at eight. Count on five: nine, ten, eleven, twelve, thirteen!",
+      "hash": "faa0b67f4f",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-5-8.mp3"
+    },
+    "g1-towers/how-add-5-9": {
+      "text": "Start at nine. Count on five: ten, eleven, twelve, thirteen, fourteen!",
+      "hash": "c16498ae1a",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-5-9.mp3"
+    },
+    "g1-towers/how-add-5-10": {
+      "text": "Start at ten. Count on five: eleven, twelve, thirteen, fourteen, fifteen!",
+      "hash": "ecaf29ff61",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-5-10.mp3"
+    },
+    "g1-towers/how-add-6-5": {
+      "text": "Start at six. Count on five: seven, eight, nine, ten, eleven!",
+      "hash": "b28169ee41",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-6-5.mp3"
+    },
+    "g1-towers/how-add-6-6": {
+      "text": "Start at six. Count on six: seven, eight, nine, ten, eleven, twelve!",
+      "hash": "4ed8bbbf94",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-6-6.mp3"
+    },
+    "g1-towers/how-add-6-7": {
+      "text": "Start at seven. Count on six: eight, nine, ten, eleven, twelve, thirteen!",
+      "hash": "16bff2a1ec",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-6-7.mp3"
+    },
+    "g1-towers/how-add-6-8": {
+      "text": "Start at eight. Count on six: nine, ten, eleven, twelve, thirteen, fourteen!",
+      "hash": "2f6b854de3",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-6-8.mp3"
+    },
+    "g1-towers/how-add-6-9": {
+      "text": "Start at nine. Count on six: ten, eleven, twelve, thirteen, fourteen, fifteen!",
+      "hash": "a65855a8c9",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-6-9.mp3"
+    },
+    "g1-towers/how-add-6-10": {
+      "text": "Start at ten. Count on six: eleven, twelve, thirteen, fourteen, fifteen, sixteen!",
+      "hash": "799969ad4a",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-6-10.mp3"
+    },
+    "g1-towers/how-add-7-4": {
+      "text": "Start at seven. Count on four: eight, nine, ten, eleven!",
+      "hash": "ff85b6e607",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-7-4.mp3"
+    },
+    "g1-towers/how-add-7-5": {
+      "text": "Start at seven. Count on five: eight, nine, ten, eleven, twelve!",
+      "hash": "7085204f4b",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-7-5.mp3"
+    },
+    "g1-towers/how-add-7-6": {
+      "text": "Start at seven. Count on six: eight, nine, ten, eleven, twelve, thirteen!",
+      "hash": "16bff2a1ec",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-7-6.mp3"
+    },
+    "g1-towers/how-add-7-7": {
+      "text": "Start at seven. Count on seven: eight, nine, ten, eleven, twelve, thirteen, fourteen!",
+      "hash": "29644cc9c1",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-7-7.mp3"
+    },
+    "g1-towers/how-add-7-8": {
+      "text": "Start at eight. Count on seven: nine, ten, eleven, twelve, thirteen, fourteen, fifteen!",
+      "hash": "6764beae74",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-7-8.mp3"
+    },
+    "g1-towers/how-add-7-9": {
+      "text": "Start at nine. Count on seven: ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen!",
+      "hash": "8df1a06b08",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-7-9.mp3"
+    },
+    "g1-towers/how-add-7-10": {
+      "text": "Start at ten. Count on seven: eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen!",
+      "hash": "ec67a18bbe",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-7-10.mp3"
+    },
+    "g1-towers/how-add-8-3": {
+      "text": "Start at eight. Count on three: nine, ten, eleven!",
+      "hash": "6ac2b46299",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-8-3.mp3"
+    },
+    "g1-towers/how-add-8-4": {
+      "text": "Start at eight. Count on four: nine, ten, eleven, twelve!",
+      "hash": "f860bb4f1e",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-8-4.mp3"
+    },
+    "g1-towers/how-add-8-5": {
+      "text": "Start at eight. Count on five: nine, ten, eleven, twelve, thirteen!",
+      "hash": "faa0b67f4f",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-8-5.mp3"
+    },
+    "g1-towers/how-add-8-6": {
+      "text": "Start at eight. Count on six: nine, ten, eleven, twelve, thirteen, fourteen!",
+      "hash": "2f6b854de3",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-8-6.mp3"
+    },
+    "g1-towers/how-add-8-7": {
+      "text": "Start at eight. Count on seven: nine, ten, eleven, twelve, thirteen, fourteen, fifteen!",
+      "hash": "6764beae74",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-8-7.mp3"
+    },
+    "g1-towers/how-add-8-8": {
+      "text": "Start at eight. Count on eight: nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen!",
+      "hash": "cb831079a1",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-8-8.mp3"
+    },
+    "g1-towers/how-add-8-9": {
+      "text": "Start at nine. Count on eight: ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen!",
+      "hash": "966cfaf2bc",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-8-9.mp3"
+    },
+    "g1-towers/how-add-8-10": {
+      "text": "Start at ten. Count on eight: eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen!",
+      "hash": "1cec8e00c8",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-8-10.mp3"
+    },
+    "g1-towers/how-add-9-2": {
+      "text": "Start at nine. Count on two: ten, eleven!",
+      "hash": "4382223cfa",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-9-2.mp3"
+    },
+    "g1-towers/how-add-9-3": {
+      "text": "Start at nine. Count on three: ten, eleven, twelve!",
+      "hash": "62a4f51355",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-9-3.mp3"
+    },
+    "g1-towers/how-add-9-4": {
+      "text": "Start at nine. Count on four: ten, eleven, twelve, thirteen!",
+      "hash": "1392036d56",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-9-4.mp3"
+    },
+    "g1-towers/how-add-9-5": {
+      "text": "Start at nine. Count on five: ten, eleven, twelve, thirteen, fourteen!",
+      "hash": "c16498ae1a",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-9-5.mp3"
+    },
+    "g1-towers/how-add-9-6": {
+      "text": "Start at nine. Count on six: ten, eleven, twelve, thirteen, fourteen, fifteen!",
+      "hash": "a65855a8c9",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-9-6.mp3"
+    },
+    "g1-towers/how-add-9-7": {
+      "text": "Start at nine. Count on seven: ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen!",
+      "hash": "8df1a06b08",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-9-7.mp3"
+    },
+    "g1-towers/how-add-9-8": {
+      "text": "Start at nine. Count on eight: ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen!",
+      "hash": "966cfaf2bc",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-9-8.mp3"
+    },
+    "g1-towers/how-add-9-9": {
+      "text": "Start at nine. Count on nine: ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen!",
+      "hash": "ee4c8eba80",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-9-9.mp3"
+    },
+    "g1-towers/how-add-9-10": {
+      "text": "Start at ten. Count on nine: eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, nineteen!",
+      "hash": "fd7d07c97f",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-9-10.mp3"
+    },
+    "g1-towers/how-add-10-1": {
+      "text": "Start at ten. Count on one: eleven!",
+      "hash": "95fc24686a",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-10-1.mp3"
+    },
+    "g1-towers/how-add-10-2": {
+      "text": "Start at ten. Count on two: eleven, twelve!",
+      "hash": "a9150d7eed",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-10-2.mp3"
+    },
+    "g1-towers/how-add-10-3": {
+      "text": "Start at ten. Count on three: eleven, twelve, thirteen!",
+      "hash": "38ec169af6",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-10-3.mp3"
+    },
+    "g1-towers/how-add-10-4": {
+      "text": "Start at ten. Count on four: eleven, twelve, thirteen, fourteen!",
+      "hash": "76faeeb616",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-10-4.mp3"
+    },
+    "g1-towers/how-add-10-5": {
+      "text": "Start at ten. Count on five: eleven, twelve, thirteen, fourteen, fifteen!",
+      "hash": "ecaf29ff61",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-10-5.mp3"
+    },
+    "g1-towers/how-add-10-6": {
+      "text": "Start at ten. Count on six: eleven, twelve, thirteen, fourteen, fifteen, sixteen!",
+      "hash": "799969ad4a",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-10-6.mp3"
+    },
+    "g1-towers/how-add-10-7": {
+      "text": "Start at ten. Count on seven: eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen!",
+      "hash": "ec67a18bbe",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-10-7.mp3"
+    },
+    "g1-towers/how-add-10-8": {
+      "text": "Start at ten. Count on eight: eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen!",
+      "hash": "1cec8e00c8",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-10-8.mp3"
+    },
+    "g1-towers/how-add-10-9": {
+      "text": "Start at ten. Count on nine: eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, nineteen!",
+      "hash": "fd7d07c97f",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-10-9.mp3"
+    },
+    "g1-towers/how-add-10-10": {
+      "text": "Start at ten. Count on ten: eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, nineteen, twenty!",
+      "hash": "cff0f71d02",
+      "kind": "line",
+      "file": "voice/g1-towers/how-add-10-10.mp3"
+    },
+    "g1-towers/how-sub-11-1": {
+      "text": "Start at eleven. Count back one: ten!",
+      "hash": "5b667b13cc",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-11-1.mp3"
+    },
+    "g1-towers/how-sub-11-2": {
+      "text": "Start at eleven. Count back two: ten, nine!",
+      "hash": "b6dc255908",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-11-2.mp3"
+    },
+    "g1-towers/how-sub-11-3": {
+      "text": "Start at eleven. Count back three: ten, nine, eight!",
+      "hash": "2d4dd62e2f",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-11-3.mp3"
+    },
+    "g1-towers/how-sub-11-4": {
+      "text": "Start at eleven. Count back four: ten, nine, eight, seven!",
+      "hash": "31351e15b3",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-11-4.mp3"
+    },
+    "g1-towers/how-sub-11-5": {
+      "text": "Start at eleven. Count back five: ten, nine, eight, seven, six!",
+      "hash": "e009ade965",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-11-5.mp3"
+    },
+    "g1-towers/how-sub-11-6": {
+      "text": "Count up from six to eleven: seven, eight, nine, ten, eleven. That's five!",
+      "hash": "2a6a7003fa",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-11-6.mp3"
+    },
+    "g1-towers/how-sub-11-7": {
+      "text": "Count up from seven to eleven: eight, nine, ten, eleven. That's four!",
+      "hash": "7a00fed69b",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-11-7.mp3"
+    },
+    "g1-towers/how-sub-11-8": {
+      "text": "Count up from eight to eleven: nine, ten, eleven. That's three!",
+      "hash": "2b56c65982",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-11-8.mp3"
+    },
+    "g1-towers/how-sub-11-9": {
+      "text": "Count up from nine to eleven: ten, eleven. That's two!",
+      "hash": "012406c7ef",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-11-9.mp3"
+    },
+    "g1-towers/how-sub-11-10": {
+      "text": "Count up from ten to eleven: eleven. That's one!",
+      "hash": "7dcedb6e79",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-11-10.mp3"
+    },
+    "g1-towers/how-sub-12-2": {
+      "text": "Start at twelve. Count back two: eleven, ten!",
+      "hash": "312597c8ce",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-12-2.mp3"
+    },
+    "g1-towers/how-sub-12-3": {
+      "text": "Start at twelve. Count back three: eleven, ten, nine!",
+      "hash": "c532a19b65",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-12-3.mp3"
+    },
+    "g1-towers/how-sub-12-4": {
+      "text": "Start at twelve. Count back four: eleven, ten, nine, eight!",
+      "hash": "f4e70f7415",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-12-4.mp3"
+    },
+    "g1-towers/how-sub-12-5": {
+      "text": "Start at twelve. Count back five: eleven, ten, nine, eight, seven!",
+      "hash": "99c516b675",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-12-5.mp3"
+    },
+    "g1-towers/how-sub-12-6": {
+      "text": "Start at twelve. Count back six: eleven, ten, nine, eight, seven, six!",
+      "hash": "bd7d09f5c6",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-12-6.mp3"
+    },
+    "g1-towers/how-sub-12-7": {
+      "text": "Count up from seven to twelve: eight, nine, ten, eleven, twelve. That's five!",
+      "hash": "ea050a20a8",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-12-7.mp3"
+    },
+    "g1-towers/how-sub-12-8": {
+      "text": "Count up from eight to twelve: nine, ten, eleven, twelve. That's four!",
+      "hash": "fa030690be",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-12-8.mp3"
+    },
+    "g1-towers/how-sub-12-9": {
+      "text": "Count up from nine to twelve: ten, eleven, twelve. That's three!",
+      "hash": "0940e4066b",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-12-9.mp3"
+    },
+    "g1-towers/how-sub-12-10": {
+      "text": "Count up from ten to twelve: eleven, twelve. That's two!",
+      "hash": "cc021ce1d3",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-12-10.mp3"
+    },
+    "g1-towers/how-sub-13-3": {
+      "text": "Start at thirteen. Count back three: twelve, eleven, ten!",
+      "hash": "d41bf8c39d",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-13-3.mp3"
+    },
+    "g1-towers/how-sub-13-4": {
+      "text": "Start at thirteen. Count back four: twelve, eleven, ten, nine!",
+      "hash": "6d09b35c95",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-13-4.mp3"
+    },
+    "g1-towers/how-sub-13-5": {
+      "text": "Start at thirteen. Count back five: twelve, eleven, ten, nine, eight!",
+      "hash": "38036a0e0a",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-13-5.mp3"
+    },
+    "g1-towers/how-sub-13-6": {
+      "text": "Start at thirteen. Count back six: twelve, eleven, ten, nine, eight, seven!",
+      "hash": "0639e7ea34",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-13-6.mp3"
+    },
+    "g1-towers/how-sub-13-7": {
+      "text": "Count up from seven to thirteen: eight, nine, ten, eleven, twelve, thirteen. That's six!",
+      "hash": "a2aa8b2149",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-13-7.mp3"
+    },
+    "g1-towers/how-sub-13-8": {
+      "text": "Count up from eight to thirteen: nine, ten, eleven, twelve, thirteen. That's five!",
+      "hash": "223d3b433a",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-13-8.mp3"
+    },
+    "g1-towers/how-sub-13-9": {
+      "text": "Count up from nine to thirteen: ten, eleven, twelve, thirteen. That's four!",
+      "hash": "2392c4f3c3",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-13-9.mp3"
+    },
+    "g1-towers/how-sub-13-10": {
+      "text": "Count up from ten to thirteen: eleven, twelve, thirteen. That's three!",
+      "hash": "c49f266a16",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-13-10.mp3"
+    },
+    "g1-towers/how-sub-14-4": {
+      "text": "Start at fourteen. Count back four: thirteen, twelve, eleven, ten!",
+      "hash": "54864c4049",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-14-4.mp3"
+    },
+    "g1-towers/how-sub-14-5": {
+      "text": "Start at fourteen. Count back five: thirteen, twelve, eleven, ten, nine!",
+      "hash": "5afa878635",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-14-5.mp3"
+    },
+    "g1-towers/how-sub-14-6": {
+      "text": "Start at fourteen. Count back six: thirteen, twelve, eleven, ten, nine, eight!",
+      "hash": "6c25139060",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-14-6.mp3"
+    },
+    "g1-towers/how-sub-14-7": {
+      "text": "Start at fourteen. Count back seven: thirteen, twelve, eleven, ten, nine, eight, seven!",
+      "hash": "76162c5ffe",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-14-7.mp3"
+    },
+    "g1-towers/how-sub-14-8": {
+      "text": "Count up from eight to fourteen: nine, ten, eleven, twelve, thirteen, fourteen. That's six!",
+      "hash": "816240c843",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-14-8.mp3"
+    },
+    "g1-towers/how-sub-14-9": {
+      "text": "Count up from nine to fourteen: ten, eleven, twelve, thirteen, fourteen. That's five!",
+      "hash": "7c3c5a22c7",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-14-9.mp3"
+    },
+    "g1-towers/how-sub-14-10": {
+      "text": "Count up from ten to fourteen: eleven, twelve, thirteen, fourteen. That's four!",
+      "hash": "60c22bea7a",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-14-10.mp3"
+    },
+    "g1-towers/how-sub-15-5": {
+      "text": "Start at fifteen. Count back five: fourteen, thirteen, twelve, eleven, ten!",
+      "hash": "36acff43a0",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-15-5.mp3"
+    },
+    "g1-towers/how-sub-15-6": {
+      "text": "Start at fifteen. Count back six: fourteen, thirteen, twelve, eleven, ten, nine!",
+      "hash": "541f02c9d3",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-15-6.mp3"
+    },
+    "g1-towers/how-sub-15-7": {
+      "text": "Start at fifteen. Count back seven: fourteen, thirteen, twelve, eleven, ten, nine, eight!",
+      "hash": "93854bd0fa",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-15-7.mp3"
+    },
+    "g1-towers/how-sub-15-8": {
+      "text": "Count up from eight to fifteen: nine, ten, eleven, twelve, thirteen, fourteen, fifteen. That's seven!",
+      "hash": "3e5f040cdb",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-15-8.mp3"
+    },
+    "g1-towers/how-sub-15-9": {
+      "text": "Count up from nine to fifteen: ten, eleven, twelve, thirteen, fourteen, fifteen. That's six!",
+      "hash": "1d62ccdbc3",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-15-9.mp3"
+    },
+    "g1-towers/how-sub-15-10": {
+      "text": "Count up from ten to fifteen: eleven, twelve, thirteen, fourteen, fifteen. That's five!",
+      "hash": "d5e36e982a",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-15-10.mp3"
+    },
+    "g1-towers/how-sub-16-6": {
+      "text": "Start at sixteen. Count back six: fifteen, fourteen, thirteen, twelve, eleven, ten!",
+      "hash": "df31f13a12",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-16-6.mp3"
+    },
+    "g1-towers/how-sub-16-7": {
+      "text": "Start at sixteen. Count back seven: fifteen, fourteen, thirteen, twelve, eleven, ten, nine!",
+      "hash": "99f789ced6",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-16-7.mp3"
+    },
+    "g1-towers/how-sub-16-8": {
+      "text": "Start at sixteen. Count back eight: fifteen, fourteen, thirteen, twelve, eleven, ten, nine, eight!",
+      "hash": "0016566d88",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-16-8.mp3"
+    },
+    "g1-towers/how-sub-16-9": {
+      "text": "Count up from nine to sixteen: ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen. That's seven!",
+      "hash": "a29c833cf0",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-16-9.mp3"
+    },
+    "g1-towers/how-sub-16-10": {
+      "text": "Count up from ten to sixteen: eleven, twelve, thirteen, fourteen, fifteen, sixteen. That's six!",
+      "hash": "5456191572",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-16-10.mp3"
+    },
+    "g1-towers/how-sub-17-7": {
+      "text": "Start at seventeen. Count back seven: sixteen, fifteen, fourteen, thirteen, twelve, eleven, ten!",
+      "hash": "5331024c2b",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-17-7.mp3"
+    },
+    "g1-towers/how-sub-17-8": {
+      "text": "Start at seventeen. Count back eight: sixteen, fifteen, fourteen, thirteen, twelve, eleven, ten, nine!",
+      "hash": "46389ac4c7",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-17-8.mp3"
+    },
+    "g1-towers/how-sub-17-9": {
+      "text": "Count up from nine to seventeen: ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen. That's eight!",
+      "hash": "f3c051b499",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-17-9.mp3"
+    },
+    "g1-towers/how-sub-17-10": {
+      "text": "Count up from ten to seventeen: eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen. That's seven!",
+      "hash": "8fdfd29eed",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-17-10.mp3"
+    },
+    "g1-towers/how-sub-18-8": {
+      "text": "Start at eighteen. Count back eight: seventeen, sixteen, fifteen, fourteen, thirteen, twelve, eleven, ten!",
+      "hash": "cf65064202",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-18-8.mp3"
+    },
+    "g1-towers/how-sub-18-9": {
+      "text": "Start at eighteen. Count back nine: seventeen, sixteen, fifteen, fourteen, thirteen, twelve, eleven, ten, nine!",
+      "hash": "259bfddf58",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-18-9.mp3"
+    },
+    "g1-towers/how-sub-18-10": {
+      "text": "Count up from ten to eighteen: eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen. That's eight!",
+      "hash": "f0bc3651c4",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-18-10.mp3"
+    },
+    "g1-towers/how-sub-19-9": {
+      "text": "Start at nineteen. Count back nine: eighteen, seventeen, sixteen, fifteen, fourteen, thirteen, twelve, eleven, ten!",
+      "hash": "978b1a6670",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-19-9.mp3"
+    },
+    "g1-towers/how-sub-19-10": {
+      "text": "Count up from ten to nineteen: eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, nineteen. That's nine!",
+      "hash": "748100643b",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-19-10.mp3"
+    },
+    "g1-towers/how-sub-20-10": {
+      "text": "Start at twenty. Count back ten: nineteen, eighteen, seventeen, sixteen, fifteen, fourteen, thirteen, twelve, eleven, ten!",
+      "hash": "ff061062f2",
+      "kind": "line",
+      "file": "voice/g1-towers/how-sub-20-10.mp3"
+    },
+    "g1-towers/mathPower": {
+      "text": "Math power!",
+      "hash": "80e4a2f787",
+      "kind": "line",
+      "file": "voice/g1-towers/mathPower.mp3"
+    },
+    "g1-towers/greatAdding": {
+      "text": "Great adding!",
+      "hash": "528d2038bc",
+      "kind": "line",
+      "file": "voice/g1-towers/greatAdding.mp3"
+    },
+    "g1-towers/greatTakingAway": {
+      "text": "Great taking away!",
+      "hash": "19e45913fb",
+      "kind": "line",
+      "file": "voice/g1-towers/greatTakingAway.mp3"
+    },
+    "g1-words/sent-pigDig": {
+      "text": "A pig can dig.",
+      "hash": "46dd06710f",
+      "kind": "line",
+      "file": "voice/g1-words/sent-pigDig.mp3"
+    },
+    "g1-words/sent-sunHot": {
+      "text": "The sun is hot.",
+      "hash": "9d09d7e5df",
+      "kind": "line",
+      "file": "voice/g1-words/sent-sunHot.mp3"
+    },
+    "g1-words/sent-dadPen": {
+      "text": "Dad has a pen.",
+      "hash": "e6533194ac",
+      "kind": "line",
+      "file": "voice/g1-words/sent-dadPen.mp3"
+    },
+    "g1-words/sent-frogHop": {
+      "text": "A frog can hop.",
+      "hash": "9634cbebc5",
+      "kind": "line",
+      "file": "voice/g1-words/sent-frogHop.mp3"
+    },
+    "g1-words/sent-fishSwim": {
+      "text": "The fish can swim.",
+      "hash": "0c6139693c",
+      "kind": "line",
+      "file": "voice/g1-words/sent-fishSwim.mp3"
+    },
+    "g1-words/sent-hatRed": {
+      "text": "My hat is red.",
+      "hash": "1331897236",
+      "kind": "line",
+      "file": "voice/g1-words/sent-hatRed.mp3"
+    },
+    "g1-words/sent-catNap": {
+      "text": "The cat had a nap.",
+      "hash": "5ee39f5c76",
+      "kind": "line",
+      "file": "voice/g1-words/sent-catNap.mp3"
+    },
+    "g1-words/sent-redHen": {
+      "text": "I see a red hen.",
+      "hash": "3106f5d0dd",
+      "kind": "line",
+      "file": "voice/g1-words/sent-redHen.mp3"
+    },
+    "g1-words/sent-getBus": {
+      "text": "We get on the bus.",
+      "hash": "f04b598187",
+      "kind": "line",
+      "file": "voice/g1-words/sent-getBus.mp3"
+    },
+    "g1-words/sent-bigShip": {
+      "text": "Look at the big ship!",
+      "hash": "cd142073aa",
+      "kind": "line",
+      "file": "voice/g1-words/sent-bigShip.mp3"
+    },
+    "g1-words/sent-samSun": {
+      "text": "Sam can see the sun.",
+      "hash": "51b3928ac5",
+      "kind": "line",
+      "file": "voice/g1-words/sent-samSun.mp3"
+    },
+    "g1-words/sent-catMat": {
+      "text": "The cat is on the mat.",
+      "hash": "a21175b864",
+      "kind": "line",
+      "file": "voice/g1-words/sent-catMat.mp3"
+    },
+    "g1-words/sent-dogBox": {
+      "text": "The dog is in the box.",
+      "hash": "e6e4308153",
+      "kind": "line",
+      "file": "voice/g1-words/sent-dogBox.mp3"
+    },
+    "g1-words/sent-foxLog": {
+      "text": "The fox sat on a log.",
+      "hash": "4f9d3f6146",
+      "kind": "line",
+      "file": "voice/g1-words/sent-foxLog.mp3"
+    },
+    "g1-words/sent-bugCup": {
+      "text": "The bug is on the cup.",
+      "hash": "47c349b74f",
+      "kind": "line",
+      "file": "voice/g1-words/sent-bugCup.mp3"
+    },
+    "g1-words/sent-duckTub": {
+      "text": "A duck is in the tub.",
+      "hash": "a975511179",
+      "kind": "line",
+      "file": "voice/g1-words/sent-duckTub.mp3"
+    },
+    "g1-words/sent-henEgg": {
+      "text": "The hen sat on an egg.",
+      "hash": "9776cbe8f2",
+      "kind": "line",
+      "file": "voice/g1-words/sent-henEgg.mp3"
+    },
+    "g1-words/sent-bagBed": {
+      "text": "My bag is on the bed.",
+      "hash": "91338215c0",
+      "kind": "line",
+      "file": "voice/g1-words/sent-bagBed.mp3"
+    },
+    "g1-words/ask-pigDig": {
+      "text": "Who can dig?",
+      "hash": "e818d8488e",
+      "kind": "line",
+      "file": "voice/g1-words/ask-pigDig.mp3"
+    },
+    "g1-words/ask-sunHot": {
+      "text": "What is hot?",
+      "hash": "c662e66b6b",
+      "kind": "line",
+      "file": "voice/g1-words/ask-sunHot.mp3"
+    },
+    "g1-words/ask-dadPen": {
+      "text": "What does Dad have?",
+      "hash": "4f742493bb",
+      "kind": "line",
+      "file": "voice/g1-words/ask-dadPen.mp3"
+    },
+    "g1-words/ask-frogHop": {
+      "text": "What can hop?",
+      "hash": "403e564297",
+      "kind": "line",
+      "file": "voice/g1-words/ask-frogHop.mp3"
+    },
+    "g1-words/ask-fishSwim": {
+      "text": "What can swim?",
+      "hash": "7e79bfcad8",
+      "kind": "line",
+      "file": "voice/g1-words/ask-fishSwim.mp3"
+    },
+    "g1-words/ask-hatRed": {
+      "text": "What is red?",
+      "hash": "c4cc2d3f59",
+      "kind": "line",
+      "file": "voice/g1-words/ask-hatRed.mp3"
+    },
+    "g1-words/ask-catNap": {
+      "text": "Who had a nap?",
+      "hash": "4a5e46858b",
+      "kind": "line",
+      "file": "voice/g1-words/ask-catNap.mp3"
+    },
+    "g1-words/ask-redHen": {
+      "text": "What do I see?",
+      "hash": "eb3913e68a",
+      "kind": "line",
+      "file": "voice/g1-words/ask-redHen.mp3"
+    },
+    "g1-words/ask-getBus": {
+      "text": "What do we get on?",
+      "hash": "8f26c18a88",
+      "kind": "line",
+      "file": "voice/g1-words/ask-getBus.mp3"
+    },
+    "g1-words/ask-bigShip": {
+      "text": "What is big?",
+      "hash": "db0fdce145",
+      "kind": "line",
+      "file": "voice/g1-words/ask-bigShip.mp3"
+    },
+    "g1-words/ask-samSun": {
+      "text": "What can Sam see?",
+      "hash": "d4dc82d2c7",
+      "kind": "line",
+      "file": "voice/g1-words/ask-samSun.mp3"
+    },
+    "g1-words/ask-catMat": {
+      "text": "Who is on the mat?",
+      "hash": "dd2dd54dae",
+      "kind": "line",
+      "file": "voice/g1-words/ask-catMat.mp3"
+    },
+    "g1-words/ask-dogBox": {
+      "text": "Where is the dog?",
+      "hash": "e9171076cb",
+      "kind": "line",
+      "file": "voice/g1-words/ask-dogBox.mp3"
+    },
+    "g1-words/ask-foxLog": {
+      "text": "Who sat on the log?",
+      "hash": "edca07d6e4",
+      "kind": "line",
+      "file": "voice/g1-words/ask-foxLog.mp3"
+    },
+    "g1-words/ask-bugCup": {
+      "text": "Where is the bug?",
+      "hash": "beec013a09",
+      "kind": "line",
+      "file": "voice/g1-words/ask-bugCup.mp3"
+    },
+    "g1-words/ask-duckTub": {
+      "text": "Who is in the tub?",
+      "hash": "f2846c475c",
+      "kind": "line",
+      "file": "voice/g1-words/ask-duckTub.mp3"
+    },
+    "g1-words/ask-henEgg": {
+      "text": "What did the hen sit on?",
+      "hash": "1779071d1a",
+      "kind": "line",
+      "file": "voice/g1-words/ask-henEgg.mp3"
+    },
+    "g1-words/ask-bagBed": {
+      "text": "What is on the bed?",
+      "hash": "a6aeb62a02",
+      "kind": "line",
+      "file": "voice/g1-words/ask-bagBed.mp3"
+    },
+    "g1-words/readAgain": {
+      "text": "Let's read it again.",
+      "hash": "81ce927928",
+      "kind": "line",
+      "file": "voice/g1-words/readAgain.mp3"
+    },
+    "g1-words/youReadIt": {
+      "text": "You read the whole sentence!",
+      "hash": "01d4ef8b37",
+      "kind": "line",
+      "file": "voice/g1-words/youReadIt.mp3"
+    },
+    "g1-words/greatReader": {
+      "text": "What a great reader!",
+      "hash": "b07794c9f4",
+      "kind": "line",
+      "file": "voice/g1-words/greatReader.mp3"
+    },
+    "g1-words/findWord/word=after": {
+      "text": "Find the word after.",
+      "hash": "dbf4f87dde",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=after.mp3"
+    },
+    "g1-words/findWord/word=again": {
+      "text": "Find the word again.",
+      "hash": "d3da2afb45",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=again.mp3"
+    },
+    "g1-words/findWord/word=any": {
+      "text": "Find the word any.",
+      "hash": "f499ed9499",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=any.mp3"
+    },
+    "g1-words/findWord/word=ask": {
+      "text": "Find the word ask.",
+      "hash": "ea7a926a91",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=ask.mp3"
+    },
+    "g1-words/findWord/word=by": {
+      "text": "Find the word by.",
+      "hash": "7e27b89096",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=by.mp3"
+    },
+    "g1-words/findWord/word=could": {
+      "text": "Find the word could.",
+      "hash": "325b466745",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=could.mp3"
+    },
+    "g1-words/findWord/word=every": {
+      "text": "Find the word every.",
+      "hash": "e6eedc7ced",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=every.mp3"
+    },
+    "g1-words/findWord/word=fly": {
+      "text": "Find the word fly.",
+      "hash": "a56253239a",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=fly.mp3"
+    },
+    "g1-words/findWord/word=from": {
+      "text": "Find the word from.",
+      "hash": "67cb243b46",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=from.mp3"
+    },
+    "g1-words/findWord/word=give": {
+      "text": "Find the word give.",
+      "hash": "7074b20cd5",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=give.mp3"
+    },
+    "g1-words/findWord/word=going": {
+      "text": "Find the word going.",
+      "hash": "69c631d67b",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=going.mp3"
+    },
+    "g1-words/findWord/word=had": {
+      "text": "Find the word had.",
+      "hash": "7be819f351",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=had.mp3"
+    },
+    "g1-words/findWord/word=has": {
+      "text": "Find the word has.",
+      "hash": "cf616a6a6a",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=has.mp3"
+    },
+    "g1-words/findWord/word=her": {
+      "text": "Find the word her.",
+      "hash": "341298f5f4",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=her.mp3"
+    },
+    "g1-words/findWord/word=him": {
+      "text": "Find the word him.",
+      "hash": "158b56df99",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=him.mp3"
+    },
+    "g1-words/findWord/word=his": {
+      "text": "Find the word his.",
+      "hash": "dcade2878e",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=his.mp3"
+    },
+    "g1-words/findWord/word=how": {
+      "text": "Find the word how.",
+      "hash": "43f89da361",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=how.mp3"
+    },
+    "g1-words/findWord/word=just": {
+      "text": "Find the word just.",
+      "hash": "eb1d0a1fac",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=just.mp3"
+    },
+    "g1-words/findWord/word=know": {
+      "text": "Find the word know.",
+      "hash": "79683f3330",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=know.mp3"
+    },
+    "g1-words/findWord/word=let": {
+      "text": "Find the word let.",
+      "hash": "47a098dde7",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=let.mp3"
+    },
+    "g1-words/findWord/word=live": {
+      "text": "Find the word live.",
+      "hash": "bbc755a317",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=live.mp3"
+    },
+    "g1-words/findWord/word=may": {
+      "text": "Find the word may.",
+      "hash": "3f4322fb96",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=may.mp3"
+    },
+    "g1-words/findWord/word=of": {
+      "text": "Find the word of.",
+      "hash": "521e7058d9",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=of.mp3"
+    },
+    "g1-words/findWord/word=old": {
+      "text": "Find the word old.",
+      "hash": "8279053f16",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=old.mp3"
+    },
+    "g1-words/findWord/word=once": {
+      "text": "Find the word once.",
+      "hash": "7c994c5536",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=once.mp3"
+    },
+    "g1-words/findWord/word=open": {
+      "text": "Find the word open.",
+      "hash": "752cfe1f19",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=open.mp3"
+    },
+    "g1-words/findWord/word=over": {
+      "text": "Find the word over.",
+      "hash": "5d8933578d",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=over.mp3"
+    },
+    "g1-words/findWord/word=put": {
+      "text": "Find the word put.",
+      "hash": "3488229ae4",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=put.mp3"
+    },
+    "g1-words/findWord/word=round": {
+      "text": "Find the word round.",
+      "hash": "8c1cd05354",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=round.mp3"
+    },
+    "g1-words/findWord/word=some": {
+      "text": "Find the word some.",
+      "hash": "55de52c55f",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=some.mp3"
+    },
+    "g1-words/findWord/word=stop": {
+      "text": "Find the word stop.",
+      "hash": "547b2d0ff6",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=stop.mp3"
+    },
+    "g1-words/findWord/word=take": {
+      "text": "Find the word take.",
+      "hash": "c3cb1c2fe6",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=take.mp3"
+    },
+    "g1-words/findWord/word=thank": {
+      "text": "Find the word thank.",
+      "hash": "5aead8274a",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=thank.mp3"
+    },
+    "g1-words/findWord/word=them": {
+      "text": "Find the word them.",
+      "hash": "d87920c6bb",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=them.mp3"
+    },
+    "g1-words/findWord/word=then": {
+      "text": "Find the word then.",
+      "hash": "ff9d7e27cf",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=then.mp3"
+    },
+    "g1-words/findWord/word=think": {
+      "text": "Find the word think.",
+      "hash": "b10463f1f2",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=think.mp3"
+    },
+    "g1-words/findWord/word=walk": {
+      "text": "Find the word walk.",
+      "hash": "9a31c156e4",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=walk.mp3"
+    },
+    "g1-words/findWord/word=were": {
+      "text": "Find the word were.",
+      "hash": "46a356229d",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=were.mp3"
+    },
+    "g1-words/findWord/word=when": {
+      "text": "Find the word when.",
+      "hash": "5ff69d1208",
+      "kind": "whole",
+      "file": "voice/g1-words/findWord/word=when.mp3"
+    },
+    "g1-words/thatWordIs/word=after": {
+      "text": "That word is after.",
+      "hash": "6ae6db8f1f",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=after.mp3"
+    },
+    "g1-words/thatWordIs/word=again": {
+      "text": "That word is again.",
+      "hash": "2a8a14344b",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=again.mp3"
+    },
+    "g1-words/thatWordIs/word=any": {
+      "text": "That word is any.",
+      "hash": "98f8c511c4",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=any.mp3"
+    },
+    "g1-words/thatWordIs/word=ask": {
+      "text": "That word is ask.",
+      "hash": "5ea2e7aae4",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=ask.mp3"
+    },
+    "g1-words/thatWordIs/word=by": {
+      "text": "That word is by.",
+      "hash": "7fd76bc41a",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=by.mp3"
+    },
+    "g1-words/thatWordIs/word=could": {
+      "text": "That word is could.",
+      "hash": "accd8acbfa",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=could.mp3"
+    },
+    "g1-words/thatWordIs/word=every": {
+      "text": "That word is every.",
+      "hash": "a13dac3f1b",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=every.mp3"
+    },
+    "g1-words/thatWordIs/word=fly": {
+      "text": "That word is fly.",
+      "hash": "a0f5bba2a4",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=fly.mp3"
+    },
+    "g1-words/thatWordIs/word=from": {
+      "text": "That word is from.",
+      "hash": "a4fa3f9e1c",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=from.mp3"
+    },
+    "g1-words/thatWordIs/word=give": {
+      "text": "That word is give.",
+      "hash": "777c4d35ce",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=give.mp3"
+    },
+    "g1-words/thatWordIs/word=going": {
+      "text": "That word is going.",
+      "hash": "7780b71503",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=going.mp3"
+    },
+    "g1-words/thatWordIs/word=had": {
+      "text": "That word is had.",
+      "hash": "c2a29df1d3",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=had.mp3"
+    },
+    "g1-words/thatWordIs/word=has": {
+      "text": "That word is has.",
+      "hash": "d777ab5087",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=has.mp3"
+    },
+    "g1-words/thatWordIs/word=her": {
+      "text": "That word is her.",
+      "hash": "976c573419",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=her.mp3"
+    },
+    "g1-words/thatWordIs/word=him": {
+      "text": "That word is him.",
+      "hash": "61d72cd6d4",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=him.mp3"
+    },
+    "g1-words/thatWordIs/word=his": {
+      "text": "That word is his.",
+      "hash": "f05871ed1f",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=his.mp3"
+    },
+    "g1-words/thatWordIs/word=how": {
+      "text": "That word is how.",
+      "hash": "0da82974d8",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=how.mp3"
+    },
+    "g1-words/thatWordIs/word=just": {
+      "text": "That word is just.",
+      "hash": "b0d4b2598b",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=just.mp3"
+    },
+    "g1-words/thatWordIs/word=know": {
+      "text": "That word is know.",
+      "hash": "b781f39e3c",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=know.mp3"
+    },
+    "g1-words/thatWordIs/word=let": {
+      "text": "That word is let.",
+      "hash": "6cb40ae1c2",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=let.mp3"
+    },
+    "g1-words/thatWordIs/word=live": {
+      "text": "That word is live.",
+      "hash": "d1d02325c2",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=live.mp3"
+    },
+    "g1-words/thatWordIs/word=may": {
+      "text": "That word is may.",
+      "hash": "791c8c9cea",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=may.mp3"
+    },
+    "g1-words/thatWordIs/word=of": {
+      "text": "That word is of.",
+      "hash": "bcde6fd0f8",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=of.mp3"
+    },
+    "g1-words/thatWordIs/word=old": {
+      "text": "That word is old.",
+      "hash": "708320dc39",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=old.mp3"
+    },
+    "g1-words/thatWordIs/word=once": {
+      "text": "That word is once.",
+      "hash": "db65b38801",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=once.mp3"
+    },
+    "g1-words/thatWordIs/word=open": {
+      "text": "That word is open.",
+      "hash": "3cd71f52b0",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=open.mp3"
+    },
+    "g1-words/thatWordIs/word=over": {
+      "text": "That word is over.",
+      "hash": "01114440f3",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=over.mp3"
+    },
+    "g1-words/thatWordIs/word=put": {
+      "text": "That word is put.",
+      "hash": "646e6f8741",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=put.mp3"
+    },
+    "g1-words/thatWordIs/word=round": {
+      "text": "That word is round.",
+      "hash": "f930e0489e",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=round.mp3"
+    },
+    "g1-words/thatWordIs/word=some": {
+      "text": "That word is some.",
+      "hash": "c0edcb1288",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=some.mp3"
+    },
+    "g1-words/thatWordIs/word=stop": {
+      "text": "That word is stop.",
+      "hash": "fde61f62b6",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=stop.mp3"
+    },
+    "g1-words/thatWordIs/word=take": {
+      "text": "That word is take.",
+      "hash": "656ab02e16",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=take.mp3"
+    },
+    "g1-words/thatWordIs/word=thank": {
+      "text": "That word is thank.",
+      "hash": "e0e66d8e0c",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=thank.mp3"
+    },
+    "g1-words/thatWordIs/word=them": {
+      "text": "That word is them.",
+      "hash": "e7a8a0f62c",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=them.mp3"
+    },
+    "g1-words/thatWordIs/word=then": {
+      "text": "That word is then.",
+      "hash": "967a413344",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=then.mp3"
+    },
+    "g1-words/thatWordIs/word=think": {
+      "text": "That word is think.",
+      "hash": "18e5071ca8",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=think.mp3"
+    },
+    "g1-words/thatWordIs/word=walk": {
+      "text": "That word is walk.",
+      "hash": "a09838496e",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=walk.mp3"
+    },
+    "g1-words/thatWordIs/word=were": {
+      "text": "That word is were.",
+      "hash": "8e41fad7bc",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=were.mp3"
+    },
+    "g1-words/thatWordIs/word=when": {
+      "text": "That word is when.",
+      "hash": "cf9da44389",
+      "kind": "whole",
+      "file": "voice/g1-words/thatWordIs/word=when.mp3"
+    },
+    "g1-writing/say-ballRight": {
+      "text": "Back up, and around the other way.",
+      "hash": "b4e9b7326b",
+      "kind": "line",
+      "file": "voice/g1-writing/say-ballRight.mp3"
+    },
+    "g1-writing/say-hump": {
+      "text": "Back up, and over for a hump.",
+      "hash": "36f2425da1",
+      "kind": "line",
+      "file": "voice/g1-writing/say-hump.mp3"
+    },
+    "g1-writing/say-hump2": {
+      "text": "Over again, for one more hump.",
+      "hash": "dcefa9c143",
+      "kind": "line",
+      "file": "voice/g1-writing/say-hump2.mp3"
+    },
+    "g1-writing/say-rCurve": {
+      "text": "Back up, and a little curve.",
+      "hash": "f7858bfab5",
+      "kind": "line",
+      "file": "voice/g1-writing/say-rCurve.mp3"
+    },
+    "g1-writing/say-eLine": {
+      "text": "Little line across, then around like a C.",
+      "hash": "15149c1142",
+      "kind": "line",
+      "file": "voice/g1-writing/say-eLine.mp3"
+    },
+    "g1-writing/say-fHook": {
+      "text": "Curve over the top, then line down.",
+      "hash": "d074b1790a",
+      "kind": "line",
+      "file": "voice/g1-writing/say-fHook.mp3"
+    },
+    "g1-writing/say-descDown": {
+      "text": "Line down, below the bottom line.",
+      "hash": "58d30968dc",
+      "kind": "line",
+      "file": "voice/g1-writing/say-descDown.mp3"
+    },
+    "g1-writing/say-dot": {
+      "text": "Now a dot on top!",
+      "hash": "5e52472f16",
+      "kind": "line",
+      "file": "voice/g1-writing/say-dot.mp3"
+    },
+    "g1-writing/say-bigSlant": {
+      "text": "Big slant down, below the bottom line.",
+      "hash": "496ebd6de9",
+      "kind": "line",
+      "file": "voice/g1-writing/say-bigSlant.mp3"
+    },
+    "g1-writing/say-tStem": {
+      "text": "Start above the dashed line. Line down.",
+      "hash": "06ff961ea2",
+      "kind": "line",
+      "file": "voice/g1-writing/say-tStem.mp3"
+    },
+    "g1-writing/niceLetters": {
+      "text": "What neat little letters!",
+      "hash": "5f63a1c56e",
+      "kind": "line",
+      "file": "voice/g1-writing/niceLetters.mp3"
+    },
+    "g1-writing/spellTogether": {
+      "text": "Let's spell it together.",
+      "hash": "0f2eb9b232",
+      "kind": "line",
+      "file": "voice/g1-writing/spellTogether.mp3"
+    },
+    "g1-writing/greatSpelling": {
+      "text": "Great spelling!",
+      "hash": "64e62414df",
+      "kind": "line",
+      "file": "voice/g1-writing/greatSpelling.mp3"
+    },
+    "g1-writing/build-dogRan": {
+      "text": "Make this sentence. The dog ran.",
+      "hash": "6d87372b9c",
+      "kind": "line",
+      "file": "voice/g1-writing/build-dogRan.mp3"
+    },
+    "g1-writing/build-weHop": {
+      "text": "Make this sentence. We can hop.",
+      "hash": "b62a057d81",
+      "kind": "line",
+      "file": "voice/g1-writing/build-weHop.mp3"
+    },
+    "g1-writing/build-bugRan": {
+      "text": "Make this sentence. The bug ran.",
+      "hash": "a3ceef1701",
+      "kind": "line",
+      "file": "voice/g1-writing/build-bugRan.mp3"
+    },
+    "g1-writing/build-henSat": {
+      "text": "Make this sentence. The hen sat.",
+      "hash": "ecb308a99e",
+      "kind": "line",
+      "file": "voice/g1-writing/build-henSat.mp3"
+    },
+    "g1-writing/build-seeCat": {
+      "text": "Make this sentence. I see a cat.",
+      "hash": "11209ea744",
+      "kind": "line",
+      "file": "voice/g1-writing/build-seeCat.mp3"
+    },
+    "g1-writing/build-sunHot": {
+      "text": "Make this sentence. The sun is hot.",
+      "hash": "5a89f23bd4",
+      "kind": "line",
+      "file": "voice/g1-writing/build-sunHot.mp3"
+    },
+    "g1-writing/build-pigDig": {
+      "text": "Make this sentence. A pig can dig.",
+      "hash": "9b1228769d",
+      "kind": "line",
+      "file": "voice/g1-writing/build-pigDig.mp3"
+    },
+    "g1-writing/build-hatRed": {
+      "text": "Make this sentence. My hat is red.",
+      "hash": "c52dceb976",
+      "kind": "line",
+      "file": "voice/g1-writing/build-hatRed.mp3"
+    },
+    "g1-writing/build-likeDog": {
+      "text": "Make this sentence. I like my dog.",
+      "hash": "07f91ab3f0",
+      "kind": "line",
+      "file": "voice/g1-writing/build-likeDog.mp3"
+    },
+    "g1-writing/build-lookDuck": {
+      "text": "Make this sentence. Look at the duck.",
+      "hash": "7b81d51b51",
+      "kind": "line",
+      "file": "voice/g1-writing/build-lookDuck.mp3"
+    },
+    "g1-writing/build-foxBig": {
+      "text": "Make this sentence. The fox is big.",
+      "hash": "3674e421b6",
+      "kind": "line",
+      "file": "voice/g1-writing/build-foxBig.mp3"
+    },
+    "g1-writing/build-catNap": {
+      "text": "Make this sentence. The cat can nap.",
+      "hash": "72c4db7744",
+      "kind": "line",
+      "file": "voice/g1-writing/build-catNap.mp3"
+    },
+    "g1-writing/build-likeSun": {
+      "text": "Make this sentence. We like the sun.",
+      "hash": "b66829db07",
+      "kind": "line",
+      "file": "voice/g1-writing/build-likeSun.mp3"
+    },
+    "g1-writing/build-seeBus": {
+      "text": "Make this sentence. We can see the bus.",
+      "hash": "0377ee54c9",
+      "kind": "line",
+      "file": "voice/g1-writing/build-seeBus.mp3"
+    },
+    "g1-writing/build-seeFish": {
+      "text": "Make this sentence. I can see a fish.",
+      "hash": "bb1fe873cf",
+      "kind": "line",
+      "file": "voice/g1-writing/build-seeFish.mp3"
+    },
+    "g1-writing/build-momCup": {
+      "text": "Make this sentence. Mom has a red cup.",
+      "hash": "a6baa1fb9c",
+      "kind": "line",
+      "file": "voice/g1-writing/build-momCup.mp3"
+    },
+    "g1-writing/read-dogRan": {
+      "text": "The dog ran.",
+      "hash": "f1e51d9282",
+      "kind": "line",
+      "file": "voice/g1-writing/read-dogRan.mp3"
+    },
+    "g1-writing/read-weHop": {
+      "text": "We can hop.",
+      "hash": "5c768a0aac",
+      "kind": "line",
+      "file": "voice/g1-writing/read-weHop.mp3"
+    },
+    "g1-writing/read-bugRan": {
+      "text": "The bug ran.",
+      "hash": "0f66445106",
+      "kind": "line",
+      "file": "voice/g1-writing/read-bugRan.mp3"
+    },
+    "g1-writing/read-henSat": {
+      "text": "The hen sat.",
+      "hash": "ade7008169",
+      "kind": "line",
+      "file": "voice/g1-writing/read-henSat.mp3"
+    },
+    "g1-writing/read-seeCat": {
+      "text": "I see a cat.",
+      "hash": "80ff6ff8f5",
+      "kind": "line",
+      "file": "voice/g1-writing/read-seeCat.mp3"
+    },
+    "g1-writing/read-sunHot": {
+      "text": "The sun is hot.",
+      "hash": "9d09d7e5df",
+      "kind": "line",
+      "file": "voice/g1-writing/read-sunHot.mp3"
+    },
+    "g1-writing/read-pigDig": {
+      "text": "A pig can dig.",
+      "hash": "46dd06710f",
+      "kind": "line",
+      "file": "voice/g1-writing/read-pigDig.mp3"
+    },
+    "g1-writing/read-hatRed": {
+      "text": "My hat is red.",
+      "hash": "1331897236",
+      "kind": "line",
+      "file": "voice/g1-writing/read-hatRed.mp3"
+    },
+    "g1-writing/read-likeDog": {
+      "text": "I like my dog.",
+      "hash": "ee9cff5a18",
+      "kind": "line",
+      "file": "voice/g1-writing/read-likeDog.mp3"
+    },
+    "g1-writing/read-lookDuck": {
+      "text": "Look at the duck.",
+      "hash": "34d99227f8",
+      "kind": "line",
+      "file": "voice/g1-writing/read-lookDuck.mp3"
+    },
+    "g1-writing/read-foxBig": {
+      "text": "The fox is big.",
+      "hash": "a88792aa0e",
+      "kind": "line",
+      "file": "voice/g1-writing/read-foxBig.mp3"
+    },
+    "g1-writing/read-catNap": {
+      "text": "The cat can nap.",
+      "hash": "afc75dea9b",
+      "kind": "line",
+      "file": "voice/g1-writing/read-catNap.mp3"
+    },
+    "g1-writing/read-likeSun": {
+      "text": "We like the sun.",
+      "hash": "bb9505f3a5",
+      "kind": "line",
+      "file": "voice/g1-writing/read-likeSun.mp3"
+    },
+    "g1-writing/read-seeBus": {
+      "text": "We can see the bus.",
+      "hash": "ace57e1e71",
+      "kind": "line",
+      "file": "voice/g1-writing/read-seeBus.mp3"
+    },
+    "g1-writing/read-seeFish": {
+      "text": "I can see a fish.",
+      "hash": "acf0e1be75",
+      "kind": "line",
+      "file": "voice/g1-writing/read-seeFish.mp3"
+    },
+    "g1-writing/read-momCup": {
+      "text": "Mom has a red cup.",
+      "hash": "0af3ccb149",
+      "kind": "line",
+      "file": "voice/g1-writing/read-momCup.mp3"
+    },
+    "g1-writing/rule": {
+      "text": "A sentence starts with a capital letter. It ends with a period.",
+      "hash": "ed9191fcb3",
+      "kind": "line",
+      "file": "voice/g1-writing/rule.mp3"
+    },
+    "g1-writing/capitalPeriod": {
+      "text": "A capital at the start, and a period at the end!",
+      "hash": "3888781324",
+      "kind": "line",
+      "file": "voice/g1-writing/capitalPeriod.mp3"
+    },
+    "g1-writing/cardRight": {
+      "text": "A capital and a period!",
+      "hash": "d3ecc9c897",
+      "kind": "line",
+      "file": "voice/g1-writing/cardRight.mp3"
+    },
+    "g1-writing/cardNoCapital": {
+      "text": "No capital!",
+      "hash": "d573576b53",
+      "kind": "line",
+      "file": "voice/g1-writing/cardNoCapital.mp3"
+    },
+    "g1-writing/cardNoPeriod": {
+      "text": "No period!",
+      "hash": "8d6854b5e4",
+      "kind": "line",
+      "file": "voice/g1-writing/cardNoPeriod.mp3"
+    },
+    "g1-writing/lower/letter=a": {
+      "text": "Let's trace little A!",
+      "hash": "186b8a8f14",
+      "kind": "whole",
+      "file": "voice/g1-writing/lower/letter=a.mp3"
+    },
+    "g1-writing/lower/letter=b": {
+      "text": "Let's trace little B!",
+      "hash": "96cbd09972",
+      "kind": "whole",
+      "file": "voice/g1-writing/lower/letter=b.mp3"
+    },
+    "g1-writing/lower/letter=c": {
+      "text": "Let's trace little C!",
+      "hash": "8608944fc8",
+      "kind": "whole",
+      "file": "voice/g1-writing/lower/letter=c.mp3"
+    },
+    "g1-writing/lower/letter=d": {
+      "text": "Let's trace little D!",
+      "hash": "b2d34fc7c6",
+      "kind": "whole",
+      "file": "voice/g1-writing/lower/letter=d.mp3"
+    },
+    "g1-writing/lower/letter=e": {
+      "text": "Let's trace little E!",
+      "hash": "885aea6ecb",
+      "kind": "whole",
+      "file": "voice/g1-writing/lower/letter=e.mp3"
+    },
+    "g1-writing/lower/letter=f": {
+      "text": "Let's trace little F!",
+      "hash": "88257bebcb",
+      "kind": "whole",
+      "file": "voice/g1-writing/lower/letter=f.mp3"
+    },
+    "g1-writing/lower/letter=g": {
+      "text": "Let's trace little G!",
+      "hash": "3994488d9f",
+      "kind": "whole",
+      "file": "voice/g1-writing/lower/letter=g.mp3"
+    },
+    "g1-writing/lower/letter=h": {
+      "text": "Let's trace little H!",
+      "hash": "17e5beb6b0",
+      "kind": "whole",
+      "file": "voice/g1-writing/lower/letter=h.mp3"
+    },
+    "g1-writing/lower/letter=i": {
+      "text": "Let's trace little I!",
+      "hash": "6b7ca4ad3a",
+      "kind": "whole",
+      "file": "voice/g1-writing/lower/letter=i.mp3"
+    },
+    "g1-writing/lower/letter=j": {
+      "text": "Let's trace little J!",
+      "hash": "1cbda2bfc6",
+      "kind": "whole",
+      "file": "voice/g1-writing/lower/letter=j.mp3"
+    },
+    "g1-writing/lower/letter=k": {
+      "text": "Let's trace little K!",
+      "hash": "af377d2284",
+      "kind": "whole",
+      "file": "voice/g1-writing/lower/letter=k.mp3"
+    },
+    "g1-writing/lower/letter=l": {
+      "text": "Let's trace little L!",
+      "hash": "2cd2d21b76",
+      "kind": "whole",
+      "file": "voice/g1-writing/lower/letter=l.mp3"
+    },
+    "g1-writing/lower/letter=m": {
+      "text": "Let's trace little M!",
+      "hash": "0160bc9535",
+      "kind": "whole",
+      "file": "voice/g1-writing/lower/letter=m.mp3"
+    },
+    "g1-writing/lower/letter=n": {
+      "text": "Let's trace little N!",
+      "hash": "0d7ade5279",
+      "kind": "whole",
+      "file": "voice/g1-writing/lower/letter=n.mp3"
+    },
+    "g1-writing/lower/letter=o": {
+      "text": "Let's trace little O!",
+      "hash": "fa6e2b0cbb",
+      "kind": "whole",
+      "file": "voice/g1-writing/lower/letter=o.mp3"
+    },
+    "g1-writing/lower/letter=p": {
+      "text": "Let's trace little P!",
+      "hash": "e88252369a",
+      "kind": "whole",
+      "file": "voice/g1-writing/lower/letter=p.mp3"
+    },
+    "g1-writing/lower/letter=q": {
+      "text": "Let's trace little Q!",
+      "hash": "6831c76e35",
+      "kind": "whole",
+      "file": "voice/g1-writing/lower/letter=q.mp3"
+    },
+    "g1-writing/lower/letter=r": {
+      "text": "Let's trace little R!",
+      "hash": "a1a868dafa",
+      "kind": "whole",
+      "file": "voice/g1-writing/lower/letter=r.mp3"
+    },
+    "g1-writing/lower/letter=s": {
+      "text": "Let's trace little S!",
+      "hash": "2f21af144f",
+      "kind": "whole",
+      "file": "voice/g1-writing/lower/letter=s.mp3"
+    },
+    "g1-writing/lower/letter=t": {
+      "text": "Let's trace little T!",
+      "hash": "489bb819a6",
+      "kind": "whole",
+      "file": "voice/g1-writing/lower/letter=t.mp3"
+    },
+    "g1-writing/lower/letter=u": {
+      "text": "Let's trace little U!",
+      "hash": "738830fb42",
+      "kind": "whole",
+      "file": "voice/g1-writing/lower/letter=u.mp3"
+    },
+    "g1-writing/lower/letter=v": {
+      "text": "Let's trace little V!",
+      "hash": "db57bffcb4",
+      "kind": "whole",
+      "file": "voice/g1-writing/lower/letter=v.mp3"
+    },
+    "g1-writing/lower/letter=w": {
+      "text": "Let's trace little W!",
+      "hash": "86abc8b4be",
+      "kind": "whole",
+      "file": "voice/g1-writing/lower/letter=w.mp3"
+    },
+    "g1-writing/lower/letter=x": {
+      "text": "Let's trace little X!",
+      "hash": "e3975c3533",
+      "kind": "whole",
+      "file": "voice/g1-writing/lower/letter=x.mp3"
+    },
+    "g1-writing/lower/letter=y": {
+      "text": "Let's trace little Y!",
+      "hash": "efae2e4e1b",
+      "kind": "whole",
+      "file": "voice/g1-writing/lower/letter=y.mp3"
+    },
+    "g1-writing/lower/letter=z": {
+      "text": "Let's trace little Z!",
+      "hash": "774d13976a",
+      "kind": "whole",
+      "file": "voice/g1-writing/lower/letter=z.mp3"
+    },
+    "g1-writing/spell/word=cat": {
+      "text": "Spell Cat. Tap the letters.",
+      "hash": "3a2a6f5315",
+      "kind": "whole",
+      "file": "voice/g1-writing/spell/word=cat.mp3"
+    },
+    "g1-writing/spell/word=hat": {
+      "text": "Spell Hat. Tap the letters.",
+      "hash": "4d1f8d12f2",
+      "kind": "whole",
+      "file": "voice/g1-writing/spell/word=hat.mp3"
+    },
+    "g1-writing/spell/word=bat": {
+      "text": "Spell Bat. Tap the letters.",
+      "hash": "244486fb98",
+      "kind": "whole",
+      "file": "voice/g1-writing/spell/word=bat.mp3"
+    },
+    "g1-writing/spell/word=map": {
+      "text": "Spell Map. Tap the letters.",
+      "hash": "a621c3faa8",
+      "kind": "whole",
+      "file": "voice/g1-writing/spell/word=map.mp3"
+    },
+    "g1-writing/spell/word=van": {
+      "text": "Spell Van. Tap the letters.",
+      "hash": "a9df6375e1",
+      "kind": "whole",
+      "file": "voice/g1-writing/spell/word=van.mp3"
+    },
+    "g1-writing/spell/word=rat": {
+      "text": "Spell Rat. Tap the letters.",
+      "hash": "70efd1bb48",
+      "kind": "whole",
+      "file": "voice/g1-writing/spell/word=rat.mp3"
+    },
+    "g1-writing/spell/word=bag": {
+      "text": "Spell Bag. Tap the letters.",
+      "hash": "6fff69ad18",
+      "kind": "whole",
+      "file": "voice/g1-writing/spell/word=bag.mp3"
+    },
+    "g1-writing/spell/word=bed": {
+      "text": "Spell Bed. Tap the letters.",
+      "hash": "49890e6e15",
+      "kind": "whole",
+      "file": "voice/g1-writing/spell/word=bed.mp3"
+    },
+    "g1-writing/spell/word=hen": {
+      "text": "Spell Hen. Tap the letters.",
+      "hash": "908a424d25",
+      "kind": "whole",
+      "file": "voice/g1-writing/spell/word=hen.mp3"
+    },
+    "g1-writing/spell/word=pen": {
+      "text": "Spell Pen. Tap the letters.",
+      "hash": "ebff22dfb9",
+      "kind": "whole",
+      "file": "voice/g1-writing/spell/word=pen.mp3"
+    },
+    "g1-writing/spell/word=net": {
+      "text": "Spell Net. Tap the letters.",
+      "hash": "6c03f202a1",
+      "kind": "whole",
+      "file": "voice/g1-writing/spell/word=net.mp3"
+    },
+    "g1-writing/spell/word=web": {
+      "text": "Spell Web. Tap the letters.",
+      "hash": "29b98ea249",
+      "kind": "whole",
+      "file": "voice/g1-writing/spell/word=web.mp3"
+    },
+    "g1-writing/spell/word=jet": {
+      "text": "Spell Jet. Tap the letters.",
+      "hash": "44ff3a3010",
+      "kind": "whole",
+      "file": "voice/g1-writing/spell/word=jet.mp3"
+    },
+    "g1-writing/spell/word=pig": {
+      "text": "Spell Pig. Tap the letters.",
+      "hash": "a8b9909314",
+      "kind": "whole",
+      "file": "voice/g1-writing/spell/word=pig.mp3"
+    },
+    "g1-writing/spell/word=pin": {
+      "text": "Spell Pin. Tap the letters.",
+      "hash": "a1e7d22ef9",
+      "kind": "whole",
+      "file": "voice/g1-writing/spell/word=pin.mp3"
+    },
+    "g1-writing/spell/word=dog": {
+      "text": "Spell Dog. Tap the letters.",
+      "hash": "1d115cc44a",
+      "kind": "whole",
+      "file": "voice/g1-writing/spell/word=dog.mp3"
+    },
+    "g1-writing/spell/word=fox": {
+      "text": "Spell Fox. Tap the letters.",
+      "hash": "0a90ff1abe",
+      "kind": "whole",
+      "file": "voice/g1-writing/spell/word=fox.mp3"
+    },
+    "g1-writing/spell/word=box": {
+      "text": "Spell Box. Tap the letters.",
+      "hash": "53c6121bd5",
+      "kind": "whole",
+      "file": "voice/g1-writing/spell/word=box.mp3"
+    },
+    "g1-writing/spell/word=sun": {
+      "text": "Spell Sun. Tap the letters.",
+      "hash": "c240289e46",
+      "kind": "whole",
+      "file": "voice/g1-writing/spell/word=sun.mp3"
+    },
+    "g1-writing/spell/word=bus": {
+      "text": "Spell Bus. Tap the letters.",
+      "hash": "2a5cfcb77c",
+      "kind": "whole",
+      "file": "voice/g1-writing/spell/word=bus.mp3"
+    },
+    "g1-writing/spell/word=bug": {
+      "text": "Spell Bug. Tap the letters.",
+      "hash": "d87ebdb9cd",
+      "kind": "whole",
+      "file": "voice/g1-writing/spell/word=bug.mp3"
+    },
+    "g1-writing/spell/word=nut": {
+      "text": "Spell Nut. Tap the letters.",
+      "hash": "cc9ee3d5fb",
+      "kind": "whole",
+      "file": "voice/g1-writing/spell/word=nut.mp3"
+    },
+    "g1-writing/spell/word=tub": {
+      "text": "Spell Tub. Tap the letters.",
+      "hash": "7bd6da5acc",
+      "kind": "whole",
+      "file": "voice/g1-writing/spell/word=tub.mp3"
+    },
+    "g1-writing/spell/word=cup": {
+      "text": "Spell Cup. Tap the letters.",
+      "hash": "1d3577932a",
+      "kind": "whole",
+      "file": "voice/g1-writing/spell/word=cup.mp3"
+    },
     "k-addtake/howManyNow": {
       "text": "How many now?",
       "hash": "5e390491b0",
@@ -3390,6 +8610,30 @@
       "hash": "d3c03ad5d6",
       "kind": "line",
       "file": "voice/k-lessons/kScience-push.mp3"
+    },
+    "k-lessons/g1Reading-middle": {
+      "text": "Pig! Which letter is in the middle? Tap it.",
+      "hash": "f8f62a36d1",
+      "kind": "line",
+      "file": "voice/k-lessons/g1Reading-middle.mp3"
+    },
+    "k-lessons/g1Reading-teams": {
+      "text": "Sun. Chick. Ship. Which one starts with shh?",
+      "hash": "80f4338bc1",
+      "kind": "line",
+      "file": "voice/k-lessons/g1Reading-teams.mp3"
+    },
+    "k-lessons/g1Writing-lines": {
+      "text": "Which letter has a tail below the line? Tap it.",
+      "hash": "0f00f69053",
+      "kind": "line",
+      "file": "voice/k-lessons/g1Writing-lines.mp3"
+    },
+    "k-lessons/g1Writing-sentence": {
+      "text": "Which one starts with a capital and ends with a period?",
+      "hash": "f0e09048b7",
+      "kind": "line",
+      "file": "voice/k-lessons/g1Writing-sentence.mp3"
     },
     "k-lessons/triangle": {
       "text": "Triangle!",
@@ -7194,6 +12438,84 @@
       "hash": "79ed45234e",
       "kind": "line",
       "file": "voice/k-nav/stage-k-towers-3.mp3"
+    },
+    "k-nav/name-g1-reading-reef": {
+      "text": "Word Reef!",
+      "hash": "6b7bbcf77c",
+      "kind": "line",
+      "file": "voice/k-nav/name-g1-reading-reef.mp3"
+    },
+    "k-nav/welcome-g1-reading-reef": {
+      "text": "Word Reef! Tap a star to play!",
+      "hash": "ead65ce202",
+      "kind": "line",
+      "file": "voice/k-nav/welcome-g1-reading-reef.mp3"
+    },
+    "k-nav/stage-g1-vowels-1": {
+      "text": "Short vowels!",
+      "hash": "42fa93fb19",
+      "kind": "line",
+      "file": "voice/k-nav/stage-g1-vowels-1.mp3"
+    },
+    "k-nav/stage-g1-digraphs-1": {
+      "text": "Letter teams!",
+      "hash": "95fc0c1569",
+      "kind": "line",
+      "file": "voice/k-nav/stage-g1-digraphs-1.mp3"
+    },
+    "k-nav/stage-g1-words-1": {
+      "text": "Read a word!",
+      "hash": "1c87eca3de",
+      "kind": "line",
+      "file": "voice/k-nav/stage-g1-words-1.mp3"
+    },
+    "k-nav/stage-g1-sentences-1": {
+      "text": "Read along!",
+      "hash": "720e4e102d",
+      "kind": "line",
+      "file": "voice/k-nav/stage-g1-sentences-1.mp3"
+    },
+    "k-nav/stage-g1-sight-1": {
+      "text": "Sight words!",
+      "hash": "8db523ef11",
+      "kind": "line",
+      "file": "voice/k-nav/stage-g1-sight-1.mp3"
+    },
+    "k-nav/stage-g1-trace-1": {
+      "text": "Little letters!",
+      "hash": "b857a8bc3a",
+      "kind": "line",
+      "file": "voice/k-nav/stage-g1-trace-1.mp3"
+    },
+    "k-nav/stage-g1-spell-1": {
+      "text": "Spell it!",
+      "hash": "304c21d862",
+      "kind": "line",
+      "file": "voice/k-nav/stage-g1-spell-1.mp3"
+    },
+    "k-nav/stage-g1-sentence-1": {
+      "text": "Build a sentence!",
+      "hash": "30cac69f4e",
+      "kind": "line",
+      "file": "voice/k-nav/stage-g1-sentence-1.mp3"
+    },
+    "k-nav/stage-g1-towers-1": {
+      "text": "Add to build!",
+      "hash": "d2bb9348d5",
+      "kind": "line",
+      "file": "voice/k-nav/stage-g1-towers-1.mp3"
+    },
+    "k-nav/stage-g1-towers-2": {
+      "text": "Take away!",
+      "hash": "ce899b3257",
+      "kind": "line",
+      "file": "voice/k-nav/stage-g1-towers-2.mp3"
+    },
+    "k-nav/stage-g1-towers-3": {
+      "text": "Tower math!",
+      "hash": "0875d1971c",
+      "kind": "line",
+      "file": "voice/k-nav/stage-g1-towers-3.mp3"
     },
     "k-rhymes/youHearRhyme": {
       "text": "You can hear the rhyme!",

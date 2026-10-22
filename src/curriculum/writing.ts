@@ -89,5 +89,41 @@ export const writingZone: Zone = {
         starsToEarn: 3,
       },
     ],
+    // 1st grade (phase 2b; the zone keeps its name): trace lowercase letters on
+    // four writing lines (ball-and-stick), spell short words from letter tiles,
+    // then build a sentence from word tiles: a capital to start, a period to end.
+    // Titles and descriptions are said aloud.
+    g1: [
+      {
+        id: 'g1-trace-1',
+        kind: 'concept',
+        title: 'Little letters',
+        description: 'Trace little letters on the lines.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Writing', mode: 'lower' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-spell-1',
+        kind: 'practice',
+        title: 'Spell it',
+        description: 'Tap the letters to spell the word.',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Writing', mode: 'spell' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-sentence-1',
+        kind: 'mastery',
+        title: 'Build a sentence',
+        description: 'Put the words in order. End with a period!',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Writing', mode: 'sentence' },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+    ],
   },
 }

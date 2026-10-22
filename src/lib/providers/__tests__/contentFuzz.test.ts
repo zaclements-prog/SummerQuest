@@ -26,6 +26,9 @@ import { boxCounts, isSortSpec, mostBox } from '../kSort'
 import { K_TOWERS_MAX } from '../kTowers'
 import { K_ACTIONS, K_FOOD, K_GEAR, K_HOME_OF, type KAction, type KGear } from '../kScience'
 import { DRAWINGS } from '../../../games/listenPlay/drawings'
+// 1st grade (phase 2b)
+import type { ReadAlongSpec } from '../../../games/listenPlay/activities/readAlongSpec'
+import type { TilesSpec } from '../../../games/listenPlay/activities/tilesSpec'
 
 /**
  * Generator fuzz suite: every stage in the curriculum, at every grade tier, plus
@@ -448,6 +451,14 @@ function answerProblems(config: ProviderConfig, grade: GradeLevel, p: Problem): 
       break
     case 'kScience':
       errs.push(...kScienceProblems(p as ListenProblem))
+      break
+    // 1st grade (phase 2b): Word Reef, Writing Workshop, Counting Towers
+    case 'g1Reading':
+    case 'g1Writing':
+      errs.push(...g1LiteracyProblems(p as ListenProblem))
+      break
+    case 'g1Towers':
+      errs.push(...g1TowersProblems(p as ListenProblem))
       break
   }
   return errs
@@ -892,3 +903,42 @@ describe('bar-graph solver', () => {
     expect(checked).toBeGreaterThanOrEqual(CHARTS.length)
   })
 })
+
+// ── 1st grade (phase 2b): Word Reef, Writing Workshop, Counting Towers ───────
+
+/** The answer, worked out from what is printed or built: the word read, the letter in the gap, the tiles in order. */
+function g1LiteracyProblems(p: ListenProblem): string[] {
+  const errs: string[] = []
+  const a = p.activity as (ReadAlongSpec | TilesSpec | undefined)
+  if (!a) {
+    const cards = p.pictureOptions ?? []
+    if (cards.length !== p.options.length || cards.some((c, i) => c.value !== p.options[i])) errs.push("picture cards don't match the options")
+    return errs
+  }
+  if (isTraceSpec(a)) return activityProblems(p)
+  if (a.kind === 'readAlong') {
+    if (a.cards.map((c) => c.value).join('|') !== p.options.join('|')) errs.push("the activity's cards aren't the options")
+    if (a.cards.filter((c) => c.value === p.answer).length !== 1) errs.push('the answer is not exactly one card')
+    if (a.layout === 'word' && a.units.join('') !== p.answer) errs.push(`printed ${a.units.join('')}, answer ${String(p.answer)}`)
+    if (a.layout === 'gap' && a.units[a.gap ?? -1] !== p.answer) errs.push(`the gap holds ${a.units[a.gap ?? -1]}, answer ${String(p.answer)}`)
+    if (a.layout === 'sentence' && !a.units.some((u) => u.toLowerCase().replace(/[^a-z]/g, '') === p.answer)) errs.push(`the sentence never says ${String(p.answer)}`)
+    return errs
+  }
+  if (a.kind === 'tiles') {
+    const built = a.mode === 'letters' ? a.units.join('') : `${a.units.slice(0, -1).join(' ')}.`
+    if (built !== p.answer) errs.push(`built ${built}, answer ${String(p.answer)}`)
+    for (const u of a.units) if (!a.tiles.includes(u)) errs.push(`no tile for ${u}`)
+    return errs
+  }
+  return [`unknown activity ${JSON.stringify(a)}`]
+}
+
+/** The number sentence on the card, worked out: the answer, and numeral cards 0–20. */
+function g1TowersProblems(p: ListenProblem): string[] {
+  const m = /^(\d+) ([+−]) (\d+)$/.exec(p.picture?.kind === 'word' ? p.picture.text : '')
+  if (!m) return [`no number sentence: ${JSON.stringify(p.picture)}`]
+  const want = m[2] === '+' ? Number(m[1]) + Number(m[3]) : Number(m[1]) - Number(m[3])
+  const errs = p.answer === want ? [] : [`answer ${String(p.answer)}, the sentence says ${want}`]
+  for (const o of p.options) if (typeof o !== 'number' || o < 0 || o > 20) errs.push(`card ${String(o)} outside 0–20`)
+  return errs
+}

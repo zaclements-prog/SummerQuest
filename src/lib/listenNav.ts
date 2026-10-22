@@ -120,6 +120,18 @@ const STAGE_PICTURE: Record<string, string> = {
   'k-towers-1': '🏰',
   'k-towers-2': '👾',
   'k-towers-3': '🚀',
+  // Word Reef, Writing Workshop and Counting Towers (1st grade, phase 2b)
+  'g1-vowels-1': '🐱',
+  'g1-digraphs-1': '🚢',
+  'g1-words-1': '📖',
+  'g1-sentences-1': '💬',
+  'g1-sight-1': '👀',
+  'g1-trace-1': '✏️',
+  'g1-spell-1': '🔤',
+  'g1-sentence-1': '📝',
+  'g1-towers-1': '➕',
+  'g1-towers-2': '➖',
+  'g1-towers-3': '🏰',
 }
 const KIND_PICTURE: Record<Stage['kind'], string> = { concept: '💡', practice: '⚡', mastery: '🏆' }
 

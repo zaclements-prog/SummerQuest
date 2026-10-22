@@ -1,0 +1,94 @@
+/*
+ * 1st-grade reading and writing activities (src/games/listenPlay/activities:
+ * ReadAlong, TileBuild): print in Andika that lights up as the voice reads it,
+ * and tiles that drop into slots. Transform / opacity / colour animations
+ * only, so they run on the compositor on a low-end tablet.
+ */
+
+/* ── readAlong ─────────────────────────────────────────────────────────── */
+.ra-print {
+  font-family: 'Andika', 'Fredoka', ui-rounded, system-ui, sans-serif;
+  font-weight: 700;
+  color: var(--color-ink-900, #3a2c38);
+}
+.ra-unit {
+  display: inline-block;
+  padding: 0 0.04em;
+  border-radius: 0.18em;
+  transition:
+    background-color 0.18s ease,
+    transform 0.18s ease;
+}
+/* the piece the voice is reading: a marker-yellow glow, lifted a little */
+.ra-unit[data-lit] {
+  background-color: #ffe066;
+  transform: translateY(-0.04em);
+}
+/* after the help: the word that answers the question stays marked */
+.ra-unit[data-key] {
+  background-color: #ffd0c4;
+  box-shadow: inset 0 -0.12em 0 #f2766b;
+}
+/* the missing middle letter: an empty box, a faint letter in the help, the letter once it's found */
+.ra-gap {
+  min-width: 0.62em;
+  margin: 0 0.06em;
+  border-bottom: 0.08em solid #74b7e8;
+  background-color: #eaf6ff;
+  border-radius: 0.14em 0.14em 0.06em 0.06em;
+}
+.ra-gap[data-filled] {
+  color: #f2766b;
+  animation: lp-pop-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.ra-ghost {
+  opacity: 0.4;
+}
+
+/* ── tiles ─────────────────────────────────────────────────────────────── */
+.tiles-tile,
+.tiles-slot {
+  font-family: 'Andika', 'Fredoka', ui-rounded, system-ui, sans-serif;
+  font-weight: 700;
+}
+.tiles-tile {
+  transition:
+    translate 0.12s ease-out,
+    box-shadow 0.12s ease-out,
+    opacity 0.25s ease;
+}
+.tiles-tile:not([aria-disabled]):active {
+  translate: 0 3px;
+  box-shadow: 0 1px 0 0 var(--color-line);
+}
+.tiles-tile[data-used] {
+  opacity: 0;
+  pointer-events: none;
+}
+.tiles-slot[data-filled] .tiles-in {
+  animation: lp-pop-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.tiles-slot[data-lit] {
+  background-color: #ffe066;
+}
+.tiles-slot[data-wrong] {
+  animation: lp-wobble 0.5s ease-in-out;
+}
+.tiles-row[data-right] .tiles-slot {
+  background-color: #c6efc0;
+}
+.tiles-ghost {
+  opacity: 0.32;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ra-unit,
+  .tiles-tile {
+    transition: none;
+  }
+  .ra-gap[data-filled],
+  .tiles-slot[data-filled] .tiles-in,
+  .tiles-slot[data-wrong] {
+    animation: none !important;
+  }
+}

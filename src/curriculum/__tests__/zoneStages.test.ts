@@ -274,6 +274,17 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
     'science-summit': ['k-science-1', 'k-science-2', 'k-science-3'],
     'tower-battlefront': ['k-towers-1', 'k-towers-2', 'k-towers-3'],
   }
+  /** 1st grade's own stage sets (phase-2b contract); a zone without one plays kindergarten's. */
+  const G1_IDS: Record<string, string[]> = {
+    // Word Reef, Writing Workshop, Counting Towers
+    'reading-reef': ['g1-vowels-1', 'g1-digraphs-1', 'g1-words-1', 'g1-sentences-1', 'g1-sight-1'],
+    'writing-workshop': ['g1-trace-1', 'g1-spell-1', 'g1-sentence-1'],
+    'tower-battlefront': ['g1-towers-1', 'g1-towers-2', 'g1-towers-3'],
+  }
+  /** 1st grade's own zone names (phase-2b contract); a zone without one keeps kindergarten's. */
+  const G1_TITLES: Record<string, string> = {
+    'reading-reef': 'Word Reef',
+  }
   const K1_TITLES: Record<string, string> = {
     'multiplication-mesa': 'Counting Mesa',
     'geometry-grove': 'Shape Grove',
@@ -295,7 +306,7 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
       for (const g of [0, 1] as const) {
         const ids = zoneStages(zone, g).map((s) => s.id)
         // (zones without a K–1 set fall back to their 2–4 stages; the World shows them as still sleeping)
-        expect(ids, `${zone.id} at grade ${g}`).toEqual(K1_IDS[zone.id] ?? zone.stages.map((s) => s.id))
+        expect(ids, `${zone.id} at grade ${g}`).toEqual((g === 1 ? G1_IDS[zone.id] : undefined) ?? K1_IDS[zone.id] ?? zone.stages.map((s) => s.id))
       }
       for (const g of [2, 3, 4, 5] as const) expect(zoneStages(zone, g)).toBe(zone.stages)
     }
@@ -440,7 +451,7 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
 
   it('names the three zones for K–1 only (zoneTitle)', () => {
     for (const zone of curriculum.zones) {
-      for (const g of [0, 1] as const) expect(zoneTitle(zone, g)).toBe(K1_TITLES[zone.id] ?? zone.title)
+      for (const g of [0, 1] as const) expect(zoneTitle(zone, g)).toBe((g === 1 ? G1_TITLES[zone.id] : undefined) ?? K1_TITLES[zone.id] ?? zone.title)
       for (const g of [2, 3, 4, 5] as const) expect(zoneTitle(zone, g)).toBe(zone.title)
       expect(zoneTitle(zone, null)).toBe(zone.title)
     }
@@ -557,5 +568,91 @@ describe('Nature Summit and Counting Towers (phase-2a contract)', () => {
     expect(zone.stages[0]).toMatchObject({ id: 'td-arena', gameId: 'towerDefense', providerConfig: { kind: 'multiplication', factorMin: 2, factorMax: 10 } })
     expect(zone.stages[0].params).toBeUndefined()
     for (const g of [2, 3, 4] as const) expect(zoneStages(zone, g).map((s) => s.id)).toEqual(['td-arena'])
+  })
+})
+
+describe('Grade 1 (phase-2b contract): Word Reef, Writing Workshop, Counting Towers', () => {
+  const G1: Record<string, { title: string; ids: [string, Stage['kind']][]; kinds: string[] }> = {
+    'reading-reef': {
+      title: 'Word Reef',
+      ids: [
+        ['g1-vowels-1', 'concept'],
+        ['g1-digraphs-1', 'practice'],
+        ['g1-words-1', 'practice'],
+        ['g1-sentences-1', 'practice'],
+        ['g1-sight-1', 'mastery'],
+      ],
+      kinds: ['g1Reading'],
+    },
+    'writing-workshop': {
+      title: 'Writing Workshop',
+      ids: [
+        ['g1-trace-1', 'concept'],
+        ['g1-spell-1', 'practice'],
+        ['g1-sentence-1', 'mastery'],
+      ],
+      kinds: ['g1Writing'],
+    },
+    'tower-battlefront': {
+      title: 'Counting Towers',
+      ids: [
+        ['g1-towers-1', 'concept'],
+        ['g1-towers-2', 'practice'],
+        ['g1-towers-3', 'mastery'],
+      ],
+      kinds: ['g1Towers'],
+    },
+  }
+
+  it.each(Object.keys(G1))('%s: its 1st-grade set and name; kindergarten and grades 2–4 unchanged', (zoneId) => {
+    const zone = getZone(zoneId)!
+    const want = G1[zoneId]
+    const set = zoneStages(zone, 1)
+    expect(set.map((st) => [st.id, st.kind])).toEqual(want.ids)
+    expect(zoneTitle(zone, 1)).toBe(want.title)
+    expect(isZoneSleeping(zone, 1)).toBe(false)
+    // kindergarten keeps its own set and name
+    expect(zoneStages(zone, 0)).toBe(zone.stagesByBand!.k1)
+    expect(zoneStages(zone, 0).some((st) => st.id.startsWith('g1-'))).toBe(false)
+    for (const g of [2, 3, 4] as const) expect(zoneStages(zone, g)).toBe(zone.stages)
+    for (const st of set) {
+      expect(want.kinds).toContain(st.providerConfig.kind)
+      expect(st.starsToEarn).toBe(3)
+      // said aloud: short, plain sentences
+      expect(st.description.split(' ').length, st.id).toBeLessThanOrEqual(10)
+      expect(st.description, st.id).toMatch(/[.!?]$/)
+      if (zoneId === 'tower-battlefront') {
+        expect(st.gameId).toBe('towerDefense')
+        expect(st.params?.listen).toBe(true)
+      } else {
+        expect(st.gameId).toBe('listenPlay')
+        expect(st.params?.questionCount, st.id).toBeGreaterThanOrEqual(5)
+        expect(st.params?.questionCount, st.id).toBeLessThanOrEqual(6)
+      }
+      // a 1st-grade stage is never found at another grade
+      expect(getStage(zoneId, st.id, 0)).toBeUndefined()
+      expect(getStage(zoneId, st.id, 3)).toBeUndefined()
+    }
+    // each unlocks after the one before it
+    const ids = set.map((st) => st.id)
+    const stars = (xs: string[]) => ({ stages: Object.fromEntries(xs.map((id) => [id, { stars: 1 }])) })
+    set.forEach((st, i) => {
+      expect(isStageUnlocked(zone, st.id, stars(ids.slice(0, i)), 1), st.id).toBe(true)
+      if (i > 0) expect(isStageUnlocked(zone, st.id, undefined, 1), st.id).toBe(false)
+    })
+  })
+
+  it('Word Reef asks spoken picture questions and reads with the readAlong activity; Writing Workshop traces and builds from tiles', () => {
+    const play = (zoneId: string, stageId: string) => {
+      const st = zoneStages(getZone(zoneId)!, 1).find((x) => x.id === stageId)!
+      const p = createProvider(st.providerConfig)
+      return Array.from({ length: 6 }, () => p.next() as ListenProblem)
+    }
+    expect(play('reading-reef', 'g1-words-1').every((q) => q.activity?.kind === 'readAlong')).toBe(true)
+    expect(play('reading-reef', 'g1-sentences-1').every((q) => q.activity?.kind === 'readAlong')).toBe(true)
+    expect(play('reading-reef', 'g1-sight-1').every((q) => !q.activity && q.pictureOptions?.every((o) => o.picture.kind === 'word'))).toBe(true)
+    expect(play('writing-workshop', 'g1-trace-1').every((q) => q.activity?.kind === 'trace')).toBe(true)
+    expect(play('writing-workshop', 'g1-spell-1').every((q) => q.activity?.kind === 'tiles')).toBe(true)
+    expect(play('writing-workshop', 'g1-sentence-1').every((q) => q.activity?.kind === 'tiles')).toBe(true)
   })
 })

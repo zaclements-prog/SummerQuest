@@ -94,6 +94,19 @@ export const SKILLS: Record<string, SkillMeta> = {
   // Counting Towers (K tower defense, phase 2a; lesson kTowers)
   'k-towers-count':   { label: 'counting to 20', zoneId: 'tower-battlefront', lessonId: 'kTowers', practiceStageId: 'k-towers-1' },
   'k-towers-compare': { label: 'more and fewer', zoneId: 'tower-battlefront', lessonId: 'kTowers', practiceStageId: 'k-towers-2' },
+  // Word Reef (1st grade, phase 2b; lesson g1Reading)
+  'g1-short-vowels': { label: 'short vowel sounds', zoneId: 'reading-reef', lessonId: 'g1Reading', practiceStageId: 'g1-vowels-1' },
+  'g1-digraphs':     { label: 'letter teams: sh, ch, th', zoneId: 'reading-reef', lessonId: 'g1Reading', practiceStageId: 'g1-digraphs-1' },
+  'g1-decoding':     { label: 'reading short words', zoneId: 'reading-reef', lessonId: 'g1Reading', practiceStageId: 'g1-words-1' },
+  'g1-read-along':   { label: 'reading sentences', zoneId: 'reading-reef', lessonId: 'g1Reading', practiceStageId: 'g1-sentences-1' },
+  'g1-sight-words':  { label: '1st-grade sight words', zoneId: 'reading-reef', lessonId: 'g1Reading', practiceStageId: 'g1-sight-1' },
+  // Writing Workshop (1st grade, phase 2b; lesson g1Writing)
+  'g1-trace-lower': { label: 'writing lowercase letters', zoneId: 'writing-workshop', lessonId: 'g1Writing', practiceStageId: 'g1-trace-1' },
+  'g1-spelling':    { label: 'spelling short words', zoneId: 'writing-workshop', lessonId: 'g1Writing', practiceStageId: 'g1-spell-1' },
+  'g1-sentences':   { label: 'writing a sentence: capital and period', zoneId: 'writing-workshop', lessonId: 'g1Writing', practiceStageId: 'g1-sentence-1' },
+  // Counting Towers (1st grade, phase 2b; kindergarten's lesson kTowers)
+  'g1-towers-add': { label: 'adding within 20', zoneId: 'tower-battlefront', lessonId: 'kTowers', practiceStageId: 'g1-towers-1' },
+  'g1-towers-sub': { label: 'taking away within 20', zoneId: 'tower-battlefront', lessonId: 'kTowers', practiceStageId: 'g1-towers-2' },
 }
 
 export interface Skill { id: string; label: string }

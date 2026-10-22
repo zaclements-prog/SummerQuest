@@ -25,6 +25,9 @@ import { kMeasureLesson } from './kMeasure'
 import { kSortingLesson } from './kSorting'
 import { kScienceLesson } from './kScience'
 import { kTowersLesson } from './kTowers'
+// 1st grade (phase 2b): Word Reef, Writing Workshop
+import { g1ReadingLesson } from './g1Reading'
+import { g1WritingLesson } from './g1Writing'
 
 /**
  * The lessons, by content band (lib/gradeBand; K–5 plan §2): kindergarten and
@@ -68,7 +71,11 @@ export const k1Lessons: Lesson[] = [
 ]
 
 /** 1st grade (band `g1`): its own voice lessons. */
-export const g1Lessons: Lesson[] = []
+export const g1Lessons: Lesson[] = [
+  // Word Reef, Writing Workshop (phase 2b)
+  g1ReadingLesson,
+  g1WritingLesson,
+]
 
 /** 5th grade (band `g5`). */
 export const g5Lessons: Lesson[] = []

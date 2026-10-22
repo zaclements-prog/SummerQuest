@@ -12,6 +12,9 @@ import { kMeasureLesson } from '../../tutoring/lessons/kMeasure'
 import { kSortingLesson } from '../../tutoring/lessons/kSorting'
 import { kScienceLesson } from '../../tutoring/lessons/kScience'
 import { kTowersLesson } from '../../tutoring/lessons/kTowers'
+// 1st grade (phase 2b): Word Reef, Writing Workshop
+import { g1ReadingLesson } from '../../tutoring/lessons/g1Reading'
+import { g1WritingLesson } from '../../tutoring/lessons/g1Writing'
 import { K_LESSON_PACK } from '../../tutoring/lessons/k1Voice'
 
 /**
@@ -39,6 +42,9 @@ for (const lesson of [
   kSortingLesson,
   kScienceLesson,
   kTowersLesson,
+  // 1st grade (phase 2b): Word Reef, Writing Workshop
+  g1ReadingLesson,
+  g1WritingLesson,
 ]) {
   for (const step of lesson.steps) {
     const ref = step.check?.speech

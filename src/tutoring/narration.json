@@ -434,5 +434,41 @@
       "stepId": "stronger",
       "text": "Towers stop the critters. Tap a tower to make it stronger!"
     }
+  ],
+  "g1Reading": [
+    {
+      "stepId": "middle",
+      "text": "Listen to the middle of a word. Cat. Kuh… aa… tuh. The A in the middle says aa!"
+    },
+    {
+      "stepId": "teams",
+      "text": "Some letters team up to make one sound. S and H say shh, like ship and shell!"
+    },
+    {
+      "stepId": "read",
+      "text": "Now read a word. Sound it out: shh… ih… puh. Put the sounds together. Ship!"
+    },
+    {
+      "stepId": "along",
+      "text": "When we read along, each word lights up. The cat is on the mat. Your turn!"
+    }
+  ],
+  "g1Writing": [
+    {
+      "stepId": "lines",
+      "text": "Little letters live on the lines. Tall ones touch the top line. Small ones start at the dashed line."
+    },
+    {
+      "stepId": "traceA",
+      "text": "Let's trace a little a. Around like a C. Then a little line down."
+    },
+    {
+      "stepId": "spell",
+      "text": "To spell a word, say it slowly. Cat. Kuh… aa… tuh. Three sounds, three letters!"
+    },
+    {
+      "stepId": "sentence",
+      "text": "A sentence starts with a capital letter. It ends with a period. The dog ran."
+    }
   ]
 }
