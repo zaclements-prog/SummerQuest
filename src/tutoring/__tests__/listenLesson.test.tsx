@@ -251,6 +251,8 @@ describe('the lesson picker', () => {
       '/tutor/kTeens',
       '/tutor/kMeasure',
       '/tutor/kSorting',
+      '/tutor/kScience',
+      '/tutor/kTowers',
     ])
     // no words: the letters lesson's picture shows letter tiles, and that's all
     for (const w of visibleWords(container)) expect(w).toMatch(/^[A-Za-z]$/)

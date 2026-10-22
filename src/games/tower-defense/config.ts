@@ -1,4 +1,4 @@
-import type { EnemyStats, TowerStats, Vec2, Wave } from './types'
+import type { EnemyStats, TdRules, TowerStats, Vec2, Wave } from './types'
 
 export const TOWER_STATS: Record<string, TowerStats> = {
   cannon: {
@@ -40,6 +40,17 @@ export const WAVES: Wave[] = [
 export const STARTING_GOLD = 75
 export const STARTING_LIVES = 10
 export const BETWEEN_WAVE_MS = 5000
+
+/** Grades 2–4 (td-arena): today's game, exactly. */
+export const CLASSIC_RULES: TdRules = {
+  waves: WAVES,
+  startingGold: STARTING_GOLD,
+  startingLives: STARTING_LIVES,
+  betweenWaveMs: BETWEEN_WAVE_MS,
+  speedScale: 1,
+  tower: (kind) => TOWER_STATS[kind],
+  baseFalls: 'gameOver',
+}
 
 export function makePath(w: number, h: number): Vec2[] {
   // S-curve path from left edge to right edge

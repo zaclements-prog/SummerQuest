@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import type { GameProps } from '../../screens/GameRunner'
 import type { GameState, PendingPurchase, Vec2 } from './types'
@@ -12,6 +12,7 @@ import {
   tick,
 } from './engine'
 import MathGate from './MathGate'
+import { lazyWithRetry } from '../../lib/lazyWithRetry'
 import { sfx } from '../../lib/sound'
 import { Button, Pill, Card } from '../../components/ui'
 import { TOON } from '../../toon/palette'
@@ -22,7 +23,24 @@ const INK = TOON.outline
 const GAME_W = 720
 const GAME_H = 420
 
-export default function TowerDefense({ provider, onComplete, meta, paused = false }: GameProps) {
+// K–1's Counting Towers, loaded only when a K–1 stage is played
+const KTowers = lazyWithRetry(() => import('./KTowers'))
+
+/**
+ * Tower Battlefront. Grades 2–4 (td-arena) play the classic game below,
+ * unchanged; a K–1 stage (`params.listen`: the `k-towers-*` stages) plays
+ * Counting Towers (./KTowers: voice-first, picture answers, no failing out).
+ */
+export default function TowerDefense(props: GameProps) {
+  if (props.params?.listen !== true) return <ClassicTowerDefense {...props} />
+  return (
+    <Suspense fallback={<div className="flex-1" />}>
+      <KTowers {...props} />
+    </Suspense>
+  )
+}
+
+function ClassicTowerDefense({ provider, onComplete, meta, paused = false }: GameProps) {
   // The engine mutates this one object in place every frame; `force` re-renders.
   // (Held in state, not a ref, so render can read it.)
   const [game] = useState<GameState>(() => createInitialState(GAME_W, GAME_H))

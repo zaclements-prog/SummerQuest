@@ -237,6 +237,8 @@ export function effectiveConfig(
       return config
     case 'kMeasure':
     case 'kSort':
+    case 'kTowers':
+    case 'kScience':
       return config
   }
 }

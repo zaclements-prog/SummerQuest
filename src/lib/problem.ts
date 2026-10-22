@@ -40,6 +40,8 @@ export type Picture =
   | { kind: 'word'; text: string }
   | { kind: 'emoji'; emoji: string }
   | { kind: 'clock'; hour: number; minute: number }
+  /** A drawing from the Listen & Play kit's set, by name (src/games/listenPlay/drawings.tsx): a push, a kite, the weather. */
+  | { kind: 'art'; name: string }
 
 export interface PictureOption {
   /** The answer this picture stands for: one of the problem's `options`. */

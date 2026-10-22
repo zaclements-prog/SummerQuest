@@ -3,6 +3,7 @@ import type { Zone } from './types'
 export const scienceZone: Zone = {
   id: 'science-summit',
   title: 'Science Summit',
+  titleByBand: { k1: 'Nature Summit' },
   subtitle: 'Plants, life cycles & nature',
   emoji: '🔬',
   themeColor: 'island',
@@ -53,4 +54,41 @@ export const scienceZone: Zone = {
       starsToEarn: 3,
     },
   ],
+  stagesByBand: {
+    // K–1 "Nature Summit" (K-ESS2, K-LS1, K-PS2): the weather and what to wear →
+    // what plants and animals need → push and pull. Every card a picture, named
+    // as it lights up. Titles and descriptions are said aloud.
+    k1: [
+      {
+        id: 'k-science-1',
+        kind: 'concept',
+        title: 'What to wear',
+        description: 'Sun, rain, snow or wind: what do you need?',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kScience', mode: 'weather' },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-science-2',
+        kind: 'practice',
+        title: 'Plants and animals',
+        description: 'What do plants and animals need to live?',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kScience', mode: 'needs' },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-science-3',
+        kind: 'mastery',
+        title: 'Push and pull',
+        description: 'Is it a push or a pull?',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'kScience', mode: 'pushPull' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+    ],
+  },
 }

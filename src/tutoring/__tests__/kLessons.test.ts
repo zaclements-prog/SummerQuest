@@ -17,6 +17,8 @@ const CONTRACT = {
   // K complete (phase 2a)
   kAddTake: { zoneId: 'fraction-falls', practiceStageId: 'k-addsub-1' },
   kStoryMath: { zoneId: 'word-problem-woods', practiceStageId: 'k-woods-1' },
+  kScience: { zoneId: 'science-summit', practiceStageId: 'k-science-1' },
+  kTowers: { zoneId: 'tower-battlefront', practiceStageId: 'k-towers-1' },
 }
 
 const checks = k1Lessons.flatMap((l) => l.steps.filter((s) => s.check).map((s) => ({ lesson: l, step: s, check: s.check! })))

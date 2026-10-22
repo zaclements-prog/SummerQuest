@@ -271,6 +271,8 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
     // K complete (phase 2a)
     'measurement-marsh': ['k-measure-1', 'k-measure-2', 'k-measure-3'],
     'data-delta': ['k-sort-1', 'k-sort-2', 'k-sort-3'],
+    'science-summit': ['k-science-1', 'k-science-2', 'k-science-3'],
+    'tower-battlefront': ['k-towers-1', 'k-towers-2', 'k-towers-3'],
   }
   const K1_TITLES: Record<string, string> = {
     'multiplication-mesa': 'Counting Mesa',
@@ -284,6 +286,8 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
     // K complete (phase 2a)
     'measurement-marsh': 'Measure Marsh',
     'data-delta': 'Sorting Delta',
+    'science-summit': 'Nature Summit',
+    'tower-battlefront': 'Counting Towers',
   }
 
   it('kindergarten and 1st grade see the K–1 stage sets; 2nd–5th grade still see today’s', () => {
@@ -317,6 +321,12 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
         expect(s.params?.ops).not.toBe('div')
         continue
       }
+      // Counting Towers: the tower defense in its K–1 mode (its questions build the towers)
+      if (s.id.startsWith('k-towers-')) {
+        expect(s.gameId, s.id).toBe('towerDefense')
+        expect(s.params?.listen, s.id).toBe(true)
+        continue
+      }
       expect(s.gameId, s.id).toBe('listenPlay')
       expect(s.params?.questionCount, s.id).toBeGreaterThanOrEqual(5)
       expect(s.params?.questionCount, s.id).toBeLessThanOrEqual(6)
@@ -331,6 +341,7 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
       ...['kCompare', 'kCompare', 'kCompare', 'kTeens', 'kTeens', 'kTeens'],
       // K complete (phase 2a), in K1_IDS order
       ...['kMeasure', 'kMeasure', 'kMeasure', 'kSort', 'kSort', 'kSort'],
+      ...['kScience', 'kScience', 'kScience', 'kTowers', 'kTowers', 'kTowers'],
     ])
     // the counting stages climb: count to 10, count on to 20 (the parade), then compare
     expect(all.slice(0, 3).map((s) => s.providerConfig)).toMatchObject([
@@ -491,5 +502,60 @@ describe('K complete (phase-2a contract): Number Dunes and Ten Frame Plateau', (
         if (i > 0) expect(isStageUnlocked(zone, s.id, stars(set.slice(0, i - 1).map((x) => x.id)), 0), s.id).toBe(false)
       })
     }
+  })
+})
+
+describe('Nature Summit and Counting Towers (phase-2a contract)', () => {
+  const stars = (ids: string[]) => ({ stages: Object.fromEntries(ids.map((id) => [id, { stars: 1 }])) })
+
+  it('Nature Summit: weather and what to wear, what living things need, push and pull', () => {
+    const zone = getZone('science-summit')!
+    const set = zoneStages(zone, 0)
+    expect(set.map((s) => [s.id, s.kind, s.title])).toEqual([
+      ['k-science-1', 'concept', 'What to wear'],
+      ['k-science-2', 'practice', 'Plants and animals'],
+      ['k-science-3', 'mastery', 'Push and pull'],
+    ])
+    expect(set.map((s) => s.providerConfig)).toEqual([
+      { kind: 'kScience', mode: 'weather' },
+      { kind: 'kScience', mode: 'needs' },
+      { kind: 'kScience', mode: 'pushPull' },
+    ])
+    expect(zoneTitle(zone, 0)).toBe('Nature Summit')
+    expect(isZoneSleeping(zone, 0)).toBe(false)
+    // the 2–4 set is untouched
+    expect(zone.stages.map((s) => s.id)).toEqual(['science-3rd', 'science-cycle', 'science-4th', 'science-mastery'])
+    set.forEach((s, i) => {
+      expect(isStageUnlocked(zone, s.id, stars(set.slice(0, i).map((x) => x.id)), 0), s.id).toBe(true)
+      if (i > 0) expect(isStageUnlocked(zone, s.id, undefined, 0), s.id).toBe(false)
+    })
+  })
+
+  it('Counting Towers: the tower defense in its K–1 mode, how many → more or fewer → mixed to 20', () => {
+    const zone = getZone('tower-battlefront')!
+    const set = zoneStages(zone, 0)
+    expect(set.map((s) => [s.id, s.kind, s.gameId])).toEqual([
+      ['k-towers-1', 'concept', 'towerDefense'],
+      ['k-towers-2', 'practice', 'towerDefense'],
+      ['k-towers-3', 'mastery', 'towerDefense'],
+    ])
+    expect(set.map((s) => s.providerConfig)).toEqual([
+      { kind: 'kTowers', mode: 'count' },
+      { kind: 'kTowers', mode: 'compare' },
+      { kind: 'kTowers', mode: 'mixed' },
+    ])
+    // K–1 behaviour lives behind the stage's params (the 2–4 stage has none)
+    expect(set.map((s) => s.params)).toEqual([
+      { listen: true, waves: 3 },
+      { listen: true, waves: 3 },
+      { listen: true, waves: 4 },
+    ])
+    expect(zoneTitle(zone, 0)).toBe('Counting Towers')
+    expect(isZoneSleeping(zone, 0)).toBe(false)
+    // grades 2–4 keep today's one stage, exactly
+    expect(zone.stages).toHaveLength(1)
+    expect(zone.stages[0]).toMatchObject({ id: 'td-arena', gameId: 'towerDefense', providerConfig: { kind: 'multiplication', factorMin: 2, factorMax: 10 } })
+    expect(zone.stages[0].params).toBeUndefined()
+    for (const g of [2, 3, 4] as const) expect(zoneStages(zone, g).map((s) => s.id)).toEqual(['td-arena'])
   })
 })

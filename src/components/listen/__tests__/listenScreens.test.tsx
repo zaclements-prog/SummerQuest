@@ -337,6 +337,8 @@ describe('World HUD', () => {
       'lesson-kTeens',
       'lesson-kMeasure',
       'lesson-kSorting',
+      'lesson-kScience',
+      'lesson-kTowers',
     ])
     expect(lines()).toEqual(['k-lessons/pickLesson'])
     click(q('[data-guide="lesson-kShapes"]'))

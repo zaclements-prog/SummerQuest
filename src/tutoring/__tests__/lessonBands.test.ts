@@ -22,6 +22,8 @@ const K_PILOT = [
   'kTeens',
   'kMeasure',
   'kSorting',
+  'kScience',
+  'kTowers',
 ]
 const ids = (ls: { id: string }[]) => ls.map((l) => l.id)
 
@@ -149,6 +151,8 @@ describe('practice links stay in the band', () => {
       // K complete (phase 2a)
       kMeasure: ['k-measure-1', 'k-measure-2', 'k-measure-3'],
       kSorting: ['k-sort-1', 'k-sort-2', 'k-sort-3'],
+      kScience: ['k-science-1', 'k-science-2', 'k-science-3'],
+      kTowers: ['k-towers-1', 'k-towers-2', 'k-towers-3'],
     }
     for (const l of k1Lessons.filter((x) => fixed[x.id])) {
       const zone = withK1(getZone(l.zoneId)!, fixed[l.id])
@@ -163,9 +167,9 @@ describe('practice links stay in the band', () => {
       // a grade-3 child who opens a K lesson lands on a grade 2–4 stage, never a K one
       const g24 = zone.stages.map((s) => s.id)
       expect(g24).toContain(practiceStageFor(l, undefined, 3, zone))
-      // and a K child who opens a 2–4 lesson of the zone lands on a K stage
-      const old = g24Lessons.find((o) => o.zoneId === l.zoneId)!
-      expect(fixed[l.id]).toContain(practiceStageFor(old, undefined, 0, zone))
+      // and a K child who opens a 2–4 lesson of the zone lands on a K stage (Tower Battlefront has none)
+      const old = g24Lessons.find((o) => o.zoneId === l.zoneId)
+      if (old) expect(fixed[l.id]).toContain(practiceStageFor(old, undefined, 0, zone))
     }
   })
 })

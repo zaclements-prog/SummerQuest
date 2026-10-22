@@ -34,8 +34,8 @@ export const PETS: readonly PetDef[] = [
   { creatureId: 'owl', zoneId: 'word-problem-woods', lessonIds: ['wordProblem', 'kStoryMath'], egg: { shell: '#e9dcc4', spot: '#9a6a46' } },
   { creatureId: 'octopus', zoneId: 'reading-reef', lessonIds: ['reading', 'kLetters', 'kRhymes'], egg: { shell: '#ffc9b8', spot: '#f7a1c4' } },
   { creatureId: 'dragonet', zoneId: 'writing-workshop', lessonIds: ['writing', 'kTracing'], egg: { shell: '#cfe8fb', spot: '#8ab8ff' } },
-  { creatureId: 'tiger', zoneId: 'science-summit', lessonIds: ['science'], egg: { shell: '#fff0c2', spot: '#f2a65a' } },
-  { creatureId: 'dragon', zoneId: 'tower-battlefront', lessonIds: [], egg: { shell: '#ffd0c4', spot: '#c94c42' } },
+  { creatureId: 'tiger', zoneId: 'science-summit', lessonIds: ['science', 'kScience'], egg: { shell: '#fff0c2', spot: '#f2a65a' } },
+  { creatureId: 'dragon', zoneId: 'tower-battlefront', lessonIds: ['kTowers'], egg: { shell: '#ffd0c4', spot: '#c94c42' } },
 ]
 
 /** The pet that grows into this creature (every creature is one zone's pet). */

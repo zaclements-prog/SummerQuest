@@ -50,8 +50,8 @@ describe('pet catalog', () => {
       ['fox', 'data-delta', ['dataGraph', 'kSorting']],
       ['unicorn', 'place-value-plateau', ['placeValue', 'kTeens']],
       ['dragonet', 'writing-workshop', ['writing', 'kTracing']],
-      ['tiger', 'science-summit', ['science']],
-      ['dragon', 'tower-battlefront', []],
+      ['tiger', 'science-summit', ['science', 'kScience']],
+      ['dragon', 'tower-battlefront', ['kTowers']],
     ]
     for (const [id, zoneId, lessonIds] of table) {
       expect(pet(id)).toMatchObject({ creatureId: id, zoneId, lessonIds })
@@ -187,8 +187,10 @@ describe('petStatus', () => {
     expect(petStatus(pet('trex'), zonesWith('division-dunes', [3, 3, 3, 3]), {}, 3).stage).toBe('adult')
   })
 
-  it('Tower Battlefront: the dragon has no lesson and grows on 1, 2 and 3 stars', () => {
+  it('Tower Battlefront: the dragon has no 2–4 lesson (K–1 hatches it with kTowers) and grows on 1, 2 and 3 stars', () => {
     expect(petStatus(pet('dragon'), {}, {}, 3).next).toEqual({ stage: 'baby', more: 1, lesson: false })
+    expect(petStatus(pet('dragon'), {}, {}, 0).next).toEqual({ stage: 'baby', more: 1, lesson: true })
+    expect(petStatus(pet('dragon'), {}, { kTowers: 1 }, 0).stage).toBe('baby')
     expect(petStatus(pet('dragon'), zonesWith('tower-battlefront', [1]), {}, 3).stage).toBe('baby')
     expect(petStatus(pet('dragon'), zonesWith('tower-battlefront', [2]), {}, 3)).toMatchObject({ stage: 'kid', next: { stage: 'adult', more: 1 } })
     expect(petStatus(pet('dragon'), zonesWith('tower-battlefront', [3]), {}, 3).stage).toBe('adult')

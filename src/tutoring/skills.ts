@@ -87,6 +87,13 @@ export const SKILLS: Record<string, SkillMeta> = {
   // Sorting Delta (K, phase 2a; lesson kSorting)
   'k-sort':         { label: 'sorting into groups', zoneId: 'data-delta', lessonId: 'kSorting', practiceStageId: 'k-sort-1' },
   'k-sort-compare': { label: 'counting and comparing groups', zoneId: 'data-delta', lessonId: 'kSorting', practiceStageId: 'k-sort-3' },
+  // Nature Summit (K science, phase 2a; lesson kScience)
+  'k-science-weather': { label: 'weather and what to wear', zoneId: 'science-summit', lessonId: 'kScience', practiceStageId: 'k-science-1' },
+  'k-science-needs':   { label: 'what plants and animals need', zoneId: 'science-summit', lessonId: 'kScience', practiceStageId: 'k-science-2' },
+  'k-science-push':    { label: 'pushes and pulls', zoneId: 'science-summit', lessonId: 'kScience', practiceStageId: 'k-science-3' },
+  // Counting Towers (K tower defense, phase 2a; lesson kTowers)
+  'k-towers-count':   { label: 'counting to 20', zoneId: 'tower-battlefront', lessonId: 'kTowers', practiceStageId: 'k-towers-1' },
+  'k-towers-compare': { label: 'more and fewer', zoneId: 'tower-battlefront', lessonId: 'kTowers', practiceStageId: 'k-towers-2' },
 }
 
 export interface Skill { id: string; label: string }

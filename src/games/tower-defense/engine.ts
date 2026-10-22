@@ -1,26 +1,25 @@
 import {
-  BETWEEN_WAVE_MS,
+  CLASSIC_RULES,
   ENEMY_STATS,
-  STARTING_GOLD,
-  STARTING_LIVES,
   TOWER_STATS,
-  WAVES,
   distToPath,
   makePath,
   pathLength,
   pointAtT,
 } from './config'
-import type { GameState, TowerKind, Vec2 } from './types'
+import type { GameState, TdRules, TowerKind, Vec2 } from './types'
 
-export function createInitialState(width: number, height: number): GameState {
+/** A new game: grades 2–4 play by `CLASSIC_RULES` (the default); K–1's Counting Towers by its own (kRules.ts). */
+export function createInitialState(width: number, height: number, rules: TdRules = CLASSIC_RULES): GameState {
   const pathPoints = makePath(width, height)
   return {
+    rules,
     width,
     height,
     pathPoints,
     pathLength: pathLength(pathPoints),
-    gold: STARTING_GOLD,
-    lives: STARTING_LIVES,
+    gold: rules.startingGold,
+    lives: rules.startingLives,
     wave: 0,
     waveProgress: 'idle',
     waveSpawnedCount: 0,
@@ -33,23 +32,45 @@ export function createInitialState(width: number, height: number): GameState {
     floats: [],
     nextId: 1,
     kills: 0,
+    setbacks: 0,
+    retries: 0,
     isGameOver: false,
     hasWon: false,
   }
 }
 
 export function startNextWave(s: GameState) {
-  if (s.wave >= WAVES.length) {
+  const waves = s.rules.waves
+  if (s.wave >= waves.length) {
     s.hasWon = true
     s.isGameOver = true
     return
   }
-  const def = WAVES[s.wave]
+  const def = waves[s.wave]
   s.wave++
   s.waveProgress = 'spawning'
   s.waveSpawnedCount = 0
-  s.waveTotal = def.enemyCount
+  // (a wave tried again after a setback brings one critter fewer each time, never under two)
+  s.waveTotal = s.retries ? Math.max(2, def.enemyCount - s.retries) : def.enemyCount
   s.waveTimerMs = 0
+}
+
+/**
+ * The base would fall (`baseFalls: 'endWave'`): the wave ends instead. The
+ * critters still out go home, the lives fill up again, and the same wave
+ * waits to be tried again (`startNextWave`), a little easier.
+ */
+function endWaveGently(s: GameState) {
+  for (const e of s.enemies) e.alive = false
+  for (const p of s.projectiles) p.alive = false
+  s.lives = s.rules.startingLives
+  s.wave = Math.max(0, s.wave - 1)
+  s.retries++
+  s.setbacks++
+  s.waveProgress = 'between-waves'
+  s.betweenWaveMs = s.rules.betweenWaveMs
+  s.waveSpawnedCount = 0
+  s.waveTotal = 0
 }
 
 export function canAffordTower(s: GameState, kind: TowerKind): boolean {
@@ -93,16 +114,19 @@ export function tick(s: GameState, dtMs: number) {
   if (s.isGameOver) return
   const dt = dtMs / 1000
 
+  const waves = s.rules.waves
+
   // wave management
   if (s.waveProgress === 'spawning') {
-    const def = WAVES[s.wave - 1]
+    const def = waves[s.wave - 1]
     s.waveTimerMs += dtMs
     while (
       s.waveSpawnedCount < s.waveTotal &&
       s.waveTimerMs >= def.spawnIntervalMs
     ) {
       s.waveTimerMs -= def.spawnIntervalMs
-      spawnEnemy(s, def.enemyKind, def.hpScale)
+      // (a wave tried again after a setback: its critters a quarter less sturdy each time, never under half)
+      spawnEnemy(s, def.enemyKind, s.retries ? def.hpScale * Math.max(0.5, 1 - 0.25 * s.retries) : def.hpScale)
       s.waveSpawnedCount++
     }
     if (s.waveSpawnedCount >= s.waveTotal) {
@@ -110,12 +134,13 @@ export function tick(s: GameState, dtMs: number) {
     }
   } else if (s.waveProgress === 'in-progress') {
     if (s.enemies.length === 0) {
-      if (s.wave >= WAVES.length) {
+      s.retries = 0
+      if (s.wave >= waves.length) {
         s.hasWon = true
         s.isGameOver = true
       } else {
         s.waveProgress = 'between-waves'
-        s.betweenWaveMs = BETWEEN_WAVE_MS
+        s.betweenWaveMs = s.rules.betweenWaveMs
       }
     }
   } else if (s.waveProgress === 'between-waves') {
@@ -129,7 +154,7 @@ export function tick(s: GameState, dtMs: number) {
   for (const e of s.enemies) {
     if (!e.alive) continue
     const stats = ENEMY_STATS[e.kind]
-    e.pathT += (stats.speed * dt) / s.pathLength
+    e.pathT += (stats.speed * s.rules.speedScale * dt) / s.pathLength
     if (e.pathT >= 1) {
       e.alive = false
       e.reachedEnd = true
@@ -142,7 +167,8 @@ export function tick(s: GameState, dtMs: number) {
         ageMs: 0,
       })
       if (s.lives <= 0) {
-        s.isGameOver = true
+        if (s.rules.baseFalls === 'endWave') endWaveGently(s)
+        else s.isGameOver = true
       }
     }
   }
@@ -151,7 +177,7 @@ export function tick(s: GameState, dtMs: number) {
   for (const t of s.towers) {
     t.cooldown -= dt
     if (t.cooldown > 0) continue
-    const stats = TOWER_STATS[t.kind]
+    const stats = s.rules.tower(t.kind, t.level)
     let bestId = -1
     let bestT = -1
     for (const e of s.enemies) {

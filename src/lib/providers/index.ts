@@ -37,6 +37,8 @@ import { makeKCompareProvider, type KCompareConfig } from './kCompare'
 import { makeKTeensProvider, type KTeensConfig } from './kTeens'
 import { makeKMeasureProvider, type KMeasureConfig } from './kMeasure'
 import { makeKSortProvider, type KSortConfig } from './kSort'
+import { makeKTowersProvider, type KTowersConfig } from './kTowers'
+import { makeKScienceProvider, type KScienceConfig } from './kScience'
 
 export type ProviderConfig =
   | { kind: 'multiplication'; factorMin: number; factorMax: number }
@@ -79,6 +81,10 @@ export type ProviderConfig =
   | ({ kind: 'kMeasure' } & KMeasureConfig)
   /** Sorting Delta: sort into groups, count a group, which has more (the `sort` activity). */
   | ({ kind: 'kSort' } & KSortConfig)
+  /** Counting Towers: the questions that build the towers (how many, more / fewer, to 20). */
+  | ({ kind: 'kTowers' } & KTowersConfig)
+  /** Nature Summit: the weather and what to wear, what plants and animals need, push and pull. */
+  | ({ kind: 'kScience' } & KScienceConfig)
 
 export function createProvider(config: ProviderConfig): ProblemProvider {
   switch (config.kind) {
@@ -136,5 +142,9 @@ export function createProvider(config: ProviderConfig): ProblemProvider {
       return makeKMeasureProvider(config)
     case 'kSort':
       return makeKSortProvider(config)
+    case 'kTowers':
+      return makeKTowersProvider(config)
+    case 'kScience':
+      return makeKScienceProvider(config)
   }
 }
