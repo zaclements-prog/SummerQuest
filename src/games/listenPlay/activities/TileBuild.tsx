@@ -178,8 +178,9 @@ function TileBuild({ spec, active, misses, onAttempt, registerHelp }: ListenActi
       data-check={check}
       style={{ ['--tile' as string]: unit }}
     >
-      {/* the picture (spelling) and the slots */}
-      <div className="flex items-center justify-center gap-5 short:gap-4 max-w-full min-h-0">
+      {/* the picture (spelling) and the slots: side by side, or the slots under the picture when
+          both don't fit across (the word's slots never break onto two lines) */}
+      <div className="flex flex-wrap items-center justify-center gap-5 short:gap-4 max-w-full min-h-0">
         {letters && spec.emoji && (
           <div data-guide={TILES_PICTURE} className="relative shrink-0 aspect-square w-[min(34vmin,14rem)] bg-paper border-[3px] border-line rounded-[1.75rem] shadow-card">
             <div className="absolute inset-[10%]">
