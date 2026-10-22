@@ -2,6 +2,11 @@
 
 A kid-friendly summer learning game for elementary students (grades 2-4;
 the difficulty tier is set on the student profile).
+
+**Status:** kindergarten through 5th grade are being built: K and 1st grade are
+complete in code (voice-first, behind `VITE_K1`), 5th grade is in progress (behind
+`VITE_G5`), and the store build still offers grades 2–4. See
+[`docs/PROJECT_STATUS.md`](docs/PROJECT_STATUS.md).
 It combines the strongest patterns from Prodigy (meta-game + avatar), DragonBox
 (concept-first visuals), Khan Academy (mastery progression) and SplashLearn
 (quick-hit practice games).
