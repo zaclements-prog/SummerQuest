@@ -151,7 +151,8 @@ export function plotPoints({ total, elapsed, streak }: { total: boolean; elapsed
 // ── layout (the grove's local frame: +x right, +z toward the camera) ─────────
 
 /** The plot area on the field (top part), and the posts in a row below it. */
-export const AREA_PLOT = { x0: -2.55, x1: 2.55, z0: -2.6, z1: 0.75 } as const
+// (shifted right of centre so the row labels on its left stay on a portrait screen)
+export const AREA_PLOT = { x0: -2.15, x1: 2.65, z0: -2.6, z1: 0.75 } as const
 export const POSTS: [number, number][] = [
   [-1.85, 2.05],
   [0, 2.05],
