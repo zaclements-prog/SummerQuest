@@ -268,6 +268,9 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
     // (K complete, phase 2a: Number Dunes, Ten Frame Plateau)
     'division-dunes': ['k-dunes-1', 'k-dunes-2', 'k-dunes-3'],
     'place-value-plateau': ['k-teens-1', 'k-teens-2', 'k-teens-3'],
+    // K complete (phase 2a)
+    'measurement-marsh': ['k-measure-1', 'k-measure-2', 'k-measure-3'],
+    'data-delta': ['k-sort-1', 'k-sort-2', 'k-sort-3'],
   }
   const K1_TITLES: Record<string, string> = {
     'multiplication-mesa': 'Counting Mesa',
@@ -278,6 +281,9 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
     'word-problem-woods': 'Story Woods',
     'division-dunes': 'Number Dunes',
     'place-value-plateau': 'Ten Frame Plateau',
+    // K complete (phase 2a)
+    'measurement-marsh': 'Measure Marsh',
+    'data-delta': 'Sorting Delta',
   }
 
   it('kindergarten and 1st grade see the K–1 stage sets; 2nd–5th grade still see today’s', () => {
@@ -323,6 +329,8 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
       ...['kAddTake', 'kAddTake', 'kAddTake'],
       ...['kStoryMath', 'kStoryMath', 'kStoryMath'],
       ...['kCompare', 'kCompare', 'kCompare', 'kTeens', 'kTeens', 'kTeens'],
+      // K complete (phase 2a), in K1_IDS order
+      ...['kMeasure', 'kMeasure', 'kMeasure', 'kSort', 'kSort', 'kSort'],
     ])
     // the counting stages climb: count to 10, count on to 20 (the parade), then compare
     expect(all.slice(0, 3).map((s) => s.providerConfig)).toMatchObject([

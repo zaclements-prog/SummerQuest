@@ -32,6 +32,8 @@ describe('daily challenge pick', () => {
       'word-problem-woods',
       'division-dunes',
       'place-value-plateau',
+      'measurement-marsh',
+      'data-delta',
     ])
     for (const grade of [0, 1] as const) {
       const zonesSeen = new Set<string>()

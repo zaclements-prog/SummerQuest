@@ -9,6 +9,8 @@ import { compareNumbersActivity } from './CompareNumbers'
 import { numberOrderActivity } from './NumberOrder'
 import { tenFramesActivity } from './TenFramesQuiz'
 import { buildActivity } from './BuildTeen'
+import { measureActivity } from './Measure'
+import { sortActivity } from './Sort'
 
 /**
  * Listen & Play activities by `kind` (see `ListenProblem.activity`): the
@@ -27,6 +29,8 @@ export const LISTEN_ACTIVITIES: Record<string, ListenActivityDef<any>> = {
   numberOrder: numberOrderActivity,
   teenFrames: tenFramesActivity,
   buildTeen: buildActivity,
+  measure: measureActivity,
+  sort: sortActivity,
 }
 
 export function activityDef(spec: ListenActivitySpec | undefined): ListenActivityDef | null {

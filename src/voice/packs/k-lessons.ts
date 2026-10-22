@@ -8,6 +8,8 @@ import { kAddTakeLesson } from '../../tutoring/lessons/kAddTake'
 import { kStoryMathLesson } from '../../tutoring/lessons/kStoryMath'
 import { kCompareLesson } from '../../tutoring/lessons/kCompare'
 import { kTeensLesson } from '../../tutoring/lessons/kTeens'
+import { kMeasureLesson } from '../../tutoring/lessons/kMeasure'
+import { kSortingLesson } from '../../tutoring/lessons/kSorting'
 import { K_LESSON_PACK } from '../../tutoring/lessons/k1Voice'
 
 /**
@@ -31,6 +33,8 @@ for (const lesson of [
   kStoryMathLesson,
   kCompareLesson,
   kTeensLesson,
+  kMeasureLesson,
+  kSortingLesson,
 ]) {
   for (const step of lesson.steps) {
     const ref = step.check?.speech

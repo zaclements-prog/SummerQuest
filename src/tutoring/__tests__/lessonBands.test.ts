@@ -20,6 +20,8 @@ const K_PILOT = [
   'kStoryMath',
   'kCompare',
   'kTeens',
+  'kMeasure',
+  'kSorting',
 ]
 const ids = (ls: { id: string }[]) => ls.map((l) => l.id)
 
@@ -144,6 +146,9 @@ describe('practice links stay in the band', () => {
       kStoryMath: ['k-woods-1', 'k-woods-2', 'k-woods-3'],
       kCompare: ['k-dunes-1', 'k-dunes-2', 'k-dunes-3'],
       kTeens: ['k-teens-1', 'k-teens-2', 'k-teens-3'],
+      // K complete (phase 2a)
+      kMeasure: ['k-measure-1', 'k-measure-2', 'k-measure-3'],
+      kSorting: ['k-sort-1', 'k-sort-2', 'k-sort-3'],
     }
     for (const l of k1Lessons.filter((x) => fixed[x.id])) {
       const zone = withK1(getZone(l.zoneId)!, fixed[l.id])

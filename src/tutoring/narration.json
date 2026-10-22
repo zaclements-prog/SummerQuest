@@ -362,5 +362,41 @@
       "stepId": "twelve",
       "text": "Every teen number is ten and some more. Let's find twelve!"
     }
+  ],
+  "kMeasure": [
+    {
+      "stepId": "lineUp",
+      "text": "Look at the two snakes. Let's line them up at the start. Now look at the ends. This snake is longer!"
+    },
+    {
+      "stepId": "yourTurn",
+      "text": "Your turn! A snake and a caterpillar. They start at the same place."
+    },
+    {
+      "stepId": "tall",
+      "text": "Now two towers. One stands on a box. Stand them on the same ground. This tower is taller!"
+    },
+    {
+      "stepId": "heavy",
+      "text": "This is a scale. The heavy side goes down. The light side goes up!"
+    }
+  ],
+  "kSorting": [
+    {
+      "stepId": "sort",
+      "text": "Sorting means putting things that go together. Animals go in this box. Food goes in that box!"
+    },
+    {
+      "stepId": "count",
+      "text": "Now count each group. Let's count the animals!"
+    },
+    {
+      "stepId": "color",
+      "text": "We can sort by color, too. Red ones go here. Blue ones go there!"
+    },
+    {
+      "stepId": "more",
+      "text": "Look at the two groups. Count each one. Which group has more?"
+    }
   ]
 }

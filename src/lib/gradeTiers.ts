@@ -235,6 +235,9 @@ export function effectiveConfig(
     case 'kCompare':
     case 'kTeens':
       return config
+    case 'kMeasure':
+    case 'kSort':
+      return config
   }
 }
 

@@ -21,6 +21,8 @@ import { kAddTakeLesson } from './kAddTake'
 import { kStoryMathLesson } from './kStoryMath'
 import { kCompareLesson } from './kCompare'
 import { kTeensLesson } from './kTeens'
+import { kMeasureLesson } from './kMeasure'
+import { kSortingLesson } from './kSorting'
 
 /**
  * The lessons, by content band (lib/gradeBand; K–5 plan §2): kindergarten and
@@ -57,6 +59,8 @@ export const k1Lessons: Lesson[] = [
   kStoryMathLesson,
   kCompareLesson,
   kTeensLesson,
+  kMeasureLesson,
+  kSortingLesson,
 ]
 
 /** 1st grade (band `g1`): its own voice lessons. */

@@ -80,6 +80,13 @@ export const SKILLS: Record<string, SkillMeta> = {
   'k-teens':       { label: 'teen numbers: ten and some more', zoneId: 'place-value-plateau', lessonId: 'kTeens', practiceStageId: 'k-teens-1' },
   'k-teens-build': { label: 'making teen numbers', zoneId: 'place-value-plateau', lessonId: 'kTeens', practiceStageId: 'k-teens-2' },
   'k-count-20':    { label: 'counting on to 20', zoneId: 'place-value-plateau', lessonId: 'kTeens', practiceStageId: 'k-teens-3' },
+  // Measure Marsh (K, phase 2a; lesson kMeasure)
+  'k-measure-length': { label: 'longer and shorter', zoneId: 'measurement-marsh', lessonId: 'kMeasure', practiceStageId: 'k-measure-1' },
+  'k-measure-height': { label: 'taller and shorter', zoneId: 'measurement-marsh', lessonId: 'kMeasure', practiceStageId: 'k-measure-1' },
+  'k-measure-weight': { label: 'heavier and lighter', zoneId: 'measurement-marsh', lessonId: 'kMeasure', practiceStageId: 'k-measure-2' },
+  // Sorting Delta (K, phase 2a; lesson kSorting)
+  'k-sort':         { label: 'sorting into groups', zoneId: 'data-delta', lessonId: 'kSorting', practiceStageId: 'k-sort-1' },
+  'k-sort-compare': { label: 'counting and comparing groups', zoneId: 'data-delta', lessonId: 'kSorting', practiceStageId: 'k-sort-3' },
 }
 
 export interface Skill { id: string; label: string }

@@ -21,6 +21,8 @@ import { isOrderSpec, STORY_PICTURES } from '../kStories'
 import { isMathStorySpec } from '../../../games/listenPlay/activities/mathStorySpec'
 import { answerOf, isNumberSpec, type NumberActivitySpec } from '../../../games/listenPlay/activities/numberSpecs'
 import { K_PAIRS } from '../../../voice/packs/k-compare'
+import { isMeasureSpec } from '../kMeasure'
+import { boxCounts, isSortSpec, mostBox } from '../kSort'
 
 /**
  * Generator fuzz suite: every stage in the curriculum, at every grade tier, plus
@@ -432,6 +434,11 @@ function answerProblems(config: ProviderConfig, grade: GradeLevel, p: Problem): 
     case 'kTeens':
       errs.push(...numberActivityProblems(config.kind, p as ListenProblem))
       break
+    // K complete (phase 2a): answered by the measure and sort activities
+    case 'kMeasure':
+    case 'kSort':
+      errs.push(...activityProblems(p as ListenProblem))
+      break
   }
   return errs
 }
@@ -564,6 +571,28 @@ function activityProblems(p: ListenProblem): string[] {
     if (STORY_PICTURES[a.story]?.join('') !== a.pictures.join('')) errs.push(`story ${a.story} shows the wrong pictures`)
     if ([...a.mixed].sort().join('') !== '012' || a.mixed.join('') === '012') errs.push(`mixed ${JSON.stringify(a.mixed)} isn't a real mix-up`)
     if (p.answer !== a.pictures.join('')) errs.push('answer isn\'t the story order')
+    return errs
+  }
+  if (isMeasureSpec(a)) {
+    const errs: string[] = []
+    if (a.attr === 'weight') {
+      if (a.items?.length !== 2) errs.push('a scale needs two things')
+    } else {
+      const [x, y] = a.sizes ?? [0, 0]
+      if (Math.abs(x - y) < 2) errs.push(`sizes ${x} and ${y} are too close to see`)
+      const longer = x > y ? 0 : 1
+      if (a.answer !== (a.ask === 'more' ? longer : 1 - longer)) errs.push(`the answer isn't the ${a.ask === 'more' ? 'longer' : 'shorter'} one`)
+    }
+    if (p.answer !== (a.answer === 0 ? 'first' : 'second')) errs.push(`answer ${JSON.stringify(p.answer)} isn't thing ${a.answer}`)
+    return errs
+  }
+  if (isSortSpec(a)) {
+    const errs: string[] = []
+    const counts = boxCounts(a)
+    if (counts.some((n) => n < 1)) errs.push(`an empty box: ${counts.join('-')}`)
+    if (a.countCards.filter((n) => n === counts[a.countBox]).length !== 1) errs.push(`the count cards ${a.countCards.join(',')} don't hold ${counts[a.countBox]} once`)
+    if (a.more && mostBox(a) === null) errs.push(`"which group has more?" with a tie: ${counts.join('-')}`)
+    if (p.answer !== counts.join('-')) errs.push(`answer ${JSON.stringify(p.answer)} isn't the counts ${counts.join('-')}`)
     return errs
   }
   return [`unknown activity ${JSON.stringify(a)}`]

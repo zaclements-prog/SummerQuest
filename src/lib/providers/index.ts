@@ -35,6 +35,8 @@ import { makeKAddTakeProvider, type KAddTakeConfig } from './kAddTake'
 import { makeKStoryMathProvider, type KStoryMathConfig } from './kStoryMath'
 import { makeKCompareProvider, type KCompareConfig } from './kCompare'
 import { makeKTeensProvider, type KTeensConfig } from './kTeens'
+import { makeKMeasureProvider, type KMeasureConfig } from './kMeasure'
+import { makeKSortProvider, type KSortConfig } from './kSort'
 
 export type ProviderConfig =
   | { kind: 'multiplication'; factorMin: number; factorMax: number }
@@ -73,6 +75,10 @@ export type ProviderConfig =
   | ({ kind: 'kCompare' } & KCompareConfig)
   /** Ten Frame Plateau: teen numbers as a full ten and some more; counting to 20. */
   | ({ kind: 'kTeens' } & KTeensConfig)
+  /** Measure Marsh: longer / shorter, taller / shorter, heavier / lighter (the `measure` activity). */
+  | ({ kind: 'kMeasure' } & KMeasureConfig)
+  /** Sorting Delta: sort into groups, count a group, which has more (the `sort` activity). */
+  | ({ kind: 'kSort' } & KSortConfig)
 
 export function createProvider(config: ProviderConfig): ProblemProvider {
   switch (config.kind) {
@@ -126,5 +132,9 @@ export function createProvider(config: ProviderConfig): ProblemProvider {
       return makeKCompareProvider(config)
     case 'kTeens':
       return makeKTeensProvider(config)
+    case 'kMeasure':
+      return makeKMeasureProvider(config)
+    case 'kSort':
+      return makeKSortProvider(config)
   }
 }

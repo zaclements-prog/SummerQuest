@@ -1,0 +1,46 @@
+/*
+ * The `measure` activity (Measure Marsh): the things to compare, drawn in one
+ * SVG, with plain buttons over them. Transform / opacity animations only.
+ */
+.measure-thing {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.measure-art {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: opacity 0.35s ease;
+}
+/* a gentle "hmm": a small wobble while we look again (never red) */
+.measure-look {
+  animation: lp-wobble 0.5s ease-in-out;
+}
+/* tried: it rests aside, faded */
+.measure-tried {
+  opacity: 0.4;
+}
+.measure-halo {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: lp-pop-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.measure-marker {
+  animation: measure-fade-in 0.4s ease-out;
+}
+
+@keyframes measure-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .measure-look,
+  .measure-halo,
+  .measure-marker {
+    animation: none !important;
+  }
+}
