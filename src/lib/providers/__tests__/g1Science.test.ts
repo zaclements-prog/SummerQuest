@@ -1,0 +1,203 @@
+import { afterEach, describe, expect, it, vi } from 'vitest'
+import { seededRng } from '../../random'
+import { createProvider } from '..'
+import {
+  G1_FAMILIES,
+  G1_HELPS,
+  G1_LIGHTS,
+  G1_LIVING,
+  G1_NO_LIGHTS,
+  G1_PARENTS,
+  G1_PARTS,
+  MATERIAL_ASK,
+  SKY,
+  makeG1ScienceProvider,
+  type G1ScienceMode,
+} from '../g1Science'
+import { voiceText } from '../../../voice/registry'
+import type { VoiceRef } from '../../../voice/types'
+import type { Picture } from '../../problem'
+import type { ListenProblem } from '../../../games/listenPlay/types'
+import { DRAWINGS } from '../../../games/listenPlay/drawings'
+import { SKILLS } from '../../../tutoring/skills'
+import { getZone, zoneStages } from '../../../curriculum'
+
+/**
+ * Sky Summit (1-PS4, 1-ESS1, 1-LS1/LS3): every picture question, over many
+ * seeds, has exactly one card that answers what is said (worked out again
+ * here from the pictures), every wrong card hears why, the pictures are
+ * drawings the kit has or emoji every tablet draws, and every line resolves.
+ */
+
+afterEach(() => vi.restoreAllMocks())
+
+const SEEDS = 40
+const said = (ref: VoiceRef | null | undefined) => {
+  expect(ref).toBeTruthy()
+  return voiceText(ref!)
+}
+
+/** Unicode 9 or older, one symbol (a text-default symbol may carry U+FE0F). */
+function oldEmoji(e: string): boolean {
+  const cps = [...e].map((c) => c.codePointAt(0)!).filter((cp) => cp !== 0xfe0f)
+  if (cps.length !== 1) return false
+  const cp = cps[0]
+  return cp < 0x1f6d3 || (cp >= 0x1f910 && cp <= 0x1f91e) || (cp >= 0x1f940 && cp <= 0x1f94b) || (cp >= 0x1f950 && cp <= 0x1f95e) || (cp >= 0x1f980 && cp <= 0x1f991) || cp === 0x1f9c0
+}
+
+function picOk(p: Picture | undefined): string[] {
+  if (!p) return []
+  if (p.kind === 'art') return DRAWINGS[p.name] ? [] : [`no drawing ${p.name}`]
+  if (p.kind === 'emoji') return oldEmoji(p.emoji) ? [] : [`new emoji ${p.emoji}`]
+  return [`a ${p.kind} picture`]
+}
+
+function round(mode: G1ScienceMode, seed: string, n = 18): ListenProblem[] {
+  vi.spyOn(Math, 'random').mockImplementation(seededRng(seed))
+  const p = makeG1ScienceProvider({ mode })
+  return Array.from({ length: n }, () => p.next())
+}
+
+const artName = (p: Picture | undefined) => (p?.kind === 'art' ? p.name : '')
+
+/** Which cards answer the question, worked out from what is shown and said (independently of the provider's answer). */
+function rightCards(q: ListenProblem): string[] {
+  const said = voiceText(q.speech!)
+  const vals = q.options.map(String)
+  switch (q.subtopic) {
+    case 'dark':
+      return vals.filter((v) => v in G1_LIGHTS)
+    case 'sound':
+      return vals.filter((v) => v.endsWith('Ring'))
+    case 'stopSound':
+      return vals.filter((v) => v.endsWith('Hold'))
+    case 'shadow':
+      return vals.filter((v) => v.endsWith('-away'))
+    case 'material': {
+      const ask = (Object.keys(MATERIAL_ASK) as (keyof typeof MATERIAL_ASK)[]).find((k) => voiceText({ line: `g1-science/${k}` }) === said)!
+      return vals.filter((v) => v === MATERIAL_ASK[ask])
+    }
+    case 'dayNight':
+      return vals.filter((v) => said.includes(`${v} sky`))
+    case 'seeSky':
+      // by day the sun; by night the moon or the stars
+      return vals.filter((v) => (said.startsWith('It is day') ? v === 'sun' : v === 'moon' || v === 'stars'))
+    case 'whenSee':
+      return vals.filter((v) => (said.includes('stars') ? v === 'night' : v === 'day'))
+    case 'sunMove':
+      return vals.filter((v) => (said.includes('comes up') ? v === 'sunRise' : said.includes('high') ? v === 'sunHigh' : v === 'sunSet'))
+    case 'skyNext':
+      // morning, then high at lunch time, then going down, then night, then morning again
+      return vals.filter((v) =>
+        said.includes('coming up') ? v === 'sunHigh' : said.includes('high') ? v === 'sunSet' : said.includes('going down') ? v === 'nightSky' : said.startsWith('It is night') && v === 'sunRise',
+      )
+    case 'season':
+      return vals.filter((v) => (said.includes('more daylight') ? v === 'summer' : v === 'winter'))
+    case 'baby': {
+      const baby = Object.keys(G1_FAMILIES).find((b) => said === `This is a ${b}. Tap its parent!`) as keyof typeof G1_FAMILIES
+      return vals.filter((v) => v === G1_FAMILIES[baby].parent)
+    }
+    case 'helps': {
+      const ask = (Object.keys(G1_HELPS) as (keyof typeof G1_HELPS)[]).find((k) => voiceText({ line: `g1-science/${k}` }) === said)!
+      return vals.filter((v) => v === G1_HELPS[ask])
+    }
+    case 'parts': {
+      const part = (Object.keys(G1_PARTS) as (keyof typeof G1_PARTS)[]).find((k) => voiceText({ line: `g1-science/part-${k}` }) === said)!
+      return vals.filter((v) => v === G1_PARTS[part].right)
+    }
+  }
+  return []
+}
+
+describe('Sky Summit: the stages', () => {
+  it('are the contract’s three stages, each a round of six', () => {
+    const set = zoneStages(getZone('science-summit')!, 1)
+    expect(set.map((s) => [s.id, (s.providerConfig as { mode?: string }).mode, s.params?.questionCount])).toEqual([
+      ['g1-science-1', 'lightSound', 6],
+      ['g1-science-2', 'sky', 6],
+      ['g1-science-3', 'families', 6],
+    ])
+    for (const s of set) expect(createProvider(s.providerConfig).topic).toBe('g1Science')
+  })
+
+  it('each stage starts easy and covers its kinds in its first round', () => {
+    const first = (mode: G1ScienceMode) => round(mode, `ramp-${mode}`, 6).map((q) => q.subtopic)
+    expect(first('lightSound')).toEqual(['dark', 'sound', 'stopSound', 'shadow', 'material', 'material'])
+    expect(first('sky')).toEqual(['dayNight', 'seeSky', 'whenSee', 'sunMove', 'skyNext', 'season'])
+    expect(first('families')).toEqual(['baby', 'baby', 'helps', 'parts', 'helps', 'parts'])
+  })
+})
+
+describe('every Sky Summit question', () => {
+  for (const mode of ['lightSound', 'sky', 'families'] as const) {
+    it(`${mode}: exactly one right card, a word for each wrong one, pictures and lines that exist`, () => {
+      const at = new Map<number, number>()
+      for (let s = 0; s < SEEDS; s++) {
+        let last = ''
+        for (const q of round(mode, `${mode}-${s}`)) {
+          const key = `${q.subtopic}: ${q.prompt}`
+          expect(q.prompt).toBe(said(q.speech))
+          expect(q.options.length, key).toBeGreaterThanOrEqual(2)
+          expect(q.options.length, key).toBeLessThanOrEqual(3)
+          expect(new Set(q.options).size, key).toBe(q.options.length)
+          const cards = q.pictureOptions!
+          expect(cards.map((c) => c.value), key).toEqual(q.options)
+          expect(new Set(cards.map((c) => JSON.stringify(c.picture))).size, key).toBe(cards.length)
+          expect(picOk(q.picture), key).toEqual([])
+          for (const c of cards) {
+            expect(picOk(c.picture), key).toEqual([])
+            if (c.speech) said(c.speech)
+          }
+          if (q.nameCards) for (const c of cards) expect(c.speech, `${key}: card ${c.value} is named, so it needs a name`).toBeDefined()
+          // one card answers it, and it is the answer
+          const right = rightCards(q)
+          expect(right, key).toEqual([q.answer])
+          // every wrong card hears why
+          q.options.forEach((o, i) => {
+            if (o === q.answer) expect(q.notes![i], key).toBeNull()
+            else said(q.notes![i])
+          })
+          expect(SKILLS[q.skill!.id], q.skill!.id).toBeDefined()
+          for (const p of q.praise ?? []) said(p)
+          // never the same question twice in a row
+          const sig = `${q.prompt}|${JSON.stringify(q.picture ?? null)}|${JSON.stringify(q.options)}`
+          expect(sig, key).not.toBe(last)
+          last = sig
+          const i = q.options.indexOf(q.answer)
+          at.set(i, (at.get(i) ?? 0) + 1)
+        }
+      }
+      // the answer turns up in every place
+      expect(at.size).toBeGreaterThanOrEqual(2)
+    })
+  }
+
+  it('wrong cards are never arguably right', () => {
+    // no light source among the "no light" things; the moon is never a wrong card for the day
+    for (const e of Object.values(G1_NO_LIGHTS)) expect(Object.values(G1_LIGHTS)).not.toContain(e)
+    for (let s = 0; s < SEEDS; s++) {
+      for (const q of round('sky', `sky-moon-${s}`)) if (q.subtopic === 'seeSky' && q.answer === 'sun') expect(q.options).not.toContain('moon')
+      for (const q of round('families', `fam-${s}`)) {
+        if (q.subtopic !== 'parts') continue
+        // a turtle swims (never a wrong card for fins); an elephant has big ears (never a wrong card for ears)
+        if (q.answer === 'fish') expect(q.options).not.toContain('turtle')
+        if (q.answer === 'rabbit') expect(q.options).not.toContain('elephant')
+        // the spines question is about plants only
+        if (q.answer === 'cactus') for (const o of q.options) expect(['cactus', 'sunflower', 'tulip']).toContain(o)
+      }
+    }
+    for (const e of [...Object.values(G1_LIGHTS), ...Object.values(G1_NO_LIGHTS), ...Object.values(SKY), ...Object.values(G1_PARENTS), ...Object.values(G1_LIVING), ...Object.values(G1_FAMILIES).map((f) => f.baby)]) expect(oldEmoji(e), e).toBe(true)
+  })
+
+  it('the shadow drawings: the right one has its shadow away from the sun', () => {
+    for (let s = 0; s < 10; s++) {
+      for (const q of round('lightSound', `shadow-${s}`)) {
+        if (q.subtopic !== 'shadow') continue
+        const right = q.pictureOptions!.find((c) => c.value === q.answer)!
+        expect(artName(right.picture)).toMatch(/^shadow-(tree|kid)-[LR]-away$/)
+        const sun = artName(right.picture).split('-')[2]
+        for (const c of q.pictureOptions!) expect(artName(c.picture).split('-')[2]).toBe(sun)
+      }
+    }
+  })
+})

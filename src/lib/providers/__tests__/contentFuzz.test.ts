@@ -31,6 +31,9 @@ import type { ReadAlongSpec } from '../../../games/listenPlay/activities/readAlo
 import type { TilesSpec } from '../../../games/listenPlay/activities/tilesSpec'
 // 1st grade (phase 2b): Tens Plateau, Fair Share Falls, Shape Grove
 import { g1ShapesProblems, g1SharesProblems, g1TensProblems } from './g1Checks'
+// 1st grade (phase 2b): Measure Marsh, Graph Delta, Sky Summit
+import { digital, isClockSpec, isLengthOrderSpec, isUnitsSpec, orderOf, sameTime } from '../g1Measure'
+import { asksRow, graphAnswer, isGraphSpec } from '../g1Graphs'
 
 /**
  * Generator fuzz suite: every stage in the curriculum, at every grade tier, plus
@@ -472,6 +475,40 @@ function answerProblems(config: ProviderConfig, grade: GradeLevel, p: Problem): 
     case 'g1Shapes':
       errs.push(...g1ShapesProblems(p as ListenProblem))
       break
+    // 1st grade (phase 2b): Measure Marsh, Graph Delta, Sky Summit (each has its own deeper suite: g1*.test.ts)
+    case 'g1Measure':
+    case 'g1Graphs':
+    case 'g1Science':
+      errs.push(...g1Problems(p as ListenProblem))
+      break
+  }
+  return errs
+}
+
+// ── 1st grade (Measure Marsh, Graph Delta, Sky Summit): the answer, from the question's own data ──
+
+function g1Problems(p: ListenProblem): string[] {
+  const a = p.activity
+  const errs: string[] = []
+  const want = (x: unknown) => {
+    if (p.answer !== x) errs.push(`answer is ${JSON.stringify(p.answer)}, the question says ${JSON.stringify(x)}`)
+  }
+  if (isLengthOrderSpec(a)) want(a.mode === 'order' ? orderOf(a.sizes, a.ask).join('-') : String(a.answer[0]))
+  else if (isUnitsSpec(a)) {
+    want(a.n)
+    if (a.cards.filter((c) => c === a.n).length !== 1) errs.push(`the cards ${a.cards.join(',')} don't hold ${a.n} once`)
+  } else if (isClockSpec(a)) {
+    want(digital(a.time))
+    if (a.cards.filter((c) => sameTime(c, a.time)).length !== 1) errs.push('the right time is not on exactly one card')
+  } else if (isGraphSpec(a)) {
+    const n = graphAnswer(a)
+    want(asksRow(a) ? a.rows[n] : n)
+    if (!asksRow(a) && a.cards?.filter((c) => c === n).length !== 1) errs.push(`the cards ${a.cards?.join(',')} don't hold ${n} once`)
+  } else if (a) errs.push(`unknown 1st-grade activity ${a.kind}`)
+  else {
+    const cards = p.pictureOptions ?? []
+    if (cards.length !== p.options.length || cards.some((c, i) => c.value !== p.options[i])) errs.push("picture cards don't match the options")
+    for (const c of [p.picture, ...cards.map((x) => x.picture)]) if (c?.kind === 'art' && !DRAWINGS[c.name]) errs.push(`no drawing "${c.name}"`)
   }
   return errs
 }

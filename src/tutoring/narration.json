@@ -528,5 +528,59 @@
       "stepId": "solids",
       "text": "A sphere can roll. A cube can stack. A cylinder can roll and stack! Your turn!"
     }
+  ],
+  "g1Measure": [
+    {
+      "stepId": "order",
+      "text": "Line them up at the start. Look at the ends. Longest first, then the next one, then the shortest!"
+    },
+    {
+      "stepId": "clips",
+      "text": "Lay paper clips end to end. No gaps, and no overlaps. This pencil is five clips long. Your turn!"
+    },
+    {
+      "stepId": "clock",
+      "text": "This is a clock. The short hand shows the hour. The long hand points up to twelve. It is three o'clock!"
+    },
+    {
+      "stepId": "halfPast",
+      "text": "Now the long hand goes down to six. The short hand moves halfway to four. It is half past three! Your turn!"
+    }
+  ],
+  "g1Graphs": [
+    {
+      "stepId": "sort",
+      "text": "Our friends picked their favorite fruit. Put each one in its row. One picture for each friend!"
+    },
+    {
+      "stepId": "count",
+      "text": "Now count each row. Four friends like apples. Your turn!"
+    },
+    {
+      "stepId": "most",
+      "text": "The longest row has the most. Apples! The shortest row has the fewest. Bananas!"
+    },
+    {
+      "stepId": "more",
+      "text": "How many more like apples than grapes? Match them up, one with one. One apple has no match. One more! Your turn!"
+    }
+  ],
+  "g1Science": [
+    {
+      "stepId": "sound",
+      "text": "Tap a drum. Its top shakes very fast. Things that shake make sound!"
+    },
+    {
+      "stepId": "light",
+      "text": "We need light to see. Light goes through glass. Wood blocks the light and makes a shadow! Your turn!"
+    },
+    {
+      "stepId": "sky",
+      "text": "In the day, we see the sun. At night, we see the moon and stars. The sun comes up, and goes down."
+    },
+    {
+      "stepId": "families",
+      "text": "A puppy looks like its mom, but not just the same. Parents feed their babies and keep them warm. Your turn!"
+    }
   ]
 }

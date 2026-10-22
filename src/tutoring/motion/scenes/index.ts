@@ -30,6 +30,10 @@ import { g1WritingScenes } from './g1Writing'
 import { g1TensScenes } from './g1Tens'
 import { g1SharesScenes } from './g1Shares'
 import { g1ShapesScenes } from './g1Shapes'
+// 1st grade (phase 2b): Measure Marsh, Graph Delta, Sky Summit
+import { g1MeasureScenes } from './g1Measure'
+import { g1GraphsScenes } from './g1Graphs'
+import { g1ScienceScenes } from './g1Science'
 
 /**
  * Motion graphics by lesson → step id. A step without a scene falls back to
@@ -70,6 +74,10 @@ const SCENES: Record<string, Record<string, Scene>> = {
   g1Tens: g1TensScenes,
   g1Shares: g1SharesScenes,
   g1Shapes: g1ShapesScenes,
+  // 1st grade (phase 2b): Measure Marsh, Graph Delta, Sky Summit
+  g1Measure: g1MeasureScenes,
+  g1Graphs: g1GraphsScenes,
+  g1Science: g1ScienceScenes,
 }
 
 export function sceneFor(lessonId: string, stepId: string): Scene | undefined {

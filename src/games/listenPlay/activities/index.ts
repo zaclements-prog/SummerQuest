@@ -19,6 +19,11 @@ import { tensActivity } from './TensQuiz'
 import { buildTensActivity } from './BuildTens'
 import { shareTapActivity } from './ShareTap'
 import { snapActivity } from './SnapShapes'
+// 1st grade (phase 2b): Measure Marsh and Graph Delta
+import { lengthOrderActivity } from './LengthOrder'
+import { unitsActivity } from './Units'
+import { clockMatchActivity } from './ClockMatch'
+import { graphActivity } from './Graph'
 
 /**
  * Listen & Play activities by `kind` (see `ListenProblem.activity`): the
@@ -47,6 +52,11 @@ export const LISTEN_ACTIVITIES: Record<string, ListenActivityDef<any>> = {
   buildTens: buildTensActivity,
   shareTap: shareTapActivity,
   snap: snapActivity,
+  // 1st grade (phase 2b): Measure Marsh and Graph Delta
+  lengthOrder: lengthOrderActivity,
+  units: unitsActivity,
+  clockMatch: clockMatchActivity,
+  graph: graphActivity,
 }
 
 export function activityDef(spec: ListenActivitySpec | undefined): ListenActivityDef | null {

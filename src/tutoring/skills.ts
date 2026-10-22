@@ -121,6 +121,16 @@ export const SKILLS: Record<string, SkillMeta> = {
   'g1-shapes-attributes': { label: 'what makes a shape', zoneId: 'geometry-grove', lessonId: 'g1Shapes', practiceStageId: 'g1-shapes-1' },
   'g1-shapes-compose':    { label: 'putting shapes together', zoneId: 'geometry-grove', lessonId: 'g1Shapes', practiceStageId: 'g1-shapes-2' },
   'g1-shapes-solids':     { label: 'solids that roll and stack', zoneId: 'geometry-grove', lessonId: 'g1Shapes', practiceStageId: 'g1-shapes-3' },
+  // ── 1st grade (phase 2b): Measure Marsh (lesson g1Measure), Graph Delta (g1Graphs), Sky Summit (g1Science) ──
+  'g1-measure-order': { label: 'putting lengths in order', zoneId: 'measurement-marsh', lessonId: 'g1Measure', practiceStageId: 'g1-measure-1' },
+  'g1-measure-units': { label: 'measuring with paper clips and cubes', zoneId: 'measurement-marsh', lessonId: 'g1Measure', practiceStageId: 'g1-measure-2' },
+  'g1-time':          { label: 'time to the hour and half hour', zoneId: 'measurement-marsh', lessonId: 'g1Measure', practiceStageId: 'g1-measure-3' },
+  'g1-graphs-make':    { label: 'making picture graphs', zoneId: 'data-delta', lessonId: 'g1Graphs', practiceStageId: 'g1-graphs-1' },
+  'g1-graphs-read':    { label: 'reading picture and tally graphs', zoneId: 'data-delta', lessonId: 'g1Graphs', practiceStageId: 'g1-graphs-2' },
+  'g1-graphs-compare': { label: 'how many more and how many fewer', zoneId: 'data-delta', lessonId: 'g1Graphs', practiceStageId: 'g1-graphs-3' },
+  'g1-science-light-sound': { label: 'light, shadows and sound', zoneId: 'science-summit', lessonId: 'g1Science', practiceStageId: 'g1-science-1' },
+  'g1-science-sky':         { label: 'the sun, the moon and the stars', zoneId: 'science-summit', lessonId: 'g1Science', practiceStageId: 'g1-science-2' },
+  'g1-science-families':    { label: 'animal parents and babies', zoneId: 'science-summit', lessonId: 'g1Science', practiceStageId: 'g1-science-3' },
 }
 
 export interface Skill { id: string; label: string }

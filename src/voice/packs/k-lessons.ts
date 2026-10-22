@@ -20,6 +20,10 @@ import { g1TensLesson } from '../../tutoring/lessons/g1Tens'
 import { g1SharesLesson } from '../../tutoring/lessons/g1Shares'
 import { g1ShapesLesson } from '../../tutoring/lessons/g1Shapes'
 import { K_LESSON_PACK } from '../../tutoring/lessons/k1Voice'
+// 1st grade (phase 2b): Measure Marsh, Graph Delta, Sky Summit
+import { g1MeasureLesson } from '../../tutoring/lessons/g1Measure'
+import { g1GraphsLesson } from '../../tutoring/lessons/g1Graphs'
+import { g1ScienceLesson } from '../../tutoring/lessons/g1Science'
 
 /**
  * What the K–1 lessons say besides their narration (src/tutoring/lessons/k*.ts):
@@ -53,6 +57,10 @@ for (const lesson of [
   g1TensLesson,
   g1SharesLesson,
   g1ShapesLesson,
+  // 1st grade (phase 2b): Measure Marsh, Graph Delta, Sky Summit
+  g1MeasureLesson,
+  g1GraphsLesson,
+  g1ScienceLesson,
 ]) {
   for (const step of lesson.steps) {
     const ref = step.check?.speech

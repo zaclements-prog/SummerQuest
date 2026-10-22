@@ -47,6 +47,10 @@ import { makeG1TowersProvider, type G1TowersConfig } from './g1Towers'
 import { makeG1TensProvider, type G1TensConfig } from './g1Tens'
 import { makeG1SharesProvider, type G1SharesConfig } from './g1Shares'
 import { makeG1ShapesProvider, type G1ShapesConfig } from './g1Shapes'
+// 1st grade (phase 2b): Measure Marsh, Graph Delta, Sky Summit
+import { makeG1MeasureProvider, type G1MeasureConfig } from './g1Measure'
+import { makeG1GraphsProvider, type G1GraphsConfig } from './g1Graphs'
+import { makeG1ScienceProvider, type G1ScienceConfig } from './g1Science'
 
 export type ProviderConfig =
   | { kind: 'multiplication'; factorMin: number; factorMax: number }
@@ -107,6 +111,12 @@ export type ProviderConfig =
   | ({ kind: 'g1Shares' } & G1SharesConfig)
   /** Shape Grove (1st grade): what makes a shape, putting shapes together, solids that roll and stack. */
   | ({ kind: 'g1Shapes' } & G1ShapesConfig)
+  /** 1st-grade Measure Marsh: lengths in order and through a string, paper clips and cubes, the clock. */
+  | ({ kind: 'g1Measure' } & G1MeasureConfig)
+  /** Graph Delta: making and reading picture and tally graphs. */
+  | ({ kind: 'g1Graphs' } & G1GraphsConfig)
+  /** Sky Summit: light and sound, the day and night sky, animal families. */
+  | ({ kind: 'g1Science' } & G1ScienceConfig)
 
 export function createProvider(config: ProviderConfig): ProblemProvider {
   switch (config.kind) {
@@ -182,5 +192,12 @@ export function createProvider(config: ProviderConfig): ProblemProvider {
       return makeG1SharesProvider(config)
     case 'g1Shapes':
       return makeG1ShapesProvider(config)
+    // 1st grade (phase 2b): Measure Marsh, Graph Delta, Sky Summit
+    case 'g1Measure':
+      return makeG1MeasureProvider(config)
+    case 'g1Graphs':
+      return makeG1GraphsProvider(config)
+    case 'g1Science':
+      return makeG1ScienceProvider(config)
   }
 }

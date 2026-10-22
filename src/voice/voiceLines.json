@@ -1,6 +1,1854 @@
 {
   "voice": "higgs-audio-v2-mlx-q8:clone:calm-teacher-v1:k",
   "clips": {
+    "g1-graphs/topic-fruit": {
+      "text": "Our friends picked their favorite fruit.",
+      "hash": "61e07b2eb8",
+      "kind": "line",
+      "file": "voice/g1-graphs/topic-fruit.mp3"
+    },
+    "g1-graphs/topic-pets": {
+      "text": "Our friends picked their favorite pet.",
+      "hash": "c623374bed",
+      "kind": "line",
+      "file": "voice/g1-graphs/topic-pets.mp3"
+    },
+    "g1-graphs/topic-treats": {
+      "text": "Our friends picked their favorite treat.",
+      "hash": "f0075ef0aa",
+      "kind": "line",
+      "file": "voice/g1-graphs/topic-treats.mp3"
+    },
+    "g1-graphs/topic-games": {
+      "text": "Our friends picked their favorite ball game.",
+      "hash": "6fc57cb028",
+      "kind": "line",
+      "file": "voice/g1-graphs/topic-games.mp3"
+    },
+    "g1-graphs/putInRow": {
+      "text": "Put each one in its row!",
+      "hash": "79eeb91c32",
+      "kind": "line",
+      "file": "voice/g1-graphs/putInRow.mp3"
+    },
+    "g1-graphs/tallyEach": {
+      "text": "Put each one in its row. Each one makes a tally mark!",
+      "hash": "e8a1c793a9",
+      "kind": "line",
+      "file": "voice/g1-graphs/tallyEach.mp3"
+    },
+    "g1-graphs/lookGraph": {
+      "text": "Look at the graph!",
+      "hash": "24242cdd79",
+      "kind": "line",
+      "file": "voice/g1-graphs/lookGraph.mp3"
+    },
+    "g1-graphs/lookTally": {
+      "text": "Look at the tally marks!",
+      "hash": "eb1aca8bac",
+      "kind": "line",
+      "file": "voice/g1-graphs/lookTally.mp3"
+    },
+    "g1-graphs/most": {
+      "text": "Which one has the most? Tap its row!",
+      "hash": "b9e52804cf",
+      "kind": "line",
+      "file": "voice/g1-graphs/most.mp3"
+    },
+    "g1-graphs/fewest": {
+      "text": "Which one has the fewest? Tap its row!",
+      "hash": "4c7381ad4c",
+      "kind": "line",
+      "file": "voice/g1-graphs/fewest.mp3"
+    },
+    "g1-graphs/inAll": {
+      "text": "How many friends in all?",
+      "hash": "0591eb62da",
+      "kind": "line",
+      "file": "voice/g1-graphs/inAll.mp3"
+    },
+    "g1-graphs/countAll": {
+      "text": "Let's count them all.",
+      "hash": "bb8b1b8b0f",
+      "kind": "line",
+      "file": "voice/g1-graphs/countAll.mp3"
+    },
+    "g1-graphs/longestRow": {
+      "text": "The longest row has the most!",
+      "hash": "db07631a66",
+      "kind": "line",
+      "file": "voice/g1-graphs/longestRow.mp3"
+    },
+    "g1-graphs/shortestRow": {
+      "text": "The shortest row has the fewest!",
+      "hash": "fc6dfcfb7b",
+      "kind": "line",
+      "file": "voice/g1-graphs/shortestRow.mp3"
+    },
+    "g1-graphs/matchUp": {
+      "text": "Let's match them up, one with one.",
+      "hash": "e249aefc84",
+      "kind": "line",
+      "file": "voice/g1-graphs/matchUp.mp3"
+    },
+    "g1-graphs/extraOnes": {
+      "text": "These ones have no match. Let's count them!",
+      "hash": "c7909fddbf",
+      "kind": "line",
+      "file": "voice/g1-graphs/extraOnes.mp3"
+    },
+    "g1-graphs/greatGraphing": {
+      "text": "Great graphing!",
+      "hash": "0c4229899f",
+      "kind": "line",
+      "file": "voice/g1-graphs/greatGraphing.mp3"
+    },
+    "g1-graphs/readGraph": {
+      "text": "You read the graph!",
+      "hash": "5df1052fd0",
+      "kind": "line",
+      "file": "voice/g1-graphs/readGraph.mp3"
+    },
+    "g1-graphs/row-apples": {
+      "text": "Apples!",
+      "hash": "16bd75601e",
+      "kind": "line",
+      "file": "voice/g1-graphs/row-apples.mp3"
+    },
+    "g1-graphs/row-bananas": {
+      "text": "Bananas!",
+      "hash": "c9ef8c266d",
+      "kind": "line",
+      "file": "voice/g1-graphs/row-bananas.mp3"
+    },
+    "g1-graphs/row-grapes": {
+      "text": "Grapes!",
+      "hash": "0e6d4128f6",
+      "kind": "line",
+      "file": "voice/g1-graphs/row-grapes.mp3"
+    },
+    "g1-graphs/row-strawberries": {
+      "text": "Strawberries!",
+      "hash": "217d7fe1e7",
+      "kind": "line",
+      "file": "voice/g1-graphs/row-strawberries.mp3"
+    },
+    "g1-graphs/row-dogs": {
+      "text": "Dogs!",
+      "hash": "66f2dc4170",
+      "kind": "line",
+      "file": "voice/g1-graphs/row-dogs.mp3"
+    },
+    "g1-graphs/row-cats": {
+      "text": "Cats!",
+      "hash": "024de37bd2",
+      "kind": "line",
+      "file": "voice/g1-graphs/row-cats.mp3"
+    },
+    "g1-graphs/row-fish": {
+      "text": "Fish!",
+      "hash": "e085510562",
+      "kind": "line",
+      "file": "voice/g1-graphs/row-fish.mp3"
+    },
+    "g1-graphs/row-rabbits": {
+      "text": "Rabbits!",
+      "hash": "4726974a6e",
+      "kind": "line",
+      "file": "voice/g1-graphs/row-rabbits.mp3"
+    },
+    "g1-graphs/row-cookies": {
+      "text": "Cookies!",
+      "hash": "a06840b5e4",
+      "kind": "line",
+      "file": "voice/g1-graphs/row-cookies.mp3"
+    },
+    "g1-graphs/row-ice-cream": {
+      "text": "Ice cream!",
+      "hash": "7f49d49a5e",
+      "kind": "line",
+      "file": "voice/g1-graphs/row-ice-cream.mp3"
+    },
+    "g1-graphs/row-cake": {
+      "text": "Cake!",
+      "hash": "ec0c1683ec",
+      "kind": "line",
+      "file": "voice/g1-graphs/row-cake.mp3"
+    },
+    "g1-graphs/row-donuts": {
+      "text": "Donuts!",
+      "hash": "937d29e1b3",
+      "kind": "line",
+      "file": "voice/g1-graphs/row-donuts.mp3"
+    },
+    "g1-graphs/row-soccer": {
+      "text": "Soccer!",
+      "hash": "bfaa2f3f9e",
+      "kind": "line",
+      "file": "voice/g1-graphs/row-soccer.mp3"
+    },
+    "g1-graphs/row-basketball": {
+      "text": "Basketball!",
+      "hash": "3c23f1a0f9",
+      "kind": "line",
+      "file": "voice/g1-graphs/row-basketball.mp3"
+    },
+    "g1-graphs/row-baseball": {
+      "text": "Baseball!",
+      "hash": "2885216d0c",
+      "kind": "line",
+      "file": "voice/g1-graphs/row-baseball.mp3"
+    },
+    "g1-graphs/row-football": {
+      "text": "Football!",
+      "hash": "f1c90de55d",
+      "kind": "line",
+      "file": "voice/g1-graphs/row-football.mp3"
+    },
+    "g1-graphs/is-apples": {
+      "text": "That one is an apple!",
+      "hash": "2c8ffefe20",
+      "kind": "line",
+      "file": "voice/g1-graphs/is-apples.mp3"
+    },
+    "g1-graphs/is-bananas": {
+      "text": "That one is a banana!",
+      "hash": "d22931f410",
+      "kind": "line",
+      "file": "voice/g1-graphs/is-bananas.mp3"
+    },
+    "g1-graphs/is-grapes": {
+      "text": "Those are grapes!",
+      "hash": "e923d79193",
+      "kind": "line",
+      "file": "voice/g1-graphs/is-grapes.mp3"
+    },
+    "g1-graphs/is-strawberries": {
+      "text": "That one is a strawberry!",
+      "hash": "8306563546",
+      "kind": "line",
+      "file": "voice/g1-graphs/is-strawberries.mp3"
+    },
+    "g1-graphs/is-dogs": {
+      "text": "That one is a dog!",
+      "hash": "4e5f5b2e43",
+      "kind": "line",
+      "file": "voice/g1-graphs/is-dogs.mp3"
+    },
+    "g1-graphs/is-cats": {
+      "text": "That one is a cat!",
+      "hash": "d8a9e62799",
+      "kind": "line",
+      "file": "voice/g1-graphs/is-cats.mp3"
+    },
+    "g1-graphs/is-fish": {
+      "text": "That one is a fish!",
+      "hash": "f063580d91",
+      "kind": "line",
+      "file": "voice/g1-graphs/is-fish.mp3"
+    },
+    "g1-graphs/is-rabbits": {
+      "text": "That one is a rabbit!",
+      "hash": "e8a006e7af",
+      "kind": "line",
+      "file": "voice/g1-graphs/is-rabbits.mp3"
+    },
+    "g1-graphs/is-cookies": {
+      "text": "That one is a cookie!",
+      "hash": "00d3a7b0de",
+      "kind": "line",
+      "file": "voice/g1-graphs/is-cookies.mp3"
+    },
+    "g1-graphs/is-ice-cream": {
+      "text": "That one is ice cream!",
+      "hash": "ab6e14cd70",
+      "kind": "line",
+      "file": "voice/g1-graphs/is-ice-cream.mp3"
+    },
+    "g1-graphs/is-cake": {
+      "text": "That one is cake!",
+      "hash": "beaec5a1fd",
+      "kind": "line",
+      "file": "voice/g1-graphs/is-cake.mp3"
+    },
+    "g1-graphs/is-donuts": {
+      "text": "That one is a donut!",
+      "hash": "1dc12a5758",
+      "kind": "line",
+      "file": "voice/g1-graphs/is-donuts.mp3"
+    },
+    "g1-graphs/is-soccer": {
+      "text": "That is a soccer ball!",
+      "hash": "094228d186",
+      "kind": "line",
+      "file": "voice/g1-graphs/is-soccer.mp3"
+    },
+    "g1-graphs/is-basketball": {
+      "text": "That is a basketball!",
+      "hash": "73441422c4",
+      "kind": "line",
+      "file": "voice/g1-graphs/is-basketball.mp3"
+    },
+    "g1-graphs/is-baseball": {
+      "text": "That is a baseball!",
+      "hash": "6b2b585834",
+      "kind": "line",
+      "file": "voice/g1-graphs/is-baseball.mp3"
+    },
+    "g1-graphs/is-football": {
+      "text": "That is a football!",
+      "hash": "7156598d60",
+      "kind": "line",
+      "file": "voice/g1-graphs/is-football.mp3"
+    },
+    "g1-graphs/howMany/thing=apples": {
+      "text": "How many friends like apples?",
+      "hash": "dabb2ae798",
+      "kind": "whole",
+      "file": "voice/g1-graphs/howMany/thing=apples.mp3"
+    },
+    "g1-graphs/howMany/thing=bananas": {
+      "text": "How many friends like bananas?",
+      "hash": "f0d948a7cc",
+      "kind": "whole",
+      "file": "voice/g1-graphs/howMany/thing=bananas.mp3"
+    },
+    "g1-graphs/howMany/thing=grapes": {
+      "text": "How many friends like grapes?",
+      "hash": "46a5a2e92d",
+      "kind": "whole",
+      "file": "voice/g1-graphs/howMany/thing=grapes.mp3"
+    },
+    "g1-graphs/howMany/thing=strawberries": {
+      "text": "How many friends like strawberries?",
+      "hash": "c0eb75fe78",
+      "kind": "whole",
+      "file": "voice/g1-graphs/howMany/thing=strawberries.mp3"
+    },
+    "g1-graphs/howMany/thing=dogs": {
+      "text": "How many friends like dogs?",
+      "hash": "3eede4b49d",
+      "kind": "whole",
+      "file": "voice/g1-graphs/howMany/thing=dogs.mp3"
+    },
+    "g1-graphs/howMany/thing=cats": {
+      "text": "How many friends like cats?",
+      "hash": "ddeda9f8b4",
+      "kind": "whole",
+      "file": "voice/g1-graphs/howMany/thing=cats.mp3"
+    },
+    "g1-graphs/howMany/thing=fish": {
+      "text": "How many friends like fish?",
+      "hash": "6f41530bbe",
+      "kind": "whole",
+      "file": "voice/g1-graphs/howMany/thing=fish.mp3"
+    },
+    "g1-graphs/howMany/thing=rabbits": {
+      "text": "How many friends like rabbits?",
+      "hash": "600ea7938b",
+      "kind": "whole",
+      "file": "voice/g1-graphs/howMany/thing=rabbits.mp3"
+    },
+    "g1-graphs/howMany/thing=cookies": {
+      "text": "How many friends like cookies?",
+      "hash": "ceeb470234",
+      "kind": "whole",
+      "file": "voice/g1-graphs/howMany/thing=cookies.mp3"
+    },
+    "g1-graphs/howMany/thing=ice-cream": {
+      "text": "How many friends like ice cream?",
+      "hash": "8e6882b148",
+      "kind": "whole",
+      "file": "voice/g1-graphs/howMany/thing=ice-cream.mp3"
+    },
+    "g1-graphs/howMany/thing=cake": {
+      "text": "How many friends like cake?",
+      "hash": "cae9e4bd98",
+      "kind": "whole",
+      "file": "voice/g1-graphs/howMany/thing=cake.mp3"
+    },
+    "g1-graphs/howMany/thing=donuts": {
+      "text": "How many friends like donuts?",
+      "hash": "9b615a6c28",
+      "kind": "whole",
+      "file": "voice/g1-graphs/howMany/thing=donuts.mp3"
+    },
+    "g1-graphs/howMany/thing=soccer": {
+      "text": "How many friends like soccer?",
+      "hash": "926c43ddbc",
+      "kind": "whole",
+      "file": "voice/g1-graphs/howMany/thing=soccer.mp3"
+    },
+    "g1-graphs/howMany/thing=basketball": {
+      "text": "How many friends like basketball?",
+      "hash": "7343a3cab7",
+      "kind": "whole",
+      "file": "voice/g1-graphs/howMany/thing=basketball.mp3"
+    },
+    "g1-graphs/howMany/thing=baseball": {
+      "text": "How many friends like baseball?",
+      "hash": "49fd7e0ba7",
+      "kind": "whole",
+      "file": "voice/g1-graphs/howMany/thing=baseball.mp3"
+    },
+    "g1-graphs/howMany/thing=football": {
+      "text": "How many friends like football?",
+      "hash": "6874a95a48",
+      "kind": "whole",
+      "file": "voice/g1-graphs/howMany/thing=football.mp3"
+    },
+    "g1-graphs/more/pair=apples-than-bananas": {
+      "text": "How many more friends like apples than bananas?",
+      "hash": "76d5db431a",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=apples-than-bananas.mp3"
+    },
+    "g1-graphs/more/pair=apples-than-grapes": {
+      "text": "How many more friends like apples than grapes?",
+      "hash": "f00148fd0f",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=apples-than-grapes.mp3"
+    },
+    "g1-graphs/more/pair=apples-than-strawberries": {
+      "text": "How many more friends like apples than strawberries?",
+      "hash": "67229ee264",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=apples-than-strawberries.mp3"
+    },
+    "g1-graphs/more/pair=bananas-than-apples": {
+      "text": "How many more friends like bananas than apples?",
+      "hash": "4f8d658aaf",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=bananas-than-apples.mp3"
+    },
+    "g1-graphs/more/pair=bananas-than-grapes": {
+      "text": "How many more friends like bananas than grapes?",
+      "hash": "7460e5056b",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=bananas-than-grapes.mp3"
+    },
+    "g1-graphs/more/pair=bananas-than-strawberries": {
+      "text": "How many more friends like bananas than strawberries?",
+      "hash": "e2931132f5",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=bananas-than-strawberries.mp3"
+    },
+    "g1-graphs/more/pair=grapes-than-apples": {
+      "text": "How many more friends like grapes than apples?",
+      "hash": "f6e4702c32",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=grapes-than-apples.mp3"
+    },
+    "g1-graphs/more/pair=grapes-than-bananas": {
+      "text": "How many more friends like grapes than bananas?",
+      "hash": "8b4b581b69",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=grapes-than-bananas.mp3"
+    },
+    "g1-graphs/more/pair=grapes-than-strawberries": {
+      "text": "How many more friends like grapes than strawberries?",
+      "hash": "d3f6cb2ae7",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=grapes-than-strawberries.mp3"
+    },
+    "g1-graphs/more/pair=strawberries-than-apples": {
+      "text": "How many more friends like strawberries than apples?",
+      "hash": "a8d02b12a8",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=strawberries-than-apples.mp3"
+    },
+    "g1-graphs/more/pair=strawberries-than-bananas": {
+      "text": "How many more friends like strawberries than bananas?",
+      "hash": "0df2caf367",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=strawberries-than-bananas.mp3"
+    },
+    "g1-graphs/more/pair=strawberries-than-grapes": {
+      "text": "How many more friends like strawberries than grapes?",
+      "hash": "ad5c54e6e0",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=strawberries-than-grapes.mp3"
+    },
+    "g1-graphs/more/pair=dogs-than-cats": {
+      "text": "How many more friends like dogs than cats?",
+      "hash": "28436fb933",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=dogs-than-cats.mp3"
+    },
+    "g1-graphs/more/pair=dogs-than-fish": {
+      "text": "How many more friends like dogs than fish?",
+      "hash": "2b122aa0ad",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=dogs-than-fish.mp3"
+    },
+    "g1-graphs/more/pair=dogs-than-rabbits": {
+      "text": "How many more friends like dogs than rabbits?",
+      "hash": "ff6cda58b0",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=dogs-than-rabbits.mp3"
+    },
+    "g1-graphs/more/pair=cats-than-dogs": {
+      "text": "How many more friends like cats than dogs?",
+      "hash": "e98a1248ea",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=cats-than-dogs.mp3"
+    },
+    "g1-graphs/more/pair=cats-than-fish": {
+      "text": "How many more friends like cats than fish?",
+      "hash": "067492f3b6",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=cats-than-fish.mp3"
+    },
+    "g1-graphs/more/pair=cats-than-rabbits": {
+      "text": "How many more friends like cats than rabbits?",
+      "hash": "083f8ddcc3",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=cats-than-rabbits.mp3"
+    },
+    "g1-graphs/more/pair=fish-than-dogs": {
+      "text": "How many more friends like fish than dogs?",
+      "hash": "746071005e",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=fish-than-dogs.mp3"
+    },
+    "g1-graphs/more/pair=fish-than-cats": {
+      "text": "How many more friends like fish than cats?",
+      "hash": "e721aca29c",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=fish-than-cats.mp3"
+    },
+    "g1-graphs/more/pair=fish-than-rabbits": {
+      "text": "How many more friends like fish than rabbits?",
+      "hash": "2024a141b4",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=fish-than-rabbits.mp3"
+    },
+    "g1-graphs/more/pair=rabbits-than-dogs": {
+      "text": "How many more friends like rabbits than dogs?",
+      "hash": "3f35fc4889",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=rabbits-than-dogs.mp3"
+    },
+    "g1-graphs/more/pair=rabbits-than-cats": {
+      "text": "How many more friends like rabbits than cats?",
+      "hash": "cee8f94fe8",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=rabbits-than-cats.mp3"
+    },
+    "g1-graphs/more/pair=rabbits-than-fish": {
+      "text": "How many more friends like rabbits than fish?",
+      "hash": "eeaa7e95e1",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=rabbits-than-fish.mp3"
+    },
+    "g1-graphs/more/pair=cookies-than-ice-cream": {
+      "text": "How many more friends like cookies than ice cream?",
+      "hash": "eb02f6a947",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=cookies-than-ice-cream.mp3"
+    },
+    "g1-graphs/more/pair=cookies-than-cake": {
+      "text": "How many more friends like cookies than cake?",
+      "hash": "67550214e9",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=cookies-than-cake.mp3"
+    },
+    "g1-graphs/more/pair=cookies-than-donuts": {
+      "text": "How many more friends like cookies than donuts?",
+      "hash": "557482dbba",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=cookies-than-donuts.mp3"
+    },
+    "g1-graphs/more/pair=ice-cream-than-cookies": {
+      "text": "How many more friends like ice cream than cookies?",
+      "hash": "b4d94063a9",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=ice-cream-than-cookies.mp3"
+    },
+    "g1-graphs/more/pair=ice-cream-than-cake": {
+      "text": "How many more friends like ice cream than cake?",
+      "hash": "40230452f7",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=ice-cream-than-cake.mp3"
+    },
+    "g1-graphs/more/pair=ice-cream-than-donuts": {
+      "text": "How many more friends like ice cream than donuts?",
+      "hash": "7501b21018",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=ice-cream-than-donuts.mp3"
+    },
+    "g1-graphs/more/pair=cake-than-cookies": {
+      "text": "How many more friends like cake than cookies?",
+      "hash": "b100e4b36f",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=cake-than-cookies.mp3"
+    },
+    "g1-graphs/more/pair=cake-than-ice-cream": {
+      "text": "How many more friends like cake than ice cream?",
+      "hash": "63a9ee955b",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=cake-than-ice-cream.mp3"
+    },
+    "g1-graphs/more/pair=cake-than-donuts": {
+      "text": "How many more friends like cake than donuts?",
+      "hash": "af052a3c61",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=cake-than-donuts.mp3"
+    },
+    "g1-graphs/more/pair=donuts-than-cookies": {
+      "text": "How many more friends like donuts than cookies?",
+      "hash": "2bdbe6db0d",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=donuts-than-cookies.mp3"
+    },
+    "g1-graphs/more/pair=donuts-than-ice-cream": {
+      "text": "How many more friends like donuts than ice cream?",
+      "hash": "8b2c26be68",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=donuts-than-ice-cream.mp3"
+    },
+    "g1-graphs/more/pair=donuts-than-cake": {
+      "text": "How many more friends like donuts than cake?",
+      "hash": "1816e7f69e",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=donuts-than-cake.mp3"
+    },
+    "g1-graphs/more/pair=soccer-than-basketball": {
+      "text": "How many more friends like soccer than basketball?",
+      "hash": "b3f3e1c56a",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=soccer-than-basketball.mp3"
+    },
+    "g1-graphs/more/pair=soccer-than-baseball": {
+      "text": "How many more friends like soccer than baseball?",
+      "hash": "f79030ea1a",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=soccer-than-baseball.mp3"
+    },
+    "g1-graphs/more/pair=soccer-than-football": {
+      "text": "How many more friends like soccer than football?",
+      "hash": "f384b62bbd",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=soccer-than-football.mp3"
+    },
+    "g1-graphs/more/pair=basketball-than-soccer": {
+      "text": "How many more friends like basketball than soccer?",
+      "hash": "266c1ea862",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=basketball-than-soccer.mp3"
+    },
+    "g1-graphs/more/pair=basketball-than-baseball": {
+      "text": "How many more friends like basketball than baseball?",
+      "hash": "557a3c9e92",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=basketball-than-baseball.mp3"
+    },
+    "g1-graphs/more/pair=basketball-than-football": {
+      "text": "How many more friends like basketball than football?",
+      "hash": "eb5c0170b6",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=basketball-than-football.mp3"
+    },
+    "g1-graphs/more/pair=baseball-than-soccer": {
+      "text": "How many more friends like baseball than soccer?",
+      "hash": "71f6749309",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=baseball-than-soccer.mp3"
+    },
+    "g1-graphs/more/pair=baseball-than-basketball": {
+      "text": "How many more friends like baseball than basketball?",
+      "hash": "5de6f89f1a",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=baseball-than-basketball.mp3"
+    },
+    "g1-graphs/more/pair=baseball-than-football": {
+      "text": "How many more friends like baseball than football?",
+      "hash": "73d747aeb7",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=baseball-than-football.mp3"
+    },
+    "g1-graphs/more/pair=football-than-soccer": {
+      "text": "How many more friends like football than soccer?",
+      "hash": "ceb42fe5a4",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=football-than-soccer.mp3"
+    },
+    "g1-graphs/more/pair=football-than-basketball": {
+      "text": "How many more friends like football than basketball?",
+      "hash": "78ae2ee6b6",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=football-than-basketball.mp3"
+    },
+    "g1-graphs/more/pair=football-than-baseball": {
+      "text": "How many more friends like football than baseball?",
+      "hash": "144ecb2393",
+      "kind": "whole",
+      "file": "voice/g1-graphs/more/pair=football-than-baseball.mp3"
+    },
+    "g1-graphs/fewer/pair=apples-than-bananas": {
+      "text": "How many fewer friends like apples than bananas?",
+      "hash": "3f1565abf7",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=apples-than-bananas.mp3"
+    },
+    "g1-graphs/fewer/pair=apples-than-grapes": {
+      "text": "How many fewer friends like apples than grapes?",
+      "hash": "0d26e09664",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=apples-than-grapes.mp3"
+    },
+    "g1-graphs/fewer/pair=apples-than-strawberries": {
+      "text": "How many fewer friends like apples than strawberries?",
+      "hash": "5c8c19a689",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=apples-than-strawberries.mp3"
+    },
+    "g1-graphs/fewer/pair=bananas-than-apples": {
+      "text": "How many fewer friends like bananas than apples?",
+      "hash": "83c189715f",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=bananas-than-apples.mp3"
+    },
+    "g1-graphs/fewer/pair=bananas-than-grapes": {
+      "text": "How many fewer friends like bananas than grapes?",
+      "hash": "4eecb01c69",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=bananas-than-grapes.mp3"
+    },
+    "g1-graphs/fewer/pair=bananas-than-strawberries": {
+      "text": "How many fewer friends like bananas than strawberries?",
+      "hash": "bee993a5dd",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=bananas-than-strawberries.mp3"
+    },
+    "g1-graphs/fewer/pair=grapes-than-apples": {
+      "text": "How many fewer friends like grapes than apples?",
+      "hash": "26b3e2605e",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=grapes-than-apples.mp3"
+    },
+    "g1-graphs/fewer/pair=grapes-than-bananas": {
+      "text": "How many fewer friends like grapes than bananas?",
+      "hash": "6636a453c2",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=grapes-than-bananas.mp3"
+    },
+    "g1-graphs/fewer/pair=grapes-than-strawberries": {
+      "text": "How many fewer friends like grapes than strawberries?",
+      "hash": "6de80623d7",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=grapes-than-strawberries.mp3"
+    },
+    "g1-graphs/fewer/pair=strawberries-than-apples": {
+      "text": "How many fewer friends like strawberries than apples?",
+      "hash": "bb592a126c",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=strawberries-than-apples.mp3"
+    },
+    "g1-graphs/fewer/pair=strawberries-than-bananas": {
+      "text": "How many fewer friends like strawberries than bananas?",
+      "hash": "a1ab066b9f",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=strawberries-than-bananas.mp3"
+    },
+    "g1-graphs/fewer/pair=strawberries-than-grapes": {
+      "text": "How many fewer friends like strawberries than grapes?",
+      "hash": "abd1799995",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=strawberries-than-grapes.mp3"
+    },
+    "g1-graphs/fewer/pair=dogs-than-cats": {
+      "text": "How many fewer friends like dogs than cats?",
+      "hash": "36d4eb7aa1",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=dogs-than-cats.mp3"
+    },
+    "g1-graphs/fewer/pair=dogs-than-fish": {
+      "text": "How many fewer friends like dogs than fish?",
+      "hash": "c6238a75c8",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=dogs-than-fish.mp3"
+    },
+    "g1-graphs/fewer/pair=dogs-than-rabbits": {
+      "text": "How many fewer friends like dogs than rabbits?",
+      "hash": "2ce383650c",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=dogs-than-rabbits.mp3"
+    },
+    "g1-graphs/fewer/pair=cats-than-dogs": {
+      "text": "How many fewer friends like cats than dogs?",
+      "hash": "bc47750806",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=cats-than-dogs.mp3"
+    },
+    "g1-graphs/fewer/pair=cats-than-fish": {
+      "text": "How many fewer friends like cats than fish?",
+      "hash": "ecf6ffd302",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=cats-than-fish.mp3"
+    },
+    "g1-graphs/fewer/pair=cats-than-rabbits": {
+      "text": "How many fewer friends like cats than rabbits?",
+      "hash": "b466b8137f",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=cats-than-rabbits.mp3"
+    },
+    "g1-graphs/fewer/pair=fish-than-dogs": {
+      "text": "How many fewer friends like fish than dogs?",
+      "hash": "cb536a7492",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=fish-than-dogs.mp3"
+    },
+    "g1-graphs/fewer/pair=fish-than-cats": {
+      "text": "How many fewer friends like fish than cats?",
+      "hash": "bc2a7d3c77",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=fish-than-cats.mp3"
+    },
+    "g1-graphs/fewer/pair=fish-than-rabbits": {
+      "text": "How many fewer friends like fish than rabbits?",
+      "hash": "5d4bd588b9",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=fish-than-rabbits.mp3"
+    },
+    "g1-graphs/fewer/pair=rabbits-than-dogs": {
+      "text": "How many fewer friends like rabbits than dogs?",
+      "hash": "eb274a9ebc",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=rabbits-than-dogs.mp3"
+    },
+    "g1-graphs/fewer/pair=rabbits-than-cats": {
+      "text": "How many fewer friends like rabbits than cats?",
+      "hash": "8d9cd56ca9",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=rabbits-than-cats.mp3"
+    },
+    "g1-graphs/fewer/pair=rabbits-than-fish": {
+      "text": "How many fewer friends like rabbits than fish?",
+      "hash": "8b2ec4dbe8",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=rabbits-than-fish.mp3"
+    },
+    "g1-graphs/fewer/pair=cookies-than-ice-cream": {
+      "text": "How many fewer friends like cookies than ice cream?",
+      "hash": "d8c4014fbe",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=cookies-than-ice-cream.mp3"
+    },
+    "g1-graphs/fewer/pair=cookies-than-cake": {
+      "text": "How many fewer friends like cookies than cake?",
+      "hash": "311e36a990",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=cookies-than-cake.mp3"
+    },
+    "g1-graphs/fewer/pair=cookies-than-donuts": {
+      "text": "How many fewer friends like cookies than donuts?",
+      "hash": "b3ced58f21",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=cookies-than-donuts.mp3"
+    },
+    "g1-graphs/fewer/pair=ice-cream-than-cookies": {
+      "text": "How many fewer friends like ice cream than cookies?",
+      "hash": "1ef7d771bf",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=ice-cream-than-cookies.mp3"
+    },
+    "g1-graphs/fewer/pair=ice-cream-than-cake": {
+      "text": "How many fewer friends like ice cream than cake?",
+      "hash": "3043f69852",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=ice-cream-than-cake.mp3"
+    },
+    "g1-graphs/fewer/pair=ice-cream-than-donuts": {
+      "text": "How many fewer friends like ice cream than donuts?",
+      "hash": "2e5698b26b",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=ice-cream-than-donuts.mp3"
+    },
+    "g1-graphs/fewer/pair=cake-than-cookies": {
+      "text": "How many fewer friends like cake than cookies?",
+      "hash": "ddeb83dc85",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=cake-than-cookies.mp3"
+    },
+    "g1-graphs/fewer/pair=cake-than-ice-cream": {
+      "text": "How many fewer friends like cake than ice cream?",
+      "hash": "58ef89abde",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=cake-than-ice-cream.mp3"
+    },
+    "g1-graphs/fewer/pair=cake-than-donuts": {
+      "text": "How many fewer friends like cake than donuts?",
+      "hash": "39d43f8195",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=cake-than-donuts.mp3"
+    },
+    "g1-graphs/fewer/pair=donuts-than-cookies": {
+      "text": "How many fewer friends like donuts than cookies?",
+      "hash": "70f1e0f1c8",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=donuts-than-cookies.mp3"
+    },
+    "g1-graphs/fewer/pair=donuts-than-ice-cream": {
+      "text": "How many fewer friends like donuts than ice cream?",
+      "hash": "4c66dc2052",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=donuts-than-ice-cream.mp3"
+    },
+    "g1-graphs/fewer/pair=donuts-than-cake": {
+      "text": "How many fewer friends like donuts than cake?",
+      "hash": "45b7c90b8e",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=donuts-than-cake.mp3"
+    },
+    "g1-graphs/fewer/pair=soccer-than-basketball": {
+      "text": "How many fewer friends like soccer than basketball?",
+      "hash": "87189524a8",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=soccer-than-basketball.mp3"
+    },
+    "g1-graphs/fewer/pair=soccer-than-baseball": {
+      "text": "How many fewer friends like soccer than baseball?",
+      "hash": "dc60355715",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=soccer-than-baseball.mp3"
+    },
+    "g1-graphs/fewer/pair=soccer-than-football": {
+      "text": "How many fewer friends like soccer than football?",
+      "hash": "5940c922fb",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=soccer-than-football.mp3"
+    },
+    "g1-graphs/fewer/pair=basketball-than-soccer": {
+      "text": "How many fewer friends like basketball than soccer?",
+      "hash": "f66a27aa79",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=basketball-than-soccer.mp3"
+    },
+    "g1-graphs/fewer/pair=basketball-than-baseball": {
+      "text": "How many fewer friends like basketball than baseball?",
+      "hash": "78957b5427",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=basketball-than-baseball.mp3"
+    },
+    "g1-graphs/fewer/pair=basketball-than-football": {
+      "text": "How many fewer friends like basketball than football?",
+      "hash": "97b20cc0ef",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=basketball-than-football.mp3"
+    },
+    "g1-graphs/fewer/pair=baseball-than-soccer": {
+      "text": "How many fewer friends like baseball than soccer?",
+      "hash": "e0c0b36eb6",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=baseball-than-soccer.mp3"
+    },
+    "g1-graphs/fewer/pair=baseball-than-basketball": {
+      "text": "How many fewer friends like baseball than basketball?",
+      "hash": "c1746fa19c",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=baseball-than-basketball.mp3"
+    },
+    "g1-graphs/fewer/pair=baseball-than-football": {
+      "text": "How many fewer friends like baseball than football?",
+      "hash": "ccf9ceac4f",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=baseball-than-football.mp3"
+    },
+    "g1-graphs/fewer/pair=football-than-soccer": {
+      "text": "How many fewer friends like football than soccer?",
+      "hash": "5723cd404d",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=football-than-soccer.mp3"
+    },
+    "g1-graphs/fewer/pair=football-than-basketball": {
+      "text": "How many fewer friends like football than basketball?",
+      "hash": "fb5b2adfc9",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=football-than-basketball.mp3"
+    },
+    "g1-graphs/fewer/pair=football-than-baseball": {
+      "text": "How many fewer friends like football than baseball?",
+      "hash": "f95606a564",
+      "kind": "whole",
+      "file": "voice/g1-graphs/fewer/pair=football-than-baseball.mp3"
+    },
+    "g1-measure/whichNext": {
+      "text": "Which one comes next? Tap it!",
+      "hash": "0cad9f35d7",
+      "kind": "line",
+      "file": "voice/g1-measure/whichNext.mp3"
+    },
+    "g1-measure/longestLeft": {
+      "text": "This one is the longest one left!",
+      "hash": "1732ba1dd0",
+      "kind": "line",
+      "file": "voice/g1-measure/longestLeft.mp3"
+    },
+    "g1-measure/shortestLeft": {
+      "text": "This one is the shortest one left!",
+      "hash": "29f26356e0",
+      "kind": "line",
+      "file": "voice/g1-measure/shortestLeft.mp3"
+    },
+    "g1-measure/soLonger": {
+      "text": "So which one is longer? Tap it!",
+      "hash": "18277b3a89",
+      "kind": "line",
+      "file": "voice/g1-measure/soLonger.mp3"
+    },
+    "g1-measure/soShorter": {
+      "text": "So which one is shorter? Tap it!",
+      "hash": "d32d4fb3b2",
+      "kind": "line",
+      "file": "voice/g1-measure/soShorter.mp3"
+    },
+    "g1-measure/layClips": {
+      "text": "Lay paper clips end to end. Tap the box to add one!",
+      "hash": "a140a4ead4",
+      "kind": "line",
+      "file": "voice/g1-measure/layClips.mp3"
+    },
+    "g1-measure/layCubes": {
+      "text": "Lay cubes end to end. Tap the box to add one!",
+      "hash": "4be8c50bfa",
+      "kind": "line",
+      "file": "voice/g1-measure/layCubes.mp3"
+    },
+    "g1-measure/reachesEnd": {
+      "text": "It reaches the end!",
+      "hash": "8891792313",
+      "kind": "line",
+      "file": "voice/g1-measure/reachesEnd.mp3"
+    },
+    "g1-measure/rightWay": {
+      "text": "Which one is measured the right way? Tap it!",
+      "hash": "8e82e08bfd",
+      "kind": "line",
+      "file": "voice/g1-measure/rightWay.mp3"
+    },
+    "g1-measure/hasGaps": {
+      "text": "That one has gaps. Line them up end to end, with no gaps!",
+      "hash": "f541b2fd79",
+      "kind": "line",
+      "file": "voice/g1-measure/hasGaps.mp3"
+    },
+    "g1-measure/hasOverlap": {
+      "text": "Those ones overlap. They must not overlap!",
+      "hash": "c2c037828a",
+      "kind": "line",
+      "file": "voice/g1-measure/hasOverlap.mp3"
+    },
+    "g1-measure/lateStart": {
+      "text": "That one does not begin at the start line!",
+      "hash": "d29684b75e",
+      "kind": "line",
+      "file": "voice/g1-measure/lateStart.mp3"
+    },
+    "g1-measure/endToEnd": {
+      "text": "End to end, no gaps, no overlaps. Great measuring!",
+      "hash": "2b5c7a24a6",
+      "kind": "line",
+      "file": "voice/g1-measure/endToEnd.mp3"
+    },
+    "g1-measure/thisOne": {
+      "text": "This one!",
+      "hash": "33537a566f",
+      "kind": "line",
+      "file": "voice/g1-measure/thisOne.mp3"
+    },
+    "g1-measure/whatTime": {
+      "text": "What time is it? Tap it!",
+      "hash": "c3df3af913",
+      "kind": "line",
+      "file": "voice/g1-measure/whatTime.mp3"
+    },
+    "g1-measure/greatMeasuring": {
+      "text": "Great measuring!",
+      "hash": "d4831e7d3b",
+      "kind": "line",
+      "file": "voice/g1-measure/greatMeasuring.mp3"
+    },
+    "g1-measure/timeTeller": {
+      "text": "You can tell time!",
+      "hash": "b87465f220",
+      "kind": "line",
+      "file": "voice/g1-measure/timeTeller.mp3"
+    },
+    "g1-measure/inOrder": {
+      "text": "You put them in order!",
+      "hash": "8a2f36bccd",
+      "kind": "line",
+      "file": "voice/g1-measure/inOrder.mp3"
+    },
+    "g1-measure/orderLong/things=pencils": {
+      "text": "Put the pencils in order. Tap the longest one first!",
+      "hash": "98c8bab408",
+      "kind": "whole",
+      "file": "voice/g1-measure/orderLong/things=pencils.mp3"
+    },
+    "g1-measure/orderLong/things=ribbons": {
+      "text": "Put the ribbons in order. Tap the longest one first!",
+      "hash": "80659a4658",
+      "kind": "whole",
+      "file": "voice/g1-measure/orderLong/things=ribbons.mp3"
+    },
+    "g1-measure/orderLong/things=snakes": {
+      "text": "Put the snakes in order. Tap the longest one first!",
+      "hash": "55beaf1790",
+      "kind": "whole",
+      "file": "voice/g1-measure/orderLong/things=snakes.mp3"
+    },
+    "g1-measure/orderLong/things=trains": {
+      "text": "Put the trains in order. Tap the longest one first!",
+      "hash": "438a307de1",
+      "kind": "whole",
+      "file": "voice/g1-measure/orderLong/things=trains.mp3"
+    },
+    "g1-measure/orderLong/things=worms": {
+      "text": "Put the worms in order. Tap the longest one first!",
+      "hash": "125eb6bcc9",
+      "kind": "whole",
+      "file": "voice/g1-measure/orderLong/things=worms.mp3"
+    },
+    "g1-measure/orderShort/things=pencils": {
+      "text": "Put the pencils in order. Tap the shortest one first!",
+      "hash": "99f733fc3f",
+      "kind": "whole",
+      "file": "voice/g1-measure/orderShort/things=pencils.mp3"
+    },
+    "g1-measure/orderShort/things=ribbons": {
+      "text": "Put the ribbons in order. Tap the shortest one first!",
+      "hash": "8077600d84",
+      "kind": "whole",
+      "file": "voice/g1-measure/orderShort/things=ribbons.mp3"
+    },
+    "g1-measure/orderShort/things=snakes": {
+      "text": "Put the snakes in order. Tap the shortest one first!",
+      "hash": "ce06000131",
+      "kind": "whole",
+      "file": "voice/g1-measure/orderShort/things=snakes.mp3"
+    },
+    "g1-measure/orderShort/things=trains": {
+      "text": "Put the trains in order. Tap the shortest one first!",
+      "hash": "28cb7cf61c",
+      "kind": "whole",
+      "file": "voice/g1-measure/orderShort/things=trains.mp3"
+    },
+    "g1-measure/orderShort/things=worms": {
+      "text": "Put the worms in order. Tap the shortest one first!",
+      "hash": "d8cab92dcc",
+      "kind": "whole",
+      "file": "voice/g1-measure/orderShort/things=worms.mp3"
+    },
+    "g1-measure/thirdLonger/thing=ribbon": {
+      "text": "Which ribbon is longer? They are far apart. Let's use a string!",
+      "hash": "1abca517a8",
+      "kind": "whole",
+      "file": "voice/g1-measure/thirdLonger/thing=ribbon.mp3"
+    },
+    "g1-measure/thirdLonger/thing=snake": {
+      "text": "Which snake is longer? They are far apart. Let's use a string!",
+      "hash": "ea2eca9acb",
+      "kind": "whole",
+      "file": "voice/g1-measure/thirdLonger/thing=snake.mp3"
+    },
+    "g1-measure/thirdShorter/thing=ribbon": {
+      "text": "Which ribbon is shorter? They are far apart. Let's use a string!",
+      "hash": "7569007c31",
+      "kind": "whole",
+      "file": "voice/g1-measure/thirdShorter/thing=ribbon.mp3"
+    },
+    "g1-measure/thirdShorter/thing=snake": {
+      "text": "Which snake is shorter? They are far apart. Let's use a string!",
+      "hash": "e9ba2c6257",
+      "kind": "whole",
+      "file": "voice/g1-measure/thirdShorter/thing=snake.mp3"
+    },
+    "g1-measure/stringLonger/thing=ribbon": {
+      "text": "The string is longer than this ribbon.",
+      "hash": "76bb9f6060",
+      "kind": "whole",
+      "file": "voice/g1-measure/stringLonger/thing=ribbon.mp3"
+    },
+    "g1-measure/stringLonger/thing=snake": {
+      "text": "The string is longer than this snake.",
+      "hash": "0caa0dff55",
+      "kind": "whole",
+      "file": "voice/g1-measure/stringLonger/thing=snake.mp3"
+    },
+    "g1-measure/stringShorter/thing=ribbon": {
+      "text": "The string is shorter than this ribbon.",
+      "hash": "86b9d25b45",
+      "kind": "whole",
+      "file": "voice/g1-measure/stringShorter/thing=ribbon.mp3"
+    },
+    "g1-measure/stringShorter/thing=snake": {
+      "text": "The string is shorter than this snake.",
+      "hash": "e162136bbb",
+      "kind": "whole",
+      "file": "voice/g1-measure/stringShorter/thing=snake.mp3"
+    },
+    "g1-measure/thirdHelpLonger/thing=ribbon": {
+      "text": "This ribbon is longer than the string. The other one is shorter than the string. So this one is longer!",
+      "hash": "d91dde929a",
+      "kind": "whole",
+      "file": "voice/g1-measure/thirdHelpLonger/thing=ribbon.mp3"
+    },
+    "g1-measure/thirdHelpLonger/thing=snake": {
+      "text": "This snake is longer than the string. The other one is shorter than the string. So this one is longer!",
+      "hash": "ec7323fce0",
+      "kind": "whole",
+      "file": "voice/g1-measure/thirdHelpLonger/thing=snake.mp3"
+    },
+    "g1-measure/thirdHelpShorter/thing=ribbon": {
+      "text": "This ribbon is shorter than the string. The other one is longer than the string. So this one is shorter!",
+      "hash": "f710595369",
+      "kind": "whole",
+      "file": "voice/g1-measure/thirdHelpShorter/thing=ribbon.mp3"
+    },
+    "g1-measure/thirdHelpShorter/thing=snake": {
+      "text": "This snake is shorter than the string. The other one is longer than the string. So this one is shorter!",
+      "hash": "59dc7d217a",
+      "kind": "whole",
+      "file": "voice/g1-measure/thirdHelpShorter/thing=snake.mp3"
+    },
+    "g1-measure/howManyLong/thing=pencil,units=paper-clips": {
+      "text": "How many paper clips long is the pencil?",
+      "hash": "b850ce11bd",
+      "kind": "whole",
+      "file": "voice/g1-measure/howManyLong/thing=pencil,units=paper-clips.mp3"
+    },
+    "g1-measure/howManyLong/thing=pencil,units=cubes": {
+      "text": "How many cubes long is the pencil?",
+      "hash": "2d3880ffaa",
+      "kind": "whole",
+      "file": "voice/g1-measure/howManyLong/thing=pencil,units=cubes.mp3"
+    },
+    "g1-measure/howManyLong/thing=ribbon,units=paper-clips": {
+      "text": "How many paper clips long is the ribbon?",
+      "hash": "cd3c22463a",
+      "kind": "whole",
+      "file": "voice/g1-measure/howManyLong/thing=ribbon,units=paper-clips.mp3"
+    },
+    "g1-measure/howManyLong/thing=ribbon,units=cubes": {
+      "text": "How many cubes long is the ribbon?",
+      "hash": "a05031905c",
+      "kind": "whole",
+      "file": "voice/g1-measure/howManyLong/thing=ribbon,units=cubes.mp3"
+    },
+    "g1-measure/howManyLong/thing=snake,units=paper-clips": {
+      "text": "How many paper clips long is the snake?",
+      "hash": "269f0c5120",
+      "kind": "whole",
+      "file": "voice/g1-measure/howManyLong/thing=snake,units=paper-clips.mp3"
+    },
+    "g1-measure/howManyLong/thing=snake,units=cubes": {
+      "text": "How many cubes long is the snake?",
+      "hash": "3fdae259a7",
+      "kind": "whole",
+      "file": "voice/g1-measure/howManyLong/thing=snake,units=cubes.mp3"
+    },
+    "g1-measure/howManyLong/thing=train,units=paper-clips": {
+      "text": "How many paper clips long is the train?",
+      "hash": "fc35339ff2",
+      "kind": "whole",
+      "file": "voice/g1-measure/howManyLong/thing=train,units=paper-clips.mp3"
+    },
+    "g1-measure/howManyLong/thing=train,units=cubes": {
+      "text": "How many cubes long is the train?",
+      "hash": "9c37cba188",
+      "kind": "whole",
+      "file": "voice/g1-measure/howManyLong/thing=train,units=cubes.mp3"
+    },
+    "g1-measure/howManyLong/thing=worm,units=paper-clips": {
+      "text": "How many paper clips long is the worm?",
+      "hash": "baf2fa57a9",
+      "kind": "whole",
+      "file": "voice/g1-measure/howManyLong/thing=worm,units=paper-clips.mp3"
+    },
+    "g1-measure/howManyLong/thing=worm,units=cubes": {
+      "text": "How many cubes long is the worm?",
+      "hash": "53147b5edd",
+      "kind": "whole",
+      "file": "voice/g1-measure/howManyLong/thing=worm,units=cubes.mp3"
+    },
+    "g1-measure/oclock/hour=1": {
+      "text": "one o'clock!",
+      "hash": "a9594c5d37",
+      "kind": "whole",
+      "file": "voice/g1-measure/oclock/hour=1.mp3"
+    },
+    "g1-measure/oclock/hour=2": {
+      "text": "two o'clock!",
+      "hash": "0b09ab25cb",
+      "kind": "whole",
+      "file": "voice/g1-measure/oclock/hour=2.mp3"
+    },
+    "g1-measure/oclock/hour=3": {
+      "text": "three o'clock!",
+      "hash": "5fa8ee174a",
+      "kind": "whole",
+      "file": "voice/g1-measure/oclock/hour=3.mp3"
+    },
+    "g1-measure/oclock/hour=4": {
+      "text": "four o'clock!",
+      "hash": "aa9633196b",
+      "kind": "whole",
+      "file": "voice/g1-measure/oclock/hour=4.mp3"
+    },
+    "g1-measure/oclock/hour=5": {
+      "text": "five o'clock!",
+      "hash": "5f540b12bf",
+      "kind": "whole",
+      "file": "voice/g1-measure/oclock/hour=5.mp3"
+    },
+    "g1-measure/oclock/hour=6": {
+      "text": "six o'clock!",
+      "hash": "42c42412b4",
+      "kind": "whole",
+      "file": "voice/g1-measure/oclock/hour=6.mp3"
+    },
+    "g1-measure/oclock/hour=7": {
+      "text": "seven o'clock!",
+      "hash": "56bdd584f4",
+      "kind": "whole",
+      "file": "voice/g1-measure/oclock/hour=7.mp3"
+    },
+    "g1-measure/oclock/hour=8": {
+      "text": "eight o'clock!",
+      "hash": "7b8f98a9ba",
+      "kind": "whole",
+      "file": "voice/g1-measure/oclock/hour=8.mp3"
+    },
+    "g1-measure/oclock/hour=9": {
+      "text": "nine o'clock!",
+      "hash": "ab038e950c",
+      "kind": "whole",
+      "file": "voice/g1-measure/oclock/hour=9.mp3"
+    },
+    "g1-measure/oclock/hour=10": {
+      "text": "ten o'clock!",
+      "hash": "21c4bedda5",
+      "kind": "whole",
+      "file": "voice/g1-measure/oclock/hour=10.mp3"
+    },
+    "g1-measure/oclock/hour=11": {
+      "text": "eleven o'clock!",
+      "hash": "d75b1a2fbe",
+      "kind": "whole",
+      "file": "voice/g1-measure/oclock/hour=11.mp3"
+    },
+    "g1-measure/oclock/hour=12": {
+      "text": "twelve o'clock!",
+      "hash": "481bfbac68",
+      "kind": "whole",
+      "file": "voice/g1-measure/oclock/hour=12.mp3"
+    },
+    "g1-measure/halfPast/hour=1": {
+      "text": "Half past one!",
+      "hash": "b232e8c78c",
+      "kind": "whole",
+      "file": "voice/g1-measure/halfPast/hour=1.mp3"
+    },
+    "g1-measure/halfPast/hour=2": {
+      "text": "Half past two!",
+      "hash": "fc60b3dc66",
+      "kind": "whole",
+      "file": "voice/g1-measure/halfPast/hour=2.mp3"
+    },
+    "g1-measure/halfPast/hour=3": {
+      "text": "Half past three!",
+      "hash": "91c2c56df8",
+      "kind": "whole",
+      "file": "voice/g1-measure/halfPast/hour=3.mp3"
+    },
+    "g1-measure/halfPast/hour=4": {
+      "text": "Half past four!",
+      "hash": "875f431f9d",
+      "kind": "whole",
+      "file": "voice/g1-measure/halfPast/hour=4.mp3"
+    },
+    "g1-measure/halfPast/hour=5": {
+      "text": "Half past five!",
+      "hash": "6e55a92c6e",
+      "kind": "whole",
+      "file": "voice/g1-measure/halfPast/hour=5.mp3"
+    },
+    "g1-measure/halfPast/hour=6": {
+      "text": "Half past six!",
+      "hash": "e832a087c5",
+      "kind": "whole",
+      "file": "voice/g1-measure/halfPast/hour=6.mp3"
+    },
+    "g1-measure/halfPast/hour=7": {
+      "text": "Half past seven!",
+      "hash": "ea90a432b2",
+      "kind": "whole",
+      "file": "voice/g1-measure/halfPast/hour=7.mp3"
+    },
+    "g1-measure/halfPast/hour=8": {
+      "text": "Half past eight!",
+      "hash": "c433bb3d01",
+      "kind": "whole",
+      "file": "voice/g1-measure/halfPast/hour=8.mp3"
+    },
+    "g1-measure/halfPast/hour=9": {
+      "text": "Half past nine!",
+      "hash": "03639e8ada",
+      "kind": "whole",
+      "file": "voice/g1-measure/halfPast/hour=9.mp3"
+    },
+    "g1-measure/halfPast/hour=10": {
+      "text": "Half past ten!",
+      "hash": "a8d51081cd",
+      "kind": "whole",
+      "file": "voice/g1-measure/halfPast/hour=10.mp3"
+    },
+    "g1-measure/halfPast/hour=11": {
+      "text": "Half past eleven!",
+      "hash": "055e3927e8",
+      "kind": "whole",
+      "file": "voice/g1-measure/halfPast/hour=11.mp3"
+    },
+    "g1-measure/halfPast/hour=12": {
+      "text": "Half past twelve!",
+      "hash": "79b907fef5",
+      "kind": "whole",
+      "file": "voice/g1-measure/halfPast/hour=12.mp3"
+    },
+    "g1-measure/tapOclock/hour=1": {
+      "text": "Tap the clock that shows one o'clock.",
+      "hash": "cec6b982ca",
+      "kind": "whole",
+      "file": "voice/g1-measure/tapOclock/hour=1.mp3"
+    },
+    "g1-measure/tapOclock/hour=2": {
+      "text": "Tap the clock that shows two o'clock.",
+      "hash": "9b0e4e055a",
+      "kind": "whole",
+      "file": "voice/g1-measure/tapOclock/hour=2.mp3"
+    },
+    "g1-measure/tapOclock/hour=3": {
+      "text": "Tap the clock that shows three o'clock.",
+      "hash": "f13b4c9818",
+      "kind": "whole",
+      "file": "voice/g1-measure/tapOclock/hour=3.mp3"
+    },
+    "g1-measure/tapOclock/hour=4": {
+      "text": "Tap the clock that shows four o'clock.",
+      "hash": "8b8a435546",
+      "kind": "whole",
+      "file": "voice/g1-measure/tapOclock/hour=4.mp3"
+    },
+    "g1-measure/tapOclock/hour=5": {
+      "text": "Tap the clock that shows five o'clock.",
+      "hash": "2ac668bc9d",
+      "kind": "whole",
+      "file": "voice/g1-measure/tapOclock/hour=5.mp3"
+    },
+    "g1-measure/tapOclock/hour=6": {
+      "text": "Tap the clock that shows six o'clock.",
+      "hash": "e950780437",
+      "kind": "whole",
+      "file": "voice/g1-measure/tapOclock/hour=6.mp3"
+    },
+    "g1-measure/tapOclock/hour=7": {
+      "text": "Tap the clock that shows seven o'clock.",
+      "hash": "f5adfac1ac",
+      "kind": "whole",
+      "file": "voice/g1-measure/tapOclock/hour=7.mp3"
+    },
+    "g1-measure/tapOclock/hour=8": {
+      "text": "Tap the clock that shows eight o'clock.",
+      "hash": "b0909138ed",
+      "kind": "whole",
+      "file": "voice/g1-measure/tapOclock/hour=8.mp3"
+    },
+    "g1-measure/tapOclock/hour=9": {
+      "text": "Tap the clock that shows nine o'clock.",
+      "hash": "3aaffd0f7e",
+      "kind": "whole",
+      "file": "voice/g1-measure/tapOclock/hour=9.mp3"
+    },
+    "g1-measure/tapOclock/hour=10": {
+      "text": "Tap the clock that shows ten o'clock.",
+      "hash": "469c9c6776",
+      "kind": "whole",
+      "file": "voice/g1-measure/tapOclock/hour=10.mp3"
+    },
+    "g1-measure/tapOclock/hour=11": {
+      "text": "Tap the clock that shows eleven o'clock.",
+      "hash": "8c52d0d704",
+      "kind": "whole",
+      "file": "voice/g1-measure/tapOclock/hour=11.mp3"
+    },
+    "g1-measure/tapOclock/hour=12": {
+      "text": "Tap the clock that shows twelve o'clock.",
+      "hash": "6e89e08899",
+      "kind": "whole",
+      "file": "voice/g1-measure/tapOclock/hour=12.mp3"
+    },
+    "g1-measure/tapHalf/hour=1": {
+      "text": "Tap the clock that shows half past one.",
+      "hash": "1727fc0b2f",
+      "kind": "whole",
+      "file": "voice/g1-measure/tapHalf/hour=1.mp3"
+    },
+    "g1-measure/tapHalf/hour=2": {
+      "text": "Tap the clock that shows half past two.",
+      "hash": "aae665c26e",
+      "kind": "whole",
+      "file": "voice/g1-measure/tapHalf/hour=2.mp3"
+    },
+    "g1-measure/tapHalf/hour=3": {
+      "text": "Tap the clock that shows half past three.",
+      "hash": "40ec180de8",
+      "kind": "whole",
+      "file": "voice/g1-measure/tapHalf/hour=3.mp3"
+    },
+    "g1-measure/tapHalf/hour=4": {
+      "text": "Tap the clock that shows half past four.",
+      "hash": "67b2f550f0",
+      "kind": "whole",
+      "file": "voice/g1-measure/tapHalf/hour=4.mp3"
+    },
+    "g1-measure/tapHalf/hour=5": {
+      "text": "Tap the clock that shows half past five.",
+      "hash": "8cb127a4df",
+      "kind": "whole",
+      "file": "voice/g1-measure/tapHalf/hour=5.mp3"
+    },
+    "g1-measure/tapHalf/hour=6": {
+      "text": "Tap the clock that shows half past six.",
+      "hash": "7402f6c94d",
+      "kind": "whole",
+      "file": "voice/g1-measure/tapHalf/hour=6.mp3"
+    },
+    "g1-measure/tapHalf/hour=7": {
+      "text": "Tap the clock that shows half past seven.",
+      "hash": "2afb8a7936",
+      "kind": "whole",
+      "file": "voice/g1-measure/tapHalf/hour=7.mp3"
+    },
+    "g1-measure/tapHalf/hour=8": {
+      "text": "Tap the clock that shows half past eight.",
+      "hash": "023d50ad71",
+      "kind": "whole",
+      "file": "voice/g1-measure/tapHalf/hour=8.mp3"
+    },
+    "g1-measure/tapHalf/hour=9": {
+      "text": "Tap the clock that shows half past nine.",
+      "hash": "5584f41cf1",
+      "kind": "whole",
+      "file": "voice/g1-measure/tapHalf/hour=9.mp3"
+    },
+    "g1-measure/tapHalf/hour=10": {
+      "text": "Tap the clock that shows half past ten.",
+      "hash": "cfc67012e8",
+      "kind": "whole",
+      "file": "voice/g1-measure/tapHalf/hour=10.mp3"
+    },
+    "g1-measure/tapHalf/hour=11": {
+      "text": "Tap the clock that shows half past eleven.",
+      "hash": "4d0355c9fb",
+      "kind": "whole",
+      "file": "voice/g1-measure/tapHalf/hour=11.mp3"
+    },
+    "g1-measure/tapHalf/hour=12": {
+      "text": "Tap the clock that shows half past twelve.",
+      "hash": "1ce2b72f4c",
+      "kind": "whole",
+      "file": "voice/g1-measure/tapHalf/hour=12.mp3"
+    },
+    "g1-measure/saysOclock/hour=1": {
+      "text": "That one says one o'clock.",
+      "hash": "25c9024d3e",
+      "kind": "whole",
+      "file": "voice/g1-measure/saysOclock/hour=1.mp3"
+    },
+    "g1-measure/saysOclock/hour=2": {
+      "text": "That one says two o'clock.",
+      "hash": "e954a3ab21",
+      "kind": "whole",
+      "file": "voice/g1-measure/saysOclock/hour=2.mp3"
+    },
+    "g1-measure/saysOclock/hour=3": {
+      "text": "That one says three o'clock.",
+      "hash": "426f97385a",
+      "kind": "whole",
+      "file": "voice/g1-measure/saysOclock/hour=3.mp3"
+    },
+    "g1-measure/saysOclock/hour=4": {
+      "text": "That one says four o'clock.",
+      "hash": "8172337281",
+      "kind": "whole",
+      "file": "voice/g1-measure/saysOclock/hour=4.mp3"
+    },
+    "g1-measure/saysOclock/hour=5": {
+      "text": "That one says five o'clock.",
+      "hash": "9c3196cfd7",
+      "kind": "whole",
+      "file": "voice/g1-measure/saysOclock/hour=5.mp3"
+    },
+    "g1-measure/saysOclock/hour=6": {
+      "text": "That one says six o'clock.",
+      "hash": "77cdcc9624",
+      "kind": "whole",
+      "file": "voice/g1-measure/saysOclock/hour=6.mp3"
+    },
+    "g1-measure/saysOclock/hour=7": {
+      "text": "That one says seven o'clock.",
+      "hash": "9cd73c508d",
+      "kind": "whole",
+      "file": "voice/g1-measure/saysOclock/hour=7.mp3"
+    },
+    "g1-measure/saysOclock/hour=8": {
+      "text": "That one says eight o'clock.",
+      "hash": "3647252541",
+      "kind": "whole",
+      "file": "voice/g1-measure/saysOclock/hour=8.mp3"
+    },
+    "g1-measure/saysOclock/hour=9": {
+      "text": "That one says nine o'clock.",
+      "hash": "21e4cfba6a",
+      "kind": "whole",
+      "file": "voice/g1-measure/saysOclock/hour=9.mp3"
+    },
+    "g1-measure/saysOclock/hour=10": {
+      "text": "That one says ten o'clock.",
+      "hash": "f8d403e3db",
+      "kind": "whole",
+      "file": "voice/g1-measure/saysOclock/hour=10.mp3"
+    },
+    "g1-measure/saysOclock/hour=11": {
+      "text": "That one says eleven o'clock.",
+      "hash": "1acb45c3b3",
+      "kind": "whole",
+      "file": "voice/g1-measure/saysOclock/hour=11.mp3"
+    },
+    "g1-measure/saysOclock/hour=12": {
+      "text": "That one says twelve o'clock.",
+      "hash": "5bb6d0cef8",
+      "kind": "whole",
+      "file": "voice/g1-measure/saysOclock/hour=12.mp3"
+    },
+    "g1-measure/saysHalf/hour=1": {
+      "text": "That one says half past one.",
+      "hash": "1cf43dfc8c",
+      "kind": "whole",
+      "file": "voice/g1-measure/saysHalf/hour=1.mp3"
+    },
+    "g1-measure/saysHalf/hour=2": {
+      "text": "That one says half past two.",
+      "hash": "1e0d5a02ad",
+      "kind": "whole",
+      "file": "voice/g1-measure/saysHalf/hour=2.mp3"
+    },
+    "g1-measure/saysHalf/hour=3": {
+      "text": "That one says half past three.",
+      "hash": "cabe07e963",
+      "kind": "whole",
+      "file": "voice/g1-measure/saysHalf/hour=3.mp3"
+    },
+    "g1-measure/saysHalf/hour=4": {
+      "text": "That one says half past four.",
+      "hash": "c99986e687",
+      "kind": "whole",
+      "file": "voice/g1-measure/saysHalf/hour=4.mp3"
+    },
+    "g1-measure/saysHalf/hour=5": {
+      "text": "That one says half past five.",
+      "hash": "8be38ee774",
+      "kind": "whole",
+      "file": "voice/g1-measure/saysHalf/hour=5.mp3"
+    },
+    "g1-measure/saysHalf/hour=6": {
+      "text": "That one says half past six.",
+      "hash": "a0c75d419d",
+      "kind": "whole",
+      "file": "voice/g1-measure/saysHalf/hour=6.mp3"
+    },
+    "g1-measure/saysHalf/hour=7": {
+      "text": "That one says half past seven.",
+      "hash": "3fba65f1ab",
+      "kind": "whole",
+      "file": "voice/g1-measure/saysHalf/hour=7.mp3"
+    },
+    "g1-measure/saysHalf/hour=8": {
+      "text": "That one says half past eight.",
+      "hash": "98fd2473e3",
+      "kind": "whole",
+      "file": "voice/g1-measure/saysHalf/hour=8.mp3"
+    },
+    "g1-measure/saysHalf/hour=9": {
+      "text": "That one says half past nine.",
+      "hash": "273359c0b5",
+      "kind": "whole",
+      "file": "voice/g1-measure/saysHalf/hour=9.mp3"
+    },
+    "g1-measure/saysHalf/hour=10": {
+      "text": "That one says half past ten.",
+      "hash": "048f12eff9",
+      "kind": "whole",
+      "file": "voice/g1-measure/saysHalf/hour=10.mp3"
+    },
+    "g1-measure/saysHalf/hour=11": {
+      "text": "That one says half past eleven.",
+      "hash": "bf45bdd1df",
+      "kind": "whole",
+      "file": "voice/g1-measure/saysHalf/hour=11.mp3"
+    },
+    "g1-measure/saysHalf/hour=12": {
+      "text": "That one says half past twelve.",
+      "hash": "4c17bbf950",
+      "kind": "whole",
+      "file": "voice/g1-measure/saysHalf/hour=12.mp3"
+    },
+    "g1-measure/howOclock/hour=1": {
+      "text": "The long hand points up to 12. The short hand points to one. It is one o'clock!",
+      "hash": "d121695649",
+      "kind": "whole",
+      "file": "voice/g1-measure/howOclock/hour=1.mp3"
+    },
+    "g1-measure/howOclock/hour=2": {
+      "text": "The long hand points up to 12. The short hand points to two. It is two o'clock!",
+      "hash": "270729d7ab",
+      "kind": "whole",
+      "file": "voice/g1-measure/howOclock/hour=2.mp3"
+    },
+    "g1-measure/howOclock/hour=3": {
+      "text": "The long hand points up to 12. The short hand points to three. It is three o'clock!",
+      "hash": "b59ce8073e",
+      "kind": "whole",
+      "file": "voice/g1-measure/howOclock/hour=3.mp3"
+    },
+    "g1-measure/howOclock/hour=4": {
+      "text": "The long hand points up to 12. The short hand points to four. It is four o'clock!",
+      "hash": "21af48690f",
+      "kind": "whole",
+      "file": "voice/g1-measure/howOclock/hour=4.mp3"
+    },
+    "g1-measure/howOclock/hour=5": {
+      "text": "The long hand points up to 12. The short hand points to five. It is five o'clock!",
+      "hash": "d4bfc2265d",
+      "kind": "whole",
+      "file": "voice/g1-measure/howOclock/hour=5.mp3"
+    },
+    "g1-measure/howOclock/hour=6": {
+      "text": "The long hand points up to 12. The short hand points to six. It is six o'clock!",
+      "hash": "7608e2890d",
+      "kind": "whole",
+      "file": "voice/g1-measure/howOclock/hour=6.mp3"
+    },
+    "g1-measure/howOclock/hour=7": {
+      "text": "The long hand points up to 12. The short hand points to seven. It is seven o'clock!",
+      "hash": "8e6a1d48a5",
+      "kind": "whole",
+      "file": "voice/g1-measure/howOclock/hour=7.mp3"
+    },
+    "g1-measure/howOclock/hour=8": {
+      "text": "The long hand points up to 12. The short hand points to eight. It is eight o'clock!",
+      "hash": "a037faf35d",
+      "kind": "whole",
+      "file": "voice/g1-measure/howOclock/hour=8.mp3"
+    },
+    "g1-measure/howOclock/hour=9": {
+      "text": "The long hand points up to 12. The short hand points to nine. It is nine o'clock!",
+      "hash": "c7f66799fe",
+      "kind": "whole",
+      "file": "voice/g1-measure/howOclock/hour=9.mp3"
+    },
+    "g1-measure/howOclock/hour=10": {
+      "text": "The long hand points up to 12. The short hand points to ten. It is ten o'clock!",
+      "hash": "228de3ce4e",
+      "kind": "whole",
+      "file": "voice/g1-measure/howOclock/hour=10.mp3"
+    },
+    "g1-measure/howOclock/hour=11": {
+      "text": "The long hand points up to 12. The short hand points to eleven. It is eleven o'clock!",
+      "hash": "15a8c7481f",
+      "kind": "whole",
+      "file": "voice/g1-measure/howOclock/hour=11.mp3"
+    },
+    "g1-measure/howOclock/hour=12": {
+      "text": "The long hand points up to 12. The short hand points to twelve. It is twelve o'clock!",
+      "hash": "a389a2dc31",
+      "kind": "whole",
+      "file": "voice/g1-measure/howOclock/hour=12.mp3"
+    },
+    "g1-measure/howHalf/hour=1": {
+      "text": "The long hand points down to 6. The short hand is just past one, halfway to the next number. It is half past one!",
+      "hash": "fdb6659bc9",
+      "kind": "whole",
+      "file": "voice/g1-measure/howHalf/hour=1.mp3"
+    },
+    "g1-measure/howHalf/hour=2": {
+      "text": "The long hand points down to 6. The short hand is just past two, halfway to the next number. It is half past two!",
+      "hash": "13c5a0f051",
+      "kind": "whole",
+      "file": "voice/g1-measure/howHalf/hour=2.mp3"
+    },
+    "g1-measure/howHalf/hour=3": {
+      "text": "The long hand points down to 6. The short hand is just past three, halfway to the next number. It is half past three!",
+      "hash": "abb5be10c0",
+      "kind": "whole",
+      "file": "voice/g1-measure/howHalf/hour=3.mp3"
+    },
+    "g1-measure/howHalf/hour=4": {
+      "text": "The long hand points down to 6. The short hand is just past four, halfway to the next number. It is half past four!",
+      "hash": "0ef4748b48",
+      "kind": "whole",
+      "file": "voice/g1-measure/howHalf/hour=4.mp3"
+    },
+    "g1-measure/howHalf/hour=5": {
+      "text": "The long hand points down to 6. The short hand is just past five, halfway to the next number. It is half past five!",
+      "hash": "34afdca7c4",
+      "kind": "whole",
+      "file": "voice/g1-measure/howHalf/hour=5.mp3"
+    },
+    "g1-measure/howHalf/hour=6": {
+      "text": "The long hand points down to 6. The short hand is just past six, halfway to the next number. It is half past six!",
+      "hash": "350d920df8",
+      "kind": "whole",
+      "file": "voice/g1-measure/howHalf/hour=6.mp3"
+    },
+    "g1-measure/howHalf/hour=7": {
+      "text": "The long hand points down to 6. The short hand is just past seven, halfway to the next number. It is half past seven!",
+      "hash": "3556b8137d",
+      "kind": "whole",
+      "file": "voice/g1-measure/howHalf/hour=7.mp3"
+    },
+    "g1-measure/howHalf/hour=8": {
+      "text": "The long hand points down to 6. The short hand is just past eight, halfway to the next number. It is half past eight!",
+      "hash": "573328dd1a",
+      "kind": "whole",
+      "file": "voice/g1-measure/howHalf/hour=8.mp3"
+    },
+    "g1-measure/howHalf/hour=9": {
+      "text": "The long hand points down to 6. The short hand is just past nine, halfway to the next number. It is half past nine!",
+      "hash": "42377b8f70",
+      "kind": "whole",
+      "file": "voice/g1-measure/howHalf/hour=9.mp3"
+    },
+    "g1-measure/howHalf/hour=10": {
+      "text": "The long hand points down to 6. The short hand is just past ten, halfway to the next number. It is half past ten!",
+      "hash": "d512a52996",
+      "kind": "whole",
+      "file": "voice/g1-measure/howHalf/hour=10.mp3"
+    },
+    "g1-measure/howHalf/hour=11": {
+      "text": "The long hand points down to 6. The short hand is just past eleven, halfway to the next number. It is half past eleven!",
+      "hash": "d075eba922",
+      "kind": "whole",
+      "file": "voice/g1-measure/howHalf/hour=11.mp3"
+    },
+    "g1-measure/howHalf/hour=12": {
+      "text": "The long hand points down to 6. The short hand is just past twelve, halfway to the next number. It is half past twelve!",
+      "hash": "4d7f14e1f0",
+      "kind": "whole",
+      "file": "voice/g1-measure/howHalf/hour=12.mp3"
+    },
     "g1-phonics/vowelQ-a": {
       "text": "Which one has the short A sound, like apple?",
       "hash": "9e79f5d39f",
@@ -1470,6 +3318,798 @@
       "hash": "b574ab6cdb",
       "kind": "whole",
       "file": "voice/g1-phonics/word/word=thumb.mp3"
+    },
+    "g1-science/whichSound": {
+      "text": "Which one is making a sound? Tap it!",
+      "hash": "c57c883111",
+      "kind": "line",
+      "file": "voice/g1-science/whichSound.mp3"
+    },
+    "g1-science/stillNote": {
+      "text": "That one is still. Things that shake make sound!",
+      "hash": "16a3a22dd2",
+      "kind": "line",
+      "file": "voice/g1-science/stillNote.mp3"
+    },
+    "g1-science/stop-bell": {
+      "text": "The bell is ringing. How can you stop the sound?",
+      "hash": "9446015c65",
+      "kind": "line",
+      "file": "voice/g1-science/stop-bell.mp3"
+    },
+    "g1-science/stop-drum": {
+      "text": "The drum is booming. How can you stop the sound?",
+      "hash": "d861ca327c",
+      "kind": "line",
+      "file": "voice/g1-science/stop-drum.mp3"
+    },
+    "g1-science/stop-guitar": {
+      "text": "The guitar is playing. How can you stop the sound?",
+      "hash": "ad279aa4d5",
+      "kind": "line",
+      "file": "voice/g1-science/stop-guitar.mp3"
+    },
+    "g1-science/hitNote": {
+      "text": "Hitting it makes it shake more. That makes more sound!",
+      "hash": "e9263332f7",
+      "kind": "line",
+      "file": "voice/g1-science/hitNote.mp3"
+    },
+    "g1-science/pluckNote": {
+      "text": "Plucking the strings makes them shake. That makes more sound!",
+      "hash": "9cdef15575",
+      "kind": "line",
+      "file": "voice/g1-science/pluckNote.mp3"
+    },
+    "g1-science/holdNote": {
+      "text": "Hold it still. When it stops shaking, the sound stops!",
+      "hash": "b0ed65d14a",
+      "kind": "line",
+      "file": "voice/g1-science/holdNote.mp3"
+    },
+    "g1-science/name-bell": {
+      "text": "The bell!",
+      "hash": "8b8e963479",
+      "kind": "line",
+      "file": "voice/g1-science/name-bell.mp3"
+    },
+    "g1-science/name-drum": {
+      "text": "The drum!",
+      "hash": "c40e3823d7",
+      "kind": "line",
+      "file": "voice/g1-science/name-drum.mp3"
+    },
+    "g1-science/name-guitar": {
+      "text": "The guitar!",
+      "hash": "38a211d26a",
+      "kind": "line",
+      "file": "voice/g1-science/name-guitar.mp3"
+    },
+    "g1-science/holdIt": {
+      "text": "Hold it still!",
+      "hash": "d412cde684",
+      "kind": "line",
+      "file": "voice/g1-science/holdIt.mp3"
+    },
+    "g1-science/hitIt": {
+      "text": "Hit it!",
+      "hash": "14d30ae17d",
+      "kind": "line",
+      "file": "voice/g1-science/hitIt.mp3"
+    },
+    "g1-science/pluckIt": {
+      "text": "Pluck it!",
+      "hash": "db5924b9d7",
+      "kind": "line",
+      "file": "voice/g1-science/pluckIt.mp3"
+    },
+    "g1-science/thisOne": {
+      "text": "This one!",
+      "hash": "33537a566f",
+      "kind": "line",
+      "file": "voice/g1-science/thisOne.mp3"
+    },
+    "g1-science/darkHelp": {
+      "text": "The room is dark. What helps you see?",
+      "hash": "1b9d96808e",
+      "kind": "line",
+      "file": "voice/g1-science/darkHelp.mp3"
+    },
+    "g1-science/flashlight": {
+      "text": "A flashlight!",
+      "hash": "1d59961cd8",
+      "kind": "line",
+      "file": "voice/g1-science/flashlight.mp3"
+    },
+    "g1-science/lightBulb": {
+      "text": "A light bulb!",
+      "hash": "a6e7cb7988",
+      "kind": "line",
+      "file": "voice/g1-science/lightBulb.mp3"
+    },
+    "g1-science/candle": {
+      "text": "A candle!",
+      "hash": "0ba4817e75",
+      "kind": "line",
+      "file": "voice/g1-science/candle.mp3"
+    },
+    "g1-science/shoe": {
+      "text": "A shoe!",
+      "hash": "1d36a01580",
+      "kind": "line",
+      "file": "voice/g1-science/shoe.mp3"
+    },
+    "g1-science/ball": {
+      "text": "A ball!",
+      "hash": "6d223edee9",
+      "kind": "line",
+      "file": "voice/g1-science/ball.mp3"
+    },
+    "g1-science/balloon": {
+      "text": "A balloon!",
+      "hash": "bc1fedcbb4",
+      "kind": "line",
+      "file": "voice/g1-science/balloon.mp3"
+    },
+    "g1-science/drum": {
+      "text": "A drum!",
+      "hash": "7efba05927",
+      "kind": "line",
+      "file": "voice/g1-science/drum.mp3"
+    },
+    "g1-science/noLight": {
+      "text": "That does not make light. We need light to see!",
+      "hash": "dbb4366e88",
+      "kind": "line",
+      "file": "voice/g1-science/noLight.mp3"
+    },
+    "g1-science/seeToys": {
+      "text": "Tap the room where you can see the toys.",
+      "hash": "fc624d0a69",
+      "kind": "line",
+      "file": "voice/g1-science/seeToys.mp3"
+    },
+    "g1-science/darkNote": {
+      "text": "It is too dark in there. We need light to see!",
+      "hash": "0f9245fca3",
+      "kind": "line",
+      "file": "voice/g1-science/darkNote.mp3"
+    },
+    "g1-science/shadow-tree": {
+      "text": "The sun is shining on the tree. Which picture shows its shadow?",
+      "hash": "5d24f85ff1",
+      "kind": "line",
+      "file": "voice/g1-science/shadow-tree.mp3"
+    },
+    "g1-science/shadow-kid": {
+      "text": "The sun is shining on the girl. Which picture shows her shadow?",
+      "hash": "896021de9f",
+      "kind": "line",
+      "file": "voice/g1-science/shadow-kid.mp3"
+    },
+    "g1-science/shadowSide": {
+      "text": "The shadow is on the side away from the sun!",
+      "hash": "03ec5469ef",
+      "kind": "line",
+      "file": "voice/g1-science/shadowSide.mp3"
+    },
+    "g1-science/shadowBlock": {
+      "text": "It blocks the light, so it makes a shadow!",
+      "hash": "206240a6e6",
+      "kind": "line",
+      "file": "voice/g1-science/shadowBlock.mp3"
+    },
+    "g1-science/seeThrough": {
+      "text": "Tap the one you can see through.",
+      "hash": "e87e6cf672",
+      "kind": "line",
+      "file": "voice/g1-science/seeThrough.mp3"
+    },
+    "g1-science/someLight": {
+      "text": "Tap the one that lets only some light through.",
+      "hash": "b9d0495f3e",
+      "kind": "line",
+      "file": "voice/g1-science/someLight.mp3"
+    },
+    "g1-science/blocksLight": {
+      "text": "Tap the one that blocks the light.",
+      "hash": "6710e94aac",
+      "kind": "line",
+      "file": "voice/g1-science/blocksLight.mp3"
+    },
+    "g1-science/glass": {
+      "text": "Glass!",
+      "hash": "0e89be8bc2",
+      "kind": "line",
+      "file": "voice/g1-science/glass.mp3"
+    },
+    "g1-science/waxPaper": {
+      "text": "Wax paper!",
+      "hash": "42c486c055",
+      "kind": "line",
+      "file": "voice/g1-science/waxPaper.mp3"
+    },
+    "g1-science/wood": {
+      "text": "Wood!",
+      "hash": "fe55219773",
+      "kind": "line",
+      "file": "voice/g1-science/wood.mp3"
+    },
+    "g1-science/note-glass": {
+      "text": "Glass is see-through. Light goes right through it!",
+      "hash": "9f80bb6b70",
+      "kind": "line",
+      "file": "voice/g1-science/note-glass.mp3"
+    },
+    "g1-science/note-waxPaper": {
+      "text": "Wax paper lets some light through. Things look blurry.",
+      "hash": "321e96cbc6",
+      "kind": "line",
+      "file": "voice/g1-science/note-waxPaper.mp3"
+    },
+    "g1-science/note-wood": {
+      "text": "Wood blocks the light. You can't see through it.",
+      "hash": "bfc5174d31",
+      "kind": "line",
+      "file": "voice/g1-science/note-wood.mp3"
+    },
+    "g1-science/tapNight": {
+      "text": "Tap the night sky.",
+      "hash": "44ee4248a5",
+      "kind": "line",
+      "file": "voice/g1-science/tapNight.mp3"
+    },
+    "g1-science/tapDay": {
+      "text": "Tap the day sky.",
+      "hash": "90a78a827e",
+      "kind": "line",
+      "file": "voice/g1-science/tapDay.mp3"
+    },
+    "g1-science/day": {
+      "text": "Day!",
+      "hash": "0ec72c0a03",
+      "kind": "line",
+      "file": "voice/g1-science/day.mp3"
+    },
+    "g1-science/night": {
+      "text": "Night!",
+      "hash": "6ff5492cfb",
+      "kind": "line",
+      "file": "voice/g1-science/night.mp3"
+    },
+    "g1-science/note-day": {
+      "text": "That is the day sky. The sun is up!",
+      "hash": "029e26816c",
+      "kind": "line",
+      "file": "voice/g1-science/note-day.mp3"
+    },
+    "g1-science/note-night": {
+      "text": "That is the night sky. It is dark!",
+      "hash": "5940007218",
+      "kind": "line",
+      "file": "voice/g1-science/note-night.mp3"
+    },
+    "g1-science/seeNight": {
+      "text": "It is night. What can you see in the sky?",
+      "hash": "ede6097e2d",
+      "kind": "line",
+      "file": "voice/g1-science/seeNight.mp3"
+    },
+    "g1-science/seeDay": {
+      "text": "It is day. What can you see in the sky?",
+      "hash": "51d6666dda",
+      "kind": "line",
+      "file": "voice/g1-science/seeDay.mp3"
+    },
+    "g1-science/sun": {
+      "text": "The sun!",
+      "hash": "e9fd28b74e",
+      "kind": "line",
+      "file": "voice/g1-science/sun.mp3"
+    },
+    "g1-science/moon": {
+      "text": "The moon!",
+      "hash": "b0c08c3558",
+      "kind": "line",
+      "file": "voice/g1-science/moon.mp3"
+    },
+    "g1-science/stars": {
+      "text": "The stars!",
+      "hash": "cd1eb933da",
+      "kind": "line",
+      "file": "voice/g1-science/stars.mp3"
+    },
+    "g1-science/note-sun": {
+      "text": "We see the sun in the day.",
+      "hash": "36fe5db8d5",
+      "kind": "line",
+      "file": "voice/g1-science/note-sun.mp3"
+    },
+    "g1-science/note-stars": {
+      "text": "We see the stars at night, when it is dark.",
+      "hash": "7c8038da74",
+      "kind": "line",
+      "file": "voice/g1-science/note-stars.mp3"
+    },
+    "g1-science/whenStars": {
+      "text": "When can you see the stars?",
+      "hash": "f01289525f",
+      "kind": "line",
+      "file": "voice/g1-science/whenStars.mp3"
+    },
+    "g1-science/whenSun": {
+      "text": "When can you see the sun?",
+      "hash": "abc536776d",
+      "kind": "line",
+      "file": "voice/g1-science/whenSun.mp3"
+    },
+    "g1-science/sunRise": {
+      "text": "In the morning, the sun comes up. Tap the sun coming up!",
+      "hash": "046bce7f30",
+      "kind": "line",
+      "file": "voice/g1-science/sunRise.mp3"
+    },
+    "g1-science/sunHigh": {
+      "text": "At lunch time, the sun is high in the sky. Tap it!",
+      "hash": "f831aa8b41",
+      "kind": "line",
+      "file": "voice/g1-science/sunHigh.mp3"
+    },
+    "g1-science/sunSet": {
+      "text": "In the evening, the sun goes down. Tap the sun going down!",
+      "hash": "26af298122",
+      "kind": "line",
+      "file": "voice/g1-science/sunSet.mp3"
+    },
+    "g1-science/note-sunRise": {
+      "text": "That sun is coming up, in the morning.",
+      "hash": "5574a41afe",
+      "kind": "line",
+      "file": "voice/g1-science/note-sunRise.mp3"
+    },
+    "g1-science/note-sunHigh": {
+      "text": "That sun is high up, at lunch time.",
+      "hash": "787e80cd2b",
+      "kind": "line",
+      "file": "voice/g1-science/note-sunHigh.mp3"
+    },
+    "g1-science/note-sunSet": {
+      "text": "That sun is going down, in the evening.",
+      "hash": "709c9fa434",
+      "kind": "line",
+      "file": "voice/g1-science/note-sunSet.mp3"
+    },
+    "g1-science/say-sunRise": {
+      "text": "Coming up!",
+      "hash": "a8ae373dff",
+      "kind": "line",
+      "file": "voice/g1-science/say-sunRise.mp3"
+    },
+    "g1-science/say-sunHigh": {
+      "text": "High in the sky!",
+      "hash": "066c945197",
+      "kind": "line",
+      "file": "voice/g1-science/say-sunHigh.mp3"
+    },
+    "g1-science/say-sunSet": {
+      "text": "Going down!",
+      "hash": "c2e78930fe",
+      "kind": "line",
+      "file": "voice/g1-science/say-sunSet.mp3"
+    },
+    "g1-science/next-sunRise": {
+      "text": "The sun is coming up. What comes next?",
+      "hash": "af33ffa0ef",
+      "kind": "line",
+      "file": "voice/g1-science/next-sunRise.mp3"
+    },
+    "g1-science/next-sunHigh": {
+      "text": "The sun is high in the sky. What comes next?",
+      "hash": "44a0e27b94",
+      "kind": "line",
+      "file": "voice/g1-science/next-sunHigh.mp3"
+    },
+    "g1-science/next-sunSet": {
+      "text": "The sun is going down. What comes next?",
+      "hash": "ee6c09b47d",
+      "kind": "line",
+      "file": "voice/g1-science/next-sunSet.mp3"
+    },
+    "g1-science/next-nightSky": {
+      "text": "It is night. What comes next?",
+      "hash": "4957ab409c",
+      "kind": "line",
+      "file": "voice/g1-science/next-nightSky.mp3"
+    },
+    "g1-science/dayPattern": {
+      "text": "Every day, the sun comes up, goes high, then goes down. Then it is night!",
+      "hash": "7d7b66095e",
+      "kind": "line",
+      "file": "voice/g1-science/dayPattern.mp3"
+    },
+    "g1-science/moreLight": {
+      "text": "Which one has more daylight, summer or winter?",
+      "hash": "f99c13cacd",
+      "kind": "line",
+      "file": "voice/g1-science/moreLight.mp3"
+    },
+    "g1-science/darkEarly": {
+      "text": "Which one gets dark early, summer or winter?",
+      "hash": "b40b76aabd",
+      "kind": "line",
+      "file": "voice/g1-science/darkEarly.mp3"
+    },
+    "g1-science/summer": {
+      "text": "Summer!",
+      "hash": "65dd12d7ce",
+      "kind": "line",
+      "file": "voice/g1-science/summer.mp3"
+    },
+    "g1-science/winter": {
+      "text": "Winter!",
+      "hash": "b5eba5e244",
+      "kind": "line",
+      "file": "voice/g1-science/winter.mp3"
+    },
+    "g1-science/note-summer": {
+      "text": "Summer days are long. The sun stays up late!",
+      "hash": "d4c32a20ed",
+      "kind": "line",
+      "file": "voice/g1-science/note-summer.mp3"
+    },
+    "g1-science/note-winter": {
+      "text": "Winter days are short. It gets dark early!",
+      "hash": "07ac9afbca",
+      "kind": "line",
+      "file": "voice/g1-science/note-winter.mp3"
+    },
+    "g1-science/hen": {
+      "text": "A hen!",
+      "hash": "695233531c",
+      "kind": "line",
+      "file": "voice/g1-science/hen.mp3"
+    },
+    "g1-science/dog": {
+      "text": "A dog!",
+      "hash": "41ae426b12",
+      "kind": "line",
+      "file": "voice/g1-science/dog.mp3"
+    },
+    "g1-science/cat": {
+      "text": "A cat!",
+      "hash": "34badff215",
+      "kind": "line",
+      "file": "voice/g1-science/cat.mp3"
+    },
+    "g1-science/cow": {
+      "text": "A cow!",
+      "hash": "9adb4ff7e8",
+      "kind": "line",
+      "file": "voice/g1-science/cow.mp3"
+    },
+    "g1-science/pig": {
+      "text": "A pig!",
+      "hash": "628b931c83",
+      "kind": "line",
+      "file": "voice/g1-science/pig.mp3"
+    },
+    "g1-science/horse": {
+      "text": "A horse!",
+      "hash": "c0a9579296",
+      "kind": "line",
+      "file": "voice/g1-science/horse.mp3"
+    },
+    "g1-science/rabbit": {
+      "text": "A rabbit!",
+      "hash": "55e7a2c481",
+      "kind": "line",
+      "file": "voice/g1-science/rabbit.mp3"
+    },
+    "g1-science/monkey": {
+      "text": "A monkey!",
+      "hash": "b69c0332df",
+      "kind": "line",
+      "file": "voice/g1-science/monkey.mp3"
+    },
+    "g1-science/grows-chick": {
+      "text": "A chick grows up to be a hen. It looks like its mom!",
+      "hash": "c4425bace3",
+      "kind": "line",
+      "file": "voice/g1-science/grows-chick.mp3"
+    },
+    "g1-science/grows-puppy": {
+      "text": "A puppy grows up to be a dog. It looks like its mom!",
+      "hash": "0a3be6bb31",
+      "kind": "line",
+      "file": "voice/g1-science/grows-puppy.mp3"
+    },
+    "g1-science/grows-kitten": {
+      "text": "A kitten grows up to be a cat. It looks like its mom!",
+      "hash": "b2d533eb0a",
+      "kind": "line",
+      "file": "voice/g1-science/grows-kitten.mp3"
+    },
+    "g1-science/grows-calf": {
+      "text": "A calf grows up to be a cow. It looks like its mom!",
+      "hash": "2af61d74d2",
+      "kind": "line",
+      "file": "voice/g1-science/grows-calf.mp3"
+    },
+    "g1-science/grows-piglet": {
+      "text": "A piglet grows up to be a pig. It looks like its mom!",
+      "hash": "6e9ed0fe1c",
+      "kind": "line",
+      "file": "voice/g1-science/grows-piglet.mp3"
+    },
+    "g1-science/grows-foal": {
+      "text": "A foal grows up to be a horse. It looks like its mom!",
+      "hash": "63de82cd48",
+      "kind": "line",
+      "file": "voice/g1-science/grows-foal.mp3"
+    },
+    "g1-science/grows-bunny": {
+      "text": "A bunny grows up to be a rabbit. It looks like its mom!",
+      "hash": "3606e8fe0a",
+      "kind": "line",
+      "file": "voice/g1-science/grows-bunny.mp3"
+    },
+    "g1-science/grows-baby-monkey": {
+      "text": "A baby monkey grows up to be a monkey. It looks like its mom!",
+      "hash": "50b89520ba",
+      "kind": "line",
+      "file": "voice/g1-science/grows-baby-monkey.mp3"
+    },
+    "g1-science/helpFeed": {
+      "text": "Which parent is feeding its babies?",
+      "hash": "d3ccc7ccb0",
+      "kind": "line",
+      "file": "voice/g1-science/helpFeed.mp3"
+    },
+    "g1-science/helpWarm": {
+      "text": "Which parent is keeping its eggs warm?",
+      "hash": "708235f294",
+      "kind": "line",
+      "file": "voice/g1-science/helpWarm.mp3"
+    },
+    "g1-science/helpCarry": {
+      "text": "Which parent is carrying its baby?",
+      "hash": "0291d9447d",
+      "kind": "line",
+      "file": "voice/g1-science/helpCarry.mp3"
+    },
+    "g1-science/does-birdFeeds": {
+      "text": "That bird is feeding its babies.",
+      "hash": "5a0520ca8f",
+      "kind": "line",
+      "file": "voice/g1-science/does-birdFeeds.mp3"
+    },
+    "g1-science/does-henWarms": {
+      "text": "That hen is keeping her eggs warm.",
+      "hash": "1139b22f72",
+      "kind": "line",
+      "file": "voice/g1-science/does-henWarms.mp3"
+    },
+    "g1-science/does-monkeyCarries": {
+      "text": "That monkey is carrying her baby.",
+      "hash": "92fb0cb970",
+      "kind": "line",
+      "file": "voice/g1-science/does-monkeyCarries.mp3"
+    },
+    "g1-science/say-birdFeeds": {
+      "text": "Feeding!",
+      "hash": "1aa21e7f52",
+      "kind": "line",
+      "file": "voice/g1-science/say-birdFeeds.mp3"
+    },
+    "g1-science/say-henWarms": {
+      "text": "Keeping warm!",
+      "hash": "ff737cf7f3",
+      "kind": "line",
+      "file": "voice/g1-science/say-henWarms.mp3"
+    },
+    "g1-science/say-monkeyCarries": {
+      "text": "Carrying!",
+      "hash": "902a3d7612",
+      "kind": "line",
+      "file": "voice/g1-science/say-monkeyCarries.mp3"
+    },
+    "g1-science/part-shell": {
+      "text": "Which one has a hard shell to stay safe?",
+      "hash": "62602a4546",
+      "kind": "line",
+      "file": "voice/g1-science/part-shell.mp3"
+    },
+    "g1-science/part-spines": {
+      "text": "Which plant has sharp spines to stay safe?",
+      "hash": "603589a1db",
+      "kind": "line",
+      "file": "voice/g1-science/part-spines.mp3"
+    },
+    "g1-science/part-wings": {
+      "text": "Which one has wings to fly?",
+      "hash": "2537de54a9",
+      "kind": "line",
+      "file": "voice/g1-science/part-wings.mp3"
+    },
+    "g1-science/part-fins": {
+      "text": "Which one has fins to swim?",
+      "hash": "01e6047b12",
+      "kind": "line",
+      "file": "voice/g1-science/part-fins.mp3"
+    },
+    "g1-science/part-trunk": {
+      "text": "Which one has a long trunk to drink and grab?",
+      "hash": "81b5614cdd",
+      "kind": "line",
+      "file": "voice/g1-science/part-trunk.mp3"
+    },
+    "g1-science/part-ears": {
+      "text": "Which one has big ears to hear danger?",
+      "hash": "b58013048e",
+      "kind": "line",
+      "file": "voice/g1-science/part-ears.mp3"
+    },
+    "g1-science/turtle": {
+      "text": "A turtle!",
+      "hash": "3f4a3dbbf3",
+      "kind": "line",
+      "file": "voice/g1-science/turtle.mp3"
+    },
+    "g1-science/cactus": {
+      "text": "A cactus!",
+      "hash": "4171826318",
+      "kind": "line",
+      "file": "voice/g1-science/cactus.mp3"
+    },
+    "g1-science/sunflower": {
+      "text": "A sunflower!",
+      "hash": "90c5dc2416",
+      "kind": "line",
+      "file": "voice/g1-science/sunflower.mp3"
+    },
+    "g1-science/tulip": {
+      "text": "A tulip!",
+      "hash": "2a6f1ec330",
+      "kind": "line",
+      "file": "voice/g1-science/tulip.mp3"
+    },
+    "g1-science/bird": {
+      "text": "A bird!",
+      "hash": "bdba9ec743",
+      "kind": "line",
+      "file": "voice/g1-science/bird.mp3"
+    },
+    "g1-science/fish": {
+      "text": "A fish!",
+      "hash": "760b47db49",
+      "kind": "line",
+      "file": "voice/g1-science/fish.mp3"
+    },
+    "g1-science/elephant": {
+      "text": "An elephant!",
+      "hash": "d61c3318b4",
+      "kind": "line",
+      "file": "voice/g1-science/elephant.mp3"
+    },
+    "g1-science/has-turtle": {
+      "text": "A turtle has a hard shell to stay safe.",
+      "hash": "1a907b1853",
+      "kind": "line",
+      "file": "voice/g1-science/has-turtle.mp3"
+    },
+    "g1-science/has-cactus": {
+      "text": "A cactus has sharp spines to stay safe.",
+      "hash": "aac1e8182c",
+      "kind": "line",
+      "file": "voice/g1-science/has-cactus.mp3"
+    },
+    "g1-science/has-sunflower": {
+      "text": "A sunflower has big leaves to catch the sun.",
+      "hash": "a904f4f47e",
+      "kind": "line",
+      "file": "voice/g1-science/has-sunflower.mp3"
+    },
+    "g1-science/has-tulip": {
+      "text": "A tulip has a stem to stand up tall.",
+      "hash": "1ccc0098c3",
+      "kind": "line",
+      "file": "voice/g1-science/has-tulip.mp3"
+    },
+    "g1-science/has-bird": {
+      "text": "A bird has wings to fly.",
+      "hash": "13ccee51df",
+      "kind": "line",
+      "file": "voice/g1-science/has-bird.mp3"
+    },
+    "g1-science/has-fish": {
+      "text": "A fish has fins to swim.",
+      "hash": "0a9a4962de",
+      "kind": "line",
+      "file": "voice/g1-science/has-fish.mp3"
+    },
+    "g1-science/has-elephant": {
+      "text": "An elephant has a long trunk to drink and grab.",
+      "hash": "7a2e240a25",
+      "kind": "line",
+      "file": "voice/g1-science/has-elephant.mp3"
+    },
+    "g1-science/has-rabbit": {
+      "text": "A rabbit has big ears to hear danger.",
+      "hash": "21c7a95046",
+      "kind": "line",
+      "file": "voice/g1-science/has-rabbit.mp3"
+    },
+    "g1-science/has-cat": {
+      "text": "A cat has sharp claws to climb.",
+      "hash": "ec0b895c27",
+      "kind": "line",
+      "file": "voice/g1-science/has-cat.mp3"
+    },
+    "g1-science/has-dog": {
+      "text": "A dog has a good nose to smell.",
+      "hash": "981295a6af",
+      "kind": "line",
+      "file": "voice/g1-science/has-dog.mp3"
+    },
+    "g1-science/skyScientist": {
+      "text": "You are a sky scientist!",
+      "hash": "117b122696",
+      "kind": "line",
+      "file": "voice/g1-science/skyScientist.mp3"
+    },
+    "g1-science/greatLooking": {
+      "text": "Great looking!",
+      "hash": "2526d25990",
+      "kind": "line",
+      "file": "voice/g1-science/greatLooking.mp3"
+    },
+    "g1-science/baby/baby=chick": {
+      "text": "This is a chick. Tap its parent!",
+      "hash": "ae5b774fdf",
+      "kind": "whole",
+      "file": "voice/g1-science/baby/baby=chick.mp3"
+    },
+    "g1-science/baby/baby=puppy": {
+      "text": "This is a puppy. Tap its parent!",
+      "hash": "e74b184f5c",
+      "kind": "whole",
+      "file": "voice/g1-science/baby/baby=puppy.mp3"
+    },
+    "g1-science/baby/baby=kitten": {
+      "text": "This is a kitten. Tap its parent!",
+      "hash": "19797298bc",
+      "kind": "whole",
+      "file": "voice/g1-science/baby/baby=kitten.mp3"
+    },
+    "g1-science/baby/baby=calf": {
+      "text": "This is a calf. Tap its parent!",
+      "hash": "928856a96c",
+      "kind": "whole",
+      "file": "voice/g1-science/baby/baby=calf.mp3"
+    },
+    "g1-science/baby/baby=piglet": {
+      "text": "This is a piglet. Tap its parent!",
+      "hash": "ddcbc11760",
+      "kind": "whole",
+      "file": "voice/g1-science/baby/baby=piglet.mp3"
+    },
+    "g1-science/baby/baby=foal": {
+      "text": "This is a foal. Tap its parent!",
+      "hash": "837c63f0cb",
+      "kind": "whole",
+      "file": "voice/g1-science/baby/baby=foal.mp3"
+    },
+    "g1-science/baby/baby=bunny": {
+      "text": "This is a bunny. Tap its parent!",
+      "hash": "925b95a568",
+      "kind": "whole",
+      "file": "voice/g1-science/baby/baby=bunny.mp3"
+    },
+    "g1-science/baby/baby=baby-monkey": {
+      "text": "This is a baby monkey. Tap its parent!",
+      "hash": "7fe4ab376d",
+      "kind": "whole",
+      "file": "voice/g1-science/baby/baby=baby-monkey.mp3"
     },
     "g1-shapes/sides3": {
       "text": "Tap the shape with three sides and three corners.",
@@ -17808,6 +20448,84 @@
       "hash": "84e89eac3f",
       "kind": "line",
       "file": "voice/k-nav/stage-g1-shapes-3.mp3"
+    },
+    "k-nav/stage-g1-measure-1": {
+      "text": "Longest to shortest!",
+      "hash": "e5e8ddae6a",
+      "kind": "line",
+      "file": "voice/k-nav/stage-g1-measure-1.mp3"
+    },
+    "k-nav/stage-g1-measure-2": {
+      "text": "Paper clip ruler!",
+      "hash": "c1af99b016",
+      "kind": "line",
+      "file": "voice/k-nav/stage-g1-measure-2.mp3"
+    },
+    "k-nav/stage-g1-measure-3": {
+      "text": "What time is it?",
+      "hash": "b5156f67a5",
+      "kind": "line",
+      "file": "voice/k-nav/stage-g1-measure-3.mp3"
+    },
+    "k-nav/name-g1-data-delta": {
+      "text": "Graph Delta!",
+      "hash": "c4bfb2b97b",
+      "kind": "line",
+      "file": "voice/k-nav/name-g1-data-delta.mp3"
+    },
+    "k-nav/welcome-g1-data-delta": {
+      "text": "Graph Delta! Tap a star to play!",
+      "hash": "2640ee8689",
+      "kind": "line",
+      "file": "voice/k-nav/welcome-g1-data-delta.mp3"
+    },
+    "k-nav/stage-g1-graphs-1": {
+      "text": "Make a graph!",
+      "hash": "9004a3a8c7",
+      "kind": "line",
+      "file": "voice/k-nav/stage-g1-graphs-1.mp3"
+    },
+    "k-nav/stage-g1-graphs-2": {
+      "text": "Read the graph!",
+      "hash": "fd2ec61011",
+      "kind": "line",
+      "file": "voice/k-nav/stage-g1-graphs-2.mp3"
+    },
+    "k-nav/stage-g1-graphs-3": {
+      "text": "Tally marks!",
+      "hash": "5603cdb4a1",
+      "kind": "line",
+      "file": "voice/k-nav/stage-g1-graphs-3.mp3"
+    },
+    "k-nav/name-g1-science-summit": {
+      "text": "Sky Summit!",
+      "hash": "a57c9b2dfe",
+      "kind": "line",
+      "file": "voice/k-nav/name-g1-science-summit.mp3"
+    },
+    "k-nav/welcome-g1-science-summit": {
+      "text": "Sky Summit! Tap a star to play!",
+      "hash": "c5f5a99980",
+      "kind": "line",
+      "file": "voice/k-nav/welcome-g1-science-summit.mp3"
+    },
+    "k-nav/stage-g1-science-1": {
+      "text": "Light and sound!",
+      "hash": "801e967175",
+      "kind": "line",
+      "file": "voice/k-nav/stage-g1-science-1.mp3"
+    },
+    "k-nav/stage-g1-science-2": {
+      "text": "Day and night sky!",
+      "hash": "7ea17ff397",
+      "kind": "line",
+      "file": "voice/k-nav/stage-g1-science-2.mp3"
+    },
+    "k-nav/stage-g1-science-3": {
+      "text": "Animal families!",
+      "hash": "77bb56f0dd",
+      "kind": "line",
+      "file": "voice/k-nav/stage-g1-science-3.mp3"
     },
     "k-rhymes/youHearRhyme": {
       "text": "You can hear the rhyme!",

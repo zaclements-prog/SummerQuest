@@ -3,7 +3,7 @@ import type { Zone } from './types'
 export const dataGraphZone: Zone = {
   id: 'data-delta',
   title: 'Data Delta',
-  titleByBand: { k1: 'Sorting Delta' },
+  titleByBand: { k1: 'Sorting Delta', g1: 'Graph Delta' },
   subtitle: 'Reading bar graphs',
   emoji: '📊',
   themeColor: 'ocean',
@@ -78,6 +78,43 @@ export const dataGraphZone: Zone = {
         gameId: 'listenPlay',
         providerConfig: { kind: 'kSort', mode: 'mix' },
         params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+    ],
+    // 1st grade (phase 2b) "Graph Delta" (1.MD.4): sort what our friends picked
+    // into a picture graph, one picture each → read picture graphs: how many,
+    // the most and the fewest, how many in all → tally graphs, and how many
+    // more or fewer. Up to three rows, each marked with a picture (never a word):
+    // the `graph` activity.
+    g1: [
+      {
+        id: 'g1-graphs-1',
+        kind: 'concept',
+        title: 'Make a graph',
+        description: 'Put each one in its row. Then count!',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Graphs', mode: 'build' },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-graphs-2',
+        kind: 'practice',
+        title: 'Read the graph',
+        description: 'Which has the most? How many in all?',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Graphs', mode: 'read' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-graphs-3',
+        kind: 'mastery',
+        title: 'Tally marks',
+        description: 'Count the tally marks. How many more?',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Graphs', mode: 'tally' },
+        params: { questionCount: 6 },
         starsToEarn: 3,
       },
     ],

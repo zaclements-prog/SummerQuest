@@ -5,6 +5,8 @@ import { M } from '../../tutoring/motion/palette'
 import { G1_SHARE_DRAWINGS } from './sharesArt'
 import { G1_SHAPE_DRAWINGS } from './g1ShapesArt'
 import { G1_SIGN_DRAWINGS } from './activities/tensSigns'
+// 1st grade (phase 2b): Measure Marsh's units, Sky Summit's light, sound, sky and families
+import { G1_DRAWINGS } from './drawingsG1'
 
 /**
  * Drawn pictures for the Listen & Play cards (`Picture` kind `art`): things
@@ -471,6 +473,8 @@ export const DRAWINGS: Record<string, () => ReactNode> = {
       <Arrow a={[78, 80]} b={[78, 46]} color={MOVE} w={6} head={9} />
     </Backdrop>
   ),
+  // 1st grade (phase 2b): Measure Marsh's units, Sky Summit (./drawingsG1)
+  ...G1_DRAWINGS,
 }
 
 // 1st grade (phase 2b): Fair Share Falls' shares, Shape Grove's shapes and Tens Plateau's signs (each module names its own)

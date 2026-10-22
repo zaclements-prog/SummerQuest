@@ -30,6 +30,11 @@ function kConfigs(): { label: string; config: ProviderConfig }[] {
       // (phase 2a: Nature Summit and Counting Towers)
       if (c.kind === 'kScience' || c.kind === 'kTowers') seen.set(JSON.stringify(c), { label: stage.id, config: c })
     }
+    // (1st grade, phase 2b: Sky Summit's picture cards keep the same contract)
+    for (const stage of zoneStages(zone, 1)) {
+      const c = stage.providerConfig
+      if (c.kind === 'g1Science') seen.set(JSON.stringify(c), { label: stage.id, config: c })
+    }
   }
   const extra: ProviderConfig[] = [
     { kind: 'kCounting' },

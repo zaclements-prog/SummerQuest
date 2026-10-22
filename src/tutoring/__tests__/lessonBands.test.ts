@@ -35,6 +35,10 @@ const G1_OWN: Record<string, string> = {
   g1Tens: 'place-value-plateau',
   g1Shares: 'fraction-falls',
   g1Shapes: 'geometry-grove',
+  // Measure Marsh, Graph Delta, Sky Summit
+  g1Measure: 'measurement-marsh',
+  g1Graphs: 'data-delta',
+  g1Science: 'science-summit',
 }
 /** 1st grade's lessons: its own, then kindergarten's for the zones it has none of its own for. */
 const G1_LESSONS = [...Object.keys(G1_OWN), ...K_PILOT.filter((id) => !Object.values(G1_OWN).includes(getLesson(id)!.zoneId))]
@@ -197,6 +201,27 @@ describe('practice links stay in the band', () => {
       // and a K child who opens a 2–4 lesson of the zone lands on a K stage (Tower Battlefront has none)
       const old = g24Lessons.find((o) => o.zoneId === l.zoneId)
       if (old) expect(fixed[l.id]).toContain(practiceStageFor(old, undefined, 0, zone))
+    }
+  })
+
+  it('the 1st-grade lessons practice their own first stages, and never cross bands', () => {
+    const fixed: Record<string, string[]> = {
+      // Measure Marsh, Graph Delta, Sky Summit
+      g1Measure: ['g1-measure-1', 'g1-measure-2', 'g1-measure-3'],
+      g1Graphs: ['g1-graphs-1', 'g1-graphs-2', 'g1-graphs-3'],
+      g1Science: ['g1-science-1', 'g1-science-2', 'g1-science-3'],
+    }
+    for (const [id, stages] of Object.entries(fixed)) {
+      const l = getLesson(id)!
+      expect(l, id).toBeDefined()
+      expect(lessonBand(l)).toBe('g1')
+      expect(l.practiceStageId).toBe(stages[0])
+      const zone = getZone(l.zoneId)!
+      expect(zoneStages(zone, 1).map((s) => s.id)).toEqual(stages)
+      expect(practiceHref(l, undefined, 1)).toBe(`/play/${l.zoneId}/${stages[0]}`)
+      // a kindergartner (or a 3rd grader) who opens it lands in their own band's set
+      expect(zoneStages(zone, 0).map((s) => s.id)).toContain(practiceStageFor(l, undefined, 0))
+      expect(zone.stages.map((s) => s.id)).toContain(practiceStageFor(l, undefined, 3))
     }
   })
 })

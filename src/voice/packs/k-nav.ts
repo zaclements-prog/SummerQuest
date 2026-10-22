@@ -174,5 +174,20 @@ export default defineVoicePack({
     'stage-g1-shapes-1': 'Still a triangle?',
     'stage-g1-shapes-2': 'Put shapes together!',
     'stage-g1-shapes-3': 'Roll or stack!',
+
+    // ── 1st grade (phase 2b): Measure Marsh (keeps its name), Graph Delta, Sky Summit ──
+    'stage-g1-measure-1': 'Longest to shortest!',
+    'stage-g1-measure-2': 'Paper clip ruler!',
+    'stage-g1-measure-3': 'What time is it?',
+    'name-g1-data-delta': 'Graph Delta!',
+    'welcome-g1-data-delta': 'Graph Delta! Tap a star to play!',
+    'stage-g1-graphs-1': 'Make a graph!',
+    'stage-g1-graphs-2': 'Read the graph!',
+    'stage-g1-graphs-3': 'Tally marks!',
+    'name-g1-science-summit': 'Sky Summit!',
+    'welcome-g1-science-summit': 'Sky Summit! Tap a star to play!',
+    'stage-g1-science-1': 'Light and sound!',
+    'stage-g1-science-2': 'Day and night sky!',
+    'stage-g1-science-3': 'Animal families!',
   },
 })

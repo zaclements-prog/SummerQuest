@@ -250,6 +250,11 @@ export function effectiveConfig(
     case 'g1Shares':
     case 'g1Shapes':
       return config
+    // 1st grade (phase 2b): Measure Marsh, Graph Delta, Sky Summit play as written
+    case 'g1Measure':
+    case 'g1Graphs':
+    case 'g1Science':
+      return config
   }
 }
 

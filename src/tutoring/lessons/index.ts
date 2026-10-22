@@ -32,6 +32,10 @@ import { g1WritingLesson } from './g1Writing'
 import { g1TensLesson } from './g1Tens'
 import { g1SharesLesson } from './g1Shares'
 import { g1ShapesLesson } from './g1Shapes'
+// 1st grade (phase 2b): Measure Marsh, Graph Delta, Sky Summit
+import { g1MeasureLesson } from './g1Measure'
+import { g1GraphsLesson } from './g1Graphs'
+import { g1ScienceLesson } from './g1Science'
 
 /**
  * The lessons, by content band (lib/gradeBand; K–5 plan §2): kindergarten and
@@ -83,6 +87,10 @@ export const g1Lessons: Lesson[] = [
   g1TensLesson,
   g1SharesLesson,
   g1ShapesLesson,
+  // Measure Marsh, Graph Delta, Sky Summit
+  g1MeasureLesson,
+  g1GraphsLesson,
+  g1ScienceLesson,
 ]
 
 /** 5th grade (band `g5`). */
