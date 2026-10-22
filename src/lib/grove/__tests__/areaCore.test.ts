@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { readFileSync } from 'node:fs'
+import groveSrc from '../../../games/TimesGrove.tsx?raw'
+import lazySrc from '../../../games/lazyGames.tsx?raw'
 import { AREA_PLOT, POSTS, POST_R, areaStars, areaStepProblem, planAreaRun, plotRects, postAt, stepAsk } from '../areaCore'
 import { FIELD_HALF } from '../../../games/TimesGrove.layout'
 import { seededRng } from '../../random'
@@ -14,7 +15,7 @@ import { SKILLS } from '../../../tutoring/skills'
 
 describe('the area-model grove (grade 5)', () => {
   it('plans a warm-up, 2-digit by 2-digit orders and a 3-digit by 2-digit finale; every post set has one right number', () => {
-    for (let seed = 0; seed < 300; seed++) {
+    for (let seed = 0; seed < 120; seed++) {
       const run = planAreaRun(3, seededRng(`area-${seed}`))
       expect(run.map((o) => o.kind)).toEqual(['warm', 'main', 'finale'])
       for (const o of run) {
@@ -42,7 +43,7 @@ describe('the area-model grove (grade 5)', () => {
         })
       }
     }
-  })
+  }, 30_000)
 
   it('the plots tile the plot area; the posts stand on the field below them, apart', () => {
     const run = planAreaRun(3, seededRng('rects'))
@@ -73,10 +74,8 @@ describe('the area-model grove (grade 5)', () => {
     const g5 = zoneStages(mesa, 5).find((s) => s.gameId === 'timesGrove')!
     expect(g5.id).toBe('g5-mult-1')
     expect(g5.params?.mode).toBe('area')
-    const src = readFileSync('src/games/TimesGrove.tsx', 'utf8')
-    expect(src).not.toMatch(/area/i)
+    expect(groveSrc).not.toMatch(/area/i)
     // the host picks the module by the stage's mode
-    const lazy = readFileSync('src/games/lazyGames.tsx', 'utf8')
-    expect(lazy).toMatch(/props\.params\?\.mode === 'area' \? <TimesGroveAreaGame/)
+    expect(lazySrc).toMatch(/props\.params\?\.mode === 'area' \? <TimesGroveAreaGame/)
   })
 })

@@ -582,5 +582,67 @@
       "stepId": "families",
       "text": "A puppy looks like its mom, but not just the same. Parents feed their babies and keep them warm. Your turn!"
     }
+  ],
+  "g5Multiplication": [
+    {
+      "stepId": "split",
+      "text": "To multiply twenty-three by fourteen, split each number by place value. Twenty-three is twenty plus three, and fourteen is ten plus four. Draw a rectangle and cut it into four boxes, one for each pair of parts. This is an area model."
+    },
+    {
+      "stepId": "partials",
+      "text": "Now fill each box. Twenty times ten is two hundred. Twenty times four is eighty. Three times ten is thirty. Three times four is twelve. These four numbers are the partial products."
+    },
+    {
+      "stepId": "total",
+      "text": "Add the partial products: two hundred, plus eighty, plus thirty, plus twelve, makes three hundred twenty-two. So twenty-three times fourteen is three hundred twenty-two."
+    },
+    {
+      "stepId": "algorithm",
+      "text": "The standard algorithm does the same work in two rows. First multiply by the ones: twenty-three times four is ninety-two. Then multiply by the tens: twenty-three times ten is two hundred thirty. Add the two rows to get three hundred twenty-two."
+    },
+    {
+      "stepId": "powers",
+      "text": "Multiplying by ten moves every digit one place to the left. Ten to the third power means ten times ten times ten, which is one thousand. So six times ten to the third power is six thousand."
+    }
+  ],
+  "g5Division": [
+    {
+      "stepId": "setup",
+      "text": "Long division splits a big number one place at a time. Let's divide six hundred seventy-two by twenty-eight. The twenty-eight goes outside the bar, and six hundred seventy-two goes inside."
+    },
+    {
+      "stepId": "estimate",
+      "text": "Twenty-eight does not fit in six, so look at sixty-seven. Twenty-eight is close to thirty, and thirty fits in sixty-seven two times. Two times twenty-eight is fifty-six. Sixty-seven minus fifty-six leaves eleven."
+    },
+    {
+      "stepId": "bringDown",
+      "text": "Bring down the two to make one hundred twelve. Twenty-eight fits in one hundred twelve four times, because four times twenty-eight is one hundred twelve. Nothing is left, so six hundred seventy-two divided by twenty-eight is twenty-four."
+    },
+    {
+      "stepId": "remainders",
+      "text": "Sometimes there is a remainder. One hundred fifty-seven students ride buses that hold twenty-four each: that is six remainder thirteen. Those thirteen students still need a seat, so we round up to seven buses. If a question asks only for full groups, we drop the remainder. If it asks what is left over, the remainder is the answer."
+    }
+  ],
+  "g5Expressions": [
+    {
+      "stepId": "order",
+      "text": "Every expression has an order. Work inside the grouping symbols first, then multiply and divide, then add and subtract. In three plus four times five, multiply first: four times five is twenty, and three plus twenty is twenty-three."
+    },
+    {
+      "stepId": "grouping",
+      "text": "Parentheses change the order. Put three plus four in parentheses, then times five. Now we add first: three plus four is seven, and seven times five is thirty-five. Brackets work the same way, around the parentheses."
+    },
+    {
+      "stepId": "write",
+      "text": "Words can turn into an expression. Add eight and seven, then multiply by two. The adding happens first, so eight plus seven goes inside parentheses, and we write two times that group. Without working it out, we know it is twice as large as eight plus seven."
+    },
+    {
+      "stepId": "patterns",
+      "text": "Two patterns can grow side by side. Pattern A starts at zero and adds three: zero, three, six, nine. Pattern B starts at zero and adds six: zero, six, twelve, eighteen. Each term in pattern B is twice the matching term in pattern A."
+    },
+    {
+      "stepId": "multiStep",
+      "text": "A multi-step problem hides two steps in one story. A class buys six packs of twenty-four markers and gives thirty away. First multiply: six times twenty-four is one hundred forty-four. Then subtract thirty: one hundred fourteen markers are left."
+    }
   ]
 }

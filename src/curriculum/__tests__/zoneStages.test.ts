@@ -57,7 +57,8 @@ afterEach(() => {
 describe('zoneStages', () => {
   it('falls back to the 2nd–4th grade stages while a band has no set (every zone, every grade)', () => {
     for (const zone of curriculum.zones) {
-      for (const g of GRADE_LEVELS) if (!zone.stagesByBand?.k1 || g >= 2) expect(zoneStages(zone, g)).toBe(zone.stages)
+      // (5th grade plays its own set where the zone has one: G5_IDS)
+      for (const g of GRADE_LEVELS) if ((!zone.stagesByBand?.k1 || g >= 2) && !(g === 5 && zone.stagesByBand?.g5?.length)) expect(zoneStages(zone, g)).toBe(zone.stages)
       expect(zoneStages(zone, null)).toBe(zone.stages)
       expect(zoneStages(zone, undefined)).toBe(zone.stages)
     }
@@ -268,6 +269,16 @@ const G1_IDS: Record<string, string[]> = {
   'data-delta': ['g1-graphs-1', 'g1-graphs-2', 'g1-graphs-3'],
   'science-summit': ['g1-science-1', 'g1-science-2', 'g1-science-3'],
 }
+/**
+ * The zones with a 5th-grade set of their own (K–5 plan, grade-5 contract).
+ * Every other zone plays its 2nd–4th grade stages at grade 5.
+ */
+const G5_IDS: Record<string, string[]> = {
+  // Multiplication Mesa, Division Dunes, Word Problem Woods (phase 3)
+  'multiplication-mesa': ['g5-mult-1', 'g5-mult-2', 'g5-mult-3'],
+  'division-dunes': ['g5-div-1', 'g5-div-arena', 'g5-div-2', 'g5-div-3'],
+  'word-problem-woods': ['g5-woods-1', 'g5-woods-2', 'g5-woods-3'],
+}
 const G1_TITLES: Record<string, string> = {
   // Word Reef, Tens Plateau, Fair Share Falls, Graph Delta, Sky Summit (phase 2b; the others keep kindergarten's name)
   'reading-reef': 'Word Reef',
@@ -326,7 +337,9 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
         // 1st grade plays its own set where the zone has one: G1_IDS)
         expect(ids, `${zone.id} at grade ${g}`).toEqual((g === 1 ? G1_IDS[zone.id] : undefined) ?? K1_IDS[zone.id] ?? zone.stages.map((s) => s.id))
       }
-      for (const g of [2, 3, 4, 5] as const) expect(zoneStages(zone, g)).toBe(zone.stages)
+      for (const g of [2, 3, 4] as const) expect(zoneStages(zone, g)).toBe(zone.stages)
+      // (5th grade plays its own set where the zone has one: G5_IDS)
+      expect(zoneStages(zone, 5).map((s) => s.id)).toEqual(G5_IDS[zone.id] ?? zone.stages.map((s) => s.id))
     }
     // today's 2–4 stage ids, unchanged
     expect(getZone('multiplication-mesa')!.stages.map((s) => s.id)).toEqual(['mult-concept', 'mult-practice', 'mult-mastery'])
@@ -804,5 +817,43 @@ describe('Grade 1 (phase-2b contract): Measure Marsh, Graph Delta, Sky Summit', 
     expect(first('measurement-marsh', 2).activity?.kind).toBe('clockMatch')
     for (const i of [0, 1, 2]) expect(first('data-delta', i).activity?.kind).toBe('graph')
     for (const i of [0, 1, 2]) expect(first('science-summit', i).pictureOptions?.length).toBeGreaterThanOrEqual(2)
+  })
+})
+
+describe('Grade 5 (phase-3 contract): Multiplication Mesa, Division Dunes, Word Problem Woods', () => {
+  beforeEach(() => {
+    mesa.stagesByBand = MESA_BANDS
+  })
+  const ZONES = ['multiplication-mesa', 'division-dunes', 'word-problem-woods']
+
+  it('5th grade plays the contract’s stage ids, in unlock order; every other grade keeps its own', () => {
+    for (const id of ZONES) {
+      const zone = getZone(id)!
+      const set = zoneStages(zone, 5)
+      expect(set.map((s) => s.id)).toEqual(G5_IDS[id])
+      const stars = (xs: string[]) => ({ stages: Object.fromEntries(xs.map((x) => [x, { stars: 1 }])) })
+      set.forEach((s, i) => expect(isStageUnlocked(zone, s.id, stars(G5_IDS[id].slice(0, i)), 5), s.id).toBe(true))
+      expect(isStageUnlocked(zone, G5_IDS[id][2], stars([G5_IDS[id][0]]), 5)).toBe(false)
+      for (const g of [0, 1, 2, 3, 4] as const) for (const s of set) expect(getStage(id, s.id, g), `${s.id} at grade ${g}`).toBeUndefined()
+      expect(zoneTitle(zone, 5)).toBe(zone.title)
+    }
+  })
+
+  it('mirrors the 2–4 sets: concept, practice (the 3D game where it has one), a mastery boss; 5th-grade providers', () => {
+    const at = (z: string) => zoneStages(getZone(z)!, 5)
+    expect(at('multiplication-mesa').map((s) => [s.kind, s.gameId])).toEqual([['concept', 'timesGrove'], ['practice', 'conceptPlay'], ['mastery', 'bossBattle']])
+    expect(at('division-dunes').map((s) => [s.kind, s.gameId])).toEqual([['concept', 'conceptPlay'], ['practice', 'divisionArena'], ['practice', 'conceptPlay'], ['mastery', 'bossBattle']])
+    expect(at('word-problem-woods').map((s) => [s.kind, s.gameId])).toEqual([['concept', 'conceptPlay'], ['practice', 'speedRun'], ['mastery', 'bossBattle']])
+    // the game tiers the contract names
+    expect(at('multiplication-mesa')[0].params?.mode).toBe('area')
+    expect(at('division-dunes')[1].params?.divisorDigits).toBe(2)
+    for (const s of ZONES.flatMap(at)) {
+      expect(s.starsToEarn).toBe(3)
+      expect(['g5Mult', 'g5Div', 'g5Expr']).toContain(s.providerConfig.kind)
+      expect(s.description.length, s.id).toBeLessThan(100)
+      // every stage's provider serves real questions
+      const p = createProvider(s.providerConfig).next() as { options: unknown[]; answer: unknown }
+      expect(p.options).toContain(p.answer)
+    }
   })
 })

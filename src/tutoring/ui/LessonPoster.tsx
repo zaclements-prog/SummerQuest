@@ -7,6 +7,8 @@ import { Apple, Cookie, Flat, Rod, UnitCube } from '../motion/shapes'
 import { DRAWINGS } from '../../games/listenPlay/drawings'
 // 1st grade (phase 2b): Fair Share Falls' pizza drawings
 import { shareArtName } from '../../games/listenPlay/shareGeometry'
+// 5th grade (phase 3): Multiplication Mesa, Division Dunes, Word Problem Woods
+import { G5_MESA_DUNES_WOODS_POSTERS } from './posters/g5MesaDunesWoods'
 
 const PW = 320
 const PH = 150
@@ -559,6 +561,7 @@ const POSTERS: Record<string, { bg: string; motif: () => ReactNode }> = {
       </g>
     ),
   },
+  ...G5_MESA_DUNES_WOODS_POSTERS,
 }
 
 /**

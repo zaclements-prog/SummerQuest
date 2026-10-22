@@ -42,10 +42,10 @@ describe('pet catalog', () => {
     const table: [string, string, string[]][] = [
       ['frog', 'fraction-falls', ['fractions', 'kAddTake', 'g1Shares']],
       ['octopus', 'reading-reef', ['reading', 'kLetters', 'kRhymes', 'g1Reading']],
-      ['owl', 'word-problem-woods', ['wordProblem', 'kStoryMath']],
+      ['owl', 'word-problem-woods', ['wordProblem', 'kStoryMath', 'g5Expressions']],
       ['panda', 'geometry-grove', ['geometry', 'kShapes', 'g1Shapes']],
-      ['lion', 'multiplication-mesa', ['multiplication', 'kCounting']],
-      ['trex', 'division-dunes', ['division', 'kCompare']],
+      ['lion', 'multiplication-mesa', ['multiplication', 'kCounting', 'g5Multiplication']],
+      ['trex', 'division-dunes', ['division', 'kCompare', 'g5Division']],
       ['bear', 'measurement-marsh', ['measurement', 'kMeasure', 'g1Measure']],
       ['fox', 'data-delta', ['dataGraph', 'kSorting', 'g1Graphs']],
       ['unicorn', 'place-value-plateau', ['placeValue', 'kTeens', 'g1Tens']],
@@ -91,6 +91,10 @@ describe('pet catalog', () => {
     expect(zoneLessonFor('measurement-marsh', 1)?.id).toBe('g1Measure')
     expect(zoneLessonFor('data-delta', 1)?.id).toBe('g1Graphs')
     expect(zoneLessonFor('science-summit', 1)?.id).toBe('g1Science')
+    // (5th grade, phase 3: the lion, the trex and the owl hatch from their zones' 5th-grade lessons)
+    expect(zoneLessonFor('multiplication-mesa', 5)?.id).toBe('g5Multiplication')
+    expect(zoneLessonFor('division-dunes', 5)?.id).toBe('g5Division')
+    expect(zoneLessonFor('word-problem-woods', 5)?.id).toBe('g5Expressions')
   })
 
   it('every egg has its own colors', () => {

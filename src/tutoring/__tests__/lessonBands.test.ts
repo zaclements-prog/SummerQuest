@@ -40,6 +40,13 @@ const G1_OWN: Record<string, string> = {
   g1Graphs: 'data-delta',
   g1Science: 'science-summit',
 }
+/** 5th grade's own lessons (phase 3), each for a zone 5th grade has its own set for. */
+const G5_OWN: Record<string, string> = {
+  // Multiplication Mesa, Division Dunes, Word Problem Woods
+  g5Multiplication: 'multiplication-mesa',
+  g5Division: 'division-dunes',
+  g5Expressions: 'word-problem-woods',
+}
 /** 1st grade's lessons: its own, then kindergarten's for the zones it has none of its own for. */
 const G1_LESSONS = [...Object.keys(G1_OWN), ...K_PILOT.filter((id) => !Object.values(G1_OWN).includes(getLesson(id)!.zoneId))]
 
@@ -111,7 +118,9 @@ describe('lessons by grade band', () => {
     expect(isLessonFor('kCounting', 0)).toBe(true)
     expect(isLessonFor('kCounting', 3)).toBe(false)
     expect(isLessonFor('division', 0)).toBe(false)
-    expect(isLessonFor('division', 5)).toBe(true)
+    // (5th grade has its own Division Dunes lesson: phase 3)
+    expect(isLessonFor('division', 5)).toBe(false)
+    expect(isLessonFor('fractions', 5)).toBe(true)
     expect(zoneLessonFor('reading-reef', 0)?.id).toBe('kLetters')
     expect(zoneLessonFor('reading-reef', 3)?.id).toBe('reading')
     // (K complete, phase 2a: Number Dunes has its own K lesson)
@@ -121,12 +130,30 @@ describe('lessons by grade band', () => {
   })
 })
 
+describe('5th grade’s own lessons (phase 3)', () => {
+  it('band g5, their zones, practised in the zone’s first 5th-grade stage; offered to 5th grade only', () => {
+    for (const [id, zoneId] of Object.entries(G5_OWN)) {
+      const l = getLesson(id)!
+      expect(l, id).toBeDefined()
+      expect(l).toMatchObject({ band: 'g5', zoneId })
+      expect(zoneLessonFor(zoneId, 5)?.id).toBe(id)
+      expect(zoneStages(getZone(zoneId)!, 5)[0].id).toBe(l.practiceStageId)
+      expect(practiceHref(l, undefined, 5)).toBe(`/play/${zoneId}/${l.practiceStageId}`)
+      for (const g of [0, 1, 2, 3, 4]) expect(isLessonFor(id, g), `${id} at grade ${g}`).toBe(false)
+    }
+    // 5th grade keeps the 2–4 lesson where it has none of its own
+    expect(zoneLessonFor('fraction-falls', 5)?.id).toBeDefined()
+    expect(lessonsFor(5).filter((l) => lessonBand(l) === 'g5').map((l) => l.id)).toEqual(expect.arrayContaining(Object.keys(G5_OWN)))
+  })
+})
+
 describe('the hub (World) lesson lists', () => {
   it('list the grade band’s lessons', () => {
     const p = { attempts: [], sessions: [] }
     expect(ids(lessonRows({ ...p, grade: 0 }))).toEqual(K_PILOT)
     expect(ids(lessonRows({ ...p, grade: 3 })).sort()).toEqual([...TODAY].sort())
-    expect(ids(lessonRows({ ...p, grade: 5 })).sort()).toEqual([...TODAY].sort())
+    // (5th grade: its own lessons where it has them, today's for the rest)
+    expect(ids(lessonRows({ ...p, grade: 5 })).sort()).toEqual([...Object.keys(G5_OWN), ...TODAY.filter((id) => !Object.values(G5_OWN).includes(getLesson(id)!.zoneId))].sort())
     expect(lessonRows({ ...p, grade: 0 })[0].href).toBe('/tutor/kCounting')
   })
 

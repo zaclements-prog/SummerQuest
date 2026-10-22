@@ -110,9 +110,25 @@ function Plot({ x0, x1, z0, z1, value, solved, ask, wilt, tint }: { x0: number; 
           <Instances geometry={geo.blob(1)} items={trees.crowns} castShadow />
         </>
       )}
-      {(solved || ask) && (
-        <group position={[cx, solved ? 0.78 : 0.5, cz]} rotation={[-0.45, 0, 0]}>
-          <Slate text={ask ? '?' : String(value)} ink={ask ? '#ffd75e' : '#fff3c4'} glow={ask} h={0.42} />
+      {solved && (
+        <group position={[cx, 0.78, cz]} rotation={[-0.45, 0, 0]}>
+          <Slate text={String(value)} h={0.42} />
+        </group>
+      )}
+      {/* the plot being asked: a glowing frame around it (the question itself is on the HUD) */}
+      {ask && !solved && (
+        <group position={[cx, 0.16, cz]}>
+          {[
+            [0, -d / 2 + 0.06, w - 0.1, 0.08],
+            [0, d / 2 - 0.06, w - 0.1, 0.08],
+            [-w / 2 + 0.06, 0, 0.08, d - 0.1],
+            [w / 2 - 0.06, 0, 0.08, d - 0.1],
+          ].map(([x, z, sx, sz], k) => (
+            <mesh key={k} position={[x, 0, z]}>
+              <boxGeometry args={[sx, 0.05, sz]} />
+              <meshBasicMaterial color={'#ffd75e'} />
+            </mesh>
+          ))}
         </group>
       )}
     </group>
