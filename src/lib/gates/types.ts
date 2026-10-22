@@ -3,13 +3,17 @@ import type { GateOp } from './ops'
 /**
  * Operation sets (docs/superpowers/specs/2026-10-19-trending-games-plan.md, "Gates by band"):
  *
- * - `addSub`:  K–1, counts ≤ 20, shown as dots: "+2 or +5?", make-10 gates.
+ * - `addSub`:  kindergarten, counts ≤ 20, shown as dots: "+2 or +5?", make-10 gates.
+ * - `add20`:   1st grade (Adding Mesa), + within 20 written as numerals: "+4 or +7?",
+ *              make-10 and doubles gates, a "+2 or −6" trap.
+ * - `sub20`:   1st grade (Take-Away Dunes), − within 20 written as numerals: "−3 or −8:
+ *              which keeps more?", back-to-ten gates.
  * - `mulAdd`:  grades 2–3, × and + within 100: "×3 or +12?".
  * - `divSub`:  ÷ and − (Division Dunes): "÷3 or −10: which keeps more?".
  * - `mulFrac`: grade 4, harder × plus fraction operators: "×½", "+¾ of us".
  * - `fracDec`: grade 5, fraction and decimal operators: "×1.5", "×0.25".
  */
-export type OpSetId = 'addSub' | 'mulAdd' | 'divSub' | 'mulFrac' | 'fracDec'
+export type OpSetId = 'addSub' | 'mulAdd' | 'divSub' | 'mulFrac' | 'fracDec' | 'add20' | 'sub20'
 
 /** The misconception a trap pair is built from. */
 export type TrapKind =

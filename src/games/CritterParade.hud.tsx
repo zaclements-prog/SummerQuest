@@ -144,8 +144,8 @@ export function Caption({ text }: { text: string }) {
   )
 }
 
-/** K–1: two big buttons for the gates while the world waits (the 3D gates are tappable too). */
-export function GateButtons({ pair, colors, onTap }: { pair: GatePair; colors: [string, string] | null; onTap: (side: Side) => void }) {
+/** K–1: two big buttons for the gates while the world waits (the 3D gates are tappable too). Kindergarten's show dots; 1st grade's the numerals. */
+export function GateButtons({ pair, colors, onTap, dots = true }: { pair: GatePair; colors: [string, string] | null; onTap: (side: Side) => void; dots?: boolean }) {
   return (
     <div className={`absolute ${SAFE.bottom3} inset-x-0 z-20 flex justify-between px-[4vw] pointer-events-none`}>
       {(['left', 'right'] as Side[]).map((side) => {
@@ -164,7 +164,7 @@ export function GateButtons({ pair, colors, onTap }: { pair: GatePair; colors: [
             style={{ background: colors?.[side === 'left' ? 0 : 1] ?? UI.paper, color: '#fff', border: `4px solid ${UI.line}`, boxShadow: UI.ledge, WebkitTextStroke: `1.5px ${UI.line}` }}
             aria-label={`${side} gate: ${gate.speech}`}
           >
-            <GateFace gate={gate} />
+            {dots ? <GateFace gate={gate} /> : <span className="block text-5xl leading-none px-2">{gate.label}</span>}
           </motion.button>
         )
       })}

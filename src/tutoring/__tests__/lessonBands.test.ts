@@ -39,6 +39,10 @@ const G1_OWN: Record<string, string> = {
   g1Measure: 'measurement-marsh',
   g1Graphs: 'data-delta',
   g1Science: 'science-summit',
+  // Adding Mesa, Take-Away Dunes, Story Woods
+  g1Adding: 'multiplication-mesa',
+  g1Subtract: 'division-dunes',
+  g1StoryMath: 'word-problem-woods',
 }
 /** 1st grade's lessons: its own, then kindergarten's for the zones it has none of its own for. */
 const G1_LESSONS = [...Object.keys(G1_OWN), ...K_PILOT.filter((id) => !Object.values(G1_OWN).includes(getLesson(id)!.zoneId))]
@@ -114,8 +118,9 @@ describe('lessons by grade band', () => {
     expect(isLessonFor('division', 5)).toBe(true)
     expect(zoneLessonFor('reading-reef', 0)?.id).toBe('kLetters')
     expect(zoneLessonFor('reading-reef', 3)?.id).toBe('reading')
-    // (K complete, phase 2a: Number Dunes has its own K lesson)
-    expect(zoneLessonFor('division-dunes', 1)?.id).toBe('kCompare')
+    // (K complete, phase 2a: Number Dunes has its own K lesson; 1st grade, phase 2b, its own: Take-Away Dunes)
+    expect(zoneLessonFor('division-dunes', 0)?.id).toBe('kCompare')
+    expect(zoneLessonFor('division-dunes', 1)?.id).toBe('g1Subtract')
     expect(zoneLessonFor('place-value-plateau', 0)?.id).toBe('kTeens')
     expect(zoneLessonFor('no-such-zone', 1)).toBeUndefined()
   })

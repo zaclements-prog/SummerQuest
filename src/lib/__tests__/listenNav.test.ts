@@ -46,18 +46,13 @@ afterAll(() => {
   for (const [z, sets] of original) if (sets) z.stagesByBand = sets
 })
 
-/** 1st grade's own zone names (phase-2b contract), where a pilot zone has one. */
-const G1_TITLES: Record<string, string> = {
-  'reading-reef': 'Word Reef',
-}
-
 describe('zones for a K–1 child', () => {
   it('K–1 titles for the pilot zones; every other grade (and zone) keeps its title', () => {
     for (const [zoneId, p] of Object.entries(PILOT)) {
       const zone = getZone(zoneId)!
       expect(zoneTitle(zone, 0)).toBe(p.title)
-      // (1st grade has a name of its own for some zones: phase 2b)
-      expect(zoneTitle(zone, 1)).toBe(G1_TITLES[zoneId] ?? p.title)
+      // (1st grade's own name where the zone has one: phase 2b)
+      expect(zoneTitle(zone, 1)).toBe(zone.titleByBand?.g1 ?? p.title)
       for (const g of [2, 3, 4, 5] as const) expect(zoneTitle(zone, g)).toBe(zone.title)
       expect(zoneTitle(zone, null)).toBe(zone.title)
     }

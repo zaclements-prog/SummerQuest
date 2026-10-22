@@ -36,6 +36,10 @@ import { g1ShapesLesson } from './g1Shapes'
 import { g1MeasureLesson } from './g1Measure'
 import { g1GraphsLesson } from './g1Graphs'
 import { g1ScienceLesson } from './g1Science'
+// 1st grade (phase 2b): Adding Mesa, Take-Away Dunes, Story Woods
+import { g1AddingLesson } from './g1Adding'
+import { g1SubtractLesson } from './g1Subtract'
+import { g1StoryMathLesson } from './g1StoryMath'
 
 /**
  * The lessons, by content band (lib/gradeBand; K–5 plan §2): kindergarten and
@@ -91,6 +95,10 @@ export const g1Lessons: Lesson[] = [
   g1MeasureLesson,
   g1GraphsLesson,
   g1ScienceLesson,
+  // Adding Mesa, Take-Away Dunes, Story Woods (phase 2b)
+  g1AddingLesson,
+  g1SubtractLesson,
+  g1StoryMathLesson,
 ]
 
 /** 5th grade (band `g5`). */

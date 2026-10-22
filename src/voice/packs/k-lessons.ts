@@ -24,6 +24,10 @@ import { K_LESSON_PACK } from '../../tutoring/lessons/k1Voice'
 import { g1MeasureLesson } from '../../tutoring/lessons/g1Measure'
 import { g1GraphsLesson } from '../../tutoring/lessons/g1Graphs'
 import { g1ScienceLesson } from '../../tutoring/lessons/g1Science'
+// 1st grade (phase 2b): Adding Mesa, Take-Away Dunes, Story Woods
+import { g1AddingLesson } from '../../tutoring/lessons/g1Adding'
+import { g1SubtractLesson } from '../../tutoring/lessons/g1Subtract'
+import { g1StoryMathLesson } from '../../tutoring/lessons/g1StoryMath'
 
 /**
  * What the K–1 lessons say besides their narration (src/tutoring/lessons/k*.ts):
@@ -61,6 +65,10 @@ for (const lesson of [
   g1MeasureLesson,
   g1GraphsLesson,
   g1ScienceLesson,
+  // 1st grade (phase 2b): Adding Mesa, Take-Away Dunes, Story Woods
+  g1AddingLesson,
+  g1SubtractLesson,
+  g1StoryMathLesson,
 ]) {
   for (const step of lesson.steps) {
     const ref = step.check?.speech

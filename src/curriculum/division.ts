@@ -3,7 +3,7 @@ import type { Zone } from './types'
 export const divisionZone: Zone = {
   id: 'division-dunes',
   title: 'Division Dunes',
-  titleByBand: { k1: 'Number Dunes' },
+  titleByBand: { k1: 'Number Dunes', g1: 'Take-Away Dunes' },
   subtitle: 'Sharing and division facts',
   emoji: '🐪',
   themeColor: 'quest',
@@ -113,6 +113,46 @@ export const divisionZone: Zone = {
         description: 'Put the numbers in order, smallest first!',
         gameId: 'listenPlay',
         providerConfig: { kind: 'kCompare', mode: 'lineUp' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+    ],
+    // 1st grade "Take-Away Dunes" (1.OA.4, 1.OA.6, 1.OA.8): subtract within 20
+    // with a number sentence on screen ("13 − 5 = ?") and a picture of the
+    // strategy: take away and count back → the parade's − gates as numerals →
+    // think addition ("5 + ? = 13"), the unknown in "? + 4 = 9" and "9 − ? = 4",
+    // and fact families. Answered with numeral cards (the `numberSentence`
+    // activity). Said aloud.
+    g1: [
+      {
+        id: 'g1-sub-1',
+        kind: 'concept',
+        title: 'Take away',
+        description: 'Take some away. How many are left?',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Subtract', mode: 'takeAway' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-sub-parade',
+        kind: 'practice',
+        title: 'Critter Parade',
+        description: 'Take away at the gates. Keep more friends!',
+        gameId: 'critterParade',
+        // (the parade makes its own gates; the provider only names the topic)
+        providerConfig: { kind: 'g1Subtract', mode: 'takeAway' },
+        // 1st grade's − gates within 20, written as numerals (lib/gates opSetFor: `sub20`)
+        params: { ops: 'sub' },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-sub-3',
+        kind: 'mastery',
+        title: 'Think addition',
+        description: 'Think addition to find the missing number!',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Subtract', mode: 'think' },
         params: { questionCount: 6 },
         starsToEarn: 3,
       },

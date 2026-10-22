@@ -12,7 +12,7 @@ import { pictureLabel } from '../pictureLabel'
 import { countAlongSteps, lpCard } from '../script'
 import type { ListenActivityDef, ListenActivityProps, ListenPhase, ListenProblem } from '../types'
 import { Backdrop, HomeArt } from './mathStoryArt'
-import { MS_HOME, MS_SCENE, MS_SIDE, hasSide, msObj, storyAnswer, storyLayout, type MathStorySpec, type Pt, type Rect, type StoryLayout } from './mathStorySpec'
+import { MS_HOME, MS_SCENE, MS_SENTENCE, MS_SIDE, hasSide, msObj, storyAnswer, storyLayout, storyLines, storyMoves, type MathStorySpec, type Pt, type Rect, type StoryLayout } from './mathStorySpec'
 import './mathStory.css'
 
 /**
@@ -55,11 +55,26 @@ interface Thing {
   change: boolean
   /** How many more: the treats still needed, which pop in once the answer is found. */
   extra?: boolean
+  /** 1st grade, the start unknown: the group that was there at the start, unseen until the answer is found. */
+  start?: boolean
 }
 
 function thingsOf(s: MathStorySpec): Thing[] {
   const rep = (n: number, t: Thing) => Array.from({ length: Math.max(0, n) }, () => t)
   switch (s.plot) {
+    // ── 1st grade ──
+    case 'joinChange':
+      // the start, then every newcomer waiting at the side (more than are needed)
+      return [...rep(s.a, { emoji: s.emoji, change: false }), ...rep(s.b + (s.extra ?? 0), { emoji: s.emoji, change: true })]
+    case 'leaveChange':
+      return rep(s.a, { emoji: s.emoji, change: false })
+    case 'joinStart':
+      return [...rep(s.a, { emoji: s.emoji, change: false, start: true }), ...rep(s.b, { emoji: s.emoji, change: true })]
+    case 'apart':
+      // the kind taken out first, then the kind that stays
+      return [...rep(s.a, { emoji: s.emoji, change: true }), ...rep(s.b, { emoji: s.emoji2 ?? s.emoji, change: false })]
+    case 'three':
+      return [...rep(s.a, { emoji: s.emoji, change: false }), ...rep(s.b, { emoji: s.emoji2 ?? s.emoji, change: true }), ...rep(s.c ?? 0, { emoji: s.emoji3 ?? s.emoji2 ?? s.emoji, change: true })]
     case 'join':
       return [...rep(s.a, { emoji: s.emoji, change: false }), ...rep(s.b, { emoji: s.emoji, change: true })]
     case 'together':
@@ -76,16 +91,26 @@ function thingsOf(s: MathStorySpec): Thing[] {
 /** The order the change happens in when nobody is tapping: the newcomers in turn; the last ones leave first. */
 function changeOrder(s: MathStorySpec): number[] {
   const range = (lo: number, hi: number) => Array.from({ length: Math.max(0, hi - lo) }, (_, i) => lo + i)
-  if (s.plot === 'leave') return range(0, s.b).map((i) => s.a - 1 - i)
+  if (s.plot === 'leave' || s.plot === 'leaveChange') return range(0, s.b).map((i) => s.a - 1 - i)
   if (s.plot === 'frame') return range(s.a, 10)
+  // (1st grade: the kind taken out; three groups: both groups put in)
+  if (s.plot === 'apart') return range(0, s.a)
+  if (s.plot === 'three') return range(s.a, s.a + storyMoves(s))
   return range(s.a, s.a + s.b)
+}
+
+/** What a tap says as the child acts it out: the count so far, or (1st grade) counting on or back from the start. */
+function actSaid(s: MathStorySpec, n: number): number {
+  if (s.plot === 'joinChange') return s.a + n
+  if (s.plot === 'leaveChange') return s.a - n
+  return n
 }
 
 // ── the scene's state ─────────────────────────────────────────────────────────
 
 interface Scene {
-  /** 0: nothing yet; 1: the start shown; 2: the change told. */
-  step: 0 | 1 | 2
+  /** 0: nothing yet; 1: the start shown; 2: the change told; 3: (1st grade) the third line told: the total, or the third group. */
+  step: 0 | 1 | 2 | 3
   /** The change's things that have moved, in the order they moved. */
   moved: number[]
   /** Each thing's moves (restarts its hop). */
@@ -109,6 +134,7 @@ type SceneAction =
   | { type: 'reset' }
   | { type: 'start' }
   | { type: 'change'; all: number[] | null }
+  | { type: 'third' }
   | { type: 'act' }
   | { type: 'move'; k: number; max: number }
   | { type: 'moveNext'; order: number[] }
@@ -134,8 +160,10 @@ function sceneReducer(s: Scene, a: SceneAction): Scene {
     case 'change':
       if (s.step < 1) return s
       return a.all ? { ...s, step: 2, moved: a.all, hops: bump(s.hops, a.all), stagger: true, acting: false } : { ...s, step: 2, moved: [], stagger: false, acting: false }
+    case 'third':
+      return s.step >= 2 ? { ...s, step: 3 } : s
     case 'act':
-      return s.step === 2 ? { ...s, acting: true } : s
+      return s.step >= 2 ? { ...s, acting: true } : s
     case 'move':
       if (s.moved.includes(a.k) || s.moved.length >= a.max) return s
       return { ...s, moved: [...s.moved, a.k], hops: bump(s.hops, [a.k]), stagger: false }
@@ -165,6 +193,7 @@ const progress = new WeakMap<object, { told: boolean; acted: boolean; tried: num
 interface Controls {
   start(): void
   change(): void
+  third(): void
   act(): void
   open(): void
 }
@@ -187,13 +216,16 @@ function tellSteps(p: ListenProblem, s: MathStorySpec): GuideStep[] {
   const c = () => controls.get(p)
   const steps: GuideStep[] = [{ voice: s.lines[0], target: MS_SCENE, hand: false, pad: 6, events: [{ cue: 0.12, run: () => c()?.start() }] }]
   if (s.lines[1]) steps.push({ voice: s.lines[1], target: MS_SCENE, hand: false, pad: 6, events: [{ cue: 0.3, run: () => c()?.change() }] })
+  // (1st grade: "Now she has 13." or the third group)
+  if (s.lines[2]) steps.push({ voice: s.lines[2], target: MS_SCENE, hand: false, pad: 6, events: [{ cue: 0.3, run: () => c()?.third() }] })
   return steps
 }
 
 /** Story Woods: "Tap each one to bring it in!", the hand on what to tap. */
 function actSteps(p: ListenProblem, s: MathStorySpec): GuideStep[] {
   if (!s.act) return []
-  return [{ voice: s.act, target: s.plot === 'leave' ? MS_HOME : MS_SIDE, hand: 'tap', pad: 10, events: [{ char: 0, run: () => controls.get(p)?.act() }] }]
+  const atHome = s.plot === 'leave' || s.plot === 'leaveChange' || s.plot === 'apart'
+  return [{ voice: s.act, target: atHome ? MS_HOME : MS_SIDE, hand: 'tap', pad: 10, events: [{ char: 0, run: () => controls.get(p)?.act() }] }]
 }
 
 /** The question: the group lit, then the cards (the ones still in play), a hand gliding along them. */
@@ -216,6 +248,8 @@ function storyAskSteps(p: ListenProblem, s: MathStorySpec): GuideStep[] {
 
 interface Place extends Pt {
   hidden?: boolean
+  /** 1st grade: one that came in (or went away) on a story whose question is how many: ringed so it can be told apart. */
+  fresh?: boolean
   /** Waiting at the side to be tapped in. */
   waiting?: boolean
   /** In the group (counted by "how many"). */
@@ -237,6 +271,19 @@ function placeOf(k: number, t: Thing, s: MathStorySpec, sc: Scene, L: StoryLayou
     if (L.side && s.friend) return { ...(L.sideSpots[mi] ?? off(at.y)) }
     return s.motion === 'melt' ? { ...at, hidden: true } : off(at.y)
   }
+  // ── 1st grade ──
+  if (s.plot === 'leaveChange' || s.plot === 'apart') {
+    // going away (or taken out): to the side, where they can be counted
+    const at = spot(k)
+    if (sc.step < 1) return { ...at, hidden: true }
+    const mi = t.change || s.plot === 'leaveChange' ? sc.moved.indexOf(k) : -1
+    if (mi < 0) return { ...at, home: true }
+    return { ...(L.sideSpots[mi] ?? off(at.y)), fresh: s.plot === 'leaveChange' }
+  }
+  if (t.start) {
+    // the start unknown: unseen until the answer is found, then in its spots
+    return sc.solved ? { ...spot(k), home: true } : { ...spot(k), hidden: true }
+  }
   if (!t.change) return sc.step >= 1 ? { ...spot(k), home: true } : { ...spot(k), hidden: true }
   if (s.plot === 'frame') {
     const filled = sc.moved.includes(k) || sc.solved
@@ -248,9 +295,10 @@ function placeOf(k: number, t: Thing, s: MathStorySpec, sc: Scene, L: StoryLayou
     return sc.solved ? { ...spot(s.a + j), home: true, spot: s.a + j } : { ...spot(s.a + j), hidden: true }
   }
   const mi = sc.moved.indexOf(k)
-  if (mi >= 0) return { ...spot(s.a + mi), home: true, spot: s.plot === 'compare' ? s.a + mi : undefined }
+  if (mi >= 0) return { ...spot(s.a + mi), home: true, spot: s.plot === 'compare' ? s.a + mi : undefined, fresh: s.plot === 'joinChange' || s.plot === 'joinStart' }
   const waitAt = L.side ? (L.sideSpots[j] ?? off(spot(s.a + j).y)) : off(spot(s.a + j).y)
-  if (sc.step < 2) return { ...waitAt, hidden: true }
+  // (1st grade, three groups: the third comes with the third line)
+  if (sc.step < (s.plot === 'three' && j >= s.b ? 3 : 2)) return { ...waitAt, hidden: true }
   return { ...waitAt, waiting: !!L.side }
 }
 
@@ -284,6 +332,8 @@ function MathStory({ problem, spec, phase, active, onAttempt, registerHelp }: Li
 
   const things = thingsOf(spec)
   const order = changeOrder(spec)
+  /** How many the child moves acting it out (the change, for every kindergarten story). */
+  const moves = storyMoves(spec)
   const cards = cardsOf(problem)
   const answer = storyAnswer(spec)
 
@@ -318,6 +368,9 @@ function MathStory({ problem, spec, phase, active, onAttempt, registerHelp }: Li
         if (!spec.act) sfx.whoosh()
         dispatch({ type: 'change', all: spec.act ? null : order })
       },
+      third: () => {
+        if (mounted.current) dispatch({ type: 'third' })
+      },
       act: () => {
         at.told = true
         if (mounted.current) dispatch({ type: 'act' })
@@ -334,7 +387,60 @@ function MathStory({ problem, spec, phase, active, onAttempt, registerHelp }: Li
     }
   })
 
+  /**
+   * 1st grade's help: the story again, acted out together (counting on or back
+   * as the change happens), then the answer counted: the ones that came, went
+   * or are left, the empty spots, or all of them.
+   */
+  function g1HelpSteps(): GuideStep[] {
+    const { a, b } = spec
+    const c = spec.c ?? 0
+    const markThing = (k: number, n: number) => dispatch({ type: 'markAs', key: `o${k}`, n })
+    const steps: GuideStep[] = [
+      { voice: kit('actTogether'), target: MS_SCENE, hand: false, pad: 6, events: [{ char: 0, run: () => dispatch({ type: 'reset' }) }] },
+      { voice: spec.lines[0], target: MS_SCENE, hand: false, pad: 6, events: [{ cue: 0.12, run: () => dispatch({ type: 'start' }) }] },
+    ]
+    if (spec.lines[1]) steps.push({ voice: spec.lines[1], target: MS_SCENE, hand: false, pad: 6, events: [{ cue: 0.3, run: () => dispatch({ type: 'change', all: null }) }] })
+    if (spec.lines[2]) steps.push({ voice: spec.lines[2], target: MS_SCENE, hand: false, pad: 6, events: [{ cue: 0.3, run: () => dispatch({ type: 'third' }) }] })
+    const moveOne = () => {
+      sfx.pop()
+      dispatch({ type: 'moveNext', order })
+    }
+    const g1 = (id: string): VoiceRef => ({ line: `g1-story-math/${id}` })
+    switch (spec.plot) {
+      case 'joinChange':
+        // counting on as each one comes in, then how many came
+        for (let i = 0; i < b; i++) steps.push({ voice: say(a + i + 1), target: MS_SIDE, hand: false, pad: 8, pause: 0.15, events: [{ char: 0, run: moveOne }] })
+        steps.push(...countAlongSteps(b, MS_HOME, (i) => markThing(order[i], i + 1), g1('countCame')))
+        break
+      case 'leaveChange':
+        // counting back as each one goes, then how many went
+        for (let i = 0; i < b; i++) steps.push({ voice: say(a - i - 1), target: MS_HOME, hand: false, pad: 8, pause: 0.15, events: [{ char: 0, run: moveOne }] })
+        steps.push(...countAlongSteps(b, MS_SIDE, (i) => markThing(order[i], i + 1), g1('countWent')))
+        break
+      case 'joinStart':
+        // the newcomers put in, then the spots they didn't fill: the start
+        steps.push(...countAlongSteps(b, MS_SIDE, moveOne, null))
+        steps.push(...countAlongSteps(a, MS_HOME, (i) => dispatch({ type: 'markAs', key: `e${i}`, n: i + 1 }), kit('countEmpty')))
+        break
+      case 'apart':
+        // the known kind taken out, then the rest counted
+        steps.push(...countAlongSteps(a, MS_HOME, moveOne, null))
+        steps.push(...countAlongSteps(b, MS_HOME, (i) => markThing(a + i, i + 1), g1('countLeft')))
+        break
+      case 'three': {
+        // both groups put in, then all of them counted
+        steps.push(...countAlongSteps(b + c, MS_SIDE, moveOne, null))
+        const all = [...Array.from({ length: a }, (_, i) => i), ...order]
+        steps.push(...countAlongSteps(answer, MS_HOME, (i) => markThing(all[i], i + 1)))
+        break
+      }
+    }
+    return steps
+  }
+
   function helpSteps(): GuideStep[] {
+    if (storyLines(spec) === 3 || spec.plot === 'apart') return g1HelpSteps()
     const { a, b } = spec
     const markThing = (k: number, n: number) => dispatch({ type: 'markAs', key: `o${k}`, n })
     if (spec.plot === 'frame') {
@@ -405,12 +511,14 @@ function MathStory({ problem, spec, phase, active, onAttempt, registerHelp }: Li
   const H = size.h || 360
   const L = storyLayout(spec, W, H)
   const places = things.map((t, k) => placeOf(k, t, spec, sc, L))
-  const acting = active && sc.acting && !sc.open && sc.moved.length < spec.b
+  const acting = active && sc.acting && !sc.open && sc.moved.length < moves
   const counting = active && sc.open && !sc.solved
 
   function canAct(k: number): boolean {
     if (!acting) return false
-    if (spec.plot === 'leave') return !sc.moved.includes(k) && !places[k].hidden
+    if (spec.plot === 'leave' || spec.plot === 'leaveChange') return !sc.moved.includes(k) && !places[k].hidden
+    // (1st grade, taking apart: only the kind being taken out)
+    if (spec.plot === 'apart') return things[k].change && !sc.moved.includes(k) && !places[k].hidden
     const t = things[k]
     return t.change && !t.extra && !sc.moved.includes(k) && !!places[k].waiting
   }
@@ -425,14 +533,22 @@ function MathStory({ problem, spec, phase, active, onAttempt, registerHelp }: Li
     return `o${k}`
   }
 
+  /** 1st grade: the ones that went away (or were taken out) can be counted at the side too. */
+  function sideCountKey(k: number): string | null {
+    if (!counting || (spec.plot !== 'leaveChange' && spec.plot !== 'apart')) return null
+    return sc.moved.includes(k) && !places[k].hidden ? `o${k}` : null
+  }
+
   function actOut(k: number) {
     // (two quick taps before a render still count as two)
     const n = ++actedRef.current
-    if (n > spec.b) return
-    dispatch({ type: 'move', k, max: spec.b })
+    if (n > moves) return
+    dispatch({ type: 'move', k, max: moves })
     sfx.pop()
-    const said = n <= COUNT_MAX ? guide.say(say(n)) : Promise.resolve(true)
-    if (n < spec.b) return
+    // (counted, or 1st grade's counting on or back: "nine!", "ten!")
+    const v = actSaid(spec, n)
+    const said = v >= 0 && v <= COUNT_MAX ? guide.say(say(v)) : Promise.resolve(true)
+    if (n < moves) return
     // acted out: the question comes once the last count is said
     const at = progressOf(problem)
     at.told = true
@@ -458,7 +574,7 @@ function MathStory({ problem, spec, phase, active, onAttempt, registerHelp }: Li
 
   function tapThing(k: number) {
     if (canAct(k)) return actOut(k)
-    const key = countKey(k)
+    const key = countKey(k) ?? sideCountKey(k)
     if (key) countIt(key)
   }
 
@@ -478,6 +594,13 @@ function MathStory({ problem, spec, phase, active, onAttempt, registerHelp }: Li
     if (correct) {
       setRight(i)
       dispatch({ type: 'solve' })
+      // 1st grade: the story's number sentence appears and is read aloud ("8 + 5 = 13")
+      if (spec.sentence && spec.sentenceSaid) {
+        busy.current = true
+        await guide.show({ voice: spec.sentenceSaid, target: MS_SENTENCE, hand: false, pad: 8, dim: false }, { repeatable: false })
+        busy.current = false
+        if (!mounted.current) return
+      }
     } else {
       wrongRef.current = i
       setWrong(i)
@@ -511,7 +634,12 @@ function MathStory({ problem, spec, phase, active, onAttempt, registerHelp }: Li
       ? Array.from({ length: 10 - spec.a }, (_, i) => spec.a + i).filter((sp) => !places[sp]?.home)
       : spec.plot === 'compare' && sc.step >= 2 && !sc.solved
         ? Array.from({ length: spec.a - sc.moved.length }, (_, i) => spec.a + sc.moved.length + i)
-        : []
+        : // 1st grade: the spots still to fill up to the total, or the ones the start group fills
+          spec.plot === 'joinChange' && sc.step >= 3
+          ? Array.from({ length: Math.max(0, spec.b - sc.moved.length) }, (_, i) => spec.a + sc.moved.length + i)
+          : spec.plot === 'joinStart' && sc.step >= 3 && !sc.solved
+            ? Array.from({ length: spec.a }, (_, i) => i)
+            : []
   const markOfThing = (k: number) => {
     const p = places[k]
     if (p.spot !== undefined) return sc.marks[`e${p.spot}`]
@@ -580,7 +708,7 @@ function MathStory({ problem, spec, phase, active, onAttempt, registerHelp }: Li
         {things.map((t, k) => {
           const p = places[k]
           const act = canAct(k)
-          const key = countKey(k)
+          const key = countKey(k) ?? sideCountKey(k)
           const tappable = act || !!key
           const mark = markOfThing(k)
           const moving = hopsOf(k) > 0
@@ -606,6 +734,7 @@ function MathStory({ problem, spec, phase, active, onAttempt, registerHelp }: Li
               style={{ width: cell, height: cell, transform: `translate(${p.x - cell / 2}px, ${p.y - cell / 2}px)`, transitionDelay: staggered }}
             >
               {p.waiting && <span className="ms-ring" aria-hidden="true" />}
+              {p.fresh && !p.hidden && <span className="ms-fresh" aria-hidden="true" />}
               <span
                 key={`${p.hidden ? 'h' : 'v'}-${sc.gen}-${hopsOf(k)}-${sc.solved ? 's' : ''}`}
                 className={`ms-body ${body}`}
@@ -622,6 +751,20 @@ function MathStory({ problem, spec, phase, active, onAttempt, registerHelp }: Li
             </div>
           )
         })}
+        {/* 1st grade: the story's number sentence, written once the answer is found ("8 + 5 = 13") */}
+        {sc.solved && spec.sentence && (
+          <>
+            {/* (the story fades back so the sentence stands out, and covers nothing by accident) */}
+            <div className="ms-sentence-veil" aria-hidden="true" />
+            <div data-guide={MS_SENTENCE} data-ms-sentence="" className="ms-sentence kid-text" style={{ fontSize: Math.max(30, Math.min(80, H * 0.24, W / (spec.sentence.length * 0.8 + 1.5))) }}>
+              {spec.sentence.map((t, i) => (
+                <span key={i} data-answer={i === spec.sentenceAnswerAt ? '' : undefined}>
+                  {t}
+                </span>
+              ))}
+            </div>
+          </>
+        )}
       </div>
 
       {/* the answers: numeral cards, said as they're tapped */}

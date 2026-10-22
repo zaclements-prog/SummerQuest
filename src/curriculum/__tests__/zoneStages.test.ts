@@ -267,14 +267,20 @@ const G1_IDS: Record<string, string[]> = {
   'measurement-marsh': ['g1-measure-1', 'g1-measure-2', 'g1-measure-3'],
   'data-delta': ['g1-graphs-1', 'g1-graphs-2', 'g1-graphs-3'],
   'science-summit': ['g1-science-1', 'g1-science-2', 'g1-science-3'],
+  // Adding Mesa, Take-Away Dunes, Story Woods (phase 2b)
+  'multiplication-mesa': ['g1-add-1', 'g1-add-parade', 'g1-add-3'],
+  'division-dunes': ['g1-sub-1', 'g1-sub-parade', 'g1-sub-3'],
+  'word-problem-woods': ['g1-woods-1', 'g1-woods-2', 'g1-woods-3'],
 }
 const G1_TITLES: Record<string, string> = {
-  // Word Reef, Tens Plateau, Fair Share Falls, Graph Delta, Sky Summit (phase 2b; the others keep kindergarten's name)
+  // Word Reef, Tens Plateau, Fair Share Falls, Graph Delta, Sky Summit, Adding Mesa, Take-Away Dunes (phase 2b; the others keep kindergarten's name)
   'reading-reef': 'Word Reef',
   'place-value-plateau': 'Tens Plateau',
   'fraction-falls': 'Fair Share Falls',
   'data-delta': 'Graph Delta',
   'science-summit': 'Sky Summit',
+  'multiplication-mesa': 'Adding Mesa',
+  'division-dunes': 'Take-Away Dunes',
 }
 
 describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
@@ -804,5 +810,89 @@ describe('Grade 1 (phase-2b contract): Measure Marsh, Graph Delta, Sky Summit', 
     expect(first('measurement-marsh', 2).activity?.kind).toBe('clockMatch')
     for (const i of [0, 1, 2]) expect(first('data-delta', i).activity?.kind).toBe('graph')
     for (const i of [0, 1, 2]) expect(first('science-summit', i).pictureOptions?.length).toBeGreaterThanOrEqual(2)
+  })
+})
+
+// ── 1st grade (phase 2b): the real 1st-grade sets ──
+describe('1st grade (phase-2b contract): Adding Mesa, Take-Away Dunes and Story Woods', () => {
+  // (the top-level beforeEach puts Multiplication Mesa's sets aside: bring them back)
+  beforeEach(() => {
+    mesa.stagesByBand = MESA_BANDS
+  })
+
+  const OWN_IDS: Record<string, string[]> = {
+    'multiplication-mesa': ['g1-add-1', 'g1-add-parade', 'g1-add-3'],
+    'division-dunes': ['g1-sub-1', 'g1-sub-parade', 'g1-sub-3'],
+    'word-problem-woods': ['g1-woods-1', 'g1-woods-2', 'g1-woods-3'],
+  }
+  const OWN_TITLES: Record<string, string> = {
+    'multiplication-mesa': 'Adding Mesa',
+    'division-dunes': 'Take-Away Dunes',
+    // (keeps kindergarten's name)
+    'word-problem-woods': 'Story Woods',
+  }
+  const stars = (ids: string[]) => ({ stages: Object.fromEntries(ids.map((id) => [id, { stars: 1 }])) })
+
+  it('1st grade plays these zones’ own sets under their 1st-grade names; kindergarten and 2nd–5th grade are unchanged', () => {
+    for (const [zoneId, ids] of Object.entries(OWN_IDS)) {
+      const zone = getZone(zoneId)!
+      expect(zoneStages(zone, 1).map((s) => s.id), zoneId).toEqual(ids)
+      expect(zoneStages(zone, 1).map((s) => s.kind), zoneId).toEqual(['concept', 'practice', 'mastery'])
+      expect(zoneTitle(zone, 1), zoneId).toBe(OWN_TITLES[zoneId])
+      expect(isZoneSleeping(zone, 1)).toBe(false)
+      // kindergarten keeps its own set and name; 2nd–5th grade keep theirs
+      expect(zoneStages(zone, 0).every((s) => s.id.startsWith('k-')), zoneId).toBe(true)
+      for (const g of [2, 3, 4, 5] as const) expect(zoneStages(zone, g)).toBe(zone.stages)
+      for (const id of ids) {
+        expect(getStage(zoneId, id, 1)?.id).toBe(id)
+        expect(getStage(zoneId, id, 0)).toBeUndefined()
+        expect(getStage(zoneId, id, 3)).toBeUndefined()
+      }
+      // each unlocks after the one before it
+      ids.forEach((id, i) => {
+        expect(isStageUnlocked(zone, id, stars(ids.slice(0, i)), 1), id).toBe(true)
+        if (i > 0) expect(isStageUnlocked(zone, id, stars(ids.slice(0, i - 1)), 1), id).toBe(false)
+      })
+    }
+    expect(zoneTitle(getZone('multiplication-mesa')!, 0)).toBe('Counting Mesa')
+    expect(zoneTitle(getZone('word-problem-woods')!, 0)).toBe('Story Woods')
+    expect(zoneTitle(getZone('division-dunes')!, 0)).toBe('Number Dunes')
+    expect(zoneTitle(getZone('division-dunes')!, 3)).toBe('Division Dunes')
+  })
+
+  it('every stage is voice-first: a short spoken description, 5–6 number-sentence or story questions, or the parade with 1st-grade gates', () => {
+    for (const [zoneId, ids] of Object.entries(OWN_IDS)) {
+      for (const s of zoneStages(getZone(zoneId)!, 1)) {
+        expect(ids).toContain(s.id)
+        expect(s.starsToEarn, s.id).toBe(3)
+        expect(s.description.split(' ').length, s.id).toBeLessThanOrEqual(10)
+        expect(s.description, s.id).toMatch(/[.!?]$/)
+        if (s.id.endsWith('-parade')) {
+          expect(s.gameId, s.id).toBe('critterParade')
+          expect(s.params?.ops, s.id).toBe(zoneId === 'division-dunes' ? 'sub' : 'add')
+          continue
+        }
+        expect(s.gameId, s.id).toBe('listenPlay')
+        expect(s.params?.questionCount, s.id).toBeGreaterThanOrEqual(5)
+        expect(s.params?.questionCount, s.id).toBeLessThanOrEqual(6)
+        const p = createProvider(s.providerConfig)
+        for (let i = 0; i < 6; i++) {
+          const q = p.next() as ListenProblem
+          expect(q.activity?.kind, `${s.id} #${i}`).toBe(zoneId === 'word-problem-woods' ? 'mathStory' : 'numberSentence')
+        }
+      }
+    }
+    expect(Object.values(OWN_IDS).flat().map((id) => getStage(Object.keys(OWN_IDS).find((z) => OWN_IDS[z].includes(id))!, id, 1)!.providerConfig.kind)).toEqual([
+      ...['g1Adding', 'g1Adding', 'g1Adding'],
+      ...['g1Subtract', 'g1Subtract', 'g1Subtract'],
+      ...['g1StoryMath', 'g1StoryMath', 'g1StoryMath'],
+    ])
+  })
+
+  it('a pet grows from its 1st-grade stars too', () => {
+    const lion = petById('lion')!
+    const g1Only = { 'multiplication-mesa': progressOf({ 'g1-add-1': 3, 'g1-add-parade': 3, 'g1-add-3': 3 }) }
+    expect(petStatus(lion, g1Only, {}, 1).stage).toBe('adult')
+    expect(petStatus(lion, g1Only, {}, 0).stage).toBe('adult')
   })
 })

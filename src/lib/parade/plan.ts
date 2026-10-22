@@ -82,6 +82,9 @@ function sequence(opSet: OpSetId, level: number): ('g' | 'c')[] {
     return level === 2 ? ['c', 'g', 'g', 'c', 'g', 'g', 'c', 'g', 'g'] : ['c', 'g', 'g', 'c', 'g', 'g', 'c', 'g']
   }
   if (opSet === 'addSub') return level === 2 ? ['g', 'g', 'c', 'g', 'g', 'g', 'g'] : ['g', 'g', 'c', 'g', 'g', 'g']
+  // 1st grade: + gates as kindergarten's; − gates as the Dunes' (a welcome cage, then refills)
+  if (opSet === 'add20') return level === 2 ? ['g', 'g', 'c', 'g', 'g', 'g', 'g'] : ['g', 'g', 'c', 'g', 'g', 'g']
+  if (opSet === 'sub20') return level === 2 ? ['c', 'g', 'g', 'c', 'g', 'g', 'c', 'g', 'g'] : ['c', 'g', 'g', 'c', 'g', 'g', 'c', 'g']
   if (level === 0) return ['g', 'g', 'c', 'g', 'g', 'g']
   if (level === 1) return ['c', 'g', 'g', 'g', 'c', 'g', 'g']
   return ['g', 'g', 'c', 'g', 'g', 'g', 'g']
@@ -94,6 +97,8 @@ const LEVEL_TOP: Record<OpSetId, [number, number, number]> = {
   divSub: [100, 100, 100],
   mulFrac: [120, 200, 280],
   fracDec: [200, 450, 900],
+  add20: [12, 15, 18],
+  sub20: [20, 20, 20],
 }
 
 function startCount(opSet: OpSetId, rng: () => number): number {
@@ -101,6 +106,10 @@ function startCount(opSet: OpSetId, rng: () => number): number {
   switch (opSet) {
     case 'addSub':
       return pickOf([2, 3])
+    case 'add20':
+      return pickOf([2, 3, 4])
+    case 'sub20':
+      return pickOf([3, 4])
     case 'mulAdd':
       return pickOf([2, 3, 4])
     case 'divSub':
@@ -158,6 +167,16 @@ export function planLevel(setup: ParadeSetup, level: number): LevelPlan {
   return plan
 }
 
+/**
+ * The zone family a parade stage's `params.ops` names: × for Multiplication
+ * Mesa (`mul`, and kindergarten's and 1st grade's `add`), ÷ and − for Division
+ * Dunes (`div`, and 1st grade's Take-Away Dunes `sub`). The grade then picks
+ * the band's operators (lib/gates opSetFor).
+ */
+export function paradeFamily(ops: unknown): OpFamily {
+  return ops === 'div' || ops === 'sub' ? 'div' : 'mul'
+}
+
 /** All three levels of a run. */
 export function planRun(setup: ParadeSetup): LevelPlan[] {
   return Array.from({ length: LEVELS }, (_, l) => planLevel(setup, l))
@@ -176,6 +195,13 @@ export function cageAmount(plan: LevelPlan, ev: CageEvent, count: number): numbe
   switch (plan.opSet) {
     case 'addSub':
       amount = ri(1, 2)
+      break
+    case 'add20':
+      amount = ri(1, 3)
+      break
+    case 'sub20':
+      // a big welcome (up to a teen number: friends to take away from), then a few more
+      amount = ev.index === 0 ? ri(15, 18) - count : ri(3, 6)
       break
     case 'mulAdd':
       amount = plan.level === 0 ? ri(2, 5) : ri(3, 8)
@@ -228,8 +254,10 @@ export function isFull(plan: LevelPlan, count: number): boolean {
 function fullAt(opSet: OpSetId, cap: number): number {
   switch (opSet) {
     case 'addSub':
+    case 'add20':
       return cap - 2
     case 'divSub':
+    case 'sub20':
       return Infinity
     case 'mulAdd':
       // past half the cap the pairs are "+m or +k" (two-digit adding): fine for a few gates

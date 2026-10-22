@@ -81,5 +81,42 @@ export const wordProblemZone: Zone = {
         starsToEarn: 3,
       },
     ],
+    // 1st grade (keeps "Story Woods"; 1.OA.1–2): spoken story problems within
+    // 20, acted out (the `mathStory` activity), each answer then written as a
+    // number sentence ("8 + 5 = 13"). Adding to, taking from and putting
+    // together; then the change unknown, taking apart and how many more; then
+    // the start unknown, three groups and how many fewer. Said aloud.
+    g1: [
+      {
+        id: 'g1-woods-1',
+        kind: 'concept',
+        title: 'Bigger stories',
+        description: 'Stories up to twenty. Act them out!',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1StoryMath', plots: ['join', 'leave', 'together'] },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-woods-2',
+        kind: 'practice',
+        title: 'Mystery numbers',
+        description: 'How many came, went, or are missing?',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1StoryMath', plots: ['joinChange', 'leaveChange', 'apart', 'compare'] },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-woods-3',
+        kind: 'mastery',
+        title: 'Story puzzles',
+        description: 'Three groups, fewer, and the start. Solve it!',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1StoryMath', plots: ['joinStart', 'three', 'fewer', 'leaveChange', 'apart'] },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+    ],
   },
 }

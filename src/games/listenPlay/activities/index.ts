@@ -24,6 +24,8 @@ import { lengthOrderActivity } from './LengthOrder'
 import { unitsActivity } from './Units'
 import { clockMatchActivity } from './ClockMatch'
 import { graphActivity } from './Graph'
+// 1st grade (phase 2b): Adding Mesa and Take-Away Dunes
+import { numberSentenceActivity } from './NumberSentence'
 
 /**
  * Listen & Play activities by `kind` (see `ListenProblem.activity`): the
@@ -57,6 +59,8 @@ export const LISTEN_ACTIVITIES: Record<string, ListenActivityDef<any>> = {
   units: unitsActivity,
   clockMatch: clockMatchActivity,
   graph: graphActivity,
+  // 1st grade (phase 2b): Adding Mesa and Take-Away Dunes
+  numberSentence: numberSentenceActivity,
 }
 
 export function activityDef(spec: ListenActivitySpec | undefined): ListenActivityDef | null {

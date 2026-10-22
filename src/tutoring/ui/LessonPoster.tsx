@@ -559,6 +559,68 @@ const POSTERS: Record<string, { bg: string; motif: () => ReactNode }> = {
       </g>
     ),
   },
+  g1Adding: {
+    bg: '#fff0c9',
+    motif: () => (
+      <g strokeLinejoin="round">
+        {/* a box of eight, and three dots counted on: 9, 10, 11 */}
+        <rect x={56} y={46} width={76} height={76} rx={14} fill="#fde7c8" stroke={M.ink} strokeWidth={3.5} />
+        <text x={94} y={86} fontFamily={M.font} fontWeight={700} fontSize={52} textAnchor="middle" dominantBaseline="middle" fill="#f2766b" stroke={M.ink} strokeWidth={3} paintOrder="stroke fill">
+          8
+        </text>
+        {[9, 10, 11].map((n, i) => (
+          <g key={n}>
+            <circle cx={176 + i * 46} cy={84} r={20} fill="#8ab8ff" stroke={M.ink} strokeWidth={3} />
+            <text x={176 + i * 46} y={85} fontFamily={M.font} fontWeight={700} fontSize={n > 9 ? 17 : 21} textAnchor="middle" dominantBaseline="middle" fill={M.ink}>
+              {n}
+            </text>
+          </g>
+        ))}
+        <path d="M 120 44 Q 150 18 176 60" fill="none" stroke={M.ink} strokeWidth={3} strokeDasharray="6 6" opacity={0.5} />
+      </g>
+    ),
+  },
+  g1Subtract: {
+    bg: '#fde3c4',
+    motif: () => (
+      <g strokeLinejoin="round">
+        {/* a ten-frame of nine, three crossed out */}
+        <rect x={70} y={44} width={180} height={76} rx={10} fill="#fffaf0" stroke={M.ink} strokeWidth={3.5} />
+        {[1, 2, 3, 4].map((k) => (
+          <line key={k} x1={70 + k * 36} y1={44} x2={70 + k * 36} y2={120} stroke={M.ink} strokeWidth={2.5} />
+        ))}
+        <line x1={70} y1={82} x2={250} y2={82} stroke={M.ink} strokeWidth={2.5} />
+        {Array.from({ length: 9 }, (_, i) => {
+          const cx = 88 + (i % 5) * 36
+          const cy = 63 + Math.floor(i / 5) * 38
+          return i >= 6 ? (
+            <path key={i} d={`M ${cx - 9} ${cy - 9} L ${cx + 9} ${cy + 9} M ${cx + 9} ${cy - 9} L ${cx - 9} ${cy + 9}`} stroke="#f2766b" strokeWidth={5} strokeLinecap="round" />
+          ) : (
+            <circle key={i} cx={cx} cy={cy} r={12} fill="#f2766b" stroke={M.ink} strokeWidth={2.5} />
+          )
+        })}
+        <text x={282} y={84} fontFamily={M.font} fontWeight={700} fontSize={40} textAnchor="middle" dominantBaseline="middle" fill={M.ink}>
+          −
+        </text>
+      </g>
+    ),
+  },
+  g1StoryMath: {
+    bg: '#dff3e4',
+    motif: () => (
+      <g strokeLinejoin="round">
+        {/* a basket of apples and its number sentence */}
+        {[0, 1, 2, 3, 4].map((i) => (
+          <circle key={i} cx={88 + i * 30} cy={92} r={13} fill="#f2766b" stroke={M.ink} strokeWidth={2.5} />
+        ))}
+        <path d="M 66 104 L 234 104 L 220 136 L 80 136 Z" fill="#e3b77e" stroke={M.ink} strokeWidth={3.5} />
+        <rect x={62} y={98} width={176} height={10} rx={5} fill="#d29a5c" stroke={M.ink} strokeWidth={3} />
+        <text x={160} y={44} fontFamily={M.font} fontWeight={700} fontSize={34} textAnchor="middle" dominantBaseline="middle" fill={M.ink}>
+          8 + 5 = 13
+        </text>
+      </g>
+    ),
+  },
 }
 
 /**

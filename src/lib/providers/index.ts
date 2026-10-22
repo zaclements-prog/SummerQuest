@@ -51,6 +51,10 @@ import { makeG1ShapesProvider, type G1ShapesConfig } from './g1Shapes'
 import { makeG1MeasureProvider, type G1MeasureConfig } from './g1Measure'
 import { makeG1GraphsProvider, type G1GraphsConfig } from './g1Graphs'
 import { makeG1ScienceProvider, type G1ScienceConfig } from './g1Science'
+// 1st grade (phase 2b): Adding Mesa, Take-Away Dunes, Story Woods
+import { makeG1AddingProvider, type G1AddingConfig } from './g1Adding'
+import { makeG1SubtractProvider, type G1SubtractConfig } from './g1Subtract'
+import { makeG1StoryMathProvider, type G1StoryMathConfig } from './g1StoryMath'
 
 export type ProviderConfig =
   | { kind: 'multiplication'; factorMin: number; factorMax: number }
@@ -117,6 +121,13 @@ export type ProviderConfig =
   | ({ kind: 'g1Graphs' } & G1GraphsConfig)
   /** Sky Summit: light and sound, the day and night sky, animal families. */
   | ({ kind: 'g1Science' } & G1ScienceConfig)
+  // ── 1st grade (phase 2b): Adding Mesa, Take-Away Dunes, Story Woods ──
+  /** Adding Mesa: add within 20, a number sentence over a picture of the strategy (count on, doubles, make ten). */
+  | ({ kind: 'g1Adding' } & G1AddingConfig)
+  /** Take-Away Dunes: subtract within 20 (take away, count back, think addition, the missing number, fact families). */
+  | ({ kind: 'g1Subtract' } & G1SubtractConfig)
+  /** Story Woods at 1st grade: story problems within 20, every kind and unknown, acted out, then a number sentence. */
+  | ({ kind: 'g1StoryMath' } & G1StoryMathConfig)
 
 export function createProvider(config: ProviderConfig): ProblemProvider {
   switch (config.kind) {
@@ -199,5 +210,12 @@ export function createProvider(config: ProviderConfig): ProblemProvider {
       return makeG1GraphsProvider(config)
     case 'g1Science':
       return makeG1ScienceProvider(config)
+    // 1st grade (phase 2b): Adding Mesa, Take-Away Dunes, Story Woods
+    case 'g1Adding':
+      return makeG1AddingProvider(config)
+    case 'g1Subtract':
+      return makeG1SubtractProvider(config)
+    case 'g1StoryMath':
+      return makeG1StoryMathProvider(config)
   }
 }

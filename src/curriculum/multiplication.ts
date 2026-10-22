@@ -3,7 +3,7 @@ import type { Zone } from './types'
 export const multiplicationZone: Zone = {
   id: 'multiplication-mesa',
   title: 'Multiplication Mesa',
-  titleByBand: { k1: 'Counting Mesa' },
+  titleByBand: { k1: 'Counting Mesa', g1: 'Adding Mesa' },
   subtitle: 'Times tables',
   emoji: '🏜️',
   themeColor: 'quest',
@@ -79,6 +79,45 @@ export const multiplicationZone: Zone = {
         description: 'Which group has more? Which number is bigger?',
         gameId: 'listenPlay',
         providerConfig: { kind: 'kCounting', mode: 'compare', min: 1, max: 10 },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+    ],
+    // 1st grade "Adding Mesa" (1.OA.3, 1.OA.6): add within 20 with a number
+    // sentence on screen ("8 + 5 = ?") and a picture of the strategy under it:
+    // count on from the bigger number and turn-around facts → the parade's +
+    // gates as numerals → doubles, near doubles and making ten. Answered with
+    // numeral cards (the `numberSentence` activity). Said aloud.
+    g1: [
+      {
+        id: 'g1-add-1',
+        kind: 'concept',
+        title: 'Count on',
+        description: 'Start with the bigger number. Count on!',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Adding', mode: 'countOn' },
+        params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-add-parade',
+        kind: 'practice',
+        title: 'Critter Parade',
+        description: 'Add the gates. Pick the one with more!',
+        gameId: 'critterParade',
+        // (the parade makes its own gates; the provider only names the topic)
+        providerConfig: { kind: 'g1Adding', mode: 'facts' },
+        // 1st grade's + gates within 20, written as numerals (lib/gates opSetFor: `add20`)
+        params: { ops: 'add' },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g1-add-3',
+        kind: 'mastery',
+        title: 'Doubles and tens',
+        description: 'Use doubles and make a ten to add!',
+        gameId: 'listenPlay',
+        providerConfig: { kind: 'g1Adding', mode: 'facts' },
         params: { questionCount: 6 },
         starsToEarn: 3,
       },
