@@ -414,6 +414,62 @@ const POSTERS: Record<string, { bg: string; motif: () => ReactNode }> = {
       </g>
     ),
   },
+  // ── 1st grade, phase 2b ──
+  g1Measure: {
+    bg: '#e3f6dc',
+    motif: () => (
+      <g strokeLinejoin="round" strokeLinecap="round">
+        {/* a clock at half past three, beside a pencil with paper clips under it */}
+        <circle cx={92} cy={76} r={52} fill="#fffaf0" stroke={M.ink} strokeWidth={4} />
+        {Array.from({ length: 12 }, (_, i) => {
+          const a = (i / 12) * Math.PI * 2
+          return <line key={i} x1={92 + Math.sin(a) * 42} y1={76 - Math.cos(a) * 42} x2={92 + Math.sin(a) * 48} y2={76 - Math.cos(a) * 48} stroke={M.ink} strokeWidth={i % 3 ? 2 : 3.5} />
+        })}
+        <line x1={92} y1={76} x2={92 + Math.sin((105 * Math.PI) / 180) * 20} y2={76 - Math.cos((105 * Math.PI) / 180) * 20} stroke={M.ink} strokeWidth={7} />
+        <line x1={92} y1={76} x2={92} y2={108} stroke="#f2766b" strokeWidth={5} />
+        <circle cx={92} cy={76} r={5} fill="#ffcf4d" stroke={M.ink} strokeWidth={2.5} />
+        <path d="M 168 40 V 128" stroke="#36c35a" strokeWidth={5} />
+        <rect x={168} y={50} width={100} height={20} rx={4} fill="#ffcf4d" stroke={M.ink} strokeWidth={3} />
+        <path d="M 268 50 L 290 60 L 268 70 Z" fill="#f6d2ad" stroke={M.ink} strokeWidth={3} />
+        {[0, 1, 2, 3, 4].map((k) => (
+          <rect key={k} x={170 + k * 24} y={86} width={22} height={11} rx={5.5} fill="none" stroke={M.ink} strokeWidth={3} />
+        ))}
+      </g>
+    ),
+  },
+  g1Graphs: {
+    bg: '#ffe9dc',
+    motif: () => (
+      <g strokeLinejoin="round">
+        {/* a picture graph: four red, two yellow, three purple, each row marked at its start */}
+        <rect x={60} y={20} width={200} height={112} rx={14} fill="#fffaf0" stroke={M.ink} strokeWidth={3} />
+        {[
+          { y: 40, n: 4, c: '#ef4b3f' },
+          { y: 76, n: 2, c: '#ffd23f' },
+          { y: 112, n: 3, c: '#9b6ad6' },
+        ].map(({ y, n, c }, r) => (
+          <g key={r}>
+            <rect x={70} y={y - 13} width={26} height={26} rx={6} fill="#ffffff" stroke={M.ink} strokeWidth={2.5} />
+            <circle cx={83} cy={y} r={7} fill={c} stroke={M.ink} strokeWidth={2} />
+            {Array.from({ length: n }, (_, k) => (
+              <circle key={k} cx={118 + k * 32} cy={y} r={11} fill={c} stroke={M.ink} strokeWidth={2.5} />
+            ))}
+          </g>
+        ))}
+      </g>
+    ),
+  },
+  g1Science: {
+    bg: '#dff1fb',
+    motif: () => (
+      <g>
+        {/* the Sky Summit cards' own drawings: a ringing bell, the night sky, a bird feeding its chicks */}
+        <g transform="translate(46 34) scale(0.86)">{DRAWINGS.bellRing()}</g>
+        <g transform="translate(130 34) scale(0.86)">{DRAWINGS.nightSky()}</g>
+        <g transform="translate(214 34) scale(0.86)">{DRAWINGS.birdFeeds()}</g>
+      </g>
+    ),
+  },
 }
 
 /**

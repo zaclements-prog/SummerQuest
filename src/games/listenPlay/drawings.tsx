@@ -1,6 +1,8 @@
 /* eslint-disable react-refresh/only-export-components -- a registry of drawings (data), not an HMR boundary */
 import type { ReactNode } from 'react'
 import { M } from '../../tutoring/motion/palette'
+// 1st grade (phase 2b): Measure Marsh's units, Sky Summit's light, sound, sky and families
+import { G1_DRAWINGS } from './drawingsG1'
 
 /**
  * Drawn pictures for the Listen & Play cards (`Picture` kind `art`): things
@@ -467,6 +469,8 @@ export const DRAWINGS: Record<string, () => ReactNode> = {
       <Arrow a={[78, 80]} b={[78, 46]} color={MOVE} w={6} head={9} />
     </Backdrop>
   ),
+  // 1st grade (phase 2b): Measure Marsh's units, Sky Summit (./drawingsG1)
+  ...G1_DRAWINGS,
 }
 
 /** A drawing by name, filling its box (nothing drawn for an unknown name). */

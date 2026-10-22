@@ -249,6 +249,20 @@ describe('changing grade', () => {
   })
 })
 
+/** 1st grade's own stage sets (phase-2b contract), by zone: 1st grade plays kindergarten's where a zone has none. */
+const G1_IDS: Record<string, string[]> = {
+  // Measure Marsh, Graph Delta, Sky Summit
+  'measurement-marsh': ['g1-measure-1', 'g1-measure-2', 'g1-measure-3'],
+  'data-delta': ['g1-graphs-1', 'g1-graphs-2', 'g1-graphs-3'],
+  'science-summit': ['g1-science-1', 'g1-science-2', 'g1-science-3'],
+}
+/** 1st grade's own zone names (a zone without one keeps kindergarten's). */
+const G1_TITLES: Record<string, string> = {
+  // Graph Delta, Sky Summit (Measure Marsh keeps its name)
+  'data-delta': 'Graph Delta',
+  'science-summit': 'Sky Summit',
+}
+
 describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
   // (the top-level beforeEach puts Multiplication Mesa's set aside: bring it back)
   beforeEach(() => {
@@ -294,8 +308,9 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
     for (const zone of curriculum.zones) {
       for (const g of [0, 1] as const) {
         const ids = zoneStages(zone, g).map((s) => s.id)
-        // (zones without a K–1 set fall back to their 2–4 stages; the World shows them as still sleeping)
-        expect(ids, `${zone.id} at grade ${g}`).toEqual(K1_IDS[zone.id] ?? zone.stages.map((s) => s.id))
+        // (zones without a K–1 set fall back to their 2–4 stages; the World shows them as still sleeping;
+        // 1st grade plays its own set where a zone has one: G1_IDS)
+        expect(ids, `${zone.id} at grade ${g}`).toEqual((g === 1 ? G1_IDS[zone.id] : undefined) ?? K1_IDS[zone.id] ?? zone.stages.map((s) => s.id))
       }
       for (const g of [2, 3, 4, 5] as const) expect(zoneStages(zone, g)).toBe(zone.stages)
     }
@@ -440,7 +455,7 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
 
   it('names the three zones for K–1 only (zoneTitle)', () => {
     for (const zone of curriculum.zones) {
-      for (const g of [0, 1] as const) expect(zoneTitle(zone, g)).toBe(K1_TITLES[zone.id] ?? zone.title)
+      for (const g of [0, 1] as const) expect(zoneTitle(zone, g)).toBe((g === 1 ? G1_TITLES[zone.id] : undefined) ?? K1_TITLES[zone.id] ?? zone.title)
       for (const g of [2, 3, 4, 5] as const) expect(zoneTitle(zone, g)).toBe(zone.title)
       expect(zoneTitle(zone, null)).toBe(zone.title)
     }
@@ -557,5 +572,61 @@ describe('Nature Summit and Counting Towers (phase-2a contract)', () => {
     expect(zone.stages[0]).toMatchObject({ id: 'td-arena', gameId: 'towerDefense', providerConfig: { kind: 'multiplication', factorMin: 2, factorMax: 10 } })
     expect(zone.stages[0].params).toBeUndefined()
     for (const g of [2, 3, 4] as const) expect(zoneStages(zone, g).map((s) => s.id)).toEqual(['td-arena'])
+  })
+})
+
+describe('Grade 1 (phase-2b contract): Measure Marsh, Graph Delta, Sky Summit', () => {
+  const zones = ['measurement-marsh', 'data-delta', 'science-summit']
+
+  it('1st grade plays its own sets, in unlock order, with the contract’s titles; kindergarten keeps its own', () => {
+    for (const id of zones) {
+      const zone = getZone(id)!
+      const set = zoneStages(zone, 1)
+      expect(set.map((s) => s.id)).toEqual(G1_IDS[id])
+      expect(set.map((s) => s.kind)).toEqual(['concept', 'practice', 'mastery'])
+      // each unlocks after the one before it
+      const stars = (xs: string[]) => ({ stages: Object.fromEntries(xs.map((x) => [x, { stars: 1 }])) })
+      set.forEach((s, i) => expect(isStageUnlocked(zone, s.id, stars(G1_IDS[id].slice(0, i)), 1), s.id).toBe(true))
+      expect(isStageUnlocked(zone, G1_IDS[id][2], stars([G1_IDS[id][0]]), 1)).toBe(false)
+      // a 1st-grade stage is no stage at any other grade (and the K set is untouched)
+      for (const g of [0, 2, 3, 4, 5] as const) for (const s of set) expect(getStage(id, s.id, g), `${s.id} at grade ${g}`).toBeUndefined()
+      expect(zoneStages(zone, 0).every((s) => s.id.startsWith('k-'))).toBe(true)
+      expect(isZoneSleeping(zone, 1)).toBe(false)
+    }
+    expect(zoneTitle(getZone('measurement-marsh')!, 1)).toBe('Measure Marsh')
+    expect(zoneTitle(getZone('data-delta')!, 1)).toBe('Graph Delta')
+    expect(zoneTitle(getZone('science-summit')!, 1)).toBe('Sky Summit')
+    // kindergarten's names, unchanged
+    expect(zones.map((z) => zoneTitle(getZone(z)!, 0))).toEqual(['Measure Marsh', 'Sorting Delta', 'Nature Summit'])
+  })
+
+  it('every 1st-grade stage is a voice-first round of 5–6 with 3 stars and a short spoken description', () => {
+    const all = zones.flatMap((z) => zoneStages(getZone(z)!, 1))
+    for (const s of all) {
+      expect(s.gameId, s.id).toBe('listenPlay')
+      expect(s.starsToEarn, s.id).toBe(3)
+      expect(s.params?.questionCount, s.id).toBeGreaterThanOrEqual(5)
+      expect(s.params?.questionCount, s.id).toBeLessThanOrEqual(6)
+      expect(s.description.split(' ').length, s.id).toBeLessThanOrEqual(10)
+      expect(s.description, s.id).toMatch(/[.!?]$/)
+    }
+    expect(all.map((s) => s.providerConfig)).toEqual([
+      { kind: 'g1Measure', mode: 'order' },
+      { kind: 'g1Measure', mode: 'units' },
+      { kind: 'g1Measure', mode: 'time' },
+      { kind: 'g1Graphs', mode: 'build' },
+      { kind: 'g1Graphs', mode: 'read' },
+      { kind: 'g1Graphs', mode: 'tally' },
+      { kind: 'g1Science', mode: 'lightSound' },
+      { kind: 'g1Science', mode: 'sky' },
+      { kind: 'g1Science', mode: 'families' },
+    ])
+    // answered through their activities (Measure Marsh, Graph Delta) or picture cards (Sky Summit)
+    const first = (z: string, i: number) => createProvider(zoneStages(getZone(z)!, 1)[i].providerConfig).next() as ListenProblem
+    expect(first('measurement-marsh', 0).activity?.kind).toBe('lengthOrder')
+    expect(first('measurement-marsh', 1).activity?.kind).toBe('units')
+    expect(first('measurement-marsh', 2).activity?.kind).toBe('clockMatch')
+    for (const i of [0, 1, 2]) expect(first('data-delta', i).activity?.kind).toBe('graph')
+    for (const i of [0, 1, 2]) expect(first('science-summit', i).pictureOptions?.length).toBeGreaterThanOrEqual(2)
   })
 })

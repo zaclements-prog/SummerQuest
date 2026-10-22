@@ -397,3 +397,40 @@ describe('ListenQuitDialog', () => {
     expect(leave).toHaveBeenCalledTimes(1)
   })
 })
+
+describe('1st grade (phase 2b): Measure Marsh, Graph Delta, Sky Summit', () => {
+  const G1 = {
+    'measurement-marsh': { title: 'Measure Marsh', welcome: 'k-nav/welcome-measurement-marsh', stages: ['g1-measure-1', 'g1-measure-2', 'g1-measure-3'] },
+    'data-delta': { title: 'Graph Delta', welcome: 'k-nav/welcome-g1-data-delta', stages: ['g1-graphs-1', 'g1-graphs-2', 'g1-graphs-3'] },
+    'science-summit': { title: 'Sky Summit', welcome: 'k-nav/welcome-g1-science-summit', stages: ['g1-science-1', 'g1-science-2', 'g1-science-3'] },
+  }
+
+  it('the zone page: the 1st-grade name and welcome, three picture buttons, nothing else to read; the map says the 1st-grade name', async () => {
+    // (the real stage sets, not the pilot's)
+    for (const [z, sets] of original) if (sets) z.stagesByBand = sets
+    for (const [zoneId, z] of Object.entries(G1)) {
+      player(1)
+      render(`/zone/${zoneId}`, <ZoneDetail />, '/zone/:zoneId')
+      expect(qa('[data-stage]').map((b) => b.dataset.stage)).toEqual(z.stages)
+      expect(container.textContent).toContain(z.title)
+      expect(container.textContent).not.toContain(getZone(zoneId)!.description)
+      expect(lines()).toEqual([z.welcome])
+      expect(targets()).toEqual([`stage-${z.stages[0]}`])
+      // each button a picture of its own (not the generic 💡 ⚡ 🏆), said aloud when tapped
+      for (const id of z.stages) expect(q(`[data-stage="${id}"]`)!.textContent).not.toMatch(/[💡⚡🏆]/u)
+      click(q(`[data-stage="${z.stages[0]}"]`))
+      expect(lines()).toEqual([`k-nav/stage-${z.stages[0]}`])
+      act(() => root.render(<></>))
+      resetGuideForTests()
+    }
+    player(1)
+    render('/map', <WorldMap />)
+    for (const [zoneId, z] of Object.entries(G1)) {
+      const marker = q(`[data-guide="map-${zoneId}"]`)!
+      expect(marker.hasAttribute('data-sleeping')).toBe(false)
+      expect(marker.getAttribute('aria-label')).toMatch(new RegExp(`^${z.title}:`))
+    }
+    click(q('[data-guide="map-data-delta"]'))
+    expect(lines()).toEqual(['k-nav/name-g1-data-delta'])
+  })
+})

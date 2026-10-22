@@ -25,6 +25,10 @@ import { kMeasureLesson } from './kMeasure'
 import { kSortingLesson } from './kSorting'
 import { kScienceLesson } from './kScience'
 import { kTowersLesson } from './kTowers'
+// 1st grade (phase 2b): Measure Marsh, Graph Delta, Sky Summit
+import { g1MeasureLesson } from './g1Measure'
+import { g1GraphsLesson } from './g1Graphs'
+import { g1ScienceLesson } from './g1Science'
 
 /**
  * The lessons, by content band (lib/gradeBand; K–5 plan §2): kindergarten and
@@ -68,7 +72,12 @@ export const k1Lessons: Lesson[] = [
 ]
 
 /** 1st grade (band `g1`): its own voice lessons. */
-export const g1Lessons: Lesson[] = []
+export const g1Lessons: Lesson[] = [
+  // Measure Marsh, Graph Delta, Sky Summit
+  g1MeasureLesson,
+  g1GraphsLesson,
+  g1ScienceLesson,
+]
 
 /** 5th grade (band `g5`). */
 export const g5Lessons: Lesson[] = []

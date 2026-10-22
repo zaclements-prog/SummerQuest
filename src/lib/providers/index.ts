@@ -39,6 +39,10 @@ import { makeKMeasureProvider, type KMeasureConfig } from './kMeasure'
 import { makeKSortProvider, type KSortConfig } from './kSort'
 import { makeKTowersProvider, type KTowersConfig } from './kTowers'
 import { makeKScienceProvider, type KScienceConfig } from './kScience'
+// 1st grade (phase 2b): Measure Marsh, Graph Delta, Sky Summit
+import { makeG1MeasureProvider, type G1MeasureConfig } from './g1Measure'
+import { makeG1GraphsProvider, type G1GraphsConfig } from './g1Graphs'
+import { makeG1ScienceProvider, type G1ScienceConfig } from './g1Science'
 
 export type ProviderConfig =
   | { kind: 'multiplication'; factorMin: number; factorMax: number }
@@ -85,6 +89,12 @@ export type ProviderConfig =
   | ({ kind: 'kTowers' } & KTowersConfig)
   /** Nature Summit: the weather and what to wear, what plants and animals need, push and pull. */
   | ({ kind: 'kScience' } & KScienceConfig)
+  /** 1st-grade Measure Marsh: lengths in order and through a string, paper clips and cubes, the clock. */
+  | ({ kind: 'g1Measure' } & G1MeasureConfig)
+  /** Graph Delta: making and reading picture and tally graphs. */
+  | ({ kind: 'g1Graphs' } & G1GraphsConfig)
+  /** Sky Summit: light and sound, the day and night sky, animal families. */
+  | ({ kind: 'g1Science' } & G1ScienceConfig)
 
 export function createProvider(config: ProviderConfig): ProblemProvider {
   switch (config.kind) {
@@ -146,5 +156,12 @@ export function createProvider(config: ProviderConfig): ProblemProvider {
       return makeKTowersProvider(config)
     case 'kScience':
       return makeKScienceProvider(config)
+    // 1st grade (phase 2b): Measure Marsh, Graph Delta, Sky Summit
+    case 'g1Measure':
+      return makeG1MeasureProvider(config)
+    case 'g1Graphs':
+      return makeG1GraphsProvider(config)
+    case 'g1Science':
+      return makeG1ScienceProvider(config)
   }
 }

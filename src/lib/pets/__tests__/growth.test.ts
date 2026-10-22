@@ -46,11 +46,11 @@ describe('pet catalog', () => {
       ['panda', 'geometry-grove', ['geometry', 'kShapes']],
       ['lion', 'multiplication-mesa', ['multiplication', 'kCounting']],
       ['trex', 'division-dunes', ['division', 'kCompare']],
-      ['bear', 'measurement-marsh', ['measurement', 'kMeasure']],
-      ['fox', 'data-delta', ['dataGraph', 'kSorting']],
+      ['bear', 'measurement-marsh', ['measurement', 'kMeasure', 'g1Measure']],
+      ['fox', 'data-delta', ['dataGraph', 'kSorting', 'g1Graphs']],
       ['unicorn', 'place-value-plateau', ['placeValue', 'kTeens']],
       ['dragonet', 'writing-workshop', ['writing', 'kTracing']],
-      ['tiger', 'science-summit', ['science', 'kScience']],
+      ['tiger', 'science-summit', ['science', 'kScience', 'g1Science']],
       ['dragon', 'tower-battlefront', ['kTowers']],
     ]
     for (const [id, zoneId, lessonIds] of table) {
@@ -83,6 +83,10 @@ describe('pet catalog', () => {
     expect(zoneLessonFor('division-dunes', 0)?.id).toBe('kCompare')
     expect(zoneLessonFor('place-value-plateau', 0)?.id).toBe('kTeens')
     expect(zoneLessonFor('no-such-zone', 0)).toBeUndefined() // no lesson button
+    // (1st grade, phase 2b: the bear, the fox and the tiger hatch from their zones' 1st-grade lessons)
+    expect(zoneLessonFor('measurement-marsh', 1)?.id).toBe('g1Measure')
+    expect(zoneLessonFor('data-delta', 1)?.id).toBe('g1Graphs')
+    expect(zoneLessonFor('science-summit', 1)?.id).toBe('g1Science')
   })
 
   it('every egg has its own colors', () => {

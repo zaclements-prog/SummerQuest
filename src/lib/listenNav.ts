@@ -120,6 +120,16 @@ const STAGE_PICTURE: Record<string, string> = {
   'k-towers-1': '🏰',
   'k-towers-2': '👾',
   'k-towers-3': '🚀',
+  // 1st grade (phase 2b): Measure Marsh, Graph Delta, Sky Summit
+  'g1-measure-1': '📏',
+  'g1-measure-2': '📎',
+  'g1-measure-3': '🕒',
+  'g1-graphs-1': '🍎',
+  'g1-graphs-2': '📊',
+  'g1-graphs-3': '✋',
+  'g1-science-1': '🔦',
+  'g1-science-2': '🌙',
+  'g1-science-3': '🐣',
 }
 const KIND_PICTURE: Record<Stage['kind'], string> = { concept: '💡', practice: '⚡', mastery: '🏆' }
 

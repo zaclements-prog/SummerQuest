@@ -5,6 +5,14 @@ import { createProvider } from '../providers'
 import { effectiveConfigForStage } from '../gradeTiers'
 import type { ListenProblem } from '../../games/listenPlay/types'
 
+/** 1st grade's own first stage, by zone (phase-2b contract): what 1st grade plays in the daily there. */
+const G1_FIRST: Record<string, string> = {
+  // Measure Marsh, Graph Delta, Sky Summit
+  'measurement-marsh': 'g1-measure-1',
+  'data-delta': 'g1-graphs-1',
+  'science-summit': 'g1-science-1',
+}
+
 describe('daily challenge pick', () => {
   it('never lands on a writing (no answer options) stage, over a full year', () => {
     const start = new Date(2026, 0, 1)
@@ -45,7 +53,8 @@ describe('daily challenge pick', () => {
       for (let d = 0; d < 120; d++) {
         const { zone, stage } = pickTodaysChallenge(grade, localDayKey(new Date(2026, 0, 1 + d)))
         expect(open.has(zone.id)).toBe(true)
-        expect(stage.id).toMatch(/^k-/)
+        // (1st grade plays its own set where a zone has one: G1_FIRST)
+        expect(stage.id).toMatch(grade === 1 && G1_FIRST[zone.id] ? /^g1-/ : /^k-/)
         zonesSeen.add(zone.id)
       }
       expect(zonesSeen.size).toBe(open.size)
@@ -91,5 +100,23 @@ describe('daily challenge pick', () => {
       expect(q.activity, stage.id).toBeUndefined()
     }
     expect([...seen].sort()).toEqual(['science-summit', 'tower-battlefront'])
+  })
+
+  it('1st grade plays its own first stage where a zone has a 1st-grade set, and kindergarten its K one', () => {
+    const seen = new Set<string>()
+    for (let d = 0; d < 366; d++) {
+      const day = localDayKey(new Date(2026, 0, 1 + d))
+      const g1 = pickTodaysChallenge(1, day)
+      if (G1_FIRST[g1.zone.id]) {
+        seen.add(g1.zone.id)
+        expect(g1.stage.id).toBe(G1_FIRST[g1.zone.id])
+        expect(g1.stage.gameId).toBe('listenPlay')
+        const q = createProvider(effectiveConfigForStage(g1.stage, 0, 1)).next() as ListenProblem
+        expect(q.speech, g1.stage.id).toBeDefined()
+      }
+      const k = pickTodaysChallenge(0, day)
+      if (G1_FIRST[k.zone.id]) expect(k.stage.id).toMatch(/^k-/)
+    }
+    expect([...seen].sort()).toEqual(['data-delta', 'measurement-marsh', 'science-summit'])
   })
 })
