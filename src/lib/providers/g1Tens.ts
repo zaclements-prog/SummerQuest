@@ -1,6 +1,6 @@
 import type { ProblemProvider } from '../problem'
 import type { ListenProblem } from '../../games/listenPlay/types'
-import { tensAnswer, tensOf, onesOf, TENS_SIGNS, type BuildTensSpec, type G1TensActivitySpec, type TensAsk, type TensSpec } from '../../games/listenPlay/activities/tensSpecs'
+import { signFor, tensAnswer, tensOf, onesOf, TENS_SIGNS, type BuildTensSpec, type G1TensActivitySpec, type TensAsk, type TensSpec } from '../../games/listenPlay/activities/tensSpecs'
 import { G1_COUNT_MAX, G1_NEXT_FIRST, G1_TEN_LESS_MIN, G1_TEN_MORE_MAX, G1_TENS_MAX, G1_TENS_MIN, buildable } from '../../voice/packs/g1-tens'
 import { voiceText } from '../../voice/registry'
 import type { VoiceRef } from '../../voice/types'
@@ -177,8 +177,10 @@ export function makeG1TensProvider(cfg: G1TensConfig = {}): Omit<ProblemProvider
       case 'bigger':
       case 'smaller':
       case 'sign': {
-        const [a, b] = pair(it.pair, it.q === 'sign')
+        let [a, b] = pair(it.pair, it.q === 'sign')
         if (it.q === 'sign') {
+          // (the signs keep their order, > < =: the numbers swap sides instead, to move the answer around)
+          if (places.wouldRepeat(TENS_SIGNS.indexOf(signFor(a, b)))) [a, b] = [b, a]
           const spec: TensSpec = { kind: 'tens', ask: 'sign', n: a, m: b, cards: TENS_SIGNS, scaffold: it.scaffold }
           return problem('sign', 'compare', { line: 'g1-tens/sign' }, spec, [...TENS_SIGNS])
         }

@@ -133,13 +133,15 @@ export function makeG1SharesProvider(cfg: G1SharesConfig = {}): Omit<ProblemProv
       case 'tapFourth': {
         // the half sits somewhere new each time
         const turn = THING_BASE[thing] === 'rect' ? 0 : pickOne(TURNS, [lastTapTurn])
-        lastTapTurn = turn
+        if (THING_BASE[thing] !== 'rect') lastTapTurn = turn
         const ask = kind === 'tapHalf' ? 'half' : 'fourth'
         const spec: ShareTapSpec = { kind: 'shareTap', thing, turn, ask }
         return { ...base(kind, mode === 'size' ? 'size' : 'halves', { template: `g1-shares/${kind}`, slots }), options: [], answer: ask, activity: spec }
       }
       case 'nameShare': {
-        const parts = partsDeck.next()
+        // (the word cards keep their order, half then fourth: the picture moves the answer around)
+        let parts = partsDeck.next()
+        if (places.wouldRepeat(parts === 2 ? 0 : 1)) parts = parts === 2 ? 4 : 2
         const cut = pickOne(parts === 2 ? ch.equal2 : ch.equal4)
         const answer = parts === 2 ? 'half' : 'fourth'
         const words = ['half', 'fourth']
