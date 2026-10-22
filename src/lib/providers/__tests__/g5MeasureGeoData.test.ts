@@ -40,6 +40,8 @@ function fair(p: Problem): string[] {
     if (BAD.test(t)) errs.push(`bad token: ${t}`)
     if (/ {2}/.test(t)) errs.push(`double space: ${t}`)
     if (t !== t.trim()) errs.push(`untrimmed: "${t}"`)
+    if (/\b(\w+) \1\b/i.test(t)) errs.push(`repeated word: ${t}`)
+    if (/\s[,.!;:]|[a-z] \?/i.test(t)) errs.push(`space before punctuation: ${t}`)
   }
   if (p.options.length < 3 || p.options.length > 4) errs.push(`${p.options.length} options`)
   if (new Set(p.options.map(String)).size !== p.options.length) errs.push(`duplicate options ${JSON.stringify(p.options)}`)

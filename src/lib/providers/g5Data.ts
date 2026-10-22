@@ -156,7 +156,7 @@ function readPlot(id: string): Problem {
       const text = mixedText(k * t, c.d)
       // (just the count, one of them, one too many or too few)
       const options = withDistractors(text, [String(k), ...[t, (k + 1) * t, (k - 1) * t].filter((w) => w > 0).map((w) => mixedText(w, c.d))], (i) => mixedText(k * t + i, c.d))
-      return plotQ(id, `What is the total of all the ${c.things} that were ${amount(t, c)} ${c.were}, in ${c.units}?`, text, options, `There are ${k} of them. Add ${mixedText(t, c.d)} ${k} times (or multiply ${k} × ${mixedText(t, c.d)}).`, 'total', visual)
+      return plotQ(id, `What is the total of all the ${c.things} that were ${amount(t, c)} ${c.were}, in ${c.units}?`, text, options, `Multiply how many there are by the measurement: ${k} × ${mixedText(t, c.d)}.`, 'total', visual)
     }
     default: {
       // more than a value

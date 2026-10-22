@@ -127,7 +127,7 @@ export const measurementZone: Zone = {
         id: 'g5-measure-1',
         kind: 'concept',
         title: 'Cube Builders',
-        description: 'Find the volume of boxes: count cubes, then use l × w × h and B × h.',
+        description: 'Find the volume of boxes by counting cubes and by multiplying.',
         gameId: 'conceptPlay',
         providerConfig: { kind: 'g5Measure', mode: 'volume' },
         params: { questionCount: 6 },
