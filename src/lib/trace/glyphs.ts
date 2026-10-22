@@ -56,12 +56,45 @@ export const STROKE_PHRASES = {
 
 export type StrokePhrase = keyof typeof STROKE_PHRASES
 
-export interface StrokeDef {
-  moves: Move[]
-  say: StrokePhrase
+/**
+ * 1st grade's lowercase letters (Writing Workshop, `g1-trace-1`) reuse the
+ * phrases above where they fit ("Little line down.", "Around like a C.") and
+ * add these (`g1-writing/say-<id>` lines).
+ */
+export const LOWER_PHRASES = {
+  ballRight: 'Back up, and around the other way.',
+  hump: 'Back up, and over for a hump.',
+  hump2: 'Over again, for one more hump.',
+  rCurve: 'Back up, and a little curve.',
+  eLine: 'Little line across, then around like a C.',
+  fHook: 'Curve over the top, then line down.',
+  descDown: 'Line down, below the bottom line.',
+  dot: 'Now a dot on top!',
+  bigSlant: 'Big slant down, below the bottom line.',
+  tStem: 'Start above the dashed line. Line down.',
+} as const
+
+export type LowerPhrase = keyof typeof LOWER_PHRASES
+
+/** The voice line of a stroke's phrase: kindergarten's (`k-trace/say-*`) or 1st grade's (`g1-writing/say-*`). */
+export function strokeLine(say: StrokePhrase | LowerPhrase): string {
+  return say in STROKE_PHRASES ? `k-trace/say-${say}` : `g1-writing/say-${say}`
 }
 
-export type GlyphKind = 'warmup' | 'digit' | 'letter'
+export interface StrokeDef {
+  moves: Move[]
+  say: StrokePhrase | LowerPhrase
+}
+
+export type GlyphKind = 'warmup' | 'digit' | 'letter' | 'lower'
+
+/** Where a glyph's writing lines are (box units, y down): top, dashed middle, base, and (lowercase) the descender line. */
+export interface Ruling {
+  top: number
+  mid: number
+  base: number
+  desc?: number
+}
 
 export interface GlyphDef {
   /** `down`, `circle` (warm-ups), `7`, `B`. */
@@ -82,12 +115,14 @@ export interface Glyph extends Omit<GlyphDef, 'strokes'> {
   strokes: Stroke[]
   /** Letters and numerals stand on the writing lines; warm-ups float free. */
   lines: boolean
+  /** Lowercase letters: their own lines (with room below for a tail); others use TOP, MID and BASE. */
+  ruling?: Ruling
 }
 
 /** Sample spacing (box units): the check compares a trace against points this far apart. */
 export const SAMPLE_SPACING = 2
 
-const S = (say: StrokePhrase, ...moves: Move[]): StrokeDef => ({ say, moves })
+const S = (say: StrokePhrase | LowerPhrase, ...moves: Move[]): StrokeDef => ({ say, moves })
 
 // ── warm-ups (pre-writing strokes), easiest first ────────────────────────────
 
@@ -163,10 +198,63 @@ const LETTER_DEFS: GlyphDef[] = [
   { id: 'Z', kind: 'letter', strokes: [S('acrossSlantAcross', L(24, TOP, 76, TOP, 24, BASE, 76, BASE))] },
 ]
 
+// ── lowercase letters a–z (1st grade) ────────────────────────────────────────
+
+/**
+ * Lowercase letters stand on their own writing lines, three equal spaces: the
+ * top line (tall letters start here), the dashed middle line (small letters
+ * start here: the x-height), the base line, and the descender line below it
+ * (g, j, p, q and y hang their tails down to it). Ball-and-stick, school
+ * order and direction: circles counter-clockwise from about two o'clock (a c
+ * first), humps and bowls clockwise from the line (n, h, b, p), lines from the
+ * top down; a dot last (i, j), a cross last (f, t).
+ */
+export const LOWER_RULING: Ruling = { top: 6, mid: 36, base: 66, desc: 96 }
+const { top: LT, mid: LM, base: LB, desc: LD = 96 } = LOWER_RULING
+
+/** The bowl of a, d, g, o and q: around like a c, from about two o'clock, all the way round. */
+const bowl = (cx: number) => A(cx, 51, 14, 15, 40, 400)
+/** i's and j's dot: a tiny stroke, done with a tap. */
+const dotAt = (x: number) => L(x, 22.5, x, 25.5)
+
+const LOWER_DEFS: GlyphDef[] = [
+  { id: 'a', kind: 'lower', strokes: [S('aroundO', bowl(46)), S('littleDown', L(60, LM, 60, LB))] },
+  { id: 'b', kind: 'lower', strokes: [S('bigDown', L(38, LT, 38, LB)), S('ballRight', A(52, 51, 14, 15, 180, -180))] },
+  { id: 'c', kind: 'lower', strokes: [S('aroundC', A(52, 51, 14, 15, 45, 315))] },
+  { id: 'd', kind: 'lower', strokes: [S('aroundO', bowl(46)), S('bigDown', L(60, LT, 60, LB))] },
+  { id: 'e', kind: 'lower', strokes: [S('eLine', M(38, 51), L(66, 51), A(52, 51, 14, 15, 0, 315))] },
+  { id: 'f', kind: 'lower', strokes: [S('fHook', A(56, 15, 8, 9, 15, 180), L(48, LB)), S('littleAcross', L(38, LM, 60, LM))] },
+  { id: 'g', kind: 'lower', strokes: [S('aroundO', bowl(46)), S('hook', L(60, LM, 60, 84), A(48, 84, 12, 11, 0, -165))] },
+  { id: 'h', kind: 'lower', strokes: [S('bigDown', L(36, LT, 36, LB)), S('hump', A(50, 50, 14, 14, 180, 0), L(64, LB))] },
+  { id: 'i', kind: 'lower', strokes: [S('littleDown', L(50, LM, 50, LB)), S('dot', dotAt(50))] },
+  { id: 'j', kind: 'lower', strokes: [S('hook', L(56, LM, 56, 84), A(44, 84, 12, 11, 0, -165)), S('dot', dotAt(56))] },
+  { id: 'k', kind: 'lower', strokes: [S('bigDown', L(38, LT, 38, LB)), S('slantInOut', L(62, LM, 39, 53, 64, LB))] },
+  { id: 'l', kind: 'lower', strokes: [S('bigDown', L(50, LT, 50, LB))] },
+  {
+    id: 'm',
+    kind: 'lower',
+    strokes: [S('littleDown', L(28, LM, 28, LB)), S('hump', A(39, 47, 11, 11, 180, 0), L(50, LB)), S('hump2', A(61, 47, 11, 11, 180, 0), L(72, LB))],
+  },
+  { id: 'n', kind: 'lower', strokes: [S('littleDown', L(36, LM, 36, LB)), S('hump', A(50, 50, 14, 14, 180, 0), L(64, LB))] },
+  { id: 'o', kind: 'lower', strokes: [S('aroundO', A(50, 51, 14, 15, 45, 405))] },
+  { id: 'p', kind: 'lower', strokes: [S('descDown', L(38, LM, 38, LD)), S('ballRight', A(52, 51, 14, 15, 180, -180))] },
+  { id: 'q', kind: 'lower', strokes: [S('aroundO', bowl(46)), S('descDown', L(60, LM, 60, LD))] },
+  { id: 'r', kind: 'lower', strokes: [S('littleDown', L(42, LM, 42, LB)), S('rCurve', A(56, 50, 14, 14, 180, 45))] },
+  { id: 's', kind: 'lower', strokes: [S('snake', A(50, 43.5, 10, 7.5, 30, 270), A(50, 58.5, 11, 7.5, 90, -150))] },
+  { id: 't', kind: 'lower', strokes: [S('tStem', L(50, 20, 50, LB)), S('littleAcross', L(38, LM, 62, LM))] },
+  { id: 'u', kind: 'lower', strokes: [S('downAroundUp', L(36, LM, 36, 54), A(50, 54, 14, 12, 180, 360), L(64, LM)), S('littleDown', L(64, LM, 64, LB))] },
+  { id: 'v', kind: 'lower', strokes: [S('slantDownUp', L(36, LM, 50, LB, 64, LM))] },
+  { id: 'w', kind: 'lower', strokes: [S('downUpDownUp', L(26, LM, 37, LB, 50, LM, 63, LB, 74, LM))] },
+  { id: 'x', kind: 'lower', strokes: [S('slantDown', L(37, LM, 63, LB)), S('slantDown', L(63, LM, 37, LB))] },
+  { id: 'y', kind: 'lower', strokes: [S('slantDown', L(36, LM, 50, LB)), S('bigSlant', L(64, LM, 38, LD))] },
+  { id: 'z', kind: 'lower', strokes: [S('acrossSlantAcross', L(37, LM, 63, LM, 37, LB, 63, LB))] },
+]
+
 function build(def: GlyphDef): Glyph {
   return {
     ...def,
     lines: def.kind !== 'warmup',
+    ...(def.kind === 'lower' ? { ruling: LOWER_RULING } : {}),
     strokes: def.strokes.map((s) => {
       const sampled = sampleMoves(s.moves, SAMPLE_SPACING)
       return { ...s, sampled, path: movesPath(s.moves), start: sampled.pts[0], end: sampled.pts[sampled.pts.length - 1] }
@@ -174,11 +262,16 @@ function build(def: GlyphDef): Glyph {
   }
 }
 
-export const WARMUPS: readonly Glyph[] = WARMUP_DEFS.map(build)
-export const DIGITS: readonly Glyph[] = DIGIT_DEFS.map(build)
-export const LETTERS: readonly Glyph[] = LETTER_DEFS.map(build)
+/** A kindergarten glyph: every stroke says one of kindergarten's phrases (`k-trace/say-*`). */
+export type KGlyph = Omit<Glyph, 'strokes'> & { strokes: (Stroke & { say: StrokePhrase })[] }
 
-const BY_ID = new Map<string, Glyph>([...WARMUPS, ...DIGITS, ...LETTERS].map((g) => [`${g.kind}:${g.id}`, g]))
+export const WARMUPS = WARMUP_DEFS.map(build) as readonly KGlyph[]
+export const DIGITS = DIGIT_DEFS.map(build) as readonly KGlyph[]
+export const LETTERS = LETTER_DEFS.map(build) as readonly KGlyph[]
+/** The lowercase letters a–z (1st grade). */
+export const LOWER: readonly Glyph[] = LOWER_DEFS.map(build)
+
+const BY_ID = new Map<string, Glyph>([...WARMUPS, ...DIGITS, ...LETTERS, ...LOWER].map((g) => [`${g.kind}:${g.id}`, g]))
 
 /** A glyph by kind and id (`glyph('letter', 'B')`); throws on a typo. */
 export function glyph(kind: GlyphKind, id: string): Glyph {
@@ -187,7 +280,8 @@ export function glyph(kind: GlyphKind, id: string): Glyph {
   return g
 }
 
-export const ALL_GLYPHS: readonly Glyph[] = [...BY_ID.values()]
+/** Kindergarten's glyphs: the warm-ups, the numerals and the capital letters (1st grade's lowercase are `LOWER`). */
+export const ALL_GLYPHS: readonly KGlyph[] = [...WARMUPS, ...DIGITS, ...LETTERS]
 
 /**
  * The capital letters by stroke family, the order Trace big letters teaches
@@ -207,6 +301,23 @@ export const WARMUP_FAMILIES = {
   patterns: ['zigzag', 'wave'],
 } as const
 
+/**
+ * The lowercase letters by stroke family, the order Trace little letters
+ * deals them in: line letters, the c family (around like a c), humps and
+ * bowls, slants.
+ */
+export const LOWER_FAMILIES = {
+  lines: ['l', 'i', 't', 'j', 'f'],
+  curves: ['c', 'o', 'a', 'd', 'g', 'q', 'e', 's'],
+  humps: ['r', 'n', 'm', 'h', 'b', 'p', 'u'],
+  slants: ['v', 'w', 'x', 'y', 'z', 'k'],
+} as const
+
+/** A stroke so short it is a dot (i's and j's): a tap on it is the stroke. */
+export function isDotStroke(s: Pick<Stroke, 'sampled'>): boolean {
+  return s.sampled.length < 6
+}
+
 /** The green start dot's radius (box units). */
 export const DOT_R = 5.4
 
@@ -217,6 +328,8 @@ export const DOT_R = 5.4
  */
 export function strokeArrows(s: Stroke): { p: Pt; dir: Pt }[] {
   const len = s.sampled.length
+  // (a dot has no way to go: it's a tap)
+  if (isDotStroke(s)) return []
   // (clear of the green dot and the guide's ring round it)
   const first = Math.min(len * 0.45, DOT_R + 14)
   const at = [first, ...s.sampled.corners.map((c) => c + 7).filter((c) => c < len - 5)]

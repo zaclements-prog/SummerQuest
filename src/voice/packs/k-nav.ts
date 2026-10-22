@@ -144,5 +144,20 @@ export default defineVoicePack({
     'stage-k-towers-1': 'How many?',
     'stage-k-towers-2': 'More or fewer!',
     'stage-k-towers-3': 'Tower count!',
+
+    // ── 1st grade (phase 2b): Word Reef (its 1st-grade name), Writing Workshop and Counting Towers' stage buttons ──
+    'name-g1-reading-reef': 'Word Reef!',
+    'welcome-g1-reading-reef': 'Word Reef! Tap a star to play!',
+    'stage-g1-vowels-1': 'Short vowels!',
+    'stage-g1-digraphs-1': 'Letter teams!',
+    'stage-g1-words-1': 'Read a word!',
+    'stage-g1-sentences-1': 'Read along!',
+    'stage-g1-sight-1': 'Sight words!',
+    'stage-g1-trace-1': 'Little letters!',
+    'stage-g1-spell-1': 'Spell it!',
+    'stage-g1-sentence-1': 'Build a sentence!',
+    'stage-g1-towers-1': 'Add to build!',
+    'stage-g1-towers-2': 'Take away!',
+    'stage-g1-towers-3': 'Tower math!',
   },
 })

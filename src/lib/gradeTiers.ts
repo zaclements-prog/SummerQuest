@@ -240,6 +240,11 @@ export function effectiveConfig(
     case 'kTowers':
     case 'kScience':
       return config
+    // 1st grade (phase 2b): Word Reef, Writing Workshop, Tower Battlefront (their own ramps, as written)
+    case 'g1Reading':
+    case 'g1Writing':
+    case 'g1Towers':
+      return config
   }
 }
 

@@ -60,6 +60,8 @@ const SKILL: Record<GlyphKind, { id: string; label: string }> = {
   warmup: { id: 'k-trace-lines', label: 'tracing lines and curves' },
   digit: { id: 'k-trace-numbers', label: 'writing numbers' },
   letter: { id: 'k-trace-letters', label: 'writing capital letters' },
+  // (1st grade's lowercase letters: Writing Workshop's g1-trace-1, src/lib/providers/g1Writing.ts)
+  lower: { id: 'g1-trace-lower', label: 'writing lowercase letters' },
 }
 
 const PRAISE: VoiceRef[] = [{ line: 'k-trace/greatTracing' }, { line: 'k-trace/niceLines' }]
