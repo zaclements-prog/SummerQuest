@@ -86,6 +86,8 @@ export default function WorldMap() {
 
   // K–1 (voice-first): the open places stand out, sleeping ones doze; a tap says the name.
   const listen = listenGrade(grade)
+  // (K–1: how many places are open decides how big their markers can be)
+  const openListenZones = listen ? curriculum.zones.filter((z) => z.available && !isZoneSleeping(z, grade)).length : 0
   const nextZoneId = nextTarget?.zoneId ?? null
   const explainMap = () => void guide.show({ voice: { line: 'k-nav/mapHelp' }, target: nextZoneId ? `map-${nextZoneId}` : null, cue: 'bright' })
   const explainRef = useRef(explainMap)
@@ -161,7 +163,7 @@ export default function WorldMap() {
                 <IslandArt />
                 {curriculum.zones.map((zone) =>
                   listen ? (
-                    <ListenZoneMarker key={zone.id} zone={zone} isNext={zone.id === nextTarget?.zoneId} />
+                    <ListenZoneMarker key={zone.id} zone={zone} isNext={zone.id === nextTarget?.zoneId} crowded={openListenZones > LISTEN_ROOMY_MAX} />
                   ) : (
                     <ZoneMarker key={zone.id} zone={zone} isNext={zone.id === nextTarget?.zoneId} />
                   ),
@@ -355,6 +357,14 @@ function ZoneMarker({ zone, isNext }: { zone: Zone; isNext: boolean }) {
 /** K–1 marker sizes: an open place is big and glows; a sleeping one is small (its tap area stays 64px). */
 const MEDAL_OPEN = 'clamp(64px, 12.5cqw, 112px)'
 const MEDAL_SLEEP = 'clamp(40px, 6.6cqw, 60px)'
+/**
+ * Up to this many open places, they're drawn big. With more open (neighbours
+ * on the island sit about 12% of the map apart), they take the 2nd–4th grade
+ * marker size so they don't cover each other; the tap area stays 64px and the
+ * names (for grown-ups) show only on a map wide enough for them.
+ */
+const LISTEN_ROOMY_MAX = 4
+const MEDAL_OPEN_CROWDED = MEDAL
 
 /**
  * A place on the K–1 map. Open (it has K–1 games): big, glowing, its K–1
@@ -362,7 +372,7 @@ const MEDAL_SLEEP = 'clamp(40px, 6.6cqw, 60px)'
  * Sleeping: small, dimmed, dozing; a tap says "This place is still sleeping.
  * Come back soon!" and goes nowhere.
  */
-function ListenZoneMarker({ zone, isNext }: { zone: Zone; isNext: boolean }) {
+function ListenZoneMarker({ zone, isNext, crowded = false }: { zone: Zone; isNext: boolean; crowded?: boolean }) {
   const navigate = useNavigate()
   const grade = useProgress((s) => s.player?.grade)
   const spot = ZONE_SPOTS[zone.id]
@@ -371,7 +381,7 @@ function ListenZoneMarker({ zone, isNext }: { zone: Zone; isNext: boolean }) {
   const sleeping = !zone.available || isZoneSleeping(zone, grade)
   const tone = TONES[toneOf(zone.themeColor)]
   const title = zoneTitle(zone, grade)
-  const size = sleeping ? MEDAL_SLEEP : MEDAL_OPEN
+  const size = sleeping ? MEDAL_SLEEP : crowded ? MEDAL_OPEN_CROWDED : MEDAL_OPEN
   const stars = zoneStars(zone.id, grade)
   const maxStars = maxStarsOf(zone, grade)
 
@@ -418,8 +428,8 @@ function ListenZoneMarker({ zone, isNext }: { zone: Zone; isNext: boolean }) {
       </button>
       {!sleeping && (
         <span
-          className={`mt-[0.6cqw] whitespace-nowrap text-center kid-text leading-snug text-ink-900 rounded-full border-2 border-line px-[0.8cqw] shadow-ledge-sm ${isNext ? 'bg-quest-200' : 'bg-paper'}`}
-          style={{ fontSize: 'clamp(12px, 2.1cqw, 19px)' }}
+          className={`${crowded ? 'hidden @[560px]:block' : ''} mt-[0.6cqw] whitespace-nowrap text-center kid-text leading-snug text-ink-900 rounded-full border-2 border-line px-[0.8cqw] shadow-ledge-sm ${isNext ? 'bg-quest-200' : 'bg-paper'}`}
+          style={{ fontSize: crowded ? 'clamp(11px, 1.75cqw, 16px)' : 'clamp(12px, 2.1cqw, 19px)' }}
           aria-hidden="true"
         >
           {title}
