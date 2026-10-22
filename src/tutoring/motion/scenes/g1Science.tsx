@@ -76,7 +76,7 @@ function Ask({ t, at, x, y }: { t: number; at: number; x: number; y: number }) {
  */
 const sound: Scene = ({ t, cue }: SceneProps) => {
   const tap = cue('Tap a drum')
-  const hit = tap + 0.6
+  const hit = tap + 1.2
   const shakes = cue('shakes')
   const sound = cue('make sound')
   const pop = spring(t, 0.1, { stiffness: 190, damping: 14 })
@@ -112,7 +112,7 @@ const sound: Scene = ({ t, cue }: SceneProps) => {
  * word; a hand waves on "Your turn". (The check: which one blocks the light?)
  */
 const light: Scene = ({ t, cue }: SceneProps) => {
-  const see = cue('light to see')
+  const see = cue('to see') + 0.3
   const lit = ease.inOutCubic(progress(t, see, 0.6))
   return (
     <>
