@@ -57,7 +57,8 @@ afterEach(() => {
 describe('zoneStages', () => {
   it('falls back to the 2nd–4th grade stages while a band has no set (every zone, every grade)', () => {
     for (const zone of curriculum.zones) {
-      for (const g of GRADE_LEVELS) if (!zone.stagesByBand?.k1 || g >= 2) expect(zoneStages(zone, g)).toBe(zone.stages)
+      // (5th grade plays its own set where the zone has one: G5_IDS)
+      for (const g of GRADE_LEVELS) if ((!zone.stagesByBand?.k1 || g >= 2) && !(g === 5 && zone.stagesByBand?.g5?.length)) expect(zoneStages(zone, g)).toBe(zone.stages)
       expect(zoneStages(zone, null)).toBe(zone.stages)
       expect(zoneStages(zone, undefined)).toBe(zone.stages)
     }
@@ -254,6 +255,14 @@ describe('changing grade', () => {
  * the ones with a 1st-grade name of their own. Every other zone plays (and is
  * called) what kindergarten does at grade 1.
  */
+/** The zones with a 5th-grade set of their own (K–5 plan, phase-3 contract). */
+const G5_IDS: Record<string, string[]> = {
+  // Reading Reef, Writing Workshop, Science Summit (phase 3)
+  'reading-reef': ['g5-read-1', 'g5-read-2', 'g5-read-3'],
+  'writing-workshop': ['g5-write-1', 'g5-write-2', 'g5-write-3'],
+  'science-summit': ['g5-sci-1', 'g5-sci-cycle', 'g5-sci-2', 'g5-sci-3'],
+}
+
 const G1_IDS: Record<string, string[]> = {
   // Word Reef, Writing Workshop, Counting Towers (phase 2b)
   'reading-reef': ['g1-vowels-1', 'g1-digraphs-1', 'g1-words-1', 'g1-sentences-1', 'g1-sight-1'],
@@ -332,7 +341,9 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
         // 1st grade plays its own set where the zone has one: G1_IDS)
         expect(ids, `${zone.id} at grade ${g}`).toEqual((g === 1 ? G1_IDS[zone.id] : undefined) ?? K1_IDS[zone.id] ?? zone.stages.map((s) => s.id))
       }
-      for (const g of [2, 3, 4, 5] as const) expect(zoneStages(zone, g)).toBe(zone.stages)
+      for (const g of [2, 3, 4] as const) expect(zoneStages(zone, g)).toBe(zone.stages)
+      // (5th grade: its own set where the zone has one, G5_IDS)
+      expect(zoneStages(zone, 5).map((s) => s.id), zone.id).toEqual(G5_IDS[zone.id] ?? zone.stages.map((s) => s.id))
     }
     // today's 2–4 stage ids, unchanged
     expect(getZone('multiplication-mesa')!.stages.map((s) => s.id)).toEqual(['mult-concept', 'mult-practice', 'mult-mastery'])
@@ -894,5 +905,38 @@ describe('1st grade (phase-2b contract): Adding Mesa, Take-Away Dunes and Story 
     const g1Only = { 'multiplication-mesa': progressOf({ 'g1-add-1': 3, 'g1-add-parade': 3, 'g1-add-3': 3 }) }
     expect(petStatus(lion, g1Only, {}, 1).stage).toBe('adult')
     expect(petStatus(lion, g1Only, {}, 0).stage).toBe('adult')
+  })
+})
+
+describe('Grade 5 (phase-3 contract): Reading Reef, Writing Workshop, Science Summit', () => {
+  const zones = ['reading-reef', 'writing-workshop', 'science-summit']
+
+  it('5th grade plays its own set in the contract’s order; the zones keep their names; every other grade is unchanged', () => {
+    for (const id of zones) {
+      const zone = getZone(id)!
+      const set = zoneStages(zone, 5)
+      expect(set.map((s) => s.id)).toEqual(G5_IDS[id])
+      expect(zoneTitle(zone, 5)).toBe(zone.title)
+      for (const g of [2, 3, 4] as const) expect(zoneStages(zone, g)).toBe(zone.stages)
+      for (const g of [0, 1, 2, 3, 4] as const) for (const s of set) expect(getStage(id, s.id, g), `${s.id} at grade ${g}`).toBeUndefined()
+      // each unlocks after the one before it
+      const stars = (xs: string[]) => ({ stages: Object.fromEntries(xs.map((x) => [x, { stars: 1 }])) })
+      set.forEach((s, i) => expect(isStageUnlocked(zone, s.id, stars(G5_IDS[id].slice(0, i)), 5), s.id).toBe(true))
+      expect(isStageUnlocked(zone, G5_IDS[id][2], stars([G5_IDS[id][0]]), 5)).toBe(false)
+      for (const s of set) {
+        expect(s.starsToEarn).toBe(3)
+        expect(s.providerConfig.kind.startsWith('g5'), s.id).toBe(true)
+      }
+    }
+  })
+
+  it('mirrors the 2–4 shapes: concept, practice, a mastery boss (the pad for writing), Cloud Keeper’s spheres tier', () => {
+    const shape = (id: string) => zoneStages(getZone(id)!, 5).map((s) => [s.kind, s.gameId])
+    expect(shape('reading-reef')).toEqual([['concept', 'conceptPlay'], ['practice', 'conceptPlay'], ['mastery', 'bossBattle']])
+    expect(shape('writing-workshop')).toEqual([['concept', 'writingPad'], ['practice', 'writingPad'], ['mastery', 'writingPad']])
+    expect(shape('science-summit')).toEqual([['concept', 'conceptPlay'], ['practice', 'cloudKeeper'], ['practice', 'conceptPlay'], ['mastery', 'bossBattle']])
+    const cycle = zoneStages(getZone('science-summit')!, 5)[1]
+    expect(cycle.providerConfig).toEqual({ kind: 'g5Spheres' })
+    expect(cycle.params).toMatchObject({ mode: 'spheres' })
   })
 })

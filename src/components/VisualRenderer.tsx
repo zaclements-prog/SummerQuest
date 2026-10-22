@@ -351,7 +351,8 @@ function PassageVisual({
   return (
     <Surface className="max-w-2xl !p-5 sm:!p-6">
       <div className="kid-text font-bold text-2xl mb-2 text-ocean-800">{visual.passageTitle}</div>
-      <p className="text-lg leading-relaxed mb-3">{visual.passageText}</p>
+      {/* (grade-5 passages keep their paragraph and line breaks; 2–4 passages have none) */}
+      <p className="text-lg leading-relaxed mb-3 whitespace-pre-line">{visual.passageText}</p>
       <div className="border-t-2 border-line/15 pt-3 kid-text text-xl text-ink-900">{visual.question}</div>
     </Surface>
   )

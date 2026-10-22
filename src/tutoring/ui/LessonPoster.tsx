@@ -7,6 +7,8 @@ import { Apple, Cookie, Flat, Rod, UnitCube } from '../motion/shapes'
 import { DRAWINGS } from '../../games/listenPlay/drawings'
 // 1st grade (phase 2b): Fair Share Falls' pizza drawings
 import { shareArtName } from '../../games/listenPlay/shareGeometry'
+// 5th grade (phase 3): Reading Reef, Writing Workshop, Science Summit
+import { G5_REEF_WORKSHOP_SUMMIT_POSTERS } from './posters/g5ReefWorkshopSummit'
 
 const PW = 320
 const PH = 150
@@ -621,6 +623,7 @@ const POSTERS: Record<string, { bg: string; motif: () => ReactNode }> = {
       </g>
     ),
   },
+  ...G5_REEF_WORKSHOP_SUMMIT_POSTERS,
 }
 
 /**

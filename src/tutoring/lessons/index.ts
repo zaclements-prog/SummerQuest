@@ -40,6 +40,10 @@ import { g1ScienceLesson } from './g1Science'
 import { g1AddingLesson } from './g1Adding'
 import { g1SubtractLesson } from './g1Subtract'
 import { g1StoryMathLesson } from './g1StoryMath'
+// 5th grade (phase 3): Reading Reef, Writing Workshop, Science Summit
+import { g5ReadingLesson } from './g5Reading'
+import { g5WritingLesson } from './g5Writing'
+import { g5ScienceLesson } from './g5Science'
 
 /**
  * The lessons, by content band (lib/gradeBand; K–5 plan §2): kindergarten and
@@ -102,7 +106,12 @@ export const g1Lessons: Lesson[] = [
 ]
 
 /** 5th grade (band `g5`). */
-export const g5Lessons: Lesson[] = []
+export const g5Lessons: Lesson[] = [
+  // Reading Reef, Writing Workshop, Science Summit (phase 3)
+  g5ReadingLesson,
+  g5WritingLesson,
+  g5ScienceLesson,
+]
 
 /** Every lesson of every band: what `getLesson` finds, and what the narration dump and scene tests cover. */
 export const everyLesson: Lesson[] = [...g24Lessons, ...k1Lessons, ...g1Lessons, ...g5Lessons]

@@ -19,7 +19,8 @@ const BAD_TEXT = /NaN|undefined|\[object Object\]|Infinity/
 // every band's stage set (K–1, 2–4, 5), each stage once
 const stages = curriculum.zones.flatMap((zone) =>
   [...new Map(GRADE_LEVELS.flatMap((g) => zoneStages(zone, g)).map((s) => [s.id, s])).values()]
-    .filter((s) => s.providerConfig.kind !== 'writingPrompt')
+    // (writing prompts, 2–4's and 5th grade's, have no answer options)
+    .filter((s) => s.providerConfig.kind !== 'writingPrompt' && s.providerConfig.kind !== 'g5Writing')
     .map((stage) => ({ zone, stage })),
 )
 

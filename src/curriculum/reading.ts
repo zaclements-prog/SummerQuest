@@ -190,5 +190,41 @@ export const readingZone: Zone = {
         starsToEarn: 3,
       },
     ],
+    // 5th grade (phase-3 contract, RL.5 / RI.5): level-5 passages, a passage at
+    // a time. Stories, poems and fables (theme, characters, figurative language,
+    // narrator) → articles and accounts (main ideas, text structure, evidence) →
+    // the boss, both shelves together. Paired texts on both shelves.
+    g5: [
+      {
+        id: 'g5-read-1',
+        kind: 'concept',
+        title: 'Story Shoals',
+        description: 'Stories and poems: find the theme, the narrator and the figurative language.',
+        gameId: 'conceptPlay',
+        providerConfig: { kind: 'g5Reading', shelf: 'literature' },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g5-read-2',
+        kind: 'practice',
+        title: 'Fact Current',
+        description: 'Articles and accounts: main ideas, text structure and evidence.',
+        gameId: 'conceptPlay',
+        providerConfig: { kind: 'g5Reading', shelf: 'informational' },
+        params: { questionCount: 5 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g5-read-3',
+        kind: 'mastery',
+        title: 'Squid Scholar',
+        description: 'Read closely and compare texts to outwit the Squid Scholar!',
+        gameId: 'bossBattle',
+        providerConfig: { kind: 'g5Reading', shelf: 'mixed' },
+        params: { questionCount: 6, bossEmoji: '🦑', bossName: 'Squid Scholar' },
+        starsToEarn: 3,
+      },
+    ],
   },
 }

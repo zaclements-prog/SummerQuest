@@ -145,6 +145,17 @@ export const SKILLS: Record<string, SkillMeta> = {
   'g1-story-unknowns': { label: 'story problems with a missing number', zoneId: 'word-problem-woods', lessonId: 'g1StoryMath', practiceStageId: 'g1-woods-2' },
   'g1-story-compare':  { label: 'how many more or fewer', zoneId: 'word-problem-woods', lessonId: 'g1StoryMath', practiceStageId: 'g1-woods-2' },
   'g1-three-addends':  { label: 'adding three numbers', zoneId: 'word-problem-woods', lessonId: 'g1StoryMath', practiceStageId: 'g1-woods-3' },
+  // ── 5th grade (phase 3): Reading Reef (lesson g5Reading), Writing Workshop (g5Writing), Science Summit (g5Science) ──
+  'g5-read-literature':    { label: 'stories and poems: theme, figurative language, narrator', zoneId: 'reading-reef', lessonId: 'g5Reading', practiceStageId: 'g5-read-1' },
+  'g5-read-informational': { label: 'nonfiction: main ideas and text structure', zoneId: 'reading-reef', lessonId: 'g5Reading', practiceStageId: 'g5-read-2' },
+  'g5-read-compare':       { label: 'comparing two texts', zoneId: 'reading-reef', lessonId: 'g5Reading', practiceStageId: 'g5-read-3' },
+  'g5-write-opinion':      { label: 'opinion writing: reasons and evidence', zoneId: 'writing-workshop', lessonId: 'g5Writing', practiceStageId: 'g5-write-1' },
+  'g5-write-informative':  { label: 'informative writing: facts and linking words', zoneId: 'writing-workshop', lessonId: 'g5Writing', practiceStageId: 'g5-write-2' },
+  'g5-write-narrative':    { label: 'narrative writing: dialogue and transitions', zoneId: 'writing-workshop', lessonId: 'g5Writing', practiceStageId: 'g5-write-3' },
+  'g5-sci-matter':   { label: 'matter: particles and conserving weight', zoneId: 'science-summit', lessonId: 'g5Science', practiceStageId: 'g5-sci-1' },
+  'g5-sci-foodwebs': { label: 'food webs: energy and matter', zoneId: 'science-summit', lessonId: 'g5Science', practiceStageId: 'g5-sci-1' },
+  'g5-sci-spheres':  { label: 'Earth’s spheres and its water', zoneId: 'science-summit', lessonId: 'g5Science', practiceStageId: 'g5-sci-cycle' },
+  'g5-sci-sky':      { label: 'shadows, the sun and the stars', zoneId: 'science-summit', lessonId: 'g5Science', practiceStageId: 'g5-sci-2' },
 }
 
 export interface Skill { id: string; label: string }

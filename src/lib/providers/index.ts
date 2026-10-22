@@ -55,6 +55,11 @@ import { makeG1ScienceProvider, type G1ScienceConfig } from './g1Science'
 import { makeG1AddingProvider, type G1AddingConfig } from './g1Adding'
 import { makeG1SubtractProvider, type G1SubtractConfig } from './g1Subtract'
 import { makeG1StoryMathProvider, type G1StoryMathConfig } from './g1StoryMath'
+// 5th grade (phase 3): Reading Reef, Writing Workshop, Science Summit (and Cloud Keeper's spheres tier)
+import { makeG5ReadingProvider, type G5ReadingConfig } from './g5Reading'
+import { makeG5WritingProvider, type G5WritingConfig } from './g5Writing'
+import { makeG5ScienceProvider, type G5ScienceConfig } from './g5Science'
+import { makeG5SpheresProvider } from './g5Spheres'
 
 export type ProviderConfig =
   | { kind: 'multiplication'; factorMin: number; factorMax: number }
@@ -128,6 +133,15 @@ export type ProviderConfig =
   | ({ kind: 'g1Subtract' } & G1SubtractConfig)
   /** Story Woods at 1st grade: story problems within 20, every kind and unknown, acted out, then a number sentence. */
   | ({ kind: 'g1StoryMath' } & G1StoryMathConfig)
+  // ── 5th grade (phase 3): Reading Reef, Writing Workshop, Science Summit ──
+  /** Reading Reef (5th grade): level-5 stories, poems and articles, a passage at a time. */
+  | ({ kind: 'g5Reading' } & G5ReadingConfig)
+  /** Writing Workshop (5th grade): opinion, informative and narrative prompts with a checklist (the writing pad). */
+  | ({ kind: 'g5Writing' } & G5WritingConfig)
+  /** Science Summit (5th grade): matter, food webs, Earth's spheres, shadows and stars. */
+  | ({ kind: 'g5Science' } & G5ScienceConfig)
+  /** Cloud Keeper's grade-5 tier: carry water, carbon dioxide and minerals between Earth's spheres. */
+  | { kind: 'g5Spheres' }
 
 export function createProvider(config: ProviderConfig): ProblemProvider {
   switch (config.kind) {
@@ -217,5 +231,14 @@ export function createProvider(config: ProviderConfig): ProblemProvider {
       return makeG1SubtractProvider(config)
     case 'g1StoryMath':
       return makeG1StoryMathProvider(config)
+    // 5th grade (phase 3): Reading Reef, Writing Workshop, Science Summit
+    case 'g5Reading':
+      return makeG5ReadingProvider(config)
+    case 'g5Writing':
+      return makeG5WritingProvider(config)
+    case 'g5Science':
+      return makeG5ScienceProvider(config)
+    case 'g5Spheres':
+      return makeG5SpheresProvider()
   }
 }

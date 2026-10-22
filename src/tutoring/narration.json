@@ -636,5 +636,71 @@
       "stepId": "fewer",
       "text": "Your turn! Bear has nine pears. Fox has six pears."
     }
+  ],
+  "g5Reading": [
+    {
+      "stepId": "theme",
+      "text": "A theme is the big lesson a story teaches. It is not just what happens. To find it, watch how the main character changes. Rafi’s bridge falls apart, he rebuilds it with triangles, and it holds. What did he learn? Mistakes can teach us how to do better. That is the theme."
+    },
+    {
+      "stepId": "figurative",
+      "text": "Writers paint pictures with figurative language. A simile compares two things using like or as: the bridge sagged like a tired horse. A metaphor says one thing is another: the quilt is a map of her life. An idiom is a saying that means something different from its words: to spill the beans means to tell a secret."
+    },
+    {
+      "stepId": "narrator",
+      "text": "Who is telling the story? If the narrator says I and we, the story is told in first person, by a character inside it. If the narrator says he, she and they, it is third person, told from outside. A first person narrator only knows their own thoughts, so their feelings color everything we read."
+    },
+    {
+      "stepId": "structure",
+      "text": "Nonfiction has a shape, called its structure. Signal words give it away. First, next, then and finally mean time order. Because and so mean cause and effect. Both, but and however mean compare and contrast. A problem, then a fix, means problem and solution."
+    },
+    {
+      "stepId": "compare",
+      "text": "Sometimes you read two texts about the same topic. Put them side by side. What do both texts say? Where do they differ? A sailor’s logbook shares feelings about a storm. A news report sticks to facts and quotes. Same event, two points of view."
+    }
+  ],
+  "g5Writing": [
+    {
+      "stepId": "opinion",
+      "text": "A strong opinion piece is built like a sandwich. Start with your opinion. Then give a reason, and back it up with evidence: a fact or an example. Add another reason with its evidence. Finish by saying your opinion again in new words."
+    },
+    {
+      "stepId": "linking",
+      "text": "Linking words are bridges between ideas. Use because to give a reason. Use for example to show evidence. Use also and in addition to add more. Use however to turn to a different idea, and therefore to show a result."
+    },
+    {
+      "stepId": "paragraphs",
+      "text": "Informative writing teaches a reader. Begin with a topic sentence that tells what you will explain. Group facts that belong together into a paragraph. Start a new paragraph for a new idea. End with a conclusion that wraps it all up."
+    },
+    {
+      "stepId": "dialogue",
+      "text": "Dialogue makes characters talk. Put the spoken words inside quotation marks. The comma or end mark goes inside the closing quotation mark, before the speaker tag. Start a new paragraph each time a new character speaks."
+    },
+    {
+      "stepId": "pacing",
+      "text": "Good stories have pacing. Slow down at the exciting moment: describe what the character sees, hears and feels. Speed up the boring parts with transitions like later that day, meanwhile, and after that. Then give your story a real ending."
+    }
+  ],
+  "g5Science": [
+    {
+      "stepId": "particles",
+      "text": "All matter is made of particles too small to see. Stir 20 grams of salt into 200 grams of water. The salt seems to vanish, but its particles are still there. Put it on a scale: 220 grams. When matter mixes, melts or dissolves, the total weight stays the same."
+    },
+    {
+      "stepId": "foodweb",
+      "text": "Energy for almost every food web starts with the sun. Grass captures sunlight to make food. A rabbit eats the grass, and a fox eats the rabbit. When they die, decomposers like mushrooms break them down and return matter to the soil. Matter cycles around. Energy keeps coming from the sun."
+    },
+    {
+      "stepId": "spheres",
+      "text": "Scientists see Earth as four spheres. The geosphere is rock and soil. The hydrosphere is water and ice. The atmosphere is the air. The biosphere is every living thing. They interact all the time: when tree roots crack a rock, the biosphere is changing the geosphere."
+    },
+    {
+      "stepId": "water",
+      "text": "If all of Earth’s water filled 100 cups, 97 cups would be salty ocean water. Only 3 cups would be fresh, and most of that is frozen in glaciers and ice caps. That is why the fresh water we can use is so precious."
+    },
+    {
+      "stepId": "sky",
+      "text": "The sun is a star. It looks brighter than other stars because it is much closer. Each day Earth spins once, so the sun seems to cross the sky. In the morning the sun is in the east, and shadows point west. At noon shadows are shortest. In the evening they point east."
+    }
   ]
 }

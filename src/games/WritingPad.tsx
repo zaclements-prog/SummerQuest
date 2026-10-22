@@ -10,6 +10,9 @@ import { sfx } from '../lib/sound'
 import { Card, Button, Medallion, ProgressBar, Pill, StarRating, Loading } from '../components/ui'
 import { useEntrance } from '../lib/motion'
 import { heuristicFeedback } from '../lib/writingGrader'
+// 5th grade: a checklist beside the prompt, checked by its own grader
+import { G5_WRITING_LABEL, isG5WritingProblem, type G5WritingMode } from '../lib/providers/g5Writing'
+import { g5WritingFeedback } from '../lib/g5WritingGrader'
 import { ROOMY_SCREEN, SHORT_SCREEN, WIDE_SHORT, useCoarsePointer, useKeepAboveKeyboard, useKeyboardInset, useMediaQuery, useVisibleHeight } from '../components/useViewport'
 
 interface Feedback {
@@ -21,7 +24,7 @@ interface Feedback {
 }
 
 export default function WritingPad({ provider, params, onComplete, meta }: GameProps) {
-  const kind = (params?.kind as 'sentence' | 'paragraph' | 'story') ?? 'sentence'
+  const kind = (params?.kind as PadKind) ?? 'sentence'
   const questionCount = (params?.questionCount as number) ?? 1
   const minWords =
     (params?.minWords as number) ??
@@ -76,10 +79,11 @@ export default function WritingPad({ provider, params, onComplete, meta }: GameP
 
     let fb: Feedback
     if (useAI) {
+      const g5 = isG5WritingProblem(problem) ? problem.g5Writing : null
       const built = buildWritingEvalPrompt({
-        promptText: problem.prompt,
+        promptText: g5 ? `${problem.prompt} Checklist: ${g5.checklist.join(' ')}` : problem.prompt,
         kidResponse: text,
-        kind,
+        kind: g5 ? (g5.mode === 'narrative' ? 'story' : 'paragraph') : (kind as 'sentence' | 'paragraph' | 'story'),
         playerName: player?.name,
       })
       const raw = await generateText({
@@ -89,9 +93,9 @@ export default function WritingPad({ provider, params, onComplete, meta }: GameP
         temperature: 0.5,
         json: true,
       })
-      fb = parseFeedback(raw, wordCount, minWords) ?? heuristicFeedback(text, minWords)
+      fb = parseFeedback(raw, wordCount, minWords) ?? offlineFeedback(problem, text, minWords)
     } else {
-      fb = heuristicFeedback(text, minWords)
+      fb = offlineFeedback(problem, text, minWords)
     }
 
     if (fb.stars >= 2) sfx.victory()
@@ -104,7 +108,9 @@ export default function WritingPad({ provider, params, onComplete, meta }: GameP
 
   function nextOrFinish() {
     if (!feedback) return
-    if (meta) recordAttempt({ zoneId: meta.zoneId, topic: provider.topic, skillId: 'write-craft', skillLabel: 'writing', correct: feedback.stars > 0 })
+    // (a grade-5 prompt names its own skill; grades 2–4 keep 'write-craft')
+    const g5Skill = isG5WritingProblem(problem) ? problem.skill : undefined
+    if (meta) recordAttempt({ zoneId: meta.zoneId, topic: provider.topic, skillId: g5Skill?.id ?? 'write-craft', skillLabel: g5Skill?.label ?? 'writing', correct: feedback.stars > 0 })
     const stars = [...totalStars, feedback.stars]
     const allScores = [...scores, feedback.score]
     if (idx + 1 >= questionCount) {
@@ -159,11 +165,19 @@ export default function WritingPad({ provider, params, onComplete, meta }: GameP
 // All game logic lives in the parent; this component only renders props and
 // forwards the existing callbacks. Built on the shared design system.
 
+/** The 2–4 pad's three kinds, and 5th grade's (with a checklist). */
+type PadKind = 'sentence' | 'paragraph' | 'story' | G5WritingMode
+
+/** The offline score: grades 2–4's heuristic, or the grade-5 checklist grader for a grade-5 prompt. */
+function offlineFeedback(problem: Problem, text: string, minWords: number): Feedback {
+  return isG5WritingProblem(problem) ? g5WritingFeedback(text, minWords, problem.g5Writing.mode) : heuristicFeedback(text, minWords)
+}
+
 interface WritingPadViewProps {
   problem: Problem
   idx: number
   questionCount: number
-  kind: 'sentence' | 'paragraph' | 'story'
+  kind: PadKind
   minWords: number
   wordCount: number
   text: string
@@ -177,10 +191,11 @@ interface WritingPadViewProps {
   llmAvailable: boolean | null
 }
 
-const KIND_LABEL: Record<WritingPadViewProps['kind'], string> = {
+const KIND_LABEL: Record<PadKind, string> = {
   sentence: 'Sentence',
   paragraph: 'Paragraph',
   story: 'Story',
+  ...G5_WRITING_LABEL,
 }
 
 function WritingPadView({
@@ -278,6 +293,14 @@ function WritingPadView({
           </Card>
         </motion.div>
 
+        {/* 5th grade: the checklist for this kind of writing (grades 2–4 have none);
+            on a short screen it goes under the writing box, which comes first */}
+        {isG5WritingProblem(problem) && !feedback && !short && (
+          <motion.div variants={item} className="w-full">
+            <G5Checklist items={problem.g5Writing.checklist} />
+          </motion.div>
+        )}
+
         {!feedback && (
           <>
             {/* Writing surface */}
@@ -322,6 +345,12 @@ function WritingPadView({
                 )}
               </Card>
             </motion.div>
+
+            {isG5WritingProblem(problem) && short && (
+              <motion.div variants={item} className="w-full">
+                <G5Checklist items={problem.g5Writing.checklist} />
+              </motion.div>
+            )}
 
             {/* (no AI notes at all in the store build: there is no AI to mention) */}
             {import.meta.env.VITE_STORE !== 'true' && !llmEnabled && (
@@ -419,6 +448,23 @@ function WritingPadView({
           writing box up above it (the page may be shorter than that). */}
       {docked && <div aria-hidden="true" className="shrink-0" style={{ height: keyboard + BAR_H }} />}
     </div>
+  )
+}
+
+/** The grade-5 checklist card (beside the prompt, or under the box on a short screen). */
+function G5Checklist({ items }: { items: string[] }) {
+  return (
+    <Card className="px-4 py-3 short:py-2" data-testid="g5-checklist">
+      <div className="kid-text text-base short:text-sm text-ink-700 mb-1">✅ Checklist</div>
+      <ul className="grid gap-x-4 gap-y-0.5 sm:grid-cols-2 text-base short:text-sm text-ink-900 leading-snug">
+        {items.map((c) => (
+          <li key={c} className="flex gap-1.5">
+            <span aria-hidden="true">☐</span>
+            <span>{c}</span>
+          </li>
+        ))}
+      </ul>
+    </Card>
   )
 }
 
