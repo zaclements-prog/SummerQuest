@@ -93,5 +93,17 @@ export default defineVoicePack({
     'stage-k-trace-2': 'Trace numbers!',
     'stage-k-trace-3': 'Trace big letters!',
     'stage-k-story-1': 'Story order!',
+
+    // ── Nature Summit and Counting Towers (phase 2a): names, welcomes and stage buttons ──
+    'name-science-summit': 'Nature Summit!',
+    'welcome-science-summit': 'Nature Summit! Tap a star to play!',
+    'stage-k-science-1': 'What to wear!',
+    'stage-k-science-2': 'Plants and animals!',
+    'stage-k-science-3': 'Push and pull!',
+    'name-tower-battlefront': 'Counting Towers!',
+    'welcome-tower-battlefront': 'Counting Towers! Tap a star to play!',
+    'stage-k-towers-1': 'How many?',
+    'stage-k-towers-2': 'More or fewer!',
+    'stage-k-towers-3': 'Tower count!',
   },
 })

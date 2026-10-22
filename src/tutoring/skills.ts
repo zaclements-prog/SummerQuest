@@ -65,6 +65,13 @@ export const SKILLS: Record<string, SkillMeta> = {
   'k-trace-numbers': { label: 'writing numbers', zoneId: 'writing-workshop', lessonId: 'kTracing', practiceStageId: 'k-trace-2' },
   'k-trace-letters': { label: 'writing capital letters', zoneId: 'writing-workshop', lessonId: 'kTracing', practiceStageId: 'k-trace-3' },
   'k-story-order':   { label: 'telling a story in order', zoneId: 'writing-workshop', lessonId: 'kTracing', practiceStageId: 'k-story-1' },
+  // Nature Summit (K science, phase 2a; lesson kScience)
+  'k-science-weather': { label: 'weather and what to wear', zoneId: 'science-summit', lessonId: 'kScience', practiceStageId: 'k-science-1' },
+  'k-science-needs':   { label: 'what plants and animals need', zoneId: 'science-summit', lessonId: 'kScience', practiceStageId: 'k-science-2' },
+  'k-science-push':    { label: 'pushes and pulls', zoneId: 'science-summit', lessonId: 'kScience', practiceStageId: 'k-science-3' },
+  // Counting Towers (K tower defense, phase 2a; lesson kTowers)
+  'k-towers-count':   { label: 'counting to 20', zoneId: 'tower-battlefront', lessonId: 'kTowers', practiceStageId: 'k-towers-1' },
+  'k-towers-compare': { label: 'more and fewer', zoneId: 'tower-battlefront', lessonId: 'kTowers', practiceStageId: 'k-towers-2' },
 }
 
 export interface Skill { id: string; label: string }

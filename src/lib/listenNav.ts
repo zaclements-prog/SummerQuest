@@ -74,6 +74,13 @@ const STAGE_PICTURE: Record<string, string> = {
   'k-trace-2': '🔢',
   'k-trace-3': '🔤',
   'k-story-1': '📖',
+  // Nature Summit and Counting Towers (phase 2a)
+  'k-science-1': '☂️',
+  'k-science-2': '🌱',
+  'k-science-3': '🛒',
+  'k-towers-1': '🏰',
+  'k-towers-2': '👾',
+  'k-towers-3': '🚀',
 }
 const KIND_PICTURE: Record<Stage['kind'], string> = { concept: '💡', practice: '⚡', mastery: '🏆' }
 

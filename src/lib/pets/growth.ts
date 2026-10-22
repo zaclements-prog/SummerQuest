@@ -4,6 +4,7 @@ import type { GradeLevel } from '../gradeTiers'
 import { PETS } from './catalog'
 import type { PetDef } from './catalog'
 import type { PetStage } from './types'
+import { isLessonFor } from '../../tutoring/lessons'
 
 /**
  * How far a pet has grown, derived from learning progress (never stored):
@@ -116,7 +117,7 @@ export interface PetNext {
   stage: PetStage
   /** More stars (in its zone) it still needs. */
   more: number
-  /** Finishing its lesson would do it instead (an egg with a lesson). */
+  /** Finishing its lesson would do it instead (an egg with a lesson this grade is offered). */
   lesson: boolean
 }
 
@@ -162,7 +163,8 @@ export function petStatus(
   // …and what comes next, counted in the child's current band
   const { earned, total } = zone ? zoneStarTotals(zone, progress, grade) : { earned: 0, total: 0 }
   let next: PetNext | null = null
-  if (stage === 'egg') next = { stage: 'baby', more: 1, lesson: pet.lessonIds.length > 0 }
+  // (only a lesson this grade is offered: the dragon's one lesson is K–1's Counting Towers)
+  if (stage === 'egg') next = { stage: 'baby', more: 1, lesson: pet.lessonIds.some((id) => isLessonFor(id, grade)) }
   else if (stage === 'baby' && total > 0) next = { stage: 'kid', more: Math.max(1, kidStarsFor(total) - earned), lesson: false }
   else if (stage === 'kid' && total > 0) next = { stage: 'adult', more: Math.max(1, total - earned), lesson: false }
   return { pet, stage, stars: earned, total, lessonDone, next }

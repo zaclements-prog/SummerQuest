@@ -18,6 +18,9 @@ import { isSolidShape, shapeSides } from '../../../games/listenPlay/shapeGeometr
 import { glyph } from '../../trace/glyphs'
 import { isTraceSpec } from '../../trace/spec'
 import { isOrderSpec, STORY_PICTURES } from '../kStories'
+import { K_TOWERS_MAX } from '../kTowers'
+import { K_ACTIONS, K_FOOD, K_GEAR, K_HOME_OF, type KAction, type KGear } from '../kScience'
+import { DRAWINGS } from '../../../games/listenPlay/drawings'
 
 /**
  * Generator fuzz suite: every stage in the curriculum, at every grade tier, plus
@@ -419,7 +422,42 @@ function answerProblems(config: ProviderConfig, grade: GradeLevel, p: Problem): 
     case 'kStories':
       errs.push(...activityProblems(p as ListenProblem))
       break
+    // Counting Towers: Counting Mesa's question shapes, in the stage's range
+    case 'kTowers':
+      errs.push(...kAnswerProblems({ kind: 'kCounting', min: 1, max: K_TOWERS_MAX[config.mode] }, p as ListenProblem))
+      break
+    case 'kScience':
+      errs.push(...kScienceProblems(p as ListenProblem))
+      break
   }
+  return errs
+}
+
+// ── K–1 Nature Summit: the answer, worked out from what is shown and said ────
+
+function kScienceProblems(p: ListenProblem): string[] {
+  const errs: string[] = []
+  const cards = p.pictureOptions ?? []
+  if (cards.length !== p.options.length || cards.some((c, i) => c.value !== p.options[i])) return ['picture cards don\'t match the options']
+  for (const pic of [p.picture, ...cards.map((c) => c.picture)]) if (pic?.kind === 'art' && !DRAWINGS[pic.name]) errs.push(`no drawing "${pic.name}"`)
+  const vals = p.options.map(String)
+  const animal = /^The (\w+) /.exec(p.prompt)?.[1] ?? ''
+  const right: Record<string, (v: string) => boolean> = {
+    whichWeather: (v) => p.prompt === `Tap the ${v} day.`,
+    wear: (v) => p.picture?.kind === 'art' && K_GEAR[v as KGear] === p.picture.name,
+    plant: (v) => v === 'sun' || v === 'water',
+    food: (v) => K_FOOD[animal as keyof typeof K_FOOD]?.name === v,
+    drink: (v) => v === 'water',
+    home: (v) => K_HOME_OF[animal as keyof typeof K_HOME_OF]?.home === v,
+    pushOrPull: (v) => p.picture?.kind === 'art' && K_ACTIONS[p.picture.name as KAction] === v,
+    tapAction: (v) => K_ACTIONS[v as KAction] === (p.prompt === 'Tap the push!' ? 'push' : 'pull'),
+    strength: (v) => v === (p.prompt.includes('far') ? 'bigPush' : 'littlePush'),
+  }
+  const ok = right[p.subtopic ?? '']
+  if (!ok) return [`unknown science question ${p.subtopic}`]
+  const hits = vals.filter(ok)
+  if (hits.length !== 1) errs.push(`${hits.length} cards answer "${p.prompt}"`)
+  else if (hits[0] !== p.answer) errs.push(`answer is ${JSON.stringify(p.answer)}, the pictures say ${hits[0]}`)
   return errs
 }
 

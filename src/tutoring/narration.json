@@ -290,5 +290,41 @@
       "stepId": "yourTurn",
       "text": "Your turn! Start at the dot, and follow the arrow. You can do it!"
     }
+  ],
+  "kScience": [
+    {
+      "stepId": "weather",
+      "text": "Look at the sky! It can be sunny, rainy, snowy or windy."
+    },
+    {
+      "stepId": "rain",
+      "text": "Uh oh, rain! We want to stay dry. Your turn!"
+    },
+    {
+      "stepId": "needs",
+      "text": "Plants need sun and water. Animals need food, water and a home."
+    },
+    {
+      "stepId": "push",
+      "text": "A push moves it away. A pull brings it close. Your turn!"
+    }
+  ],
+  "kTowers": [
+    {
+      "stepId": "critters",
+      "text": "Critters are coming down the path! Let's keep them away from the house."
+    },
+    {
+      "stepId": "build",
+      "text": "Tap a spot. Answer the question. Pop! A tower!"
+    },
+    {
+      "stepId": "count",
+      "text": "Your turn! Count the critters with your finger."
+    },
+    {
+      "stepId": "stronger",
+      "text": "Towers stop the critters. Tap a tower to make it stronger!"
+    }
   ]
 }

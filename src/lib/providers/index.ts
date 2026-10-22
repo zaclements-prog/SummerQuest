@@ -31,6 +31,8 @@ import { makeKLettersProvider, type KLettersConfig } from './kLetters'
 import { makeKLiteracyProvider, type KLiteracyConfig } from './kLiteracy'
 import { makeKTraceProvider, type KTraceConfig } from './kTrace'
 import { makeKStoriesProvider } from './kStories'
+import { makeKTowersProvider, type KTowersConfig } from './kTowers'
+import { makeKScienceProvider, type KScienceConfig } from './kScience'
 
 export type ProviderConfig =
   | { kind: 'multiplication'; factorMin: number; factorMax: number }
@@ -61,6 +63,10 @@ export type ProviderConfig =
   | ({ kind: 'kTrace' } & KTraceConfig)
   /** Writing Workshop: a three-picture story, then first, next, last (the `order` activity). */
   | { kind: 'kStories' }
+  /** Counting Towers: the questions that build the towers (how many, more / fewer, to 20). */
+  | ({ kind: 'kTowers' } & KTowersConfig)
+  /** Nature Summit: the weather and what to wear, what plants and animals need, push and pull. */
+  | ({ kind: 'kScience' } & KScienceConfig)
 
 export function createProvider(config: ProviderConfig): ProblemProvider {
   switch (config.kind) {
@@ -106,5 +112,9 @@ export function createProvider(config: ProviderConfig): ProblemProvider {
       return makeKTraceProvider(config)
     case 'kStories':
       return makeKStoriesProvider()
+    case 'kTowers':
+      return makeKTowersProvider(config)
+    case 'kScience':
+      return makeKScienceProvider(config)
   }
 }

@@ -230,6 +230,8 @@ export function effectiveConfig(
     case 'kLiteracy':
     case 'kTrace':
     case 'kStories':
+    case 'kTowers':
+    case 'kScience':
       return config
   }
 }

@@ -324,7 +324,7 @@ describe('World HUD', () => {
     near('', 'Schoolhouse', 'schoolhouse')
     expect(lines()).toEqual(['k-nav/lessonTime'])
     click(q('[data-guide="world-visit"]'))
-    expect(qa('[data-guide^="lesson-"]').map((b) => b.dataset.guide)).toEqual(['lesson-kCounting', 'lesson-kShapes', 'lesson-kLetters', 'lesson-kRhymes', 'lesson-kTracing'])
+    expect(qa('[data-guide^="lesson-"]').map((b) => b.dataset.guide)).toEqual(['lesson-kCounting', 'lesson-kShapes', 'lesson-kLetters', 'lesson-kRhymes', 'lesson-kTracing', 'lesson-kScience', 'lesson-kTowers'])
     expect(lines()).toEqual(['k-lessons/pickLesson'])
     click(q('[data-guide="lesson-kShapes"]'))
     expect(at.path).toBe('/tutor/kShapes')

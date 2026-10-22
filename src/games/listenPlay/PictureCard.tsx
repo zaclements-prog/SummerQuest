@@ -5,6 +5,7 @@ import { M } from '../../tutoring/motion/palette'
 import { groupLayout } from './groupLayout'
 import { shapeCorners, type Point, type ShapeName } from './shapeGeometry'
 import { pictureLabel } from './pictureLabel'
+import { DrawingArt } from './drawings'
 import './listenPlay.css'
 
 /**
@@ -75,6 +76,8 @@ export function PictureArt({ picture, marks, onObjectTap, aspect = 4 / 3, badges
       )
     case 'clock':
       return <ClockArt hour={picture.hour} minute={picture.minute} className={cls} />
+    case 'art':
+      return <DrawingArt name={picture.name} className={cls} />
   }
 }
 

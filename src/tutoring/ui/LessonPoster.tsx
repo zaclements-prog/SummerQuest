@@ -4,6 +4,7 @@ import { slicePath } from '../motion/anim'
 import { PV, starPath } from '../motion/layout'
 import { M } from '../motion/palette'
 import { Apple, Cookie, Flat, Rod, UnitCube } from '../motion/shapes'
+import { DRAWINGS } from '../../games/listenPlay/drawings'
 
 const PW = 320
 const PH = 150
@@ -246,6 +247,45 @@ const POSTERS: Record<string, { bg: string; motif: () => ReactNode }> = {
         <circle cx={130} cy={40} r={8} fill="#36c35a" stroke={M.ink} strokeWidth={2.5} />
         <path d="M 154 64 L 154 92 M 145 82 L 154 94 L 163 82" stroke="#ff8a3d" strokeWidth={6} />
         <circle cx={226} cy={70} r={17} fill="none" stroke="#dccbb0" strokeWidth={10} />
+      </g>
+    ),
+  },
+  // ── kindergarten, phase 2a ──
+  kScience: {
+    bg: '#e2f3ff',
+    motif: () => (
+      <g>
+        {/* the Nature Summit cards' own drawings: a sunny day, a rainy one, an umbrella */}
+        <g transform="translate(46 34) scale(0.86)">{DRAWINGS.sunny()}</g>
+        <g transform="translate(130 34) scale(0.86)">{DRAWINGS.rainy()}</g>
+        <g transform="translate(214 34) scale(0.86)">{DRAWINGS.umbrella()}</g>
+      </g>
+    ),
+  },
+  kTowers: {
+    bg: '#dff3d2',
+    motif: () => (
+      <g strokeLinejoin="round" strokeLinecap="round">
+        {/* the path, two critters on it, a tower beside it */}
+        <path d="M 20 118 C 90 118 110 70 170 76 S 250 110 300 96" fill="none" stroke={M.ink} strokeWidth={26} />
+        <path d="M 20 118 C 90 118 110 70 170 76 S 250 110 300 96" fill="none" stroke="#f1d9a6" strokeWidth={19} />
+        {[
+          [196, 80],
+          [244, 98],
+        ].map(([x, y], i) => (
+          <g key={i} transform={`translate(${x} ${y - 6})`}>
+            <path d="M -5 -12 L -8 -20 M 5 -12 L 8 -20" stroke={M.ink} strokeWidth={2.5} />
+            <circle r={14} fill="#b79af0" stroke={M.ink} strokeWidth={3} />
+            <circle cx={-5} cy={-2} r={3.5} fill="#fff" stroke={M.ink} strokeWidth={1.8} />
+            <circle cx={5} cy={-2} r={3.5} fill="#fff" stroke={M.ink} strokeWidth={1.8} />
+          </g>
+        ))}
+        <g transform="translate(96 136)">
+          <path d="M -3 -84 L -3 -104 L 15 -97 L -3 -91" fill="#f2766b" stroke={M.ink} strokeWidth={2.5} />
+          <path d="M -22 0 L -20 -60 L 20 -60 L 22 0 Z" fill="#c3cede" stroke={M.ink} strokeWidth={3} />
+          <path d="M -25 -60 L -25 -76 L -16 -76 L -16 -69 L -4 -69 L -4 -76 L 4 -76 L 4 -69 L 16 -69 L 16 -76 L 25 -76 L 25 -60 Z" fill="#d7dee8" stroke={M.ink} strokeWidth={3} />
+          <path d="M -8 0 L -8 -15 Q 0 -24 8 -15 L 8 0 Z" fill="#9a6a46" stroke={M.ink} strokeWidth={2.5} />
+        </g>
       </g>
     ),
   },

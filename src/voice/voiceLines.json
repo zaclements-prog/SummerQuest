@@ -49,6 +49,18 @@
       "kind": "line",
       "file": "voice/k-lessons/kTracing-lineL.mp3"
     },
+    "k-lessons/kScience-rain": {
+      "text": "Sunglasses. Umbrella. Mittens. It is raining. What do you need?",
+      "hash": "b0ff75a675",
+      "kind": "line",
+      "file": "voice/k-lessons/kScience-rain.mp3"
+    },
+    "k-lessons/kScience-push": {
+      "text": "Push. Pull. Which one moves the box away?",
+      "hash": "d3c03ad5d6",
+      "kind": "line",
+      "file": "voice/k-lessons/kScience-push.mp3"
+    },
     "k-lessons/triangle": {
       "text": "Triangle!",
       "hash": "da7385986c",
@@ -3373,6 +3385,66 @@
       "kind": "line",
       "file": "voice/k-nav/stage-k-story-1.mp3"
     },
+    "k-nav/name-science-summit": {
+      "text": "Nature Summit!",
+      "hash": "1367fe8b20",
+      "kind": "line",
+      "file": "voice/k-nav/name-science-summit.mp3"
+    },
+    "k-nav/welcome-science-summit": {
+      "text": "Nature Summit! Tap a star to play!",
+      "hash": "5fb98323cf",
+      "kind": "line",
+      "file": "voice/k-nav/welcome-science-summit.mp3"
+    },
+    "k-nav/stage-k-science-1": {
+      "text": "What to wear!",
+      "hash": "d4b5acf4f9",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-science-1.mp3"
+    },
+    "k-nav/stage-k-science-2": {
+      "text": "Plants and animals!",
+      "hash": "536a7f2a07",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-science-2.mp3"
+    },
+    "k-nav/stage-k-science-3": {
+      "text": "Push and pull!",
+      "hash": "67e65c75df",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-science-3.mp3"
+    },
+    "k-nav/name-tower-battlefront": {
+      "text": "Counting Towers!",
+      "hash": "7093237fb9",
+      "kind": "line",
+      "file": "voice/k-nav/name-tower-battlefront.mp3"
+    },
+    "k-nav/welcome-tower-battlefront": {
+      "text": "Counting Towers! Tap a star to play!",
+      "hash": "a8facde433",
+      "kind": "line",
+      "file": "voice/k-nav/welcome-tower-battlefront.mp3"
+    },
+    "k-nav/stage-k-towers-1": {
+      "text": "How many?",
+      "hash": "b476a4f63d",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-towers-1.mp3"
+    },
+    "k-nav/stage-k-towers-2": {
+      "text": "More or fewer!",
+      "hash": "f21c9267c0",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-towers-2.mp3"
+    },
+    "k-nav/stage-k-towers-3": {
+      "text": "Tower count!",
+      "hash": "79ed45234e",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-towers-3.mp3"
+    },
     "k-rhymes/youHearRhyme": {
       "text": "You can hear the rhyme!",
       "hash": "bf6b701bbe",
@@ -3984,6 +4056,702 @@
       "hash": "436bd79cb0",
       "kind": "piece",
       "file": "voice/k-rhymes/noRhyme.part2.mp3"
+    },
+    "k-science/tap-sunny": {
+      "text": "Tap the sunny day.",
+      "hash": "8268eeca00",
+      "kind": "line",
+      "file": "voice/k-science/tap-sunny.mp3"
+    },
+    "k-science/tap-rainy": {
+      "text": "Tap the rainy day.",
+      "hash": "b344459be1",
+      "kind": "line",
+      "file": "voice/k-science/tap-rainy.mp3"
+    },
+    "k-science/tap-snowy": {
+      "text": "Tap the snowy day.",
+      "hash": "d78c90a60b",
+      "kind": "line",
+      "file": "voice/k-science/tap-snowy.mp3"
+    },
+    "k-science/tap-windy": {
+      "text": "Tap the windy day.",
+      "hash": "495afa8516",
+      "kind": "line",
+      "file": "voice/k-science/tap-windy.mp3"
+    },
+    "k-science/wear-sunny": {
+      "text": "It is sunny and hot. What will you wear?",
+      "hash": "b63787f7f0",
+      "kind": "line",
+      "file": "voice/k-science/wear-sunny.mp3"
+    },
+    "k-science/wear-rainy": {
+      "text": "It is raining. What do you need?",
+      "hash": "a121d859cc",
+      "kind": "line",
+      "file": "voice/k-science/wear-rainy.mp3"
+    },
+    "k-science/wear-snowy": {
+      "text": "It is snowing. What will you wear?",
+      "hash": "99aa3ce543",
+      "kind": "line",
+      "file": "voice/k-science/wear-snowy.mp3"
+    },
+    "k-science/wear-windy": {
+      "text": "It is windy. What can you fly?",
+      "hash": "07d866ae51",
+      "kind": "line",
+      "file": "voice/k-science/wear-windy.mp3"
+    },
+    "k-science/sunny": {
+      "text": "Sunny!",
+      "hash": "be750b94bf",
+      "kind": "line",
+      "file": "voice/k-science/sunny.mp3"
+    },
+    "k-science/rainy": {
+      "text": "Rainy!",
+      "hash": "b003fb197a",
+      "kind": "line",
+      "file": "voice/k-science/rainy.mp3"
+    },
+    "k-science/snowy": {
+      "text": "Snowy!",
+      "hash": "78059cb192",
+      "kind": "line",
+      "file": "voice/k-science/snowy.mp3"
+    },
+    "k-science/windy": {
+      "text": "Windy!",
+      "hash": "d2ba32f416",
+      "kind": "line",
+      "file": "voice/k-science/windy.mp3"
+    },
+    "k-science/is-sunny": {
+      "text": "That is a sunny day.",
+      "hash": "d0fc878288",
+      "kind": "line",
+      "file": "voice/k-science/is-sunny.mp3"
+    },
+    "k-science/is-rainy": {
+      "text": "That is a rainy day.",
+      "hash": "47c037b786",
+      "kind": "line",
+      "file": "voice/k-science/is-rainy.mp3"
+    },
+    "k-science/is-snowy": {
+      "text": "That is a snowy day.",
+      "hash": "8134da8909",
+      "kind": "line",
+      "file": "voice/k-science/is-snowy.mp3"
+    },
+    "k-science/is-windy": {
+      "text": "That is a windy day.",
+      "hash": "97b2cec3e7",
+      "kind": "line",
+      "file": "voice/k-science/is-windy.mp3"
+    },
+    "k-science/sunglasses": {
+      "text": "Sunglasses!",
+      "hash": "b3955804f1",
+      "kind": "line",
+      "file": "voice/k-science/sunglasses.mp3"
+    },
+    "k-science/sunHat": {
+      "text": "A sun hat!",
+      "hash": "65ef210299",
+      "kind": "line",
+      "file": "voice/k-science/sunHat.mp3"
+    },
+    "k-science/umbrella": {
+      "text": "An umbrella!",
+      "hash": "b1e90dd2c8",
+      "kind": "line",
+      "file": "voice/k-science/umbrella.mp3"
+    },
+    "k-science/mittens": {
+      "text": "Mittens!",
+      "hash": "a57d27e4cf",
+      "kind": "line",
+      "file": "voice/k-science/mittens.mp3"
+    },
+    "k-science/warmHat": {
+      "text": "A warm hat!",
+      "hash": "545b707fe8",
+      "kind": "line",
+      "file": "voice/k-science/warmHat.mp3"
+    },
+    "k-science/scarf": {
+      "text": "A scarf!",
+      "hash": "e05cc28742",
+      "kind": "line",
+      "file": "voice/k-science/scarf.mp3"
+    },
+    "k-science/kite": {
+      "text": "A kite!",
+      "hash": "bea113d689",
+      "kind": "line",
+      "file": "voice/k-science/kite.mp3"
+    },
+    "k-science/for-sunglasses": {
+      "text": "Sunglasses are for sunny days.",
+      "hash": "270b9f4325",
+      "kind": "line",
+      "file": "voice/k-science/for-sunglasses.mp3"
+    },
+    "k-science/for-sunHat": {
+      "text": "A sun hat is for hot, sunny days.",
+      "hash": "ed8f94f8e7",
+      "kind": "line",
+      "file": "voice/k-science/for-sunHat.mp3"
+    },
+    "k-science/for-umbrella": {
+      "text": "An umbrella keeps you dry in the rain.",
+      "hash": "23e46e742b",
+      "kind": "line",
+      "file": "voice/k-science/for-umbrella.mp3"
+    },
+    "k-science/for-mittens": {
+      "text": "Mittens keep your hands warm in the snow.",
+      "hash": "6db29c8983",
+      "kind": "line",
+      "file": "voice/k-science/for-mittens.mp3"
+    },
+    "k-science/for-warmHat": {
+      "text": "A warm hat keeps you warm in the snow.",
+      "hash": "6d6be27487",
+      "kind": "line",
+      "file": "voice/k-science/for-warmHat.mp3"
+    },
+    "k-science/for-scarf": {
+      "text": "A scarf keeps you warm in the snow.",
+      "hash": "71abc8f3fe",
+      "kind": "line",
+      "file": "voice/k-science/for-scarf.mp3"
+    },
+    "k-science/for-kite": {
+      "text": "A kite flies on a windy day.",
+      "hash": "591a49832d",
+      "kind": "line",
+      "file": "voice/k-science/for-kite.mp3"
+    },
+    "k-science/plantNeeds": {
+      "text": "What does a plant need to grow?",
+      "hash": "14846fe69d",
+      "kind": "line",
+      "file": "voice/k-science/plantNeeds.mp3"
+    },
+    "k-science/plantNote": {
+      "text": "A plant needs sun and water to grow.",
+      "hash": "c19795a6c5",
+      "kind": "line",
+      "file": "voice/k-science/plantNote.mp3"
+    },
+    "k-science/sun": {
+      "text": "The sun!",
+      "hash": "e9fd28b74e",
+      "kind": "line",
+      "file": "voice/k-science/sun.mp3"
+    },
+    "k-science/water": {
+      "text": "Water!",
+      "hash": "5564620ffa",
+      "kind": "line",
+      "file": "voice/k-science/water.mp3"
+    },
+    "k-science/ball": {
+      "text": "A ball!",
+      "hash": "6d223edee9",
+      "kind": "line",
+      "file": "voice/k-science/ball.mp3"
+    },
+    "k-science/shoe": {
+      "text": "A shoe!",
+      "hash": "1d36a01580",
+      "kind": "line",
+      "file": "voice/k-science/shoe.mp3"
+    },
+    "k-science/guitar": {
+      "text": "A guitar!",
+      "hash": "a518b184b2",
+      "kind": "line",
+      "file": "voice/k-science/guitar.mp3"
+    },
+    "k-science/car": {
+      "text": "A car!",
+      "hash": "390e9e512b",
+      "kind": "line",
+      "file": "voice/k-science/car.mp3"
+    },
+    "k-science/balloon": {
+      "text": "A balloon!",
+      "hash": "bc1fedcbb4",
+      "kind": "line",
+      "file": "voice/k-science/balloon.mp3"
+    },
+    "k-science/carrot": {
+      "text": "A carrot!",
+      "hash": "7ce15bd3bf",
+      "kind": "line",
+      "file": "voice/k-science/carrot.mp3"
+    },
+    "k-science/banana": {
+      "text": "A banana!",
+      "hash": "652ec77b3b",
+      "kind": "line",
+      "file": "voice/k-science/banana.mp3"
+    },
+    "k-science/cheese": {
+      "text": "Cheese!",
+      "hash": "a7c3c3acde",
+      "kind": "line",
+      "file": "voice/k-science/cheese.mp3"
+    },
+    "k-science/honey": {
+      "text": "Honey!",
+      "hash": "3cac14e58b",
+      "kind": "line",
+      "file": "voice/k-science/honey.mp3"
+    },
+    "k-science/apple": {
+      "text": "An apple!",
+      "hash": "aeb3f4aadb",
+      "kind": "line",
+      "file": "voice/k-science/apple.mp3"
+    },
+    "k-science/nut": {
+      "text": "A nut!",
+      "hash": "f2fad0ac05",
+      "kind": "line",
+      "file": "voice/k-science/nut.mp3"
+    },
+    "k-science/eats-rabbit": {
+      "text": "Rabbits eat carrots!",
+      "hash": "586694fa27",
+      "kind": "line",
+      "file": "voice/k-science/eats-rabbit.mp3"
+    },
+    "k-science/eats-monkey": {
+      "text": "Monkeys eat bananas!",
+      "hash": "bde3f94b71",
+      "kind": "line",
+      "file": "voice/k-science/eats-monkey.mp3"
+    },
+    "k-science/eats-mouse": {
+      "text": "Mice eat cheese!",
+      "hash": "e09a9a01dd",
+      "kind": "line",
+      "file": "voice/k-science/eats-mouse.mp3"
+    },
+    "k-science/eats-bear": {
+      "text": "Bears eat honey!",
+      "hash": "49ddc0c38d",
+      "kind": "line",
+      "file": "voice/k-science/eats-bear.mp3"
+    },
+    "k-science/eats-horse": {
+      "text": "Horses eat apples!",
+      "hash": "c368a42c5f",
+      "kind": "line",
+      "file": "voice/k-science/eats-horse.mp3"
+    },
+    "k-science/eats-squirrel": {
+      "text": "Squirrels eat nuts!",
+      "hash": "05606c9f81",
+      "kind": "line",
+      "file": "voice/k-science/eats-squirrel.mp3"
+    },
+    "k-science/drinkNote": {
+      "text": "Animals drink water when they are thirsty.",
+      "hash": "058b00ae5f",
+      "kind": "line",
+      "file": "voice/k-science/drinkNote.mp3"
+    },
+    "k-science/ocean": {
+      "text": "The ocean!",
+      "hash": "ba002e12df",
+      "kind": "line",
+      "file": "voice/k-science/ocean.mp3"
+    },
+    "k-science/tree": {
+      "text": "A tree!",
+      "hash": "6f124fdd1d",
+      "kind": "line",
+      "file": "voice/k-science/tree.mp3"
+    },
+    "k-science/desert": {
+      "text": "The desert!",
+      "hash": "a6353a7754",
+      "kind": "line",
+      "file": "voice/k-science/desert.mp3"
+    },
+    "k-science/house": {
+      "text": "A house!",
+      "hash": "2fdbb78064",
+      "kind": "line",
+      "file": "voice/k-science/house.mp3"
+    },
+    "k-science/lives-fish": {
+      "text": "Fish live in the ocean.",
+      "hash": "29f1d091ee",
+      "kind": "line",
+      "file": "voice/k-science/lives-fish.mp3"
+    },
+    "k-science/lives-octopus": {
+      "text": "An octopus lives in the ocean.",
+      "hash": "e077c46a39",
+      "kind": "line",
+      "file": "voice/k-science/lives-octopus.mp3"
+    },
+    "k-science/lives-bird": {
+      "text": "Birds live in trees.",
+      "hash": "eea0eef12d",
+      "kind": "line",
+      "file": "voice/k-science/lives-bird.mp3"
+    },
+    "k-science/lives-monkey": {
+      "text": "Monkeys live in trees.",
+      "hash": "0656d1332d",
+      "kind": "line",
+      "file": "voice/k-science/lives-monkey.mp3"
+    },
+    "k-science/lives-camel": {
+      "text": "Camels live in the desert.",
+      "hash": "39272c5e7d",
+      "kind": "line",
+      "file": "voice/k-science/lives-camel.mp3"
+    },
+    "k-science/lives-dog": {
+      "text": "A dog can live in a house with us.",
+      "hash": "9fcea6c144",
+      "kind": "line",
+      "file": "voice/k-science/lives-dog.mp3"
+    },
+    "k-science/pp-swing": {
+      "text": "Look at the swing. Push or pull?",
+      "hash": "6df8f5a229",
+      "kind": "line",
+      "file": "voice/k-science/pp-swing.mp3"
+    },
+    "k-science/pp-door": {
+      "text": "Look at the door. Push or pull?",
+      "hash": "52ad812551",
+      "kind": "line",
+      "file": "voice/k-science/pp-door.mp3"
+    },
+    "k-science/pp-kick": {
+      "text": "Look at the ball. Push or pull?",
+      "hash": "886fb6675e",
+      "kind": "line",
+      "file": "voice/k-science/pp-kick.mp3"
+    },
+    "k-science/pp-cart": {
+      "text": "Look at the cart. Push or pull?",
+      "hash": "392c7c8044",
+      "kind": "line",
+      "file": "voice/k-science/pp-cart.mp3"
+    },
+    "k-science/pp-wagon": {
+      "text": "Look at the wagon. Push or pull?",
+      "hash": "80c8011bca",
+      "kind": "line",
+      "file": "voice/k-science/pp-wagon.mp3"
+    },
+    "k-science/pp-drawer": {
+      "text": "Look at the drawer. Push or pull?",
+      "hash": "97b6fce4d3",
+      "kind": "line",
+      "file": "voice/k-science/pp-drawer.mp3"
+    },
+    "k-science/pp-kiteString": {
+      "text": "Look at the kite. Push or pull?",
+      "hash": "3cb36695d3",
+      "kind": "line",
+      "file": "voice/k-science/pp-kiteString.mp3"
+    },
+    "k-science/pp-carrot": {
+      "text": "Look at the carrot. Push or pull?",
+      "hash": "dff84f7ad7",
+      "kind": "line",
+      "file": "voice/k-science/pp-carrot.mp3"
+    },
+    "k-science/push": {
+      "text": "Push!",
+      "hash": "aa5312b8f4",
+      "kind": "line",
+      "file": "voice/k-science/push.mp3"
+    },
+    "k-science/pull": {
+      "text": "Pull!",
+      "hash": "d18bfac96a",
+      "kind": "line",
+      "file": "voice/k-science/pull.mp3"
+    },
+    "k-science/why-swing": {
+      "text": "The swing goes away. That is a push!",
+      "hash": "babb69c36d",
+      "kind": "line",
+      "file": "voice/k-science/why-swing.mp3"
+    },
+    "k-science/why-door": {
+      "text": "The door goes away. That is a push!",
+      "hash": "4b8fc49edf",
+      "kind": "line",
+      "file": "voice/k-science/why-door.mp3"
+    },
+    "k-science/why-kick": {
+      "text": "The ball goes away. That is a push!",
+      "hash": "609142faff",
+      "kind": "line",
+      "file": "voice/k-science/why-kick.mp3"
+    },
+    "k-science/why-cart": {
+      "text": "The cart goes away. That is a push!",
+      "hash": "9dc9e078b7",
+      "kind": "line",
+      "file": "voice/k-science/why-cart.mp3"
+    },
+    "k-science/why-wagon": {
+      "text": "The wagon comes closer. That is a pull!",
+      "hash": "15981c3009",
+      "kind": "line",
+      "file": "voice/k-science/why-wagon.mp3"
+    },
+    "k-science/why-drawer": {
+      "text": "The drawer comes closer. That is a pull!",
+      "hash": "a8fa7657d6",
+      "kind": "line",
+      "file": "voice/k-science/why-drawer.mp3"
+    },
+    "k-science/why-kiteString": {
+      "text": "The kite comes closer. That is a pull!",
+      "hash": "11a4eaecc6",
+      "kind": "line",
+      "file": "voice/k-science/why-kiteString.mp3"
+    },
+    "k-science/why-carrot": {
+      "text": "The carrot comes closer. That is a pull!",
+      "hash": "7c74ceed86",
+      "kind": "line",
+      "file": "voice/k-science/why-carrot.mp3"
+    },
+    "k-science/tapPush": {
+      "text": "Tap the push!",
+      "hash": "9e9070313a",
+      "kind": "line",
+      "file": "voice/k-science/tapPush.mp3"
+    },
+    "k-science/tapPull": {
+      "text": "Tap the pull!",
+      "hash": "06f591af45",
+      "kind": "line",
+      "file": "voice/k-science/tapPull.mp3"
+    },
+    "k-science/name-swing": {
+      "text": "The swing!",
+      "hash": "193a37ab4b",
+      "kind": "line",
+      "file": "voice/k-science/name-swing.mp3"
+    },
+    "k-science/name-door": {
+      "text": "The door!",
+      "hash": "1a432708d8",
+      "kind": "line",
+      "file": "voice/k-science/name-door.mp3"
+    },
+    "k-science/name-kick": {
+      "text": "The ball!",
+      "hash": "6c7baa690c",
+      "kind": "line",
+      "file": "voice/k-science/name-kick.mp3"
+    },
+    "k-science/name-cart": {
+      "text": "The cart!",
+      "hash": "e026614c28",
+      "kind": "line",
+      "file": "voice/k-science/name-cart.mp3"
+    },
+    "k-science/name-wagon": {
+      "text": "The wagon!",
+      "hash": "941487ed9e",
+      "kind": "line",
+      "file": "voice/k-science/name-wagon.mp3"
+    },
+    "k-science/name-drawer": {
+      "text": "The drawer!",
+      "hash": "19cd03301c",
+      "kind": "line",
+      "file": "voice/k-science/name-drawer.mp3"
+    },
+    "k-science/name-kiteString": {
+      "text": "The kite!",
+      "hash": "88e7f01721",
+      "kind": "line",
+      "file": "voice/k-science/name-kiteString.mp3"
+    },
+    "k-science/name-carrot": {
+      "text": "The carrot!",
+      "hash": "6f2f4725ab",
+      "kind": "line",
+      "file": "voice/k-science/name-carrot.mp3"
+    },
+    "k-science/far": {
+      "text": "Which push makes the ball go far?",
+      "hash": "dcbaa26bba",
+      "kind": "line",
+      "file": "voice/k-science/far.mp3"
+    },
+    "k-science/near": {
+      "text": "Which push makes the ball go a little way?",
+      "hash": "f3fe380d62",
+      "kind": "line",
+      "file": "voice/k-science/near.mp3"
+    },
+    "k-science/bigPush": {
+      "text": "A big push!",
+      "hash": "717abe9ca2",
+      "kind": "line",
+      "file": "voice/k-science/bigPush.mp3"
+    },
+    "k-science/littlePush": {
+      "text": "A little push!",
+      "hash": "d3c71401ce",
+      "kind": "line",
+      "file": "voice/k-science/littlePush.mp3"
+    },
+    "k-science/bigNote": {
+      "text": "A big push makes it go far.",
+      "hash": "1bd4327786",
+      "kind": "line",
+      "file": "voice/k-science/bigNote.mp3"
+    },
+    "k-science/littleNote": {
+      "text": "A little push makes it go a little way.",
+      "hash": "46c433a355",
+      "kind": "line",
+      "file": "voice/k-science/littleNote.mp3"
+    },
+    "k-science/greatThinking": {
+      "text": "Great thinking!",
+      "hash": "231af2434d",
+      "kind": "line",
+      "file": "voice/k-science/greatThinking.mp3"
+    },
+    "k-science/scientist": {
+      "text": "You are a super scientist!",
+      "hash": "42cf964d59",
+      "kind": "line",
+      "file": "voice/k-science/scientist.mp3"
+    },
+    "k-science/hungry/animal=rabbit": {
+      "text": "The rabbit is hungry. What does it need?",
+      "hash": "6cfca98821",
+      "kind": "whole",
+      "file": "voice/k-science/hungry/animal=rabbit.mp3"
+    },
+    "k-science/hungry/animal=monkey": {
+      "text": "The monkey is hungry. What does it need?",
+      "hash": "23071b559c",
+      "kind": "whole",
+      "file": "voice/k-science/hungry/animal=monkey.mp3"
+    },
+    "k-science/hungry/animal=mouse": {
+      "text": "The mouse is hungry. What does it need?",
+      "hash": "8422124c83",
+      "kind": "whole",
+      "file": "voice/k-science/hungry/animal=mouse.mp3"
+    },
+    "k-science/hungry/animal=bear": {
+      "text": "The bear is hungry. What does it need?",
+      "hash": "029e90260e",
+      "kind": "whole",
+      "file": "voice/k-science/hungry/animal=bear.mp3"
+    },
+    "k-science/hungry/animal=horse": {
+      "text": "The horse is hungry. What does it need?",
+      "hash": "9ae5600c76",
+      "kind": "whole",
+      "file": "voice/k-science/hungry/animal=horse.mp3"
+    },
+    "k-science/hungry/animal=squirrel": {
+      "text": "The squirrel is hungry. What does it need?",
+      "hash": "ae4b2216be",
+      "kind": "whole",
+      "file": "voice/k-science/hungry/animal=squirrel.mp3"
+    },
+    "k-science/thirsty/animal=dog": {
+      "text": "The dog is thirsty. What does it need?",
+      "hash": "846da1c84b",
+      "kind": "whole",
+      "file": "voice/k-science/thirsty/animal=dog.mp3"
+    },
+    "k-science/thirsty/animal=cat": {
+      "text": "The cat is thirsty. What does it need?",
+      "hash": "97a8950bda",
+      "kind": "whole",
+      "file": "voice/k-science/thirsty/animal=cat.mp3"
+    },
+    "k-science/thirsty/animal=cow": {
+      "text": "The cow is thirsty. What does it need?",
+      "hash": "8b0da1ccf5",
+      "kind": "whole",
+      "file": "voice/k-science/thirsty/animal=cow.mp3"
+    },
+    "k-science/thirsty/animal=elephant": {
+      "text": "The elephant is thirsty. What does it need?",
+      "hash": "65b979612c",
+      "kind": "whole",
+      "file": "voice/k-science/thirsty/animal=elephant.mp3"
+    },
+    "k-science/thirsty/animal=lion": {
+      "text": "The lion is thirsty. What does it need?",
+      "hash": "96247fe12c",
+      "kind": "whole",
+      "file": "voice/k-science/thirsty/animal=lion.mp3"
+    },
+    "k-science/thirsty/animal=pig": {
+      "text": "The pig is thirsty. What does it need?",
+      "hash": "7dec608e6d",
+      "kind": "whole",
+      "file": "voice/k-science/thirsty/animal=pig.mp3"
+    },
+    "k-science/home/animal=fish": {
+      "text": "The fish needs a home. Where does it live?",
+      "hash": "63071fd5e3",
+      "kind": "whole",
+      "file": "voice/k-science/home/animal=fish.mp3"
+    },
+    "k-science/home/animal=octopus": {
+      "text": "The octopus needs a home. Where does it live?",
+      "hash": "83dac97e91",
+      "kind": "whole",
+      "file": "voice/k-science/home/animal=octopus.mp3"
+    },
+    "k-science/home/animal=bird": {
+      "text": "The bird needs a home. Where does it live?",
+      "hash": "7d7980f1ce",
+      "kind": "whole",
+      "file": "voice/k-science/home/animal=bird.mp3"
+    },
+    "k-science/home/animal=monkey": {
+      "text": "The monkey needs a home. Where does it live?",
+      "hash": "6e4ffb82c3",
+      "kind": "whole",
+      "file": "voice/k-science/home/animal=monkey.mp3"
+    },
+    "k-science/home/animal=camel": {
+      "text": "The camel needs a home. Where does it live?",
+      "hash": "7c3a3a63ee",
+      "kind": "whole",
+      "file": "voice/k-science/home/animal=camel.mp3"
+    },
+    "k-science/home/animal=dog": {
+      "text": "The dog needs a home. Where does it live?",
+      "hash": "f15c544f47",
+      "kind": "whole",
+      "file": "voice/k-science/home/animal=dog.mp3"
     },
     "k-shapes/tapFlat": {
       "text": "Tap the shape that is flat.",
@@ -5814,6 +6582,558 @@
       "hash": "ee840719a6",
       "kind": "line",
       "file": "voice/k-stories/popcorn-3.mp3"
+    },
+    "k-towers/intro": {
+      "text": "Critters are coming! Tap a spot to build a tower.",
+      "hash": "a216d98373",
+      "kind": "line",
+      "file": "voice/k-towers/intro.mp3"
+    },
+    "k-towers/buildMore": {
+      "text": "Build one more tower!",
+      "hash": "5eff59d85c",
+      "kind": "line",
+      "file": "voice/k-towers/buildMore.mp3"
+    },
+    "k-towers/ready": {
+      "text": "Ready? Tap the arrow to start!",
+      "hash": "63e1c8fab4",
+      "kind": "line",
+      "file": "voice/k-towers/ready.mp3"
+    },
+    "k-towers/built": {
+      "text": "Your tower is ready!",
+      "hash": "6568ad2a28",
+      "kind": "line",
+      "file": "voice/k-towers/built.mp3"
+    },
+    "k-towers/stronger": {
+      "text": "Your tower is stronger!",
+      "hash": "e30d4c5611",
+      "kind": "line",
+      "file": "voice/k-towers/stronger.mp3"
+    },
+    "k-towers/maxed": {
+      "text": "This tower is super strong!",
+      "hash": "781c2c4ca5",
+      "kind": "line",
+      "file": "voice/k-towers/maxed.mp3"
+    },
+    "k-towers/waveDone": {
+      "text": "You stopped them all!",
+      "hash": "c4dedcb925",
+      "kind": "line",
+      "file": "voice/k-towers/waveDone.mp3"
+    },
+    "k-towers/phew": {
+      "text": "Phew! A few got by.",
+      "hash": "069532fd23",
+      "kind": "line",
+      "file": "voice/k-towers/phew.mp3"
+    },
+    "k-towers/moreComing": {
+      "text": "More critters are coming! Add a tower, or tap one to make it stronger.",
+      "hash": "a1b7b7a851",
+      "kind": "line",
+      "file": "voice/k-towers/moreComing.mp3"
+    },
+    "k-towers/setback": {
+      "text": "Oh no, some got by! Let's add a tower and try again.",
+      "hash": "31bb85d9dc",
+      "kind": "line",
+      "file": "voice/k-towers/setback.mp3"
+    },
+    "k-towers/allDone": {
+      "text": "Hooray! You kept the critters away!",
+      "hash": "6ca6edcfb7",
+      "kind": "line",
+      "file": "voice/k-towers/allDone.mp3"
+    },
+    "k-towers/towerPower": {
+      "text": "Tower power!",
+      "hash": "ecc4ac3bd6",
+      "kind": "line",
+      "file": "voice/k-towers/towerPower.mp3"
+    },
+    "k-towers/howMany/thing=critters": {
+      "text": "How many critters? Tap the number.",
+      "hash": "f1d942bc3c",
+      "kind": "whole",
+      "file": "voice/k-towers/howMany/thing=critters.mp3"
+    },
+    "k-towers/howMany/thing=towers": {
+      "text": "How many towers? Tap the number.",
+      "hash": "f9b07a86fe",
+      "kind": "whole",
+      "file": "voice/k-towers/howMany/thing=towers.mp3"
+    },
+    "k-towers/howMany/thing=gems": {
+      "text": "How many gems? Tap the number.",
+      "hash": "a495f36711",
+      "kind": "whole",
+      "file": "voice/k-towers/howMany/thing=gems.mp3"
+    },
+    "k-towers/howMany/thing=rockets": {
+      "text": "How many rockets? Tap the number.",
+      "hash": "b522c84c58",
+      "kind": "whole",
+      "file": "voice/k-towers/howMany/thing=rockets.mp3"
+    },
+    "k-towers/findGroup/n=2,thing=critters": {
+      "text": "Tap the group with two critters.",
+      "hash": "4f3ff2a5c7",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=2,thing=critters.mp3"
+    },
+    "k-towers/findGroup/n=2,thing=towers": {
+      "text": "Tap the group with two towers.",
+      "hash": "043b6b6c5d",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=2,thing=towers.mp3"
+    },
+    "k-towers/findGroup/n=2,thing=gems": {
+      "text": "Tap the group with two gems.",
+      "hash": "d7ca143710",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=2,thing=gems.mp3"
+    },
+    "k-towers/findGroup/n=2,thing=rockets": {
+      "text": "Tap the group with two rockets.",
+      "hash": "422f1978f1",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=2,thing=rockets.mp3"
+    },
+    "k-towers/findGroup/n=3,thing=critters": {
+      "text": "Tap the group with three critters.",
+      "hash": "8159f442e0",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=3,thing=critters.mp3"
+    },
+    "k-towers/findGroup/n=3,thing=towers": {
+      "text": "Tap the group with three towers.",
+      "hash": "517ae55824",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=3,thing=towers.mp3"
+    },
+    "k-towers/findGroup/n=3,thing=gems": {
+      "text": "Tap the group with three gems.",
+      "hash": "4206517b25",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=3,thing=gems.mp3"
+    },
+    "k-towers/findGroup/n=3,thing=rockets": {
+      "text": "Tap the group with three rockets.",
+      "hash": "3cd8f0ec0f",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=3,thing=rockets.mp3"
+    },
+    "k-towers/findGroup/n=4,thing=critters": {
+      "text": "Tap the group with four critters.",
+      "hash": "1d805c2d76",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=4,thing=critters.mp3"
+    },
+    "k-towers/findGroup/n=4,thing=towers": {
+      "text": "Tap the group with four towers.",
+      "hash": "e024649493",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=4,thing=towers.mp3"
+    },
+    "k-towers/findGroup/n=4,thing=gems": {
+      "text": "Tap the group with four gems.",
+      "hash": "970956a3e2",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=4,thing=gems.mp3"
+    },
+    "k-towers/findGroup/n=4,thing=rockets": {
+      "text": "Tap the group with four rockets.",
+      "hash": "849270b8c6",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=4,thing=rockets.mp3"
+    },
+    "k-towers/findGroup/n=5,thing=critters": {
+      "text": "Tap the group with five critters.",
+      "hash": "189714ba25",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=5,thing=critters.mp3"
+    },
+    "k-towers/findGroup/n=5,thing=towers": {
+      "text": "Tap the group with five towers.",
+      "hash": "8fcbcb7eb6",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=5,thing=towers.mp3"
+    },
+    "k-towers/findGroup/n=5,thing=gems": {
+      "text": "Tap the group with five gems.",
+      "hash": "7402b2f114",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=5,thing=gems.mp3"
+    },
+    "k-towers/findGroup/n=5,thing=rockets": {
+      "text": "Tap the group with five rockets.",
+      "hash": "ca59b1473b",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=5,thing=rockets.mp3"
+    },
+    "k-towers/findGroup/n=6,thing=critters": {
+      "text": "Tap the group with six critters.",
+      "hash": "1d9eb91c05",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=6,thing=critters.mp3"
+    },
+    "k-towers/findGroup/n=6,thing=towers": {
+      "text": "Tap the group with six towers.",
+      "hash": "2a69c44ce6",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=6,thing=towers.mp3"
+    },
+    "k-towers/findGroup/n=6,thing=gems": {
+      "text": "Tap the group with six gems.",
+      "hash": "d2e3cf72e0",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=6,thing=gems.mp3"
+    },
+    "k-towers/findGroup/n=6,thing=rockets": {
+      "text": "Tap the group with six rockets.",
+      "hash": "33cb39b6cf",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=6,thing=rockets.mp3"
+    },
+    "k-towers/findGroup/n=7,thing=critters": {
+      "text": "Tap the group with seven critters.",
+      "hash": "b6ae79b1f4",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=7,thing=critters.mp3"
+    },
+    "k-towers/findGroup/n=7,thing=towers": {
+      "text": "Tap the group with seven towers.",
+      "hash": "1bfa167071",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=7,thing=towers.mp3"
+    },
+    "k-towers/findGroup/n=7,thing=gems": {
+      "text": "Tap the group with seven gems.",
+      "hash": "7bff8367a2",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=7,thing=gems.mp3"
+    },
+    "k-towers/findGroup/n=7,thing=rockets": {
+      "text": "Tap the group with seven rockets.",
+      "hash": "e7bbb64042",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=7,thing=rockets.mp3"
+    },
+    "k-towers/findGroup/n=8,thing=critters": {
+      "text": "Tap the group with eight critters.",
+      "hash": "308198d1bc",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=8,thing=critters.mp3"
+    },
+    "k-towers/findGroup/n=8,thing=towers": {
+      "text": "Tap the group with eight towers.",
+      "hash": "e468e9a653",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=8,thing=towers.mp3"
+    },
+    "k-towers/findGroup/n=8,thing=gems": {
+      "text": "Tap the group with eight gems.",
+      "hash": "97964aa5ca",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=8,thing=gems.mp3"
+    },
+    "k-towers/findGroup/n=8,thing=rockets": {
+      "text": "Tap the group with eight rockets.",
+      "hash": "ceb83b3c3a",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=8,thing=rockets.mp3"
+    },
+    "k-towers/findGroup/n=9,thing=critters": {
+      "text": "Tap the group with nine critters.",
+      "hash": "14ff8fd7a0",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=9,thing=critters.mp3"
+    },
+    "k-towers/findGroup/n=9,thing=towers": {
+      "text": "Tap the group with nine towers.",
+      "hash": "d057890d6d",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=9,thing=towers.mp3"
+    },
+    "k-towers/findGroup/n=9,thing=gems": {
+      "text": "Tap the group with nine gems.",
+      "hash": "14e9e530c9",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=9,thing=gems.mp3"
+    },
+    "k-towers/findGroup/n=9,thing=rockets": {
+      "text": "Tap the group with nine rockets.",
+      "hash": "d8445e68f0",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=9,thing=rockets.mp3"
+    },
+    "k-towers/findGroup/n=10,thing=critters": {
+      "text": "Tap the group with ten critters.",
+      "hash": "1f101c7373",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=10,thing=critters.mp3"
+    },
+    "k-towers/findGroup/n=10,thing=towers": {
+      "text": "Tap the group with ten towers.",
+      "hash": "d99c06aca7",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=10,thing=towers.mp3"
+    },
+    "k-towers/findGroup/n=10,thing=gems": {
+      "text": "Tap the group with ten gems.",
+      "hash": "068fa92c64",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=10,thing=gems.mp3"
+    },
+    "k-towers/findGroup/n=10,thing=rockets": {
+      "text": "Tap the group with ten rockets.",
+      "hash": "60a245c504",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=10,thing=rockets.mp3"
+    },
+    "k-towers/findGroup/n=11,thing=critters": {
+      "text": "Tap the group with eleven critters.",
+      "hash": "d476fa9b39",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=11,thing=critters.mp3"
+    },
+    "k-towers/findGroup/n=11,thing=towers": {
+      "text": "Tap the group with eleven towers.",
+      "hash": "f5e5a0b03d",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=11,thing=towers.mp3"
+    },
+    "k-towers/findGroup/n=11,thing=gems": {
+      "text": "Tap the group with eleven gems.",
+      "hash": "4f450f58d6",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=11,thing=gems.mp3"
+    },
+    "k-towers/findGroup/n=11,thing=rockets": {
+      "text": "Tap the group with eleven rockets.",
+      "hash": "0e2c67f1a9",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=11,thing=rockets.mp3"
+    },
+    "k-towers/findGroup/n=12,thing=critters": {
+      "text": "Tap the group with twelve critters.",
+      "hash": "c4e7f61b9e",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=12,thing=critters.mp3"
+    },
+    "k-towers/findGroup/n=12,thing=towers": {
+      "text": "Tap the group with twelve towers.",
+      "hash": "22032695d5",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=12,thing=towers.mp3"
+    },
+    "k-towers/findGroup/n=12,thing=gems": {
+      "text": "Tap the group with twelve gems.",
+      "hash": "6b2bf9f52a",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=12,thing=gems.mp3"
+    },
+    "k-towers/findGroup/n=12,thing=rockets": {
+      "text": "Tap the group with twelve rockets.",
+      "hash": "a788da750b",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=12,thing=rockets.mp3"
+    },
+    "k-towers/findGroup/n=13,thing=critters": {
+      "text": "Tap the group with thirteen critters.",
+      "hash": "2fef381745",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=13,thing=critters.mp3"
+    },
+    "k-towers/findGroup/n=13,thing=towers": {
+      "text": "Tap the group with thirteen towers.",
+      "hash": "664a9c8f71",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=13,thing=towers.mp3"
+    },
+    "k-towers/findGroup/n=13,thing=gems": {
+      "text": "Tap the group with thirteen gems.",
+      "hash": "e16f1d70f8",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=13,thing=gems.mp3"
+    },
+    "k-towers/findGroup/n=13,thing=rockets": {
+      "text": "Tap the group with thirteen rockets.",
+      "hash": "4ec50c6157",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=13,thing=rockets.mp3"
+    },
+    "k-towers/findGroup/n=14,thing=critters": {
+      "text": "Tap the group with fourteen critters.",
+      "hash": "63bcf172e9",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=14,thing=critters.mp3"
+    },
+    "k-towers/findGroup/n=14,thing=towers": {
+      "text": "Tap the group with fourteen towers.",
+      "hash": "b6acfa1ff4",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=14,thing=towers.mp3"
+    },
+    "k-towers/findGroup/n=14,thing=gems": {
+      "text": "Tap the group with fourteen gems.",
+      "hash": "6a1682f15c",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=14,thing=gems.mp3"
+    },
+    "k-towers/findGroup/n=14,thing=rockets": {
+      "text": "Tap the group with fourteen rockets.",
+      "hash": "907c203bec",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=14,thing=rockets.mp3"
+    },
+    "k-towers/findGroup/n=15,thing=critters": {
+      "text": "Tap the group with fifteen critters.",
+      "hash": "d9f4c029d0",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=15,thing=critters.mp3"
+    },
+    "k-towers/findGroup/n=15,thing=towers": {
+      "text": "Tap the group with fifteen towers.",
+      "hash": "919fa959f8",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=15,thing=towers.mp3"
+    },
+    "k-towers/findGroup/n=15,thing=gems": {
+      "text": "Tap the group with fifteen gems.",
+      "hash": "06172f038d",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=15,thing=gems.mp3"
+    },
+    "k-towers/findGroup/n=15,thing=rockets": {
+      "text": "Tap the group with fifteen rockets.",
+      "hash": "c8076d092b",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=15,thing=rockets.mp3"
+    },
+    "k-towers/findGroup/n=16,thing=critters": {
+      "text": "Tap the group with sixteen critters.",
+      "hash": "7d8b591d05",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=16,thing=critters.mp3"
+    },
+    "k-towers/findGroup/n=16,thing=towers": {
+      "text": "Tap the group with sixteen towers.",
+      "hash": "9d6264505b",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=16,thing=towers.mp3"
+    },
+    "k-towers/findGroup/n=16,thing=gems": {
+      "text": "Tap the group with sixteen gems.",
+      "hash": "f729a68729",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=16,thing=gems.mp3"
+    },
+    "k-towers/findGroup/n=16,thing=rockets": {
+      "text": "Tap the group with sixteen rockets.",
+      "hash": "fa00995cbd",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=16,thing=rockets.mp3"
+    },
+    "k-towers/findGroup/n=17,thing=critters": {
+      "text": "Tap the group with seventeen critters.",
+      "hash": "877454c5e9",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=17,thing=critters.mp3"
+    },
+    "k-towers/findGroup/n=17,thing=towers": {
+      "text": "Tap the group with seventeen towers.",
+      "hash": "360e4a0830",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=17,thing=towers.mp3"
+    },
+    "k-towers/findGroup/n=17,thing=gems": {
+      "text": "Tap the group with seventeen gems.",
+      "hash": "2a117d0057",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=17,thing=gems.mp3"
+    },
+    "k-towers/findGroup/n=17,thing=rockets": {
+      "text": "Tap the group with seventeen rockets.",
+      "hash": "aa6c03d595",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=17,thing=rockets.mp3"
+    },
+    "k-towers/findGroup/n=18,thing=critters": {
+      "text": "Tap the group with eighteen critters.",
+      "hash": "2ca991233b",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=18,thing=critters.mp3"
+    },
+    "k-towers/findGroup/n=18,thing=towers": {
+      "text": "Tap the group with eighteen towers.",
+      "hash": "edf1ed78d6",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=18,thing=towers.mp3"
+    },
+    "k-towers/findGroup/n=18,thing=gems": {
+      "text": "Tap the group with eighteen gems.",
+      "hash": "381fe7c00a",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=18,thing=gems.mp3"
+    },
+    "k-towers/findGroup/n=18,thing=rockets": {
+      "text": "Tap the group with eighteen rockets.",
+      "hash": "daaec65844",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=18,thing=rockets.mp3"
+    },
+    "k-towers/findGroup/n=19,thing=critters": {
+      "text": "Tap the group with nineteen critters.",
+      "hash": "3883106843",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=19,thing=critters.mp3"
+    },
+    "k-towers/findGroup/n=19,thing=towers": {
+      "text": "Tap the group with nineteen towers.",
+      "hash": "cf1e7a60c1",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=19,thing=towers.mp3"
+    },
+    "k-towers/findGroup/n=19,thing=gems": {
+      "text": "Tap the group with nineteen gems.",
+      "hash": "1b6f2b6680",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=19,thing=gems.mp3"
+    },
+    "k-towers/findGroup/n=19,thing=rockets": {
+      "text": "Tap the group with nineteen rockets.",
+      "hash": "ae6502d279",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=19,thing=rockets.mp3"
+    },
+    "k-towers/findGroup/n=20,thing=critters": {
+      "text": "Tap the group with twenty critters.",
+      "hash": "161995b34a",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=20,thing=critters.mp3"
+    },
+    "k-towers/findGroup/n=20,thing=towers": {
+      "text": "Tap the group with twenty towers.",
+      "hash": "9031ab100b",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=20,thing=towers.mp3"
+    },
+    "k-towers/findGroup/n=20,thing=gems": {
+      "text": "Tap the group with twenty gems.",
+      "hash": "8504173358",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=20,thing=gems.mp3"
+    },
+    "k-towers/findGroup/n=20,thing=rockets": {
+      "text": "Tap the group with twenty rockets.",
+      "hash": "3fa0f54ab8",
+      "kind": "whole",
+      "file": "voice/k-towers/findGroup/n=20,thing=rockets.mp3"
     },
     "k-trace/warm-down": {
       "text": "Let's trace a big line down!",

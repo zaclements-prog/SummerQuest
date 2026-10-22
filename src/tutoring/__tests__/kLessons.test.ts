@@ -14,6 +14,9 @@ const CONTRACT = {
   kRhymes: { zoneId: 'reading-reef', practiceStageId: 'k-rhyme-1' },
   // K literacy (phase 1b)
   kTracing: { zoneId: 'writing-workshop', practiceStageId: 'k-trace-1' },
+  // K complete (phase 2a)
+  kScience: { zoneId: 'science-summit', practiceStageId: 'k-science-1' },
+  kTowers: { zoneId: 'tower-battlefront', practiceStageId: 'k-towers-1' },
 }
 
 const checks = k1Lessons.flatMap((l) => l.steps.filter((s) => s.check).map((s) => ({ lesson: l, step: s, check: s.check! })))
