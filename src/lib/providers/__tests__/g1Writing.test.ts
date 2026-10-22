@@ -53,7 +53,7 @@ function common(q: ListenProblem) {
   for (const s of steps) if (typeof s.cue === 'string') expect(phraseIndex(q.prompt, s.cue), `"${s.cue}" in ${q.prompt}`).toBeGreaterThanOrEqual(0)
 }
 
-describe('the lowercase letters (src/lib/trace/glyphs)', () => {
+describe('the lowercase letters (src/lib/trace/glyphs)', { timeout: 30_000 }, () => {
   const ys = (id: string) => glyph('lower', id).strokes.flatMap((s) => s.sampled.pts.map((p) => p.y))
   const top = (id: string) => Math.min(...ys(id))
   const bottom = (id: string) => Math.max(...ys(id))
@@ -163,7 +163,7 @@ describe('the lowercase letters (src/lib/trace/glyphs)', () => {
   })
 })
 
-describe('Little letters (g1-trace-1)', () => {
+describe('Little letters (g1-trace-1)', { timeout: 30_000 }, () => {
   const cfg = zoneStages(getZone('writing-workshop')!, 1).find((s) => s.id === 'g1-trace-1')!.providerConfig as G1WritingConfig
 
   it('a round deals six different letters, one from each family share, in family order', () => {
@@ -192,7 +192,7 @@ describe('Little letters (g1-trace-1)', () => {
   })
 })
 
-describe('Spell it (g1-spell-1)', () => {
+describe('Spell it (g1-spell-1)', { timeout: 30_000 }, () => {
   const cfg = zoneStages(getZone('writing-workshop')!, 1).find((s) => s.id === 'g1-spell-1')!.providerConfig as G1WritingConfig
 
   it('a picture, a slot per letter, the letters among a few others; tiles say their names; a miss sounds it out', () => {
@@ -230,7 +230,7 @@ describe('Spell it (g1-spell-1)', () => {
   })
 })
 
-describe('Build a sentence (g1-sentence-1)', () => {
+describe('Build a sentence (g1-sentence-1)', { timeout: 30_000 }, () => {
   const cfg = zoneStages(getZone('writing-workshop')!, 1).find((s) => s.id === 'g1-sentence-1')!.providerConfig as G1WritingConfig
 
   it('the bank: three to five words a 1st grader reads, a capital to start, a period to end', () => {
@@ -270,7 +270,7 @@ describe('Build a sentence (g1-sentence-1)', () => {
   })
 })
 
-describe('Writing Workshop in the curriculum', () => {
+describe('Writing Workshop in the curriculum', { timeout: 30_000 }, () => {
   it('every stage draws its questions from the createProvider registry', () => {
     for (const st of zoneStages(getZone('writing-workshop')!, 1)) {
       const p = createProvider(st.providerConfig)

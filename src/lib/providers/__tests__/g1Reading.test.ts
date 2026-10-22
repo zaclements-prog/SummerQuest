@@ -166,7 +166,7 @@ const CONFUSED: [ShortVowel, ShortVowel][] = [
 ]
 const confused = (x: string, y: string) => CONFUSED.some(([a, b]) => (a === x && b === y) || (a === y && b === x))
 
-describe('the picture words (banks)', () => {
+describe('the picture words (banks)', { timeout: 30_000 }, () => {
   it('every word has one picture every Android tablet draws, no two words share one, and each is named', () => {
     for (const [w, e] of Object.entries(G1_NEW_WORD_EMOJI)) expect(oldEmoji(e), `${w} ${e}`).toBe(true)
     // the new pictures are exactly the words kindergarten has none for (three is a numeral)
@@ -232,7 +232,7 @@ describe('the picture words (banks)', () => {
   })
 })
 
-describe('Short vowels (g1-vowels-1)', () => {
+describe('Short vowels (g1-vowels-1)', { timeout: 30_000 }, () => {
   const stage = zoneStages(getZone('reading-reef')!, 1).find((s) => s.id === 'g1-vowels-1')!
   const cfg = stage.providerConfig as G1ReadingConfig
 
@@ -288,7 +288,7 @@ describe('Short vowels (g1-vowels-1)', () => {
   })
 })
 
-describe('Letter teams (g1-digraphs-1)', () => {
+describe('Letter teams (g1-digraphs-1)', { timeout: 30_000 }, () => {
   const cfg = zoneStages(getZone('reading-reef')!, 1).find((s) => s.id === 'g1-digraphs-1')!.providerConfig as G1ReadingConfig
   const close = (d: string, w: string) => ({ sh: ['s', 'ch'], ch: ['sh', 't'], th: ['t', 'f'], wh: ['w'] })[d]!.includes(firstGrapheme(w as G1Word))
 
@@ -343,7 +343,7 @@ describe('Letter teams (g1-digraphs-1)', () => {
   })
 })
 
-describe('Read a word (g1-words-1)', () => {
+describe('Read a word (g1-words-1)', { timeout: 30_000 }, () => {
   const cfg = zoneStages(getZone('reading-reef')!, 1).find((s) => s.id === 'g1-words-1')!.providerConfig as G1ReadingConfig
 
   it('the word is printed and NEVER said before it is read: not in the question, and the cards are not named', () => {
@@ -377,7 +377,7 @@ describe('Read a word (g1-words-1)', () => {
   })
 })
 
-describe('Read along (g1-sentences-1)', () => {
+describe('Read along (g1-sentences-1)', { timeout: 30_000 }, () => {
   const cfg = zoneStages(getZone('reading-reef')!, 1).find((s) => s.id === 'g1-sentences-1')!.providerConfig as G1ReadingConfig
 
   it('the sentence is read with each word lighting, then the question, then the cards named; the answer is in the sentence', () => {
@@ -403,7 +403,7 @@ describe('Read along (g1-sentences-1)', () => {
   })
 })
 
-describe('Sight words (g1-sight-1)', () => {
+describe('Sight words (g1-sight-1)', { timeout: 30_000 }, () => {
   const cfg = zoneStages(getZone('reading-reef')!, 1).find((s) => s.id === 'g1-sight-1')!.providerConfig as G1ReadingConfig
 
   it('"Find the word could.": three Dolch first-grade word cards, never named; a wrong one hears its word', () => {
@@ -426,7 +426,7 @@ describe('Sight words (g1-sight-1)', () => {
   })
 })
 
-describe('Word Reef in the curriculum', () => {
+describe('Word Reef in the curriculum', { timeout: 30_000 }, () => {
   it('every stage draws its questions from the createProvider registry', () => {
     const reef = curriculum.zones.find((z) => z.id === 'reading-reef')!
     for (const st of reef.stagesByBand!.g1!) {

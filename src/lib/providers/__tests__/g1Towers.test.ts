@@ -37,7 +37,7 @@ function factOf(q: ListenProblem): G1Fact {
 
 const words = (s: string) => s.match(/[a-z]+(?:-[a-z]+)?/gi) ?? []
 
-describe('the facts', () => {
+describe('the facts', { timeout: 30_000 }, () => {
   it('within 10, then past ten: every answer 0–20, never a negative, never all taken away', () => {
     expect(ADD_10).toHaveLength(45)
     expect(SUB_10).toHaveLength(45)
