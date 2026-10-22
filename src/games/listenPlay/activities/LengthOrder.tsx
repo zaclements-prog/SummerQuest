@@ -197,7 +197,8 @@ function LengthOrderActivity({ problem, spec, phase, active, onAttempt, register
     <div ref={boxRef} className="absolute inset-0 select-none" data-length-order={spec.mode} data-lo-ready={p.ready ? '' : undefined} data-lo-done={p.done.length}>
       <div className="lp-picture-panel absolute inset-0 bg-paper border-[3px] border-line rounded-[2rem] shadow-card" aria-hidden="true" />
       <svg className="absolute inset-0 w-full h-full" viewBox={`0 0 ${w} ${h}`} aria-hidden="true">
-        {geo.art(stateOf)}
+        {/* (once measured: the string glides, and must not glide in from a guessed place) */}
+        {size.measured && geo.art(stateOf)}
       </svg>
       {geo.guides.map((g) => (
         <div key={g.id} data-guide={g.id} className="absolute pointer-events-none" style={boxStyle(g.r)} aria-hidden="true" />

@@ -417,7 +417,8 @@ function GraphActivity({ problem, spec, phase, active, onAttempt, registerHelp }
       {extraBox && <div data-guide="graph-extra" className="absolute pointer-events-none" style={boxStyle(extraBox)} aria-hidden="true" />}
       {tray.length > 0 && <div data-guide="graph-tray" className="absolute pointer-events-none" style={boxStyle(L.trayBox)} aria-hidden="true" />}
       {/* the friends' picks (a picture graph keeps them in its rows; a tally turns each into a mark) */}
-      {tray.map((r, i) => {
+      {size.measured &&
+        tray.map((r, i) => {
         const at = pickAt(i)
         const inRow = p.placed[i] !== null
         const gone = inRow && spec.style === 'tally'

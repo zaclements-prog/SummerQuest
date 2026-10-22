@@ -22,13 +22,17 @@ export function union(rs: Rect[]): Rect {
   return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 }
 }
 
-/** The element's size, kept up to date (0 × 0 before it is laid out, and in a test DOM). */
-export function useBoxSize(ref: RefObject<HTMLElement | null>): { w: number; h: number } {
-  const [size, setSize] = useState({ w: 0, h: 0 })
+/**
+ * The element's size, kept up to date (0 × 0 before it is laid out, and in a test DOM).
+ * `measured` turns true once it has been measured (before the first paint): anything that
+ * moves with a CSS transition waits for it, so it never glides in from a guessed place.
+ */
+export function useBoxSize(ref: RefObject<HTMLElement | null>): { w: number; h: number; measured: boolean } {
+  const [size, setSize] = useState({ w: 0, h: 0, measured: false })
   useLayoutEffect(() => {
     const el = ref.current
     if (!el) return
-    const measure = () => setSize({ w: el.clientWidth, h: el.clientHeight })
+    const measure = () => setSize({ w: el.clientWidth, h: el.clientHeight, measured: true })
     measure()
     if (typeof ResizeObserver === 'undefined') return
     const ro = new ResizeObserver(measure)
