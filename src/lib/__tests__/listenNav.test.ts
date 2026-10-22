@@ -51,7 +51,8 @@ describe('zones for a K–1 child', () => {
     for (const [zoneId, p] of Object.entries(PILOT)) {
       const zone = getZone(zoneId)!
       expect(zoneTitle(zone, 0)).toBe(p.title)
-      expect(zoneTitle(zone, 1)).toBe(p.title)
+      // (1st grade's own name where the zone has one: phase 2b)
+      expect(zoneTitle(zone, 1)).toBe(zone.titleByBand?.g1 ?? p.title)
       for (const g of [2, 3, 4, 5] as const) expect(zoneTitle(zone, g)).toBe(zone.title)
       expect(zoneTitle(zone, null)).toBe(zone.title)
     }

@@ -25,6 +25,10 @@ import { kMeasureLesson } from './kMeasure'
 import { kSortingLesson } from './kSorting'
 import { kScienceLesson } from './kScience'
 import { kTowersLesson } from './kTowers'
+// 1st grade (phase 2b): Adding Mesa, Take-Away Dunes, Story Woods
+import { g1AddingLesson } from './g1Adding'
+import { g1SubtractLesson } from './g1Subtract'
+import { g1StoryMathLesson } from './g1StoryMath'
 
 /**
  * The lessons, by content band (lib/gradeBand; K–5 plan §2): kindergarten and
@@ -68,7 +72,12 @@ export const k1Lessons: Lesson[] = [
 ]
 
 /** 1st grade (band `g1`): its own voice lessons. */
-export const g1Lessons: Lesson[] = []
+export const g1Lessons: Lesson[] = [
+  // Adding Mesa, Take-Away Dunes, Story Woods (phase 2b)
+  g1AddingLesson,
+  g1SubtractLesson,
+  g1StoryMathLesson,
+]
 
 /** 5th grade (band `g5`). */
 export const g5Lessons: Lesson[] = []

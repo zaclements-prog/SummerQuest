@@ -24,6 +24,7 @@ import {
   introLine,
   levelScore,
   lossHint,
+  paradeFamily,
   paradeFull,
   paradeStars,
   passCage,
@@ -162,7 +163,7 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
   const listen = isListenMode(grade)
   // × for Multiplication Mesa, ÷ and − for Division Dunes (the grade picks the band's operators;
   // 1st grade's Take-Away Dunes parade names its − gates `sub`)
-  const family: OpFamily = params?.ops === 'div' || params?.ops === 'sub' ? 'div' : 'mul'
+  const family: OpFamily = paradeFamily(params?.ops)
   const theme: ThemeKey = family
   const activeCreature = useProgress((s) => s.activeCreature)
   const recordAnswer = useProgress((s) => s.recordAnswer)

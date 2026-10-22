@@ -332,7 +332,7 @@ function SentenceArt({ spec, solved }: { spec: NumberSentenceSpec; solved: boole
   const asked = sentencePieces(spec.sentence, given ? given.width + gap : 0, TOKEN_H / 2, spec.answer, solved)
   const w = (given ? given.width + gap : 0) + asked.width
   return (
-    <svg viewBox={`-10 0 ${w + 20} ${TOKEN_H}`} className="block w-full h-full" role="img" aria-label={[spec.given, spec.sentence].filter(Boolean).map((s) => s!.join(' ')).join(', ')}>
+    <svg viewBox={`-10 0 ${w + 20} ${TOKEN_H}`} className="absolute inset-0 w-full h-full" role="img" aria-label={[spec.given, spec.sentence].filter(Boolean).map((s) => s!.join(' ')).join(', ')}>
       {given && (
         <g>
           {given.nodes}
@@ -820,8 +820,8 @@ function NumberSentence({ problem, spec, phase, active, onAttempt, registerHelp 
     >
       {!family && (
         // the sentence, written big
-        <div data-guide={NS_SENTENCE} className="shrink-0 h-[min(15vh,7.5rem)] short:h-[min(14vh,5rem)] px-2 rounded-[1.5rem] bg-paper/90 border-[3px] border-line shadow-card grid place-items-center">
-          <div className="w-full h-full py-1.5">
+        <div data-guide={NS_SENTENCE} className="relative shrink-0 h-[min(15vh,7.5rem)] short:h-[min(14vh,5rem)] rounded-[1.5rem] bg-paper/90 border-[3px] border-line shadow-card">
+          <div className="absolute inset-x-3 inset-y-1.5">
             <SentenceArt spec={spec} solved={st.solved} />
           </div>
         </div>

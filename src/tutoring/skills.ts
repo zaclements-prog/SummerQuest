@@ -94,6 +94,20 @@ export const SKILLS: Record<string, SkillMeta> = {
   // Counting Towers (K tower defense, phase 2a; lesson kTowers)
   'k-towers-count':   { label: 'counting to 20', zoneId: 'tower-battlefront', lessonId: 'kTowers', practiceStageId: 'k-towers-1' },
   'k-towers-compare': { label: 'more and fewer', zoneId: 'tower-battlefront', lessonId: 'kTowers', practiceStageId: 'k-towers-2' },
+  // ── 1st grade (phase 2b) ──
+  // Adding Mesa (lesson g1Adding)
+  'g1-count-on': { label: 'counting on to add', zoneId: 'multiplication-mesa', lessonId: 'g1Adding', practiceStageId: 'g1-add-1' },
+  'g1-doubles':  { label: 'doubles and near doubles', zoneId: 'multiplication-mesa', lessonId: 'g1Adding', practiceStageId: 'g1-add-3' },
+  'g1-make-ten': { label: 'making ten to add', zoneId: 'multiplication-mesa', lessonId: 'g1Adding', practiceStageId: 'g1-add-3' },
+  // Take-Away Dunes (lesson g1Subtract)
+  'g1-take-away':      { label: 'taking away and counting back', zoneId: 'division-dunes', lessonId: 'g1Subtract', practiceStageId: 'g1-sub-1' },
+  'g1-think-addition': { label: 'thinking addition to subtract', zoneId: 'division-dunes', lessonId: 'g1Subtract', practiceStageId: 'g1-sub-3' },
+  'g1-fact-families':  { label: 'fact families', zoneId: 'division-dunes', lessonId: 'g1Subtract', practiceStageId: 'g1-sub-3' },
+  // Story Woods (lesson g1StoryMath)
+  'g1-story-problems': { label: 'story problems within 20', zoneId: 'word-problem-woods', lessonId: 'g1StoryMath', practiceStageId: 'g1-woods-1' },
+  'g1-story-unknowns': { label: 'story problems with a missing number', zoneId: 'word-problem-woods', lessonId: 'g1StoryMath', practiceStageId: 'g1-woods-2' },
+  'g1-story-compare':  { label: 'how many more or fewer', zoneId: 'word-problem-woods', lessonId: 'g1StoryMath', practiceStageId: 'g1-woods-2' },
+  'g1-three-addends':  { label: 'adding three numbers', zoneId: 'word-problem-woods', lessonId: 'g1StoryMath', practiceStageId: 'g1-woods-3' },
 }
 
 export interface Skill { id: string; label: string }

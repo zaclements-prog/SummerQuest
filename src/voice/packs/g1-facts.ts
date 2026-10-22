@@ -10,9 +10,10 @@ import { numberWord } from '../../lib/numberWords'
  * card, and praise.
  *
  * Fixed lines spell their numbers out (the recording says exactly what is
- * written); the questions are templates recorded whole, one clip per
- * sentence, over the numbers a stage asks. The counting itself ("nine!",
- * "ten!") is the Listen & Play kit's own `listen/number`.
+ * written). The questions are fixed lines too, one per true sentence within
+ * 20 (`add-8-5`: "What is eight plus five?"), so no clip is recorded for a
+ * sentence no stage can ask. The counting itself ("nine!", "ten!") is the
+ * Listen & Play kit's own `listen/number`.
  */
 
 const w = numberWord
@@ -20,10 +21,33 @@ const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
 const range = (lo: number, hi: number) => Array.from({ length: hi - lo + 1 }, (_, i) => lo + i)
 const each = <T,>(xs: readonly T[], f: (x: T) => [string, string][]) => Object.fromEntries(xs.flatMap(f))
 
-/** The largest number an addition question starts from (count on from up to 17). */
-export const G1_ADD_A_MAX = 17
-/** Questions add or take away at most this many. */
+/** Take-away and missing-part questions take away (or are missing) at most this many. */
 export const G1_CHANGE_MAX = 10
+
+/** The question lines, one per true sentence within 20 (see `factAskId`). */
+export type G1FactAskKind = 'add' | 'sub' | 'addB' | 'addA' | 'subB'
+/**
+ * A question's line id: `add-8-5` ("What is eight plus five?"), `sub-13-5`
+ * ("What is thirteen minus five?"), `addB-5-13` ("Five plus what makes
+ * thirteen?"), `addA-4-9` ("What plus four makes nine?"), `subB-12-4`
+ * ("Twelve minus what is four?").
+ */
+export const factAskId = (kind: G1FactAskKind, x: number, y: number) => `${kind}-${x}-${y}`
+/** Every question the pack says: [kind, x, y, text]. */
+export function g1FactAsks(): [G1FactAskKind, number, number, string][] {
+  const out: [G1FactAskKind, number, number, string][] = []
+  for (let a = 1; a <= 19; a++) for (let b = 1; a + b <= 20; b++) out.push(['add', a, b, `What is ${w(a)} plus ${w(b)}?`])
+  for (let b = 1; b <= G1_CHANGE_MAX; b++)
+    for (let a = b + 1; a <= 20; a++) {
+      out.push(['sub', a, b, `What is ${w(a)} minus ${w(b)}?`])
+      // a + ? = c and ? + b = c, with the known part up to ten
+      out.push(['addB', b, a, `${cap(w(b))} plus what makes ${w(a)}?`])
+      out.push(['addA', b, a, `What plus ${w(b)} makes ${w(a)}?`])
+      // a − ? = c, the part left up to ten
+      out.push(['subB', a, b, `${cap(w(a))} minus what is ${w(b)}?`])
+    }
+  return out
+}
 
 /** "Eight and three make eleven.": every pair of parts with a whole up to 20 (both orders). */
 export const makeLineId = (a: number, b: number) => `make-${a}-${b}`
@@ -33,6 +57,9 @@ export const leftLineId = (n: number) => `left-${n}`
 export default defineVoicePack({
   id: 'g1-facts',
   lines: {
+    // ── the questions: one line per true sentence within 20 ──
+    ...Object.fromEntries(g1FactAsks().map(([kind, x, y, text]) => [factAskId(kind, x, y), text])),
+
     // ── hints: said as the picture under the sentence lights up ──
     hintCountOn: 'Start with the bigger number. Count on!',
     hintTurn: 'A turn-around fact! The same numbers make the same total.',
@@ -97,16 +124,6 @@ export default defineVoicePack({
     thinkPro: 'Great thinking!',
   },
   templates: {
-    /** 289 clips: "What is 8 plus 5?" (and "3 plus 14": the smaller number first) */
-    add: { text: 'What is {a} plus {b}?', slots: { a: { numbers: [1, G1_ADD_A_MAX] }, b: { numbers: [1, G1_ADD_A_MAX] } }, render: 'whole' },
-    /** 190 clips: "What is 13 minus 5?" */
-    sub: { text: 'What is {a} minus {b}?', slots: { a: { numbers: [2, 20] }, b: { numbers: [1, G1_CHANGE_MAX] } }, render: 'whole' },
-    /** 190 clips: "5 plus what makes 13?" (5 + ? = 13: think addition, the missing part) */
-    addB: { text: '{a} plus what makes {c}?', slots: { a: { numbers: [1, G1_CHANGE_MAX] }, c: { numbers: [2, 20] } }, render: 'whole' },
-    /** 190 clips: "What plus 4 makes 9?" (? + 4 = 9) */
-    addA: { text: 'What plus {b} makes {c}?', slots: { b: { numbers: [1, G1_CHANGE_MAX] }, c: { numbers: [2, 20] } }, render: 'whole' },
-    /** 190 clips: "12 minus what is 4?" (12 − ? = 4) */
-    subB: { text: '{a} minus what is {c}?', slots: { a: { numbers: [2, 20] }, c: { numbers: [1, G1_CHANGE_MAX] } }, render: 'whole' },
     /** 9 clips: "Tap 3 to take them away!" (two or more) */
     actTake: { text: 'Tap {n} to take them away!', slots: { n: { numbers: [2, G1_CHANGE_MAX] } }, render: 'whole' },
   },

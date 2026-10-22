@@ -25,12 +25,21 @@ const K_PILOT = [
   'kScience',
   'kTowers',
 ]
+/** 1st grade's own lessons (phase 2b), in `g1Lessons` order: a zone with one doesn't show kindergarten's. */
+const G1_OWN = [
+  // Adding Mesa, Take-Away Dunes, Story Woods
+  'g1Adding',
+  'g1Subtract',
+  'g1StoryMath',
+]
 const ids = (ls: { id: string }[]) => ls.map((l) => l.id)
 
 describe('lessons by grade band', () => {
   it('K and grade 1 see only the K–1 lessons', () => {
     expect(ids(lessonsFor(0))).toEqual(K_PILOT)
-    expect(ids(lessonsFor(1))).toEqual(K_PILOT)
+    // (1st grade: its own lessons first, then kindergarten's for the other zones)
+    const ownZones = new Set(G1_OWN.map((id) => getLesson(id)!.zoneId))
+    expect(ids(lessonsFor(1))).toEqual([...G1_OWN, ...K_PILOT.filter((id) => !ownZones.has(getLesson(id)!.zoneId))])
   })
 
   it("grades 2–4 see today's eleven lessons, unchanged", () => {
@@ -76,8 +85,9 @@ describe('lessons by grade band', () => {
     expect(isLessonFor('division', 5)).toBe(true)
     expect(zoneLessonFor('reading-reef', 0)?.id).toBe('kLetters')
     expect(zoneLessonFor('reading-reef', 3)?.id).toBe('reading')
-    // (K complete, phase 2a: Number Dunes has its own K lesson)
-    expect(zoneLessonFor('division-dunes', 1)?.id).toBe('kCompare')
+    // (K complete, phase 2a: Number Dunes has its own K lesson; 1st grade, phase 2b, its own: Take-Away Dunes)
+    expect(zoneLessonFor('division-dunes', 0)?.id).toBe('kCompare')
+    expect(zoneLessonFor('division-dunes', 1)?.id).toBe('g1Subtract')
     expect(zoneLessonFor('place-value-plateau', 0)?.id).toBe('kTeens')
     expect(zoneLessonFor('no-such-zone', 1)).toBeUndefined()
   })
@@ -162,7 +172,9 @@ describe('practice links stay in the band', () => {
       const before = fixed[l.id][fixed[l.id].indexOf(l.practiceStageId) - 1]
       const opened = before ? { stages: { [before]: { stars: 1 } } } : undefined
       expect(practiceStageFor(l, opened, 0, zone)).toBe(l.practiceStageId)
-      expect(practiceStageFor(l, opened, 1, zone)).toBe(l.practiceStageId)
+      // (a 1st grader shares them, unless the zone has its own 1st-grade set: then a stage of that)
+      if (zone.stagesByBand?.g1) expect(zoneStages(zone, 1).map((s) => s.id)).toContain(practiceStageFor(l, opened, 1, zone))
+      else expect(practiceStageFor(l, opened, 1, zone)).toBe(l.practiceStageId)
       expect(practiceStageFor(l, undefined, 0, zone)).toBe(before ? first : l.practiceStageId)
       // a grade-3 child who opens a K lesson lands on a grade 2–4 stage, never a K one
       const g24 = zone.stages.map((s) => s.id)

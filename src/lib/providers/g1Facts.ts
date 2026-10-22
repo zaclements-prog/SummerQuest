@@ -1,7 +1,7 @@
 import type { ListenProblem } from '../../games/listenPlay/types'
 import { solveSentence, type FactModel, type HelpBeat, type NumberSentenceSpec, type SentenceToken } from '../../games/listenPlay/activities/numberSentenceSpec'
-import { G1_ADD_A_MAX, G1_CHANGE_MAX, leftLineId, makeLineId } from '../../voice/packs/g1-facts'
-import { voiceText } from '../../voice/registry'
+import { factAskId, leftLineId, makeLineId } from '../../voice/packs/g1-facts'
+import { lineText, voiceText } from '../../voice/registry'
 import type { VoiceRef } from '../../voice/types'
 import { shuffle } from '../random'
 import { numeralCard } from './kMathStory'
@@ -64,37 +64,30 @@ export function askAnswer(q: FactAsk): number {
   }
 }
 
-/** How the question is said ("What is 8 plus 5?"). */
-export function askLine(q: FactAsk): VoiceRef {
+/** The question's line id in the `g1-facts` pack. */
+function askId(q: FactAsk): string {
   switch (q.kind) {
     case 'add':
-      return { template: 'g1-facts/add', slots: { a: q.a, b: q.b } }
+      return factAskId('add', q.a, q.b)
     case 'sub':
-      return { template: 'g1-facts/sub', slots: { a: q.a, b: q.b } }
+      return factAskId('sub', q.a, q.b)
     case 'addB':
-      return { template: 'g1-facts/addB', slots: { a: q.a, c: q.c } }
+      return factAskId('addB', q.a, q.c)
     case 'addA':
-      return { template: 'g1-facts/addA', slots: { b: q.b, c: q.c } }
+      return factAskId('addA', q.b, q.c)
     case 'subB':
-      return { template: 'g1-facts/subB', slots: { a: q.a, c: q.c } }
+      return factAskId('subB', q.a, q.c)
   }
 }
 
-/** Every question the pack can say (the numbers its templates are recorded for). */
+/** How the question is said ("What is eight plus five?"). */
+export function askLine(q: FactAsk): VoiceRef {
+  return fact(askId(q))
+}
+
+/** The pack has a recorded line for this question (a true sentence within 20, the change or missing part up to ten). */
 export function askInRange(q: FactAsk): boolean {
-  const ok = (v: number, lo: number, hi: number) => Number.isInteger(v) && v >= lo && v <= hi
-  switch (q.kind) {
-    case 'add':
-      return ok(q.a, 1, G1_ADD_A_MAX) && ok(q.b, 1, G1_ADD_A_MAX) && q.a + q.b <= G1_FACT_MAX
-    case 'sub':
-      return ok(q.a, 2, 20) && ok(q.b, 1, G1_CHANGE_MAX) && q.a - q.b >= 1
-    case 'addB':
-      return ok(q.a, 1, G1_CHANGE_MAX) && ok(q.c, 2, 20) && q.c - q.a >= 1
-    case 'addA':
-      return ok(q.b, 1, G1_CHANGE_MAX) && ok(q.c, 2, 20) && q.c - q.b >= 1
-    case 'subB':
-      return ok(q.a, 2, 20) && ok(q.c, 1, G1_CHANGE_MAX) && q.a - q.c >= 1
-  }
+  return lineText(`g1-facts/${askId(q)}`) !== undefined
 }
 
 // ── the help after a miss, per model ─────────────────────────────────────────
@@ -167,7 +160,7 @@ export function countBackHelp(start: number, back: number): HelpBeat[] {
 export function partsHelp(whole: number, part: number): HelpBeat[] {
   const missing = whole - part
   return [
-    { voice: { template: 'g1-facts/addB', slots: { a: part, c: whole } }, do: { kind: 'light', part: 'start' } },
+    { voice: askLine({ kind: 'addB', a: part, c: whole }), do: { kind: 'light', part: 'start' } },
     ...Array.from({ length: missing }, (_, i): HelpBeat => ({ voice: said(part + i + 1), do: { kind: 'fill', n: i + 1 } })),
     { voice: make(part, missing), do: { kind: 'light', part: 'model' } },
   ]

@@ -1,4 +1,5 @@
 import type { VoiceRef } from '../../voice/types'
+import { G1_PARADE_RANGES as G1 } from '../../voice/packs/g1-parade'
 import type { Decision, GatePair, OpSetId } from '../gates'
 
 /**
@@ -23,9 +24,10 @@ export function gatePrompt(pair: GatePair, listen: boolean, opSet?: OpSetId): Vo
   if (listen && isG1Set(opSet)) {
     const [a, b] = [pair.left.op, pair.right.op]
     if (a.kind === 'add' && b.kind === 'add' && inRange(a.k, 1, 10) && inRange(b.k, 1, 10)) return { template: 'parade/plusOrPlus', slots: { a: a.k, b: b.k } }
-    if (a.kind === 'add' && b.kind === 'sub' && inRange(a.k, 1, 9) && inRange(b.k, 1, 9)) return { template: 'g1-parade/plusOrMinus', slots: { a: a.k, b: b.k } }
-    if (a.kind === 'sub' && b.kind === 'add' && inRange(a.k, 1, 9) && inRange(b.k, 1, 9)) return { template: 'g1-parade/minusOrPlus', slots: { a: a.k, b: b.k } }
-    if (a.kind === 'sub' && b.kind === 'sub' && inRange(a.k, 1, 9) && inRange(b.k, 1, 9)) return { template: 'g1-parade/minusOrMinus', slots: { a: a.k, b: b.k } }
+    const fits = (x: number, y: number, r: { a: readonly [number, number]; b: readonly [number, number] }) => inRange(x, ...r.a) && inRange(y, ...r.b)
+    if (a.kind === 'add' && b.kind === 'sub' && fits(a.k, b.k, G1.plusOrMinus)) return { template: 'g1-parade/plusOrMinus', slots: { a: a.k, b: b.k } }
+    if (a.kind === 'sub' && b.kind === 'add' && fits(a.k, b.k, G1.minusOrPlus)) return { template: 'g1-parade/minusOrPlus', slots: { a: a.k, b: b.k } }
+    if (a.kind === 'sub' && b.kind === 'sub' && fits(a.k, b.k, G1.minusOrMinus)) return { template: 'g1-parade/minusOrMinus', slots: { a: a.k, b: b.k } }
     return { line: pair.goal === 'keep' ? 'parade/keepPrompt' : 'parade/gatePrompt' }
   }
   if (listen) {
@@ -46,7 +48,7 @@ export function afterPick(d: Decision, listen: boolean, cheer: number, opSet?: O
   if (d.smart) return { line: (['parade/smartPick', 'parade/cheerMore', 'parade/cheerGrow', 'parade/cheerThink'] as const)[cheer % 4] }
   const other = d.picked === 'left' ? d.pair.right.op : d.pair.left.op
   // 1st grade's − gates: "Minus three would have left fifteen!"
-  if (listen && isG1Set(opSet) && other.kind === 'sub' && inRange(other.k, 1, 9) && inRange(d.other, 1, 19))
+  if (listen && isG1Set(opSet) && other.kind === 'sub' && inRange(other.k, ...G1.minusWouldHave.a) && inRange(d.other, ...G1.minusWouldHave.n))
     return { template: 'g1-parade/minusWouldHave', slots: { a: other.k, n: d.other } }
   if (listen && other.kind === 'add' && inRange(other.k, 1, 10) && inRange(d.other, 2, 20))
     return { template: 'parade/plusWouldHave', slots: { a: other.k, n: d.other } }

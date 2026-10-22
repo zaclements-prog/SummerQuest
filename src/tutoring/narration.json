@@ -434,5 +434,59 @@
       "stepId": "stronger",
       "text": "Towers stop the critters. Tap a tower to make it stronger!"
     }
+  ],
+  "g1Adding": [
+    {
+      "stepId": "countOn",
+      "text": "Eight plus three. Start at eight. Count on: nine, ten, eleven!"
+    },
+    {
+      "stepId": "turnAround",
+      "text": "Your turn! Two plus nine. Turn it around: start at nine."
+    },
+    {
+      "stepId": "makeTen",
+      "text": "Eight plus five. Move two to make ten. Ten and three is thirteen!"
+    },
+    {
+      "stepId": "doubles",
+      "text": "Your turn! Six and six. That is a double."
+    }
+  ],
+  "g1Subtract": [
+    {
+      "stepId": "takeAway",
+      "text": "Nine take away three. Cross out three. Six are left!"
+    },
+    {
+      "stepId": "countBack",
+      "text": "Your turn! Twelve minus three. Hop back three."
+    },
+    {
+      "stepId": "think",
+      "text": "Thirteen minus five. Think addition! Five plus eight makes thirteen. So the answer is eight."
+    },
+    {
+      "stepId": "family",
+      "text": "Your turn! Three, five and eight are a family."
+    }
+  ],
+  "g1StoryMath": [
+    {
+      "stepId": "story",
+      "text": "Bear has eight apples. Fox brings five more. Eight plus five is thirteen!"
+    },
+    {
+      "stepId": "mystery",
+      "text": "Your turn! Owl saw twelve birds. Some flew away. Now nine are left."
+    },
+    {
+      "stepId": "three",
+      "text": "Bunny picks four tulips, six roses and three daisies. Four and six make ten. Ten and three is thirteen!"
+    },
+    {
+      "stepId": "fewer",
+      "text": "Your turn! Bear has nine pears. Fox has six pears."
+    }
   ]
 }

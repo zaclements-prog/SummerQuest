@@ -26,6 +26,9 @@ import { boxCounts, isSortSpec, mostBox } from '../kSort'
 import { K_TOWERS_MAX } from '../kTowers'
 import { K_ACTIONS, K_FOOD, K_GEAR, K_HOME_OF, type KAction, type KGear } from '../kScience'
 import { DRAWINGS } from '../../../games/listenPlay/drawings'
+// 1st grade (phase 2b): number sentences and stories within 20
+import { isNumberSentenceSpec, sentenceHolds, solveSentence, type SentenceToken } from '../../../games/listenPlay/activities/numberSentenceSpec'
+import { storyAnswer as mathStoryAnswer } from '../../../games/listenPlay/activities/mathStorySpec'
 
 /**
  * Generator fuzz suite: every stage in the curriculum, at every grade tier, plus
@@ -449,7 +452,48 @@ function answerProblems(config: ProviderConfig, grade: GradeLevel, p: Problem): 
     case 'kScience':
       errs.push(...kScienceProblems(p as ListenProblem))
       break
+    // 1st grade (phase 2b): Adding Mesa and Take-Away Dunes (number sentences), Story Woods (stories within 20)
+    case 'g1Adding':
+    case 'g1Subtract':
+      errs.push(...g1SentenceProblems(p as ListenProblem))
+      break
+    case 'g1StoryMath':
+      errs.push(...g1StoryProblems(p as ListenProblem))
+      break
   }
+  return errs
+}
+
+// ── 1st grade (phase 2b): the answer, worked out from the sentence or the story's numbers ──
+
+function g1Cards(p: ListenProblem): string[] {
+  const errs: string[] = []
+  const cards = p.pictureOptions ?? []
+  if (cards.length !== 3 || cards.some((c, i) => c.value !== p.options[i] || c.picture.kind !== 'numeral')) errs.push('three numeral cards, one per option')
+  if (p.options.filter((o) => o === p.answer).length !== 1) errs.push('the answer is not exactly one card')
+  for (const o of p.options) if (!(Number.isInteger(o) && (o as number) >= 1 && (o as number) <= 20)) errs.push(`card ${o} is not 1–20`)
+  return errs
+}
+
+function g1SentenceProblems(p: ListenProblem): string[] {
+  const s = p.activity
+  if (!isNumberSentenceSpec(s)) return [`not a number sentence: ${JSON.stringify(s)}`]
+  const errs = g1Cards(p)
+  const solved = solveSentence(s.sentence)
+  if (solved !== p.answer) errs.push(`"${s.sentence.join(' ')}" makes ${solved}, the answer is ${p.answer}`)
+  if (!/^(What|\w+ (plus|minus) what)/.test(p.prompt)) errs.push(`the question isn't asked first: "${p.prompt}"`)
+  return errs
+}
+
+function g1StoryProblems(p: ListenProblem): string[] {
+  const s = p.activity
+  if (!isMathStorySpec(s)) return [`not a story: ${JSON.stringify(s)}`]
+  const errs = g1Cards(p)
+  if (mathStoryAnswer(s) !== p.answer) errs.push(`the scene shows ${mathStoryAnswer(s)}, the answer is ${p.answer}`)
+  const tokens = (s.sentence ?? []) as SentenceToken[]
+  if (!sentenceHolds(tokens, 0)) errs.push(`the written sentence "${tokens.join(' ')}" isn't true`)
+  if (tokens[s.sentenceAnswerAt ?? -1] !== p.answer) errs.push(`the sentence "${tokens.join(' ')}" doesn't hold the answer ${p.answer}`)
+  if (!s.act) errs.push('a story with nothing to act out')
   return errs
 }
 

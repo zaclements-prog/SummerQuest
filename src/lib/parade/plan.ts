@@ -167,6 +167,16 @@ export function planLevel(setup: ParadeSetup, level: number): LevelPlan {
   return plan
 }
 
+/**
+ * The zone family a parade stage's `params.ops` names: × for Multiplication
+ * Mesa (`mul`, and kindergarten's and 1st grade's `add`), ÷ and − for Division
+ * Dunes (`div`, and 1st grade's Take-Away Dunes `sub`). The grade then picks
+ * the band's operators (lib/gates opSetFor).
+ */
+export function paradeFamily(ops: unknown): OpFamily {
+  return ops === 'div' || ops === 'sub' ? 'div' : 'mul'
+}
+
 /** All three levels of a run. */
 export function planRun(setup: ParadeSetup): LevelPlan[] {
   return Array.from({ length: LEVELS }, (_, l) => planLevel(setup, l))

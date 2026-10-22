@@ -144,5 +144,20 @@ export default defineVoicePack({
     'stage-k-towers-1': 'How many?',
     'stage-k-towers-2': 'More or fewer!',
     'stage-k-towers-3': 'Tower count!',
+
+    // ── 1st grade (phase 2b): Adding Mesa, Take-Away Dunes, Story Woods ──
+    'name-g1-multiplication-mesa': 'Adding Mesa!',
+    'welcome-g1-multiplication-mesa': 'Adding Mesa! Tap a star to play!',
+    'stage-g1-add-1': 'Count on!',
+    'stage-g1-add-parade': 'Critter Parade!',
+    'stage-g1-add-3': 'Doubles and tens!',
+    'name-g1-division-dunes': 'Take-Away Dunes!',
+    'welcome-g1-division-dunes': 'Take-Away Dunes! Tap a star to play!',
+    'stage-g1-sub-1': 'Take away!',
+    'stage-g1-sub-parade': 'Critter Parade!',
+    'stage-g1-sub-3': 'Think addition!',
+    'stage-g1-woods-1': 'Bigger stories!',
+    'stage-g1-woods-2': 'Mystery numbers!',
+    'stage-g1-woods-3': 'Story puzzles!',
   },
 })

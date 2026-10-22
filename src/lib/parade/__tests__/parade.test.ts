@@ -2,7 +2,8 @@ import { describe, expect, it } from 'vitest'
 import { seededRng } from '../../random'
 import { voiceText } from '../../../voice/registry'
 import { decide } from '../../gates'
-import { OP_SETS, bestSide, opSetFor, type GatePair, type OpFamily, type Side } from '../../gates'
+import { OP_SETS, bestSide, isListenSet, opSetFor, showsDots, type GatePair, type OpFamily, type Side } from '../../gates'
+import { paradeFingerprint } from './fingerprint'
 import {
   LEVELS,
   PARADE_SHAPE,
@@ -25,6 +26,7 @@ import {
   finaleLine,
   gatePrompt,
   introLine,
+  paradeFamily,
 } from '..'
 
 const SETUPS: [OpFamily, number][] = [
@@ -258,4 +260,98 @@ describe('voice lines', () => {
     expect(k1?.kind).toBe('gate')
     if (k1?.kind === 'gate') expect(voiceText(gatePrompt(k1.pair, true))).toMatch(/^(Plus|Take away) \d+ or (plus|take away) \d+\?$/)
   })
+})
+
+// ── 1st grade (phase 2b): Adding Mesa's + gates and Take-Away Dunes' − gates, written as numerals ──
+describe('1st grade parades (phase 2b)', () => {
+  /**
+   * Fingerprints of kindergarten's and grades 2–5's parades (every level's
+   * plan, the pairs and cages along the smart and weak paths, every voice
+   * line), taken from the engine before the 1st-grade sets were added
+   * (commit 7492020) with the same function: they must not move.
+   */
+  const BEFORE: Record<string, string> = {
+    mul0: '415dd4e8',
+    mul2: '59e059ae',
+    mul3: '0c705a2d',
+    mul4: '99725f92',
+    mul5: 'baf28c4f',
+    div0: '415dd4e8',
+    div2: 'bcd26e19',
+    div3: '040d36d8',
+    div4: '5e3fcec3',
+    div5: 'baf28c4f',
+  }
+
+  it('kindergarten’s parade and grades 2–5’s are exactly as they were', () => {
+    const m = { planRun, startLevel, passGate, passCage, bestSide, gatePrompt, afterPick, introLine, cageLine, finaleLine, finaleOutcome, lossHint }
+    for (const fam of ['mul', 'div'] as const) for (const g of [0, 2, 3, 4, 5]) expect(paradeFingerprint(m, fam, g), `${fam} grade ${g}`).toBe(BEFORE[`${fam}${g}`])
+    // kindergarten keeps its dots
+    expect(showsDots(opSetFor('mul', 0))).toBe(true)
+  }, 30000)
+
+  it('the stages pick the families: Adding Mesa’s `add` (×), Take-Away Dunes’ `sub` (÷ and −); 1st grade gets its own sets, written as numerals', () => {
+    expect([paradeFamily('add'), paradeFamily('mul'), paradeFamily(undefined), paradeFamily('sub'), paradeFamily('div')]).toEqual(['mul', 'mul', 'mul', 'div', 'div'])
+    expect(opSetFor(paradeFamily('add'), 1)).toBe('add20')
+    expect(opSetFor(paradeFamily('sub'), 1)).toBe('sub20')
+    expect(showsDots('add20') || showsDots('sub20')).toBe(false)
+    expect(isListenSet('add20') && isListenSet('sub20') && isListenSet('addSub') && !isListenSet('mulAdd')).toBe(true)
+  })
+
+  it('Adding Mesa: + gates within 20 (a "+2 or −6" trap now and then), the parade grows, the gate pair asked aloud', () => {
+    const r = seededRng('g1-add')
+    let pairs = 0
+    let plus = 0
+    for (let s = 0; s < 40; s++)
+      for (const plan of planRun({ family: 'mul', grade: 1, seed: `g1a-${s}` })) {
+        expect(plan.opSet).toBe('add20')
+        expect(plan.cap).toBe(20)
+        const { pairs: ps, state } = play(plan, () => (r() < 0.5 ? 'left' : 'right'))
+        for (const p of ps) {
+          pairs++
+          for (const g of [p.left, p.right]) {
+            expect(g.label, g.label).toMatch(/^[+−]\d$/)
+            expect(g.result).toBeLessThanOrEqual(20)
+          }
+          if (p.left.op.kind === 'add' && p.right.op.kind === 'add') plus++
+          const ref = gatePrompt(p, true, plan.opSet)
+          expect(voiceText(ref)).toMatch(/^(Plus|Minus) \d+ or (plus|minus) \d+\?$|gate/)
+        }
+        expect(state.count).toBeLessThanOrEqual(20)
+      }
+    // mostly + gates
+    expect(plus / pairs).toBeGreaterThan(0.75)
+  }, 30000)
+
+  it('Take-Away Dunes: − gates within 20, which keeps more; a welcome cage fills the parade first; "Minus three or minus six?"', () => {
+    const r = seededRng('g1-sub')
+    let keep = 0
+    let pairs = 0
+    for (let s = 0; s < 40; s++)
+      for (const plan of planRun({ family: 'div', grade: 1, seed: `g1s-${s}` })) {
+        expect(plan.opSet).toBe('sub20')
+        expect(plan.events[0].kind).toBe('cage')
+        const { pairs: ps, cages } = play(plan, () => (r() < 0.5 ? 'left' : 'right'))
+        expect(plan.start + cages[0]).toBeGreaterThanOrEqual(15)
+        for (const p of ps) {
+          pairs++
+          for (const g of [p.left, p.right]) expect(g.label).toMatch(/^[+−]\d$/)
+          if (p.goal === 'keep') {
+            keep++
+            expect(p.left.op.kind === 'sub' && p.right.op.kind === 'sub').toBe(true)
+            expect(voiceText(gatePrompt(p, true, plan.opSet))).toMatch(/^Minus \d+ or minus \d+\?$|keeps more/)
+          }
+        }
+      }
+    expect(keep / pairs).toBeGreaterThan(0.8)
+    expect(voiceText(introLine('keep', true))).toMatch(/keeps more friends/)
+    // a weak pick hears what the other gate would have left
+    const plan = planLevel({ family: 'div', grade: 1, seed: 'weak' }, 0)
+    let st = startLevel(plan)
+    while (st.upcoming?.kind === 'cage') st = passCage(st).state
+    if (st.upcoming?.kind === 'gate' && st.upcoming.pair.goal === 'keep' && st.upcoming.pair.winner !== 'tie') {
+      const weak = other(bestSide(st.upcoming.pair))
+      expect(voiceText(afterPick(decide(st.upcoming.pair, weak), true, 0, plan.opSet))).toMatch(/^Minus \d+ would have left \d+!$/)
+    }
+  }, 30000)
 })

@@ -23,6 +23,10 @@ import { kMeasureScenes } from './kMeasure'
 import { kSortingScenes } from './kSorting'
 import { kScienceScenes } from './kScience'
 import { kTowersScenes } from './kTowers'
+// 1st grade (phase 2b): Adding Mesa, Take-Away Dunes, Story Woods
+import { g1AddingScenes } from './g1Adding'
+import { g1SubtractScenes } from './g1Subtract'
+import { g1StoryMathScenes } from './g1StoryMath'
 
 /**
  * Motion graphics by lesson → step id. A step without a scene falls back to
@@ -56,6 +60,10 @@ const SCENES: Record<string, Record<string, Scene>> = {
   kSorting: kSortingScenes,
   kScience: kScienceScenes,
   kTowers: kTowersScenes,
+  // 1st grade (phase 2b): Adding Mesa, Take-Away Dunes, Story Woods
+  g1Adding: g1AddingScenes,
+  g1Subtract: g1SubtractScenes,
+  g1StoryMath: g1StoryMathScenes,
 }
 
 export function sceneFor(lessonId: string, stepId: string): Scene | undefined {
