@@ -57,6 +57,11 @@ export default function VisualRenderer({
       return <MoneyVisual visual={visual} />
     case 'barGraph':
       return <BarGraphVisual visual={visual} />
+    // 5th grade (Multiplication Mesa, Division Dunes)
+    case 'areaModel':
+      return <AreaModelVisual visual={visual} size={size} />
+    case 'longDivision':
+      return <LongDivisionVisual visual={visual} size={size} />
   }
 }
 
@@ -472,6 +477,89 @@ function MoneyVisual({
   return (
     <Surface className="kid-text font-bold text-3xl">
       💰 ${dollars}.{String(cents).padStart(2, '0')}
+    </Surface>
+  )
+}
+
+// ── 5th grade: area models and long division ────────────────────────────────
+
+/** Soft fills for an area model's parts: one per row, so a row's partial products read as a group. */
+const AREA_FILLS = ['#ffe3a6', '#cdeccf', '#d9e4ff']
+
+/**
+ * An area model: each factor split by place value along the edges (rows down
+ * the left, columns across the top), each box its partial product. Bigger
+ * places get bigger boxes (not to scale: a 20 next to a 3 would be a sliver).
+ */
+function AreaModelVisual({ visual, size }: { visual: Extract<ProblemVisual, { kind: 'areaModel' }>; size: 'sm' | 'md' | 'lg' }) {
+  const unit = size === 'sm' ? 0.78 : 1
+  const span = (n: number) => (String(n).length >= 3 ? 1.5 : String(n).length === 2 ? 1.25 : 0.95)
+  const cw = visual.cols.map((c) => Math.round(span(c) * 92 * unit))
+  const rh = visual.rows.map((r) => Math.round(span(r) * 54 * unit))
+  const label = Math.round(46 * unit)
+  const fs = Math.round(21 * unit)
+  const W = label + cw.reduce((a, b) => a + b, 0) + 4
+  const H = Math.round(34 * unit) + rh.reduce((a, b) => a + b, 0) + 4
+  const top = Math.round(34 * unit)
+  const xs = cw.map((_, j) => label + cw.slice(0, j).reduce((a, b) => a + b, 0))
+  const ys = rh.map((_, i) => top + rh.slice(0, i).reduce((a, b) => a + b, 0))
+  const num = (n: number) => n.toLocaleString('en-US')
+  return (
+    <Surface className="inline-flex flex-col items-center !p-3">
+      <svg width={W} height={H} role="img" aria-label="area model">
+        {visual.cols.map((c, j) => (
+          <text key={`c${j}`} x={xs[j] + cw[j] / 2} y={top - 10} textAnchor="middle" fontSize={fs} fontWeight={700} fill="#3f6fd1" className="kid-text">
+            {num(c)}
+          </text>
+        ))}
+        {visual.rows.map((r, i) => (
+          <text key={`r${i}`} x={label - 8} y={ys[i] + rh[i] / 2 + fs * 0.35} textAnchor="end" fontSize={fs} fontWeight={700} fill="#e0564a" className="kid-text">
+            {num(r)}
+          </text>
+        ))}
+        {visual.rows.map((_, i) =>
+          visual.cols.map((__, j) => {
+            const v = visual.cells[i]?.[j]
+            const ask = v === null
+            return (
+              <g key={`${i}-${j}`}>
+                <rect x={xs[j] + 1.5} y={ys[i] + 1.5} width={cw[j] - 3} height={rh[i] - 3} rx={6} fill={ask ? '#ffffff' : AREA_FILLS[i % AREA_FILLS.length]} stroke={INK} strokeWidth={2.5} strokeDasharray={ask ? '7 5' : undefined} />
+                {v !== undefined && (
+                  <text x={xs[j] + cw[j] / 2} y={ys[i] + rh[i] / 2 + fs * 0.35} textAnchor="middle" fontSize={ask ? fs * 1.25 : fs} fontWeight={700} fill={ask ? '#e0564a' : INK} className="kid-text">
+                    {ask ? '?' : num(v)}
+                  </text>
+                )}
+              </g>
+            )
+          }),
+        )}
+      </svg>
+      {visual.total !== undefined && (
+        <div className="kid-text font-bold text-xl mt-1 text-ink-900">
+          Total: {visual.total === null ? <span style={{ color: '#e0564a' }}>?</span> : num(visual.total)}
+        </div>
+      )}
+    </Surface>
+  )
+}
+
+/** Long division set up the way it is written: the divisor, then the dividend under the bar; `highlight` lights its first digits. */
+function LongDivisionVisual({ visual, size }: { visual: Extract<ProblemVisual, { kind: 'longDivision' }>; size: 'sm' | 'md' | 'lg' }) {
+  const digits = String(visual.dividend).split('')
+  const hl = visual.highlight ?? 0
+  const text = size === 'sm' ? 'text-3xl' : 'text-4xl'
+  return (
+    <Surface className="inline-flex !px-6 !py-4">
+      <div className={`kid-text font-bold ${text} text-ink-900 flex items-end tabular-nums`} aria-label={`${visual.dividend} divided by ${visual.divisor}`}>
+        <span className="pr-1.5 pb-0.5">{visual.divisor}</span>
+        <span className="border-l-[3px] border-t-[3px] border-line rounded-tl-lg pl-2 pr-1 pt-1 flex">
+          {digits.map((d, i) => (
+            <span key={i} className={i < hl ? 'rounded-md px-0.5 bg-quest-300' : 'px-0.5'}>
+              {d}
+            </span>
+          ))}
+        </span>
+      </div>
     </Surface>
   )
 }

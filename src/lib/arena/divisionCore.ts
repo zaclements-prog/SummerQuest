@@ -325,3 +325,106 @@ export function isBossFact(round: Pick<DivRound, 'dividend' | 'quotient'>, tierD
  * vanishingly rare.
  */
 export const BOSS_REDRAWS = 40
+
+// ── 5th grade: two-digit divisors (a stage's `divisorDigits: 2`) ─────────────
+//
+// Grade 5's Division Dunes plays the same arena with two-digit crystals
+// (5.NBT.6): a golem chalked 225 needs the 25-crystal to shatter into 9 camels.
+// Everything above stays exactly as it was for grades 2–4: `arenaRules(1, …)`
+// hands back the functions and numbers the arena always used, and only
+// `arenaRules(2, …)` reaches the code below.
+
+/** Two-digit-divisor facts, bounded like the others: the pen shows the quotient (≤ 9), the chalk three digits. */
+export const TWO_DIGIT_ARENA = { divisorMin: 11, divisorMax: 25, quotientMin: 2, quotientMax: 9 } as const
+/** Warm-up facts: the friendly corner (÷11–15, quotients 2–5). */
+export const TWO_DIGIT_WARM = { divisorMin: 11, divisorMax: 15, quotientMin: 2, quotientMax: 5 } as const
+/** Two-digit golems take longer to think about: they march at this share of the usual speed. */
+export const TWO_DIGIT_SPEED = 0.75
+
+/**
+ * Pedestal crystals for a two-digit divisor (always two-digit numbers): the
+ * one-off slips first (24 or 26 for 25), then a true two-digit factor whose
+ * split the herd can still show (15 splits 225 into 15 camels: too many!),
+ * then the tens slip (35), then two off. Shuffled.
+ */
+export function makeTwoDigitPedestals(dividend: number, divisor: number, count = 3): number[] {
+  const n = Math.max(2, Math.min(6, Math.floor(count)))
+  const want: number[] = [divisor]
+  const ok = (d: number) => d >= 10 && d <= 99 && !want.includes(d)
+  const push = (d: number) => {
+    if (want.length < n && ok(d)) want.push(d)
+  }
+  push(divisor + 1)
+  push(divisor - 1)
+  for (let f = 10; f <= 99 && want.length < Math.min(n, 4); f++) if (dividend % f === 0 && dividend / f <= MAX_HERD && dividend / f >= 2) push(f)
+  for (const d of [divisor + 10, divisor - 10, divisor + 2, divisor - 2, divisor + 3, divisor + 11]) push(d)
+  for (let d = 11; want.length < n && d <= 99; d++) push(d)
+  return shuffle(want)
+}
+
+/** The two-digit giant: ten golems' worth (2,250 ÷ 10 = 225), then the fact itself (225 ÷ 25 = 9). */
+export function twoDigitBossChain(round: DivRound): BossChain {
+  const giant = round.dividend * 10
+  return {
+    giant,
+    steps: [
+      { dividend: giant, divisor: 10, quotient: round.dividend },
+      { dividend: round.dividend, divisor: round.divisor, quotient: round.quotient, factId: round.factId },
+    ],
+  }
+}
+
+/** A two-digit fact big enough for the giant: a herd of at least five camels at the end. */
+export function isTwoDigitBossFact(round: Pick<DivRound, 'dividend' | 'quotient'>): boolean {
+  return round.quotient >= 5
+}
+
+/** The two-digit run: the usual warm-ups → faster → giant, every golem a little slower. */
+export function twoDigitPlan(rounds: number): RoundPlan[] {
+  return arenaPlan(rounds).map((p) => ({ ...p, speed: +(p.speed * TWO_DIGIT_SPEED).toFixed(3) }))
+}
+
+/**
+ * Everything the arena's flow asks of its facts, per divisor size: where the
+ * golems' facts come from, the crystals, the giant, the run's speeds, and the
+ * coach skill the facts are filed under (left alone for grades 2–4).
+ */
+export interface ArenaRules {
+  facts: { divisorMin: number; divisorMax: number; quotientMin: number; quotientMax: number }
+  warm: { divisorMin: number; divisorMax: number; quotientMin: number; quotientMax: number }
+  plan: (rounds: number) => RoundPlan[]
+  pedestals: (dividend: number, divisor: number, count?: number) => number[]
+  bossChain: (round: DivRound) => BossChain
+  isBossFact: (round: Pick<DivRound, 'dividend' | 'quotient'>) => boolean
+  crackedSpeed: number
+  /** The coach skill of the giant's first crack. */
+  crackSkill: { id: string; label: string }
+  /** Files every golem's fact under this skill (grade 5); unset keeps the provider's own. */
+  skill?: { id: string; label: string }
+}
+
+export function arenaRules(divisorDigits: 1 | 2, tierDivMax: number): ArenaRules {
+  if (divisorDigits === 2) {
+    return {
+      facts: { ...TWO_DIGIT_ARENA },
+      warm: { ...TWO_DIGIT_WARM },
+      plan: twoDigitPlan,
+      pedestals: makeTwoDigitPedestals,
+      bossChain: twoDigitBossChain,
+      isBossFact: isTwoDigitBossFact,
+      crackedSpeed: +(BOSS_CRACKED_SPEED * TWO_DIGIT_SPEED).toFixed(3),
+      crackSkill: { id: 'g5-div-2digit', label: 'dividing by two-digit numbers' },
+      skill: { id: 'g5-div-2digit', label: 'dividing by two-digit numbers' },
+    }
+  }
+  return {
+    facts: arenaFactConfig(tierDivMax),
+    warm: warmFactConfig(tierDivMax),
+    plan: arenaPlan,
+    pedestals: makePedestalOptions,
+    bossChain: (round) => bossChain(round, bossKMax(tierDivMax)),
+    isBossFact: (round) => isBossFact(round, tierDivMax),
+    crackedSpeed: BOSS_CRACKED_SPEED,
+    crackSkill: { id: 'div-basic', label: 'basic division facts' },
+  }
+}

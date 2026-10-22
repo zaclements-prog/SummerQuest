@@ -51,6 +51,10 @@ import { makeG1ShapesProvider, type G1ShapesConfig } from './g1Shapes'
 import { makeG1MeasureProvider, type G1MeasureConfig } from './g1Measure'
 import { makeG1GraphsProvider, type G1GraphsConfig } from './g1Graphs'
 import { makeG1ScienceProvider, type G1ScienceConfig } from './g1Science'
+// 5th grade (phase 3): Multiplication Mesa, Division Dunes, Word Problem Woods
+import { makeG5MultProvider, type G5MultConfig } from './g5Mult'
+import { makeG5DivProvider, type G5DivConfig } from './g5Div'
+import { makeG5ExprProvider, type G5ExprConfig } from './g5Expr'
 
 export type ProviderConfig =
   | { kind: 'multiplication'; factorMin: number; factorMax: number }
@@ -117,6 +121,13 @@ export type ProviderConfig =
   | ({ kind: 'g1Graphs' } & G1GraphsConfig)
   /** Sky Summit: light and sound, the day and night sky, animal families. */
   | ({ kind: 'g1Science' } & G1ScienceConfig)
+  // ── 5th grade (phase 3): Multiplication Mesa, Division Dunes, Word Problem Woods ──
+  /** Multiplication Mesa (5th grade): area models, the standard algorithm, powers of 10 and exponents. */
+  | ({ kind: 'g5Mult' } & G5MultConfig)
+  /** Division Dunes (5th grade): long division to 4-digit by 2-digit, two-digit divisors, remainders in stories. */
+  | ({ kind: 'g5Div' } & G5DivConfig)
+  /** Word Problem Woods (5th grade): writing and working out expressions, two-rule patterns, multi-step stories. */
+  | ({ kind: 'g5Expr' } & G5ExprConfig)
 
 export function createProvider(config: ProviderConfig): ProblemProvider {
   switch (config.kind) {
@@ -199,5 +210,12 @@ export function createProvider(config: ProviderConfig): ProblemProvider {
       return makeG1GraphsProvider(config)
     case 'g1Science':
       return makeG1ScienceProvider(config)
+    // 5th grade (phase 3): Multiplication Mesa, Division Dunes, Word Problem Woods
+    case 'g5Mult':
+      return makeG5MultProvider(config)
+    case 'g5Div':
+      return makeG5DivProvider(config)
+    case 'g5Expr':
+      return makeG5ExprProvider(config)
   }
 }

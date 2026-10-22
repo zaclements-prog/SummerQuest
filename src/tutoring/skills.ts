@@ -131,6 +131,17 @@ export const SKILLS: Record<string, SkillMeta> = {
   'g1-science-light-sound': { label: 'light, shadows and sound', zoneId: 'science-summit', lessonId: 'g1Science', practiceStageId: 'g1-science-1' },
   'g1-science-sky':         { label: 'the sun, the moon and the stars', zoneId: 'science-summit', lessonId: 'g1Science', practiceStageId: 'g1-science-2' },
   'g1-science-families':    { label: 'animal parents and babies', zoneId: 'science-summit', lessonId: 'g1Science', practiceStageId: 'g1-science-3' },
+  // ── 5th grade (phase 3): Multiplication Mesa (g5Multiplication), Division Dunes (g5Division), Word Problem Woods (g5Expressions) ──
+  'g5-mult-area':      { label: 'area models and partial products', zoneId: 'multiplication-mesa', lessonId: 'g5Multiplication', practiceStageId: 'g5-mult-1' },
+  'g5-mult-algorithm': { label: 'multi-digit multiplication', zoneId: 'multiplication-mesa', lessonId: 'g5Multiplication', practiceStageId: 'g5-mult-2' },
+  'g5-mult-powers':    { label: 'powers of 10 and exponents', zoneId: 'multiplication-mesa', lessonId: 'g5Multiplication', practiceStageId: 'g5-mult-2' },
+  'g5-div-long':       { label: 'long division', zoneId: 'division-dunes', lessonId: 'g5Division', practiceStageId: 'g5-div-1' },
+  'g5-div-2digit':     { label: 'dividing by two-digit numbers', zoneId: 'division-dunes', lessonId: 'g5Division', practiceStageId: 'g5-div-arena' },
+  'g5-div-remainders': { label: 'what to do with a remainder', zoneId: 'division-dunes', lessonId: 'g5Division', practiceStageId: 'g5-div-2' },
+  'g5-expr-write':     { label: 'writing and reading expressions', zoneId: 'word-problem-woods', lessonId: 'g5Expressions', practiceStageId: 'g5-woods-1' },
+  'g5-expr-order':     { label: 'order of operations', zoneId: 'word-problem-woods', lessonId: 'g5Expressions', practiceStageId: 'g5-woods-2' },
+  'g5-expr-patterns':  { label: 'patterns with two rules', zoneId: 'word-problem-woods', lessonId: 'g5Expressions', practiceStageId: 'g5-woods-1' },
+  'g5-wp-multistep':   { label: 'multi-step word problems', zoneId: 'word-problem-woods', lessonId: 'g5Expressions', practiceStageId: 'g5-woods-3' },
 }
 
 export interface Skill { id: string; label: string }
