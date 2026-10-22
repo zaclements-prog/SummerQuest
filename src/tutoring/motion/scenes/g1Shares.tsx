@@ -69,6 +69,8 @@ function Slice({ poly, colored, glow }: { poly: Point[]; colored: boolean; glow:
         {glow > 0 && <path d={polyPath(poly)} fill={M.gold} opacity={0.55 * glow} />}
       </g>
       <path d={polyPath(poly)} fill="none" stroke={M.ink} strokeWidth={2.6} strokeLinejoin="round" />
+      {/* the share being talked about: a gold edge (gold on cheese alone would hardly show) */}
+      {glow > 0 && <path d={polyPath(poly)} fill="none" stroke="#ffb703" strokeWidth={3.2} strokeLinejoin="round" opacity={glow} />}
     </g>
   )
 }

@@ -251,7 +251,8 @@ function TensQuiz({ problem, spec, phase, active, onAttempt, registerHelp }: Lis
     }
     case 'shows':
       return sideBySide(
-        panel(<div className="absolute inset-[8%] grid place-items-center"><BigNumeral n={spec.n} /></div>),
+        // (upright, the numeral needs less room than the block cards under it)
+        panel(<div className="absolute inset-[8%] grid place-items-center"><BigNumeral n={spec.n} /></div>, 'h-[min(28vh,18rem)] landscape:h-full landscape:max-h-[34rem] min-h-32'),
         cardEls('flex-1 max-w-64 roomy:max-w-72'),
         'landscape:grid-cols-[minmax(0,0.6fr)_minmax(0,1.7fr)]',
       )

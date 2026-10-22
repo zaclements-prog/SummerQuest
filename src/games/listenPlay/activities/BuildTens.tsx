@@ -182,7 +182,8 @@ function BuildTens({ problem, spec, phase, active, misses, onAttempt, registerHe
       </div>
 
       {/* the mat: tens on the left, ones on the right */}
-      <div data-guide={TENS_MAT} className="tq-mat relative flex-1 min-h-0 min-w-0 bg-paper border-[3px] border-line rounded-[2rem] shadow-card overflow-hidden">
+      {/* (upright, the mat keeps its own shape instead of stretching tall) */}
+      <div data-guide={TENS_MAT} className="tq-mat relative min-h-0 min-w-0 portrait:w-full portrait:aspect-[340/190] portrait:max-h-full portrait:self-center landscape:flex-1 bg-paper border-[3px] border-line rounded-[2rem] shadow-card overflow-hidden">
         <Mat blocks={blocks} marks={m} snapped={snapped} onRod={can ? takeRod : undefined} onCube={can ? takeCube : undefined} />
       </div>
 
