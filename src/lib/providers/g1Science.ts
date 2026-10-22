@@ -44,6 +44,7 @@ export type G1ScienceKind =
   | 'seeSky'
   | 'whenSee'
   | 'sunMove'
+  | 'skyNext'
   | 'season'
   | 'baby'
   | 'helps'
@@ -82,6 +83,9 @@ export const MATERIAL_ASK = { seeThrough: 'glass', someLight: 'waxPaper', blocks
 export const SKY = { sun: '☀️', moon: '🌙', stars: '⭐' } as const
 export const G1_SUN_PLACES = ['sunRise', 'sunHigh', 'sunSet'] as const
 export type SunPlace = (typeof G1_SUN_PLACES)[number]
+/** The day's pattern, and what comes after each part of it (night comes round to morning again). */
+export const G1_SKY_NEXT = { sunRise: 'sunHigh', sunHigh: 'sunSet', sunSet: 'nightSky', nightSky: 'sunRise' } as const
+export type SkyTime = keyof typeof G1_SKY_NEXT
 
 // ── animal families ──────────────────────────────────────────────────────────
 
@@ -131,14 +135,14 @@ const PRAISE: Record<G1ScienceMode, VoiceRef[]> = {
 
 const MODE_KINDS: Record<G1ScienceMode, G1ScienceKind[]> = {
   lightSound: ['dark', 'sound', 'stopSound', 'shadow', 'material'],
-  sky: ['dayNight', 'seeSky', 'whenSee', 'sunMove', 'season'],
+  sky: ['dayNight', 'seeSky', 'whenSee', 'sunMove', 'skyNext', 'season'],
   families: ['baby', 'helps', 'parts'],
 }
 
 /** The stage's first questions, easiest first (then any of its kinds). */
 const RAMP: Record<G1ScienceMode, G1ScienceKind[]> = {
   lightSound: ['dark', 'sound', 'stopSound', 'shadow', 'material', 'material'],
-  sky: ['dayNight', 'seeSky', 'whenSee', 'sunMove', 'sunMove', 'season'],
+  sky: ['dayNight', 'seeSky', 'whenSee', 'sunMove', 'skyNext', 'season'],
   families: ['baby', 'baby', 'helps', 'parts', 'helps', 'parts'],
 }
 
@@ -157,6 +161,7 @@ export function makeG1ScienceProvider(cfg: G1ScienceConfig): Omit<ProblemProvide
   const shadowThings = makeDeck(G1_SHADOW_THINGS)
   const materialAsks = makeDeck(Object.keys(MATERIAL_ASK) as (keyof typeof MATERIAL_ASK)[])
   const sunAsks = makeDeck(G1_SUN_PLACES)
+  const skyNow = makeDeck(Object.keys(G1_SKY_NEXT) as SkyTime[])
   const babies = makeDeck(G1_BABIES)
   const helpAsks = makeDeck(Object.keys(G1_HELPS) as (keyof typeof G1_HELPS)[])
   const parts = makeDeck(Object.keys(G1_PARTS) as BodyPart[])
@@ -255,6 +260,15 @@ export function makeG1ScienceProvider(cfg: G1ScienceConfig): Omit<ProblemProvide
     return { ...base('sunMove', 2), ...c, speech: line(want), cues: [{ target: 'cards', cue: 'Tap' }], walkthrough: 'none' }
   }
 
+  function skyNext(): Q {
+    const now = skyNow.next()
+    const right = G1_SKY_NEXT[now]
+    const wrong = (Object.keys(G1_SKY_NEXT) as SkyTime[]).filter((v) => v !== now && v !== right)
+    const say = (v: SkyTime) => line(v === 'nightSky' ? 'night' : `say-${v}`)
+    const c = cards<SkyTime>(right, wrong, (v) => ({ value: v, picture: art(v), speech: say(v) }), () => line('dayPattern'))
+    return { ...base('skyNext', 3), ...c, speech: line(`next-${now}`), picture: art(now), cues: [{ target: 'picture' }, { target: 'cards', cue: 'What' }], walkthrough: 'none' }
+  }
+
   function season(): Q {
     const ask = turn('season', 'moreLight', 'darkEarly')
     const right = ask === 'moreLight' ? 'summer' : 'winter'
@@ -307,6 +321,8 @@ export function makeG1ScienceProvider(cfg: G1ScienceConfig): Omit<ProblemProvide
         return whenSee()
       case 'sunMove':
         return sunMove()
+      case 'skyNext':
+        return skyNext()
       case 'season':
         return season()
       case 'baby':
@@ -327,7 +343,7 @@ export function makeG1ScienceProvider(cfg: G1ScienceConfig): Omit<ProblemProvide
       for (const k of Object.keys(flip) as (keyof typeof flip)[]) flip[k] = ''
       picker.reset()
       places.reset()
-      for (const d of [instruments, lights, shadowThings, materialAsks, sunAsks, babies, helpAsks, parts]) d.reset()
+      for (const d of [instruments, lights, shadowThings, materialAsks, sunAsks, skyNow, babies, helpAsks, parts]) d.reset()
     },
     next(): ListenProblem {
       const ramp = RAMP[mode]

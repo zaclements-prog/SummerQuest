@@ -153,7 +153,7 @@ function UnitsActivity({ problem, spec, phase, active, onAttempt, registerHelp }
 
   const w = size.w || 640
   const h = size.h || 420
-  const L = layout(w, h)
+  const L = layout(w, h, spec.n)
   const won = phase === 'praise' || phase === 'done' || phase === 'loading'
   const color = paletteColor(spec.color)
   const unitXs = Array.from({ length: p.laid }, (_, k) => L.x0 + k * L.u)
@@ -246,15 +246,19 @@ function UnitsActivity({ problem, spec, phase, active, onAttempt, registerHelp }
 }
 
 /** The measuring on top (the thing, the clips under it), the box or the cards under it. */
-function layout(w: number, h: number) {
+function layout(w: number, h: number, n: number) {
   const gap = clamp(Math.min(w, h) * 0.03, 8, 18)
   const cardS = Math.floor(clamp(Math.min(h * 0.36, (w - 4 * gap) / 3.4), 72, 170))
   const panel: Rect = { x: 0, y: 0, w, h: h - cardS - gap * 2 }
   const pad = clamp(Math.min(w, panel.h) * 0.06, 12, 34)
   const x0 = pad + 18
-  const u = Math.min((w - x0 - pad - 10) / 10, (panel.h - 2 * pad) / 3.2)
+  // the clips as big as this thing's length lets them be (a short thing gets big clips on a narrow screen)
+  const u = Math.min((w - x0 - pad - 10) / Math.max(n + 1.5, 5), (panel.h - 2 * pad) / 3.2)
   const thick = clamp(u * 0.8, 20, 64)
-  const thingY = pad + panel.h * 0.12 + thick * 0.6
+  // the flag's top to the counting badges, in the middle of the panel (on a tall screen too)
+  const above = thick * 0.9 + 14
+  const below = thick / 2 + u * 0.95 + Math.max(u * 0.75, u * 0.62 + 25)
+  const thingY = Math.max(pad + panel.h * 0.12 + thick * 0.6, (panel.h - above - below) / 2 + above)
   const rowY = thingY + thick / 2 + u * 0.95
   const cy = h - cardS / 2 - gap
   const cards: Rect[] = [0, 1, 2].map((j) => ({ x: w / 2 + (j - 1) * (cardS + gap * 2) - cardS / 2, y: cy - cardS / 2, w: cardS, h: cardS }))

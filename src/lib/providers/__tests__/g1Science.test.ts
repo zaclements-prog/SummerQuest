@@ -86,6 +86,11 @@ function rightCards(q: ListenProblem): string[] {
       return vals.filter((v) => (said.includes('stars') ? v === 'night' : v === 'day'))
     case 'sunMove':
       return vals.filter((v) => (said.includes('comes up') ? v === 'sunRise' : said.includes('high') ? v === 'sunHigh' : v === 'sunSet'))
+    case 'skyNext':
+      // morning, then high at lunch time, then going down, then night, then morning again
+      return vals.filter((v) =>
+        said.includes('coming up') ? v === 'sunHigh' : said.includes('high') ? v === 'sunSet' : said.includes('going down') ? v === 'nightSky' : said.startsWith('It is night') && v === 'sunRise',
+      )
     case 'season':
       return vals.filter((v) => (said.includes('more daylight') ? v === 'summer' : v === 'winter'))
     case 'baby': {
@@ -118,7 +123,7 @@ describe('Sky Summit: the stages', () => {
   it('each stage starts easy and covers its kinds in its first round', () => {
     const first = (mode: G1ScienceMode) => round(mode, `ramp-${mode}`, 6).map((q) => q.subtopic)
     expect(first('lightSound')).toEqual(['dark', 'sound', 'stopSound', 'shadow', 'material', 'material'])
-    expect(first('sky')).toEqual(['dayNight', 'seeSky', 'whenSee', 'sunMove', 'sunMove', 'season'])
+    expect(first('sky')).toEqual(['dayNight', 'seeSky', 'whenSee', 'sunMove', 'skyNext', 'season'])
     expect(first('families')).toEqual(['baby', 'baby', 'helps', 'parts', 'helps', 'parts'])
   })
 })

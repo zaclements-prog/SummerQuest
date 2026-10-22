@@ -2227,6 +2227,36 @@
       "kind": "line",
       "file": "voice/g1-science/say-sunSet.mp3"
     },
+    "g1-science/next-sunRise": {
+      "text": "The sun is coming up. What comes next?",
+      "hash": "af33ffa0ef",
+      "kind": "line",
+      "file": "voice/g1-science/next-sunRise.mp3"
+    },
+    "g1-science/next-sunHigh": {
+      "text": "The sun is high in the sky. What comes next?",
+      "hash": "44a0e27b94",
+      "kind": "line",
+      "file": "voice/g1-science/next-sunHigh.mp3"
+    },
+    "g1-science/next-sunSet": {
+      "text": "The sun is going down. What comes next?",
+      "hash": "ee6c09b47d",
+      "kind": "line",
+      "file": "voice/g1-science/next-sunSet.mp3"
+    },
+    "g1-science/next-nightSky": {
+      "text": "It is night. What comes next?",
+      "hash": "4957ab409c",
+      "kind": "line",
+      "file": "voice/g1-science/next-nightSky.mp3"
+    },
+    "g1-science/dayPattern": {
+      "text": "Every day, the sun comes up, goes high, then goes down. Then it is night!",
+      "hash": "7d7b66095e",
+      "kind": "line",
+      "file": "voice/g1-science/dayPattern.mp3"
+    },
     "g1-science/moreLight": {
       "text": "Which one has more daylight, summer or winter?",
       "hash": "f99c13cacd",
