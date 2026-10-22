@@ -81,7 +81,7 @@ export function g5WritingFeedback(text: string, minWords: number, mode: G5Writin
     ),
   )
   const stars = starsForScore(score)
-  const celebrations = checks.filter((c) => c.met).map((c) => `✓ ${c.label}`)
+  const celebrations = checks.filter((c) => c.met).map((c) => c.label)
   const improvements = checks.filter((c) => !c.met).map((c) => c.label)
   if (words.length < minWords) improvements.unshift(`Aim for about ${minWords} words: add another detail or example.`)
   return {

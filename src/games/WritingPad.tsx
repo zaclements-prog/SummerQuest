@@ -293,20 +293,11 @@ function WritingPadView({
           </Card>
         </motion.div>
 
-        {/* 5th grade: the checklist for this kind of writing (grades 2–4 have none) */}
-        {isG5WritingProblem(problem) && !feedback && (
+        {/* 5th grade: the checklist for this kind of writing (grades 2–4 have none);
+            on a short screen it goes under the writing box, which comes first */}
+        {isG5WritingProblem(problem) && !feedback && !short && (
           <motion.div variants={item} className="w-full">
-            <Card className="px-4 py-3 short:py-2" data-testid="g5-checklist">
-              <div className="kid-text text-base text-ink-700 mb-1">✅ Checklist</div>
-              <ul className="grid gap-x-4 gap-y-0.5 sm:grid-cols-2 text-base short:text-sm text-ink-900 leading-snug">
-                {problem.g5Writing.checklist.map((c) => (
-                  <li key={c} className="flex gap-1.5">
-                    <span aria-hidden="true">☐</span>
-                    <span>{c}</span>
-                  </li>
-                ))}
-              </ul>
-            </Card>
+            <G5Checklist items={problem.g5Writing.checklist} />
           </motion.div>
         )}
 
@@ -354,6 +345,12 @@ function WritingPadView({
                 )}
               </Card>
             </motion.div>
+
+            {isG5WritingProblem(problem) && short && (
+              <motion.div variants={item} className="w-full">
+                <G5Checklist items={problem.g5Writing.checklist} />
+              </motion.div>
+            )}
 
             {/* (no AI notes at all in the store build: there is no AI to mention) */}
             {import.meta.env.VITE_STORE !== 'true' && !llmEnabled && (
@@ -451,6 +448,23 @@ function WritingPadView({
           writing box up above it (the page may be shorter than that). */}
       {docked && <div aria-hidden="true" className="shrink-0" style={{ height: keyboard + BAR_H }} />}
     </div>
+  )
+}
+
+/** The grade-5 checklist card (beside the prompt, or under the box on a short screen). */
+function G5Checklist({ items }: { items: string[] }) {
+  return (
+    <Card className="px-4 py-3 short:py-2" data-testid="g5-checklist">
+      <div className="kid-text text-base short:text-sm text-ink-700 mb-1">✅ Checklist</div>
+      <ul className="grid gap-x-4 gap-y-0.5 sm:grid-cols-2 text-base short:text-sm text-ink-900 leading-snug">
+        {items.map((c) => (
+          <li key={c} className="flex gap-1.5">
+            <span aria-hidden="true">☐</span>
+            <span>{c}</span>
+          </li>
+        ))}
+      </ul>
+    </Card>
   )
 }
 

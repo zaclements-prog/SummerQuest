@@ -1,4 +1,3 @@
- 
 import { ease, progress } from '../anim'
 import { Arrow, Burst, Chip, Glow, Paper, Pop, Title } from '../kit'
 import { M } from '../palette'
@@ -90,17 +89,17 @@ const paragraphs: Scene = ({ t, cue }: SceneProps) => {
   const group = cue('Group facts')
   const fresh = cue('new paragraph')
   const end = cue('conclusion')
-  const bar = (x: number, y: number, w: number, at: number, c: string) => {
+  const bar = (x: number, y: number, w: number, at: number, c: string, key?: number) => {
     const k = ease.outCubic(progress(t, at, 0.4))
-    return k > 0 ? <rect x={x} y={y} width={w * k} height={16} rx={8} fill={c} /> : null
+    return k > 0 ? <rect key={key} x={x} y={y} width={w * k} height={16} rx={8} fill={c} /> : null
   }
   return (
     <>
       <Paper />
       <Panel t={t} at={0.1} x={250} y={30} w={460} h={480} fill={M.white}>
         {bar(290, 70, 380, topic, M.coral)}
-        {[0, 1, 2].map((i) => bar(i === 0 ? 320 : 290, 130 + i * 30, i === 2 ? 240 : 360, group + i * 0.2, '#7cc4f2'))}
-        {[0, 1, 2].map((i) => bar(i === 0 ? 320 : 290, 250 + i * 30, i === 2 ? 200 : 360, fresh + i * 0.2, M.mint))}
+        {[0, 1, 2].map((i) => bar(i === 0 ? 320 : 290, 130 + i * 30, i === 2 ? 240 : 360, group + i * 0.2, '#7cc4f2', i))}
+        {[0, 1, 2].map((i) => bar(i === 0 ? 320 : 290, 250 + i * 30, i === 2 ? 200 : 360, fresh + i * 0.2, M.mint, i))}
         {bar(290, 400, 380, end, M.lilac)}
       </Panel>
       <Line t={t} at={topic} x={740} y={78} text="Topic sentence" size={26} color={M.coral} />

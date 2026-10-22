@@ -51,7 +51,7 @@ const particles: Scene = ({ t, cue }: SceneProps) => {
       })}
       <g>
         <rect x={jx - 80} y={jy - 60} width={160} height={180} rx={18} fill="#cfeaff" fillOpacity={0.8} stroke={M.ink} strokeWidth={4} />
-        <Title x={jx} y={jy + 140} size={22} color={M.inkSoft}>
+        <Title x={jx} y={jy - 82} size={22} color={M.inkSoft}>
           water 200 g
         </Title>
       </g>
@@ -202,9 +202,10 @@ const sky: Scene = ({ t, cue }: SceneProps) => {
       )}
       <rect x={poleX - 5} y={top} width={10} height={base - top} fill={M.wood} stroke={M.ink} strokeWidth={2} />
       <path d={`M ${poleX + 5} ${top} L ${poleX + 70} ${top + 22} L ${poleX + 5} ${top + 44} Z`} fill={M.coral} stroke={M.ink} strokeWidth={3} />
-      <Line t={t} at={cue('shadows point west') + 0.2} x={480} y={520} text="Morning: the shadow points west" size={24} anchor="middle" color={M.ink} />
-      <Line t={t} at={noon + 0.4} x={480} y={110} text="Noon: shortest shadow" size={26} anchor="middle" color="#2a9b75" />
-      <Line t={t} at={cue('Earth spins once')} x={40} y={100} text="Earth spins once a day" size={24} color={M.inkSoft} />
+      {t < noon && <Line t={t} at={cue('shadows point west') + 0.2} x={480} y={520} text="Morning: the shadow points west" size={24} anchor="middle" color={M.ink} />}
+      <Line t={t} at={cue('point east')} x={480} y={520} text="Evening: the shadow points east" size={24} anchor="middle" color={M.ink} />
+      <Line t={t} at={noon + 0.4} x={920} y={104} text="Noon: shortest shadow" size={24} anchor="end" color="#2a9b75" />
+      <Line t={t} at={cue('Earth spins once')} x={40} y={104} text="Earth spins once a day" size={22} color={M.inkSoft} />
       <Burst t={t} at={evening + 1.3} x={sx} y={sy} r={60} />
     </>
   )

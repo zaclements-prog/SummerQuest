@@ -1,4 +1,3 @@
- 
 import type { ReactNode } from 'react'
 import { ease, progress, spring } from '../anim'
 import { Title } from '../kit'

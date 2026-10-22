@@ -28,19 +28,19 @@ export const SPHERE_STATIONS: Record<Sphere, { x: number; z: number; r: number; 
   hydrosphere: { x: -3.4, z: 0.6, r: 1.8, tagY: 0.55 },
   atmosphere: { x: 0.1, z: -3.0, r: 1.35, tagY: 0.45 },
   geosphere: { x: 3.4, z: 0.6, r: 1.45, tagY: 0.4 },
-  biosphere: { x: 0.2, z: 3.1, r: 1.3, tagY: 0.4 },
+  biosphere: { x: -2.5, z: -2.55, r: 1.15, tagY: 0.4 },
 }
 export const SPHERE_LAKE = { x: -3.6, z: 0.4, r: 1.25 }
 export const SPHERE_PEAK = { x: 3.75, z: -0.6, r: 1.25, h: 2.7 }
 export const SPHERE_CLOUD_Y = 2.55
-export const SPHERE_SPAWN: [number, number] = [0.2, 0.3]
-export const SPHERE_PEBBLE: [number, number, number] = [-2.75, 0, -2.55]
+export const SPHERE_SPAWN: [number, number] = [0.2, 0.9]
+export const SPHERE_PEBBLE: [number, number, number] = [2.75, 0, -2.6]
 /** Where a traveler goes when it reaches a sphere (for the fly-to). */
 export const SPHERE_DROP: Record<Sphere, [number, number, number]> = {
   hydrosphere: [SPHERE_LAKE.x, 0.5, SPHERE_LAKE.z],
   atmosphere: [0.1, SPHERE_CLOUD_Y - 0.1, -3.0],
   geosphere: [SPHERE_PEAK.x - 0.3, 1.2, SPHERE_PEAK.z + 0.6],
-  biosphere: [0.35, 2.0, 3.0],
+  biosphere: [-2.35, 2.0, -2.65],
 }
 
 const TAG_LABEL: Record<Sphere, string> = { geosphere: 'Geosphere', hydrosphere: 'Hydrosphere', atmosphere: 'Atmosphere', biosphere: 'Biosphere' }
@@ -188,7 +188,6 @@ export function SpheresYard() {
       <FlowerPatch position={[-5.2, 0, -2.4]} seed={8} count={6} radius={0.6} />
       <FlowerPatch position={[5.8, 0, 2.4]} seed={9} count={6} radius={0.6} />
       <Rock position={[-5.8, 0, 2.2]} scale={1.1} seed={3} outline />
-      <Bush position={[-3.5, 0, -4.6]} scale={1.2} seed={4} />
       <Bush position={[4.6, 0, -3.9]} scale={1.0} seed={9} />
       <ScatterTrees trees={trees} />
     </group>
@@ -246,7 +245,6 @@ export function SphereTraveler({
     if (g.current) st.current.from.copy(g.current.position)
     st.current.t = 0
     // (the motion object is rebuilt each render; its key says when it changed)
-     
   }, [key])
   useEffect(() => {
     if (shake > 0) st.current.shakeT = 0
