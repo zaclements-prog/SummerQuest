@@ -5,6 +5,7 @@ import { useProgress, zoneStars } from '../store/progress'
 import { sfx } from '../lib/sound'
 import { computeBadges, type BadgeStatus } from '../lib/badges'
 import { todayStr } from '../lib/daily'
+import { findNextTarget } from '../lib/continueTarget'
 import DailyGoalCard from '../components/DailyGoalCard'
 import { Button, Celebration, Medallion, TONES, toneOf, type Tone } from '../components/ui'
 import IslandArt from '../components/map/IslandArt'
@@ -21,25 +22,6 @@ import { SleepingBadge } from '../components/listen/ListenSleeping'
 import '../components/listen/listen.css'
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
-
-/** Returns the next stage (of each zone's set for the grade) that hasn't been fully starred yet (the "continue" target). */
-function findNextTarget(
-  zonesProgress: ReturnType<typeof useProgress.getState>['zones'],
-  grade: GradeLevel | null | undefined,
-): { zoneId: string; stageId?: string } | null {
-  for (const zone of curriculum.zones) {
-    // (K–1: a sleeping place has nothing to play yet)
-    if (!zone.available || isZoneSleeping(zone, grade)) continue
-    const progress = zonesProgress[zone.id]
-    for (const stage of zoneStages(zone, grade)) {
-      const earned = progress?.stages[stage.id]?.stars ?? 0
-      if (earned < stage.starsToEarn) {
-        return { zoneId: zone.id, stageId: stage.id }
-      }
-    }
-  }
-  return null
-}
 
 const maxStarsOf = (zone: Zone, grade: GradeLevel | null | undefined) =>
   zoneStages(zone, grade).reduce((s, st) => s + st.starsToEarn, 0)
@@ -165,9 +147,14 @@ export default function WorldMap() {
                   listen ? (
                     <ListenZoneMarker key={zone.id} zone={zone} isNext={zone.id === nextTarget?.zoneId} crowded={openListenZones > LISTEN_ROOMY_MAX} />
                   ) : (
-                    <ZoneMarker key={zone.id} zone={zone} isNext={zone.id === nextTarget?.zoneId} />
+                    <ZoneMarker key={zone.id} zone={zone} isNext={zone.id === nextTarget?.zoneId} layer="medal" />
                   ),
                 )}
+                {/* every name on top of every medal and star count, so no neighbour's ★ chip hides a name */}
+                {!listen &&
+                  curriculum.zones.map((zone) => (
+                    <ZoneMarker key={`${zone.id}-label`} zone={zone} isNext={zone.id === nextTarget?.zoneId} layer="label" />
+                  ))}
               </div>
             </div>
 
@@ -182,7 +169,7 @@ export default function WorldMap() {
             </ul>
             )}
             {nextZone && (
-              <p className="sr-only">Next up: {nextZone.title}</p>
+              <p className="sr-only">Next up: {zoneTitle(nextZone, grade)}</p>
             )}
           </div>
         </section>
@@ -246,7 +233,13 @@ function NavTile({ to, icon, label, tone }: { to: string; icon: string; label: s
 
 // ── Map marker ────────────────────────────────────────────────────────────────
 
-function ZoneMarker({ zone, isNext }: { zone: Zone; isNext: boolean }) {
+/**
+ * A place on the map, drawn in two layers: `medal` (the medal, its ★ count and
+ * the "Next!" flag; the link a screen reader hears) and `label` (the name, at
+ * the same spot under an empty medal-sized gap). All names are drawn after all
+ * medals, so a neighbour's star chip never covers a name.
+ */
+function ZoneMarker({ zone, isNext, layer }: { zone: Zone; isNext: boolean; layer: 'medal' | 'label' }) {
   const grade = useProgress((s) => s.player?.grade)
   const spot = ZONE_SPOTS[zone.id]
   if (!spot) return null
@@ -254,6 +247,7 @@ function ZoneMarker({ zone, isNext }: { zone: Zone; isNext: boolean }) {
   const stars = zoneStars(zone.id, grade)
   const maxStars = maxStarsOf(zone, grade)
   const done = maxStars > 0 && stars >= maxStars
+  const title = zoneTitle(zone, grade)
 
   const medal = (
     <span className="relative block" style={{ width: MEDAL, height: MEDAL }}>
@@ -318,34 +312,50 @@ function ZoneMarker({ zone, isNext }: { zone: Zone; isNext: boolean }) {
       ].join(' ')}
       style={{ fontSize: 'clamp(11px, 1.75cqw, 16px)' }}
     >
-      {zone.title}
+      {title}
     </span>
   )
+
+  const at = { ...toPct(spot), marginTop: `calc(${MEDAL} / -2)` }
+  if (layer === 'label') {
+    // (the medal's link is what's announced; the name is a mouse/finger target only)
+    return (
+      <div className="absolute -translate-x-1/2 flex flex-col items-center pointer-events-none" style={at} aria-hidden="true" data-map-label={zone.id}>
+        <span className="block" style={{ width: MEDAL, height: MEDAL }} />
+        {zone.available ? (
+          <Link to={`/zone/${zone.id}`} onClick={() => sfx.enter()} tabIndex={-1} className="pointer-events-auto outline-none">
+            {label}
+          </Link>
+        ) : (
+          label
+        )}
+      </div>
+    )
+  }
 
   return (
     <div
       className="absolute -translate-x-1/2 flex flex-col items-center"
-      style={{ ...toPct(spot), marginTop: `calc(${MEDAL} / -2)` }}
+      style={at}
+      data-map-medal={zone.id}
     >
       {zone.available ? (
         <Link
           to={`/zone/${zone.id}`}
           onClick={() => sfx.enter()}
           className="group flex flex-col items-center outline-none"
-          aria-label={`${zone.title}: ${stars} of ${maxStars} stars`}
+          aria-label={`${title}: ${stars} of ${maxStars} stars`}
         >
           {medal}
-          {label}
         </Link>
       ) : (
         <div
           className="flex flex-col items-center cursor-not-allowed"
           aria-disabled="true"
-          aria-label={`${zone.title}: locked`}
+          aria-label={`${title}: locked`}
           role="img"
         >
           {medal}
-          {label}
         </div>
       )}
     </div>
