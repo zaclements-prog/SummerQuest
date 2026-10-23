@@ -269,7 +269,7 @@ export default function BossBattle({ provider, params, onComplete, meta }: GameP
             ) : (
               <>
                 {question}
-                <div className="mt-5 short:mt-3 w-full flex justify-center">{answers}</div>
+                <div className="mt-5 short:mt-3 w-full flex flex-col items-center">{answers}</div>
               </>
             )}
           </div>

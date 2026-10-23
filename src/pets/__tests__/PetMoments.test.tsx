@@ -146,6 +146,23 @@ describe('PetMoments', () => {
     expect(useProgress.getState().petsSeen.lion).toBeUndefined() // still waiting for the next screen
   })
 
+  it('closing another dialog first (a badge pop-up) still lets it show', () => {
+    hatchFour()
+    const other = document.createElement('div')
+    other.setAttribute('aria-modal', 'true')
+    const ok = document.createElement('button')
+    other.appendChild(ok)
+    document.body.appendChild(other)
+    render('/map')
+    tick(2000)
+    act(() => {
+      ok.dispatchEvent(new Event('pointerdown', { bubbles: true }))
+    })
+    other.remove()
+    tick(1000)
+    expect(dialog()).not.toBeNull()
+  })
+
   it('nothing waiting, nothing shown', () => {
     render('/world')
     tick(5000)

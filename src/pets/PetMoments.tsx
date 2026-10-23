@@ -67,7 +67,9 @@ export default function PetMoments() {
     touched.current = false
   }, [screen])
   useEffect(() => {
-    const onInput = () => {
+    const onInput = (e: Event) => {
+      // Closing another dialog (a badge or zone celebration) isn't using the screen.
+      if (e.target instanceof Element && e.target.closest('[aria-modal="true"]')) return
       touched.current = true
     }
     document.addEventListener('pointerdown', onInput, true)

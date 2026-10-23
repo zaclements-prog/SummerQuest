@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react'
+import { createContext, useContext, useEffect, useRef } from 'react'
 import type { ReactNode } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import type { ProblemAnswer } from '../../lib/problem'
@@ -241,8 +241,15 @@ export function MissNote({
   onGotIt?: () => void
 }) {
   const reduced = useReducedMotion()
+  // On a tall, narrow screen the note can land below the fold: bring it (and its button) into view.
+  const ref = useRef<HTMLDivElement>(null)
+  const canDismiss = !!onGotIt
+  useEffect(() => {
+    ref.current?.scrollIntoView?.({ block: 'nearest', behavior: reduced ? 'auto' : 'smooth' })
+  }, [canDismiss, reduced])
   return (
     <motion.div
+      ref={ref}
       initial={reduced ? { opacity: 0 } : { opacity: 0, y: 10 }}
       animate={reduced ? { opacity: 1 } : { opacity: 1, y: 0 }}
       role="status"
