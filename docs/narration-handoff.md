@@ -76,6 +76,24 @@ sounds): surface to the owner before the next phonics pass; if "keep", render
 those with a relaxed exact-word gate + owner ear-check; if "record", schedule
 a hand session for the onset forms only.
 
+**Content changes landing on master while this renders (2026-10-22).** A
+separate session is working through the product-review fixes (hints, results
+screens, spoken K/G1 reward moments, badge names, the grade-5 writing grader,
+and later quests and games), so lesson and voice text will change under this
+branch. Clips are keyed by a hash of voice id + text, so nothing rendered here
+is wasted:
+- before the final sweep, merge `origin/master` into `narration-k-g1-g5`, then
+  `npm run tts:dump && npm run voice:dump` to pick up new and edited text;
+- `npm run tts:prune && npm run voice:prune` drops clips whose text changed or
+  whose line is gone; a re-run of `bash campaign.sh` renders only the new and
+  edited lines (hash-skip keeps every unchanged clip);
+- new spoken lines belong in a voice pack (`src/voice/packs/*.ts`), never as
+  ad-hoc device speech, so they join the catalog and get rendered;
+- only one renderer process at a time, and stop the campaign before merging
+  (the renderer rewrites the whole manifest from its in-memory copy).
+Until a line is rendered the app reads it with device speech, so the other
+session never blocks on audio.
+
 **Resume order after the remaining packs:** verify (§5 as before):
 `tts:check` (expect 198/198), `voice:check --strict`, `VOICE_STRICT=1 npx
 vitest run src/voice`, `npx vitest run src/tutoring`, then commit
