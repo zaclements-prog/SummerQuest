@@ -33037,6 +33037,96 @@
       "kind": "line",
       "file": "voice/k-nav/petGrownUp.mp3"
     },
+    "k-nav/baby-lion": {
+      "text": "It's a baby lion!",
+      "hash": "b28398c6a4",
+      "kind": "line",
+      "file": "voice/k-nav/baby-lion.mp3"
+    },
+    "k-nav/baby-trex": {
+      "text": "It's a baby T-Rex!",
+      "hash": "4213e23c19",
+      "kind": "line",
+      "file": "voice/k-nav/baby-trex.mp3"
+    },
+    "k-nav/baby-frog": {
+      "text": "It's a baby frog!",
+      "hash": "12e1df70e4",
+      "kind": "line",
+      "file": "voice/k-nav/baby-frog.mp3"
+    },
+    "k-nav/baby-unicorn": {
+      "text": "It's a baby unicorn!",
+      "hash": "f2788f9419",
+      "kind": "line",
+      "file": "voice/k-nav/baby-unicorn.mp3"
+    },
+    "k-nav/baby-bear": {
+      "text": "It's a baby bear!",
+      "hash": "505761124c",
+      "kind": "line",
+      "file": "voice/k-nav/baby-bear.mp3"
+    },
+    "k-nav/baby-panda": {
+      "text": "It's a baby panda!",
+      "hash": "a59e95fa90",
+      "kind": "line",
+      "file": "voice/k-nav/baby-panda.mp3"
+    },
+    "k-nav/baby-fox": {
+      "text": "It's a baby fox!",
+      "hash": "19acc0c60e",
+      "kind": "line",
+      "file": "voice/k-nav/baby-fox.mp3"
+    },
+    "k-nav/baby-owl": {
+      "text": "It's a baby owl!",
+      "hash": "2371fd0bee",
+      "kind": "line",
+      "file": "voice/k-nav/baby-owl.mp3"
+    },
+    "k-nav/baby-octopus": {
+      "text": "It's a baby octopus!",
+      "hash": "41dc140bf9",
+      "kind": "line",
+      "file": "voice/k-nav/baby-octopus.mp3"
+    },
+    "k-nav/baby-dragonet": {
+      "text": "It's a baby dragonet!",
+      "hash": "c708d4b526",
+      "kind": "line",
+      "file": "voice/k-nav/baby-dragonet.mp3"
+    },
+    "k-nav/baby-tiger": {
+      "text": "It's a baby tiger!",
+      "hash": "a87e8f2820",
+      "kind": "line",
+      "file": "voice/k-nav/baby-tiger.mp3"
+    },
+    "k-nav/baby-dragon": {
+      "text": "It's a baby dragon!",
+      "hash": "8bd9f657a8",
+      "kind": "line",
+      "file": "voice/k-nav/baby-dragon.mp3"
+    },
+    "k-nav/petsGrewAll": {
+      "text": "Look! Your pets grew!",
+      "hash": "f2809e2f02",
+      "kind": "line",
+      "file": "voice/k-nav/petsGrewAll.mp3"
+    },
+    "k-nav/newBadge": {
+      "text": "You got a new badge!",
+      "hash": "2f973f46dd",
+      "kind": "line",
+      "file": "voice/k-nav/newBadge.mp3"
+    },
+    "k-nav/letsGo": {
+      "text": "Let's go!",
+      "hash": "eb2ae82dcf",
+      "kind": "line",
+      "file": "voice/k-nav/letsGo.mp3"
+    },
     "k-nav/quitAsk": {
       "text": "Do you want to stop playing?",
       "hash": "3167235bf1",

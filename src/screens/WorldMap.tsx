@@ -19,6 +19,7 @@ import { SayAgainButton } from '../guide/SayAgainButton'
 import { ListenIconButton } from '../components/listen/ListenIconButton'
 import { SleepingBadge } from '../components/listen/ListenSleeping'
 import '../components/listen/listen.css'
+import { useListenSay } from '../components/listen/useListenSay'
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -86,6 +87,8 @@ export default function WorldMap() {
 
   // K–1 (voice-first): the open places stand out, sleeping ones doze; a tap says the name.
   const listen = listenGrade(grade)
+  // K–1: the badge card is said out loud
+  useListenSay(celebrating.length > 0, { line: 'k-nav/newBadge' })
   // (K–1: how many places are open decides how big their markers can be)
   const openListenZones = listen ? curriculum.zones.filter((z) => z.available && !isZoneSleeping(z, grade)).length : 0
   const nextZoneId = nextTarget?.zoneId ?? null

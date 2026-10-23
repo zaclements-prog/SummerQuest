@@ -11,6 +11,7 @@ import { stageLabel } from '../lib/pets/copy'
 import { lazyWithRetry } from '../lib/lazyWithRetry'
 import { Button, Modal } from '../components/ui'
 import { sfx } from '../lib/sound'
+import { useListenSay } from '../components/listen/useListenSay'
 
 // The 3D card (three.js and the creature models) loads only when a pet has something to celebrate.
 const PetMomentCard = lazyWithRetry(() => import('./PetMomentCard'))
@@ -119,6 +120,8 @@ function SummaryCard({ moments, onPets, onDone }: { moments: PetMoment[]; onPets
   useEffect(() => {
     sfx.fanfare()
   }, [])
+  // K–1: said out loud
+  useListenSay(true, { line: 'k-nav/petsGrewAll' })
   return (
     <Modal open onClose={onDone} label="Your pets grew!" size="md">
       <div className="relative overflow-hidden rounded-toon px-5 pt-5 pb-5 short:pt-4 short:pb-4 text-center">

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { useProgress } from '../store/progress'
 import { computeBadges, type BadgeStatus } from '../lib/badges'
 import { sfx } from '../lib/sound'
+import { useListenSay } from '../components/listen/useListenSay'
 import {
   Card,
   Button,
@@ -42,6 +43,9 @@ export default function BadgesScreen() {
   const [celebrating, setCelebrating] = useState<BadgeStatus[]>(() =>
     earned.filter((b) => newIds.has(b.id)),
   )
+
+  // K–1: the badge card is said out loud
+  useListenSay(celebrating.length > 0, { line: 'k-nav/newBadge' })
 
   // Opening the trophy case counts as "seeing" everything earned so far.
   useEffect(() => {

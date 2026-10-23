@@ -58,6 +58,25 @@ export default defineVoicePack({
     petHatched: 'Your egg hatched!',
     petGrew: 'Your pet grew bigger!',
     petGrownUp: 'Your pet is all grown up!',
+    // after "Your egg hatched!": what came out (the name is only printed)
+    'baby-lion': "It's a baby lion!",
+    'baby-trex': "It's a baby T-Rex!",
+    'baby-frog': "It's a baby frog!",
+    'baby-unicorn': "It's a baby unicorn!",
+    'baby-bear': "It's a baby bear!",
+    'baby-panda': "It's a baby panda!",
+    'baby-fox': "It's a baby fox!",
+    'baby-owl': "It's a baby owl!",
+    'baby-octopus': "It's a baby octopus!",
+    'baby-dragonet': "It's a baby dragonet!",
+    'baby-tiger': "It's a baby tiger!",
+    'baby-dragon': "It's a baby dragon!",
+    // several pets at once (the launch summary)
+    petsGrewAll: 'Look! Your pets grew!',
+    // a badge earned (the badge card)
+    newBadge: 'You got a new badge!',
+    // the pet card's place button, before the place's name ("Let's go! Counting Mesa!")
+    letsGo: "Let's go!",
 
     // ── "Quit?" in a game ──
     quitAsk: 'Do you want to stop playing?',
