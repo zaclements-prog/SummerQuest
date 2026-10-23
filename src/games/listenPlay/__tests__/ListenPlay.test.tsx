@@ -2,8 +2,10 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { act } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import GuideLayer from '../../../guide/GuideLayer'
-import { getGuideSnapshot, resetGuideForTests } from '../../../guide/store'
+import { getGuideSnapshot, resetGuideForTests, subscribeGuide } from '../../../guide/store'
 import { makeKCountingProvider } from '../../../lib/providers/kCounting'
+import { makeKLettersProvider } from '../../../lib/providers/kLetters'
+import { makeKShapesProvider } from '../../../lib/providers/kShapes'
 import { seededRng } from '../../../lib/random'
 import { useProgress } from '../../../store/progress'
 import { expectTextBudget, visibleWords } from '../../../test/textBudget'
@@ -119,6 +121,59 @@ describe('Listen & Play', () => {
     expect(result).toEqual({ stars: 2, score: 20, correct: 2, total: 3 })
     // one answer recorded per question (the first pick), not per try
     expect(useProgress.getState().stats.problemsAnswered).toBe(3)
+  })
+
+  /** Every line the narrator starts from now on, with what it lights up. */
+  function recordLines() {
+    const said: { text: string; targets: unknown[] }[] = []
+    let serial = -1
+    const unsub = subscribeGuide(() => {
+      const g = getGuideSnapshot()
+      if (!g.run || g.lineSerial === serial) return
+      serial = g.lineSerial
+      const line = g.run.lines[g.line]
+      said.push({ text: line.text, targets: line.marks.map((m) => m.target) })
+    })
+    return { said, unsub }
+  }
+
+  it('letters: a miss lights up the letter asked for and names it, then another try', async () => {
+    mount(makeKLettersProvider({ mode: 'findUpper' }), () => {})
+    await advance(100)
+    const letter = rightCard().getAttribute('aria-label')!
+    const at = cards().indexOf(rightCard())
+    const { said, unsub } = recordLines()
+    act(() => wrongCards()[0].click())
+    await advance(9000)
+    unsub()
+    const texts = said.map((l) => l.text)
+    const i = texts.indexOf(`This is the letter ${letter}.`)
+    expect(i, texts.join(' | ')).toBeGreaterThan(texts.indexOf("Hmm, let's look again."))
+    expect(said[i].targets).toEqual([`lp-card-${at}`])
+    expect(texts[i + 1]).toBe('Now you try!')
+    expect(texts[i + 2]).toBe(`Tap the letter ${letter}.`)
+  })
+
+  it('shapes: a miss names the shape asked for and counts its sides on its card', async () => {
+    vi.spyOn(Math, 'random').mockImplementation(seededRng('shape-reteach-2'))
+    const provider = makeKShapesProvider({ mode: 'name2d' })
+    mount(provider, () => {})
+    await advance(100)
+    const shape = rightCard().getAttribute('aria-label')!
+    const at = cards().indexOf(rightCard())
+    const { said, unsub } = recordLines()
+    act(() => wrongCards()[0].click())
+    await advance(16000)
+    unsub()
+    const texts = said.map((l) => l.text)
+    const i = texts.findIndex((t) => t.startsWith(`This is a ${shape}.`))
+    expect(i, texts.join(' | ')).toBeGreaterThan(0)
+    expect(said[i].targets).toEqual([`lp-card-${at}`])
+    expect(texts).not.toContain("Let's count the sides.")
+    expect(shape).not.toBe('circle') // (this seed asks for a shape with sides)
+    expect(texts[i + 1]).toMatch(/^One, two, three/)
+    expect(said[i + 1].targets).toEqual([`lp-card-${at}`])
+    expect(texts[i + 2]).toBe('Now you try!')
   })
 
   it('a wrong group is counted on its own card, then the question again', async () => {

@@ -213,3 +213,20 @@ describe('Sorting Delta questions (kSort)', () => {
     expect(spec(p.next()).items).toHaveLength(4)
   })
 })
+
+describe('a round says its sorting rule once', () => {
+  it('the first question says the rule; a later one with the same rule is brief (just the boxes named)', () => {
+    for (const mode of ['kind', 'colorSize', 'mix'] as KSortMode[]) {
+      vi.spyOn(Math, 'random').mockImplementation(seededRng(`ksort-brief-${mode}`))
+      const p = makeKSortProvider({ mode })
+      p.reset?.()
+      const specs = Array.from({ length: 5 }, () => p.next().activity as SortSpec)
+      expect(specs[0].brief).toBeUndefined()
+      for (let i = 1; i < specs.length; i++) expect(specs[i].brief).toBe(specs[i].rule === specs[i - 1].rule ? true : undefined)
+      // a new round says it again
+      p.reset?.()
+      expect((p.next().activity as SortSpec).brief).toBeUndefined()
+      vi.restoreAllMocks()
+    }
+  })
+})

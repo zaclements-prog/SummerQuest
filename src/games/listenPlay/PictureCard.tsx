@@ -59,7 +59,7 @@ export function PictureArt({ picture, marks, onObjectTap, aspect = 4 / 3, badges
     case 'group':
       return <GroupArt count={picture.count} emoji={picture.emoji ?? '🍎'} marks={marks} onObjectTap={onObjectTap} aspect={aspect} badges={badges} frame={frame} className={cls} />
     case 'tenFrame':
-      return <TenFrameArt count={picture.count} className={cls} />
+      return <TenFrameArt count={picture.count} split={picture.split} gone={picture.gone} className={cls} />
     case 'shape':
       return <ShapeArt shape={picture.shape} color={picture.color} turn={picture.turn} marks={marks} onSideTap={onObjectTap} className={cls} />
     case 'letter':
@@ -286,7 +286,7 @@ function GroupArt({
   )
 }
 
-function TenFrameArt({ count, className }: { count: number; className: string }) {
+function TenFrameArt({ count, split, gone = 0, className }: { count: number; split?: number; gone?: number; className: string }) {
   const frames = Math.max(1, Math.ceil(Math.min(Math.max(count, 0), 20) / 10))
   const cs = 38
   const fw = cs * 5
@@ -308,7 +308,20 @@ function TenFrameArt({ count, className }: { count: number; className: string })
             {Array.from({ length: 10 }, (_, i) => {
               const k = f * 10 + i
               if (k >= count) return null
-              return <circle key={i} cx={pad + (i % 5) * cs + cs / 2} cy={y0 + Math.floor(i / 5) * cs + cs / 2} r={cs * 0.34} fill={FILLS[0]} stroke={INK} strokeWidth={3} />
+              const cx = pad + (i % 5) * cs + cs / 2
+              const cy = y0 + Math.floor(i / 5) * cs + cs / 2
+              // taken away: faded and crossed out
+              if (k >= count - gone) {
+                const r = cs * 0.24
+                return (
+                  <g key={i} data-gone="">
+                    <circle cx={cx} cy={cy} r={cs * 0.34} fill={FILLS[0]} opacity={0.3} stroke={INK} strokeWidth={2} />
+                    <path d={`M ${cx - r} ${cy - r} L ${cx + r} ${cy + r} M ${cx + r} ${cy - r} L ${cx - r} ${cy + r}`} stroke={INK} strokeWidth={4} strokeLinecap="round" />
+                  </g>
+                )
+              }
+              const on = split !== undefined && k >= split
+              return <circle key={i} data-on={on ? '' : undefined} cx={cx} cy={cy} r={cs * 0.34} fill={on ? FILLS[3] : FILLS[0]} stroke={INK} strokeWidth={3} />
             })}
           </g>
         )

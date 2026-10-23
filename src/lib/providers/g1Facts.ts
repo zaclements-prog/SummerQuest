@@ -20,6 +20,8 @@ export const G1_FACT_MAX = 20
 export const fact = (id: string): VoiceRef => ({ line: `g1-facts/${id}` })
 const said = (n: number): VoiceRef => ({ template: 'listen/number', slots: { n } })
 const make = (a: number, b: number): VoiceRef => fact(makeLineId(a, b))
+/** What a first miss's help asks instead of saying how it comes out. */
+const STOP = { inAll: fact('stop-inAll'), left: fact('stop-left'), land: fact('stop-land'), fill: fact('stop-fill') }
 
 /** What the question asks: a sum, a difference, or a missing number. */
 export type FactAsk =
@@ -98,7 +100,7 @@ export function countOnHelp(start: number, on: number, smallerFirst: boolean): H
     ...(smallerFirst ? [{ voice: fact('biggerFirst'), do: { kind: 'light', part: 'start' } } as HelpBeat] : []),
     { voice: fact(`startAt-${start}`), do: { kind: 'light', part: 'start' } },
     ...Array.from({ length: on }, (_, i): HelpBeat => ({ voice: said(start + i + 1), do: { kind: 'dot', i, n: start + i + 1 } })),
-    { voice: make(start, on) },
+    { voice: make(start, on), short: STOP.inAll },
   ]
 }
 
@@ -107,21 +109,21 @@ function countAll(n: number): HelpBeat[] {
   return Array.from({ length: n }, (_, i): HelpBeat => ({ voice: said(i + 1), do: { kind: 'count', i, n: i + 1 } }))
 }
 
-/** A double: "Double six is twelve." then a count to be sure. */
+/** A double: "Let's count them all." one by one, then "Double six is twelve." */
 export function doubleHelp(n: number): HelpBeat[] {
-  return [{ voice: fact(`double-${n}`), do: { kind: 'light', part: 'model' } }, ...countAll(2 * n)]
+  return [{ voice: fact('countAll'), do: { kind: 'light', part: 'model' } }, ...countAll(2 * n), { voice: fact(`double-${n}`), do: { kind: 'light', part: 'model' }, short: STOP.inAll }]
 }
 
-/** A near double (n and n + 1): "Six and six make twelve. One more is thirteen." the extra one lit. */
+/** A near double (n and n + 1): the extra one lit, all counted, then "Six and six make twelve. One more is thirteen." */
 export function nearHelp(n: number): HelpBeat[] {
-  return [{ voice: fact(`near-${n}`), do: { kind: 'light', part: 'extra' } }, ...countAll(2 * n + 1)]
+  return [{ voice: fact('countAll'), do: { kind: 'light', part: 'extra' } }, ...countAll(2 * n + 1), { voice: fact(`near-${n}`), do: { kind: 'light', part: 'extra' }, short: STOP.inAll }]
 }
 
 /** A turn-around fact: the rows swap, "Turn it around…", then "Five and three make eight." */
 export function turnHelp(first: number, second: number): HelpBeat[] {
   return [
     { voice: fact('turnAround'), do: { kind: 'turn' } },
-    { voice: make(first, second), do: { kind: 'light', part: 'model' } },
+    { voice: make(first, second), do: { kind: 'light', part: 'model' }, short: STOP.inAll },
   ]
 }
 
@@ -131,7 +133,7 @@ export function makeTenHelp(a: number, b: number): HelpBeat[] {
   return [
     { voice: fact(`needs-${a}`), do: { kind: 'light', part: 'first' } },
     ...Array.from({ length: need }, (_, i): HelpBeat => ({ voice: said(i + 1), do: { kind: 'move', n: i + 1 } })),
-    { voice: fact(`tenAnd-${a + b - 10}`), do: { kind: 'light', part: 'model' } },
+    { voice: fact(`tenAnd-${a + b - 10}`), do: { kind: 'light', part: 'model' }, short: STOP.inAll },
   ]
 }
 
@@ -142,7 +144,7 @@ export function takeAwayHelp(whole: number, take: number): HelpBeat[] {
     { voice: fact(`take-${take}`), do: { kind: 'light', part: 'model' } },
     ...Array.from({ length: take }, (_, i): HelpBeat => ({ voice: said(i + 1), do: { kind: 'take', n: i + 1 } })),
     ...Array.from({ length: left }, (_, i): HelpBeat => ({ voice: said(i + 1), do: { kind: 'count', i, n: i + 1 } })),
-    { voice: fact(leftLineId(left)) },
+    { voice: fact(leftLineId(left)), short: STOP.left },
   ]
 }
 
@@ -152,7 +154,7 @@ export function countBackHelp(start: number, back: number): HelpBeat[] {
     { voice: fact(`startAt-${start}`), do: { kind: 'light', part: 'start' } },
     { voice: fact(`hop-${back}`), do: { kind: 'light', part: 'model' } },
     ...Array.from({ length: back }, (_, i): HelpBeat => ({ voice: said(start - i - 1), do: { kind: 'hop', to: start - i - 1 } })),
-    { voice: fact(`land-${start - back}`) },
+    { voice: fact(`land-${start - back}`), short: STOP.land },
   ]
 }
 
@@ -162,7 +164,7 @@ export function partsHelp(whole: number, part: number): HelpBeat[] {
   return [
     { voice: askLine({ kind: 'addB', a: part, c: whole }), do: { kind: 'light', part: 'start' } },
     ...Array.from({ length: missing }, (_, i): HelpBeat => ({ voice: said(part + i + 1), do: { kind: 'fill', n: i + 1 } })),
-    { voice: make(part, missing), do: { kind: 'light', part: 'model' } },
+    { voice: make(part, missing), do: { kind: 'light', part: 'model' }, short: STOP.fill },
   ]
 }
 
@@ -226,6 +228,10 @@ export function factProblem(q: FactQuestion, places: Arranger, base: Pick<Listen
   if (answer === null) throw new Error(`g1 facts: "${q.sentence.join(' ')}" has no single answer`)
   const { cards, notes } = factCards(answer, q.mixups)
   const options = places.arrange(cards, answer)
+  // a first miss: the help stops one step short of the answer and asks; from the second, the whole help
+  const stops = q.help.some((b) => b.short)
+  const full = q.help.map((b): HelpBeat => ({ voice: b.voice, ...(b.target ? { target: b.target } : {}), ...(b.do ? { do: b.do } : {}) }))
+  const help = stops ? q.help.map(({ short, ...b }) => (short ? { ...b, voice: short } : b)) : full
   const spec: NumberSentenceSpec = {
     kind: 'numberSentence',
     sentence: q.sentence,
@@ -236,7 +242,8 @@ export function factProblem(q: FactQuestion, places: Arranger, base: Pick<Listen
     ask: q.ask,
     hint: q.hint,
     act: q.act,
-    help: q.help,
+    help,
+    ...(stops ? { helpAgain: full } : {}),
   }
   return {
     ...base,

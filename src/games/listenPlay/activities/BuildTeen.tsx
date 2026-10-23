@@ -168,13 +168,18 @@ function RoundButton({ icon, label, onClick, disabled, guide: guideId, big = fal
   )
 }
 
-/** The number as the line starts, the frames a moment later, ✓ on "check". */
-function askSteps(problem: ListenProblem): GuideStep[] {
-  return [
-    { voice: problem.speech ?? null, target: BUILD_NUMBER, hand: false, pad: 8 },
-    { target: BUILD_FRAMES, cue: 0.3, hand: 'tap', pad: 8 },
-    { target: BUILD_CHECK, cue: 'check', hand: 'tap', pad: 10 },
-  ]
+/** Where the ones go: the second frame (the full ten is the first). */
+const onesFrame = () => document.querySelector(`[data-guide="${BUILD_FRAMES}"] [data-frame="1"]`)?.getBoundingClientRect()
+
+/**
+ * The number as the line starts, the frames a moment later, ✓ on "check".
+ * Asked again after a miss (the full ten already in), the hand stays on the
+ * empty frame where the ones go: ✓ comes once they're in, not before.
+ */
+function askSteps(problem: ListenProblem, _spec: BuildSpec, misses: number): GuideStep[] {
+  const first: GuideStep = { voice: problem.speech ?? null, target: BUILD_NUMBER, hand: false, pad: 8 }
+  if (misses > 0) return [first, { target: onesFrame, cue: 0.3, hand: 'tap', pad: 8 }]
+  return [first, { target: BUILD_FRAMES, cue: 0.3, hand: 'tap', pad: 8 }, { target: BUILD_CHECK, cue: 'check', hand: 'tap', pad: 10 }]
 }
 
 export const buildActivity: ListenActivityDef<BuildSpec> = { Component: BuildTeen, askSteps }

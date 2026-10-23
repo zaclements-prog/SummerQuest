@@ -117,7 +117,12 @@ describe.each([
         expect(hasPicturePanel(q)).toBe(true)
         expect(SKILLS[q.skill!.id]).toMatchObject({ zoneId: 'tower-battlefront', lessonId: 'kTowers' })
         for (const p of q.praise ?? []) voiceText(p)
-        q.notes!.forEach((n, i) => (q.options[i] === ans ? expect(n).toBeNull() : expect(voiceText(n!)).toBe(factStrategy(f))))
+        // a miss: the strategy, or for ten and some more just that ("Ten and nine more is nineteen.")
+        const tenAnd = f.op === '+' && (f.a === 10 || f.b === 10)
+        const note = tenAnd ? `Ten and ${numberWord(f.a === 10 ? f.b : f.a)} more is ${numberWord(ans)}.` : factStrategy(f)
+        q.notes!.forEach((n, i) => (q.options[i] === ans ? expect(n).toBeNull() : expect(voiceText(n!)).toBe(note)))
+        // …with the counters in ten-frames shown: the start and the ones counted on, or the ones taken crossed out
+        expect(q.helpPicture).toEqual(f.op === '+' ? { kind: 'tenFrame', count: ans, split: Math.max(f.a, f.b) } : { kind: 'tenFrame', count: f.a, gone: f.b })
         for (const c of q.cues ?? []) if (typeof c.cue === 'string') expect(phraseIndex(q.prompt, c.cue)).toBeGreaterThanOrEqual(0)
         expect(questionSteps(q, [0, 1, 2]).map((s) => s.target)).toEqual(['lp-picture', ['lp-card-0', 'lp-card-1', 'lp-card-2']])
         // only numbers and signs on screen

@@ -70,6 +70,12 @@ export interface SortSpec extends ListenActivitySpec {
   countCards: readonly number[]
   /** Then "Which group has more?": only when one box has the most. */
   more: boolean
+  /**
+   * The round already heard this rule ("Let's sort by color! Look at the
+   * boxes.") on the question before: ask with just the boxes' names and
+   * "Put each one in its box!".
+   */
+  brief?: boolean
 }
 
 export const isSortSpec = (s: { kind: string } | undefined): s is SortSpec => s?.kind === 'sort'
@@ -154,6 +160,8 @@ export function makeKSortProvider(cfg: KSortConfig = {}): Omit<ProblemProvider, 
   let plan: Plan[] = []
   let asked = 0
   let serial = 0
+  /** The rule the question before was sorted by (a round says it once). */
+  let lastRule: SortRule | null = null
   let kindRounds = 0
   let lastColors = ''
 
@@ -240,6 +248,7 @@ export function makeKSortProvider(cfg: KSortConfig = {}): Omit<ProblemProvider, 
     reset() {
       asked = 0
       serial = 0
+      lastRule = null
       plan = []
       cardPlaces.reset()
       morePlaces.reset()
@@ -249,7 +258,8 @@ export function makeKSortProvider(cfg: KSortConfig = {}): Omit<ProblemProvider, 
       const at = asked % 5
       const p = plan[at]
       asked++
-      const spec = question(p, at)
+      const spec: SortSpec = { ...question(p, at), ...(at > 0 && lastRule === p.rule ? { brief: true } : {}) }
+      lastRule = spec.rule
       const speech = RULE_LINE[spec.rule]
       const counts = boxCounts(spec)
       return {

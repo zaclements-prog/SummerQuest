@@ -2,7 +2,9 @@ import type { GuideStep } from '../../guide/store'
 import type { PictureOption } from '../../lib/problem'
 import { phraseIndex } from '../motion/cues'
 import { COUNT_MAX } from '../../voice/packs/listen'
-import { voiceText } from '../../voice/registry'
+import { VOICE_PACKS, voiceText } from '../../voice/registry'
+import type { VoiceRef } from '../../voice/types'
+import { K_LESSON_PACK } from '../lessons/k1Voice'
 import type { LessonCheck } from '../types'
 
 /**
@@ -55,4 +57,16 @@ export function askSteps(check: LessonCheck, cards: PictureOption[], open: numbe
   const word = ['tap', 'which'].find((w) => phraseIndex(text, w) > 0)
   add({ target: ids.length === 1 ? ids[0] : ids, cue: word ?? 0.45, hand: ids.length === 1 ? 'tap' : 'sweep', pad: 12 })
   return steps
+}
+
+/**
+ * A check's explanation as a `k-lessons` line ("A triangle has three
+ * sides."), said after a miss with the answer lit up: the line whose text is
+ * the check's `explain` (see `explainLineId`). Null when there is none.
+ */
+export function explainAloud(check: LessonCheck): VoiceRef | null {
+  if (check.countAlong) return null
+  const lines = VOICE_PACKS[K_LESSON_PACK]?.lines ?? {}
+  const id = Object.keys(lines).find((k) => k.startsWith('explain-') && lines[k] === check.explain)
+  return id ? { line: `${K_LESSON_PACK}/${id}` } : null
 }

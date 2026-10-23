@@ -86,8 +86,8 @@ function readAlongAskSteps(problem: ListenProblem, spec: ReadAlongSpec): GuideSt
     const ask: GuideStep = { voice: spec.ask ?? null, target: cards, hand: spec.nameCards ? false : hand, pad: 12 }
     // after the help has read it again: just the question (and the cards still in play)
     if (progress.get(problem)?.helped) return [ask, ...naming]
-    const text = said(spec.read.line)
-    return [{ voice: spec.read.line, target: RA_TEXT, hand: false, pad: 10, pause: 0.45, events: lightEvents(problem, spec.read, text) }, ask, ...naming]
+    // the child reads it first: never read aloud before a miss (or 🔊, see replaySteps)
+    return [{ voice: { line: 'g1-words/readFirst' }, target: RA_TEXT, hand: false, pad: 10, pause: 0.6 }, ask, ...naming]
   }
   if (spec.layout === 'gap') {
     return [
@@ -271,7 +271,30 @@ function ReadAlong({ problem, spec, phase, active, misses, onAttempt, registerHe
   )
 }
 
+/** 🔊 on a sentence: it is read aloud, each word lighting, then the question (help, when the child asks for it). */
+function readAlongReplaySteps(problem: ListenProblem, spec: ReadAlongSpec): GuideStep[] {
+  if (spec.layout !== 'sentence') return []
+  const open = openCards(spec, problem)
+  const text = said(spec.read.line)
+  return [
+    { voice: spec.read.line, target: RA_TEXT, hand: false, pad: 10, pause: 0.45, events: lightEvents(problem, spec.read, text) },
+    { voice: spec.ask ?? null, target: sweepOf(open), hand: open.length === 1 ? 'tap' : 'sweep', pad: 12 },
+  ]
+}
+
+/** No touch for a while on a sentence: just the question again (still not read aloud). */
+function readAlongRepromptSteps(problem: ListenProblem, spec: ReadAlongSpec): GuideStep[] {
+  if (spec.layout !== 'sentence') return readAlongAskSteps(problem, spec)
+  const open = openCards(spec, problem)
+  return [
+    { voice: spec.ask ?? null, target: RA_TEXT, hand: false, pad: 10 },
+    { target: sweepOf(open), cue: 0.6, hand: open.length === 1 ? 'tap' : 'sweep', pad: 12 },
+  ]
+}
+
 export const readAlongActivity: ListenActivityDef<ReadAlongSpec> = {
   Component: ReadAlong,
   askSteps: readAlongAskSteps,
+  replaySteps: readAlongReplaySteps,
+  repromptSteps: readAlongRepromptSteps,
 }

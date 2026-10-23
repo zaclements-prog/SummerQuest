@@ -98,3 +98,17 @@ export function sameBox(a: Box | null, b: Box | null): boolean {
   if (!a || !b) return a === b
   return Math.round(a.x) === Math.round(b.x) && Math.round(a.y) === Math.round(b.y) && Math.round(a.w) === Math.round(b.w) && Math.round(a.h) === Math.round(b.h)
 }
+
+/** One glide of a sweeping hand from one end of the row to the other (s; the `gl-sweep` animation's duration). */
+export const SWEEP_PASS_S = 2.4
+
+/**
+ * Is a sweeping hand still showing? While the line is said, yes; once it has
+ * been said, after one full glide it fades: a hand left resting at the end of
+ * the row would sit on one card (the last one), as if choosing it, while the
+ * child decides. A tapping or dragging hand stays.
+ */
+export function sweepShowing(mode: 'tap' | 'sweep' | 'drag' | null, speaking: boolean, shownForS: number): boolean {
+  if (mode !== 'sweep') return !!mode
+  return speaking || shownForS < SWEEP_PASS_S
+}

@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { act } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import GuideLayer from '../../../guide/GuideLayer'
-import { getGuideSnapshot, resetGuideForTests, subscribeGuide } from '../../../guide/store'
+import { getGuideSnapshot, guide, resetGuideForTests, subscribeGuide } from '../../../guide/store'
 import { makeG1ReadingProvider } from '../../../lib/providers/g1Reading'
 import { makeG1WritingProvider } from '../../../lib/providers/g1Writing'
 import { seededRng } from '../../../lib/random'
@@ -235,7 +235,7 @@ describe('readAlong: the middle letter', { timeout: 60_000 }, () => {
 })
 
 describe('readAlong: Read along', { timeout: 60_000 }, () => {
-  it('reads the sentence with each word lighting as it is said, then asks, then names the cards', async () => {
+  it('the child reads first: "Read the sentence!", the question, the cards named; never read aloud before a miss', async () => {
     const item = first({ mode: 'sentences' })
     const spec = item.activity as ReadAlongSpec
     mount(these(item))
@@ -244,10 +244,27 @@ describe('readAlong: Read along', { timeout: 60_000 }, () => {
     expect(visibleWords(container.querySelector('[data-ra-text]')!).join(' ')).toBe(item.prompt.replace(/[.!]$/, ''))
     expect(wordsOutsideContent()).toEqual([])
     await advance(9000)
-    expect(said[0]).toBe(item.prompt)
-    expect(litLog.slice(0, spec.units.length)).toEqual(spec.units.map((_, i) => String(i)))
+    expect(said[0]).toBe('Read the sentence!')
     expect(said[1]).toMatch(/^(Who|What|Where) .+\?$/)
     expect(said.slice(2, 5).map((s) => s.toLowerCase())).toEqual(spec.cards.map((c) => `${c.value}!`))
+    expect(said).not.toContain(item.prompt)
+    expect(litLog).toEqual([])
+    // no touch for a while: the question again, still not read
+    await advance(12000)
+    expect(said).not.toContain(item.prompt)
+  })
+
+  it('🔊 is the help: it reads the sentence aloud, each word lighting, then the question', async () => {
+    const item = first({ mode: 'sentences' })
+    const spec = item.activity as ReadAlongSpec
+    mount(these(item))
+    await advance(9000)
+    said.length = 0
+    act(() => void guide.replay())
+    await advance(9000)
+    expect(said[0]).toBe(item.prompt)
+    expect(litLog.slice(0, spec.units.length)).toEqual(spec.units.map((_, i) => String(i)))
+    expect(said[1]).toMatch(/\?$/)
   })
 
   it('a miss: "Let\'s read it again." with the words lighting; the word that answers stays marked; a short re-ask', async () => {

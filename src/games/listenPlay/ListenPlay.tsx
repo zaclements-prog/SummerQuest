@@ -30,6 +30,7 @@ import {
   praiseFor,
   questionPicture,
   questionSteps,
+  reteachSteps,
   walkthroughCounts,
   walkthroughSteps,
   type Where,
@@ -213,7 +214,7 @@ export default function ListenPlay({ provider, params, onComplete, meta, paused 
   }, [s.idx, provider])
 
   // ── what the narrator does in each phase (re-runs from the top after a pause) ──
-  const { phase, token, picked, tried, idx, firstTryCorrect } = s
+  const { phase, token, picked, tried, idx, firstTryCorrect, misses } = s
   useEffect(() => {
     if (paused || !problem) return
     let live = true
@@ -221,7 +222,14 @@ export default function ListenPlay({ provider, params, onComplete, meta, paused 
       switch (phase) {
         case 'ask': {
           if (problem.activity) {
-            await guide.sequence(activityAskSteps(problem, activityDef(problem.activity)))
+            const def = activityDef(problem.activity)
+            const steps = activityAskSteps(problem, def, misses)
+            // 🔊 can say more than the question (Read along: it reads the sentence, as help)
+            const replay = def?.replaySteps?.(problem, problem.activity)
+            if (replay?.length) {
+              guide.setReplay(replay)
+              await guide.sequence(steps, { repeatable: false })
+            } else await guide.sequence(steps)
             return
           }
           const open = cards.map((_, i) => i).filter((i) => !tried.includes(i))
@@ -266,18 +274,35 @@ export default function ListenPlay({ provider, params, onComplete, meta, paused 
             await guide.show({ voice: note, target: lpCard(picked), hand: false, pad: 12 }, { repeatable: false })
             if (!live) return
           }
+          // the answer lit up and named ("This is the letter A."): the next try isn't a guess.
+          // Before counting the answer's sides; after counting the picked card's
+          const reteach = reteachSteps(problem, cards)
+          const teachFirst = problem.walkthrough === 'answer'
+          if (reteach.length && teachFirst) {
+            await guide.sequence(reteach, { repeatable: false })
+            if (!live) return
+          }
           const open = cards.map((_, i) => i).filter((i) => !tried.includes(i))
           const plan = walkthroughCounts(problem, cards, picked, open)
           const steps = plan.length
-            ? walkthroughSteps(plan, (where, i) => {
-                if (live) dispatch({ type: 'mark', where, obj: i, n: i + 1 })
-              })
+            ? walkthroughSteps(
+                plan,
+                (where, i) => {
+                  if (live) dispatch({ type: 'mark', where, obj: i, n: i + 1 })
+                },
+                // (straight after "…Four sides, all the same.": just the count)
+                !(teachFirst && reteach.length),
+              )
             : problem.walkthrough === 'countUp'
               ? countUpSteps(cards, open)
               : []
           if (steps.length) {
             dispatch({ type: 'clearMarks' })
             await guide.sequence(steps, { repeatable: false })
+            if (!live) return
+          }
+          if (reteach.length && !teachFirst) {
+            await guide.sequence(reteach, { repeatable: false })
             if (!live) return
           }
           await guide.say({ line: 'listen/yourTurn' })
@@ -290,7 +315,7 @@ export default function ListenPlay({ provider, params, onComplete, meta, paused 
     return () => {
       live = false
     }
-  }, [phase, token, paused, problem, cards, picked, tried, idx, firstTryCorrect, total])
+  }, [phase, token, paused, problem, cards, picked, tried, idx, firstTryCorrect, total, misses])
 
   // "Quit?" is open: hush (the phase starts over when it closes)
   useEffect(() => {
@@ -299,7 +324,9 @@ export default function ListenPlay({ provider, params, onComplete, meta, paused 
   // leaving: stop talking, and 🔊 has nothing left to repeat
   useEffect(() => () => guide.clear({ forget: true }), [])
 
-  useIdleReprompt({ key: `${idx}:${token}`, enabled: phase === 'ask' && !paused })
+  // an activity with a long intro says just what to do now (Sorting Delta: "Put each one in its box!")
+  const reprompt = problem?.activity && activity?.repromptSteps ? () => void guide.sequence(activity.repromptSteps!(problem, problem.activity!), { gentle: true, repeatable: false }) : undefined
+  useIdleReprompt({ key: `${idx}:${token}`, enabled: phase === 'ask' && !paused, onIdle: reprompt })
 
   function pick(card: number) {
     if (phase !== 'ask' || !problem || paused) return

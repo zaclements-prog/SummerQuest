@@ -23,7 +23,12 @@ export type Picture =
   | { kind: 'numeral'; n: number }
   /** A group of objects to count (default emoji 🍎). */
   | { kind: 'group'; count: number; emoji?: string }
-  | { kind: 'tenFrame'; count: number }
+  /**
+   * `count` counters in ten-frames (two past ten). `split`: the first `split`
+   * one colour and the rest another (adding: the start, then the ones counted
+   * on). `gone`: the last `gone` crossed out (taking away).
+   */
+  | { kind: 'tenFrame'; count: number; split?: number; gone?: number }
   | {
       kind: 'shape'
       shape: 'circle' | 'square' | 'triangle' | 'rectangle' | 'hexagon' | 'oval' | 'star' | 'cube' | 'sphere' | 'cone' | 'cylinder'
