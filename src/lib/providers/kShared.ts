@@ -13,6 +13,39 @@ export function pickOne<T>(xs: readonly T[], avoid: readonly T[] = []): T {
   return from[randInt(0, from.length - 1)]
 }
 
+/** The longest Listen & Play round (questions): how far back "this round" remembers. */
+export const ROUND_MEMORY = 6
+
+/**
+ * The last `size` things a provider asked (a round's worth): `has` says
+ * whether one came up this round. Older ones are forgotten, so a provider
+ * that runs on without a `reset()` keeps its variety and never runs dry.
+ */
+export function makeRecent<T>(size = ROUND_MEMORY) {
+  const xs: T[] = []
+  return {
+    has: (x: T) => xs.includes(x),
+    add(x: T) {
+      xs.push(x)
+      if (xs.length > size) xs.shift()
+    },
+    list: (): readonly T[] => xs,
+    clear() {
+      xs.length = 0
+    },
+  }
+}
+
+/**
+ * What to keep out of a pick from `pool` so a round doesn't ask the same
+ * thing twice: everything in `used` (this round's picks) while some of the
+ * pool is still unused; once it's all used, just `last` (never twice in a row).
+ */
+export function avoidUsed<T>(pool: readonly T[], used: readonly T[], last?: T): T[] {
+  const fresh = pool.filter((x) => !used.includes(x))
+  return fresh.length ? pool.filter((x) => used.includes(x)) : pool.filter((x) => x === last)
+}
+
 /**
  * Deals `items` in a shuffled order, a fresh shuffle each time they run out,
  * never the same item twice in a row (not even across a reshuffle). Every

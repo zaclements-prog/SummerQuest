@@ -149,6 +149,8 @@ export function makeKScienceProvider(cfg: KScienceConfig): Omit<ProblemProvider,
   const picker = makeKindPicker(MODE_KINDS[mode])
   const places = makePositionGuard()
   const weathers = makeDeck(K_WEATHERS)
+  // ("what will you wear?" deals its own weathers: a round never asks it twice about one weather while others are left)
+  const wearWeathers = makeDeck(K_WEATHERS)
   const hungry = makeDeck(K_HUNGRY_ANIMALS)
   const thirsty = makeDeck(K_THIRSTY_ANIMALS)
   const homes = makeDeck(K_HOME_ANIMALS)
@@ -203,7 +205,7 @@ export function makeKScienceProvider(cfg: KScienceConfig): Omit<ProblemProvider,
   }
 
   function wear(): ListenProblem {
-    const w = weathers.next()
+    const w = wearWeathers.next()
     const right = (Object.keys(K_GEAR) as KGear[]).filter((g) => K_GEAR[g] === w)
     const answer = pickOne(right)
     const wrongPool = (Object.keys(K_GEAR) as KGear[]).filter((g) => K_GEAR[g] !== w && !K_GEAR_ARGUABLE[w].includes(g))
@@ -390,7 +392,7 @@ export function makeKScienceProvider(cfg: KScienceConfig): Omit<ProblemProvider,
       lastTap = ''
       picker.reset()
       places.reset()
-      for (const d of [weathers, hungry, thirsty, homes, actions]) d.reset()
+      for (const d of [weathers, wearWeathers, hungry, thirsty, homes, actions]) d.reset()
     },
     next(): ListenProblem {
       const ramp = RAMP[mode]

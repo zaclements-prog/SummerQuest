@@ -97,12 +97,16 @@ export function makeG1TensProvider(cfg: G1TensConfig = {}): Omit<ProblemProvider
   let serial = 0
   let lastN = -1
 
-  /** A number in [lo, hi], not the last one asked, passing `ok` (when one can). */
+  /** The numbers this round has asked about: a round never asks about one twice (while others fit). */
+  const used = new Set<number>()
+
+  /** A number in [lo, hi], not the last one asked (nor, mostly, one this round asked), passing `ok` (when one can). */
   function pickN(lo: number, hi: number, ok: (n: number) => boolean = () => true): number {
     for (let tries = 0; tries < 60; tries++) {
       const n = randInt(lo, hi)
-      if (n !== lastN && ok(n)) {
+      if (n !== lastN && ok(n) && (tries >= 40 || !used.has(n))) {
         lastN = n
+        used.add(n)
         return n
       }
     }
@@ -234,6 +238,7 @@ export function makeG1TensProvider(cfg: G1TensConfig = {}): Omit<ProblemProvider
       asked = 0
       serial = 0
       lastN = -1
+      used.clear()
       places.reset()
     },
     next(): ListenProblem {
