@@ -20,15 +20,14 @@ import {
   Card,
   Button,
   Pill,
-  Celebration,
   ConfirmDialog,
   ErrorState,
   Medallion,
   TopBar,
   ToonStar,
-  TONES,
-  accuracyToneOf,
 } from '../components/ui'
+import { ConfettiBurst } from '../components/ui/Celebration'
+import { resultCopy } from './resultCopy'
 import { isStageUnlocked } from '../lib/stageLocks'
 import { useWorldUi } from '../world/useWorldUi'
 
@@ -39,6 +38,11 @@ export interface GameResult {
   score: number
   correct: number
   total: number
+  /**
+   * How the game itself ended, when stars alone don't say it (Tower Battlefront:
+   * "The base fell at wave 4"). The result screen's headline comes from this.
+   */
+  outcome?: { headline: string; detail?: string; lost?: boolean }
 }
 
 export interface GameProps {
@@ -252,7 +256,7 @@ export default function GameRunner() {
   )
 }
 
-function ResultScreen({
+export function ResultScreen({
   result,
   coins,
   onContinue,
@@ -264,25 +268,18 @@ function ResultScreen({
   onPlayAgain: () => void
 }) {
   const reduced = useReducedMotion() ?? false
-  const won = result.stars > 0
-  // Win celebration shows first as an overlay; dismissing it reveals the
-  // result card with the Play-again / Continue actions underneath.
-  const [celebrate, setCelebrate] = useState(won)
+  // Headline + praise from the stars and how the game ended (not a percentage).
+  // One screen, no extra "Awesome!" pop-up on top: a 3D game has already shown
+  // its own results card, so this is the last tap before the map.
+  const { heading, praise, emoji, won } = resultCopy(result)
+  const cleared = result.stars > 0
 
   useEffect(() => {
     if (won) sfx.victory()
     else sfx.defeat()
   }, [won])
 
-  const accuracy = result.total
-    ? Math.round((result.correct / result.total) * 100)
-    : 0
-
-  const heading =
-    result.stars >= 3 ? 'Perfect!' : result.stars >= 1 ? 'Great job!' : 'Keep trying!'
-  const emoji = result.stars >= 3 ? '🏆' : result.stars >= 1 ? '🎉' : '💪'
   const cardTone = won ? 'correct' : 'wrong'
-  const accTone = accuracyToneOf(accuracy)
 
   return (
     <div className="flex-1 flex items-center justify-center p-6 short:p-3">
@@ -305,21 +302,20 @@ function ResultScreen({
               aria-hidden="true"
             />
           )}
+          {won && <ConfettiBurst reduced={reduced} />}
           <div className="relative">
           <div className="relative flex justify-center mb-3 short:mb-2">
             <Medallion tone={won ? 'quest' : 'wrong'} size="xl">
               {emoji}
             </Medallion>
           </div>
-          <h2 className="relative kid-text font-bold text-4xl text-ink-900 mb-1">{heading}</h2>
-          <p className="relative text-ink-700 text-lg mb-2">
-            You answered {result.correct} out of {result.total}
-          </p>
-          <p className="relative">
-            <span className={`inline-block kid-text font-bold text-2xl rounded-full border-[3px] border-line px-4 ${TONES[accTone].fill}`}>
-              {accuracy}%
-            </span>
-          </p>
+          <h2 className="relative kid-text font-bold text-4xl short:text-3xl text-ink-900 mb-1">{heading}</h2>
+          {praise && <p className="relative kid-text text-xl text-ink-900 mb-1">{praise}</p>}
+          {result.total > 0 && (
+            <p className="relative text-ink-700 text-lg mb-2">
+              {result.correct} of {result.total} right on the first try
+            </p>
+          )}
           </div>
 
           <div className="relative">
@@ -354,7 +350,7 @@ function ResultScreen({
           {/* Actions */}
           <div className="relative flex flex-col sm:flex-row gap-3 mt-6 short:mt-3">
             <Button
-              variant={won ? 'ghost' : 'secondary'}
+              variant={cleared ? 'ghost' : 'secondary'}
               size="lg"
               className="flex-1 justify-center"
               onClick={onPlayAgain}
@@ -362,7 +358,7 @@ function ResultScreen({
               ↻ Play again
             </Button>
             <Button
-              variant={won ? 'success' : 'ghost'}
+              variant={cleared ? 'success' : 'ghost'}
               size="lg"
               className="flex-1 justify-center"
               onClick={onContinue}
@@ -373,15 +369,6 @@ function ResultScreen({
           </div>
         </Card>
       </motion.div>
-
-      {/* Amplified win celebration — stars scale with star count, coins shown */}
-      <Celebration
-        open={celebrate}
-        onClose={() => setCelebrate(false)}
-        title={heading}
-        stars={result.stars}
-        coins={coins}
-      />
     </div>
   )
 }

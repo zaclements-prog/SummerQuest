@@ -6,9 +6,11 @@ import { sfx } from '../lib/sound'
 import { useProgress } from '../store/progress'
 import { skillOf } from '../tutoring/skills'
 import { ProgressBar, Pill, Loading } from '../components/ui'
-import { QuestionPrompt, AnswerGrid, QuizSplit } from './_shared/QuizUI'
+import { QuestionPrompt, AnswerGrid, QuizSplit, MissNote } from './_shared/QuizUI'
 
 const DEFAULT_STAR_THRESHOLDS: [number, number, number] = [10, 15, 20]
+/** A miss shows the right answer + hint this long (ms) — with the clock stopped. */
+export const MISS_REVIEW_MS = 2500
 
 export default function SpeedRun({ provider, params, onComplete, meta, paused = false }: GameProps) {
   const timeLimitSec = (params?.timeLimitSec as number) ?? 60
@@ -27,6 +29,9 @@ export default function SpeedRun({ provider, params, onComplete, meta, paused = 
   const recordAnswer = useProgress((s) => s.recordAnswer)
   const recordAttempt = useProgress((s) => s.recordAttempt)
   const reduced = useReducedMotion()
+  // The clock also stops while a miss's answer + hint are up: reading never costs time.
+  const clockStopped = paused || feedback === 'wrong'
+  const missTimer = useRef(0)
 
   useEffect(() => {
     let cancel = false
@@ -39,7 +44,7 @@ export default function SpeedRun({ provider, params, onComplete, meta, paused = 
   }, [provider])
 
   useEffect(() => {
-    if (paused) return
+    if (clockStopped) return
     const start = Date.now()
     const tick = setInterval(() => {
       const elapsed = elapsedBefore.current + (Date.now() - start) / 1000
@@ -51,7 +56,7 @@ export default function SpeedRun({ provider, params, onComplete, meta, paused = 
       clearInterval(tick)
       elapsedBefore.current += (Date.now() - start) / 1000
     }
-  }, [paused, timeLimitSec])
+  }, [clockStopped, timeLimitSec])
 
   useEffect(() => {
     if (timeLeft <= 0) {
@@ -86,13 +91,19 @@ export default function SpeedRun({ provider, params, onComplete, meta, paused = 
       sfx.wrong()
       setStreak(0)
       setFeedback('wrong')
+      missTimer.current = window.setTimeout(next, MISS_REVIEW_MS)
+      return
     }
-    setTimeout(() => {
-      setFeedback(null)
-      setPicked(null)
-      nextProblem(provider).then((p) => setProblem(p))
-    }, 350)
+    setTimeout(next, 350)
   }
+
+  function next() {
+    window.clearTimeout(missTimer.current)
+    setFeedback(null)
+    setPicked(null)
+    nextProblem(provider).then((p) => setProblem(p))
+  }
+  useEffect(() => () => window.clearTimeout(missTimer.current), [])
 
   const secondsLeft = Math.ceil(timeLeft)
   // Urgency window: last quarter of the clock (and always the final 10s).
@@ -161,13 +172,18 @@ export default function SpeedRun({ provider, params, onComplete, meta, paused = 
         center
         question={<QuestionPrompt>{problem.prompt}</QuestionPrompt>}
         answers={
-          <AnswerGrid
-            options={problem.options}
-            answer={problem.answer}
-            picked={picked}
-            onPick={pick}
-            disabled={feedback !== null}
-          />
+          <>
+            <AnswerGrid
+              options={problem.options}
+              answer={problem.answer}
+              picked={picked}
+              onPick={pick}
+              disabled={feedback !== null}
+            />
+            {feedback === 'wrong' && (
+              <MissNote answer={problem.answer} hint={problem.hint} onGotIt={paused ? undefined : next} />
+            )}
+          </>
         }
       />
     </div>
