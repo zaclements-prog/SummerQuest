@@ -11393,6 +11393,30 @@
     "duration": 0.99,
     "words": "voice/g1-phonics/youReadIt.words.json"
   },
+  "g1-science/afterSeason-fall": {
+    "file": "voice/g1-science/afterSeason-fall.mp3",
+    "hash": "860890d817",
+    "duration": 2.99,
+    "words": "voice/g1-science/afterSeason-fall.words.json"
+  },
+  "g1-science/afterSeason-spring": {
+    "file": "voice/g1-science/afterSeason-spring.mp3",
+    "hash": "4b5bea1058",
+    "duration": 2.88,
+    "words": "voice/g1-science/afterSeason-spring.words.json"
+  },
+  "g1-science/afterSeason-summer": {
+    "file": "voice/g1-science/afterSeason-summer.mp3",
+    "hash": "ef1b6a7644",
+    "duration": 3.08,
+    "words": "voice/g1-science/afterSeason-summer.words.json"
+  },
+  "g1-science/afterSeason-winter": {
+    "file": "voice/g1-science/afterSeason-winter.mp3",
+    "hash": "a4ba9ed69b",
+    "duration": 3.03,
+    "words": "voice/g1-science/afterSeason-winter.words.json"
+  },
   "g1-science/baby/baby=baby-monkey": {
     "file": "voice/g1-science/baby/baby=baby-monkey.mp3",
     "hash": "a42cf922d2",
@@ -11549,6 +11573,12 @@
     "duration": 0.82,
     "words": "voice/g1-science/elephant.words.json"
   },
+  "g1-science/fall": {
+    "file": "voice/g1-science/fall.mp3",
+    "hash": "758378f497",
+    "duration": 0.75,
+    "words": "voice/g1-science/fall.words.json"
+  },
   "g1-science/fish": {
     "file": "voice/g1-science/fish.mp3",
     "hash": "dd44ec54b4",
@@ -11600,7 +11630,7 @@
   "g1-science/grows-foal": {
     "file": "voice/g1-science/grows-foal.mp3",
     "hash": "1db6b0db81",
-    "duration": 3.47,
+    "duration": 4.37,
     "words": "voice/g1-science/grows-foal.words.json"
   },
   "g1-science/grows-kitten": {
@@ -11753,6 +11783,24 @@
     "duration": 0.84,
     "words": "voice/g1-science/moon.words.json"
   },
+  "g1-science/moonFull": {
+    "file": "voice/g1-science/moonFull.mp3",
+    "hash": "1b1d7bf4d2",
+    "duration": 5.05,
+    "words": "voice/g1-science/moonFull.words.json"
+  },
+  "g1-science/moonHalf": {
+    "file": "voice/g1-science/moonHalf.mp3",
+    "hash": "7f61efc85c",
+    "duration": 4.36,
+    "words": "voice/g1-science/moonHalf.words.json"
+  },
+  "g1-science/moonThin": {
+    "file": "voice/g1-science/moonThin.mp3",
+    "hash": "cb4ff78b22",
+    "duration": 5.95,
+    "words": "voice/g1-science/moonThin.words.json"
+  },
   "g1-science/moreLight": {
     "file": "voice/g1-science/moreLight.mp3",
     "hash": "e714cab881",
@@ -11825,11 +11873,35 @@
     "duration": 3.62,
     "words": "voice/g1-science/note-glass.words.json"
   },
+  "g1-science/note-moonFull": {
+    "file": "voice/g1-science/note-moonFull.mp3",
+    "hash": "ff1d73b46f",
+    "duration": 2.94,
+    "words": "voice/g1-science/note-moonFull.words.json"
+  },
+  "g1-science/note-moonHalf": {
+    "file": "voice/g1-science/note-moonHalf.mp3",
+    "hash": "dc2cc709e8",
+    "duration": 3.32,
+    "words": "voice/g1-science/note-moonHalf.words.json"
+  },
+  "g1-science/note-moonThin": {
+    "file": "voice/g1-science/note-moonThin.mp3",
+    "hash": "7bc2ca352a",
+    "duration": 3.37,
+    "words": "voice/g1-science/note-moonThin.words.json"
+  },
   "g1-science/note-night": {
     "file": "voice/g1-science/note-night.mp3",
     "hash": "121765d9ae",
     "duration": 3.06,
     "words": "voice/g1-science/note-night.words.json"
+  },
+  "g1-science/note-pattern": {
+    "file": "voice/g1-science/note-pattern.mp3",
+    "hash": "54e8c82632",
+    "duration": 6.16,
+    "words": "voice/g1-science/note-pattern.words.json"
   },
   "g1-science/note-stars": {
     "file": "voice/g1-science/note-stars.mp3",
@@ -11921,6 +11993,18 @@
     "duration": 1.85,
     "words": "voice/g1-science/part-wings.words.json"
   },
+  "g1-science/patternMoonSun": {
+    "file": "voice/g1-science/patternMoonSun.mp3",
+    "hash": "657b84eceb",
+    "duration": 3.27,
+    "words": "voice/g1-science/patternMoonSun.words.json"
+  },
+  "g1-science/patternSunMoon": {
+    "file": "voice/g1-science/patternSunMoon.mp3",
+    "hash": "e00d303df1",
+    "duration": 3.65,
+    "words": "voice/g1-science/patternSunMoon.words.json"
+  },
   "g1-science/pig": {
     "file": "voice/g1-science/pig.mp3",
     "hash": "7e866e53f6",
@@ -11963,6 +12047,24 @@
     "duration": 0.97,
     "words": "voice/g1-science/say-monkeyCarries.words.json"
   },
+  "g1-science/say-moonFull": {
+    "file": "voice/g1-science/say-moonFull.mp3",
+    "hash": "e7e174ec44",
+    "duration": 1.08,
+    "words": "voice/g1-science/say-moonFull.words.json"
+  },
+  "g1-science/say-moonHalf": {
+    "file": "voice/g1-science/say-moonHalf.mp3",
+    "hash": "b40fd733fc",
+    "duration": 1.29,
+    "words": "voice/g1-science/say-moonHalf.words.json"
+  },
+  "g1-science/say-moonThin": {
+    "file": "voice/g1-science/say-moonThin.mp3",
+    "hash": "d67b1d8a8c",
+    "duration": 1.36,
+    "words": "voice/g1-science/say-moonThin.words.json"
+  },
   "g1-science/say-sunHigh": {
     "file": "voice/g1-science/say-sunHigh.mp3",
     "hash": "d0359b83a2",
@@ -11980,6 +12082,36 @@
     "hash": "83356f62cb",
     "duration": 0.93,
     "words": "voice/g1-science/say-sunSet.words.json"
+  },
+  "g1-science/seasonPattern": {
+    "file": "voice/g1-science/seasonPattern.mp3",
+    "hash": "342635b811",
+    "duration": 6.29,
+    "words": "voice/g1-science/seasonPattern.words.json"
+  },
+  "g1-science/see-fall": {
+    "file": "voice/g1-science/see-fall.mp3",
+    "hash": "ca9984e41e",
+    "duration": 3.1,
+    "words": "voice/g1-science/see-fall.words.json"
+  },
+  "g1-science/see-spring": {
+    "file": "voice/g1-science/see-spring.mp3",
+    "hash": "117288f9ee",
+    "duration": 4.35,
+    "words": "voice/g1-science/see-spring.words.json"
+  },
+  "g1-science/see-summer": {
+    "file": "voice/g1-science/see-summer.mp3",
+    "hash": "da33932e87",
+    "duration": 2.83,
+    "words": "voice/g1-science/see-summer.words.json"
+  },
+  "g1-science/see-winter": {
+    "file": "voice/g1-science/see-winter.mp3",
+    "hash": "26fe71ceee",
+    "duration": 3.26,
+    "words": "voice/g1-science/see-winter.words.json"
   },
   "g1-science/seeDay": {
     "file": "voice/g1-science/seeDay.mp3",
@@ -12004,6 +12136,30 @@
     "hash": "75816d0325",
     "duration": 2.3,
     "words": "voice/g1-science/seeToys.words.json"
+  },
+  "g1-science/seen-fall": {
+    "file": "voice/g1-science/seen-fall.mp3",
+    "hash": "adf50c4584",
+    "duration": 2.4,
+    "words": "voice/g1-science/seen-fall.words.json"
+  },
+  "g1-science/seen-spring": {
+    "file": "voice/g1-science/seen-spring.mp3",
+    "hash": "c7013eea6f",
+    "duration": 1.79,
+    "words": "voice/g1-science/seen-spring.words.json"
+  },
+  "g1-science/seen-summer": {
+    "file": "voice/g1-science/seen-summer.mp3",
+    "hash": "04c108442b",
+    "duration": 1.92,
+    "words": "voice/g1-science/seen-summer.words.json"
+  },
+  "g1-science/seen-winter": {
+    "file": "voice/g1-science/seen-winter.mp3",
+    "hash": "d881e99140",
+    "duration": 2.13,
+    "words": "voice/g1-science/seen-winter.words.json"
   },
   "g1-science/shadow-kid": {
     "file": "voice/g1-science/shadow-kid.mp3",
@@ -12046,6 +12202,12 @@
     "hash": "d1e9031652",
     "duration": 2.4,
     "words": "voice/g1-science/someLight.words.json"
+  },
+  "g1-science/spring": {
+    "file": "voice/g1-science/spring.mp3",
+    "hash": "e591dffbb3",
+    "duration": 0.77,
+    "words": "voice/g1-science/spring.words.json"
   },
   "g1-science/stars": {
     "file": "voice/g1-science/stars.mp3",
@@ -12125,6 +12287,30 @@
     "duration": 1.38,
     "words": "voice/g1-science/tapNight.words.json"
   },
+  "g1-science/thing-fall": {
+    "file": "voice/g1-science/thing-fall.mp3",
+    "hash": "116f400003",
+    "duration": 1.21,
+    "words": "voice/g1-science/thing-fall.words.json"
+  },
+  "g1-science/thing-spring": {
+    "file": "voice/g1-science/thing-spring.mp3",
+    "hash": "84f184568e",
+    "duration": 0.86,
+    "words": "voice/g1-science/thing-spring.words.json"
+  },
+  "g1-science/thing-summer": {
+    "file": "voice/g1-science/thing-summer.mp3",
+    "hash": "9268f8efd2",
+    "duration": 0.77,
+    "words": "voice/g1-science/thing-summer.words.json"
+  },
+  "g1-science/thing-winter": {
+    "file": "voice/g1-science/thing-winter.mp3",
+    "hash": "9fd33189c1",
+    "duration": 1.05,
+    "words": "voice/g1-science/thing-winter.words.json"
+  },
   "g1-science/thisOne": {
     "file": "voice/g1-science/thisOne.mp3",
     "hash": "b148244238",
@@ -12143,11 +12329,59 @@
     "duration": 0.82,
     "words": "voice/g1-science/turtle.words.json"
   },
+  "g1-science/up-bat": {
+    "file": "voice/g1-science/up-bat.mp3",
+    "hash": "6592489608",
+    "duration": 4.06,
+    "words": "voice/g1-science/up-bat.words.json"
+  },
+  "g1-science/up-owl": {
+    "file": "voice/g1-science/up-owl.mp3",
+    "hash": "5986bc26c4",
+    "duration": 3.73,
+    "words": "voice/g1-science/up-owl.words.json"
+  },
+  "g1-science/up-rooster": {
+    "file": "voice/g1-science/up-rooster.mp3",
+    "hash": "162eda9b2b",
+    "duration": 4.38,
+    "words": "voice/g1-science/up-rooster.words.json"
+  },
+  "g1-science/up-school": {
+    "file": "voice/g1-science/up-school.mp3",
+    "hash": "26bbb91bca",
+    "duration": 4.03,
+    "words": "voice/g1-science/up-school.words.json"
+  },
   "g1-science/waxPaper": {
     "file": "voice/g1-science/waxPaper.mp3",
     "hash": "b73ed63100",
     "duration": 1.21,
     "words": "voice/g1-science/waxPaper.words.json"
+  },
+  "g1-science/when-bat": {
+    "file": "voice/g1-science/when-bat.mp3",
+    "hash": "33104149dc",
+    "duration": 4.69,
+    "words": "voice/g1-science/when-bat.words.json"
+  },
+  "g1-science/when-owl": {
+    "file": "voice/g1-science/when-owl.mp3",
+    "hash": "cd121d8cdb",
+    "duration": 4.56,
+    "words": "voice/g1-science/when-owl.words.json"
+  },
+  "g1-science/when-rooster": {
+    "file": "voice/g1-science/when-rooster.mp3",
+    "hash": "203476d37a",
+    "duration": 2.08,
+    "words": "voice/g1-science/when-rooster.words.json"
+  },
+  "g1-science/when-school": {
+    "file": "voice/g1-science/when-school.mp3",
+    "hash": "33a5113b72",
+    "duration": 2.95,
+    "words": "voice/g1-science/when-school.words.json"
   },
   "g1-science/whenStars": {
     "file": "voice/g1-science/whenStars.mp3",
@@ -26057,6 +26291,12 @@
     "duration": 1.47,
     "words": "voice/k-addtake/start/n=2,thing=turtles.words.json"
   },
+  "k-addtake/start/n=3,thing=bees": {
+    "file": "voice/k-addtake/start/n=3,thing=bees.mp3",
+    "hash": "147e4197f4",
+    "duration": 1.44,
+    "words": "voice/k-addtake/start/n=3,thing=bees.words.json"
+  },
   "k-addtake/start/n=3,thing=birds": {
     "file": "voice/k-addtake/start/n=3,thing=birds.mp3",
     "hash": "9d8200a0ae",
@@ -29024,7 +29264,7 @@
   "k-lessons/explain-g1Science-families": {
     "file": "voice/k-lessons/explain-g1Science-families.mp3",
     "hash": "26049bc73f",
-    "duration": 3.5,
+    "duration": 4.48,
     "words": "voice/k-lessons/explain-g1Science-families.words.json"
   },
   "k-lessons/explain-g1Science-light": {
@@ -34340,7 +34580,7 @@
   "k-rhymes/word/word=pear": {
     "file": "voice/k-rhymes/word/word=pear.mp3",
     "hash": "89b8eb24ea",
-    "duration": 0.42,
+    "duration": 0.69,
     "words": "voice/k-rhymes/word/word=pear.words.json"
   },
   "k-rhymes/word/word=pen": {
@@ -45088,6 +45328,24 @@
     "hash": "44af863117",
     "duration": 2.1,
     "words": "voice/parade/winBy/n=99.words.json"
+  },
+  "quest/done": {
+    "file": "voice/quest/done.mp3",
+    "hash": "c01354a884",
+    "duration": 3.13,
+    "words": "voice/quest/done.words.json"
+  },
+  "quest/first": {
+    "file": "voice/quest/first.mp3",
+    "hash": "2bf2c363fd",
+    "duration": 3.81,
+    "words": "voice/quest/first.words.json"
+  },
+  "quest/today": {
+    "file": "voice/quest/today.mp3",
+    "hash": "4bfbfbe045",
+    "duration": 3.09,
+    "words": "voice/quest/today.words.json"
   },
   "slots/number/0": {
     "file": "voice/slots/number/0.mp3",
