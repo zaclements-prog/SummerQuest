@@ -1,6 +1,8 @@
 import type { Problem, ProblemProvider } from '../problem'
 import { add, compare, gcd, int, mul, rat, sub, type Rational } from '../numbers'
 import { randInt, shuffle } from '../random'
+import { createFactSampler } from '../adaptive'
+import { currentFactStats } from '../../store/progress'
 import { MINUS, fracOptions, fracText, lcm, pick, properOf, rawFrac, ratOrNull, weighted } from './fracDecKit'
 
 /**
@@ -495,22 +497,40 @@ export function forgeSumFacts(maxDenom: number): [Rational, Rational][] {
   return out
 }
 
+/** "fsum:1/2+1/3" — in the order asked (the forge renames the left part first). */
+export function forgeSumFactId(f1: Rational, f2: Rational): string {
+  return `fsum:${f1.n}/${f1.d}+${f2.n}/${f2.d}`
+}
+
 /**
  * The forge's orders ("1/2 + 1/3 = ?", answer "5/6"), dealt from a shuffled
- * deck so a run doesn't repeat. A plain multiple-choice provider too.
+ * deck so a run doesn't repeat — except that a missed order comes back a couple
+ * of orders later, and orders the child keeps missing are dealt more often
+ * (lib/adaptive's fact sampler; the deck is its uniform draw). A plain
+ * multiple-choice provider too.
  */
 export function makeForgeSumProvider(maxDenom: number): ProblemProvider {
   const facts = forgeSumFacts(maxDenom)
+  const byId = new Map(facts.map((f) => [forgeSumFactId(f[0], f[1]), f] as const))
   let deck: [Rational, Rational][] = []
   let serial = 0
+  const sampler = createFactSampler<[Rational, Rational]>({
+    key: ([f1, f2]) => forgeSumFactId(f1, f2),
+    parse: (id) => byId.get(id) ?? null,
+    uniform: () => {
+      if (deck.length === 0) deck = shuffle(facts)
+      return deck.pop()!
+    },
+    stats: currentFactStats,
+  })
   return {
     topic: TOPIC,
     reset: () => {
       deck = []
+      sampler.reset()
     },
     next(): Problem {
-      if (deck.length === 0) deck = shuffle(facts)
-      const [f1, f2] = deck.pop()!
+      const { fact: [f1, f2], factId } = sampler.next()
       const L = lcm(f1.d, f2.d)
       const answer = add(f1, f2)
       const { options, answer: key } = fracOptions(
@@ -525,6 +545,7 @@ export function makeForgeSumProvider(maxDenom: number): ProblemProvider {
         options,
         answer: key,
         subtopic: 'forge-add',
+        factId,
         skill: G5_FRAC_SKILLS.addSub,
         hint: `Rename both fractions with ${L} as the denominator first.`,
       }

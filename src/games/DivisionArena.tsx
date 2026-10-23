@@ -33,7 +33,7 @@ import {
   type DivRound,
   type RoundPlan,
 } from '../lib/arena/divisionCore'
-import { makeDivisionProvider } from '../lib/providers/division'
+import { makeArenaProviders } from '../lib/providers/division'
 import { DEFAULT_GRADE, GRADE_TIERS } from '../lib/gradeTiers'
 import { BossBar, CamelHerd, FlyingCrystal, Golem, HeldCrystal, HintArrow, HostCamel, Pedestal, Pen, type HerdJob, type HostMood } from './DivisionArena.parts'
 import { ArenaSet } from './DivisionArena.set'
@@ -183,9 +183,11 @@ export default function DivisionArena({ params, onComplete, meta, paused: hostPa
   // The arena draws its OWN bounded facts: the grade tier widens division to
   // ÷12 (dividends to 144), which the pen (rows of five) and the chalk can't
   // model legibly. Never harder than the grade, never wider than the model.
-  // Warm-ups come from the friendly corner of the same range.
-  const facts = useMemo(() => makeDivisionProvider(rules.facts), [rules])
-  const warmFacts = useMemo(() => makeDivisionProvider(rules.warm), [rules])
+  // Warm-ups come from the friendly corner of the same range; the two draws
+  // share a retry queue, so a warm-up miss comes back on a later golem.
+  const providers = useMemo(() => makeArenaProviders(rules.facts, rules.warm), [rules])
+  const facts = providers.facts
+  const warmFacts = providers.warm
 
   const spawnWorld = useMemo(() => toWorld(...SPAWN_LOCAL), [])
   const posRef = useRef(new Vector3(spawnWorld[0], 0, spawnWorld[1]))
