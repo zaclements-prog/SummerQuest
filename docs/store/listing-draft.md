@@ -147,8 +147,9 @@ parents actually use.
 
 ## Category, audience and price
 
-- **Category:** Education. TODO(owner): pick the closest subcategory offered (for example,
-  Kids or Learning). Add a secondary Kids category if the console allows one.
+- **Category:** **Kids**, from the next update (owner decision 2026-10-23). v1.0 went live on
+  2026-10-23 under Education. The console offers one category, so set it to Kids when
+  submitting versionCode 2. Keep the Learning Subjects (Math, Science and so on).
 - **Target age:** elementary school. Today's content covers grades 2–4 (about ages 7–9): pick the
   console's age bands that match the content now, and widen them as grades are added. The app is directed at
   children under 13, so Amazon's Child-Directed App Policy applies (see `content-rating.md`).
