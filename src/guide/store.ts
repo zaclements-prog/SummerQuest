@@ -257,6 +257,11 @@ export interface Guide {
   say(voice: VoiceRef, opts?: RunOptions): Promise<boolean>
   /** Say it again: the last repeatable show/sequence, from the top (🔊, the idle re-prompt). */
   replay(opts?: { gentle?: boolean }): Promise<boolean>
+  /**
+   * What "say it again" says from now on, without saying it now (a question
+   * asked without reading its sentence aloud: 🔊 reads it, as help).
+   */
+  setReplay(steps: readonly GuideStep[]): void
   /** Stop talking and pointing. `forget`: Say-it-again has nothing to repeat either (a new screen). */
   clear(opts?: { forget?: boolean }): void
   /** Is there something to say again? */
@@ -268,6 +273,9 @@ export const guide: Guide = {
   sequence: (steps, opts) => start(steps, opts),
   say: (voice, opts) => start([{ voice }], { repeatable: false, ...opts }),
   replay: (opts) => (lastRepeatable ? start(lastRepeatable, { repeatable: true, gentle: opts?.gentle }) : Promise.resolve(false)),
+  setReplay(steps) {
+    lastRepeatable = steps.length ? steps : lastRepeatable
+  },
   clear(opts) {
     if (opts?.forget) lastRepeatable = null
     const prev = snap.run

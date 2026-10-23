@@ -24031,6 +24031,12 @@
       "kind": "line",
       "file": "voice/g1-words/readAgain.mp3"
     },
+    "g1-words/readFirst": {
+      "text": "Read the sentence!",
+      "hash": "44ae302825",
+      "kind": "line",
+      "file": "voice/g1-words/readFirst.mp3"
+    },
     "g1-words/youReadIt": {
       "text": "You read the whole sentence!",
       "hash": "01d4ef8b37",

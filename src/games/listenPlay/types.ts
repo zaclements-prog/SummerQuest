@@ -135,4 +135,10 @@ export interface ListenActivityDef<S extends ListenActivitySpec = ListenActivity
    * shrinks to what to do now. Default: the question again.
    */
   repromptSteps?(problem: ListenProblem, spec: S): GuideStep[]
+  /**
+   * What 🔊 says, when it isn't the question as asked: a sentence the child
+   * reads first is read aloud only when they ask for it (🔊) or after a miss.
+   * Default: the question again.
+   */
+  replaySteps?(problem: ListenProblem, spec: S): GuideStep[]
 }

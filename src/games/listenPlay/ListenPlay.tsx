@@ -222,7 +222,14 @@ export default function ListenPlay({ provider, params, onComplete, meta, paused 
       switch (phase) {
         case 'ask': {
           if (problem.activity) {
-            await guide.sequence(activityAskSteps(problem, activityDef(problem.activity), misses))
+            const def = activityDef(problem.activity)
+            const steps = activityAskSteps(problem, def, misses)
+            // 🔊 can say more than the question (Read along: it reads the sentence, as help)
+            const replay = def?.replaySteps?.(problem, problem.activity)
+            if (replay?.length) {
+              guide.setReplay(replay)
+              await guide.sequence(steps, { repeatable: false })
+            } else await guide.sequence(steps)
             return
           }
           const open = cards.map((_, i) => i).filter((i) => !tried.includes(i))
