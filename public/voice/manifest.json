@@ -3113,6 +3113,12 @@
     "duration": 1.16,
     "words": "voice/g1-facts/hop-1.words.json"
   },
+  "g1-facts/hop-2": {
+    "file": "voice/g1-facts/hop-2.mp3",
+    "hash": "6587805f90",
+    "duration": 1.26,
+    "words": "voice/g1-facts/hop-2.words.json"
+  },
   "g1-facts/hop-3": {
     "file": "voice/g1-facts/hop-3.mp3",
     "hash": "09f6321e10",
@@ -6605,11 +6611,35 @@
     "duration": 1.24,
     "words": "voice/g1-facts/take-10.words.json"
   },
+  "g1-facts/take-2": {
+    "file": "voice/g1-facts/take-2.mp3",
+    "hash": "6ea0aae51c",
+    "duration": 1.24,
+    "words": "voice/g1-facts/take-2.words.json"
+  },
   "g1-facts/take-3": {
     "file": "voice/g1-facts/take-3.mp3",
     "hash": "96ccd03d5a",
     "duration": 0.88,
     "words": "voice/g1-facts/take-3.words.json"
+  },
+  "g1-facts/take-4": {
+    "file": "voice/g1-facts/take-4.mp3",
+    "hash": "6d6530986c",
+    "duration": 1.35,
+    "words": "voice/g1-facts/take-4.words.json"
+  },
+  "g1-facts/take-5": {
+    "file": "voice/g1-facts/take-5.mp3",
+    "hash": "a44fa396cf",
+    "duration": 1.31,
+    "words": "voice/g1-facts/take-5.words.json"
+  },
+  "g1-facts/take-6": {
+    "file": "voice/g1-facts/take-6.mp3",
+    "hash": "6a3d8db2aa",
+    "duration": 1.32,
+    "words": "voice/g1-facts/take-6.words.json"
   },
   "g1-facts/take-7": {
     "file": "voice/g1-facts/take-7.mp3",
@@ -6622,6 +6652,12 @@
     "hash": "0bd4a972ed",
     "duration": 1.21,
     "words": "voice/g1-facts/take-8.words.json"
+  },
+  "g1-facts/take-9": {
+    "file": "voice/g1-facts/take-9.mp3",
+    "hash": "e05e04a08f",
+    "duration": 1.31,
+    "words": "voice/g1-facts/take-9.words.json"
   },
   "g1-facts/tenAnd-1": {
     "file": "voice/g1-facts/tenAnd-1.mp3",
@@ -10463,6 +10499,18 @@
     "duration": 1.67,
     "words": "voice/g1-phonics/starts-gift.words.json"
   },
+  "g1-phonics/starts-hat": {
+    "file": "voice/g1-phonics/starts-hat.mp3",
+    "hash": "d65676d80c",
+    "duration": 2.09,
+    "words": "voice/g1-phonics/starts-hat.words.json"
+  },
+  "g1-phonics/starts-hen": {
+    "file": "voice/g1-phonics/starts-hen.mp3",
+    "hash": "2129315be4",
+    "duration": 1.72,
+    "words": "voice/g1-phonics/starts-hen.words.json"
+  },
   "g1-phonics/starts-lock": {
     "file": "voice/g1-phonics/starts-lock.mp3",
     "hash": "e1daf61652",
@@ -10540,6 +10588,12 @@
     "hash": "86d2e53c37",
     "duration": 2.41,
     "words": "voice/g1-phonics/starts-ship.words.json"
+  },
+  "g1-phonics/starts-shirt": {
+    "file": "voice/g1-phonics/starts-shirt.mp3",
+    "hash": "59be591658",
+    "duration": 1.84,
+    "words": "voice/g1-phonics/starts-shirt.words.json"
   },
   "g1-phonics/starts-shoe": {
     "file": "voice/g1-phonics/starts-shoe.mp3",
@@ -11525,6 +11579,12 @@
     "duration": 4.68,
     "words": "voice/g1-science/grows-baby-monkey.words.json"
   },
+  "g1-science/grows-bunny": {
+    "file": "voice/g1-science/grows-bunny.mp3",
+    "hash": "6bd39c842d",
+    "duration": 4.66,
+    "words": "voice/g1-science/grows-bunny.words.json"
+  },
   "g1-science/grows-calf": {
     "file": "voice/g1-science/grows-calf.mp3",
     "hash": "24c9b12fc3",
@@ -11537,11 +11597,23 @@
     "duration": 3.4,
     "words": "voice/g1-science/grows-chick.words.json"
   },
+  "g1-science/grows-foal": {
+    "file": "voice/g1-science/grows-foal.mp3",
+    "hash": "1db6b0db81",
+    "duration": 3.47,
+    "words": "voice/g1-science/grows-foal.words.json"
+  },
   "g1-science/grows-kitten": {
     "file": "voice/g1-science/grows-kitten.mp3",
     "hash": "b21eca41a0",
     "duration": 5.18,
     "words": "voice/g1-science/grows-kitten.words.json"
+  },
+  "g1-science/grows-piglet": {
+    "file": "voice/g1-science/grows-piglet.mp3",
+    "hash": "a36be78224",
+    "duration": 5.11,
+    "words": "voice/g1-science/grows-piglet.words.json"
   },
   "g1-science/grows-puppy": {
     "file": "voice/g1-science/grows-puppy.mp3",
@@ -12100,6 +12172,12 @@
     "hash": "daa9374593",
     "duration": 0.68,
     "words": "voice/g1-science/winter.words.json"
+  },
+  "g1-science/wood": {
+    "file": "voice/g1-science/wood.mp3",
+    "hash": "672d2fa0bd",
+    "duration": 0.75,
+    "words": "voice/g1-science/wood.words.json"
   },
   "g1-shapes/cantRoll": {
     "file": "voice/g1-shapes/cantRoll.mp3",
@@ -22541,6 +22619,12 @@
     "duration": 2.04,
     "words": "voice/g1-woods/mouseCookies-a/n=16.words.json"
   },
+  "g1-woods/mouseCookies-b/n=2": {
+    "file": "voice/g1-woods/mouseCookies-b/n=2.mp3",
+    "hash": "3c2d16bfc0",
+    "duration": 1.64,
+    "words": "voice/g1-woods/mouseCookies-b/n=2.words.json"
+  },
   "g1-woods/mouseCookies-b/n=3": {
     "file": "voice/g1-woods/mouseCookies-b/n=3.mp3",
     "hash": "79271dccc4",
@@ -22967,6 +23051,12 @@
     "duration": 2.1,
     "words": "voice/g1-woods/pondParty-c/n=2.words.json"
   },
+  "g1-woods/pondParty-c/n=3": {
+    "file": "voice/g1-woods/pondParty-c/n=3.mp3",
+    "hash": "2645cc4a0e",
+    "duration": 2.47,
+    "words": "voice/g1-woods/pondParty-c/n=3.words.json"
+  },
   "g1-woods/pondParty-c/n=4": {
     "file": "voice/g1-woods/pondParty-c/n=4.mp3",
     "hash": "22957747de",
@@ -23302,6 +23392,54 @@
     "hash": "691d3b26b0",
     "duration": 1.74,
     "words": "voice/g1-woods/rockFish-q.words.json"
+  },
+  "g1-woods/sheepField-a/n=10": {
+    "file": "voice/g1-woods/sheepField-a/n=10.mp3",
+    "hash": "13ebf7435b",
+    "duration": 2.08,
+    "words": "voice/g1-woods/sheepField-a/n=10.words.json"
+  },
+  "g1-woods/sheepField-a/n=11": {
+    "file": "voice/g1-woods/sheepField-a/n=11.mp3",
+    "hash": "5435d6aa75",
+    "duration": 2.42,
+    "words": "voice/g1-woods/sheepField-a/n=11.words.json"
+  },
+  "g1-woods/sheepField-a/n=12": {
+    "file": "voice/g1-woods/sheepField-a/n=12.mp3",
+    "hash": "1cf0f3b411",
+    "duration": 2.16,
+    "words": "voice/g1-woods/sheepField-a/n=12.words.json"
+  },
+  "g1-woods/sheepField-a/n=5": {
+    "file": "voice/g1-woods/sheepField-a/n=5.mp3",
+    "hash": "6bd9884dce",
+    "duration": 2.1,
+    "words": "voice/g1-woods/sheepField-a/n=5.words.json"
+  },
+  "g1-woods/sheepField-a/n=6": {
+    "file": "voice/g1-woods/sheepField-a/n=6.mp3",
+    "hash": "e442384330",
+    "duration": 2.35,
+    "words": "voice/g1-woods/sheepField-a/n=6.words.json"
+  },
+  "g1-woods/sheepField-a/n=7": {
+    "file": "voice/g1-woods/sheepField-a/n=7.mp3",
+    "hash": "6e8c5ad461",
+    "duration": 2.2,
+    "words": "voice/g1-woods/sheepField-a/n=7.words.json"
+  },
+  "g1-woods/sheepField-a/n=8": {
+    "file": "voice/g1-woods/sheepField-a/n=8.mp3",
+    "hash": "d133dfe230",
+    "duration": 2.09,
+    "words": "voice/g1-woods/sheepField-a/n=8.words.json"
+  },
+  "g1-woods/sheepField-a/n=9": {
+    "file": "voice/g1-woods/sheepField-a/n=9.mp3",
+    "hash": "910f8fa5bc",
+    "duration": 2.16,
+    "words": "voice/g1-woods/sheepField-a/n=9.words.json"
   },
   "g1-woods/sheepField-b/n=2": {
     "file": "voice/g1-woods/sheepField-b/n=2.mp3",
@@ -24443,6 +24581,12 @@
     "duration": 1.85,
     "words": "voice/g1-words/findWord/word=just.words.json"
   },
+  "g1-words/findWord/word=know": {
+    "file": "voice/g1-words/findWord/word=know.mp3",
+    "hash": "a014c12273",
+    "duration": 1.39,
+    "words": "voice/g1-words/findWord/word=know.words.json"
+  },
   "g1-words/findWord/word=let": {
     "file": "voice/g1-words/findWord/word=let.mp3",
     "hash": "69b9cfc9cc",
@@ -24796,6 +24940,12 @@
     "hash": "7f9bd1156f",
     "duration": 2.11,
     "words": "voice/g1-words/thatWordIs/word=just.words.json"
+  },
+  "g1-words/thatWordIs/word=know": {
+    "file": "voice/g1-words/thatWordIs/word=know.mp3",
+    "hash": "ca3632d615",
+    "duration": 2.07,
+    "words": "voice/g1-words/thatWordIs/word=know.words.json"
   },
   "g1-words/thatWordIs/word=let": {
     "file": "voice/g1-words/thatWordIs/word=let.mp3",
@@ -25630,6 +25780,12 @@
     "hash": "3398b0c420",
     "duration": 1.18,
     "words": "voice/k-addtake/hopAway-1.words.json"
+  },
+  "k-addtake/hopAway/n=2": {
+    "file": "voice/k-addtake/hopAway/n=2.mp3",
+    "hash": "1aaa616e85",
+    "duration": 1.28,
+    "words": "voice/k-addtake/hopAway/n=2.words.json"
   },
   "k-addtake/hopAway/n=3": {
     "file": "voice/k-addtake/hopAway/n=3.mp3",
@@ -28865,6 +29021,12 @@
     "duration": 3.59,
     "words": "voice/k-lessons/explain-g1Reading-teams.words.json"
   },
+  "k-lessons/explain-g1Science-families": {
+    "file": "voice/k-lessons/explain-g1Science-families.mp3",
+    "hash": "26049bc73f",
+    "duration": 3.5,
+    "words": "voice/k-lessons/explain-g1Science-families.words.json"
+  },
   "k-lessons/explain-g1Science-light": {
     "file": "voice/k-lessons/explain-g1Science-light.mp3",
     "hash": "83eca99d55",
@@ -29285,6 +29447,12 @@
     "duration": 1.4,
     "words": "voice/k-letters/findLittle/letter=h.words.json"
   },
+  "k-letters/findLittle/letter=i": {
+    "file": "voice/k-letters/findLittle/letter=i.mp3",
+    "hash": "b6a802186b",
+    "duration": 1.4,
+    "words": "voice/k-letters/findLittle/letter=i.words.json"
+  },
   "k-letters/findLittle/letter=j": {
     "file": "voice/k-letters/findLittle/letter=j.mp3",
     "hash": "86f2ba7424",
@@ -29350,6 +29518,12 @@
     "hash": "fe49965177",
     "duration": 1.36,
     "words": "voice/k-letters/findLittle/letter=t.words.json"
+  },
+  "k-letters/findLittle/letter=u": {
+    "file": "voice/k-letters/findLittle/letter=u.mp3",
+    "hash": "378e62e00a",
+    "duration": 1.27,
+    "words": "voice/k-letters/findLittle/letter=u.words.json"
   },
   "k-letters/findLittle/letter=v": {
     "file": "voice/k-letters/findLittle/letter=v.mp3",
@@ -29506,6 +29680,12 @@
     "hash": "7dff872fe9",
     "duration": 0.74,
     "words": "voice/k-letters/letter/letter=t.words.json"
+  },
+  "k-letters/letter/letter=u": {
+    "file": "voice/k-letters/letter/letter=u.mp3",
+    "hash": "b6e0c363fd",
+    "duration": 0.48,
+    "words": "voice/k-letters/letter/letter=u.words.json"
   },
   "k-letters/letter/letter=v": {
     "file": "voice/k-letters/letter/letter=v.mp3",
@@ -30292,6 +30472,12 @@
     "hash": "70c17dbbee",
     "duration": 1.27,
     "words": "voice/k-letters/thisIsLittle/letter=t.words.json"
+  },
+  "k-letters/thisIsLittle/letter=u": {
+    "file": "voice/k-letters/thisIsLittle/letter=u.mp3",
+    "hash": "ebdcf7705e",
+    "duration": 1.38,
+    "words": "voice/k-letters/thisIsLittle/letter=u.words.json"
   },
   "k-letters/thisIsLittle/letter=v": {
     "file": "voice/k-letters/thisIsLittle/letter=v.mp3",
@@ -34151,6 +34337,12 @@
     "duration": 0.79,
     "words": "voice/k-rhymes/word/word=nose.words.json"
   },
+  "k-rhymes/word/word=pear": {
+    "file": "voice/k-rhymes/word/word=pear.mp3",
+    "hash": "89b8eb24ea",
+    "duration": 0.42,
+    "words": "voice/k-rhymes/word/word=pear.words.json"
+  },
   "k-rhymes/word/word=pen": {
     "file": "voice/k-rhymes/word/word=pen.mp3",
     "hash": "863616e53a",
@@ -34192,6 +34384,12 @@
     "hash": "4a14d6cdaa",
     "duration": 0.78,
     "words": "voice/k-rhymes/word/word=ship.words.json"
+  },
+  "k-rhymes/word/word=shoe": {
+    "file": "voice/k-rhymes/word/word=shoe.mp3",
+    "hash": "70076487f9",
+    "duration": 0.77,
+    "words": "voice/k-rhymes/word/word=shoe.words.json"
   },
   "k-rhymes/word/word=snail": {
     "file": "voice/k-rhymes/word/word=snail.mp3",
@@ -45143,6 +45341,12 @@
     "duration": 0.5,
     "words": "voice/slots/word/crown.words.json"
   },
+  "slots/word/dock": {
+    "file": "voice/slots/word/dock.mp3",
+    "hash": "15aeb2d5dc",
+    "duration": 0.32,
+    "words": "voice/slots/word/dock.words.json"
+  },
   "slots/word/dog": {
     "file": "voice/slots/word/dog.mp3",
     "hash": "c0b614f2db",
@@ -45346,6 +45550,12 @@
     "hash": "0d2d42d060",
     "duration": 0.57,
     "words": "voice/slots/word/orange.words.json"
+  },
+  "slots/word/pear": {
+    "file": "voice/slots/word/pear.mp3",
+    "hash": "33815f2d52",
+    "duration": 0.36,
+    "words": "voice/slots/word/pear.words.json"
   },
   "slots/word/peep": {
     "file": "voice/slots/word/peep.mp3",

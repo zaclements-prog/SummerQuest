@@ -119,6 +119,23 @@ class Rules(unittest.TestCase):
         self.assertIn("duration", vl.short_gate("seven", "seven", 0.1))
         self.assertIn("duration", vl.short_gate("seven", "seven", 6.0))
 
+    def test_short_gate_accepts_whisper_spellings_of_the_same_sound(self):
+        self.assertIsNone(vl.short_gate("Take away eight.", "Takeaway 8", 1.0))
+        self.assertIsNone(vl.short_gate("Hop back two.", "hop back too", 1.0))
+        self.assertIsNone(vl.short_gate("shoe", "Shoo.", 0.6))
+        self.assertIsNone(vl.short_gate("know", "No.", 0.6))
+        self.assertIsNone(vl.short_gate("wood", "Would.", 0.6))
+        self.assertIsNone(vl.short_gate("two hop away.", "to hop away", 1.0))
+        self.assertIsNone(vl.short_gate("u", "You.", 0.6))
+        self.assertGreaterEqual(recovery("five sheep ate grass in the field.",
+                                         "Five sheep, 8 grass in the field."), 0.94)
+        self.assertGreaterEqual(recovery("Find the little u.", "Find the little you."), 0.94)
+        self.assertGreaterEqual(recovery("This is a foal. Tap its parent!",
+                                         "This is a fowl. Tap its parent!"), 0.94)
+        # still a different word
+        self.assertIn("heard", vl.short_gate("Take away eight.", "Take away 9", 1.0))
+        self.assertIn("heard", vl.short_gate("shoe", "show", 0.6))
+
     def test_prompt_frames_only_touch_stitched_clips(self):
         slot = {"kind": "slot", "text": "seven"}
         piece = {"kind": "piece", "text": "Tap the group with"}

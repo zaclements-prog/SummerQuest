@@ -49,6 +49,16 @@ _HOMOPHONES = {
     "here": "hear",
     "their": "there",
     "son": "sun",
+    # owner-approved 2026-10-23: lone-word and short-phrase clips that no
+    # take could pass because Whisper spells the same sound the other way
+    "shoo": "shoe",
+    "no": "know",
+    "would": "wood",
+    "too": "2",  # "hop back two" heard as "hop back too"
+    "to": "2",   # "two hop away" heard as "to hop away"
+    "ate": "8",  # "five sheep ate grass" heard as "five sheep 8 grass"
+    "you": "u",  # "This is little u" heard as "little you"
+    "fowl": "foal",
 }
 
 # Letter-name/sound spellings used by the phonics packs ("Bat starts with
@@ -160,6 +170,7 @@ def _fold_ordinal_fraction(m):
 
 
 _SYMBOLS = [
+    (r"\btakeaway\b", "take away"),           # Whisper joins "take away 4"
     (r"\s[×✕]\s", " times "),                 # explicit multiplication marks
     (r"(?<=\d)\s*x\s*(?=\d)", " times "),    # "7 x 8" only, not "six"
     (r"\s÷\s", " divided by "),
