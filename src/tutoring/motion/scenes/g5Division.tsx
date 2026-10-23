@@ -41,6 +41,19 @@ function Board({ t, at = 0 }: { t: number; at?: number }) {
   )
 }
 
+/** A number written one digit per dividend column, starting at column `i0` (a narrow 1 can't drift out of its column). */
+function Digits({ text, i0, y, color }: { text: string; i0: number; y: number; color: string }) {
+  return (
+    <>
+      {[...text].map((d, k) => (
+        <Title key={k} x={digitX(i0 + k)} y={y} size={SZ} color={color} stroke={M.white}>
+          {d}
+        </Title>
+      ))}
+    </>
+  )
+}
+
 /** A quotient digit above dividend place `i`. */
 function QDigit({ t, at, i, d }: { t: number; at: number; i: number; d: string }) {
   return (
@@ -103,9 +116,7 @@ const estimate: Scene = ({ t, cue }: SceneProps) => {
       </Pop>
       <Draw t={t} at={minus} d={`M ${digitX(0) - 40} ${row(1) + 34} H ${digitX(1) + 24}`} width={5} />
       <Pop t={t} at={minus + 0.8} x={digitX(0.5)} y={row(2)}>
-        <Title x={digitX(1)} y={row(2)} size={SZ} color={DIFF} stroke={M.white}>
-          11
-        </Title>
+        <Digits text="11" i0={0} y={row(2)} color={DIFF} />
       </Pop>
     </>
   )
@@ -129,9 +140,7 @@ const bringDown: Scene = ({ t, cue }: SceneProps) => {
         − 56
       </Title>
       <path d={`M ${digitX(0) - 40} ${row(1) + 34} H ${digitX(1) + 24}`} stroke={M.ink} strokeWidth={5} strokeLinecap="round" />
-      <Title x={digitX(1)} y={row(2)} size={SZ} color={DIFF} stroke={M.white}>
-        11
-      </Title>
+      <Digits text="11" i0={0} y={row(2)} color={DIFF} />
       {k > 0 && (
         <Title x={x} y={y} size={SZ} color={k >= 1 ? DIFF : M.ink} stroke={M.white}>
           2
@@ -139,10 +148,12 @@ const bringDown: Scene = ({ t, cue }: SceneProps) => {
       )}
       <Arrow t={t} at={bring} from={[digitX(2) + 34, row(0) + 10]} to={[digitX(2) + 34, row(2) - 30]} bend={0.3} color={M.gold} />
       <QDigit t={t} at={four} i={2} d="4" />
-      <Pop t={t} at={four + 0.6} x={digitX(1.5)} y={row(3)}>
-        <Title x={digitX(1.5)} y={row(3)} size={SZ} color={PROD} stroke={M.white}>
-          − 112
+      {/* 112 sits in the 6-7-2 columns, under the 112 above it; its minus stands to the left */}
+      <Pop t={t} at={four + 0.6} x={digitX(1)} y={row(3)}>
+        <Title x={digitX(-1) - 6} y={row(3)} size={SZ} color={PROD} stroke={M.white}>
+          −
         </Title>
+        <Digits text="112" i0={0} y={row(3)} color={PROD} />
       </Pop>
       <Draw t={t} at={nothing - 0.3} d={`M ${digitX(0) - 40} ${row(3) + 34} H ${digitX(2) + 24}`} width={5} />
       <Pop t={t} at={nothing} x={digitX(2)} y={row(4)}>
