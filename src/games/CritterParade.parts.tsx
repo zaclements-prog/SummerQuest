@@ -331,13 +331,22 @@ export function GatePair3D({
 // ── counting cage ───────────────────────────────────────────────────────────
 
 /** "3 friends join!": a little wooden pen across the middle of the track; its front swings open. */
-export function Cage3D({ z, amount, open, listen }: { z: number; amount: number; open: boolean; listen: boolean }) {
+/** The words under a sign's number: none for K–1 (`words` false), who see the dots and the number and hear the rest. */
+export function cageSignWords(amount: number, dots: boolean, words: boolean): string {
+  if (!words) return dots && amount <= 10 ? `+${amount}` : ''
+  return dots && amount <= 10 ? `${amount} join!` : 'friends join!'
+}
+export function gangSignWords(happy: boolean, words: boolean): string {
+  return words ? (happy ? 'happy now!' : 'Grumble Gang') : happy ? '😊' : '😠'
+}
+
+export function Cage3D({ z, amount, open, listen, words = true }: { z: number; amount: number; open: boolean; listen: boolean; words?: boolean }) {
   const door = useRef<Group>(null)
   const openRef = useRef(open)
   useEffect(() => {
     openRef.current = open
   }, [open])
-  const tex = useCanvasTexture(`cage|${amount}|${listen}`, (c) => {
+  const tex = useCanvasTexture(`cage|${amount}|${listen}|${words}`, (c) => {
     const ctx = c.getContext('2d')
     if (!ctx) return
     ctx.clearRect(0, 0, c.width, c.height)
@@ -350,10 +359,11 @@ export function Cage3D({ z, amount, open, listen }: { z: number; amount: number;
     if (listen && amount <= 10) {
       outlinedText(ctx, '+', 80, c.height / 2 - 20, 110)
       drawDots(ctx, amount, c.width / 2 + 40, c.height / 2 - 20, 26, '#ffffff')
-      outlinedText(ctx, `${amount} join!`, c.width / 2 + 30, c.height - 48, 46, '#ffffff')
+      outlinedText(ctx, cageSignWords(amount, true, words), c.width / 2 + 30, c.height - 48, 46, '#ffffff')
     } else {
-      outlinedText(ctx, `+${amount}`, c.width / 2, c.height / 2 - 18, 130)
-      outlinedText(ctx, 'friends join!', c.width / 2, c.height - 50, 44)
+      const under = cageSignWords(amount, false, words)
+      outlinedText(ctx, `+${amount}`, c.width / 2, under ? c.height / 2 - 18 : c.height / 2 + 6, under ? 130 : 150)
+      if (under) outlinedText(ctx, under, c.width / 2, c.height - 50, 44)
     }
   })
   const signMat = useMemo(() => new MeshBasicMaterial({ map: tex, transparent: true, toneMapped: false }), [tex])
@@ -503,8 +513,8 @@ export function Rope({ ropeRef, ribbonRef, length }: { ropeRef: RefObject<Group 
 }
 
 /** The Grumble Gang's banner: their number, big, over their leader's head. */
-export function GangSign({ count, happy }: { count: number; happy: boolean }) {
-  const tex = useCanvasTexture(`gang|${count}|${happy}`, (c) => {
+export function GangSign({ count, happy, words = true }: { count: number; happy: boolean; words?: boolean }) {
+  const tex = useCanvasTexture(`gang|${count}|${happy}|${words}`, (c) => {
     const ctx = c.getContext('2d')
     if (!ctx) return
     ctx.clearRect(0, 0, c.width, c.height)
@@ -515,7 +525,7 @@ export function GangSign({ count, happy }: { count: number; happy: boolean }) {
     ctx.strokeStyle = '#3a2c38'
     ctx.stroke()
     outlinedText(ctx, String(count), c.width / 2, c.height / 2 - 14, 150)
-    outlinedText(ctx, happy ? 'happy now!' : 'Grumble Gang', c.width / 2, c.height - 46, 42)
+    outlinedText(ctx, gangSignWords(happy, words), c.width / 2, c.height - 46, words ? 42 : 56)
   })
   const mat = useMemo(() => new MeshBasicMaterial({ map: tex, transparent: true, toneMapped: false }), [tex])
   useEffect(() => () => mat.dispose(), [mat])

@@ -112,7 +112,7 @@ export function SpeechBubble({ text }: { text: string }) {
  * Run score in a chunky chip; the number springs each time it changes. Its
  * icon is a target (🎯), not a star, so the score never reads as stars earned.
  */
-export function ScoreChip({ score, best }: { score: number; best?: number }) {
+export function ScoreChip({ score, best, pictureBest = false }: { score: number; best?: number; /** K–1: the best as 🏆 and its number, no word to read */ pictureBest?: boolean }) {
   return (
     <div
       className="kid-text pointer-events-none select-none flex items-center gap-2 rounded-2xl px-3 py-1 text-white shadow-lg"
@@ -131,7 +131,11 @@ export function ScoreChip({ score, best }: { score: number; best?: number }) {
       >
         {score.toLocaleString()}
       </motion.span>
-      {best != null && best > 0 && <span className="text-xs opacity-75 leading-none">best {best.toLocaleString()}</span>}
+      {best != null && best > 0 && (
+        <span className="text-xs opacity-75 leading-none" aria-label={pictureBest ? `best ${best.toLocaleString()}` : undefined}>
+          {pictureBest ? '🏆' : 'best'} {best.toLocaleString()}
+        </span>
+      )}
     </div>
   )
 }

@@ -438,13 +438,13 @@ export function ParadeScene({
       {gates.map((gt) => (
         <GatePair3D key={`${gt.at}`} pair={gt.pair} z={-gt.at} colors={gt.colors} listen={dots} helper={scaffold} picked={gt.picked} onTap={onTap} />
       ))}
-      {cage && <Cage3D key={cage.at} z={-cage.at} amount={cage.amount} open={cage.open} listen={dots} />}
+      {cage && <Cage3D key={cage.at} z={-cage.at} amount={cage.amount} open={cage.open} listen={dots} words={!listen} />}
       <group visible={gangShown}>
         <FinaleProps z={-finaleAt} />
         <Rope ropeRef={ropeRef} ribbonRef={ribbonRef} length={6.6} />
         <group ref={gangLeaderRef}>
           {leaderModel && <mesh geometry={leaderModel} material={bodyMat} scale={2.3} castShadow={!low} />}
-          <GangSign count={gang} happy={gangCheer} />
+          <GangSign count={gang} happy={gangCheer} words={!listen} />
         </group>
       </group>
       {/* the leader */}

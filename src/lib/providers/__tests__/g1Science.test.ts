@@ -9,9 +9,16 @@ import {
   G1_NO_LIGHTS,
   G1_PARENTS,
   G1_PARTS,
+  G1_DAY_NIGHT_THINGS,
+  G1_SEASONS,
+  G1_SKY_PATTERNS,
   MATERIAL_ASK,
+  SEASON_PICS,
   SKY,
+  SKY_TIERS,
   makeG1ScienceProvider,
+  nextSeason,
+  questionKey,
   type G1ScienceMode,
 } from '../g1Science'
 import { voiceText } from '../../../voice/registry'
@@ -93,6 +100,24 @@ function rightCards(q: ListenProblem): string[] {
       )
     case 'season':
       return vals.filter((v) => (said.includes('more daylight') ? v === 'summer' : v === 'winter'))
+    case 'nightThing': {
+      const thing = (Object.keys(G1_DAY_NIGHT_THINGS) as (keyof typeof G1_DAY_NIGHT_THINGS)[]).find((k) => q.picture?.kind === 'emoji' && q.picture.emoji === G1_DAY_NIGHT_THINGS[k].emoji)!
+      return vals.filter((v) => v === G1_DAY_NIGHT_THINGS[thing].when)
+    }
+    case 'moonShape':
+      return vals.filter((v) => (said.includes('full moon') ? v === 'moonFull' : said.includes('half moon') ? v === 'moonHalf' : said.includes('thin moon') && v === 'moonThin'))
+    case 'skyPattern':
+      // sun, moon, sun: the moon (night) next; moon, sun, moon: the sun (day)
+      return vals.filter((v) => v === G1_SKY_PATTERNS[artName(q.picture) as keyof typeof G1_SKY_PATTERNS])
+    case 'seasonSee': {
+      const now = G1_SEASONS.find((x) => said === `It is ${x}. What might you see outside?`)!
+      return vals.filter((v) => v === now)
+    }
+    case 'seasonNext': {
+      const now = G1_SEASONS.find((x) => said === `It is ${x}. Which season comes next?`)!
+      expect(q.picture).toEqual({ kind: 'emoji', emoji: SEASON_PICS[now] })
+      return vals.filter((v) => v === nextSeason(now))
+    }
     case 'baby': {
       const baby = Object.keys(G1_FAMILIES).find((b) => said === `This is a ${b}. Tap its parent!`) as keyof typeof G1_FAMILIES
       return vals.filter((v) => v === G1_FAMILIES[baby].parent)
@@ -123,8 +148,16 @@ describe('Sky Summit: the stages', () => {
   it('each stage starts easy and covers its kinds in its first round', () => {
     const first = (mode: G1ScienceMode) => round(mode, `ramp-${mode}`, 6).map((q) => q.subtopic)
     expect(first('lightSound')).toEqual(['dark', 'sound', 'stopSound', 'shadow', 'material', 'material'])
-    expect(first('sky')).toEqual(['dayNight', 'seeSky', 'whenSee', 'sunMove', 'skyNext', 'season'])
     expect(first('families')).toEqual(['baby', 'baby', 'helps', 'parts', 'helps', 'parts'])
+    // the sky: two easy kinds, two middling, two harder, six different ones (its eleven kinds share the rounds)
+    const seen = new Set<string>()
+    for (let s = 0; s < SEEDS; s++) {
+      const kinds = round('sky', `ramp-sky-${s}`, 6).map((q) => q.subtopic!)
+      expect(new Set(kinds).size, kinds.join()).toBe(6)
+      kinds.forEach((k, i) => expect(SKY_TIERS[Math.floor(i / 2)], `${i}: ${k}`).toContain(k))
+      for (const k of kinds) seen.add(k)
+    }
+    expect(seen.size).toBe(SKY_TIERS.flat().length)
   })
 })
 
@@ -172,11 +205,41 @@ describe('every Sky Summit question', () => {
     })
   }
 
+  it('the sky has about 32 different questions, and a round never asks one twice', () => {
+    const all = new Set<string>()
+    for (let s = 0; s < 120; s++) {
+      for (const n of [6, 12]) {
+        const qs = round('sky', `sky-pool-${s}-${n}`, n)
+        const keys = qs.map(questionKey)
+        // (a round is six; a longer run, the daily quest's, keeps its last six apart)
+        for (let i = 0; i < keys.length; i++) expect(keys.slice(Math.max(0, i - 5), i), keys[i]).not.toContain(keys[i])
+        for (const k of keys) all.add(k)
+      }
+    }
+    expect(all.size).toBeGreaterThanOrEqual(32)
+  })
+
+  it('every sky card has a picture and a voice line', () => {
+    for (let s = 0; s < SEEDS; s++) {
+      for (const q of round('sky', `sky-cards-${s}`, 12)) {
+        for (const c of q.pictureOptions!) {
+          expect(picOk(c.picture), `${q.prompt}: ${c.value}`).toEqual([])
+          expect(c.picture, `${q.prompt}: ${c.value}`).toBeDefined()
+          expect(said(c.speech).length).toBeGreaterThan(0)
+        }
+      }
+    }
+  })
+
   it('wrong cards are never arguably right', () => {
     // no light source among the "no light" things; the moon is never a wrong card for the day
     for (const e of Object.values(G1_NO_LIGHTS)) expect(Object.values(G1_LIGHTS)).not.toContain(e)
     for (let s = 0; s < SEEDS; s++) {
-      for (const q of round('sky', `sky-moon-${s}`)) if (q.subtopic === 'seeSky' && q.answer === 'sun') expect(q.options).not.toContain('moon')
+      for (const q of round('sky', `sky-moon-${s}`)) {
+        if (q.subtopic === 'seeSky' && q.answer === 'sun') expect(q.options).not.toContain('moon')
+        // "what might you see?" offers only the season across the year (a snowman in summer, never in spring)
+        if (q.subtopic === 'seasonSee') expect(q.options.length).toBe(2)
+      }
       for (const q of round('families', `fam-${s}`)) {
         if (q.subtopic !== 'parts') continue
         // a turtle swims (never a wrong card for fins); an elephant has big ears (never a wrong card for ears)
@@ -186,7 +249,7 @@ describe('every Sky Summit question', () => {
         if (q.answer === 'cactus') for (const o of q.options) expect(['cactus', 'sunflower', 'tulip']).toContain(o)
       }
     }
-    for (const e of [...Object.values(G1_LIGHTS), ...Object.values(G1_NO_LIGHTS), ...Object.values(SKY), ...Object.values(G1_PARENTS), ...Object.values(G1_LIVING), ...Object.values(G1_FAMILIES).map((f) => f.baby)]) expect(oldEmoji(e), e).toBe(true)
+    for (const e of [...Object.values(G1_LIGHTS), ...Object.values(G1_NO_LIGHTS), ...Object.values(SKY), ...Object.values(G1_PARENTS), ...Object.values(G1_LIVING), ...Object.values(G1_FAMILIES).map((f) => f.baby), ...Object.values(SEASON_PICS), ...Object.values(G1_DAY_NIGHT_THINGS).map((t) => t.emoji)]) expect(oldEmoji(e), e).toBe(true)
   })
 
   it('the shadow drawings: the right one has its shadow away from the sun', () => {
