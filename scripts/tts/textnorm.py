@@ -76,23 +76,69 @@ _PHONEME_TO_LETTER = {
 }
 
 
+# Letter-name words used in phonics packs ("Bee.", "listen buh ell", "Here is
+# one bee."). Whisper frequently writes the LETTER instead of the word ("B"),
+# or a vowel-shortened form ("Be") — even on correct audio. These words are
+# homophonous with letter names ONLY in phonics contexts; in ordinary sentences
+# ("we can see the bus") they are not letters, so the fold is guarded:
+#  - after "listen" (sound-spelling frame), or
+#  - after "one" (count frame), or
+#  - when the clip IS just the word (slot/word clips), handled in short_gate.
+# Lone letters fold to their letter class everywhere (scripts never emit them).
+# Letter sounds and letter names, as the phonics scripts spell them and as
+# Whisper transcribes them. Every spelling here (buh, shhhh, bee, ell, lone
+# letters) occurs ONLY in phonics content, so folding to a common "snd<letter>"
+# token globally is safe — and symmetric: the fold runs identically on script
+# and transcript, so it can only remove ASR spelling noise, never invent a
+# match. Digit shapes (2 == tuh) ARE guarded to the "starts/ends with X"
+# frame, since bare digits elsewhere are real numbers.
+_SOUND_WORDS = {
+    # phonetic spellings (K/G1 phonics scripts)
+    "kuh": "k", "buh": "b", "muh": "m", "vuh": "v", "wuh": "w", "guh": "g",
+    "puh": "p", "duh": "d", "tuh": "t", "nuh": "n", "fuh": "f", "suh": "s",
+    "shuh": "sh", "chuh": "ch", "thuh": "th", "zuh": "z", "juh": "j",
+    "luh": "l", "ruh": "r", "eh": "e", "ih": "i", "aa": "a", "uh": "u",
+    # stretched continuants
+    "hhhh": "h", "mmmm": "m", "vvvv": "v", "rrrr": "r", "nnnn": "n",
+    "ffff": "f", "ssss": "s", "llll": "l", "shhhh": "sh", "thhhh": "th",
+    "chch": "ch", "zzz": "z",
+    # letter-name words
+    "bee": "b", "be": "b", "cee": "c", "see": "c", "sea": "c", "dee": "d",
+    "gee": "g", "jay": "j", "kay": "k", "cue": "k", "ell": "l", "em": "m",
+    "en": "n", "pee": "p", "are": "r", "ess": "s", "tee": "t", "vee": "v",
+    "why": "y", "zee": "z", "ex": "x", "ay": "a",
+    # bare digraphs Whisper produces for the sounds
+    "sh": "sh", "ch": "ch", "th": "th",
+}
+
+
 def _fold_phonemes(tokens: list[str]) -> list[str]:
-    res = list(tokens)
-    for i in range(len(res) - 1):
-        if res[i] == "with" and res[i + 1] in _PHONEME_TO_LETTER:
-            res[i + 1] = "snd" + _PHONEME_TO_LETTER[res[i + 1]]
-    # letter plurals after a numeral: Whisper writes "three B's" for the noun
-    # "three bees" (letter-name plurals collide with real words)
-    LETTER_PLURAL = {"b": "bees", "c": "seas", "k": "kays", "m": "ems",
-                     "p": "pees", "r": "ars", "t": "tees", "v": "vees",
-                     "z": "zees", "l": "ells", "n": "ens", "g": "jees"}
-    for i in range(1, len(res) - 2):
-        if (res[i].isdigit() and len(res[i + 1]) == 1 and res[i + 1].isalpha()
-                and res[i + 2] == "s"
-                and res[i + 1] in LETTER_PLURAL):
-            res[i + 2] = LETTER_PLURAL[res[i + 1]]
-            res[i + 1] = ""
-    return [t for t in res if t]
+    res: list[str] = []
+    i = 0
+    while i < len(tokens):
+        t = tokens[i]
+        if len(t) == 1 and t.isalpha():
+            # Whisper "B" (and "B's", which tokenizes as b + s)
+            if i + 1 < len(tokens) and tokens[i + 1] == "s":
+                res.append("snd" + t + "s")
+                i += 2
+                continue
+            res.append("snd" + t)
+            i += 1
+            continue
+        if t in _SOUND_WORDS:
+            res.append("snd" + _SOUND_WORDS[t])
+        elif len(t) > 1 and t.endswith("s") and t[:-1] in _SOUND_WORDS:
+            res.append("snd" + _SOUND_WORDS[t[:-1]] + "s")    # bees == B's
+        else:
+            res.append(t)
+        i += 1
+    # digit letter-homophones, guarded to the phonics frame only
+    for j in range(len(res) - 1):
+        if res[j] == "with":
+            res[j + 1] = {"2": "sndt", "8": "snday"}.get(res[j + 1], res[j + 1])
+    return res
+
 
 # Symbol rewrites run on the raw lowercased string, spaced-out so the
 # tokenizer splits the results cleanly. Only ever touch marks surrounded by
