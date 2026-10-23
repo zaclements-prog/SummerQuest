@@ -4725,31 +4725,31 @@
     },
     "g1-facts/stop-inAll": {
       "text": "So how many in all?",
-      "hash": "486dfb54f7",
+      "hash": "3cabd4c05b",
       "kind": "line",
       "file": "voice/g1-facts/stop-inAll.mp3"
     },
     "g1-facts/stop-left": {
       "text": "So how many are left?",
-      "hash": "5c72b4f6f9",
+      "hash": "4411db1266",
       "kind": "line",
       "file": "voice/g1-facts/stop-left.mp3"
     },
     "g1-facts/stop-land": {
       "text": "So where do we land?",
-      "hash": "dac450fa49",
+      "hash": "b6560623ce",
       "kind": "line",
       "file": "voice/g1-facts/stop-land.mp3"
     },
     "g1-facts/stop-fill": {
       "text": "So how many did we fill in?",
-      "hash": "1d224dafd7",
+      "hash": "9a6bf4d393",
       "kind": "line",
       "file": "voice/g1-facts/stop-fill.mp3"
     },
     "g1-facts/countAll": {
       "text": "Let's count them all.",
-      "hash": "bb8b1b8b0f",
+      "hash": "f92e6d405e",
       "kind": "line",
       "file": "voice/g1-facts/countAll.mp3"
     },
@@ -17655,535 +17655,535 @@
     },
     "g1-tens/makeIt/n=11": {
       "text": "Make eleven! Then tap the check.",
-      "hash": "456650f0cc",
+      "hash": "9dd5e444d9",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=11.mp3"
     },
     "g1-tens/makeIt/n=12": {
       "text": "Make twelve! Then tap the check.",
-      "hash": "372148901d",
+      "hash": "1c7560c601",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=12.mp3"
     },
     "g1-tens/makeIt/n=13": {
       "text": "Make thirteen! Then tap the check.",
-      "hash": "299a5b7f9e",
+      "hash": "ab972f5ba0",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=13.mp3"
     },
     "g1-tens/makeIt/n=14": {
       "text": "Make fourteen! Then tap the check.",
-      "hash": "94ecb77538",
+      "hash": "47c08781d1",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=14.mp3"
     },
     "g1-tens/makeIt/n=15": {
       "text": "Make fifteen! Then tap the check.",
-      "hash": "1b00fea80c",
+      "hash": "433e080699",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=15.mp3"
     },
     "g1-tens/makeIt/n=16": {
       "text": "Make sixteen! Then tap the check.",
-      "hash": "a8383b7405",
+      "hash": "5ef8358367",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=16.mp3"
     },
     "g1-tens/makeIt/n=17": {
       "text": "Make seventeen! Then tap the check.",
-      "hash": "62410584db",
+      "hash": "3b7e4edfa5",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=17.mp3"
     },
     "g1-tens/makeIt/n=18": {
       "text": "Make eighteen! Then tap the check.",
-      "hash": "3e351fca92",
+      "hash": "04305e18bd",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=18.mp3"
     },
     "g1-tens/makeIt/n=19": {
       "text": "Make nineteen! Then tap the check.",
-      "hash": "1164d11cd7",
+      "hash": "e366ede516",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=19.mp3"
     },
     "g1-tens/makeIt/n=20": {
       "text": "Make twenty! Then tap the check.",
-      "hash": "f25f6366b9",
+      "hash": "30ffd150a4",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=20.mp3"
     },
     "g1-tens/makeIt/n=21": {
       "text": "Make twenty-one! Then tap the check.",
-      "hash": "6a7415c571",
+      "hash": "4e58b7f7d0",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=21.mp3"
     },
     "g1-tens/makeIt/n=22": {
       "text": "Make twenty-two! Then tap the check.",
-      "hash": "ae14ae4f90",
+      "hash": "8ea175df16",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=22.mp3"
     },
     "g1-tens/makeIt/n=23": {
       "text": "Make twenty-three! Then tap the check.",
-      "hash": "4e90494962",
+      "hash": "74f61b38ac",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=23.mp3"
     },
     "g1-tens/makeIt/n=24": {
       "text": "Make twenty-four! Then tap the check.",
-      "hash": "d1c011476d",
+      "hash": "2e409eb4b8",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=24.mp3"
     },
     "g1-tens/makeIt/n=25": {
       "text": "Make twenty-five! Then tap the check.",
-      "hash": "c92e7f09df",
+      "hash": "1dc528edf7",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=25.mp3"
     },
     "g1-tens/makeIt/n=26": {
       "text": "Make twenty-six! Then tap the check.",
-      "hash": "2ce674f382",
+      "hash": "692607478f",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=26.mp3"
     },
     "g1-tens/makeIt/n=27": {
       "text": "Make twenty-seven! Then tap the check.",
-      "hash": "007c23f55e",
+      "hash": "45dec534be",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=27.mp3"
     },
     "g1-tens/makeIt/n=28": {
       "text": "Make twenty-eight! Then tap the check.",
-      "hash": "decb6cd74a",
+      "hash": "bb3c70102b",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=28.mp3"
     },
     "g1-tens/makeIt/n=29": {
       "text": "Make twenty-nine! Then tap the check.",
-      "hash": "a18a21ce11",
+      "hash": "376ffd5724",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=29.mp3"
     },
     "g1-tens/makeIt/n=30": {
       "text": "Make thirty! Then tap the check.",
-      "hash": "eb57ad90be",
+      "hash": "943ee2788a",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=30.mp3"
     },
     "g1-tens/makeIt/n=31": {
       "text": "Make thirty-one! Then tap the check.",
-      "hash": "b546041ad3",
+      "hash": "c0684337c2",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=31.mp3"
     },
     "g1-tens/makeIt/n=32": {
       "text": "Make thirty-two! Then tap the check.",
-      "hash": "25de457740",
+      "hash": "391667bc1d",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=32.mp3"
     },
     "g1-tens/makeIt/n=33": {
       "text": "Make thirty-three! Then tap the check.",
-      "hash": "b7cf30b572",
+      "hash": "a93e3a5645",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=33.mp3"
     },
     "g1-tens/makeIt/n=34": {
       "text": "Make thirty-four! Then tap the check.",
-      "hash": "26e4ec572a",
+      "hash": "5fd93ea599",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=34.mp3"
     },
     "g1-tens/makeIt/n=35": {
       "text": "Make thirty-five! Then tap the check.",
-      "hash": "d593e97ef5",
+      "hash": "c88407e385",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=35.mp3"
     },
     "g1-tens/makeIt/n=36": {
       "text": "Make thirty-six! Then tap the check.",
-      "hash": "1a4869a182",
+      "hash": "79acbddbff",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=36.mp3"
     },
     "g1-tens/makeIt/n=37": {
       "text": "Make thirty-seven! Then tap the check.",
-      "hash": "08dc98aafb",
+      "hash": "b8bf4779a4",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=37.mp3"
     },
     "g1-tens/makeIt/n=38": {
       "text": "Make thirty-eight! Then tap the check.",
-      "hash": "85349d0338",
+      "hash": "43435d4141",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=38.mp3"
     },
     "g1-tens/makeIt/n=39": {
       "text": "Make thirty-nine! Then tap the check.",
-      "hash": "c76bc8746b",
+      "hash": "f8f8e6d4ff",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=39.mp3"
     },
     "g1-tens/makeIt/n=40": {
       "text": "Make forty! Then tap the check.",
-      "hash": "27ccf81805",
+      "hash": "a878d4f1bd",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=40.mp3"
     },
     "g1-tens/makeIt/n=41": {
       "text": "Make forty-one! Then tap the check.",
-      "hash": "d80903cc8f",
+      "hash": "4e7ffc5c6a",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=41.mp3"
     },
     "g1-tens/makeIt/n=42": {
       "text": "Make forty-two! Then tap the check.",
-      "hash": "a65852daab",
+      "hash": "bbbb0770f1",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=42.mp3"
     },
     "g1-tens/makeIt/n=43": {
       "text": "Make forty-three! Then tap the check.",
-      "hash": "fab18a0708",
+      "hash": "0ab8c05b5e",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=43.mp3"
     },
     "g1-tens/makeIt/n=44": {
       "text": "Make forty-four! Then tap the check.",
-      "hash": "0adcbdc073",
+      "hash": "56d9c04b40",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=44.mp3"
     },
     "g1-tens/makeIt/n=45": {
       "text": "Make forty-five! Then tap the check.",
-      "hash": "be5af44f04",
+      "hash": "9f544f4c5e",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=45.mp3"
     },
     "g1-tens/makeIt/n=46": {
       "text": "Make forty-six! Then tap the check.",
-      "hash": "9b61ea0b47",
+      "hash": "c9d280a8ef",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=46.mp3"
     },
     "g1-tens/makeIt/n=47": {
       "text": "Make forty-seven! Then tap the check.",
-      "hash": "9f73d0bf0e",
+      "hash": "01f9c7553c",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=47.mp3"
     },
     "g1-tens/makeIt/n=48": {
       "text": "Make forty-eight! Then tap the check.",
-      "hash": "019dc315bd",
+      "hash": "d190921eeb",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=48.mp3"
     },
     "g1-tens/makeIt/n=49": {
       "text": "Make forty-nine! Then tap the check.",
-      "hash": "cd24bc6764",
+      "hash": "aaef933772",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=49.mp3"
     },
     "g1-tens/makeIt/n=50": {
       "text": "Make fifty! Then tap the check.",
-      "hash": "43879b61ce",
+      "hash": "ef0c196db6",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=50.mp3"
     },
     "g1-tens/makeIt/n=51": {
       "text": "Make fifty-one! Then tap the check.",
-      "hash": "0c7fdc6716",
+      "hash": "6c5e98ed02",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=51.mp3"
     },
     "g1-tens/makeIt/n=52": {
       "text": "Make fifty-two! Then tap the check.",
-      "hash": "db183f02f7",
+      "hash": "8942d6f7db",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=52.mp3"
     },
     "g1-tens/makeIt/n=53": {
       "text": "Make fifty-three! Then tap the check.",
-      "hash": "87cd35d109",
+      "hash": "521c7d9016",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=53.mp3"
     },
     "g1-tens/makeIt/n=54": {
       "text": "Make fifty-four! Then tap the check.",
-      "hash": "80350ecda3",
+      "hash": "6c3ad0b8d9",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=54.mp3"
     },
     "g1-tens/makeIt/n=55": {
       "text": "Make fifty-five! Then tap the check.",
-      "hash": "80008a0f96",
+      "hash": "0f7b853d27",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=55.mp3"
     },
     "g1-tens/makeIt/n=56": {
       "text": "Make fifty-six! Then tap the check.",
-      "hash": "6cf75306c0",
+      "hash": "f25dd31ec8",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=56.mp3"
     },
     "g1-tens/makeIt/n=57": {
       "text": "Make fifty-seven! Then tap the check.",
-      "hash": "c1cf8435fd",
+      "hash": "57b4e1fc75",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=57.mp3"
     },
     "g1-tens/makeIt/n=58": {
       "text": "Make fifty-eight! Then tap the check.",
-      "hash": "5a947b0409",
+      "hash": "d03e625437",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=58.mp3"
     },
     "g1-tens/makeIt/n=59": {
       "text": "Make fifty-nine! Then tap the check.",
-      "hash": "a76a8963c5",
+      "hash": "dcb5a13f75",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=59.mp3"
     },
     "g1-tens/makeIt/n=60": {
       "text": "Make sixty! Then tap the check.",
-      "hash": "608d5729b7",
+      "hash": "2e5fd905b8",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=60.mp3"
     },
     "g1-tens/makeIt/n=61": {
       "text": "Make sixty-one! Then tap the check.",
-      "hash": "8fd980355c",
+      "hash": "57ee259cf0",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=61.mp3"
     },
     "g1-tens/makeIt/n=62": {
       "text": "Make sixty-two! Then tap the check.",
-      "hash": "68c0aede54",
+      "hash": "2a0c78ee0d",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=62.mp3"
     },
     "g1-tens/makeIt/n=63": {
       "text": "Make sixty-three! Then tap the check.",
-      "hash": "6aa3fdf424",
+      "hash": "fc84dbbf56",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=63.mp3"
     },
     "g1-tens/makeIt/n=64": {
       "text": "Make sixty-four! Then tap the check.",
-      "hash": "a4c97b146c",
+      "hash": "416c74ad60",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=64.mp3"
     },
     "g1-tens/makeIt/n=65": {
       "text": "Make sixty-five! Then tap the check.",
-      "hash": "ec5fdd3999",
+      "hash": "ecb7a8f144",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=65.mp3"
     },
     "g1-tens/makeIt/n=66": {
       "text": "Make sixty-six! Then tap the check.",
-      "hash": "8f407d34b0",
+      "hash": "f873104723",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=66.mp3"
     },
     "g1-tens/makeIt/n=67": {
       "text": "Make sixty-seven! Then tap the check.",
-      "hash": "073d69b2a6",
+      "hash": "8d94af2942",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=67.mp3"
     },
     "g1-tens/makeIt/n=68": {
       "text": "Make sixty-eight! Then tap the check.",
-      "hash": "c28716a3e5",
+      "hash": "4151e189ee",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=68.mp3"
     },
     "g1-tens/makeIt/n=69": {
       "text": "Make sixty-nine! Then tap the check.",
-      "hash": "64875e0f1b",
+      "hash": "eac0bf6758",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=69.mp3"
     },
     "g1-tens/makeIt/n=70": {
       "text": "Make seventy! Then tap the check.",
-      "hash": "4e4fe07430",
+      "hash": "49021523dd",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=70.mp3"
     },
     "g1-tens/makeIt/n=71": {
       "text": "Make seventy-one! Then tap the check.",
-      "hash": "642267c1b6",
+      "hash": "7c091e5a81",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=71.mp3"
     },
     "g1-tens/makeIt/n=72": {
       "text": "Make seventy-two! Then tap the check.",
-      "hash": "6fe6263e4b",
+      "hash": "bd66531868",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=72.mp3"
     },
     "g1-tens/makeIt/n=73": {
       "text": "Make seventy-three! Then tap the check.",
-      "hash": "b5aa44d6ae",
+      "hash": "0c967369bf",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=73.mp3"
     },
     "g1-tens/makeIt/n=74": {
       "text": "Make seventy-four! Then tap the check.",
-      "hash": "232e7016d4",
+      "hash": "9270226c38",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=74.mp3"
     },
     "g1-tens/makeIt/n=75": {
       "text": "Make seventy-five! Then tap the check.",
-      "hash": "8f00800a97",
+      "hash": "a0c27c09a2",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=75.mp3"
     },
     "g1-tens/makeIt/n=76": {
       "text": "Make seventy-six! Then tap the check.",
-      "hash": "86de4d1191",
+      "hash": "fc09232b71",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=76.mp3"
     },
     "g1-tens/makeIt/n=77": {
       "text": "Make seventy-seven! Then tap the check.",
-      "hash": "bfbcaf84e1",
+      "hash": "ea101146e0",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=77.mp3"
     },
     "g1-tens/makeIt/n=78": {
       "text": "Make seventy-eight! Then tap the check.",
-      "hash": "54dc0db33c",
+      "hash": "b74d6b1fb4",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=78.mp3"
     },
     "g1-tens/makeIt/n=79": {
       "text": "Make seventy-nine! Then tap the check.",
-      "hash": "6ccdb7e42e",
+      "hash": "1c053791bc",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=79.mp3"
     },
     "g1-tens/makeIt/n=80": {
       "text": "Make eighty! Then tap the check.",
-      "hash": "8d9a5a0b68",
+      "hash": "f430446a42",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=80.mp3"
     },
     "g1-tens/makeIt/n=81": {
       "text": "Make eighty-one! Then tap the check.",
-      "hash": "9d7daa8b75",
+      "hash": "1b95e1fea9",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=81.mp3"
     },
     "g1-tens/makeIt/n=82": {
       "text": "Make eighty-two! Then tap the check.",
-      "hash": "d4404aedf2",
+      "hash": "94ee5c9a20",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=82.mp3"
     },
     "g1-tens/makeIt/n=83": {
       "text": "Make eighty-three! Then tap the check.",
-      "hash": "31c5bd9021",
+      "hash": "52e5fc74a1",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=83.mp3"
     },
     "g1-tens/makeIt/n=84": {
       "text": "Make eighty-four! Then tap the check.",
-      "hash": "c7b0814056",
+      "hash": "e9ceae3e02",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=84.mp3"
     },
     "g1-tens/makeIt/n=85": {
       "text": "Make eighty-five! Then tap the check.",
-      "hash": "6c54be3d53",
+      "hash": "7a17963c60",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=85.mp3"
     },
     "g1-tens/makeIt/n=86": {
       "text": "Make eighty-six! Then tap the check.",
-      "hash": "0ea7e4e1a6",
+      "hash": "e39c655056",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=86.mp3"
     },
     "g1-tens/makeIt/n=87": {
       "text": "Make eighty-seven! Then tap the check.",
-      "hash": "5fc8397440",
+      "hash": "693fc8f4f4",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=87.mp3"
     },
     "g1-tens/makeIt/n=88": {
       "text": "Make eighty-eight! Then tap the check.",
-      "hash": "bef2b16745",
+      "hash": "b4373a0bbc",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=88.mp3"
     },
     "g1-tens/makeIt/n=89": {
       "text": "Make eighty-nine! Then tap the check.",
-      "hash": "be453c3d14",
+      "hash": "58115e6c8a",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=89.mp3"
     },
     "g1-tens/makeIt/n=90": {
       "text": "Make ninety! Then tap the check.",
-      "hash": "b6d8f87eb8",
+      "hash": "067ecdd14e",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=90.mp3"
     },
     "g1-tens/makeIt/n=91": {
       "text": "Make ninety-one! Then tap the check.",
-      "hash": "94e5aca02d",
+      "hash": "17d5a6b7e9",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=91.mp3"
     },
     "g1-tens/makeIt/n=92": {
       "text": "Make ninety-two! Then tap the check.",
-      "hash": "9d44fbad94",
+      "hash": "aba2848ea7",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=92.mp3"
     },
     "g1-tens/makeIt/n=93": {
       "text": "Make ninety-three! Then tap the check.",
-      "hash": "f7efd0f0a2",
+      "hash": "ee68a8ba6d",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=93.mp3"
     },
     "g1-tens/makeIt/n=94": {
       "text": "Make ninety-four! Then tap the check.",
-      "hash": "045f83c150",
+      "hash": "264ae69c82",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=94.mp3"
     },
     "g1-tens/makeIt/n=95": {
       "text": "Make ninety-five! Then tap the check.",
-      "hash": "a0584868b0",
+      "hash": "543fe3f8ef",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=95.mp3"
     },
     "g1-tens/makeIt/n=96": {
       "text": "Make ninety-six! Then tap the check.",
-      "hash": "effb98453c",
+      "hash": "f50c53959a",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=96.mp3"
     },
     "g1-tens/makeIt/n=97": {
       "text": "Make ninety-seven! Then tap the check.",
-      "hash": "72b06799c6",
+      "hash": "b829cf2615",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=97.mp3"
     },
     "g1-tens/makeIt/n=98": {
       "text": "Make ninety-eight! Then tap the check.",
-      "hash": "41ed26e130",
+      "hash": "1f430cd886",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=98.mp3"
     },
     "g1-tens/makeIt/n=99": {
       "text": "Make ninety-nine! Then tap the check.",
-      "hash": "0b4757a6b2",
+      "hash": "9712252573",
       "kind": "whole",
       "file": "voice/g1-tens/makeIt/n=99.mp3"
     },
@@ -24597,7 +24597,7 @@
     },
     "g1-words/readFirst": {
       "text": "Read the sentence!",
-      "hash": "44ae302825",
+      "hash": "77cd4fb10b",
       "kind": "line",
       "file": "voice/g1-words/readFirst.mp3"
     },
@@ -29127,199 +29127,199 @@
     },
     "k-lessons/explain-kShapes-circle": {
       "text": "A triangle has three sides.",
-      "hash": "735a3fe4bc",
+      "hash": "f90b5803e8",
       "kind": "line",
       "file": "voice/k-lessons/explain-kShapes-circle.mp3"
     },
     "k-lessons/explain-kShapes-solid": {
       "text": "A cube is solid, like a box.",
-      "hash": "588617f24e",
+      "hash": "f84d5f693d",
       "kind": "line",
       "file": "voice/k-lessons/explain-kShapes-solid.mp3"
     },
     "k-lessons/explain-kLetters-bigLittle": {
       "text": "Little b is the small one. Big B is the tall one.",
-      "hash": "3727c18f27",
+      "hash": "ca11eaf61e",
       "kind": "line",
       "file": "voice/k-lessons/explain-kLetters-bigLittle.mp3"
     },
     "k-lessons/explain-kLetters-yourTurn": {
       "text": "Banana starts with B, just like ball.",
-      "hash": "b0d0c6dfcc",
+      "hash": "63c2193434",
       "kind": "line",
       "file": "voice/k-lessons/explain-kLetters-yourTurn.mp3"
     },
     "k-lessons/explain-kRhymes-moon": {
       "text": "Spoon rhymes with moon. They sound the same at the end.",
-      "hash": "7e487d54f7",
+      "hash": "dd894b6385",
       "kind": "line",
       "file": "voice/k-lessons/explain-kRhymes-moon.mp3"
     },
     "k-lessons/explain-kTracing-dot": {
       "text": "We always start at the green dot.",
-      "hash": "b3467737b1",
+      "hash": "345f09e10d",
       "kind": "line",
       "file": "voice/k-lessons/explain-kTracing-dot.mp3"
     },
     "k-lessons/explain-kTracing-lineL": {
       "text": "Big lines start at the top and go down.",
-      "hash": "27eb0aec43",
+      "hash": "37fff1bbb8",
       "kind": "line",
       "file": "voice/k-lessons/explain-kTracing-lineL.mp3"
     },
     "k-lessons/explain-kCompare-bears": {
       "text": "Every bear has a ball, and one ball is left over. There are more balls!",
-      "hash": "92b53bd84b",
+      "hash": "1952aae89a",
       "kind": "line",
       "file": "voice/k-lessons/explain-kCompare-bears.mp3"
     },
     "k-lessons/explain-kCompare-numbers": {
       "text": "Nine has more dots than six. Nine is more!",
-      "hash": "8ecb7cb765",
+      "hash": "83e028bf45",
       "kind": "line",
       "file": "voice/k-lessons/explain-kCompare-numbers.mp3"
     },
     "k-lessons/explain-kTeens-twelve": {
       "text": "Twelve is a full ten and two more.",
-      "hash": "417c6c54bf",
+      "hash": "13159fb192",
       "kind": "line",
       "file": "voice/k-lessons/explain-kTeens-twelve.mp3"
     },
     "k-lessons/explain-kMeasure-yourTurn": {
       "text": "They start at the same place, and the snake goes further. The snake is longer.",
-      "hash": "03d45866be",
+      "hash": "2d15e4f1b6",
       "kind": "line",
       "file": "voice/k-lessons/explain-kMeasure-yourTurn.mp3"
     },
     "k-lessons/explain-kMeasure-heavy": {
       "text": "The watermelon side goes down. The watermelon is heavier.",
-      "hash": "882fa62e1e",
+      "hash": "997222e406",
       "kind": "line",
       "file": "voice/k-lessons/explain-kMeasure-heavy.mp3"
     },
     "k-lessons/explain-kSorting-more": {
       "text": "Four red ones and two blue ones. Four is more than two!",
-      "hash": "89e4d28d0b",
+      "hash": "22ad7aebda",
       "kind": "line",
       "file": "voice/k-lessons/explain-kSorting-more.mp3"
     },
     "k-lessons/explain-kScience-rain": {
       "text": "An umbrella keeps you dry in the rain.",
-      "hash": "23e46e742b",
+      "hash": "48a289ef18",
       "kind": "line",
       "file": "voice/k-lessons/explain-kScience-rain.mp3"
     },
     "k-lessons/explain-kScience-push": {
       "text": "A push moves the box away.",
-      "hash": "77088d24d9",
+      "hash": "58a009cf34",
       "kind": "line",
       "file": "voice/k-lessons/explain-kScience-push.mp3"
     },
     "k-lessons/explain-kTowers-stronger": {
       "text": "Five is more than two.",
-      "hash": "77ea8cb5c0",
+      "hash": "edc45016b8",
       "kind": "line",
       "file": "voice/k-lessons/explain-kTowers-stronger.mp3"
     },
     "k-lessons/explain-g1Reading-middle": {
       "text": "Map has the short A in the middle, like cat.",
-      "hash": "267c214bc8",
+      "hash": "9676021137",
       "kind": "line",
       "file": "voice/k-lessons/explain-g1Reading-middle.mp3"
     },
     "k-lessons/explain-g1Reading-teams": {
       "text": "Ship starts with shh: S and H.",
-      "hash": "da57daf081",
+      "hash": "4fe408d645",
       "kind": "line",
       "file": "voice/k-lessons/explain-g1Reading-teams.mp3"
     },
     "k-lessons/explain-g1Writing-lines": {
       "text": "G has a tail that hangs below the line.",
-      "hash": "bb197025c2",
+      "hash": "555cc24d93",
       "kind": "line",
       "file": "voice/k-lessons/explain-g1Writing-lines.mp3"
     },
     "k-lessons/explain-g1Writing-sentence": {
       "text": "The, with a capital T, can start a sentence.",
-      "hash": "33e0bfe29c",
+      "hash": "c916024910",
       "kind": "line",
       "file": "voice/k-lessons/explain-g1Writing-sentence.mp3"
     },
     "k-lessons/explain-g1Tens-count": {
       "text": "Five tens and two ones make fifty-two.",
-      "hash": "06cc7639b7",
+      "hash": "a831a9b535",
       "kind": "line",
       "file": "voice/k-lessons/explain-g1Tens-count.mp3"
     },
     "k-lessons/explain-g1Tens-sign": {
       "text": "Fifty-three is greater than thirty-five.",
-      "hash": "3a97e1f129",
+      "hash": "082f4a2ff4",
       "kind": "line",
       "file": "voice/k-lessons/explain-g1Tens-sign.mp3"
     },
     "k-lessons/explain-g1Shares-halves": {
       "text": "Two equal shares: halves.",
-      "hash": "23f13cd2bd",
+      "hash": "4723cea2ea",
       "kind": "line",
       "file": "voice/k-lessons/explain-g1Shares-halves.mp3"
     },
     "k-lessons/explain-g1Shares-smaller": {
       "text": "A fourth is smaller than a half.",
-      "hash": "bba92bbbe3",
+      "hash": "92a1b5b1d5",
       "kind": "line",
       "file": "voice/k-lessons/explain-g1Shares-smaller.mp3"
     },
     "k-lessons/explain-g1Shapes-still": {
       "text": "Three straight sides, three corners, and closed: a triangle.",
-      "hash": "0345b4ea35",
+      "hash": "ff3cbfe8a4",
       "kind": "line",
       "file": "voice/k-lessons/explain-g1Shapes-still.mp3"
     },
     "k-lessons/explain-g1Shapes-solids": {
       "text": "A sphere is round all over: it rolls.",
-      "hash": "2450d7e7af",
+      "hash": "6dfd832f3a",
       "kind": "line",
       "file": "voice/k-lessons/explain-g1Shapes-solids.mp3"
     },
     "k-lessons/explain-g1Measure-halfPast": {
       "text": "The long hand points down to six, and the short hand is just past seven. It is half past seven.",
-      "hash": "af5ebaa4d5",
+      "hash": "3f22439d57",
       "kind": "line",
       "file": "voice/k-lessons/explain-g1Measure-halfPast.mp3"
     },
     "k-lessons/explain-g1Graphs-more": {
       "text": "Match them up: two apples have no match. Two more friends like apples.",
-      "hash": "2c9fe0a851",
+      "hash": "7f2f581e7b",
       "kind": "line",
       "file": "voice/k-lessons/explain-g1Graphs-more.mp3"
     },
     "k-lessons/explain-g1Science-light": {
       "text": "Wood blocks the light. You can not see through it.",
-      "hash": "e8469da678",
+      "hash": "83eca99d55",
       "kind": "line",
       "file": "voice/k-lessons/explain-g1Science-light.mp3"
     },
     "k-lessons/explain-g1Science-families": {
       "text": "A chick grows up to be a hen. It looks like its mom!",
-      "hash": "c4425bace3",
+      "hash": "26049bc73f",
       "kind": "line",
       "file": "voice/k-lessons/explain-g1Science-families.mp3"
     },
     "k-lessons/explain-g1Adding-turnAround": {
       "text": "Start at nine and count on two: ten, eleven.",
-      "hash": "6f9272c20e",
+      "hash": "6edd4b2b89",
       "kind": "line",
       "file": "voice/k-lessons/explain-g1Adding-turnAround.mp3"
     },
     "k-lessons/explain-g1Subtract-countBack": {
       "text": "Start at twelve. Hop back: eleven, ten, nine.",
-      "hash": "09f9247566",
+      "hash": "04b323ad23",
       "kind": "line",
       "file": "voice/k-lessons/explain-g1Subtract-countBack.mp3"
     },
     "k-lessons/explain-g1Subtract-family": {
       "text": "Three and five make eight. So eight minus five is three.",
-      "hash": "45b2b77a46",
+      "hash": "2545e4771a",
       "kind": "line",
       "file": "voice/k-lessons/explain-g1Subtract-family.mp3"
     },
@@ -30471,313 +30471,313 @@
     },
     "k-letters/thisIsLetter/letter=a": {
       "text": "This is the letter A.",
-      "hash": "f52bfa825f",
+      "hash": "1feca393a8",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLetter/letter=a.mp3"
     },
     "k-letters/thisIsLetter/letter=b": {
       "text": "This is the letter B.",
-      "hash": "c68e1d139d",
+      "hash": "2ab514ddc7",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLetter/letter=b.mp3"
     },
     "k-letters/thisIsLetter/letter=c": {
       "text": "This is the letter C.",
-      "hash": "23932a714f",
+      "hash": "37a362603e",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLetter/letter=c.mp3"
     },
     "k-letters/thisIsLetter/letter=d": {
       "text": "This is the letter D.",
-      "hash": "29b6f3044d",
+      "hash": "00d88a7b55",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLetter/letter=d.mp3"
     },
     "k-letters/thisIsLetter/letter=e": {
       "text": "This is the letter E.",
-      "hash": "6c3e6a9d4d",
+      "hash": "8219e48469",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLetter/letter=e.mp3"
     },
     "k-letters/thisIsLetter/letter=f": {
       "text": "This is the letter F.",
-      "hash": "416d3d6b2f",
+      "hash": "fd062feff1",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLetter/letter=f.mp3"
     },
     "k-letters/thisIsLetter/letter=g": {
       "text": "This is the letter G.",
-      "hash": "3272b02dff",
+      "hash": "a3b194e290",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLetter/letter=g.mp3"
     },
     "k-letters/thisIsLetter/letter=h": {
       "text": "This is the letter H.",
-      "hash": "8188c3fd97",
+      "hash": "38187b80a9",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLetter/letter=h.mp3"
     },
     "k-letters/thisIsLetter/letter=i": {
       "text": "This is the letter I.",
-      "hash": "9f77562974",
+      "hash": "85074d08e7",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLetter/letter=i.mp3"
     },
     "k-letters/thisIsLetter/letter=j": {
       "text": "This is the letter J.",
-      "hash": "3d6a14aa45",
+      "hash": "551eb71671",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLetter/letter=j.mp3"
     },
     "k-letters/thisIsLetter/letter=k": {
       "text": "This is the letter K.",
-      "hash": "125211a89f",
+      "hash": "a783606d1d",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLetter/letter=k.mp3"
     },
     "k-letters/thisIsLetter/letter=l": {
       "text": "This is the letter L.",
-      "hash": "2ec3fd94a5",
+      "hash": "6e6704fc0a",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLetter/letter=l.mp3"
     },
     "k-letters/thisIsLetter/letter=m": {
       "text": "This is the letter M.",
-      "hash": "62e2afa4c8",
+      "hash": "cdca24116e",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLetter/letter=m.mp3"
     },
     "k-letters/thisIsLetter/letter=n": {
       "text": "This is the letter N.",
-      "hash": "683805fa1c",
+      "hash": "0dc6dc651b",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLetter/letter=n.mp3"
     },
     "k-letters/thisIsLetter/letter=o": {
       "text": "This is the letter O.",
-      "hash": "af0d72e23e",
+      "hash": "4867672499",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLetter/letter=o.mp3"
     },
     "k-letters/thisIsLetter/letter=p": {
       "text": "This is the letter P.",
-      "hash": "a4ff2a9b1c",
+      "hash": "0b4574d48b",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLetter/letter=p.mp3"
     },
     "k-letters/thisIsLetter/letter=q": {
       "text": "This is the letter Q.",
-      "hash": "0e55e2661a",
+      "hash": "59f183a89d",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLetter/letter=q.mp3"
     },
     "k-letters/thisIsLetter/letter=r": {
       "text": "This is the letter R.",
-      "hash": "323ca01605",
+      "hash": "4f9397bc6a",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLetter/letter=r.mp3"
     },
     "k-letters/thisIsLetter/letter=s": {
       "text": "This is the letter S.",
-      "hash": "0f69b16669",
+      "hash": "0f58f6243b",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLetter/letter=s.mp3"
     },
     "k-letters/thisIsLetter/letter=t": {
       "text": "This is the letter T.",
-      "hash": "cef1a43cc3",
+      "hash": "6b511e3805",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLetter/letter=t.mp3"
     },
     "k-letters/thisIsLetter/letter=u": {
       "text": "This is the letter U.",
-      "hash": "e4d191996a",
+      "hash": "f1f91efe5e",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLetter/letter=u.mp3"
     },
     "k-letters/thisIsLetter/letter=v": {
       "text": "This is the letter V.",
-      "hash": "507c7d1ea5",
+      "hash": "51bccf7715",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLetter/letter=v.mp3"
     },
     "k-letters/thisIsLetter/letter=w": {
       "text": "This is the letter W.",
-      "hash": "ffe0717d02",
+      "hash": "eae06d882d",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLetter/letter=w.mp3"
     },
     "k-letters/thisIsLetter/letter=x": {
       "text": "This is the letter X.",
-      "hash": "129dbccc93",
+      "hash": "4d62732261",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLetter/letter=x.mp3"
     },
     "k-letters/thisIsLetter/letter=y": {
       "text": "This is the letter Y.",
-      "hash": "691c620ef2",
+      "hash": "a8c141a59b",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLetter/letter=y.mp3"
     },
     "k-letters/thisIsLetter/letter=z": {
       "text": "This is the letter Z.",
-      "hash": "12658b5314",
+      "hash": "9993fd93da",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLetter/letter=z.mp3"
     },
     "k-letters/thisIsLittle/letter=a": {
       "text": "This is little a.",
-      "hash": "51fb07163a",
+      "hash": "278997b1de",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLittle/letter=a.mp3"
     },
     "k-letters/thisIsLittle/letter=b": {
       "text": "This is little b.",
-      "hash": "735406dd45",
+      "hash": "b2c0515268",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLittle/letter=b.mp3"
     },
     "k-letters/thisIsLittle/letter=c": {
       "text": "This is little c.",
-      "hash": "c2d8f76950",
+      "hash": "d3d414b946",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLittle/letter=c.mp3"
     },
     "k-letters/thisIsLittle/letter=d": {
       "text": "This is little d.",
-      "hash": "fefc48f4dd",
+      "hash": "bd021262fb",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLittle/letter=d.mp3"
     },
     "k-letters/thisIsLittle/letter=e": {
       "text": "This is little e.",
-      "hash": "c7ba3bd93e",
+      "hash": "f4f5a5258a",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLittle/letter=e.mp3"
     },
     "k-letters/thisIsLittle/letter=f": {
       "text": "This is little f.",
-      "hash": "54b3403efc",
+      "hash": "5028206124",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLittle/letter=f.mp3"
     },
     "k-letters/thisIsLittle/letter=g": {
       "text": "This is little g.",
-      "hash": "9b9d206919",
+      "hash": "1a83b6ce72",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLittle/letter=g.mp3"
     },
     "k-letters/thisIsLittle/letter=h": {
       "text": "This is little h.",
-      "hash": "94220ba707",
+      "hash": "0f8408c08c",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLittle/letter=h.mp3"
     },
     "k-letters/thisIsLittle/letter=i": {
       "text": "This is little i.",
-      "hash": "a31b8b20cc",
+      "hash": "7623305bc3",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLittle/letter=i.mp3"
     },
     "k-letters/thisIsLittle/letter=j": {
       "text": "This is little j.",
-      "hash": "72c7bfb9e2",
+      "hash": "cf1c77d408",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLittle/letter=j.mp3"
     },
     "k-letters/thisIsLittle/letter=k": {
       "text": "This is little k.",
-      "hash": "164510339d",
+      "hash": "1bdf37a32b",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLittle/letter=k.mp3"
     },
     "k-letters/thisIsLittle/letter=l": {
       "text": "This is little l.",
-      "hash": "d618674b17",
+      "hash": "165f20dc81",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLittle/letter=l.mp3"
     },
     "k-letters/thisIsLittle/letter=m": {
       "text": "This is little m.",
-      "hash": "66141e5bae",
+      "hash": "6b574406e5",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLittle/letter=m.mp3"
     },
     "k-letters/thisIsLittle/letter=n": {
       "text": "This is little n.",
-      "hash": "7b345a606b",
+      "hash": "0a97675174",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLittle/letter=n.mp3"
     },
     "k-letters/thisIsLittle/letter=o": {
       "text": "This is little o.",
-      "hash": "2cbac51ed0",
+      "hash": "a6f30a05ac",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLittle/letter=o.mp3"
     },
     "k-letters/thisIsLittle/letter=p": {
       "text": "This is little p.",
-      "hash": "5091a69c7c",
+      "hash": "eb15c40ffa",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLittle/letter=p.mp3"
     },
     "k-letters/thisIsLittle/letter=q": {
       "text": "This is little q.",
-      "hash": "489e1d12c4",
+      "hash": "838358094a",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLittle/letter=q.mp3"
     },
     "k-letters/thisIsLittle/letter=r": {
       "text": "This is little r.",
-      "hash": "cec684d84d",
+      "hash": "91d62dac32",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLittle/letter=r.mp3"
     },
     "k-letters/thisIsLittle/letter=s": {
       "text": "This is little s.",
-      "hash": "fa38e3f13c",
+      "hash": "05a319d2e7",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLittle/letter=s.mp3"
     },
     "k-letters/thisIsLittle/letter=t": {
       "text": "This is little t.",
-      "hash": "69053a5ded",
+      "hash": "70c17dbbee",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLittle/letter=t.mp3"
     },
     "k-letters/thisIsLittle/letter=u": {
       "text": "This is little u.",
-      "hash": "8472d39dd3",
+      "hash": "ebdcf7705e",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLittle/letter=u.mp3"
     },
     "k-letters/thisIsLittle/letter=v": {
       "text": "This is little v.",
-      "hash": "9eb49be007",
+      "hash": "45232edd61",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLittle/letter=v.mp3"
     },
     "k-letters/thisIsLittle/letter=w": {
       "text": "This is little w.",
-      "hash": "961a4d47e5",
+      "hash": "982ef64194",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLittle/letter=w.mp3"
     },
     "k-letters/thisIsLittle/letter=x": {
       "text": "This is little x.",
-      "hash": "94d867512e",
+      "hash": "77dd5eab04",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLittle/letter=x.mp3"
     },
     "k-letters/thisIsLittle/letter=y": {
       "text": "This is little y.",
-      "hash": "6c0b85b91e",
+      "hash": "c91d9a1051",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLittle/letter=y.mp3"
     },
     "k-letters/thisIsLittle/letter=z": {
       "text": "This is little z.",
-      "hash": "620d4668cd",
+      "hash": "c1ec092f4f",
       "kind": "whole",
       "file": "voice/k-letters/thisIsLittle/letter=z.mp3"
     },
@@ -33039,91 +33039,91 @@
     },
     "k-nav/baby-lion": {
       "text": "It's a baby lion!",
-      "hash": "b28398c6a4",
+      "hash": "c0423d338d",
       "kind": "line",
       "file": "voice/k-nav/baby-lion.mp3"
     },
     "k-nav/baby-trex": {
       "text": "It's a baby T-Rex!",
-      "hash": "4213e23c19",
+      "hash": "115e412aa2",
       "kind": "line",
       "file": "voice/k-nav/baby-trex.mp3"
     },
     "k-nav/baby-frog": {
       "text": "It's a baby frog!",
-      "hash": "12e1df70e4",
+      "hash": "3e902f47f2",
       "kind": "line",
       "file": "voice/k-nav/baby-frog.mp3"
     },
     "k-nav/baby-unicorn": {
       "text": "It's a baby unicorn!",
-      "hash": "f2788f9419",
+      "hash": "417daa7c52",
       "kind": "line",
       "file": "voice/k-nav/baby-unicorn.mp3"
     },
     "k-nav/baby-bear": {
       "text": "It's a baby bear!",
-      "hash": "505761124c",
+      "hash": "ef602af5cc",
       "kind": "line",
       "file": "voice/k-nav/baby-bear.mp3"
     },
     "k-nav/baby-panda": {
       "text": "It's a baby panda!",
-      "hash": "a59e95fa90",
+      "hash": "9f8b932b7a",
       "kind": "line",
       "file": "voice/k-nav/baby-panda.mp3"
     },
     "k-nav/baby-fox": {
       "text": "It's a baby fox!",
-      "hash": "19acc0c60e",
+      "hash": "3c93519fb1",
       "kind": "line",
       "file": "voice/k-nav/baby-fox.mp3"
     },
     "k-nav/baby-owl": {
       "text": "It's a baby owl!",
-      "hash": "2371fd0bee",
+      "hash": "378f96b6cf",
       "kind": "line",
       "file": "voice/k-nav/baby-owl.mp3"
     },
     "k-nav/baby-octopus": {
       "text": "It's a baby octopus!",
-      "hash": "41dc140bf9",
+      "hash": "9555fb041c",
       "kind": "line",
       "file": "voice/k-nav/baby-octopus.mp3"
     },
     "k-nav/baby-dragonet": {
       "text": "It's a baby dragonet!",
-      "hash": "c708d4b526",
+      "hash": "99100272b9",
       "kind": "line",
       "file": "voice/k-nav/baby-dragonet.mp3"
     },
     "k-nav/baby-tiger": {
       "text": "It's a baby tiger!",
-      "hash": "a87e8f2820",
+      "hash": "4814ac9c57",
       "kind": "line",
       "file": "voice/k-nav/baby-tiger.mp3"
     },
     "k-nav/baby-dragon": {
       "text": "It's a baby dragon!",
-      "hash": "8bd9f657a8",
+      "hash": "53677ae4c2",
       "kind": "line",
       "file": "voice/k-nav/baby-dragon.mp3"
     },
     "k-nav/petsGrewAll": {
       "text": "Look! Your pets grew!",
-      "hash": "f2809e2f02",
+      "hash": "8ab34e3f44",
       "kind": "line",
       "file": "voice/k-nav/petsGrewAll.mp3"
     },
     "k-nav/newBadge": {
       "text": "You got a new badge!",
-      "hash": "2f973f46dd",
+      "hash": "4993e6ce2f",
       "kind": "line",
       "file": "voice/k-nav/newBadge.mp3"
     },
     "k-nav/letsGo": {
       "text": "Let's go!",
-      "hash": "eb2ae82dcf",
+      "hash": "162ada172a",
       "kind": "line",
       "file": "voice/k-nav/letsGo.mp3"
     },
@@ -35199,55 +35199,55 @@
     },
     "k-shapes/teach-circle": {
       "text": "This is a circle. It is round, with no corners.",
-      "hash": "ebd0e485b5",
+      "hash": "8c90f6c3d0",
       "kind": "line",
       "file": "voice/k-shapes/teach-circle.mp3"
     },
     "k-shapes/teach-square": {
       "text": "This is a square. Four sides, all the same.",
-      "hash": "f015741b7e",
+      "hash": "08beef26d0",
       "kind": "line",
       "file": "voice/k-shapes/teach-square.mp3"
     },
     "k-shapes/teach-triangle": {
       "text": "This is a triangle. It has three sides.",
-      "hash": "4912cbb397",
+      "hash": "7359922d2a",
       "kind": "line",
       "file": "voice/k-shapes/teach-triangle.mp3"
     },
     "k-shapes/teach-rectangle": {
       "text": "This is a rectangle. Two long sides, two short sides.",
-      "hash": "e08b5160bd",
+      "hash": "bb73fe7039",
       "kind": "line",
       "file": "voice/k-shapes/teach-rectangle.mp3"
     },
     "k-shapes/teach-hexagon": {
       "text": "This is a hexagon. It has six sides.",
-      "hash": "7d75126761",
+      "hash": "da29a85807",
       "kind": "line",
       "file": "voice/k-shapes/teach-hexagon.mp3"
     },
     "k-shapes/teach-cube": {
       "text": "This is a cube. It looks like a box.",
-      "hash": "c0b79b91f7",
+      "hash": "ba51cdbef0",
       "kind": "line",
       "file": "voice/k-shapes/teach-cube.mp3"
     },
     "k-shapes/teach-sphere": {
       "text": "This is a sphere. It is round, like a ball.",
-      "hash": "e48445a6ad",
+      "hash": "dca3b5b417",
       "kind": "line",
       "file": "voice/k-shapes/teach-sphere.mp3"
     },
     "k-shapes/teach-cone": {
       "text": "This is a cone, like an ice cream cone.",
-      "hash": "2eaaa7fa62",
+      "hash": "e68194435d",
       "kind": "line",
       "file": "voice/k-shapes/teach-cone.mp3"
     },
     "k-shapes/teach-cylinder": {
       "text": "This is a cylinder, like a can.",
-      "hash": "b2c21c6631",
+      "hash": "214ba40377",
       "kind": "line",
       "file": "voice/k-shapes/teach-cylinder.mp3"
     },
@@ -44523,595 +44523,595 @@
     },
     "parade/weHaveFriends/n=1": {
       "text": "We have one friends!",
-      "hash": "31cb627dc8",
+      "hash": "6f2bac1ce7",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=1.mp3"
     },
     "parade/weHaveFriends/n=2": {
       "text": "We have two friends!",
-      "hash": "edf6425ee6",
+      "hash": "3b1d002289",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=2.mp3"
     },
     "parade/weHaveFriends/n=3": {
       "text": "We have three friends!",
-      "hash": "799df82cc9",
+      "hash": "03aeeb90ec",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=3.mp3"
     },
     "parade/weHaveFriends/n=4": {
       "text": "We have four friends!",
-      "hash": "cbc858aec5",
+      "hash": "5e1a4c05d7",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=4.mp3"
     },
     "parade/weHaveFriends/n=5": {
       "text": "We have five friends!",
-      "hash": "0e279add9e",
+      "hash": "4709b87ec9",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=5.mp3"
     },
     "parade/weHaveFriends/n=6": {
       "text": "We have six friends!",
-      "hash": "233eefbed5",
+      "hash": "660da58bc9",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=6.mp3"
     },
     "parade/weHaveFriends/n=7": {
       "text": "We have seven friends!",
-      "hash": "0a3b32e5ac",
+      "hash": "ac578d4028",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=7.mp3"
     },
     "parade/weHaveFriends/n=8": {
       "text": "We have eight friends!",
-      "hash": "4e94505e6d",
+      "hash": "20fef2dad6",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=8.mp3"
     },
     "parade/weHaveFriends/n=9": {
       "text": "We have nine friends!",
-      "hash": "104fa539b9",
+      "hash": "fa9da3df5a",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=9.mp3"
     },
     "parade/weHaveFriends/n=10": {
       "text": "We have ten friends!",
-      "hash": "9bf14b0e8e",
+      "hash": "f46a9d7b9d",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=10.mp3"
     },
     "parade/weHaveFriends/n=11": {
       "text": "We have eleven friends!",
-      "hash": "01aab889d3",
+      "hash": "3554bd8c74",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=11.mp3"
     },
     "parade/weHaveFriends/n=12": {
       "text": "We have twelve friends!",
-      "hash": "cb862777ee",
+      "hash": "f6ed39d923",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=12.mp3"
     },
     "parade/weHaveFriends/n=13": {
       "text": "We have thirteen friends!",
-      "hash": "cdb7555241",
+      "hash": "062108a901",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=13.mp3"
     },
     "parade/weHaveFriends/n=14": {
       "text": "We have fourteen friends!",
-      "hash": "577ae51c78",
+      "hash": "2b1bceeb0c",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=14.mp3"
     },
     "parade/weHaveFriends/n=15": {
       "text": "We have fifteen friends!",
-      "hash": "1807a39d50",
+      "hash": "8657104d8f",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=15.mp3"
     },
     "parade/weHaveFriends/n=16": {
       "text": "We have sixteen friends!",
-      "hash": "7b284faa02",
+      "hash": "6947990369",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=16.mp3"
     },
     "parade/weHaveFriends/n=17": {
       "text": "We have seventeen friends!",
-      "hash": "ad59433f6d",
+      "hash": "957f7aa887",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=17.mp3"
     },
     "parade/weHaveFriends/n=18": {
       "text": "We have eighteen friends!",
-      "hash": "5fd0646bed",
+      "hash": "ede57f9471",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=18.mp3"
     },
     "parade/weHaveFriends/n=19": {
       "text": "We have nineteen friends!",
-      "hash": "61adb4dc42",
+      "hash": "2392171965",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=19.mp3"
     },
     "parade/weHaveFriends/n=20": {
       "text": "We have twenty friends!",
-      "hash": "02a2de7a73",
+      "hash": "465206d904",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=20.mp3"
     },
     "parade/weHaveFriends/n=21": {
       "text": "We have twenty-one friends!",
-      "hash": "be461e7077",
+      "hash": "9474daf806",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=21.mp3"
     },
     "parade/weHaveFriends/n=22": {
       "text": "We have twenty-two friends!",
-      "hash": "d7de5a9019",
+      "hash": "831bb8a271",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=22.mp3"
     },
     "parade/weHaveFriends/n=23": {
       "text": "We have twenty-three friends!",
-      "hash": "ca2d72ff74",
+      "hash": "35ab9aa73f",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=23.mp3"
     },
     "parade/weHaveFriends/n=24": {
       "text": "We have twenty-four friends!",
-      "hash": "e813630d4b",
+      "hash": "9bbfe55a42",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=24.mp3"
     },
     "parade/weHaveFriends/n=25": {
       "text": "We have twenty-five friends!",
-      "hash": "231c0f4b0f",
+      "hash": "7f960e4f9d",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=25.mp3"
     },
     "parade/weHaveFriends/n=26": {
       "text": "We have twenty-six friends!",
-      "hash": "dbbe38ac4e",
+      "hash": "79433dc3bd",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=26.mp3"
     },
     "parade/weHaveFriends/n=27": {
       "text": "We have twenty-seven friends!",
-      "hash": "c38f093984",
+      "hash": "7ae85fce51",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=27.mp3"
     },
     "parade/weHaveFriends/n=28": {
       "text": "We have twenty-eight friends!",
-      "hash": "f57d003749",
+      "hash": "8cfdc14cd2",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=28.mp3"
     },
     "parade/weHaveFriends/n=29": {
       "text": "We have twenty-nine friends!",
-      "hash": "32677f8c8a",
+      "hash": "868e4a22c1",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=29.mp3"
     },
     "parade/weHaveFriends/n=30": {
       "text": "We have thirty friends!",
-      "hash": "ae4ebcdd17",
+      "hash": "16c883a967",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=30.mp3"
     },
     "parade/weHaveFriends/n=31": {
       "text": "We have thirty-one friends!",
-      "hash": "bf04f4fe97",
+      "hash": "19f0bdce6c",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=31.mp3"
     },
     "parade/weHaveFriends/n=32": {
       "text": "We have thirty-two friends!",
-      "hash": "dff7d08e74",
+      "hash": "3d74838013",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=32.mp3"
     },
     "parade/weHaveFriends/n=33": {
       "text": "We have thirty-three friends!",
-      "hash": "abd7e05468",
+      "hash": "349e880952",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=33.mp3"
     },
     "parade/weHaveFriends/n=34": {
       "text": "We have thirty-four friends!",
-      "hash": "0829707ef4",
+      "hash": "b3dc01c9f7",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=34.mp3"
     },
     "parade/weHaveFriends/n=35": {
       "text": "We have thirty-five friends!",
-      "hash": "bfa14cb3b2",
+      "hash": "bc2a1ebd16",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=35.mp3"
     },
     "parade/weHaveFriends/n=36": {
       "text": "We have thirty-six friends!",
-      "hash": "748850bfb3",
+      "hash": "5c7341af66",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=36.mp3"
     },
     "parade/weHaveFriends/n=37": {
       "text": "We have thirty-seven friends!",
-      "hash": "3e05a0bdb3",
+      "hash": "8a1b7a8efd",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=37.mp3"
     },
     "parade/weHaveFriends/n=38": {
       "text": "We have thirty-eight friends!",
-      "hash": "83b0974c0b",
+      "hash": "c7193a4aef",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=38.mp3"
     },
     "parade/weHaveFriends/n=39": {
       "text": "We have thirty-nine friends!",
-      "hash": "c56f7666a4",
+      "hash": "eccae1c816",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=39.mp3"
     },
     "parade/weHaveFriends/n=40": {
       "text": "We have forty friends!",
-      "hash": "4c04f2ce2b",
+      "hash": "f13247d984",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=40.mp3"
     },
     "parade/weHaveFriends/n=41": {
       "text": "We have forty-one friends!",
-      "hash": "f9e3caf94c",
+      "hash": "1ee980b70c",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=41.mp3"
     },
     "parade/weHaveFriends/n=42": {
       "text": "We have forty-two friends!",
-      "hash": "f53cb2a033",
+      "hash": "1640421bf8",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=42.mp3"
     },
     "parade/weHaveFriends/n=43": {
       "text": "We have forty-three friends!",
-      "hash": "45f993da31",
+      "hash": "69bc117429",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=43.mp3"
     },
     "parade/weHaveFriends/n=44": {
       "text": "We have forty-four friends!",
-      "hash": "d798709cc1",
+      "hash": "3dfaa33270",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=44.mp3"
     },
     "parade/weHaveFriends/n=45": {
       "text": "We have forty-five friends!",
-      "hash": "8987f1073e",
+      "hash": "fc3a6b91e8",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=45.mp3"
     },
     "parade/weHaveFriends/n=46": {
       "text": "We have forty-six friends!",
-      "hash": "a74e935407",
+      "hash": "fa19e102f2",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=46.mp3"
     },
     "parade/weHaveFriends/n=47": {
       "text": "We have forty-seven friends!",
-      "hash": "961f7883b8",
+      "hash": "4334cc6dbd",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=47.mp3"
     },
     "parade/weHaveFriends/n=48": {
       "text": "We have forty-eight friends!",
-      "hash": "f38a5b0310",
+      "hash": "b7f52eba29",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=48.mp3"
     },
     "parade/weHaveFriends/n=49": {
       "text": "We have forty-nine friends!",
-      "hash": "0ee93b287a",
+      "hash": "49bdf2e10f",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=49.mp3"
     },
     "parade/weHaveFriends/n=50": {
       "text": "We have fifty friends!",
-      "hash": "c57b75db72",
+      "hash": "0f540b1d4a",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=50.mp3"
     },
     "parade/weHaveFriends/n=51": {
       "text": "We have fifty-one friends!",
-      "hash": "cb9e7a537f",
+      "hash": "dcff96a8d3",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=51.mp3"
     },
     "parade/weHaveFriends/n=52": {
       "text": "We have fifty-two friends!",
-      "hash": "8d9a651433",
+      "hash": "222bb862a9",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=52.mp3"
     },
     "parade/weHaveFriends/n=53": {
       "text": "We have fifty-three friends!",
-      "hash": "eb1713210c",
+      "hash": "1659c2194e",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=53.mp3"
     },
     "parade/weHaveFriends/n=54": {
       "text": "We have fifty-four friends!",
-      "hash": "1eeaebb33f",
+      "hash": "0c5a6d7a85",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=54.mp3"
     },
     "parade/weHaveFriends/n=55": {
       "text": "We have fifty-five friends!",
-      "hash": "fb4a30eba0",
+      "hash": "684f4a8746",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=55.mp3"
     },
     "parade/weHaveFriends/n=56": {
       "text": "We have fifty-six friends!",
-      "hash": "0eb789defd",
+      "hash": "c288b7bcbe",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=56.mp3"
     },
     "parade/weHaveFriends/n=57": {
       "text": "We have fifty-seven friends!",
-      "hash": "5558e3855d",
+      "hash": "a3b9c489cd",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=57.mp3"
     },
     "parade/weHaveFriends/n=58": {
       "text": "We have fifty-eight friends!",
-      "hash": "8b2e0605f7",
+      "hash": "3c4b67e6d9",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=58.mp3"
     },
     "parade/weHaveFriends/n=59": {
       "text": "We have fifty-nine friends!",
-      "hash": "a57c631924",
+      "hash": "4e0d7341c1",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=59.mp3"
     },
     "parade/weHaveFriends/n=60": {
       "text": "We have sixty friends!",
-      "hash": "ff4dc0f8e2",
+      "hash": "5097a3b6c7",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=60.mp3"
     },
     "parade/weHaveFriends/n=61": {
       "text": "We have sixty-one friends!",
-      "hash": "e14641a8b4",
+      "hash": "9c689b0fc7",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=61.mp3"
     },
     "parade/weHaveFriends/n=62": {
       "text": "We have sixty-two friends!",
-      "hash": "bd142c6626",
+      "hash": "bfcffeee11",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=62.mp3"
     },
     "parade/weHaveFriends/n=63": {
       "text": "We have sixty-three friends!",
-      "hash": "729fa5adfd",
+      "hash": "17faf0555c",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=63.mp3"
     },
     "parade/weHaveFriends/n=64": {
       "text": "We have sixty-four friends!",
-      "hash": "0596ca1921",
+      "hash": "6eec83dda3",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=64.mp3"
     },
     "parade/weHaveFriends/n=65": {
       "text": "We have sixty-five friends!",
-      "hash": "9cbc6170cc",
+      "hash": "b3501d57df",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=65.mp3"
     },
     "parade/weHaveFriends/n=66": {
       "text": "We have sixty-six friends!",
-      "hash": "263d800616",
+      "hash": "0d7bb92702",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=66.mp3"
     },
     "parade/weHaveFriends/n=67": {
       "text": "We have sixty-seven friends!",
-      "hash": "629fcda385",
+      "hash": "03eec5386d",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=67.mp3"
     },
     "parade/weHaveFriends/n=68": {
       "text": "We have sixty-eight friends!",
-      "hash": "2bf3232e81",
+      "hash": "2509e081a4",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=68.mp3"
     },
     "parade/weHaveFriends/n=69": {
       "text": "We have sixty-nine friends!",
-      "hash": "a3dfed260d",
+      "hash": "bb8b6c2c1d",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=69.mp3"
     },
     "parade/weHaveFriends/n=70": {
       "text": "We have seventy friends!",
-      "hash": "af79746280",
+      "hash": "2cda7ce606",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=70.mp3"
     },
     "parade/weHaveFriends/n=71": {
       "text": "We have seventy-one friends!",
-      "hash": "bb54fd22cc",
+      "hash": "3699cb3f44",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=71.mp3"
     },
     "parade/weHaveFriends/n=72": {
       "text": "We have seventy-two friends!",
-      "hash": "b9f9e1c163",
+      "hash": "4a5f5c69f2",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=72.mp3"
     },
     "parade/weHaveFriends/n=73": {
       "text": "We have seventy-three friends!",
-      "hash": "072c9168a9",
+      "hash": "7ce3c9b78c",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=73.mp3"
     },
     "parade/weHaveFriends/n=74": {
       "text": "We have seventy-four friends!",
-      "hash": "62f03e73d6",
+      "hash": "8937a5fe22",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=74.mp3"
     },
     "parade/weHaveFriends/n=75": {
       "text": "We have seventy-five friends!",
-      "hash": "182a4bf994",
+      "hash": "ba94183b17",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=75.mp3"
     },
     "parade/weHaveFriends/n=76": {
       "text": "We have seventy-six friends!",
-      "hash": "8af4b87960",
+      "hash": "15d6c3c348",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=76.mp3"
     },
     "parade/weHaveFriends/n=77": {
       "text": "We have seventy-seven friends!",
-      "hash": "90f3fcc80e",
+      "hash": "e533146cc9",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=77.mp3"
     },
     "parade/weHaveFriends/n=78": {
       "text": "We have seventy-eight friends!",
-      "hash": "fe7e7e4d3d",
+      "hash": "43cdd0675e",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=78.mp3"
     },
     "parade/weHaveFriends/n=79": {
       "text": "We have seventy-nine friends!",
-      "hash": "a518522185",
+      "hash": "e13d21714e",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=79.mp3"
     },
     "parade/weHaveFriends/n=80": {
       "text": "We have eighty friends!",
-      "hash": "b3084322b9",
+      "hash": "83858c479e",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=80.mp3"
     },
     "parade/weHaveFriends/n=81": {
       "text": "We have eighty-one friends!",
-      "hash": "3ca57ba09a",
+      "hash": "b39939563c",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=81.mp3"
     },
     "parade/weHaveFriends/n=82": {
       "text": "We have eighty-two friends!",
-      "hash": "7c75316801",
+      "hash": "024a0ecf3c",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=82.mp3"
     },
     "parade/weHaveFriends/n=83": {
       "text": "We have eighty-three friends!",
-      "hash": "c1955bc351",
+      "hash": "d374b89e6f",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=83.mp3"
     },
     "parade/weHaveFriends/n=84": {
       "text": "We have eighty-four friends!",
-      "hash": "ae5ff4a692",
+      "hash": "fc3f53e089",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=84.mp3"
     },
     "parade/weHaveFriends/n=85": {
       "text": "We have eighty-five friends!",
-      "hash": "f65c2596d6",
+      "hash": "d00c72c7c0",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=85.mp3"
     },
     "parade/weHaveFriends/n=86": {
       "text": "We have eighty-six friends!",
-      "hash": "9fb9185f4e",
+      "hash": "15f5d9a2f8",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=86.mp3"
     },
     "parade/weHaveFriends/n=87": {
       "text": "We have eighty-seven friends!",
-      "hash": "7ecfca480e",
+      "hash": "3c0c8bde23",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=87.mp3"
     },
     "parade/weHaveFriends/n=88": {
       "text": "We have eighty-eight friends!",
-      "hash": "a79ff33b7a",
+      "hash": "33a4878d9a",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=88.mp3"
     },
     "parade/weHaveFriends/n=89": {
       "text": "We have eighty-nine friends!",
-      "hash": "b3f53f4bab",
+      "hash": "85f142ea6c",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=89.mp3"
     },
     "parade/weHaveFriends/n=90": {
       "text": "We have ninety friends!",
-      "hash": "536c428acd",
+      "hash": "fefd3ab273",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=90.mp3"
     },
     "parade/weHaveFriends/n=91": {
       "text": "We have ninety-one friends!",
-      "hash": "73c85c9f24",
+      "hash": "ea72fab85b",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=91.mp3"
     },
     "parade/weHaveFriends/n=92": {
       "text": "We have ninety-two friends!",
-      "hash": "f86a4b358c",
+      "hash": "d15868c82b",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=92.mp3"
     },
     "parade/weHaveFriends/n=93": {
       "text": "We have ninety-three friends!",
-      "hash": "72a063bcdf",
+      "hash": "5e8ea0655c",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=93.mp3"
     },
     "parade/weHaveFriends/n=94": {
       "text": "We have ninety-four friends!",
-      "hash": "336be0f3fa",
+      "hash": "323a8d33b6",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=94.mp3"
     },
     "parade/weHaveFriends/n=95": {
       "text": "We have ninety-five friends!",
-      "hash": "039f508e39",
+      "hash": "4467ab11b4",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=95.mp3"
     },
     "parade/weHaveFriends/n=96": {
       "text": "We have ninety-six friends!",
-      "hash": "afd5180a34",
+      "hash": "a7ea430fc9",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=96.mp3"
     },
     "parade/weHaveFriends/n=97": {
       "text": "We have ninety-seven friends!",
-      "hash": "3156dcc056",
+      "hash": "7c0e590d44",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=97.mp3"
     },
     "parade/weHaveFriends/n=98": {
       "text": "We have ninety-eight friends!",
-      "hash": "1f7a2bbda3",
+      "hash": "c94ac02480",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=98.mp3"
     },
     "parade/weHaveFriends/n=99": {
       "text": "We have ninety-nine friends!",
-      "hash": "479bb04e94",
+      "hash": "3d56d436ca",
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=99.mp3"
     },
