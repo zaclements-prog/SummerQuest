@@ -32,7 +32,7 @@ import {
 import { groveOrderWithAlts, grovePoolFor, groveProblem } from '../lib/providers/multiplicationGrove'
 import { CrateStack, FieldLabels, Keeper, PlantField, RootRing, SeedBag, type FieldMode, type KeeperMood } from './TimesGrove.parts'
 import { GroveSet } from './TimesGrove.set'
-import { CAM_FOCUS_LOCAL, CAM_FOV, CAM_OFFSET, CRATES, DWELL, FIELD_HALF, FRUITS, ISO_YAW, SEED_BAG, SPAWN_LOCAL, toWorld, wpos } from './TimesGrove.layout'
+import { CAM_FOCUS_LOCAL, CAM_FOV, CAM_OFFSET, GROVE_FIT_ASPECT, CRATES, DWELL, FIELD_HALF, FRUITS, ISO_YAW, SEED_BAG, SPAWN_LOCAL, toWorld, wpos } from './TimesGrove.layout'
 import { GameSky } from './_scene/GameSky'
 import { localX, localZ } from './_scene/isoFrame'
 import { GameCameraRig } from './_scene/GameCameraRig'
@@ -692,7 +692,7 @@ function GroveScene({
           <CreatureAccessories />
         </group>
       </group>
-      <GameCameraRig targetRef={posRef} focus={FOCUS} offset={CAM_OFFSET} follow={0.12} />
+      <GameCameraRig targetRef={posRef} focus={FOCUS} offset={CAM_OFFSET} follow={0.12} fitAspect={GROVE_FIT_ASPECT} />
       <JuiceLayer />
     </group>
   )

@@ -307,6 +307,36 @@ describe('grades 2–5 lessons', () => {
     expect(container.textContent).toContain('Division is sharing fairly')
   })
 
+  it('"Now practice" never skips an unanswered check: it brings the check into view; an answer scrolls its feedback above the dock', async () => {
+    const scrolls: (ScrollLogicalPosition | undefined)[] = []
+    const prev = Element.prototype.scrollIntoView
+    Element.prototype.scrollIntoView = function (this: Element, arg?: boolean | ScrollIntoViewOptions) {
+      if (this.getAttribute('data-testid') === 'lesson-check') scrolls.push(typeof arg === 'object' ? arg.block : undefined)
+    }
+    try {
+      setGrade(3)
+      mount('/tutor/division')
+      await advance(300)
+      const byText = (re: RegExp) => [...container.querySelectorAll('button')].find((b) => re.test(b.textContent ?? ''))!
+      click(byText(/^Next/)) // → step 2
+      click(byText(/^Next/)) // → step 3, the last, with its check
+      await advance(300)
+      const practice = byText(/Now practice/)
+      expect(practice.getAttribute('aria-disabled')).toBe('true')
+      scrolls.length = 0
+      click(practice)
+      expect(container.querySelector('[aria-label="Lesson complete"]')).toBeNull()
+      expect(scrolls).toEqual(['start'])
+      const opts = [...container.querySelectorAll<HTMLButtonElement>('[data-check-option]')]
+      click(opts.find((o) => o.textContent?.includes('4'))!)
+      await advance(500)
+      expect(scrolls.at(-1)).toBe('end')
+      expect(practice.getAttribute('aria-disabled')).toBeNull()
+    } finally {
+      Element.prototype.scrollIntoView = prev
+    }
+  })
+
   it('a K–1 lesson opened by any grade is told the voice-first way', async () => {
     setGrade(3)
     mount('/tutor/kCounting')

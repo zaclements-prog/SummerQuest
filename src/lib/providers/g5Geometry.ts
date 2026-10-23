@@ -353,7 +353,7 @@ function triangleSides(id: string): Problem {
     `A triangle has sides of ${x} cm, ${y} cm and ${z} cm. Which name describes it best?`,
     kind,
     shuffle(['equilateral', 'isosceles', 'scalene']),
-    'Three equal sides: equilateral. Exactly two equal sides: isosceles. No equal sides: scalene.',
+    'At least two equal sides: isosceles. All three equal: equilateral, the best name (it is isosceles too). No equal sides: scalene.',
     'triangle',
   )
 }
