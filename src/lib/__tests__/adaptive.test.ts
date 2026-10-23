@@ -291,3 +291,60 @@ describe('createFactSampler', () => {
     for (let i = 1; i < out.length; i++) expect(out[i]).not.toBe(out[i - 1])
   })
 })
+
+describe('createFactSampler: game hooks (pin, early, a shared queue)', () => {
+  function toy(stats: () => FactStats, opts: { max?: number; queue?: ReturnType<typeof createRetryQueue<number>>; seed?: string } = {}) {
+    const rng = seededRng(opts.seed ?? 'hooks')
+    const max = opts.max ?? 20
+    return createFactSampler<number>({
+      key: (n) => `n:${n}`,
+      parse: (id) => {
+        const m = /^n:(\d+)$/.exec(id)
+        return m && Number(m[1]) < max ? Number(m[1]) : null
+      },
+      uniform: () => Math.floor(rng() * max),
+      stats,
+      queue: opts.queue,
+      rng,
+      now: () => NOW,
+    })
+  }
+
+  it('pin serves the caller\'s fact, and a miss on it still comes back', () => {
+    let stats: FactStats = {}
+    const s = toy(() => stats)
+    const pinned = s.pin(13)
+    expect(pinned).toEqual({ fact: 13, factId: 'n:13', source: 'fixed' })
+    stats = recordFactAnswer(stats, 'n:13', false, NOW)
+    const later = [s.next(), s.next(), s.next()]
+    expect(later.some((d) => d.factId === 'n:13' && d.source === 'retry')).toBe(true)
+  })
+
+  it('early takes a retry before its turn, but still never back-to-back', () => {
+    let stats: FactStats = {}
+    const s = toy(() => stats, { seed: 'early' })
+    const first = s.next()
+    stats = recordFactAnswer(stats, first.factId, false, NOW)
+    expect(s.next({ early: true }).factId).not.toBe(first.factId) // just asked: not again yet
+    const d = s.next({ early: true })
+    expect(d).toMatchObject({ factId: first.factId, source: 'retry' })
+  })
+
+  it('a shared queue carries a miss from one sampler to another, within each one\'s range', () => {
+    let stats: FactStats = {}
+    const queue = createRetryQueue<number>(seededRng('shared'))
+    const small = toy(() => stats, { max: 5, queue, seed: 'small' })
+    const big = toy(() => stats, { max: 20, queue, seed: 'big' })
+    // a big-range miss is never served by the small sampler…
+    big.pin(17)
+    stats = recordFactAnswer(stats, 'n:17', false, NOW)
+    for (let i = 0; i < 4; i++) expect(small.next().fact).toBeLessThan(5)
+    // …but the big one still has it queued
+    expect(big.next()).toMatchObject({ factId: 'n:17', source: 'retry' })
+    // a small-range miss comes back on the big sampler
+    small.pin(3)
+    stats = recordFactAnswer(stats, 'n:3', false, NOW)
+    const later = [big.next(), big.next(), big.next()]
+    expect(later.some((d) => d.factId === 'n:3' && d.source === 'retry')).toBe(true)
+  })
+})

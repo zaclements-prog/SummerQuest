@@ -1,6 +1,6 @@
 import type { Problem, ProblemProvider } from '../problem'
 import { randInt, shuffle } from '../random'
-import { createFactSampler, inRange } from '../adaptive'
+import { createFactSampler, createRetryQueue, inRange, type RetryQueue } from '../adaptive'
 import { currentFactStats } from '../../store/progress'
 
 interface Config {
@@ -10,10 +10,12 @@ interface Config {
   quotientMax: number
 }
 
-interface Fact {
+export interface DivFact {
   divisor: number
   quotient: number
 }
+
+type Fact = DivFact
 
 /** "div:56/8" — dividend / divisor. */
 export function divFactId(divisor: number, quotient: number): string {
@@ -31,9 +33,11 @@ export function parseDivFactId(id: string, cfg: Config): Fact | null {
   return { divisor, quotient }
 }
 
-export function makeDivisionProvider(cfg: Config): ProblemProvider {
+/** `retries`: a queue shared with another division provider (see `makeArenaProviders`). */
+export function makeDivisionProvider(cfg: Config, opts: { retries?: RetryQueue<Fact> } = {}): ProblemProvider {
   let serial = 0
   const sampler = createFactSampler<Fact>({
+    queue: opts.retries,
     key: ({ divisor, quotient }) => divFactId(divisor, quotient),
     parse: (id) => parseDivFactId(id, cfg),
     uniform: () => ({
@@ -78,4 +82,14 @@ function makeDistractors(answer: number): number[] {
   }
   while (set.size < 3) set.add(answer + randInt(1, 5))
   return Array.from(set)
+}
+
+/**
+ * Division Arena's two fact draws — the warm-up corner and the full range —
+ * sharing one retry queue, so a fact missed on a warm-up golem comes back on a
+ * main golem a couple of rounds later (each draw keeps its own range).
+ */
+export function makeArenaProviders(facts: Config, warm: Config): { facts: ProblemProvider; warm: ProblemProvider } {
+  const retries = createRetryQueue<Fact>()
+  return { facts: makeDivisionProvider(facts, { retries }), warm: makeDivisionProvider(warm, { retries }) }
 }
