@@ -4723,6 +4723,36 @@
       "kind": "line",
       "file": "voice/g1-facts/familyRule.mp3"
     },
+    "g1-facts/stop-inAll": {
+      "text": "So how many in all?",
+      "hash": "486dfb54f7",
+      "kind": "line",
+      "file": "voice/g1-facts/stop-inAll.mp3"
+    },
+    "g1-facts/stop-left": {
+      "text": "So how many are left?",
+      "hash": "5c72b4f6f9",
+      "kind": "line",
+      "file": "voice/g1-facts/stop-left.mp3"
+    },
+    "g1-facts/stop-land": {
+      "text": "So where do we land?",
+      "hash": "dac450fa49",
+      "kind": "line",
+      "file": "voice/g1-facts/stop-land.mp3"
+    },
+    "g1-facts/stop-fill": {
+      "text": "So how many did we fill in?",
+      "hash": "1d224dafd7",
+      "kind": "line",
+      "file": "voice/g1-facts/stop-fill.mp3"
+    },
+    "g1-facts/countAll": {
+      "text": "Let's count them all.",
+      "hash": "bb8b1b8b0f",
+      "kind": "line",
+      "file": "voice/g1-facts/countAll.mp3"
+    },
     "g1-facts/startAt-1": {
       "text": "Start at one.",
       "hash": "0f163a27f4",

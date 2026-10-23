@@ -691,9 +691,9 @@ function NumberSentence({ problem, spec, phase, active, misses, onAttempt, regis
       onAttempt(correct)
     },
   })
-  const live = useRef({ choice, st, active })
+  const live = useRef({ choice, st, active, misses })
   useLayoutEffect(() => {
-    live.current = { choice, st, active }
+    live.current = { choice, st, active, misses }
   })
 
   useEffect(() => {
@@ -742,7 +742,9 @@ function NumberSentence({ problem, spec, phase, active, misses, onAttempt, regis
       const picked = live.current.choice.picked
       const note = picked !== null ? problem.notes?.[picked] : null
       if (note && picked !== null) steps.push({ voice: note, target: nkCard(picked), hand: false, pad: 12, pause: 0.35 })
-      spec.help.forEach((beat, k) => {
+      // a first miss: the help stops one step short; from the second, the more direct one
+      const beats = live.current.misses > 0 && spec.helpAgain ? spec.helpAgain : spec.help
+      beats.forEach((beat, k) => {
         const counting = beat.do?.kind === 'dot' || beat.do?.kind === 'count' || beat.do?.kind === 'move' || beat.do?.kind === 'take' || beat.do?.kind === 'hop' || beat.do?.kind === 'fill'
         const events = [
           ...(k === 0 ? [{ char: 0, run: () => mounted.current && dispatch({ type: 'reset' }) }] : []),

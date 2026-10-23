@@ -191,6 +191,49 @@ describe('count on (Adding Mesa)', () => {
     }
     expect(result).toMatchObject({ correct: 2, total: 3 })
   })
+
+  it('a first miss stops one step short and asks ("So how many in all?"); a second says how it comes out', async () => {
+    const { p, provider } = firstOf({ kind: 'g1Adding', mode: 'countOn' }, (s) => s.model.kind === 'countOn' && !s.act)
+    const s = p.activity as NumberSentenceSpec
+    mount(provider)
+    await until(isOpen)
+    said.length = 0
+    tap(wrongCard())
+    await until(() => phase() === 'ask' && said.includes('Now you try!'), 60000)
+    expect(said).toContain('So how many in all?')
+    expect(said.some((t) => / make /.test(t))).toBe(false)
+    // the help stopped short: the full help is kept for a second miss
+    expect(s.help.at(-1)!.voice).toEqual({ line: 'g1-facts/stop-inAll' })
+    expect(voiceText(s.helpAgain!.at(-1)!.voice)).toMatch(/ make /)
+    await until(isOpen)
+    said.length = 0
+    tap(wrongCard())
+    await until(() => phase() === 'ask' && said.includes('Now you try!'), 60000)
+    expect(said).toContain(voiceText(s.helpAgain!.at(-1)!.voice))
+    expect(said).not.toContain('So how many in all?')
+  })
+})
+
+describe('every Adding Mesa and Take-Away Dunes help stops short on a first miss', () => {
+  it.each([
+    { kind: 'g1Adding', mode: 'countOn' },
+    { kind: 'g1Adding', mode: 'facts' },
+    { kind: 'g1Subtract', mode: 'takeAway' },
+    { kind: 'g1Subtract', mode: 'think' },
+  ] as Parameters<typeof createProvider>[0][])('%o', (config) => {
+    const make = createProvider(config)
+    make.reset?.()
+    for (let i = 0; i < 60; i++) {
+      const s = (make.next() as ListenProblem).activity as NumberSentenceSpec
+      const said = s.help.map((b) => voiceText(b.voice))
+      // the first help never says the answer as its last word
+      if (s.model.kind !== 'family') {
+        expect(s.helpAgain, s.sentence.join(' ')).toBeDefined()
+        expect(said.at(-1)).toMatch(/^So /)
+      }
+      for (const b of [...s.help, ...(s.helpAgain ?? [])]) expect(b.short).toBeUndefined()
+    }
+  })
 })
 
 describe('every strategy picture', () => {

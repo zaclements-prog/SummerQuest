@@ -72,6 +72,12 @@ export interface HelpBeat {
   target?: 'model' | 'sentence'
   /** Run as the line starts; a count-along of numbers runs one per beat. */
   do?: HelpDo
+  /**
+   * This beat says how it comes out ("Eight and three make eleven."): on a
+   * first miss the help stops one step short and asks this instead ("So how
+   * many in all?"), so the next try isn't parroting (see `helpAgain`).
+   */
+  short?: VoiceRef
 }
 
 export interface NumberSentenceSpec extends ListenActivitySpec {
@@ -93,6 +99,8 @@ export interface NumberSentenceSpec extends ListenActivitySpec {
   act?: VoiceRef
   /** The help after a miss: lines, each doing something to the model as it is said. */
   help: readonly HelpBeat[]
+  /** From the second miss: a more direct help (it ends by saying how it comes out). Default: `help` again. */
+  helpAgain?: readonly HelpBeat[]
 }
 
 export const isNumberSentenceSpec = (s: { kind: string } | undefined | null): s is NumberSentenceSpec => s?.kind === 'numberSentence'
