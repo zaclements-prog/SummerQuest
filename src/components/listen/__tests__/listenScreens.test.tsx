@@ -289,8 +289,23 @@ describe('World HUD', () => {
   const near = (zoneId: string, label: string, hub?: 'schoolhouse' | 'library') =>
     act(() => useWorldUi.getState().setActiveNpc({ areaId: hub ?? zoneId, zoneId, hub, label }))
 
-  it('K: icon buttons, the first-visit tour (map, pets, home), once', async () => {
+  it('K: a new child lands on the first quest: a big star, said out loud; the tour waits', async () => {
     player(0)
+    render('/world', <WorldHud posRef={posRef} />, '/world')
+    expect(q('[data-quest-card="first"]')).not.toBeNull()
+    expect(q('[data-guide="quest-start"]')).not.toBeNull()
+    expect(q('[data-quest-card="first"]')!.textContent).not.toMatch(/[a-z]/i) // pictures only, no words
+    await tick(1400)
+    expect(lines()).toEqual(['quest/first'])
+    expect(targets()).toEqual(['quest-start'])
+    expect(useProgress.getState().toursSeen).toEqual([])
+    click(q('[data-guide="quest-start"]'))
+    expect(at.path).toBe('/play/multiplication-mesa/k-count-1')
+  })
+
+  it('K: icon buttons, the first-visit tour (map, pets, home), once', async () => {
+    // (a child who has played already: no first-quest card in front of the tour)
+    player(0, { zones: { 'multiplication-mesa': { zoneId: 'multiplication-mesa', stages: { 'k-count-1': { stageId: 'k-count-1', stars: 1, bestScore: 1, attempts: 1 } } } } })
     render('/world', <WorldHud posRef={posRef} />, '/world')
     expect(q('[data-listen-hud]')).not.toBeNull()
     for (const id of ['hud-map', 'hud-pets', 'hud-home', 'say-again']) expect(q(`[data-guide="${id}"]`), id).not.toBeNull()

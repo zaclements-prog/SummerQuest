@@ -45115,6 +45115,24 @@
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=99.mp3"
     },
+    "quest/first": {
+      "text": "Here is your first quest! Tap the big star to start.",
+      "hash": "e3a2a95576",
+      "kind": "line",
+      "file": "voice/quest/first.mp3"
+    },
+    "quest/today": {
+      "text": "Here is today's quest! Tap the star to play.",
+      "hash": "bac424a292",
+      "kind": "line",
+      "file": "voice/quest/today.mp3"
+    },
+    "quest/done": {
+      "text": "You did today's quest! Here are some coins.",
+      "hash": "c800a5a4dd",
+      "kind": "line",
+      "file": "voice/quest/done.mp3"
+    },
     "ui/tapToStart": {
       "text": "Tap the star to start!",
       "hash": "92f6e6330e",
