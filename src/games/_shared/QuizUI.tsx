@@ -2,7 +2,7 @@ import { createContext, useContext } from 'react'
 import type { ReactNode } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import type { ProblemAnswer } from '../../lib/problem'
-import { ProgressBar } from '../../components/ui'
+import { Button, ProgressBar } from '../../components/ui'
 import { WIDE_SHORT, useMediaQuery } from '../../components/useViewport'
 
 /**
@@ -16,11 +16,11 @@ import { WIDE_SHORT, useMediaQuery } from '../../components/useViewport'
 // A quest-toned ProgressBar scaled to current/total plus a readable caption.
 // Replaces the old low-contrast "Question X of N" text.
 
-export function QuizProgress({ current, total }: { current: number; total: number }) {
+export function QuizProgress({ current, total, caption }: { current: number; total: number; caption?: string }) {
   return (
     <div className="w-full max-w-md mb-4 short:mb-2 roomy:max-w-xl roomy:mb-6">
       <div className="kid-text text-base text-ink-700 text-center mb-1.5 short:mb-1 short:text-sm roomy:text-lg">
-        Question {current} of {total}
+        {caption ?? `Question ${current} of ${total}`}
       </div>
       <ProgressBar value={current} max={total} tone="quest" />
     </div>
@@ -223,5 +223,51 @@ function AnswerButton({
         </span>
       )}
     </button>
+  )
+}
+
+// ── Miss note ──────────────────────────────────────────────────────────────────
+// After a wrong pick: the right answer and the provider's 💡 hint. Untimed games
+// keep it on screen until the child taps "Got it →", so there's time to read it.
+
+export function MissNote({
+  answer,
+  hint,
+  onGotIt,
+}: {
+  answer: ProblemAnswer
+  hint?: string
+  /** Shows the "Got it →" button (omit it while the note can't be dismissed yet). */
+  onGotIt?: () => void
+}) {
+  const reduced = useReducedMotion()
+  return (
+    <motion.div
+      initial={reduced ? { opacity: 0 } : { opacity: 0, y: 10 }}
+      animate={reduced ? { opacity: 1 } : { opacity: 1, y: 0 }}
+      role="status"
+      data-miss-note=""
+      className="mt-5 short:mt-3 w-full max-w-md roomy:max-w-xl flex flex-col items-center gap-3 short:gap-2 bg-quest-100 text-ink-900 px-4 py-3 short:py-2 rounded-[1.25rem] border-[3px] border-line shadow-ledge-sm kid-text text-lg text-left"
+    >
+      <div className="w-full flex items-start gap-3">
+        <span
+          className="grid place-items-center w-10 h-10 shrink-0 rounded-full bg-quest-300 border-2 border-line text-xl"
+          aria-hidden="true"
+        >
+          💡
+        </span>
+        <div className="min-w-0 self-center">
+          <div className="font-bold">
+            The answer is <span className="whitespace-nowrap">{String(answer)}</span>.
+          </div>
+          {hint && <div className="text-ink-800">{hint}</div>}
+        </div>
+      </div>
+      {onGotIt && (
+        <Button variant="secondary" size="lg" guide="miss-got-it" onClick={onGotIt} className="min-w-[10rem]">
+          Got it →
+        </Button>
+      )}
+    </motion.div>
   )
 }

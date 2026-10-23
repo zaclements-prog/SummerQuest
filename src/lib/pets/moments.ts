@@ -13,8 +13,11 @@ export function isCalmRoute(pathname: string, lessonCompleteOpen: boolean): bool
   return false
 }
 
-/** More than this many waiting at once → one summary card instead of a queue. */
-export const MAX_QUEUED_MOMENTS = 3
+/**
+ * More than this many waiting at once → one summary card. (One at a time made a
+ * queue that popped up again on every screen after; several now batch into one.)
+ */
+export const MAX_QUEUED_MOMENTS = 1
 
 export type MomentShow = { kind: 'one'; moment: PetMoment } | { kind: 'summary'; moments: PetMoment[] }
 

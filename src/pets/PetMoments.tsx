@@ -1,4 +1,4 @@
-import { Suspense, useCallback, useEffect, useMemo, useState } from 'react'
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useProgress } from '../store/progress'
 import { pendingMoments, petStages } from '../lib/pets/growth'
@@ -36,8 +36,11 @@ function stillLoading(pathname: string): boolean {
  * from progress) is ahead of the one last celebrated (`petsSeen`), it shows a
  * hatch or grow-up moment — but only at calm moments: the World, the map, a
  * zone, Home, Pets, the Tutor's list, or a lesson's complete card. Never in the
- * middle of a game or a lesson. Several wait in a queue, one at a time; more
- * than three become one summary card. Each is marked seen when it's dismissed.
+ * middle of a game or a lesson, and only as a screen opens: once the child has
+ * started tapping on a screen (the decorate shop, say) it waits for the next
+ * one, so it never lands on top of what they're doing. One pet gets its own
+ * card; several become one summary card. Each is marked seen as it's shown, so
+ * it never plays again on a later screen.
  */
 export default function PetMoments() {
   const { pathname } = useLocation()
@@ -52,21 +55,48 @@ export default function PetMoments() {
   const calm = !!player && isCalmRoute(pathname, lessonOpen)
   const grade = player?.grade
   const pending = useMemo(() => pendingMoments(petStages(zones, lessonsDone, grade), petsSeen), [zones, lessonsDone, grade, petsSeen])
-  const [show, setShow] = useState<MomentShow | null>(null)
-  // Leaving the calm screen hides it without marking it seen (it comes back later).
+  // The screen a celebration opened on: leaving it closes the card (already marked seen).
+  const screen = `${pathname}|${lessonOpen}`
+  const [shown, setShown] = useState<{ show: MomentShow; screen: string } | null>(null)
+  const show = shown && shown.screen === screen ? shown.show : null
   const visible = calm ? show : null
+
+  // Has the child started doing something on this screen? Then don't pop up over it.
+  const touched = useRef(false)
+  useEffect(() => {
+    touched.current = false
+  }, [screen])
+  useEffect(() => {
+    const onInput = () => {
+      touched.current = true
+    }
+    document.addEventListener('pointerdown', onInput, true)
+    document.addEventListener('keydown', onInput, true)
+    return () => {
+      document.removeEventListener('pointerdown', onInput, true)
+      document.removeEventListener('keydown', onInput, true)
+    }
+  }, [])
 
   // Something to celebrate on a calm screen: after a beat, once its 3D view is up and no other dialog is.
   useEffect(() => {
     if (show || !calm || pending.length === 0) return
     let timer = 0
     const tryOpen = () => {
-      if (otherDialogOpen() || stillLoading(pathname)) timer = window.setTimeout(tryOpen, 600)
-      else setShow(nextMomentShow(pending))
+      if (touched.current) return // busy here: the next screen celebrates instead
+      if (otherDialogOpen() || stillLoading(pathname)) {
+        timer = window.setTimeout(tryOpen, 600)
+        return
+      }
+      const next = nextMomentShow(pending)
+      if (!next) return
+      setShown({ show: next, screen })
+      // Seen as soon as it's shown: it never comes back on a later screen.
+      markPetsSeen(seenOf(next))
     }
     timer = window.setTimeout(tryOpen, lessonOpen ? SETTLE_LESSON_MS : SETTLE_MS)
     return () => window.clearTimeout(timer)
-  }, [show, calm, pending, lessonOpen, pathname])
+  }, [show, calm, pending, lessonOpen, pathname, screen, markPetsSeen])
 
   // The lesson-complete card holds its countdown while a celebration is up.
   useEffect(() => {
@@ -76,9 +106,8 @@ export default function PetMoments() {
 
   const done = useCallback(() => {
     if (!show) return
-    const list = show.kind === 'one' ? [show.moment] : show.moments
-    markPetsSeen(Object.fromEntries(list.map((m) => [m.creatureId, m.to])))
-    setShow(null)
+    markPetsSeen(seenOf(show))
+    setShown(null)
   }, [show, markPetsSeen])
 
   if (!visible) return null
@@ -113,7 +142,13 @@ export default function PetMoments() {
   )
 }
 
-/** Lots happened at once (more than three pets): one card that lists them all. */
+/** The `petsSeen` entries for what a celebration shows. */
+function seenOf(show: MomentShow): Record<string, PetMoment['to']> {
+  const list = show.kind === 'one' ? [show.moment] : show.moments
+  return Object.fromEntries(list.map((m) => [m.creatureId, m.to]))
+}
+
+/** Lots happened at once (more than one pet): one card that lists them all. */
 function SummaryCard({ moments, onPets, onDone }: { moments: PetMoment[]; onPets?: () => void; onDone: () => void }) {
   const adults = moments.filter((m) => m.to === 'adult').map((m) => petName(m.creatureId))
   useEffect(() => {

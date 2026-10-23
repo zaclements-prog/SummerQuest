@@ -16,7 +16,7 @@ let root: Root
 function render(path: string) {
   act(() =>
     root.render(
-      <MemoryRouter initialEntries={[path]}>
+      <MemoryRouter key={path} initialEntries={[path]}>
         <PetMoments />
       </MemoryRouter>,
     ),
@@ -110,6 +110,40 @@ describe('PetMoments', () => {
     tick(700)
     expect(dialog()).not.toBeNull()
     main.remove()
+  })
+
+  it('two waiting: one summary card, not one pop-up per screen', () => {
+    for (const zoneId of ['multiplication-mesa', 'fraction-falls']) {
+      useProgress.getState().awardStage(zoneId, getZone(zoneId)!.stages[0].id, 1, 5)
+    }
+    render('/zone/fraction-falls')
+    tick(1400)
+    expect(dialog()?.getAttribute('aria-label')).toBe('Your pets grew!')
+    expect(container.textContent).toContain('2 pets hatched or grew')
+  })
+
+  it('marked seen as soon as it shows, so a later screen never replays it', () => {
+    hatchFour()
+    render('/map')
+    tick(1400)
+    expect(dialog()).not.toBeNull()
+    // not dismissed (the child walked off) — but already seen
+    expect(useProgress.getState().petsSeen).toMatchObject({ lion: 'baby', frog: 'baby', octopus: 'baby', fox: 'baby' })
+    render('/zone/fraction-falls')
+    tick(5000)
+    expect(dialog()).toBeNull()
+  })
+
+  it('never pops up over a screen the child has started using', () => {
+    hatchFour()
+    render('/zone/fraction-falls')
+    tick(300)
+    act(() => {
+      document.body.dispatchEvent(new Event('pointerdown', { bubbles: true }))
+    })
+    tick(5000)
+    expect(dialog()).toBeNull()
+    expect(useProgress.getState().petsSeen.lion).toBeUndefined() // still waiting for the next screen
   })
 
   it('nothing waiting, nothing shown', () => {

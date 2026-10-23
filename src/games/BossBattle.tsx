@@ -6,7 +6,7 @@ import { sfx } from '../lib/sound'
 import { useProgress } from '../store/progress'
 import { skillOf } from '../tutoring/skills'
 import { Loading, ProgressBar, Pill } from '../components/ui'
-import { QuizProgress, QuestionPrompt, AnswerGrid, QuizSplit } from './_shared/QuizUI'
+import { QuizProgress, QuestionPrompt, AnswerGrid, QuizSplit, MissNote } from './_shared/QuizUI'
 import VisualRenderer from '../components/VisualRenderer'
 import { visualSize } from '../components/visualSize'
 import { SHORT_SCREEN, WIDE_SHORT, useMediaQuery } from '../components/useViewport'
@@ -54,6 +54,8 @@ export default function BossBattle({ provider, params, onComplete, meta }: GameP
   // Reveal state for the shared AnswerGrid: which option the player picked this
   // question (null until they answer; cleared when the next problem loads).
   const [picked, setPicked] = useState<ProblemAnswer | null>(null)
+  // A wrong answer: the right answer + hint stay up until the child taps "Got it →".
+  const [missed, setMissed] = useState(false)
   const recordAnswer = useProgress((s) => s.recordAnswer)
   const recordAttempt = useProgress((s) => s.recordAttempt)
   // Phone held sideways: the boss stands on the left, the question on the right.
@@ -79,7 +81,8 @@ export default function BossBattle({ provider, params, onComplete, meta }: GameP
 
   useEffect(() => {
     const over = bossHp <= 0 || playerHp <= 0 || questionsAnswered >= questionCount
-    if (!over) return
+    // (a miss on the last question / last heart: read the hint first)
+    if (!over || missed) return
     const won = bossHp <= 0
     const stars = won
       ? playerHp >= maxHearts
@@ -100,10 +103,10 @@ export default function BossBattle({ provider, params, onComplete, meta }: GameP
       })
     }, 1100)
     return () => clearTimeout(t)
-  }, [bossHp, playerHp, questionsAnswered, questionCount, correct, maxHearts, onComplete])
+  }, [bossHp, playerHp, questionsAnswered, questionCount, correct, maxHearts, missed, onComplete])
 
   function pick(opt: string | number) {
-    if (!problem || state !== 'idle') return
+    if (!problem || state !== 'idle' || missed) return
     if (bossHp <= 0 || playerHp <= 0 || questionsAnswered >= questionCount) return
 
     const isCorrect = opt === problem.answer
@@ -125,28 +128,42 @@ export default function BossBattle({ provider, params, onComplete, meta }: GameP
         setBossHp((hp) => Math.max(0, hp - 1))
         setBossShake(false)
       }, 350)
+      setTimeout(() => {
+        setState('idle')
+        setPicked(null)
+        // Only load another question if the battle isn't already decided by count.
+        if (answeredNow < questionCount) {
+          nextProblem(provider).then((p) => setProblem(p))
+        }
+      }, 900)
     } else {
       sfx.wrong()
       setState('hurt')
+      setMissed(true)
       setTimeout(() => {
         setPlayerHp((hp) => Math.max(0, hp - 1))
       }, 350)
+      // The hurt cue plays out; the right answer and hint stay until "Got it →".
+      setTimeout(() => setState('idle'), 900)
     }
+  }
 
-    setTimeout(() => {
-      setState('idle')
-      setPicked(null)
-      // Only load another question if the battle isn't already decided by count.
-      if (answeredNow < questionCount) {
-        nextProblem(provider).then((p) => setProblem(p))
-      }
-    }, 900)
+  /** After a miss: on to the next question (or let the battle end). */
+  function gotIt() {
+    if (!missed || state !== 'idle') return
+    setMissed(false)
+    setPicked(null)
+    if (questionsAnswered < questionCount && playerHp > 0) {
+      nextProblem(provider).then((p) => setProblem(p))
+    }
   }
 
   // On the final question, keep the answer feedback on screen until the hit/hurt
   // animation settles, so the banner reflects the real outcome (not "Out of moves!").
   const outOfQuestions = questionsAnswered >= questionCount && state === 'idle'
-  const isOver = bossHp <= 0 || playerHp <= 0 || outOfQuestions
+  const isOver = (bossHp <= 0 || playerHp <= 0 || outOfQuestions) && !missed
+  // The question on screen: the one being answered (not the next, while its answer shows).
+  const questionNo = Math.min(questionsAnswered + (picked === null ? 1 : 0), questionCount)
 
   if (!problem) {
     return (
@@ -170,7 +187,10 @@ export default function BossBattle({ provider, params, onComplete, meta }: GameP
     </>
   )
   const answers = (
-    <AnswerGrid options={problem.options} answer={problem.answer} picked={picked} onPick={pick} disabled={state !== 'idle'} />
+    <>
+      <AnswerGrid options={problem.options} answer={problem.answer} picked={picked} onPick={pick} disabled={state !== 'idle' || missed} />
+      {missed && <MissNote answer={problem.answer} hint={problem.hint} onGotIt={state === 'idle' ? gotIt : undefined} />}
+    </>
   )
 
   return (
@@ -241,7 +261,8 @@ export default function BossBattle({ provider, params, onComplete, meta }: GameP
              happens when rAF is paused (backgrounded tab), freezing the
              question. This matches ConceptPlay's robust prompt pattern. */
           <div key={problem.id} className={`${wide ? 'mt-0' : 'mt-4'} w-full flex flex-col items-center`}>
-            <QuizProgress current={Math.min(questionsAnswered + 1, questionCount)} total={questionCount} />
+            {/* The boss can fall (or your hearts run out) before the last one: "up to" */}
+            <QuizProgress current={questionNo} total={questionCount} caption={`Question ${questionNo} · up to ${questionCount}`} />
 
             {sideAnswers ? (
               <QuizSplit question={question} answers={answers} />

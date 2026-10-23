@@ -103,6 +103,10 @@ function ClassicTowerDefense({ provider, onComplete, meta, paused = false }: Gam
         score: game.kills * 5 + wavesCleared * 20,
         correct: answersRef.current.correct,
         total: answersRef.current.total,
+        // The result screen says what happened: the base fell (whatever the gate score).
+        ...(game.hasWon
+          ? {}
+          : { outcome: { lost: true, headline: `The base fell at wave ${Math.max(game.wave, 1)}`, detail: 'Try again for more stars!' } }),
       })
     }, 1400)
   })
