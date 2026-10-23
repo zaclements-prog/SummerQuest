@@ -14,6 +14,67 @@ you produce is checked by `npm run tts:check` and the test suite.
 
 ## 0. The current render job (2026-10-22)
 
+**STATUS 2026-10-22 ~22:00 PDT — PAUSED with progress banked.** Work happens in
+worktree `~/Projects/sq-narration2` on branch `narration-k-g1-g5`; resume with
+`bash campaign.sh` (hash-skip resumes exactly where it stopped).
+
+| Set | Fresh | Remaining | Voice id |
+|---|---|---|---|
+| Lessons (`npm run tts:check`) | **198/198 — DONE**: all 45 grade 2–4 steps, all 56 `g5*` steps, all 97 K/G1 steps, 0 problems | 0 | `narrationVoice.json`: `…calm-teacher-v1` |
+| Voice lines (`npm run voice:check`) | **1,920 / 7,330** | ~5,410 clips (all 14 `g1-*` packs except shapes/shares/graphs/science/story-math/words/writing, plus `g1-facts`/`g1-tens`/`g1-woods`/`g1-towers`, `parade`) | `voiceId.json`: `…calm-teacher-v1` |
+
+**Owner decision (2026-10-22): ONE voice for everything.** "We decided on a voice
+already… the example woman voice." The approved voice is the `calm-teacher-v1`
+clone (`~/Projects/contentgen/qwen3-tts/refs/sq_teacher_v2.wav`) on Higgs v2 —
+the exact persona of the shipped grade 2–4 lessons. **No separate K reference and
+no `:k` voice id**: `voiceId.json` was reset to base `…calm-teacher-v1` and
+`voiceLines.json` re-dumped. §7.2's "K delivery" slower/warmer reference is
+superseded; K/G1 use the same voice with the same short-sentence scripts.
+Do not route any SummerQuest audio through other engines (the Ming-3.0 port is
+under evaluation only; nothing Ming may be embedded).
+
+**Gate fixes this session (required to render K/G1/g5 at all).** The fresh
+number-heavy content failed en masse because `textnorm` was corrupting the
+SCRIPT side, not because Higgs mangled audio. Commits `d4dcef1`, `5622cd5`,
+`cf10845`; every fix is pinned by `scripts/tts/test_voicelines.py`
+(14 tests, run: `$PY -m unittest discover -s scripts/tts`):
+- decimals fold to one token from every surface form (`three point four seven
+  two` == `3.472` == `3 .472`); a dot + whitespace stays sentence punctuation
+  so count-by lists (`Ten, twenty, thirty.` == `10. 20. 30.`) never merge;
+- a units/tens word never continues a number phrase (`sixty-seven two times`
+  stays 67 + 2; `twenty thirty` stays a list), except tens after a scale
+  (`one hundred twenty` = 120);
+- teen connector dropped (`ten and three` == `10 and 3`);
+- phonics fold: phonetic spellings (`buh`, `shhhh`), letter-name words
+  (`bee`, `ell`) and Whisper's letters/digit-shapes (`b`, `sh`, `2` = tuh —
+  digits only in the starts/ends-with frame) all fold to `snd<letter>`,
+  symmetric on both sides; `bees` == `B's`; `for` == `4` as word/digit;
+- letter-sound articulations (`Kuh… aa… tuh.`) are ASR-exempt: duration
+  window + human sampling only (§7.6 note 4 — this is now coded, not just
+  promised);
+- stitched whole-clip pace excludes our own 0.28 s seams (they are silence,
+  not speech).
+Anti-gaming assertions confirm genuinely skipped words still fail the gates.
+
+**Known rejects awaiting a re-render sweep:** ~46 clips logged `FAILED` in
+pack processes that started before these fixes landed (`g1-phonics` ~31,
+`k-math/putInBowl` bees 5, `k-sounds/parts-bee`, `k-letters/starts_bee`,
+`k-addtake/one-bees`, `g1-measure/…thing=snake`, `parade/intro`,
+`g5Decimals`–`g5Division` stragglers). After resuming, re-run the failed
+packs once the campaign finishes — hash-skip touches only the missing clips:
+```bash
+$PY scripts/tts/render_local.py --set voice --engine higgs --ref-audio $REF \
+  --only g1-phonics,k-math,k-sounds,k-letters,k-addtake,g1-measure,parade,g5Decimals,g5Multiplication,g5Division
+```
+
+**Resume order after the remaining packs:** verify (§5 as before):
+`tts:check` (expect 198/198), `voice:check --strict`, `VOICE_STRICT=1 npx
+vitest run src/voice`, `npx vitest run src/tutoring`, then commit
+`public/tts/**` + `public/voice/**` with manifests and open a PR.
+
+Original plan notes (still valid where they don't contradict the owner
+decision above):
+
 Kindergarten and 1st grade are complete in code (see `docs/PROJECT_STATUS.md`), and none of
 their audio is recorded yet. They are voice-first, so these clips matter most. The
 grade 2–4 lessons are already recorded and need nothing.
