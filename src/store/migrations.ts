@@ -15,6 +15,7 @@ export interface PersistedProgressV0 {
   zones?: unknown
   ownedCreatures?: unknown
   activeCreature?: unknown
+  quest?: unknown
   [k: string]: unknown
 }
 
@@ -103,4 +104,13 @@ export function migrateV2toV3(p: PersistedProgressV0): PersistedProgressV0 {
     buddyPet,
     ownedCreatures: [...owned, ...adultPets(stages).filter((id) => !owned.includes(id))],
   }
+}
+
+/**
+ * v3 → v4: the World's quest. No save has one yet: `quest` starts empty and
+ * the World picks one on the next visit (a first quest for a player with no
+ * stars, else today's quest). Everything else is kept as it was.
+ */
+export function migrateV3toV4(p: PersistedProgressV0): PersistedProgressV0 {
+  return { ...p, quest: null }
 }
