@@ -35,7 +35,7 @@ export const SPHERE_MOVES: SphereMove[] = [
   m('water', 'hydrosphere', 'biosphere', 'A camel at an oasis gulps Drip down in one long drink.', '🐪 A camel takes a long drink'),
   m('water', 'atmosphere', 'hydrosphere', 'High in the cool sky, Drip joins a cloud droplet and falls as rain into the sea.', '🌧️ Rain falls on the sea'),
   m('water', 'atmosphere', 'hydrosphere', 'Drip freezes into a snowflake and lands on a glacier.', '❄️ Snow falls on a glacier'),
-  m('water', 'atmosphere', 'hydrosphere', 'Drip falls as rain and trickles down to the groundwater under a field.', '💧 Rain trickles underground'),
+  m('water', 'atmosphere', 'hydrosphere', 'Drip falls as rain and trickles down to the groundwater under a field.', '💧 Water soaks into groundwater'),
   m('water', 'biosphere', 'atmosphere', 'On a hot day, a maple tree lets Drip out of tiny holes in its leaves as vapor.', '🍁 Leaves give off vapor'),
   m('water', 'biosphere', 'atmosphere', 'A runner sweats, and Drip evaporates off her warm skin.', '🏃 Sweat dries on a runner'),
   m('water', 'biosphere', 'atmosphere', 'A dog pants on a summer day and breathes Drip out with its warm breath.', '🐕 A panting dog breathes out'),

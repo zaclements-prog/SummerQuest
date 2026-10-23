@@ -374,7 +374,10 @@ export function powersItem(): Item {
     // "just add zeros": the digits don't move
     times && placesOf(m) + k <= 3 ? [m, placesOf(m) + k] : null,
   ]
-  const { options, answer } = decOptions(result, undefined, cands, (j) => [result + j * Math.max(1, UNIT[Math.max(1, placesOf(result))])])
+  // more choices: the same digits with the point moved further (34,100 → 341,000 or 341),
+  // never a tacked-on ".1" or ".2" that no one would pick
+  const shift = (j: number): [number] => [j % 2 ? result * 10 ** ((j + 1) / 2) : result / 10 ** (j / 2)]
+  const { options, answer } = decOptions(result, undefined, cands, shift)
   const exp = Math.random() < 0.3
   const sign = times ? '×' : '÷'
   return {
