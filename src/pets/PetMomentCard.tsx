@@ -10,6 +10,7 @@ import CelebrationScene from './CelebrationScene'
 import { useProgress } from '../store/progress'
 import { listenGrade } from '../lib/listenNav'
 import { guide } from '../guide/store'
+import { lineText } from '../voice/registry'
 
 /**
  * One pet celebration (a hatch, or a pet growing up), loaded on demand: a small
@@ -52,9 +53,11 @@ export default function PetMomentCard({
       return
     }
     const line = moment.to === 'adult' ? 'k-nav/petGrownUp' : moment.from === 'egg' ? 'k-nav/petHatched' : 'k-nav/petGrew'
-    void guide.show({ voice: { line }, target: 'pet-moment-ok', dim: false })
+    // hatched: and what came out ("It's a baby lion!")
+    const baby = moment.from === 'egg' && moment.to === 'baby' && lineText(`k-nav/baby-${moment.creatureId}`) ? `k-nav/baby-${moment.creatureId}` : null
+    void guide.sequence([{ voice: { line }, target: 'pet-moment-ok', dim: false }, ...(baby ? [{ voice: { line: baby }, target: 'pet-moment-ok', dim: false }] : [])])
     return () => guide.clear({ forget: true })
-  }, [listen, revealed, moment.to, moment.from])
+  }, [listen, revealed, moment.to, moment.from, moment.creatureId])
 
   // Before the reveal a stray tap on the scrim (or Esc) doesn't skip the moment.
   const close = revealed ? onDone : undefined

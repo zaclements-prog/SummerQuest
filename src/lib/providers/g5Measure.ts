@@ -237,7 +237,8 @@ function toSmall(id: string, p: UnitPair): Problem {
   const answer = (tenths * p.f) / 10
   const [text, options] = amountChoices(
     answer,
-    [...CONFUSE[p.system].filter((f) => f !== p.f).map((f) => (tenths * f) / 10), n + p.f, n],
+    // (one zero too many, not "add the factor": 9 kg is never 1,009 g in anyone's head)
+    [...CONFUSE[p.system].filter((f) => f !== p.f).map((f) => (tenths * f) / 10), answer * 10, n],
     (i) => answer + i * p.f,
   )
   return conv(id, `${qty(n, p.big)} = ? ${U[p.small].many}`, text, options, `1 ${U[p.big].one} = ${qty(p.f, p.small)}, so multiply by ${p.f}.`, 'toSmall')

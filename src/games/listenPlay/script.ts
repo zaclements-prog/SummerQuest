@@ -102,8 +102,8 @@ export function questionSteps(p: ListenProblem, openCards: number[]): GuideStep[
 }
 
 /** Asking an activity's question: its own steps, else the line with the activity's area lit. */
-export function activityAskSteps(p: ListenProblem, def: ListenActivityDef | null): GuideStep[] {
-  const steps = def?.askSteps && p.activity ? def.askSteps(p, p.activity) : []
+export function activityAskSteps(p: ListenProblem, def: ListenActivityDef | null, misses = 0): GuideStep[] {
+  const steps = def?.askSteps && p.activity ? def.askSteps(p, p.activity, misses) : []
   return steps.length ? steps : [{ voice: p.speech ?? null, target: LP_ACTIVITY, hand: false, pad: 6 }]
 }
 
@@ -151,6 +151,8 @@ export function walkthroughCounts(p: ListenProblem, cards: PictureOption[], pick
       return some(open.map(card))
     case 'picked':
       return some([card(picked)])
+    case 'answer':
+      return some([card(cards.findIndex((c) => c.value === p.answer))])
     case 'count': {
       const q = countable(questionPicture(p))
       if (q) return [{ where: 'picture', target: LP_PICTURE, ...q }]
@@ -180,12 +182,23 @@ export function countAlongSteps(count: number, target: string, onCount: (i: numb
  * "…the sides.", or "…each group." for two), then each thing counted in
  * turn, its parts lighting up one by one (`onCount(where, i)`).
  */
-export function walkthroughSteps(plan: CountPlan[], onCount: (where: Where, i: number) => void): GuideStep[] {
+export function walkthroughSteps(plan: CountPlan[], onCount: (where: Where, i: number) => void, intro = true): GuideStep[] {
   if (!plan.length) return []
-  const intro = plan.length > 1 ? 'listen/countEach' : plan[0].sides ? 'listen/countSides' : 'listen/countTogether'
-  const steps: GuideStep[] = [{ voice: { line: intro }, target: plan.length > 1 ? plan.map((c) => c.target) : plan[0].target, hand: false, pad: 6 }]
+  const introLine = plan.length > 1 ? 'listen/countEach' : plan[0].sides ? 'listen/countSides' : 'listen/countTogether'
+  const steps: GuideStep[] = intro ? [{ voice: { line: introLine }, target: plan.length > 1 ? plan.map((c) => c.target) : plan[0].target, hand: false, pad: 6 }] : []
   for (const c of plan) steps.push(...countAlongSteps(c.count, c.target, (i) => onCount(c.where, i), null))
   return steps
+}
+
+/**
+ * After a miss, the answer card lit up as `reteach` names it ("This is the
+ * letter A."): no hand, no tap: the child taps it on the next try. Empty
+ * without a `reteach` (or when the answer card isn't on screen).
+ */
+export function reteachSteps(p: ListenProblem, cards: PictureOption[]): GuideStep[] {
+  if (!p.reteach) return []
+  const i = cards.findIndex((c) => c.value === p.answer)
+  return i < 0 ? [] : [{ voice: p.reteach, target: lpCard(i), hand: false, pad: 12, pause: 0.4 }]
 }
 
 /**

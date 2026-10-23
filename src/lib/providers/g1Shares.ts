@@ -6,7 +6,7 @@ import { G1_SHARE_THINGS } from '../../voice/packs/g1-shares'
 import { voiceText } from '../../voice/registry'
 import type { VoiceRef } from '../../voice/types'
 import { randInt } from '../random'
-import { makeDeck, makePositionGuard, pickOne } from './kShared'
+import { makeDeck, makePositionGuard, makeRecent, pickOne } from './kShared'
 
 /**
  * 1st grade equal shares (Fair Share Falls, 1.G.3), voice-first, for the
@@ -72,6 +72,8 @@ export function makeG1SharesProvider(cfg: G1SharesConfig = {}): Omit<ProblemProv
   let asked = 0
   let serial = 0
   let lastTapTurn = -1
+  /** This round's questions (what's said and shown): a round never asks one twice. */
+  const seen = makeRecent<string>()
 
   const turnFor = (thing: ShareThing) => (THING_BASE[thing] === 'rect' ? 0 : TURNS[randInt(0, 3)])
   /** A card of this thing, cut this way (value: the cut). */
@@ -183,6 +185,7 @@ export function makeG1SharesProvider(cfg: G1SharesConfig = {}): Omit<ProblemProv
       asked = 0
       serial = 0
       lastTapTurn = -1
+      seen.clear()
       thingDeck.reset()
       partsDeck.reset()
       places.reset()
@@ -190,7 +193,10 @@ export function makeG1SharesProvider(cfg: G1SharesConfig = {}): Omit<ProblemProv
     next(): ListenProblem {
       const i = asked < plan.length ? asked : Math.floor(plan.length / 2) + ((asked - plan.length) % Math.ceil(plan.length / 2))
       asked++
-      const p = make(plan[i])
+      // (the same picture with the same question again is drawn afresh)
+      let p = make(plan[i])
+      for (let tries = 0; tries < 8 && p.picture && seen.has(`${p.prompt}|${JSON.stringify(p.picture)}`); tries++) p = make(plan[i])
+      if (p.picture) seen.add(`${p.prompt}|${JSON.stringify(p.picture)}`)
       const at = p.options.indexOf(p.answer)
       if (at >= 0) places.note(at)
       return p

@@ -22,8 +22,11 @@ import {
   finaleOutcome,
   gatePrompt,
   introLine,
+  friendsLine,
   levelScore,
   lossHint,
+  lossHintLine,
+  paradeBestKey,
   paradeFamily,
   paradeFull,
   paradeStars,
@@ -31,6 +34,7 @@ import {
   passGate,
   planRun,
   startLevel,
+  worstPick,
   type FinaleOutcome,
   type LevelState,
   type NextUp,
@@ -45,7 +49,7 @@ import { SAFE, UI } from './_runkit/uiTokens'
 import { WalkHint } from './_runkit/RunHud'
 import { RICH } from './_runkit/juiceExtras'
 import { ParadeScene, makeWorld, type Hooks, type ShownGate, type World } from './CritterParade.scene'
-import { Caption, CountBadge, FinaleReadout, GateButtons, LevelEndCard, LevelPips, RevealChips, type LevelEnd, type Reveal } from './CritterParade.hud'
+import { Caption, CountBadge, FinaleReadout, GateButtons, LevelEndCard, LevelPips, ListenParadeResults, RevealChips, type LevelEnd, type Reveal } from './CritterParade.hud'
 import { CAM, GATE_COLORS, LANE_X, STEER_MAX, crowdCaps, marchSpeed } from './CritterParade.layout'
 import type { ThemeKey } from './CritterParade.set'
 
@@ -91,7 +95,6 @@ function askAtGates(prompt: VoiceRef) {
  * simulation and the crowds) is only touched in callbacks and the frame loop.
  */
 
-const BEST_KEY = 'sq-best-critter-parade-v1'
 const SLOW_MO_PER_LEVEL = 3
 
 /** Run bookkeeping that never drives rendering directly. */
@@ -205,7 +208,9 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
   const [finaleShow, setFinaleShow] = useState<{ ours: number; gang: number; result: FinaleOutcome | null } | null>(null)
   const [levelEnd, setLevelEnd] = useState<LevelEnd | null>(null)
   const [results, setResults] = useState<Results | null>(null)
-  const [best] = useState(() => loadBest(BEST_KEY).score)
+  // each parade stage keeps its own best (the − parade never shows the + parade's)
+  const bestKey = paradeBestKey(meta?.stageId)
+  const [best] = useState(() => loadBest(bestKey).score)
   const [gangShown, setGangShown] = useState(false)
   const [gangCheer, setGangCheer] = useState(false)
 
@@ -570,8 +575,19 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
     later(out.win ? 3600 : 2200, () => {
       s.phase = 'levelEnd'
       setPhase('levelEnd')
-      setLevelEnd({ outcome: out, smart, gates: st.decisions.length, hint: out.win ? null : lossHint(st.decisions, st.plan.opSet), joined: out.win ? st.count + st.plan.gang : st.count })
-      say({ line: out.win ? 'parade/nextParade' : 'parade/finaleLose' })
+      const joined = out.win ? st.count + st.plan.gang : st.count
+      const worst = out.win ? null : worstPick(st.decisions)
+      setLevelEnd({ outcome: out, smart, gates: st.decisions.length, hint: out.win ? null : lossHint(st.decisions, st.plan.opSet), joined, worst })
+      const next: VoiceRef = { line: out.win ? 'parade/nextParade' : 'parade/finaleLose' }
+      if (listen) {
+        // K–1: the card has only pictures and numbers: the number, the tip and what next are said
+        const friends = friendsLine(joined)
+        say(null)
+        void guide.sequence(
+          [...(friends ? [friends] : []), ...(out.win ? [] : [lossHintLine(worst, st.plan.opSet)]), next].map((voice) => ({ voice, dim: false })),
+          { repeatable: true },
+        )
+      } else say(next)
     })
   }, [levelIdx, later, say, listen])
 
@@ -584,13 +600,21 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
     const won = wins.filter(Boolean).length
     const stars = paradeStars({ smart, total: ds.length, wins: won, levels: LEVELS })
     const perfect = ds.length > 0 && smart === ds.length && won === LEVELS
-    const rec = recordRun(BEST_KEY, { score: run.score, streak: run.streak, perfect })
+    const rec = recordRun(bestKey, { score: run.score, streak: run.streak, perfect })
     const cheered = wins.reduce((a, x, i) => a + (x ? plans[i].gang : 0), 0)
     setResults({ stars, score: run.score, smart, total: ds.length, wins: won, biggest: run.biggest, cheered, prevBest: rec.prev.score, newBest: rec.newBest, perfect })
     worldRef.current!.sim.phase = 'results'
     setPhase('results')
-    say({ line: 'parade/runDone' })
-  }, [wins, plans, say])
+    if (listen) {
+      // K–1: how big the parade got, then the stars and the arrow
+      const friends = friendsLine(run.biggest)
+      say(null)
+      void guide.sequence(
+        [...(friends ? [{ voice: friends, dim: false }] : []), { voice: { line: `listen/stars${Math.min(3, Math.max(1, stars))}` }, target: 'parade-collect', dim: false, pad: 8 }],
+        { repeatable: true },
+      )
+    } else say({ line: 'parade/runDone' })
+  }, [wins, plans, say, listen, bestKey])
 
   const nextLevel = useCallback(() => {
     if (worldRef.current!.sim.phase !== 'levelEnd') return
@@ -827,9 +851,10 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
 
       {listen && waiting && upGate && <GateButtons pair={upGate.pair} colors={gates.find((g) => g.at === upGate.ev.at)?.colors ?? null} onTap={tapGate} dots={dots} />}
 
-      {levelEnd && phase === 'levelEnd' && <LevelEndCard end={levelEnd} level={levelIdx} last={levelIdx + 1 >= LEVELS} onNext={nextLevel} onRematch={rematch} />}
+      {levelEnd && phase === 'levelEnd' && <LevelEndCard end={levelEnd} level={levelIdx} last={levelIdx + 1 >= LEVELS} onNext={nextLevel} onRematch={rematch} listen={listen} />}
 
-      {results && (
+      {results && listen && <ListenParadeResults stars={results.stars} biggest={results.biggest} smart={results.smart} total={results.total} onCollect={collect} />}
+      {results && !listen && (
         <RunResults
           title={results.perfect ? 'Perfect parade!' : 'What a parade!'}
           emoji={results.perfect ? '🏆' : '🎉'}

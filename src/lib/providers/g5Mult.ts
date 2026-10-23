@@ -219,7 +219,7 @@ function estimateProblem(id: string): Problem {
   const { options, answer } = numberOptions(est, [est * 10, est / 10, trunc, roundGreatest(a) * (roundGreatest(b) + 10)])
   return {
     id,
-    prompt: `Round each number, then estimate. About how much is ${a} × ${b}?`,
+    prompt: `Round each number to its greatest place, then estimate. About how much is ${a} × ${b}?`,
     options,
     answer,
     topic: TOPIC,

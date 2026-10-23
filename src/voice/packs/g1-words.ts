@@ -71,6 +71,8 @@ export default defineVoicePack({
     ...Object.fromEntries(G1_SENTENCE_IDS.map((id) => [`ask-${id}`, G1_SENTENCES[id].ask])),
     // the help after a miss: the sentence again, its words lighting
     readAgain: "Let's read it again.",
+    // asking: the child reads the sentence first (🔊 reads it aloud, as help)
+    readFirst: 'Read the sentence!',
     // praise (taking turns with the kit's own)
     youReadIt: 'You read the whole sentence!',
     greatReader: 'What a great reader!',

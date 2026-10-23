@@ -55,6 +55,21 @@ export function afterPick(d: Decision, listen: boolean, cheer: number, opSet?: O
   return { line: 'parade/otherHadMore' }
 }
 
+/**
+ * K–1: the rematch tip, said: what the other gate would have given at the
+ * costliest pick ("Minus one would have left fourteen!"), else how to win
+ * ("Tap the gate that gives us more friends.").
+ */
+export function lossHintLine(worst: Decision | null, opSet: OpSetId): VoiceRef {
+  if (worst) return afterPick(worst, true, 0, opSet)
+  return introLine(opSet === 'divSub' || opSet === 'sub20' ? 'keep' : 'more', true)
+}
+
+/** K–1: the parade's size, said ("We have thirty-six friends!"); null past what's recorded. */
+export function friendsLine(n: number): VoiceRef | null {
+  return inRange(n, 1, 99) ? { template: 'parade/weHaveFriends', slots: { n } } : null
+}
+
 export function cageLine(amount: number): VoiceRef {
   return inRange(amount, 1, 20) ? { template: 'parade/friendsJoin', slots: { n: amount } } : { line: 'parade/cageOpen' }
 }

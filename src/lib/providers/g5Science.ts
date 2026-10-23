@@ -165,6 +165,10 @@ export const FOOD_CHAINS: { place: string; chain: string[] }[] = [
   { place: 'desert', chain: ['cactus flower', 'beetle', 'lizard', 'roadrunner'] },
 ]
 
+/** "All the grasshoppers": the plural of a chain's consumers (most just add -s). */
+const PLURAL: Record<string, string> = { 'mayfly larva': 'mayfly larvae', krill: 'krill', mouse: 'mice', 'oak leaves': 'oak leaves' }
+export const pluralOf = (thing: string) => PLURAL[thing] ?? `${thing}s`
+
 const DECOMPOSE_HINT = 'Decomposers such as fungi and bacteria break down dead things and return the materials to the soil.'
 
 export function foodWebItem(): Quick {
@@ -198,10 +202,10 @@ export function foodWebItem(): Quick {
       }
     case 3:
       return {
-        prompt: `In this ${place} food chain, what would most likely happen to the ${chain[2]} if all the ${chain[1]} disappeared? ${shown}`,
+        prompt: `In this ${place} food chain, what would most likely happen to the ${chain[2]} if all the ${pluralOf(chain[1])} disappeared? ${shown}`,
         answer: 'It would have less food.',
         options: ['It would have less food.', 'It would have more food.', 'Nothing would change for it.', 'It would make its own food.'],
-        hint: `The ${chain[2]} eats the ${chain[1]}, so losing the ${chain[1]} takes away its food.`,
+        hint: `The ${chain[2]} eats the ${chain[1]}, so losing the ${pluralOf(chain[1])} takes away its food.`,
       }
     default:
       return {

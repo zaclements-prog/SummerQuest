@@ -191,6 +191,49 @@ describe('count on (Adding Mesa)', () => {
     }
     expect(result).toMatchObject({ correct: 2, total: 3 })
   })
+
+  it('a first miss stops one step short and asks ("So how many in all?"); a second says how it comes out', async () => {
+    const { p, provider } = firstOf({ kind: 'g1Adding', mode: 'countOn' }, (s) => s.model.kind === 'countOn' && !s.act)
+    const s = p.activity as NumberSentenceSpec
+    mount(provider)
+    await until(isOpen)
+    said.length = 0
+    tap(wrongCard())
+    await until(() => phase() === 'ask' && said.includes('Now you try!'), 60000)
+    expect(said).toContain('So how many in all?')
+    expect(said.some((t) => / make /.test(t))).toBe(false)
+    // the help stopped short: the full help is kept for a second miss
+    expect(s.help.at(-1)!.voice).toEqual({ line: 'g1-facts/stop-inAll' })
+    expect(voiceText(s.helpAgain!.at(-1)!.voice)).toMatch(/ make /)
+    await until(isOpen)
+    said.length = 0
+    tap(wrongCard())
+    await until(() => phase() === 'ask' && said.includes('Now you try!'), 60000)
+    expect(said).toContain(voiceText(s.helpAgain!.at(-1)!.voice))
+    expect(said).not.toContain('So how many in all?')
+  })
+})
+
+describe('every Adding Mesa and Take-Away Dunes help stops short on a first miss', () => {
+  it.each([
+    { kind: 'g1Adding', mode: 'countOn' },
+    { kind: 'g1Adding', mode: 'facts' },
+    { kind: 'g1Subtract', mode: 'takeAway' },
+    { kind: 'g1Subtract', mode: 'think' },
+  ] as Parameters<typeof createProvider>[0][])('%o', (config) => {
+    const make = createProvider(config)
+    make.reset?.()
+    for (let i = 0; i < 60; i++) {
+      const s = (make.next() as ListenProblem).activity as NumberSentenceSpec
+      const said = s.help.map((b) => voiceText(b.voice))
+      // the first help never says the answer as its last word
+      if (s.model.kind !== 'family') {
+        expect(s.helpAgain, s.sentence.join(' ')).toBeDefined()
+        expect(said.at(-1)).toMatch(/^So /)
+      }
+      for (const b of [...s.help, ...(s.helpAgain ?? [])]) expect(b.short).toBeUndefined()
+    }
+  })
 })
 
 describe('every strategy picture', () => {
@@ -223,6 +266,12 @@ describe('every strategy picture', () => {
       // the house: four sentences, the asked one lit as the question is said
       expect(qa('[data-sentence]')).toHaveLength(4)
       expect(q('[data-guide="ns-sentence"]')!.getAttribute('data-sentence')).toBe(String(s.model.kind === 'family' ? s.model.blank : -1))
+      // its other three sentences wait for a miss: "10 − 4 = 6" beside "10 − ? = 4" would say the answer
+      expect(qa('[data-sentence][data-hidden]')).toHaveLength(3)
+    }
+    if (s.given) {
+      // a turn-around's known fact ("3 + 5 = 8") waits for a miss too
+      expect(q('[data-guide="ns-sentence"] svg')!.getAttribute('aria-label')).toBe(s.sentence.join(' '))
     }
     if (!s.act && kind !== 'family' && kind !== 'rows') {
       // the picture is there to use: a tap does the next step of the strategy
@@ -245,6 +294,9 @@ describe('every strategy picture', () => {
     const from = said.indexOf(help[0])
     expect(from).toBeGreaterThan(0)
     expect(said.slice(from, from + help.length)).toEqual(help)
+    // after the miss, what was held back is there, as help
+    if (kind === 'family') expect(qa('[data-sentence][data-hidden]')).toHaveLength(0)
+    if (s.given) expect(q('[data-guide="ns-sentence"] svg')!.getAttribute('aria-label')).toBe(`${s.given.join(' ')}, ${s.sentence.join(' ')}`)
     await until(isOpen)
     tap(rightCard())
     await until(() => !!q('[data-ns-solved]'))

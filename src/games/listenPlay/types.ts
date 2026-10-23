@@ -21,9 +21,12 @@ export type ListenTarget = 'picture' | 'cards' | 'pair0' | 'pair1' | `card${numb
  * - `picked`: the picked card: its group, or the sides of its shape;
  * - `countUp`: count up to the biggest numeral card, each numeral card lit as
  *   its number is said (the number said later is bigger);
+ * - `answer`: the answer card (its group, or the sides of its shape), right
+ *   after `reteach` has named it ("This is a square. Four sides, all the
+ *   same." "One, two, three, four.");
  * - `none`: nothing to count.
  */
-export type ListenWalkthrough = 'count' | 'each' | 'picked' | 'countUp' | 'none'
+export type ListenWalkthrough = 'count' | 'each' | 'picked' | 'countUp' | 'answer' | 'none'
 
 /**
  * A K–1 question as Listen & Play reads it: a `Problem` with `speech` and
@@ -61,6 +64,19 @@ export interface ListenProblem extends Problem {
    * count-along (by card index): "Cat starts with C.", "A cube is solid."
    */
   notes?: readonly (VoiceRef | null)[]
+  /**
+   * After a miss, the answer card lights up as this is said ("This is the
+   * letter A.", "This is a hexagon. It has six sides."): the miss re-teaches,
+   * so the next try isn't a guess between the cards left. Said after the
+   * note about the picked card, before any count-along.
+   */
+  reteach?: VoiceRef
+  /**
+   * After a miss (and on the tries after it), shown under the question's
+   * picture: the counters to count on or take away (Counting Towers, 1st
+   * grade: "7 + 2" over seven red and two blue in ten-frames).
+   */
+  helpPicture?: Picture
   /** Praise for this question, taking turns with the kit's own. */
   praise?: readonly VoiceRef[]
   /**
@@ -114,7 +130,21 @@ export interface ListenActivityDef<S extends ListenActivitySpec = ListenActivity
   /**
    * What the narrator says and points at as the question is asked. Default:
    * the question's `speech`, lighting the activity's area. Guide ids inside
-   * the activity are the activity's own (`data-guide`).
+   * the activity are the activity's own (`data-guide`). `misses`: tries on this
+   * question that weren't right yet (asked again after help, the pointing
+   * can show where to go on rather than where to finish).
    */
-  askSteps?(problem: ListenProblem, spec: S): GuideStep[]
+  askSteps?(problem: ListenProblem, spec: S, misses: number): GuideStep[]
+  /**
+   * What the idle re-prompt (no touch for a while) says, gently, instead of
+   * the whole question again: a long intro (the boxes named one by one)
+   * shrinks to what to do now. Default: the question again.
+   */
+  repromptSteps?(problem: ListenProblem, spec: S): GuideStep[]
+  /**
+   * What 🔊 says, when it isn't the question as asked: a sentence the child
+   * reads first is read aloud only when they ask for it (🔊) or after a miss.
+   * Default: the question again.
+   */
+  replaySteps?(problem: ListenProblem, spec: S): GuideStep[]
 }

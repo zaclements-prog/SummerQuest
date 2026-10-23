@@ -18,6 +18,13 @@ export const askLineId = (lessonId: string, stepId: string) => `${lessonId}-${st
 /** How a check question is said: the `k-lessons` line holding the question's own text. */
 export const askAloud = (lessonId: string, stepId: string): VoiceRef => ({ line: `${K_LESSON_PACK}/${askLineId(lessonId, stepId)}` })
 
+/**
+ * A check's explanation, said after a miss on a check with nothing to count
+ * (the answer card lit up): `explain-<lessonId>-<stepId>`, its text the
+ * check's own `explain`.
+ */
+export const explainLineId = (lessonId: string, stepId: string) => `explain-${lessonId}-${stepId}`
+
 /** A `k-lessons` line (a card's name: "Triangle!"). */
 export const kLine = (id: string): VoiceRef => ({ line: `${K_LESSON_PACK}/${id}` })
 

@@ -25,15 +25,16 @@ describe('calm moments for pet celebrations', () => {
 describe('queueing celebrations', () => {
   const m = (id: string): PetMoment => ({ creatureId: id, from: 'egg', to: 'baby' })
 
-  it('shows them one at a time, in order', () => {
+  it('one waiting: its own celebration', () => {
     expect(nextMomentShow([])).toBeNull()
-    expect(nextMomentShow([m('frog'), m('lion')])).toEqual({ kind: 'one', moment: m('frog') })
-    expect(nextMomentShow([m('frog'), m('lion'), m('owl')])).toEqual({ kind: 'one', moment: m('frog') })
+    expect(nextMomentShow([m('frog')])).toEqual({ kind: 'one', moment: m('frog') })
   })
 
-  it('more than three waiting become one summary', () => {
+  it('several waiting become one summary (not one pop-up per screen)', () => {
+    expect(MAX_QUEUED_MOMENTS).toBe(1)
+    const two = [m('frog'), m('lion')]
+    expect(nextMomentShow(two)).toEqual({ kind: 'summary', moments: two })
     const many = ['frog', 'lion', 'owl', 'fox'].map(m)
-    expect(MAX_QUEUED_MOMENTS).toBe(3)
     expect(nextMomentShow(many)).toEqual({ kind: 'summary', moments: many })
   })
 })

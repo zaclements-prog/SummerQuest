@@ -23,10 +23,25 @@ export function levelScore({ count, smartPicks, win, margin }: { count: number; 
   return count + smartPicks * 25 + (win ? 100 + Math.max(0, margin) : 0)
 }
 
-/** The tip on the rematch card: the biggest missed gain this level, in a few words. */
-export function lossHint(ds: readonly Decision[], opSet: OpSetId): string {
+/** The pick that cost the most this level (the biggest missed gain), or null when every pick was smart. */
+export function worstPick(ds: readonly Decision[]): Decision | null {
   let worst: Decision | null = null
   for (const d of ds) if (!d.smart && (!worst || d.other - d.result > worst.other - worst.result)) worst = d
+  return worst
+}
+
+/**
+ * Where a parade stage keeps its best score: one per stage (the subtraction
+ * parade never shows the addition parade's best). A stage with no best of
+ * its own yet simply has none; outside a stage, the old shared key.
+ */
+export function paradeBestKey(stageId?: string | null): string {
+  return stageId ? `sq-best-critter-parade-v1:${stageId}` : 'sq-best-critter-parade-v1'
+}
+
+/** The tip on the rematch card: the biggest missed gain this level, in a few words. */
+export function lossHint(ds: readonly Decision[], opSet: OpSetId): string {
+  const worst = worstPick(ds)
   if (worst) {
     const better = worst.picked === 'left' ? worst.pair.right : worst.pair.left
     const picked = worst.picked === 'left' ? worst.pair.left : worst.pair.right

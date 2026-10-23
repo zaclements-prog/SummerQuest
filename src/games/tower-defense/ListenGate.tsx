@@ -135,6 +135,8 @@ export default function ListenGate({ provider, onAnswer, onSolved, onCancel, pau
   const cards = useMemo(() => (problem ? cardsFor(problem) : []), [problem])
   const picture = problem ? questionPicture(problem) : null
   const panel = problem ? hasPicturePanel(problem) : false
+  // after a miss: the counters under the number sentence ("7 + 2": seven red, two blue), for the rest of the question
+  const helpPicture = problem?.helpPicture && (phase === 'oops' || tried.length > 0) ? problem.helpPicture : null
   const groupCounts = (pics: readonly Picture[]) => (pics.every((p) => p.kind === 'group') ? pics.map((p) => (p.kind === 'group' ? p.count : 0)) : [])
   const cardFrame = sharedFrame(groupCounts(cards.map((c) => c.picture)), 1)
 
@@ -304,7 +306,7 @@ export default function ListenGate({ provider, onAnswer, onSolved, onCancel, pau
               data-guide={LP_PICTURE}
               className="lp-picture-panel relative w-full h-[min(36vh,26rem)] landscape:h-full landscape:max-h-[30rem] min-h-36 shrink self-center bg-paper border-[3px] border-line rounded-[2rem] shadow-card overflow-hidden"
             >
-              <div className="absolute inset-[4%] grid place-items-center">
+              <div className={`absolute inset-[4%] grid place-items-center ${helpPicture ? 'bottom-[62%]' : ''}`}>
                 {picture && (
                   <PictureArt
                     picture={picture}
@@ -313,6 +315,11 @@ export default function ListenGate({ provider, onAnswer, onSolved, onCancel, pau
                   />
                 )}
               </div>
+              {helpPicture && (
+                <div className="absolute inset-x-[6%] top-[40%] bottom-[5%] grid place-items-center" data-help-picture="">
+                  <PictureArt picture={helpPicture} />
+                </div>
+              )}
             </div>
             <div className="shrink-0 flex items-center justify-center gap-4 short:gap-3 roomy:gap-6 px-1 pb-1" role="group" aria-label="answers">
               {cards.map((_, i) => renderCard(i, `flex-1 ${cards.length <= 2 ? 'max-w-56 roomy:max-w-64' : 'max-w-48 roomy:max-w-56'}`))}

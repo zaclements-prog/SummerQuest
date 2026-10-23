@@ -41,5 +41,7 @@ export default defineVoicePack({
     plusWouldHave: { text: 'Plus {a} would have made {n}!', slots: { a: { numbers: [1, 10] }, n: { numbers: [2, 20] } }, render: 'whole' },
     // margins over 100 just say "We win!" (finaleWin), so 100 whole sentences cover it
     winBy: { text: 'We win by {n}!', slots: { n: { numbers: [1, 100] } }, render: 'whole' },
+    /** K–1's end-of-parade and results cards: the one number said ("We have 36 friends!"). */
+    weHaveFriends: { text: 'We have {n} friends!', slots: { n: { numbers: [1, 99] } }, render: 'whole' },
   },
 })

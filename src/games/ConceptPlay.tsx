@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
 import type { GameProps } from '../screens/GameRunner'
 import { nextProblem, type Problem } from '../lib/problem'
 import { sfx } from '../lib/sound'
@@ -8,7 +7,7 @@ import VisualRenderer from '../components/VisualRenderer'
 import { visualSize } from '../components/visualSize'
 import { skillOf } from '../tutoring/skills'
 import { Loading } from '../components/ui'
-import { QuizProgress, QuestionPrompt, AnswerGrid, QuizSplit } from './_shared/QuizUI'
+import { QuizProgress, QuestionPrompt, AnswerGrid, QuizSplit, MissNote } from './_shared/QuizUI'
 import { SHORT_SCREEN, WIDE_SHORT, useMediaQuery } from '../components/useViewport'
 
 /**
@@ -25,6 +24,7 @@ export default function ConceptPlay({ provider, params, onComplete, meta }: Game
   // Index of the question whose problem has arrived; anything else is still loading.
   const [loadedIdx, setLoadedIdx] = useState(-1)
   const loading = loadedIdx !== idx
+  const advancedRef = useRef(-1)
   const recordAnswer = useProgress((s) => s.recordAnswer)
   const recordAttempt = useProgress((s) => s.recordAttempt)
   // Phone held sideways: smaller pictures, question beside the answers.
@@ -57,30 +57,36 @@ export default function ConceptPlay({ provider, params, onComplete, meta }: Game
     if (isCorrect) {
       sfx.correct()
       setCorrectCount((c) => c + 1)
+      // A right answer moves on by itself; a wrong one waits for "Got it →" (below).
+      setTimeout(() => advance(correctCount + 1), 1100)
     } else {
       sfx.wrong()
     }
-    setTimeout(() => {
-      if (idx + 1 >= questionCount) {
-        const finalCorrect = correctCount + (isCorrect ? 1 : 0)
-        const stars =
-          finalCorrect >= questionCount
-            ? 3
-            : finalCorrect >= questionCount - 1
-              ? 2
-              : finalCorrect >= Math.floor(questionCount * 0.6)
-                ? 1
-                : 0
-        onComplete({
-          stars,
-          score: finalCorrect * 10,
-          correct: finalCorrect,
-          total: questionCount,
-        })
-      } else {
-        setIdx((i) => i + 1)
-      }
-    }, 1100)
+  }
+
+  /** On to the next question, or the end of the stage. */
+  function advance(finalCorrect: number) {
+    // Once per question (a double tap on "Got it →" mustn't skip one).
+    if (advancedRef.current === idx) return
+    advancedRef.current = idx
+    if (idx + 1 >= questionCount) {
+      const stars =
+        finalCorrect >= questionCount
+          ? 3
+          : finalCorrect >= questionCount - 1
+            ? 2
+            : finalCorrect >= Math.floor(questionCount * 0.6)
+              ? 1
+              : 0
+      onComplete({
+        stars,
+        score: finalCorrect * 10,
+        correct: finalCorrect,
+        total: questionCount,
+      })
+    } else {
+      setIdx((i) => i + 1)
+    }
   }
 
   if (loading || !problem) {
@@ -129,20 +135,8 @@ export default function ConceptPlay({ provider, params, onComplete, meta }: Game
                 disabled={answered !== null}
               />
             </div>
-            {answered !== null && answered !== problem.answer && problem.hint && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="mt-5 short:mt-3 flex items-center gap-3 bg-quest-100 text-ink-900 pl-2 pr-4 py-2 rounded-[1.25rem] border-[3px] border-line shadow-ledge-sm kid-text text-lg max-w-md text-left"
-              >
-                <span
-                  className="grid place-items-center w-10 h-10 shrink-0 rounded-full bg-quest-300 border-2 border-line text-xl"
-                  aria-hidden="true"
-                >
-                  💡
-                </span>
-                {problem.hint}
-              </motion.div>
+            {answered !== null && answered !== problem.answer && (
+              <MissNote answer={problem.answer} hint={problem.hint} onGotIt={() => advance(correctCount)} />
             )}
           </>
         }

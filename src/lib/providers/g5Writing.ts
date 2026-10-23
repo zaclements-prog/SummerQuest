@@ -27,7 +27,7 @@ export const G5_CHECKLISTS: Record<G5WritingMode, string[]> = {
     'Give at least two reasons.',
     'Back up each reason with a fact or an example.',
     'Link ideas with words like because, for example, also and therefore.',
-    'Write at least two paragraphs and end with a conclusion.',
+    'End with a conclusion that sums up your opinion.',
   ],
   informative: [
     'Introduce your topic in the first sentence.',

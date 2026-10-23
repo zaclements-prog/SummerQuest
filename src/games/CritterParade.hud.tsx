@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import type { FinaleOutcome } from '../lib/parade'
-import type { GatePair, Side } from '../lib/gates'
+import type { Decision, GatePair, Side } from '../lib/gates'
+import { ToonStar } from '../components/ui'
 import { SAFE, UI } from './_runkit/uiTokens'
 
 /**
@@ -25,6 +26,8 @@ export interface LevelEnd {
   hint: string | null
   /** the parade's size after the Gang joins (or as it stands) */
   joined: number
+  /** the costliest pick (a loss): K–1's tip is a picture of it */
+  worst?: Decision | null
 }
 
 /** The parade's true size, big (the crowd shows at most 150). */
@@ -196,8 +199,9 @@ function GateFace({ gate }: { gate: GatePair['left'] }) {
   return <span>{gate.label}</span>
 }
 
-export function LevelEndCard({ end, level, last, onNext, onRematch }: { end: LevelEnd; level: number; last: boolean; onNext: () => void; onRematch: () => void }) {
+export function LevelEndCard({ end, level, last, onNext, onRematch, listen = false }: { end: LevelEnd; level: number; last: boolean; onNext: () => void; onRematch: () => void; listen?: boolean }) {
   const win = end.outcome.win
+  if (listen) return <ListenLevelEnd end={end} onNext={onNext} onRematch={onRematch} />
   return (
     <div className={`absolute inset-0 z-30 flex items-center justify-center ${SAFE.pad}`} style={{ background: 'rgba(58,44,56,.22)' }}>
       <motion.div
@@ -248,6 +252,138 @@ export function LevelEndCard({ end, level, last, onNext, onRematch }: { end: Lev
             style={{ background: win ? UI.correctBtn : UI.paper, color: UI.line, border: `3px solid ${UI.line}`, boxShadow: UI.ledge }}
           >
             {last ? 'Finish ▶' : 'Next parade ▶'}
+          </button>
+        </div>
+      </motion.div>
+    </div>
+  )
+}
+
+// ── K–1 (listen mode): the same cards with nothing to read ──────────────────
+
+const RING = 'grid place-items-center rounded-full outline-none focus-visible:ring-4 focus-visible:ring-ocean-600/70 focus-visible:ring-offset-2 active:translate-y-[3px]'
+
+/** One dot per gate: filled for a smart pick (no fraction to read). */
+function PickDots({ smart, total }: { smart: number; total: number }) {
+  return (
+    <span className="flex flex-wrap justify-center gap-1.5" role="img" aria-label={`${smart} smart picks of ${total}`}>
+      {Array.from({ length: total }, (_, i) => (
+        <span key={i} data-smart={i < smart ? '' : undefined} className="block w-5 h-5 rounded-full" style={{ background: i < smart ? UI.correctBtn : UI.paper, border: `3px solid ${UI.line}` }} />
+      ))}
+    </span>
+  )
+}
+
+/** A big icon over a big number. */
+function BigTile({ icon, children, label }: { icon: string; children: React.ReactNode; label: string }) {
+  return (
+    <div className="flex flex-col items-center gap-1 rounded-2xl px-3 py-2 kid-text" style={{ background: UI.cream, color: UI.line }} aria-label={label}>
+      <span className="text-4xl leading-none" aria-hidden="true">
+        {icon}
+      </span>
+      {children}
+    </div>
+  )
+}
+
+/** The rematch tip as a picture: our number, the gate we took and the one that was better (starred). */
+function HintPicture({ worst }: { worst: Decision }) {
+  const better = worst.picked === 'left' ? worst.pair.right : worst.pair.left
+  const picked = worst.picked === 'left' ? worst.pair.left : worst.pair.right
+  const chip = (g: GatePair['left'], good: boolean) => (
+    <span
+      data-better={good ? '' : undefined}
+      className="kid-text inline-flex items-center gap-1 rounded-2xl px-3 py-1 text-2xl tabular-nums"
+      style={{ background: good ? UI.questSoft : UI.paper, color: UI.line, border: `${good ? 4 : 2}px solid ${UI.line}`, opacity: good ? 1 : 0.7 }}
+    >
+      {g.label} <span aria-hidden="true">➜</span> {g.result}
+      {good && <ToonStar filled px={26} />}
+    </span>
+  )
+  return (
+    <div data-parade-hint="" className="mt-3 flex flex-wrap items-center justify-center gap-2" aria-label={`With ${worst.pair.count}: ${better.label} gives ${better.result}, ${picked.label} gives ${picked.result}`}>
+      <span className="kid-text rounded-full px-3 py-0.5 text-2xl tabular-nums" style={{ background: UI.quest, color: UI.line, border: `3px solid ${UI.line}` }}>
+        🐾 {worst.pair.count}
+      </span>
+      {chip(better, true)}
+      {chip(picked, false)}
+    </div>
+  )
+}
+
+function ListenLevelEnd({ end, onNext, onRematch }: { end: LevelEnd; onNext: () => void; onRematch: () => void }) {
+  const win = end.outcome.win
+  return (
+    <div className={`absolute inset-0 z-30 flex items-center justify-center ${SAFE.pad}`} style={{ background: 'rgba(58,44,56,.22)' }}>
+      <motion.div
+        initial={{ scale: 0.6, opacity: 0, y: 30 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 18 }}
+        className="w-full max-w-sm max-h-full overflow-y-auto rounded-[26px] px-5 py-4 text-center"
+        style={{ background: UI.paper, border: `4px solid ${UI.line}`, boxShadow: '0 8px 0 rgba(58,44,56,.35)' }}
+        data-testid="parade-level-end"
+        data-listen=""
+        role="dialog"
+        aria-label={win ? 'We win!' : 'The Grumble Gang won this time'}
+      >
+        <div className="text-6xl leading-none" aria-hidden="true">
+          {win ? '🎉' : '🪢'}
+        </div>
+        <div className="mt-3 grid grid-cols-2 gap-2">
+          <BigTile icon="🐾" label={`${end.joined} friends`}>
+            <span className="text-4xl tabular-nums leading-none">{end.joined}</span>
+          </BigTile>
+          <BigTile icon="🧠" label="smart picks">
+            <PickDots smart={end.smart} total={end.gates} />
+          </BigTile>
+        </div>
+        {!win && end.worst && <HintPicture worst={end.worst} />}
+        <div className="mt-4 flex items-center justify-center gap-5">
+          {!win && (
+            <button type="button" aria-label="Rematch" onClick={onRematch} className={`${RING} w-20 h-20 text-4xl`} style={{ background: UI.quest, border: `3px solid ${UI.line}`, boxShadow: UI.ledge }}>
+              <span aria-hidden="true">🪢</span>
+            </button>
+          )}
+          <button type="button" autoFocus aria-label="Next parade" onClick={onNext} className={`${RING} w-24 h-24 text-5xl`} style={{ background: UI.correctBtn, border: `3px solid ${UI.line}`, boxShadow: UI.ledge }}>
+            <span aria-hidden="true">▶</span>
+          </button>
+        </div>
+      </motion.div>
+    </div>
+  )
+}
+
+/** K–1's results: the stars, the biggest parade and the smart picks as pictures, and a big ▶. Grades 2–5 keep RunResults. */
+export function ListenParadeResults({ stars, biggest, smart, total, onCollect }: { stars: number; biggest: number; smart: number; total: number; onCollect: () => void }) {
+  return (
+    <div className={`absolute inset-0 z-30 flex items-center justify-center ${SAFE.pad}`} style={{ background: 'rgba(58,44,56,.28)' }} data-parade-results="" data-listen="">
+      <motion.div
+        initial={{ scale: 0.6, opacity: 0, y: 30 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 18 }}
+        className="w-full max-w-sm max-h-full overflow-y-auto rounded-[26px] px-5 py-4 text-center"
+        style={{ background: UI.paper, border: `4px solid ${UI.line}`, boxShadow: '0 8px 0 rgba(58,44,56,.35)' }}
+        role="dialog"
+        aria-label="What a parade!"
+      >
+        <div className="flex items-end justify-center gap-1" role="img" aria-label={`${stars} of 3 stars`}>
+          {[0, 1, 2].map((i) => (
+            <span key={i} className={i === 1 ? '-translate-y-2' : ''}>
+              <ToonStar filled={i < stars} px={i === 1 ? 84 : 64} />
+            </span>
+          ))}
+        </div>
+        <div className="mt-3 grid grid-cols-2 gap-2">
+          <BigTile icon="🐾" label={`${biggest} friends`}>
+            <span className="text-4xl tabular-nums leading-none">{biggest}</span>
+          </BigTile>
+          <BigTile icon="🧠" label="smart picks">
+            <PickDots smart={smart} total={total} />
+          </BigTile>
+        </div>
+        <div className="mt-4 flex justify-center">
+          <button type="button" autoFocus aria-label="Collect" data-guide="parade-collect" onClick={onCollect} className={`${RING} w-24 h-24 text-5xl`} style={{ background: UI.correctBtn, border: `3px solid ${UI.line}`, boxShadow: UI.ledge }}>
+            <span aria-hidden="true">▶</span>
           </button>
         </div>
       </motion.div>

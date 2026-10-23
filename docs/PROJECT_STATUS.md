@@ -93,7 +93,7 @@ Stage ids and lesson ids for every zone and band are fixed in the expansion plan
 
 1. **Voice rendering (local Mac):**
    - 97 K/1st-grade lesson steps;
-   - 7,330 voice-line clips;
+   - 7,633 voice-line clips (303 of them added by the playtest fixes);
    - 56 5th-grade lesson steps (11 lessons).
 
    See the narration handoff, section 0. Until clips exist, the app uses the device's speech.

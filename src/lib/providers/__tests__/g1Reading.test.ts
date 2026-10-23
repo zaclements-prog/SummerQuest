@@ -390,10 +390,16 @@ describe('Read along (g1-sentences-1)', { timeout: 30_000 }, () => {
       said(a.ask)
       expect(a.nameCards).toBe(true)
       expect(a.units[a.key!].toLowerCase().replace(/[^a-z]/g, '')).toBe(q.answer)
+      // asked: the child reads it first ("Read the sentence!"), never read aloud
       const steps = activityAskSteps(q, activityDef(a))
-      expect(steps[0]).toMatchObject({ voice: a.read.line, target: RA_TEXT })
-      expect(steps[0].events).toHaveLength(a.units.length + 1)
+      expect(steps[0]).toMatchObject({ voice: { line: 'g1-words/readFirst' }, target: RA_TEXT })
       expect(steps[1].voice).toEqual(a.ask)
+      expect(steps.map((s) => s.voice)).not.toContainEqual(a.read.line)
+      // 🔊 (help): read aloud, each word lighting, then the question
+      const replay = activityDef(a)!.replaySteps!(q, a)
+      expect(replay[0]).toMatchObject({ voice: a.read.line, target: RA_TEXT })
+      expect(replay[0].events).toHaveLength(a.units.length + 1)
+      expect(replay[1].voice).toEqual(a.ask)
     }
   })
 

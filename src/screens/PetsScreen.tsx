@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import GLCanvas from '../platform/gl/GLCanvas'
 import { canvasQuality, useLowGraphics } from '../world/graphicsQuality'
@@ -13,7 +14,9 @@ import { PET_STAGES } from '../lib/pets/types'
 import { Button, ProgressBar } from '../components/ui'
 import { sfx } from '../lib/sound'
 import { getZone, zoneTitle as bandZoneTitle } from '../curriculum'
-import { isZoneSleeping, listenGrade } from '../lib/listenNav'
+import { isZoneSleeping, listenGrade, zoneNameVoice } from '../lib/listenNav'
+import { guide, type GuideStep } from '../guide/store'
+import type { GradeLevel } from '../lib/gradeTiers'
 import { useListenIntro } from '../components/listen/useListenIntro'
 import { ListenIconButton } from '../components/listen/ListenIconButton'
 import { SayAgainButton } from '../guide/SayAgainButton'
@@ -55,6 +58,12 @@ const EMOJI_SIZE: Record<PetGrowth, string> = { egg: 'text-2xl', baby: 'text-2xl
  * next, and buttons to make it your World buddy, become it (grown-ups), or go
  * learn in its zone. `?pet=<id>` picks the pet to show.
  */
+/** "Let's go!" then the place's name ("Counting Mesa!"), the hand on nothing (the page is about to change). */
+function goSteps(zoneId: string, grade: GradeLevel | null | undefined): GuideStep[] {
+  const name = zoneNameVoice(zoneId, grade)
+  return [{ voice: { line: 'k-nav/letsGo' }, dim: false }, ...(name ? [{ voice: name, dim: false }] : [])]
+}
+
 export default function PetsScreen() {
   const statuses = usePetStatuses()
   const [params, setParams] = useSearchParams()
@@ -88,6 +97,20 @@ export default function PetsScreen() {
   const select = (petId: string) => {
     sfx.click()
     setParams({ pet: petId }, { replace: true })
+  }
+  // K–1: the pet card's picture buttons say where they go first ("Let's go! Counting Mesa!", "Let's learn something new!")
+  // (it goes even if something else starts talking over it; not once this page has gone)
+  const here = useRef(true)
+  useEffect(() => {
+    here.current = true
+    return () => {
+      here.current = false
+    }
+  }, [])
+  const sayThenGo = (steps: GuideStep[], path: string) => {
+    void guide.sequence(steps, { repeatable: false }).then(() => {
+      if (here.current) navigate(path)
+    })
   }
   // Back to wherever you came from (the World, Home, the map…); a fresh start goes to the World.
   const back = () => {
@@ -207,8 +230,12 @@ export default function PetsScreen() {
               {listen ? (
                 // K–1: the pet's place as a picture (only once it's awake), and its lesson
                 <>
-                  {zoneOpen && petZone && <ListenIconButton icon={petZone.emoji} label={`Go to ${bandZoneTitle(petZone, grade)}`} to={`/zone/${petZone.id}`} tone="sun" />}
-                  {sel.stage === 'egg' && lessonId && <ListenIconButton icon="📚" label="Lesson" to={`/tutor/${lessonId}`} tone="ocean" />}
+                  {zoneOpen && petZone && (
+                    <ListenIconButton icon={petZone.emoji} label={`Go to ${bandZoneTitle(petZone, grade)}`} onClick={() => sayThenGo(goSteps(petZone.id, grade), `/zone/${petZone.id}`)} tone="sun" />
+                  )}
+                  {sel.stage === 'egg' && lessonId && (
+                    <ListenIconButton icon="📚" label="Lesson" onClick={() => sayThenGo([{ voice: { line: 'k-nav/lessonTime' }, dim: false }], `/tutor/${lessonId}`)} tone="ocean" />
+                  )}
                 </>
               ) : (
                 <>

@@ -108,7 +108,9 @@ describe('guide overlay', () => {
 
     await advance(1200) // the dim lifts a moment after the line
     expect(on(spot())).toBe(false)
-    expect(on(hand())).toBe(true)
+    // the sweeping hand has glided along the row once since the line: it fades rather than rest on one card
+    expect(on(hand())).toBe(false)
+    expect(on(ring())).toBe(true)
   })
 
   it('fires events as the voice reaches them, and all of them by the end', async () => {
