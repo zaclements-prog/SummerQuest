@@ -44521,6 +44521,600 @@
       "kind": "whole",
       "file": "voice/parade/winBy/n=100.mp3"
     },
+    "parade/weHaveFriends/n=1": {
+      "text": "We have one friends!",
+      "hash": "31cb627dc8",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=1.mp3"
+    },
+    "parade/weHaveFriends/n=2": {
+      "text": "We have two friends!",
+      "hash": "edf6425ee6",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=2.mp3"
+    },
+    "parade/weHaveFriends/n=3": {
+      "text": "We have three friends!",
+      "hash": "799df82cc9",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=3.mp3"
+    },
+    "parade/weHaveFriends/n=4": {
+      "text": "We have four friends!",
+      "hash": "cbc858aec5",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=4.mp3"
+    },
+    "parade/weHaveFriends/n=5": {
+      "text": "We have five friends!",
+      "hash": "0e279add9e",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=5.mp3"
+    },
+    "parade/weHaveFriends/n=6": {
+      "text": "We have six friends!",
+      "hash": "233eefbed5",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=6.mp3"
+    },
+    "parade/weHaveFriends/n=7": {
+      "text": "We have seven friends!",
+      "hash": "0a3b32e5ac",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=7.mp3"
+    },
+    "parade/weHaveFriends/n=8": {
+      "text": "We have eight friends!",
+      "hash": "4e94505e6d",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=8.mp3"
+    },
+    "parade/weHaveFriends/n=9": {
+      "text": "We have nine friends!",
+      "hash": "104fa539b9",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=9.mp3"
+    },
+    "parade/weHaveFriends/n=10": {
+      "text": "We have ten friends!",
+      "hash": "9bf14b0e8e",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=10.mp3"
+    },
+    "parade/weHaveFriends/n=11": {
+      "text": "We have eleven friends!",
+      "hash": "01aab889d3",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=11.mp3"
+    },
+    "parade/weHaveFriends/n=12": {
+      "text": "We have twelve friends!",
+      "hash": "cb862777ee",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=12.mp3"
+    },
+    "parade/weHaveFriends/n=13": {
+      "text": "We have thirteen friends!",
+      "hash": "cdb7555241",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=13.mp3"
+    },
+    "parade/weHaveFriends/n=14": {
+      "text": "We have fourteen friends!",
+      "hash": "577ae51c78",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=14.mp3"
+    },
+    "parade/weHaveFriends/n=15": {
+      "text": "We have fifteen friends!",
+      "hash": "1807a39d50",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=15.mp3"
+    },
+    "parade/weHaveFriends/n=16": {
+      "text": "We have sixteen friends!",
+      "hash": "7b284faa02",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=16.mp3"
+    },
+    "parade/weHaveFriends/n=17": {
+      "text": "We have seventeen friends!",
+      "hash": "ad59433f6d",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=17.mp3"
+    },
+    "parade/weHaveFriends/n=18": {
+      "text": "We have eighteen friends!",
+      "hash": "5fd0646bed",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=18.mp3"
+    },
+    "parade/weHaveFriends/n=19": {
+      "text": "We have nineteen friends!",
+      "hash": "61adb4dc42",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=19.mp3"
+    },
+    "parade/weHaveFriends/n=20": {
+      "text": "We have twenty friends!",
+      "hash": "02a2de7a73",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=20.mp3"
+    },
+    "parade/weHaveFriends/n=21": {
+      "text": "We have twenty-one friends!",
+      "hash": "be461e7077",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=21.mp3"
+    },
+    "parade/weHaveFriends/n=22": {
+      "text": "We have twenty-two friends!",
+      "hash": "d7de5a9019",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=22.mp3"
+    },
+    "parade/weHaveFriends/n=23": {
+      "text": "We have twenty-three friends!",
+      "hash": "ca2d72ff74",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=23.mp3"
+    },
+    "parade/weHaveFriends/n=24": {
+      "text": "We have twenty-four friends!",
+      "hash": "e813630d4b",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=24.mp3"
+    },
+    "parade/weHaveFriends/n=25": {
+      "text": "We have twenty-five friends!",
+      "hash": "231c0f4b0f",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=25.mp3"
+    },
+    "parade/weHaveFriends/n=26": {
+      "text": "We have twenty-six friends!",
+      "hash": "dbbe38ac4e",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=26.mp3"
+    },
+    "parade/weHaveFriends/n=27": {
+      "text": "We have twenty-seven friends!",
+      "hash": "c38f093984",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=27.mp3"
+    },
+    "parade/weHaveFriends/n=28": {
+      "text": "We have twenty-eight friends!",
+      "hash": "f57d003749",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=28.mp3"
+    },
+    "parade/weHaveFriends/n=29": {
+      "text": "We have twenty-nine friends!",
+      "hash": "32677f8c8a",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=29.mp3"
+    },
+    "parade/weHaveFriends/n=30": {
+      "text": "We have thirty friends!",
+      "hash": "ae4ebcdd17",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=30.mp3"
+    },
+    "parade/weHaveFriends/n=31": {
+      "text": "We have thirty-one friends!",
+      "hash": "bf04f4fe97",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=31.mp3"
+    },
+    "parade/weHaveFriends/n=32": {
+      "text": "We have thirty-two friends!",
+      "hash": "dff7d08e74",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=32.mp3"
+    },
+    "parade/weHaveFriends/n=33": {
+      "text": "We have thirty-three friends!",
+      "hash": "abd7e05468",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=33.mp3"
+    },
+    "parade/weHaveFriends/n=34": {
+      "text": "We have thirty-four friends!",
+      "hash": "0829707ef4",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=34.mp3"
+    },
+    "parade/weHaveFriends/n=35": {
+      "text": "We have thirty-five friends!",
+      "hash": "bfa14cb3b2",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=35.mp3"
+    },
+    "parade/weHaveFriends/n=36": {
+      "text": "We have thirty-six friends!",
+      "hash": "748850bfb3",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=36.mp3"
+    },
+    "parade/weHaveFriends/n=37": {
+      "text": "We have thirty-seven friends!",
+      "hash": "3e05a0bdb3",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=37.mp3"
+    },
+    "parade/weHaveFriends/n=38": {
+      "text": "We have thirty-eight friends!",
+      "hash": "83b0974c0b",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=38.mp3"
+    },
+    "parade/weHaveFriends/n=39": {
+      "text": "We have thirty-nine friends!",
+      "hash": "c56f7666a4",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=39.mp3"
+    },
+    "parade/weHaveFriends/n=40": {
+      "text": "We have forty friends!",
+      "hash": "4c04f2ce2b",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=40.mp3"
+    },
+    "parade/weHaveFriends/n=41": {
+      "text": "We have forty-one friends!",
+      "hash": "f9e3caf94c",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=41.mp3"
+    },
+    "parade/weHaveFriends/n=42": {
+      "text": "We have forty-two friends!",
+      "hash": "f53cb2a033",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=42.mp3"
+    },
+    "parade/weHaveFriends/n=43": {
+      "text": "We have forty-three friends!",
+      "hash": "45f993da31",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=43.mp3"
+    },
+    "parade/weHaveFriends/n=44": {
+      "text": "We have forty-four friends!",
+      "hash": "d798709cc1",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=44.mp3"
+    },
+    "parade/weHaveFriends/n=45": {
+      "text": "We have forty-five friends!",
+      "hash": "8987f1073e",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=45.mp3"
+    },
+    "parade/weHaveFriends/n=46": {
+      "text": "We have forty-six friends!",
+      "hash": "a74e935407",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=46.mp3"
+    },
+    "parade/weHaveFriends/n=47": {
+      "text": "We have forty-seven friends!",
+      "hash": "961f7883b8",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=47.mp3"
+    },
+    "parade/weHaveFriends/n=48": {
+      "text": "We have forty-eight friends!",
+      "hash": "f38a5b0310",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=48.mp3"
+    },
+    "parade/weHaveFriends/n=49": {
+      "text": "We have forty-nine friends!",
+      "hash": "0ee93b287a",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=49.mp3"
+    },
+    "parade/weHaveFriends/n=50": {
+      "text": "We have fifty friends!",
+      "hash": "c57b75db72",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=50.mp3"
+    },
+    "parade/weHaveFriends/n=51": {
+      "text": "We have fifty-one friends!",
+      "hash": "cb9e7a537f",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=51.mp3"
+    },
+    "parade/weHaveFriends/n=52": {
+      "text": "We have fifty-two friends!",
+      "hash": "8d9a651433",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=52.mp3"
+    },
+    "parade/weHaveFriends/n=53": {
+      "text": "We have fifty-three friends!",
+      "hash": "eb1713210c",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=53.mp3"
+    },
+    "parade/weHaveFriends/n=54": {
+      "text": "We have fifty-four friends!",
+      "hash": "1eeaebb33f",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=54.mp3"
+    },
+    "parade/weHaveFriends/n=55": {
+      "text": "We have fifty-five friends!",
+      "hash": "fb4a30eba0",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=55.mp3"
+    },
+    "parade/weHaveFriends/n=56": {
+      "text": "We have fifty-six friends!",
+      "hash": "0eb789defd",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=56.mp3"
+    },
+    "parade/weHaveFriends/n=57": {
+      "text": "We have fifty-seven friends!",
+      "hash": "5558e3855d",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=57.mp3"
+    },
+    "parade/weHaveFriends/n=58": {
+      "text": "We have fifty-eight friends!",
+      "hash": "8b2e0605f7",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=58.mp3"
+    },
+    "parade/weHaveFriends/n=59": {
+      "text": "We have fifty-nine friends!",
+      "hash": "a57c631924",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=59.mp3"
+    },
+    "parade/weHaveFriends/n=60": {
+      "text": "We have sixty friends!",
+      "hash": "ff4dc0f8e2",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=60.mp3"
+    },
+    "parade/weHaveFriends/n=61": {
+      "text": "We have sixty-one friends!",
+      "hash": "e14641a8b4",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=61.mp3"
+    },
+    "parade/weHaveFriends/n=62": {
+      "text": "We have sixty-two friends!",
+      "hash": "bd142c6626",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=62.mp3"
+    },
+    "parade/weHaveFriends/n=63": {
+      "text": "We have sixty-three friends!",
+      "hash": "729fa5adfd",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=63.mp3"
+    },
+    "parade/weHaveFriends/n=64": {
+      "text": "We have sixty-four friends!",
+      "hash": "0596ca1921",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=64.mp3"
+    },
+    "parade/weHaveFriends/n=65": {
+      "text": "We have sixty-five friends!",
+      "hash": "9cbc6170cc",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=65.mp3"
+    },
+    "parade/weHaveFriends/n=66": {
+      "text": "We have sixty-six friends!",
+      "hash": "263d800616",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=66.mp3"
+    },
+    "parade/weHaveFriends/n=67": {
+      "text": "We have sixty-seven friends!",
+      "hash": "629fcda385",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=67.mp3"
+    },
+    "parade/weHaveFriends/n=68": {
+      "text": "We have sixty-eight friends!",
+      "hash": "2bf3232e81",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=68.mp3"
+    },
+    "parade/weHaveFriends/n=69": {
+      "text": "We have sixty-nine friends!",
+      "hash": "a3dfed260d",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=69.mp3"
+    },
+    "parade/weHaveFriends/n=70": {
+      "text": "We have seventy friends!",
+      "hash": "af79746280",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=70.mp3"
+    },
+    "parade/weHaveFriends/n=71": {
+      "text": "We have seventy-one friends!",
+      "hash": "bb54fd22cc",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=71.mp3"
+    },
+    "parade/weHaveFriends/n=72": {
+      "text": "We have seventy-two friends!",
+      "hash": "b9f9e1c163",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=72.mp3"
+    },
+    "parade/weHaveFriends/n=73": {
+      "text": "We have seventy-three friends!",
+      "hash": "072c9168a9",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=73.mp3"
+    },
+    "parade/weHaveFriends/n=74": {
+      "text": "We have seventy-four friends!",
+      "hash": "62f03e73d6",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=74.mp3"
+    },
+    "parade/weHaveFriends/n=75": {
+      "text": "We have seventy-five friends!",
+      "hash": "182a4bf994",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=75.mp3"
+    },
+    "parade/weHaveFriends/n=76": {
+      "text": "We have seventy-six friends!",
+      "hash": "8af4b87960",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=76.mp3"
+    },
+    "parade/weHaveFriends/n=77": {
+      "text": "We have seventy-seven friends!",
+      "hash": "90f3fcc80e",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=77.mp3"
+    },
+    "parade/weHaveFriends/n=78": {
+      "text": "We have seventy-eight friends!",
+      "hash": "fe7e7e4d3d",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=78.mp3"
+    },
+    "parade/weHaveFriends/n=79": {
+      "text": "We have seventy-nine friends!",
+      "hash": "a518522185",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=79.mp3"
+    },
+    "parade/weHaveFriends/n=80": {
+      "text": "We have eighty friends!",
+      "hash": "b3084322b9",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=80.mp3"
+    },
+    "parade/weHaveFriends/n=81": {
+      "text": "We have eighty-one friends!",
+      "hash": "3ca57ba09a",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=81.mp3"
+    },
+    "parade/weHaveFriends/n=82": {
+      "text": "We have eighty-two friends!",
+      "hash": "7c75316801",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=82.mp3"
+    },
+    "parade/weHaveFriends/n=83": {
+      "text": "We have eighty-three friends!",
+      "hash": "c1955bc351",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=83.mp3"
+    },
+    "parade/weHaveFriends/n=84": {
+      "text": "We have eighty-four friends!",
+      "hash": "ae5ff4a692",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=84.mp3"
+    },
+    "parade/weHaveFriends/n=85": {
+      "text": "We have eighty-five friends!",
+      "hash": "f65c2596d6",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=85.mp3"
+    },
+    "parade/weHaveFriends/n=86": {
+      "text": "We have eighty-six friends!",
+      "hash": "9fb9185f4e",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=86.mp3"
+    },
+    "parade/weHaveFriends/n=87": {
+      "text": "We have eighty-seven friends!",
+      "hash": "7ecfca480e",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=87.mp3"
+    },
+    "parade/weHaveFriends/n=88": {
+      "text": "We have eighty-eight friends!",
+      "hash": "a79ff33b7a",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=88.mp3"
+    },
+    "parade/weHaveFriends/n=89": {
+      "text": "We have eighty-nine friends!",
+      "hash": "b3f53f4bab",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=89.mp3"
+    },
+    "parade/weHaveFriends/n=90": {
+      "text": "We have ninety friends!",
+      "hash": "536c428acd",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=90.mp3"
+    },
+    "parade/weHaveFriends/n=91": {
+      "text": "We have ninety-one friends!",
+      "hash": "73c85c9f24",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=91.mp3"
+    },
+    "parade/weHaveFriends/n=92": {
+      "text": "We have ninety-two friends!",
+      "hash": "f86a4b358c",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=92.mp3"
+    },
+    "parade/weHaveFriends/n=93": {
+      "text": "We have ninety-three friends!",
+      "hash": "72a063bcdf",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=93.mp3"
+    },
+    "parade/weHaveFriends/n=94": {
+      "text": "We have ninety-four friends!",
+      "hash": "336be0f3fa",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=94.mp3"
+    },
+    "parade/weHaveFriends/n=95": {
+      "text": "We have ninety-five friends!",
+      "hash": "039f508e39",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=95.mp3"
+    },
+    "parade/weHaveFriends/n=96": {
+      "text": "We have ninety-six friends!",
+      "hash": "afd5180a34",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=96.mp3"
+    },
+    "parade/weHaveFriends/n=97": {
+      "text": "We have ninety-seven friends!",
+      "hash": "3156dcc056",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=97.mp3"
+    },
+    "parade/weHaveFriends/n=98": {
+      "text": "We have ninety-eight friends!",
+      "hash": "1f7a2bbda3",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=98.mp3"
+    },
+    "parade/weHaveFriends/n=99": {
+      "text": "We have ninety-nine friends!",
+      "hash": "479bb04e94",
+      "kind": "whole",
+      "file": "voice/parade/weHaveFriends/n=99.mp3"
+    },
     "ui/tapToStart": {
       "text": "Tap the star to start!",
       "hash": "92f6e6330e",
