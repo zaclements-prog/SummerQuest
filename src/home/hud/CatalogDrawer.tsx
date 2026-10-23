@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useProgress } from '../../store/progress'
 import { useHomeUi } from '../useHomeUi'
@@ -12,6 +12,40 @@ import { sfx } from '../../lib/sound'
 type Tab = 'furniture' | 'decor' | 'animals' | 'style'
 
 const TAB_LABEL: Record<Tab, string> = { furniture: 'Furniture', decor: 'Decor', animals: '🐾 Animals', style: '✨ Style' }
+
+/** How long a "Buy for 150?" ask waits for its second tap before it quietly backs off (ms). */
+const CONFIRM_MS = 6000
+
+/** A shop card's picture: the item's emoji on a soft tile. */
+function ItemPicture({ emoji, dim = false }: { emoji: string; dim?: boolean }) {
+  return (
+    <div className={`mx-auto mb-1 grid h-12 w-12 place-items-center rounded-2xl bg-cream-100 text-3xl leading-none ${dim ? 'opacity-60' : ''}`} aria-hidden="true">
+      {emoji}
+    </div>
+  )
+}
+
+/**
+ * The price button, in two taps: the first asks "Buy for 🪙150?", the second
+ * buys. Nothing is spent on a single (or accidental) tap.
+ */
+function BuyButton({ price, canAfford, asking, onAsk, onBuy, name }: { price: number; canAfford: boolean; asking: boolean; onAsk: () => void; onBuy: () => void; name: string }) {
+  return (
+    <button
+      type="button"
+      onClick={() => (asking ? onBuy() : onAsk())}
+      disabled={!canAfford}
+      aria-label={asking ? `Yes, buy the ${name} for ${price} coins` : `${name}: ${price} coins`}
+      data-asking={asking || undefined}
+      className={[
+        'kid-text text-sm w-full min-h-12 px-2 py-1 rounded-full outline-none focus-visible:ring-4 focus-visible:ring-quest-300',
+        !canAfford ? 'bg-gray-200 text-gray-400' : asking ? 'bg-correct-500 text-white ring-4 ring-correct-300' : 'bg-quest-500 text-quest-900',
+      ].join(' ')}
+    >
+      {asking ? `Buy for ${price}? ✓` : `🪙 ${price}`}
+    </button>
+  )
+}
 
 export default function CatalogDrawer({ onHide }: { onHide: () => void }) {
   const [tab, setTab] = useState<Tab>('furniture')
@@ -28,6 +62,17 @@ export default function CatalogDrawer({ onHide }: { onHide: () => void }) {
   const equipAccessory = useProgress((s) => s.equipAccessory)
   const startPlacing = useHomeUi((s) => s.startPlacing)
   const items = HOME_ITEMS.filter((i) => i.category === tab)
+  // The card waiting for its second ("yes, buy it") tap, if any.
+  const [asking, setAsking] = useState<string | null>(null)
+  useEffect(() => {
+    if (!asking) return
+    const id = window.setTimeout(() => setAsking(null), CONFIRM_MS)
+    return () => window.clearTimeout(id)
+  }, [asking])
+  const ask = (id: string) => {
+    sfx.click()
+    setAsking(id)
+  }
 
   return (
     // The shop: a sheet along the bottom; on a phone held sideways, a panel down
@@ -43,7 +88,7 @@ export default function CatalogDrawer({ onHide }: { onHide: () => void }) {
       <div className="flex flex-wrap items-center gap-2 short:gap-1.5 mb-2">
         <div className="contents" role="tablist" aria-label="Shop">
         {(['furniture', 'decor', 'animals', 'style'] as Tab[]).map((t) => (
-          <button key={t} type="button" role="tab" aria-selected={tab === t} onClick={() => { sfx.click(); setTab(t) }}
+          <button key={t} type="button" role="tab" aria-selected={tab === t} onClick={() => { sfx.click(); setTab(t); setAsking(null) }}
             className={`kid-text min-h-12 px-3 short:px-2.5 short:text-sm rounded-full text-base outline-none focus-visible:ring-4 focus-visible:ring-quest-300 ${tab === t ? 'bg-quest-500 text-quest-900' : 'bg-white/15 text-white'}`}>
             {TAB_LABEL[t]}
           </button>
@@ -62,6 +107,7 @@ export default function CatalogDrawer({ onHide }: { onHide: () => void }) {
             const canAfford = coins >= a.price
             return (
               <div key={a.id} className="bg-white text-ocean-900 rounded-2xl p-2 text-center">
+                <ItemPicture emoji={a.emoji} />
                 <div className="kid-text text-sm leading-tight my-1 min-h-[2em]">{a.name}</div>
                 {isOwned ? (
                   <button type="button" onClick={() => { sfx.click(); equipAccessory(a.id) }}
@@ -69,10 +115,21 @@ export default function CatalogDrawer({ onHide }: { onHide: () => void }) {
                     {isEquipped ? 'Wearing ✓' : 'Wear'}
                   </button>
                 ) : (
-                  <button type="button" onClick={() => { if (buyAccessory(a.id, a.price)) sfx.victory() }} disabled={!canAfford}
-                    className={`kid-text text-sm w-full min-h-12 px-2 py-1 rounded-full ${canAfford ? 'bg-quest-500 text-quest-900' : 'bg-gray-200 text-gray-400'}`}>
-                    🪙 {a.price}
-                  </button>
+                  <BuyButton
+                    name={a.name}
+                    price={a.price}
+                    canAfford={canAfford}
+                    asking={asking === `style:${a.id}`}
+                    onAsk={() => ask(`style:${a.id}`)}
+                    onBuy={() => {
+                      setAsking(null)
+                      // bought → put it straight on, so the purchase shows
+                      if (buyAccessory(a.id, a.price)) {
+                        sfx.victory()
+                        if (!isEquipped) equipAccessory(a.id)
+                      }
+                    }}
+                  />
                 )}
               </div>
             )
@@ -119,17 +176,31 @@ export default function CatalogDrawer({ onHide }: { onHide: () => void }) {
             const canAfford = coins >= it.price
             return (
               <div key={it.id} className="bg-white text-ocean-900 rounded-2xl p-2 text-center">
+                <ItemPicture emoji={it.emoji} />
                 <div className="kid-text text-sm leading-tight mb-1 min-h-[2em]">{it.name}</div>
                 {count > 0 && (
-                  <button type="button" onClick={() => { sfx.click(); startPlacing(it.id) }}
+                  // (bought earlier and still in the bag: put one in the room)
+                  <button type="button" onClick={() => { sfx.click(); startPlacing(it.id) }} aria-label={`Put a ${it.name} in your room (${count} in your bag)`}
                     className="kid-text text-sm w-full min-h-12 mb-1.5 px-2 py-1 rounded-full bg-correct-500 text-white">
-                    Place ({count})
+                    📦 Place ({count})
                   </button>
                 )}
-                <button type="button" onClick={() => { if (buyHomeItem(it.id, it.price)) sfx.victory() }} disabled={!canAfford}
-                  className={`kid-text text-sm w-full min-h-12 px-2 py-1 rounded-full ${canAfford ? 'bg-quest-500 text-quest-900' : 'bg-gray-200 text-gray-400'}`}>
-                  🪙 {it.price}
-                </button>
+                <BuyButton
+                  name={it.name}
+                  price={it.price}
+                  canAfford={canAfford}
+                  asking={asking === it.id}
+                  onAsk={() => ask(it.id)}
+                  onBuy={() => {
+                    setAsking(null)
+                    // bought → straight into placing it: the shop folds away and
+                    // the room says "Tap a tile to place"
+                    if (buyHomeItem(it.id, it.price)) {
+                      sfx.victory()
+                      startPlacing(it.id)
+                    }
+                  }}
+                />
               </div>
             )
           })}
