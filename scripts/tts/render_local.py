@@ -341,6 +341,10 @@ def render_stitched(engine, aligner, text: str, tmp_dir: Path,
     recovery, span_wpm = aligner.verify(out, verify_text)
     if recovery < 0.90:
         raise RuntimeError(f"stitched clip recovery {recovery:.2f} < 0.90")
+    # the 0.28 s seams are OUR insertion, not speech: pace the clip on the
+    # content duration only, or multi-sentence stitches look "rushed"
+    content_dur = dur - 0.28 * (len(sentences) - 1)
+    span_wpm = span_wpm * dur / max(content_dur, 1.0)
     if span_wpm > 210:
         raise RuntimeError(f"stitched clip {span_wpm:.0f} wpm > 210")
     return out, dur

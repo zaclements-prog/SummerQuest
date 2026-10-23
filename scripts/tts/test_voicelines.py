@@ -82,6 +82,25 @@ class Rules(unittest.TestCase):
         self.assertTrue(vl.is_articulation("sss..."))
         self.assertFalse(vl.is_articulation("Cat starts with kuh."))
 
+    def test_phoneme_letter_folds(self):
+        # phonics packs say letter SOUNDS; Whisper writes letters/digit shapes.
+        # Real script↔transcript pairs from the g1-phonics and k-math packs.
+        pairs = [
+            ("Bat starts with buh.", "Bat starts with, b."),
+            ("Cat ends with tuh.", "Cat ends with 2."),
+            ("Map ends with puh.", "Map ends with p."),
+            ("Cat starts with kuh.", "Cat starts with k."),
+            ("Sheep starts with shhhh.", "Sheep starts with sh."),
+            ("Sun ends with nuh.", "Son ends with n."),
+            ("Put three bees in the bowl.", "Put three B's in the bowl."),
+            ("Put four bees in the bowl.", "Put for B's in the bowl."),
+        ]
+        for script, heard in pairs:
+            r = recovery(script, heard)
+            self.assertGreaterEqual(r, 0.94, f"{script!r} vs {heard!r}: {r:.2f}")
+        # a genuinely skipped phoneme still fails
+        self.assertLess(recovery("Bat starts with buh.", "Bat starts."), 0.94)
+
     def test_short_clips(self):
         self.assertTrue(vl.is_short("Great job!"))
         self.assertTrue(vl.is_short("Tap the star"))

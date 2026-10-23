@@ -32,6 +32,12 @@ _TENS = {
 }
 _SCALES = {"hundred": 100, "thousand": 1000}
 
+# Word that ASR resolves to a homophone *digit* in kid content: Whisper
+# writes "four" when "for" is spoken (and vice versa). Folding "for" -> "4"
+# at word level is symmetric — both sides of every comparison normalize the
+# same way — so it can never manufacture a mismatch.
+_WORD_AS_DIGIT = {"for": "4"}
+
 # Homophones Whisper resolves to the "other" spelling in kid content. Applied
 # to BOTH script and transcript, so the fold is symmetric: it can only remove
 # mismatches, never invent them. Number homophones (won/one, ate/eight,
@@ -44,6 +50,49 @@ _HOMOPHONES = {
     "their": "there",
     "son": "sun",
 }
+
+# Letter-name/sound spellings used by the phonics packs ("Bat starts with
+# buh.", "Fish starts with fffshhhh."). Whisper transcribes the same sound as
+# a bare letter ("with b"), a digit shape ("ends with 2" == tuh) or a short
+# digraph ("sh"). All of these occur ONLY in the "starts/ends with X" frame,
+# so the fold is guarded to that frame and applied symmetrically: script and
+# transcript land on the same "snd<letter>" token.
+_PHONEME_TO_LETTER = {
+    "kuh": "k", "buh": "b", "muh": "m", "vuh": "v", "wuh": "w", "guh": "g",
+    "puh": "p", "duh": "d", "tuh": "t", "nuh": "n", "fuh": "f", "suh": "s",
+    "shuh": "sh", "chuh": "ch", "thuh": "th", "zuh": "z", "juh": "j",
+    "luh": "l", "ruh": "r", "eh": "e", "ih": "i", "aa": "a",
+    # stretched continuants (scripts hold the sound out)
+    "hhhh": "h", "mmmm": "m", "vvvv": "v", "rrrr": "r", "nnnn": "n",
+    "ffff": "f", "ssss": "s", "llll": "l", "shhhh": "sh", "thhhh": "th",
+    "chch": "ch", "zzz": "z",
+    # bare letters / digraphs / digit shapes Whisper produces
+    "a": "a", "b": "b", "c": "k", "d": "d", "e": "e", "f": "f", "g": "j",
+    "h": "h", "i": "i", "j": "j", "k": "k", "l": "l", "m": "m", "n": "n",
+    "p": "p", "q": "k", "r": "r", "s": "s", "t": "t", "u": "u", "v": "v",
+    "w": "w", "x": "x", "y": "y", "z": "z",
+    "sh": "sh", "ch": "ch", "th": "th",
+    "2": "t", "8": "ey",
+}
+
+
+def _fold_phonemes(tokens: list[str]) -> list[str]:
+    res = list(tokens)
+    for i in range(len(res) - 1):
+        if res[i] == "with" and res[i + 1] in _PHONEME_TO_LETTER:
+            res[i + 1] = "snd" + _PHONEME_TO_LETTER[res[i + 1]]
+    # letter plurals after a numeral: Whisper writes "three B's" for the noun
+    # "three bees" (letter-name plurals collide with real words)
+    LETTER_PLURAL = {"b": "bees", "c": "seas", "k": "kays", "m": "ems",
+                     "p": "pees", "r": "ars", "t": "tees", "v": "vees",
+                     "z": "zees", "l": "ells", "n": "ens", "g": "jees"}
+    for i in range(1, len(res) - 2):
+        if (res[i].isdigit() and len(res[i + 1]) == 1 and res[i + 1].isalpha()
+                and res[i + 2] == "s"
+                and res[i + 1] in LETTER_PLURAL):
+            res[i + 2] = LETTER_PLURAL[res[i + 1]]
+            res[i + 1] = ""
+    return [t for t in res if t]
 
 # Symbol rewrites run on the raw lowercased string, spaced-out so the
 # tokenizer splits the results cleanly. Only ever touch marks surrounded by
@@ -184,6 +233,7 @@ def normalize(text: str) -> list[str]:
     s = s.replace(".", " . ")
     raw = [w for w in re.sub(r"[^a-z0-9 ]", " ", s).split() if w]
     raw = [_HOMOPHONES.get(w, w) for w in raw]
+    raw = [_WORD_AS_DIGIT.get(w, w) for w in raw]
 
     out: list[str] = []
     i = 0
@@ -230,7 +280,7 @@ def normalize(text: str) -> list[str]:
             continue
         out.append(t)
         i += 1
-    return _fold_decimals(out)
+    return _fold_phonemes(_fold_decimals(out))
 
 
 def recovery(src_text: str, heard_text: str) -> float:
