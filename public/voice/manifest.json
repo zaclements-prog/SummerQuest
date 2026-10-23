@@ -3686,7 +3686,7 @@
   "g1-facts/make-13-4": {
     "file": "voice/g1-facts/make-13-4.mp3",
     "hash": "f25ce5e5ed",
-    "duration": 2.41,
+    "duration": 2.68,
     "words": "voice/g1-facts/make-13-4.words.json"
   },
   "g1-facts/make-13-5": {
@@ -4232,7 +4232,7 @@
   "g1-facts/make-6-1": {
     "file": "voice/g1-facts/make-6-1.mp3",
     "hash": "ee24b98c8b",
-    "duration": 1.77,
+    "duration": 2.03,
     "words": "voice/g1-facts/make-6-1.words.json"
   },
   "g1-facts/make-6-10": {
@@ -9902,7 +9902,7 @@
   "g1-phonics/ends-map": {
     "file": "voice/g1-phonics/ends-map.mp3",
     "hash": "ee1fd78545",
-    "duration": 2.25,
+    "duration": 1.51,
     "words": "voice/g1-phonics/ends-map.words.json"
   },
   "g1-phonics/ends-pig": {
@@ -10322,13 +10322,13 @@
   "g1-phonics/starts-bus": {
     "file": "voice/g1-phonics/starts-bus.mp3",
     "hash": "90d464a73b",
-    "duration": 1.97,
+    "duration": 2.1,
     "words": "voice/g1-phonics/starts-bus.words.json"
   },
   "g1-phonics/starts-cat": {
     "file": "voice/g1-phonics/starts-cat.mp3",
     "hash": "7acfcdbade",
-    "duration": 1.51,
+    "duration": 1.47,
     "words": "voice/g1-phonics/starts-cat.words.json"
   },
   "g1-phonics/starts-cheese": {
@@ -11192,7 +11192,7 @@
   "g1-phonics/word/word=chick": {
     "file": "voice/g1-phonics/word/word=chick.mp3",
     "hash": "0f671f9a8e",
-    "duration": 0.72,
+    "duration": 0.64,
     "words": "voice/g1-phonics/word/word=chick.words.json"
   },
   "g1-phonics/word/word=church": {
@@ -11228,7 +11228,7 @@
   "g1-phonics/word/word=net": {
     "file": "voice/g1-phonics/word/word=net.mp3",
     "hash": "a0c2149a5a",
-    "duration": 0.68,
+    "duration": 0.81,
     "words": "voice/g1-phonics/word/word=net.words.json"
   },
   "g1-phonics/word/word=nut": {
@@ -11480,13 +11480,13 @@
   "g1-science/grows-chick": {
     "file": "voice/g1-science/grows-chick.mp3",
     "hash": "26049bc73f",
-    "duration": 4.15,
+    "duration": 3.4,
     "words": "voice/g1-science/grows-chick.words.json"
   },
   "g1-science/grows-kitten": {
     "file": "voice/g1-science/grows-kitten.mp3",
     "hash": "b21eca41a0",
-    "duration": 3.54,
+    "duration": 5.18,
     "words": "voice/g1-science/grows-kitten.words.json"
   },
   "g1-science/has-bird": {
@@ -12218,7 +12218,7 @@
   "g1-shapes/label/shape=sphere": {
     "file": "voice/g1-shapes/label/shape=sphere.mp3",
     "hash": "f53b11d1a3",
-    "duration": 0.76,
+    "duration": 0.79,
     "words": "voice/g1-shapes/label/shape=sphere.words.json"
   },
   "g1-shapes/label/shape=square": {
@@ -14732,7 +14732,7 @@
   "g1-tens/number/n=110": {
     "file": "voice/g1-tens/number/n=110.mp3",
     "hash": "aeebcfa98d",
-    "duration": 2.06,
+    "duration": 1.54,
     "words": "voice/g1-tens/number/n=110.words.json"
   },
   "g1-tens/number/n=111": {
@@ -17588,7 +17588,7 @@
   "g1-towers/add-10-5": {
     "file": "voice/g1-towers/add-10-5.mp3",
     "hash": "832810261d",
-    "duration": 4.18,
+    "duration": 2.74,
     "words": "voice/g1-towers/add-10-5.words.json"
   },
   "g1-towers/add-10-6": {
@@ -18278,7 +18278,7 @@
   "g1-towers/how-add-2-8": {
     "file": "voice/g1-towers/how-add-2-8.mp3",
     "hash": "baa6934ff0",
-    "duration": 3.66,
+    "duration": 4.53,
     "words": "voice/g1-towers/how-add-2-8.words.json"
   },
   "g1-towers/how-add-2-9": {
@@ -19850,7 +19850,7 @@
   "g1-towers/sub-8-5": {
     "file": "voice/g1-towers/sub-8-5.mp3",
     "hash": "db7eeb9c46",
-    "duration": 2.77,
+    "duration": 2.87,
     "words": "voice/g1-towers/sub-8-5.words.json"
   },
   "g1-towers/sub-8-6": {
@@ -19862,7 +19862,7 @@
   "g1-towers/sub-8-7": {
     "file": "voice/g1-towers/sub-8-7.mp3",
     "hash": "4404ab8d22",
-    "duration": 3.62,
+    "duration": 3.31,
     "words": "voice/g1-towers/sub-8-7.words.json"
   },
   "g1-towers/sub-9-1": {
@@ -22922,7 +22922,7 @@
   "g1-woods/starGazing-b/n=5": {
     "file": "voice/g1-woods/starGazing-b/n=5.mp3",
     "hash": "a3f591f5a1",
-    "duration": 1.85,
+    "duration": 1.75,
     "words": "voice/g1-woods/starGazing-b/n=5.words.json"
   },
   "g1-woods/starGazing-b/n=6": {
@@ -29210,7 +29210,7 @@
   "k-letters/word/word=ball": {
     "file": "voice/k-letters/word/word=ball.mp3",
     "hash": "d4bf0f6f4d",
-    "duration": 0.73,
+    "duration": 0.89,
     "words": "voice/k-letters/word/word=ball.words.json"
   },
   "k-letters/word/word=bee": {
@@ -33938,7 +33938,7 @@
   "k-sort/box-animals": {
     "file": "voice/k-sort/box-animals.mp3",
     "hash": "4dfbc1b2a1",
-    "duration": 0.85,
+    "duration": 1.0,
     "words": "voice/k-sort/box-animals.words.json"
   },
   "k-sort/box-big": {
@@ -34574,7 +34574,7 @@
   "k-sounds/drumWord/word=pig": {
     "file": "voice/k-sounds/drumWord/word=pig.mp3",
     "hash": "e880cf364f",
-    "duration": 4.15,
+    "duration": 4.04,
     "words": "voice/k-sounds/drumWord/word=pig.words.json"
   },
   "k-sounds/drumWord/word=pineapple": {
@@ -35108,7 +35108,7 @@
   "k-sounds/parts-tree": {
     "file": "voice/k-sounds/parts-tree.mp3",
     "hash": "3bf4dd36c8",
-    "duration": 0.71,
+    "duration": 0.69,
     "words": "voice/k-sounds/parts-tree.words.json"
   },
   "k-sounds/parts-turtle": {
@@ -43328,7 +43328,7 @@
   "slots/word/hat": {
     "file": "voice/slots/word/hat.mp3",
     "hash": "b8d57ad4c8",
-    "duration": 0.36,
+    "duration": 0.48,
     "words": "voice/slots/word/hat.words.json"
   },
   "slots/word/hen": {
@@ -43352,13 +43352,13 @@
   "slots/word/house": {
     "file": "voice/slots/word/house.mp3",
     "hash": "e2e9ab4d70",
-    "duration": 0.39,
+    "duration": 0.54,
     "words": "voice/slots/word/house.words.json"
   },
   "slots/word/key": {
     "file": "voice/slots/word/key.mp3",
     "hash": "6645e5cfee",
-    "duration": 0.49,
+    "duration": 0.45,
     "words": "voice/slots/word/key.words.json"
   },
   "slots/word/king": {
@@ -43418,7 +43418,7 @@
   "slots/word/moon": {
     "file": "voice/slots/word/moon.mp3",
     "hash": "1424b14ff2",
-    "duration": 0.54,
+    "duration": 0.49,
     "words": "voice/slots/word/moon.words.json"
   },
   "slots/word/mouse": {
@@ -43490,7 +43490,7 @@
   "slots/word/ring": {
     "file": "voice/slots/word/ring.mp3",
     "hash": "46adc45d71",
-    "duration": 0.58,
+    "duration": 0.48,
     "words": "voice/slots/word/ring.words.json"
   },
   "slots/word/robot": {
