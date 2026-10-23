@@ -123,8 +123,9 @@ describe('arenaFactConfig', () => {
     // grade tiers: G2 divMax 5, G3 10, G4 12 — the arena must stay ≤ 9 / ≤ 10
     for (const tierDivMax of [2, 5, 10, 12, 144]) {
       const c = arenaFactConfig(tierDivMax)
-      expect(c.divisorMin).toBe(2)
-      expect(c.quotientMin).toBe(2)
+      // 4th grade's tier (÷12) leaves the ÷2 and "2 each" facts behind
+      expect(c.divisorMin).toBe(tierDivMax >= 12 ? 3 : 2)
+      expect(c.quotientMin).toBe(tierDivMax >= 12 ? 3 : 2)
       expect(c.divisorMax).toBeLessThanOrEqual(ARENA_LIMITS.divisorMax)
       expect(c.quotientMax).toBeLessThanOrEqual(ARENA_LIMITS.quotientMax)
       // and never harder than the grade itself
@@ -305,7 +306,25 @@ describe('warmFactConfig', () => {
       const a = arenaFactConfig(tier)
       expect(w.divisorMax).toBeLessThanOrEqual(Math.min(5, a.divisorMax))
       expect(w.quotientMax).toBeLessThanOrEqual(Math.min(5, a.quotientMax))
-      expect(w.divisorMin).toBe(2)
+      expect(w.divisorMin).toBe(a.divisorMin)
+      expect(w.quotientMin).toBe(a.quotientMin)
+    }
+  })
+  it('2nd grade warms up on ÷2 and ÷3 only; 3rd and 4th keep ÷ up to 5', () => {
+    expect(warmFactConfig(GRADE_TIERS[2].divMax)).toEqual({ divisorMin: 2, divisorMax: 3, quotientMin: 2, quotientMax: 5 })
+    expect(warmFactConfig(GRADE_TIERS[3].divMax)).toEqual({ divisorMin: 2, divisorMax: 5, quotientMin: 2, quotientMax: 5 })
+    expect(warmFactConfig(GRADE_TIERS[4].divMax)).toEqual({ divisorMin: 3, divisorMax: 5, quotientMin: 3, quotientMax: 5 })
+  })
+  it('4th grade asks harder facts than 3rd: same ceiling (the pen), a higher floor', () => {
+    expect(arenaFactConfig(GRADE_TIERS[3].divMax)).toEqual({ divisorMin: 2, divisorMax: 9, quotientMin: 2, quotientMax: 10 })
+    expect(arenaFactConfig(GRADE_TIERS[4].divMax)).toEqual({ divisorMin: 3, divisorMax: 9, quotientMin: 3, quotientMax: 10 })
+    // and the giant still finds its fact at every grade
+    for (const g of [2, 3, 4] as const) {
+      const tier = GRADE_TIERS[g].divMax
+      const c = arenaFactConfig(tier)
+      let found = 0
+      for (let d = c.divisorMin; d <= c.divisorMax; d++) for (let q = c.quotientMin; q <= c.quotientMax; q++) if (isBossFact({ dividend: d * q, quotient: q }, tier)) found++
+      expect(found, `grade ${g}`).toBeGreaterThanOrEqual(4)
     }
   })
 })
