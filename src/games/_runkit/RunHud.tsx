@@ -106,7 +106,8 @@ export function SpeechBubble({ face, text, tone = 'plain' }: { face: string; tex
           key={text}
           initial={{ scale: 0.6, opacity: 0, y: -8 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
-          exit={{ scale: 0.8, opacity: 0 }}
+          // (the old words vanish at once: fading out on top of the new ones, they read as a jumble)
+          exit={{ opacity: 0, transition: { duration: 0 } }}
           transition={{ type: 'spring', stiffness: 420, damping: 20 }}
           className="pointer-events-none select-none flex items-center gap-2 rounded-2xl px-3 py-1.5 max-w-[min(92vw,420px)]"
           style={{ background: bg, border: `3px solid ${UI.line}`, boxShadow: UI.ledge }}
@@ -307,6 +308,7 @@ export function RunResults({
           <AnimatePresence>
             {counted && newBest && (
               <motion.span
+                key="best"
                 initial={{ scale: 0 }}
                 animate={{ scale: [0, 1.3, 1] }}
                 className="kid-text rounded-full px-3 py-0.5 text-lg"
@@ -317,6 +319,7 @@ export function RunResults({
             )}
             {counted && perfect && (
               <motion.span
+                key="perfect"
                 initial={{ scale: 0 }}
                 animate={{ scale: [0, 1.3, 1] }}
                 transition={{ delay: 0.25 }}

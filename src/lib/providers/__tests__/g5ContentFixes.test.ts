@@ -76,8 +76,8 @@ describe('grade-5 content', () => {
     for (let i = 0; i < 400; i++) {
       const it = powersItem()
       const digits = (s: string) => s.replace(/[^0-9]/g, '').replace(/^0+/, '').replace(/0+$/, '')
-      const want = digits(it.answer)
-      for (const o of it.options) expect(digits(o), `${it.prompt}: ${it.options.join(' / ')}`).toBe(want)
+      const want = digits(String(it.answer))
+      for (const o of it.options) expect(digits(String(o)), `${it.prompt}: ${it.options.join(' / ')}`).toBe(want)
     }
   })
 
