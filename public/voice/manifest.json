@@ -674,7 +674,7 @@
   "g1-facts/add-3-16": {
     "file": "voice/g1-facts/add-3-16.mp3",
     "hash": "9999f8fbf4",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-facts/add-3-16.words.json"
   },
   "g1-facts/add-3-17": {
@@ -1502,7 +1502,7 @@
   "g1-facts/addA-3-10": {
     "file": "voice/g1-facts/addA-3-10.mp3",
     "hash": "667c3bd91e",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-facts/addA-3-10.words.json"
   },
   "g1-facts/addA-3-11": {
@@ -1982,7 +1982,7 @@
   "g1-facts/addA-8-15": {
     "file": "voice/g1-facts/addA-8-15.mp3",
     "hash": "cb2edd21aa",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-facts/addA-8-15.words.json"
   },
   "g1-facts/addA-8-16": {
@@ -2042,7 +2042,7 @@
   "g1-facts/addA-9-13": {
     "file": "voice/g1-facts/addA-9-13.mp3",
     "hash": "20e011363b",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-facts/addA-9-13.words.json"
   },
   "g1-facts/addA-9-14": {
@@ -2108,7 +2108,7 @@
   "g1-facts/addB-1-13": {
     "file": "voice/g1-facts/addB-1-13.mp3",
     "hash": "3bff0417e0",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-facts/addB-1-13.words.json"
   },
   "g1-facts/addB-1-14": {
@@ -2456,7 +2456,7 @@
   "g1-facts/addB-3-7": {
     "file": "voice/g1-facts/addB-3-7.mp3",
     "hash": "6b0dddb057",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-facts/addB-3-7.words.json"
   },
   "g1-facts/addB-3-8": {
@@ -2720,7 +2720,7 @@
   "g1-facts/addB-6-20": {
     "file": "voice/g1-facts/addB-6-20.mp3",
     "hash": "db69136b56",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-facts/addB-6-20.words.json"
   },
   "g1-facts/addB-6-7": {
@@ -2962,6 +2962,12 @@
     "hash": "cfbc3f44d5",
     "duration": 1.64,
     "words": "voice/g1-facts/biggerFirst.words.json"
+  },
+  "g1-facts/countAll": {
+    "file": "voice/g1-facts/countAll.mp3",
+    "hash": "f92e6d405e",
+    "duration": 1.25,
+    "words": "voice/g1-facts/countAll.words.json"
   },
   "g1-facts/double-1": {
     "file": "voice/g1-facts/double-1.mp3",
@@ -4040,7 +4046,7 @@
   "g1-facts/make-3-9": {
     "file": "voice/g1-facts/make-3-9.mp3",
     "hash": "b8d823a32b",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-facts/make-3-9.words.json"
   },
   "g1-facts/make-4-1": {
@@ -4490,7 +4496,7 @@
   "g1-facts/make-9-3": {
     "file": "voice/g1-facts/make-9-3.mp3",
     "hash": "e725c0b258",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-facts/make-9-3.words.json"
   },
   "g1-facts/make-9-4": {
@@ -4823,6 +4829,30 @@
     "duration": 1.14,
     "words": "voice/g1-facts/startAt-9.words.json"
   },
+  "g1-facts/stop-fill": {
+    "file": "voice/g1-facts/stop-fill.mp3",
+    "hash": "9a6bf4d393",
+    "duration": 1.72,
+    "words": "voice/g1-facts/stop-fill.words.json"
+  },
+  "g1-facts/stop-inAll": {
+    "file": "voice/g1-facts/stop-inAll.mp3",
+    "hash": "3cabd4c05b",
+    "duration": 1.51,
+    "words": "voice/g1-facts/stop-inAll.words.json"
+  },
+  "g1-facts/stop-land": {
+    "file": "voice/g1-facts/stop-land.mp3",
+    "hash": "b6560623ce",
+    "duration": 1.56,
+    "words": "voice/g1-facts/stop-land.words.json"
+  },
+  "g1-facts/stop-left": {
+    "file": "voice/g1-facts/stop-left.mp3",
+    "hash": "4411db1266",
+    "duration": 1.53,
+    "words": "voice/g1-facts/stop-left.words.json"
+  },
   "g1-facts/sub-10-1": {
     "file": "voice/g1-facts/sub-10-1.mp3",
     "hash": "f2127d944b",
@@ -5084,7 +5114,7 @@
   "g1-facts/sub-14-4": {
     "file": "voice/g1-facts/sub-14-4.mp3",
     "hash": "bbf6cd2bc6",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-facts/sub-14-4.words.json"
   },
   "g1-facts/sub-14-5": {
@@ -5282,7 +5312,7 @@
   "g1-facts/sub-17-7": {
     "file": "voice/g1-facts/sub-17-7.mp3",
     "hash": "7a21ebd88d",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-facts/sub-17-7.words.json"
   },
   "g1-facts/sub-17-8": {
@@ -5312,7 +5342,7 @@
   "g1-facts/sub-18-2": {
     "file": "voice/g1-facts/sub-18-2.mp3",
     "hash": "a4ceb5dfd0",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-facts/sub-18-2.words.json"
   },
   "g1-facts/sub-18-3": {
@@ -5396,7 +5426,7 @@
   "g1-facts/sub-19-6": {
     "file": "voice/g1-facts/sub-19-6.mp3",
     "hash": "934b5d0b24",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-facts/sub-19-6.words.json"
   },
   "g1-facts/sub-19-7": {
@@ -5792,7 +5822,7 @@
   "g1-facts/subB-11-7": {
     "file": "voice/g1-facts/subB-11-7.mp3",
     "hash": "6e9159cc36",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-facts/subB-11-7.words.json"
   },
   "g1-facts/subB-11-8": {
@@ -5936,7 +5966,7 @@
   "g1-facts/subB-14-10": {
     "file": "voice/g1-facts/subB-14-10.mp3",
     "hash": "8c7d76a64d",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-facts/subB-14-10.words.json"
   },
   "g1-facts/subB-14-2": {
@@ -6284,7 +6314,7 @@
   "g1-facts/subB-19-9": {
     "file": "voice/g1-facts/subB-19-9.mp3",
     "hash": "dd38a0da86",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-facts/subB-19-9.words.json"
   },
   "g1-facts/subB-2-1": {
@@ -6563,6 +6593,12 @@
     "duration": 1.72,
     "words": "voice/g1-facts/subB-9-8.words.json"
   },
+  "g1-facts/take-1": {
+    "file": "voice/g1-facts/take-1.mp3",
+    "hash": "5c6f82258a",
+    "duration": 1.18,
+    "words": "voice/g1-facts/take-1.words.json"
+  },
   "g1-facts/take-10": {
     "file": "voice/g1-facts/take-10.mp3",
     "hash": "083b72f802",
@@ -6580,6 +6616,12 @@
     "hash": "4b7d5546b8",
     "duration": 1.59,
     "words": "voice/g1-facts/take-7.words.json"
+  },
+  "g1-facts/take-8": {
+    "file": "voice/g1-facts/take-8.mp3",
+    "hash": "0bd4a972ed",
+    "duration": 1.21,
+    "words": "voice/g1-facts/take-8.words.json"
   },
   "g1-facts/tenAnd-1": {
     "file": "voice/g1-facts/tenAnd-1.mp3",
@@ -7592,7 +7634,7 @@
   "g1-graphs/row-strawberries": {
     "file": "voice/g1-graphs/row-strawberries.mp3",
     "hash": "c2b24e3a8d",
-    "duration": 1.0,
+    "duration": 1,
     "words": "voice/g1-graphs/row-strawberries.words.json"
   },
   "g1-graphs/shortestRow": {
@@ -8522,7 +8564,7 @@
   "g1-parade/minusOrMinus/a=1,b=2": {
     "file": "voice/g1-parade/minusOrMinus/a=1,b=2.mp3",
     "hash": "5149a8c56e",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-parade/minusOrMinus/a=1,b=2.words.json"
   },
   "g1-parade/minusOrMinus/a=1,b=3": {
@@ -8648,7 +8690,7 @@
   "g1-parade/minusOrMinus/a=4,b=5": {
     "file": "voice/g1-parade/minusOrMinus/a=4,b=5.mp3",
     "hash": "1e2f52bd87",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-parade/minusOrMinus/a=4,b=5.words.json"
   },
   "g1-parade/minusOrMinus/a=4,b=6": {
@@ -8918,7 +8960,7 @@
   "g1-parade/minusOrPlus/a=8,b=4": {
     "file": "voice/g1-parade/minusOrPlus/a=8,b=4.mp3",
     "hash": "66eaef278f",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-parade/minusOrPlus/a=8,b=4.words.json"
   },
   "g1-parade/minusOrPlus/a=9,b=1": {
@@ -9056,7 +9098,7 @@
   "g1-parade/minusWouldHave/a=1,n=9": {
     "file": "voice/g1-parade/minusWouldHave/a=1,n=9.mp3",
     "hash": "862be2e90c",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-parade/minusWouldHave/a=1,n=9.words.json"
   },
   "g1-parade/minusWouldHave/a=2,n=1": {
@@ -9746,7 +9788,7 @@
   "g1-parade/plusOrMinus/a=3,b=2": {
     "file": "voice/g1-parade/plusOrMinus/a=3,b=2.mp3",
     "hash": "cacf4e182a",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-parade/plusOrMinus/a=3,b=2.words.json"
   },
   "g1-parade/plusOrMinus/a=3,b=3": {
@@ -9884,7 +9926,7 @@
   "g1-phonics/ends-drum": {
     "file": "voice/g1-phonics/ends-drum.mp3",
     "hash": "5fece1d456",
-    "duration": 4.0,
+    "duration": 4,
     "words": "voice/g1-phonics/ends-drum.words.json"
   },
   "g1-phonics/ends-fish": {
@@ -9920,7 +9962,7 @@
   "g1-phonics/ends-sun": {
     "file": "voice/g1-phonics/ends-sun.mp3",
     "hash": "7b7ff4f010",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-phonics/ends-sun.words.json"
   },
   "g1-phonics/ends-tub": {
@@ -10181,6 +10223,12 @@
     "duration": 2.92,
     "words": "voice/g1-phonics/sounds-fish.words.json"
   },
+  "g1-phonics/sounds-fox": {
+    "file": "voice/g1-phonics/sounds-fox.mp3",
+    "hash": "15ad26d526",
+    "duration": 7.02,
+    "words": "voice/g1-phonics/sounds-fox.words.json"
+  },
   "g1-phonics/sounds-hat": {
     "file": "voice/g1-phonics/sounds-hat.mp3",
     "hash": "36de100977",
@@ -10390,6 +10438,12 @@
     "hash": "84f8135abe",
     "duration": 1.56,
     "words": "voice/g1-phonics/starts-egg.words.json"
+  },
+  "g1-phonics/starts-fish": {
+    "file": "voice/g1-phonics/starts-fish.mp3",
+    "hash": "9507c2db9c",
+    "duration": 1.8,
+    "words": "voice/g1-phonics/starts-fish.words.json"
   },
   "g1-phonics/starts-fox": {
     "file": "voice/g1-phonics/starts-fox.mp3",
@@ -10850,7 +10904,7 @@
   "g1-phonics/thatWordIs/word=sit": {
     "file": "voice/g1-phonics/thatWordIs/word=sit.mp3",
     "hash": "f6688ae62a",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-phonics/thatWordIs/word=sit.words.json"
   },
   "g1-phonics/thatWordIs/word=that": {
@@ -11488,6 +11542,12 @@
     "hash": "b21eca41a0",
     "duration": 5.18,
     "words": "voice/g1-science/grows-kitten.words.json"
+  },
+  "g1-science/grows-puppy": {
+    "file": "voice/g1-science/grows-puppy.mp3",
+    "hash": "dd98c7feb6",
+    "duration": 4.8,
+    "words": "voice/g1-science/grows-puppy.words.json"
   },
   "g1-science/has-bird": {
     "file": "voice/g1-science/has-bird.mp3",
@@ -12977,6 +13037,12 @@
     "duration": 0.53,
     "words": "voice/g1-story-math/sayPlus.part1.words.json"
   },
+  "g1-story-math/sayPlus#2": {
+    "file": "voice/g1-story-math/sayPlus.part2.mp3",
+    "hash": "2e2344723e",
+    "duration": 0.56,
+    "words": "voice/g1-story-math/sayPlus.part2.words.json"
+  },
   "g1-story-math/sayPlus3#1": {
     "file": "voice/g1-story-math/sayPlus3.part1.mp3",
     "hash": "6711c0a6df",
@@ -13048,6 +13114,12 @@
     "hash": "93c88489af",
     "duration": 2.27,
     "words": "voice/g1-tens/howManyPlain.words.json"
+  },
+  "g1-tens/is-10": {
+    "file": "voice/g1-tens/is-10.mp3",
+    "hash": "37871d7c3b",
+    "duration": 2.17,
+    "words": "voice/g1-tens/is-10.words.json"
   },
   "g1-tens/is-100": {
     "file": "voice/g1-tens/is-100.mp3",
@@ -13520,7 +13592,7 @@
   "g1-tens/is-88": {
     "file": "voice/g1-tens/is-88.mp3",
     "hash": "015d7a9415",
-    "duration": 3.0,
+    "duration": 3,
     "words": "voice/g1-tens/is-88.words.json"
   },
   "g1-tens/is-89": {
@@ -13994,7 +14066,7 @@
   "g1-tens/make-93": {
     "file": "voice/g1-tens/make-93.mp3",
     "hash": "1ea7354096",
-    "duration": 5.0,
+    "duration": 5,
     "words": "voice/g1-tens/make-93.words.json"
   },
   "g1-tens/make-94": {
@@ -14032,6 +14104,540 @@
     "hash": "e83b297b84",
     "duration": 4.97,
     "words": "voice/g1-tens/make-99.words.json"
+  },
+  "g1-tens/makeIt/n=11": {
+    "file": "voice/g1-tens/makeIt/n=11.mp3",
+    "hash": "9dd5e444d9",
+    "duration": 2.39,
+    "words": "voice/g1-tens/makeIt/n=11.words.json"
+  },
+  "g1-tens/makeIt/n=12": {
+    "file": "voice/g1-tens/makeIt/n=12.mp3",
+    "hash": "1c7560c601",
+    "duration": 2.25,
+    "words": "voice/g1-tens/makeIt/n=12.words.json"
+  },
+  "g1-tens/makeIt/n=13": {
+    "file": "voice/g1-tens/makeIt/n=13.mp3",
+    "hash": "ab972f5ba0",
+    "duration": 2.97,
+    "words": "voice/g1-tens/makeIt/n=13.words.json"
+  },
+  "g1-tens/makeIt/n=14": {
+    "file": "voice/g1-tens/makeIt/n=14.mp3",
+    "hash": "47c08781d1",
+    "duration": 2.85,
+    "words": "voice/g1-tens/makeIt/n=14.words.json"
+  },
+  "g1-tens/makeIt/n=15": {
+    "file": "voice/g1-tens/makeIt/n=15.mp3",
+    "hash": "433e080699",
+    "duration": 4.04,
+    "words": "voice/g1-tens/makeIt/n=15.words.json"
+  },
+  "g1-tens/makeIt/n=16": {
+    "file": "voice/g1-tens/makeIt/n=16.mp3",
+    "hash": "5ef8358367",
+    "duration": 2.77,
+    "words": "voice/g1-tens/makeIt/n=16.words.json"
+  },
+  "g1-tens/makeIt/n=17": {
+    "file": "voice/g1-tens/makeIt/n=17.mp3",
+    "hash": "3b7e4edfa5",
+    "duration": 3.18,
+    "words": "voice/g1-tens/makeIt/n=17.words.json"
+  },
+  "g1-tens/makeIt/n=18": {
+    "file": "voice/g1-tens/makeIt/n=18.mp3",
+    "hash": "04305e18bd",
+    "duration": 2.94,
+    "words": "voice/g1-tens/makeIt/n=18.words.json"
+  },
+  "g1-tens/makeIt/n=19": {
+    "file": "voice/g1-tens/makeIt/n=19.mp3",
+    "hash": "e366ede516",
+    "duration": 2.72,
+    "words": "voice/g1-tens/makeIt/n=19.words.json"
+  },
+  "g1-tens/makeIt/n=20": {
+    "file": "voice/g1-tens/makeIt/n=20.mp3",
+    "hash": "30ffd150a4",
+    "duration": 2.65,
+    "words": "voice/g1-tens/makeIt/n=20.words.json"
+  },
+  "g1-tens/makeIt/n=21": {
+    "file": "voice/g1-tens/makeIt/n=21.mp3",
+    "hash": "4e58b7f7d0",
+    "duration": 2.76,
+    "words": "voice/g1-tens/makeIt/n=21.words.json"
+  },
+  "g1-tens/makeIt/n=22": {
+    "file": "voice/g1-tens/makeIt/n=22.mp3",
+    "hash": "8ea175df16",
+    "duration": 2.69,
+    "words": "voice/g1-tens/makeIt/n=22.words.json"
+  },
+  "g1-tens/makeIt/n=23": {
+    "file": "voice/g1-tens/makeIt/n=23.mp3",
+    "hash": "74f61b38ac",
+    "duration": 2.95,
+    "words": "voice/g1-tens/makeIt/n=23.words.json"
+  },
+  "g1-tens/makeIt/n=24": {
+    "file": "voice/g1-tens/makeIt/n=24.mp3",
+    "hash": "2e409eb4b8",
+    "duration": 3.1,
+    "words": "voice/g1-tens/makeIt/n=24.words.json"
+  },
+  "g1-tens/makeIt/n=25": {
+    "file": "voice/g1-tens/makeIt/n=25.mp3",
+    "hash": "1dc528edf7",
+    "duration": 3.01,
+    "words": "voice/g1-tens/makeIt/n=25.words.json"
+  },
+  "g1-tens/makeIt/n=26": {
+    "file": "voice/g1-tens/makeIt/n=26.mp3",
+    "hash": "692607478f",
+    "duration": 2.96,
+    "words": "voice/g1-tens/makeIt/n=26.words.json"
+  },
+  "g1-tens/makeIt/n=27": {
+    "file": "voice/g1-tens/makeIt/n=27.mp3",
+    "hash": "45dec534be",
+    "duration": 2.86,
+    "words": "voice/g1-tens/makeIt/n=27.words.json"
+  },
+  "g1-tens/makeIt/n=28": {
+    "file": "voice/g1-tens/makeIt/n=28.mp3",
+    "hash": "bb3c70102b",
+    "duration": 3.29,
+    "words": "voice/g1-tens/makeIt/n=28.words.json"
+  },
+  "g1-tens/makeIt/n=29": {
+    "file": "voice/g1-tens/makeIt/n=29.mp3",
+    "hash": "376ffd5724",
+    "duration": 2.69,
+    "words": "voice/g1-tens/makeIt/n=29.words.json"
+  },
+  "g1-tens/makeIt/n=30": {
+    "file": "voice/g1-tens/makeIt/n=30.mp3",
+    "hash": "943ee2788a",
+    "duration": 2.28,
+    "words": "voice/g1-tens/makeIt/n=30.words.json"
+  },
+  "g1-tens/makeIt/n=31": {
+    "file": "voice/g1-tens/makeIt/n=31.mp3",
+    "hash": "c0684337c2",
+    "duration": 3.94,
+    "words": "voice/g1-tens/makeIt/n=31.words.json"
+  },
+  "g1-tens/makeIt/n=32": {
+    "file": "voice/g1-tens/makeIt/n=32.mp3",
+    "hash": "391667bc1d",
+    "duration": 2.84,
+    "words": "voice/g1-tens/makeIt/n=32.words.json"
+  },
+  "g1-tens/makeIt/n=33": {
+    "file": "voice/g1-tens/makeIt/n=33.mp3",
+    "hash": "a93e3a5645",
+    "duration": 2.75,
+    "words": "voice/g1-tens/makeIt/n=33.words.json"
+  },
+  "g1-tens/makeIt/n=34": {
+    "file": "voice/g1-tens/makeIt/n=34.mp3",
+    "hash": "5fd93ea599",
+    "duration": 2.63,
+    "words": "voice/g1-tens/makeIt/n=34.words.json"
+  },
+  "g1-tens/makeIt/n=35": {
+    "file": "voice/g1-tens/makeIt/n=35.mp3",
+    "hash": "c88407e385",
+    "duration": 2.94,
+    "words": "voice/g1-tens/makeIt/n=35.words.json"
+  },
+  "g1-tens/makeIt/n=36": {
+    "file": "voice/g1-tens/makeIt/n=36.mp3",
+    "hash": "79acbddbff",
+    "duration": 3.04,
+    "words": "voice/g1-tens/makeIt/n=36.words.json"
+  },
+  "g1-tens/makeIt/n=37": {
+    "file": "voice/g1-tens/makeIt/n=37.mp3",
+    "hash": "b8bf4779a4",
+    "duration": 2.75,
+    "words": "voice/g1-tens/makeIt/n=37.words.json"
+  },
+  "g1-tens/makeIt/n=38": {
+    "file": "voice/g1-tens/makeIt/n=38.mp3",
+    "hash": "43435d4141",
+    "duration": 2.77,
+    "words": "voice/g1-tens/makeIt/n=38.words.json"
+  },
+  "g1-tens/makeIt/n=39": {
+    "file": "voice/g1-tens/makeIt/n=39.mp3",
+    "hash": "f8f8e6d4ff",
+    "duration": 2.75,
+    "words": "voice/g1-tens/makeIt/n=39.words.json"
+  },
+  "g1-tens/makeIt/n=40": {
+    "file": "voice/g1-tens/makeIt/n=40.mp3",
+    "hash": "a878d4f1bd",
+    "duration": 2.55,
+    "words": "voice/g1-tens/makeIt/n=40.words.json"
+  },
+  "g1-tens/makeIt/n=41": {
+    "file": "voice/g1-tens/makeIt/n=41.mp3",
+    "hash": "4e7ffc5c6a",
+    "duration": 2.93,
+    "words": "voice/g1-tens/makeIt/n=41.words.json"
+  },
+  "g1-tens/makeIt/n=42": {
+    "file": "voice/g1-tens/makeIt/n=42.mp3",
+    "hash": "bbbb0770f1",
+    "duration": 3.4,
+    "words": "voice/g1-tens/makeIt/n=42.words.json"
+  },
+  "g1-tens/makeIt/n=43": {
+    "file": "voice/g1-tens/makeIt/n=43.mp3",
+    "hash": "0ab8c05b5e",
+    "duration": 2.99,
+    "words": "voice/g1-tens/makeIt/n=43.words.json"
+  },
+  "g1-tens/makeIt/n=44": {
+    "file": "voice/g1-tens/makeIt/n=44.mp3",
+    "hash": "56d9c04b40",
+    "duration": 2.73,
+    "words": "voice/g1-tens/makeIt/n=44.words.json"
+  },
+  "g1-tens/makeIt/n=45": {
+    "file": "voice/g1-tens/makeIt/n=45.mp3",
+    "hash": "9f544f4c5e",
+    "duration": 3.03,
+    "words": "voice/g1-tens/makeIt/n=45.words.json"
+  },
+  "g1-tens/makeIt/n=46": {
+    "file": "voice/g1-tens/makeIt/n=46.mp3",
+    "hash": "c9d280a8ef",
+    "duration": 3.07,
+    "words": "voice/g1-tens/makeIt/n=46.words.json"
+  },
+  "g1-tens/makeIt/n=47": {
+    "file": "voice/g1-tens/makeIt/n=47.mp3",
+    "hash": "01f9c7553c",
+    "duration": 2.81,
+    "words": "voice/g1-tens/makeIt/n=47.words.json"
+  },
+  "g1-tens/makeIt/n=48": {
+    "file": "voice/g1-tens/makeIt/n=48.mp3",
+    "hash": "d190921eeb",
+    "duration": 2.69,
+    "words": "voice/g1-tens/makeIt/n=48.words.json"
+  },
+  "g1-tens/makeIt/n=49": {
+    "file": "voice/g1-tens/makeIt/n=49.mp3",
+    "hash": "aaef933772",
+    "duration": 2.65,
+    "words": "voice/g1-tens/makeIt/n=49.words.json"
+  },
+  "g1-tens/makeIt/n=50": {
+    "file": "voice/g1-tens/makeIt/n=50.mp3",
+    "hash": "ef0c196db6",
+    "duration": 2.44,
+    "words": "voice/g1-tens/makeIt/n=50.words.json"
+  },
+  "g1-tens/makeIt/n=51": {
+    "file": "voice/g1-tens/makeIt/n=51.mp3",
+    "hash": "6c5e98ed02",
+    "duration": 2.88,
+    "words": "voice/g1-tens/makeIt/n=51.words.json"
+  },
+  "g1-tens/makeIt/n=52": {
+    "file": "voice/g1-tens/makeIt/n=52.mp3",
+    "hash": "8942d6f7db",
+    "duration": 2.68,
+    "words": "voice/g1-tens/makeIt/n=52.words.json"
+  },
+  "g1-tens/makeIt/n=53": {
+    "file": "voice/g1-tens/makeIt/n=53.mp3",
+    "hash": "521c7d9016",
+    "duration": 3.04,
+    "words": "voice/g1-tens/makeIt/n=53.words.json"
+  },
+  "g1-tens/makeIt/n=54": {
+    "file": "voice/g1-tens/makeIt/n=54.mp3",
+    "hash": "6c3ad0b8d9",
+    "duration": 2.77,
+    "words": "voice/g1-tens/makeIt/n=54.words.json"
+  },
+  "g1-tens/makeIt/n=55": {
+    "file": "voice/g1-tens/makeIt/n=55.mp3",
+    "hash": "0f7b853d27",
+    "duration": 2.89,
+    "words": "voice/g1-tens/makeIt/n=55.words.json"
+  },
+  "g1-tens/makeIt/n=56": {
+    "file": "voice/g1-tens/makeIt/n=56.mp3",
+    "hash": "f25dd31ec8",
+    "duration": 2.93,
+    "words": "voice/g1-tens/makeIt/n=56.words.json"
+  },
+  "g1-tens/makeIt/n=57": {
+    "file": "voice/g1-tens/makeIt/n=57.mp3",
+    "hash": "57b4e1fc75",
+    "duration": 2.98,
+    "words": "voice/g1-tens/makeIt/n=57.words.json"
+  },
+  "g1-tens/makeIt/n=58": {
+    "file": "voice/g1-tens/makeIt/n=58.mp3",
+    "hash": "d03e625437",
+    "duration": 3.18,
+    "words": "voice/g1-tens/makeIt/n=58.words.json"
+  },
+  "g1-tens/makeIt/n=59": {
+    "file": "voice/g1-tens/makeIt/n=59.mp3",
+    "hash": "dcb5a13f75",
+    "duration": 3.04,
+    "words": "voice/g1-tens/makeIt/n=59.words.json"
+  },
+  "g1-tens/makeIt/n=60": {
+    "file": "voice/g1-tens/makeIt/n=60.mp3",
+    "hash": "2e5fd905b8",
+    "duration": 2.64,
+    "words": "voice/g1-tens/makeIt/n=60.words.json"
+  },
+  "g1-tens/makeIt/n=61": {
+    "file": "voice/g1-tens/makeIt/n=61.mp3",
+    "hash": "57ee259cf0",
+    "duration": 3.09,
+    "words": "voice/g1-tens/makeIt/n=61.words.json"
+  },
+  "g1-tens/makeIt/n=62": {
+    "file": "voice/g1-tens/makeIt/n=62.mp3",
+    "hash": "2a0c78ee0d",
+    "duration": 2.59,
+    "words": "voice/g1-tens/makeIt/n=62.words.json"
+  },
+  "g1-tens/makeIt/n=63": {
+    "file": "voice/g1-tens/makeIt/n=63.mp3",
+    "hash": "fc84dbbf56",
+    "duration": 2.98,
+    "words": "voice/g1-tens/makeIt/n=63.words.json"
+  },
+  "g1-tens/makeIt/n=64": {
+    "file": "voice/g1-tens/makeIt/n=64.mp3",
+    "hash": "416c74ad60",
+    "duration": 2.78,
+    "words": "voice/g1-tens/makeIt/n=64.words.json"
+  },
+  "g1-tens/makeIt/n=65": {
+    "file": "voice/g1-tens/makeIt/n=65.mp3",
+    "hash": "ecb7a8f144",
+    "duration": 2.87,
+    "words": "voice/g1-tens/makeIt/n=65.words.json"
+  },
+  "g1-tens/makeIt/n=66": {
+    "file": "voice/g1-tens/makeIt/n=66.mp3",
+    "hash": "f873104723",
+    "duration": 3.04,
+    "words": "voice/g1-tens/makeIt/n=66.words.json"
+  },
+  "g1-tens/makeIt/n=67": {
+    "file": "voice/g1-tens/makeIt/n=67.mp3",
+    "hash": "8d94af2942",
+    "duration": 2.94,
+    "words": "voice/g1-tens/makeIt/n=67.words.json"
+  },
+  "g1-tens/makeIt/n=68": {
+    "file": "voice/g1-tens/makeIt/n=68.mp3",
+    "hash": "4151e189ee",
+    "duration": 3.16,
+    "words": "voice/g1-tens/makeIt/n=68.words.json"
+  },
+  "g1-tens/makeIt/n=69": {
+    "file": "voice/g1-tens/makeIt/n=69.mp3",
+    "hash": "eac0bf6758",
+    "duration": 3.28,
+    "words": "voice/g1-tens/makeIt/n=69.words.json"
+  },
+  "g1-tens/makeIt/n=70": {
+    "file": "voice/g1-tens/makeIt/n=70.mp3",
+    "hash": "49021523dd",
+    "duration": 2.8,
+    "words": "voice/g1-tens/makeIt/n=70.words.json"
+  },
+  "g1-tens/makeIt/n=71": {
+    "file": "voice/g1-tens/makeIt/n=71.mp3",
+    "hash": "7c091e5a81",
+    "duration": 3.02,
+    "words": "voice/g1-tens/makeIt/n=71.words.json"
+  },
+  "g1-tens/makeIt/n=72": {
+    "file": "voice/g1-tens/makeIt/n=72.mp3",
+    "hash": "bd66531868",
+    "duration": 2.97,
+    "words": "voice/g1-tens/makeIt/n=72.words.json"
+  },
+  "g1-tens/makeIt/n=73": {
+    "file": "voice/g1-tens/makeIt/n=73.mp3",
+    "hash": "0c967369bf",
+    "duration": 3.19,
+    "words": "voice/g1-tens/makeIt/n=73.words.json"
+  },
+  "g1-tens/makeIt/n=74": {
+    "file": "voice/g1-tens/makeIt/n=74.mp3",
+    "hash": "9270226c38",
+    "duration": 2.94,
+    "words": "voice/g1-tens/makeIt/n=74.words.json"
+  },
+  "g1-tens/makeIt/n=75": {
+    "file": "voice/g1-tens/makeIt/n=75.mp3",
+    "hash": "a0c27c09a2",
+    "duration": 2.99,
+    "words": "voice/g1-tens/makeIt/n=75.words.json"
+  },
+  "g1-tens/makeIt/n=76": {
+    "file": "voice/g1-tens/makeIt/n=76.mp3",
+    "hash": "fc09232b71",
+    "duration": 2.91,
+    "words": "voice/g1-tens/makeIt/n=76.words.json"
+  },
+  "g1-tens/makeIt/n=77": {
+    "file": "voice/g1-tens/makeIt/n=77.mp3",
+    "hash": "ea101146e0",
+    "duration": 3.02,
+    "words": "voice/g1-tens/makeIt/n=77.words.json"
+  },
+  "g1-tens/makeIt/n=78": {
+    "file": "voice/g1-tens/makeIt/n=78.mp3",
+    "hash": "b74d6b1fb4",
+    "duration": 2.95,
+    "words": "voice/g1-tens/makeIt/n=78.words.json"
+  },
+  "g1-tens/makeIt/n=79": {
+    "file": "voice/g1-tens/makeIt/n=79.mp3",
+    "hash": "1c053791bc",
+    "duration": 2.89,
+    "words": "voice/g1-tens/makeIt/n=79.words.json"
+  },
+  "g1-tens/makeIt/n=80": {
+    "file": "voice/g1-tens/makeIt/n=80.mp3",
+    "hash": "f430446a42",
+    "duration": 2.48,
+    "words": "voice/g1-tens/makeIt/n=80.words.json"
+  },
+  "g1-tens/makeIt/n=81": {
+    "file": "voice/g1-tens/makeIt/n=81.mp3",
+    "hash": "1b95e1fea9",
+    "duration": 2.98,
+    "words": "voice/g1-tens/makeIt/n=81.words.json"
+  },
+  "g1-tens/makeIt/n=82": {
+    "file": "voice/g1-tens/makeIt/n=82.mp3",
+    "hash": "94ee5c9a20",
+    "duration": 2.73,
+    "words": "voice/g1-tens/makeIt/n=82.words.json"
+  },
+  "g1-tens/makeIt/n=83": {
+    "file": "voice/g1-tens/makeIt/n=83.mp3",
+    "hash": "52e5fc74a1",
+    "duration": 2.79,
+    "words": "voice/g1-tens/makeIt/n=83.words.json"
+  },
+  "g1-tens/makeIt/n=84": {
+    "file": "voice/g1-tens/makeIt/n=84.mp3",
+    "hash": "e9ceae3e02",
+    "duration": 3.44,
+    "words": "voice/g1-tens/makeIt/n=84.words.json"
+  },
+  "g1-tens/makeIt/n=85": {
+    "file": "voice/g1-tens/makeIt/n=85.mp3",
+    "hash": "7a17963c60",
+    "duration": 3.22,
+    "words": "voice/g1-tens/makeIt/n=85.words.json"
+  },
+  "g1-tens/makeIt/n=86": {
+    "file": "voice/g1-tens/makeIt/n=86.mp3",
+    "hash": "e39c655056",
+    "duration": 2.87,
+    "words": "voice/g1-tens/makeIt/n=86.words.json"
+  },
+  "g1-tens/makeIt/n=87": {
+    "file": "voice/g1-tens/makeIt/n=87.mp3",
+    "hash": "693fc8f4f4",
+    "duration": 2.82,
+    "words": "voice/g1-tens/makeIt/n=87.words.json"
+  },
+  "g1-tens/makeIt/n=88": {
+    "file": "voice/g1-tens/makeIt/n=88.mp3",
+    "hash": "b4373a0bbc",
+    "duration": 2.96,
+    "words": "voice/g1-tens/makeIt/n=88.words.json"
+  },
+  "g1-tens/makeIt/n=89": {
+    "file": "voice/g1-tens/makeIt/n=89.mp3",
+    "hash": "58115e6c8a",
+    "duration": 2.9,
+    "words": "voice/g1-tens/makeIt/n=89.words.json"
+  },
+  "g1-tens/makeIt/n=90": {
+    "file": "voice/g1-tens/makeIt/n=90.mp3",
+    "hash": "067ecdd14e",
+    "duration": 2.61,
+    "words": "voice/g1-tens/makeIt/n=90.words.json"
+  },
+  "g1-tens/makeIt/n=91": {
+    "file": "voice/g1-tens/makeIt/n=91.mp3",
+    "hash": "17d5a6b7e9",
+    "duration": 2.95,
+    "words": "voice/g1-tens/makeIt/n=91.words.json"
+  },
+  "g1-tens/makeIt/n=92": {
+    "file": "voice/g1-tens/makeIt/n=92.mp3",
+    "hash": "aba2848ea7",
+    "duration": 3.06,
+    "words": "voice/g1-tens/makeIt/n=92.words.json"
+  },
+  "g1-tens/makeIt/n=93": {
+    "file": "voice/g1-tens/makeIt/n=93.mp3",
+    "hash": "ee68a8ba6d",
+    "duration": 3.56,
+    "words": "voice/g1-tens/makeIt/n=93.words.json"
+  },
+  "g1-tens/makeIt/n=94": {
+    "file": "voice/g1-tens/makeIt/n=94.mp3",
+    "hash": "264ae69c82",
+    "duration": 2.77,
+    "words": "voice/g1-tens/makeIt/n=94.words.json"
+  },
+  "g1-tens/makeIt/n=95": {
+    "file": "voice/g1-tens/makeIt/n=95.mp3",
+    "hash": "543fe3f8ef",
+    "duration": 3.13,
+    "words": "voice/g1-tens/makeIt/n=95.words.json"
+  },
+  "g1-tens/makeIt/n=96": {
+    "file": "voice/g1-tens/makeIt/n=96.mp3",
+    "hash": "f50c53959a",
+    "duration": 3.13,
+    "words": "voice/g1-tens/makeIt/n=96.words.json"
+  },
+  "g1-tens/makeIt/n=97": {
+    "file": "voice/g1-tens/makeIt/n=97.mp3",
+    "hash": "b829cf2615",
+    "duration": 3.03,
+    "words": "voice/g1-tens/makeIt/n=97.words.json"
+  },
+  "g1-tens/makeIt/n=98": {
+    "file": "voice/g1-tens/makeIt/n=98.mp3",
+    "hash": "1f430cd886",
+    "duration": 2.59,
+    "words": "voice/g1-tens/makeIt/n=98.words.json"
+  },
+  "g1-tens/makeIt/n=99": {
+    "file": "voice/g1-tens/makeIt/n=99.mp3",
+    "hash": "9712252573",
+    "duration": 2.89,
+    "words": "voice/g1-tens/makeIt/n=99.words.json"
   },
   "g1-tens/moreTens": {
     "file": "voice/g1-tens/moreTens.mp3",
@@ -14192,7 +14798,7 @@
   "g1-tens/next-24": {
     "file": "voice/g1-tens/next-24.mp3",
     "hash": "de0d5565e2",
-    "duration": 5.0,
+    "duration": 5,
     "words": "voice/g1-tens/next-24.words.json"
   },
   "g1-tens/next-25": {
@@ -14822,7 +15428,7 @@
   "g1-tens/number/n=16": {
     "file": "voice/g1-tens/number/n=16.mp3",
     "hash": "37783298b8",
-    "duration": 1.0,
+    "duration": 1,
     "words": "voice/g1-tens/number/n=16.words.json"
   },
   "g1-tens/number/n=17": {
@@ -15032,7 +15638,7 @@
   "g1-tens/number/n=48": {
     "file": "voice/g1-tens/number/n=48.mp3",
     "hash": "8132004ce6",
-    "duration": 1.0,
+    "duration": 1,
     "words": "voice/g1-tens/number/n=48.words.json"
   },
   "g1-tens/number/n=49": {
@@ -15260,7 +15866,7 @@
   "g1-tens/number/n=82": {
     "file": "voice/g1-tens/number/n=82.mp3",
     "hash": "3bb38cd555",
-    "duration": 1.0,
+    "duration": 1,
     "words": "voice/g1-tens/number/n=82.words.json"
   },
   "g1-tens/number/n=83": {
@@ -15854,7 +16460,7 @@
   "g1-tens/shows/n=87": {
     "file": "voice/g1-tens/shows/n=87.mp3",
     "hash": "652337dfb9",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-tens/shows/n=87.words.json"
   },
   "g1-tens/shows/n=88": {
@@ -15884,7 +16490,7 @@
   "g1-tens/shows/n=92": {
     "file": "voice/g1-tens/shows/n=92.mp3",
     "hash": "a5b33bff2f",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-tens/shows/n=92.words.json"
   },
   "g1-tens/shows/n=93": {
@@ -15920,7 +16526,7 @@
   "g1-tens/shows/n=98": {
     "file": "voice/g1-tens/shows/n=98.mp3",
     "hash": "d36561edf5",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-tens/shows/n=98.words.json"
   },
   "g1-tens/shows/n=99": {
@@ -16118,7 +16724,7 @@
   "g1-tens/tenLess/n=50": {
     "file": "voice/g1-tens/tenLess/n=50.mp3",
     "hash": "1bc9f9a6a3",
-    "duration": 4.0,
+    "duration": 4,
     "words": "voice/g1-tens/tenLess/n=50.words.json"
   },
   "g1-tens/tenLess/n=51": {
@@ -16256,7 +16862,7 @@
   "g1-tens/tenLess/n=73": {
     "file": "voice/g1-tens/tenLess/n=73.mp3",
     "hash": "c0ac82fa14",
-    "duration": 5.0,
+    "duration": 5,
     "words": "voice/g1-tens/tenLess/n=73.words.json"
   },
   "g1-tens/tenLess/n=74": {
@@ -17384,7 +17990,7 @@
   "g1-tens/tensIn/n=82": {
     "file": "voice/g1-tens/tensIn/n=82.mp3",
     "hash": "cda75cbed8",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-tens/tensIn/n=82.words.json"
   },
   "g1-tens/tensIn/n=83": {
@@ -17966,7 +18572,7 @@
   "g1-towers/add-7-8": {
     "file": "voice/g1-towers/add-7-8.mp3",
     "hash": "9c717efba0",
-    "duration": 3.0,
+    "duration": 3,
     "words": "voice/g1-towers/add-7-8.words.json"
   },
   "g1-towers/add-7-9": {
@@ -18452,7 +19058,7 @@
   "g1-towers/how-add-5-7": {
     "file": "voice/g1-towers/how-add-5-7.mp3",
     "hash": "a55ca3e169",
-    "duration": 8.0,
+    "duration": 8,
     "words": "voice/g1-towers/how-add-5-7.words.json"
   },
   "g1-towers/how-add-5-8": {
@@ -19550,7 +20156,7 @@
   "g1-towers/sub-14-6": {
     "file": "voice/g1-towers/sub-14-6.mp3",
     "hash": "e886c0e629",
-    "duration": 3.0,
+    "duration": 3,
     "words": "voice/g1-towers/sub-14-6.words.json"
   },
   "g1-towers/sub-14-7": {
@@ -19736,7 +20342,7 @@
   "g1-towers/sub-5-1": {
     "file": "voice/g1-towers/sub-5-1.mp3",
     "hash": "6f3c10de72",
-    "duration": 3.0,
+    "duration": 3,
     "words": "voice/g1-towers/sub-5-1.words.json"
   },
   "g1-towers/sub-5-2": {
@@ -20006,7 +20612,7 @@
   "g1-woods/appleGift-c/n=6": {
     "file": "voice/g1-woods/appleGift-c/n=6.mp3",
     "hash": "02f9f00093",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-woods/appleGift-c/n=6.words.json"
   },
   "g1-woods/appleGift-c/n=7": {
@@ -20156,7 +20762,7 @@
   "g1-woods/appleStart-c/n=12": {
     "file": "voice/g1-woods/appleStart-c/n=12.mp3",
     "hash": "318b2ab2b4",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-woods/appleStart-c/n=12.words.json"
   },
   "g1-woods/appleStart-c/n=13": {
@@ -20552,7 +21158,7 @@
   "g1-woods/branchBirds-a/n=7": {
     "file": "voice/g1-woods/branchBirds-a/n=7.mp3",
     "hash": "170991b34d",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-woods/branchBirds-a/n=7.words.json"
   },
   "g1-woods/branchBirds-a/n=8": {
@@ -21302,7 +21908,7 @@
   "g1-woods/frogStart-b/n=2": {
     "file": "voice/g1-woods/frogStart-b/n=2.mp3",
     "hash": "91892a7475",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-woods/frogStart-b/n=2.words.json"
   },
   "g1-woods/frogStart-b/n=3": {
@@ -21512,7 +22118,7 @@
   "g1-woods/fruitSort-a/n=13": {
     "file": "voice/g1-woods/fruitSort-a/n=13.mp3",
     "hash": "99665fa8cf",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-woods/fruitSort-a/n=13.words.json"
   },
   "g1-woods/fruitSort-a/n=14": {
@@ -21530,7 +22136,7 @@
   "g1-woods/fruitSort-a/n=16": {
     "file": "voice/g1-woods/fruitSort-a/n=16.mp3",
     "hash": "9073c386b5",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-woods/fruitSort-a/n=16.words.json"
   },
   "g1-woods/fruitSort-a/n=7": {
@@ -21764,7 +22370,7 @@
   "g1-woods/henNest-c/n=14": {
     "file": "voice/g1-woods/henNest-c/n=14.mp3",
     "hash": "020c9f7199",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-woods/henNest-c/n=14.words.json"
   },
   "g1-woods/henNest-c/n=15": {
@@ -21926,7 +22532,7 @@
   "g1-woods/mouseCookies-a/n=15": {
     "file": "voice/g1-woods/mouseCookies-a/n=15.mp3",
     "hash": "5a908b2559",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-woods/mouseCookies-a/n=15.words.json"
   },
   "g1-woods/mouseCookies-a/n=16": {
@@ -22190,7 +22796,7 @@
   "g1-woods/pigBalloons-b/n=5": {
     "file": "voice/g1-woods/pigBalloons-b/n=5.mp3",
     "hash": "a18744cf65",
-    "duration": 3.0,
+    "duration": 3,
     "words": "voice/g1-woods/pigBalloons-b/n=5.words.json"
   },
   "g1-woods/pigBalloons-b/n=6": {
@@ -22226,7 +22832,7 @@
   "g1-woods/pondPals-a/n=5": {
     "file": "voice/g1-woods/pondPals-a/n=5.mp3",
     "hash": "ee9e183186",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-woods/pondPals-a/n=5.words.json"
   },
   "g1-woods/pondPals-a/n=6": {
@@ -22310,7 +22916,7 @@
   "g1-woods/pondParty-a/n=4": {
     "file": "voice/g1-woods/pondParty-a/n=4.mp3",
     "hash": "fc275f4d1d",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-woods/pondParty-a/n=4.words.json"
   },
   "g1-woods/pondParty-a/n=5": {
@@ -22322,7 +22928,7 @@
   "g1-woods/pondParty-a/n=6": {
     "file": "voice/g1-woods/pondParty-a/n=6.mp3",
     "hash": "d1af1ef5a3",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-woods/pondParty-a/n=6.words.json"
   },
   "g1-woods/pondParty-a/n=7": {
@@ -22360,6 +22966,18 @@
     "hash": "50d0320896",
     "duration": 2.1,
     "words": "voice/g1-woods/pondParty-c/n=2.words.json"
+  },
+  "g1-woods/pondParty-c/n=4": {
+    "file": "voice/g1-woods/pondParty-c/n=4.mp3",
+    "hash": "22957747de",
+    "duration": 2.16,
+    "words": "voice/g1-woods/pondParty-c/n=4.words.json"
+  },
+  "g1-woods/pondParty-c/n=5": {
+    "file": "voice/g1-woods/pondParty-c/n=5.mp3",
+    "hash": "dbe3ffe76d",
+    "duration": 2.16,
+    "words": "voice/g1-woods/pondParty-c/n=5.words.json"
   },
   "g1-woods/pondParty-q": {
     "file": "voice/g1-woods/pondParty-q.mp3",
@@ -22466,7 +23084,7 @@
   "g1-woods/pondSort-b/n=7": {
     "file": "voice/g1-woods/pondSort-b/n=7.mp3",
     "hash": "80a8973fc0",
-    "duration": 3.0,
+    "duration": 3,
     "words": "voice/g1-woods/pondSort-b/n=7.words.json"
   },
   "g1-woods/pondSort-b/n=8": {
@@ -23354,7 +23972,7 @@
   "g1-woods/treeBirds-a/n=11": {
     "file": "voice/g1-woods/treeBirds-a/n=11.mp3",
     "hash": "1e4adf68ad",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-woods/treeBirds-a/n=11.words.json"
   },
   "g1-woods/treeBirds-a/n=12": {
@@ -23438,7 +24056,7 @@
   "g1-woods/treeBirds-c/n=4": {
     "file": "voice/g1-woods/treeBirds-c/n=4.mp3",
     "hash": "a4daeb3483",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-woods/treeBirds-c/n=4.words.json"
   },
   "g1-woods/treeBirds-c/n=5": {
@@ -23957,6 +24575,12 @@
     "duration": 1.23,
     "words": "voice/g1-words/readAgain.words.json"
   },
+  "g1-words/readFirst": {
+    "file": "voice/g1-words/readFirst.mp3",
+    "hash": "77cd4fb10b",
+    "duration": 1.03,
+    "words": "voice/g1-words/readFirst.words.json"
+  },
   "g1-words/sent-bagBed": {
     "file": "voice/g1-words/sent-bagBed.mp3",
     "hash": "33835180f4",
@@ -24416,7 +25040,7 @@
   "g1-writing/cardLittleT": {
     "file": "voice/g1-writing/cardLittleT.mp3",
     "hash": "f9b321a1e7",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/g1-writing/cardLittleT.words.json"
   },
   "g1-writing/greatSpelling": {
@@ -24848,7 +25472,7 @@
   "g1-writing/spell/word=pig": {
     "file": "voice/g1-writing/spell/word=pig.mp3",
     "hash": "15fee21dea",
-    "duration": 3.0,
+    "duration": 3,
     "words": "voice/g1-writing/spell/word=pig.words.json"
   },
   "g1-writing/spell/word=pin": {
@@ -25814,7 +26438,7 @@
   "k-compare/ask-more-bees": {
     "file": "voice/k-compare/ask-more-bees.mp3",
     "hash": "4ccefe97c4",
-    "duration": 4.0,
+    "duration": 4,
     "words": "voice/k-compare/ask-more-bees.words.json"
   },
   "k-compare/ask-more-bunnies": {
@@ -26648,7 +27272,7 @@
   "k-compare/less-1-9": {
     "file": "voice/k-compare/less-1-9.mp3",
     "hash": "0ba0beeaed",
-    "duration": 3.0,
+    "duration": 3,
     "words": "voice/k-compare/less-1-9.words.json"
   },
   "k-compare/less-10-1": {
@@ -26852,7 +27476,7 @@
   "k-compare/less-4-7": {
     "file": "voice/k-compare/less-4-7.mp3",
     "hash": "7dc6a93e9a",
-    "duration": 3.0,
+    "duration": 3,
     "words": "voice/k-compare/less-4-7.words.json"
   },
   "k-compare/less-4-8": {
@@ -28211,6 +28835,198 @@
     "duration": 0.77,
     "words": "voice/k-lessons/down.words.json"
   },
+  "k-lessons/explain-g1Adding-turnAround": {
+    "file": "voice/k-lessons/explain-g1Adding-turnAround.mp3",
+    "hash": "6edd4b2b89",
+    "duration": 4.27,
+    "words": "voice/k-lessons/explain-g1Adding-turnAround.words.json"
+  },
+  "k-lessons/explain-g1Graphs-more": {
+    "file": "voice/k-lessons/explain-g1Graphs-more.mp3",
+    "hash": "7f2f581e7b",
+    "duration": 5.1,
+    "words": "voice/k-lessons/explain-g1Graphs-more.words.json"
+  },
+  "k-lessons/explain-g1Measure-halfPast": {
+    "file": "voice/k-lessons/explain-g1Measure-halfPast.mp3",
+    "hash": "3f22439d57",
+    "duration": 6.71,
+    "words": "voice/k-lessons/explain-g1Measure-halfPast.words.json"
+  },
+  "k-lessons/explain-g1Reading-middle": {
+    "file": "voice/k-lessons/explain-g1Reading-middle.mp3",
+    "hash": "9676021137",
+    "duration": 3.25,
+    "words": "voice/k-lessons/explain-g1Reading-middle.words.json"
+  },
+  "k-lessons/explain-g1Reading-teams": {
+    "file": "voice/k-lessons/explain-g1Reading-teams.mp3",
+    "hash": "4fe408d645",
+    "duration": 3.59,
+    "words": "voice/k-lessons/explain-g1Reading-teams.words.json"
+  },
+  "k-lessons/explain-g1Science-light": {
+    "file": "voice/k-lessons/explain-g1Science-light.mp3",
+    "hash": "83eca99d55",
+    "duration": 3.06,
+    "words": "voice/k-lessons/explain-g1Science-light.words.json"
+  },
+  "k-lessons/explain-g1Shapes-solids": {
+    "file": "voice/k-lessons/explain-g1Shapes-solids.mp3",
+    "hash": "6dfd832f3a",
+    "duration": 3.21,
+    "words": "voice/k-lessons/explain-g1Shapes-solids.words.json"
+  },
+  "k-lessons/explain-g1Shapes-still": {
+    "file": "voice/k-lessons/explain-g1Shapes-still.mp3",
+    "hash": "ff3cbfe8a4",
+    "duration": 4.97,
+    "words": "voice/k-lessons/explain-g1Shapes-still.words.json"
+  },
+  "k-lessons/explain-g1Shares-halves": {
+    "file": "voice/k-lessons/explain-g1Shares-halves.mp3",
+    "hash": "4723cea2ea",
+    "duration": 2.52,
+    "words": "voice/k-lessons/explain-g1Shares-halves.words.json"
+  },
+  "k-lessons/explain-g1Shares-smaller": {
+    "file": "voice/k-lessons/explain-g1Shares-smaller.mp3",
+    "hash": "92a1b5b1d5",
+    "duration": 2.02,
+    "words": "voice/k-lessons/explain-g1Shares-smaller.words.json"
+  },
+  "k-lessons/explain-g1Subtract-countBack": {
+    "file": "voice/k-lessons/explain-g1Subtract-countBack.mp3",
+    "hash": "04b323ad23",
+    "duration": 5.4,
+    "words": "voice/k-lessons/explain-g1Subtract-countBack.words.json"
+  },
+  "k-lessons/explain-g1Subtract-family": {
+    "file": "voice/k-lessons/explain-g1Subtract-family.mp3",
+    "hash": "2545e4771a",
+    "duration": 4.64,
+    "words": "voice/k-lessons/explain-g1Subtract-family.words.json"
+  },
+  "k-lessons/explain-g1Tens-count": {
+    "file": "voice/k-lessons/explain-g1Tens-count.mp3",
+    "hash": "a831a9b535",
+    "duration": 2.77,
+    "words": "voice/k-lessons/explain-g1Tens-count.words.json"
+  },
+  "k-lessons/explain-g1Tens-sign": {
+    "file": "voice/k-lessons/explain-g1Tens-sign.mp3",
+    "hash": "082f4a2ff4",
+    "duration": 2.83,
+    "words": "voice/k-lessons/explain-g1Tens-sign.words.json"
+  },
+  "k-lessons/explain-g1Writing-lines": {
+    "file": "voice/k-lessons/explain-g1Writing-lines.mp3",
+    "hash": "555cc24d93",
+    "duration": 2.56,
+    "words": "voice/k-lessons/explain-g1Writing-lines.words.json"
+  },
+  "k-lessons/explain-g1Writing-sentence": {
+    "file": "voice/k-lessons/explain-g1Writing-sentence.mp3",
+    "hash": "c916024910",
+    "duration": 3.53,
+    "words": "voice/k-lessons/explain-g1Writing-sentence.words.json"
+  },
+  "k-lessons/explain-kCompare-bears": {
+    "file": "voice/k-lessons/explain-kCompare-bears.mp3",
+    "hash": "1952aae89a",
+    "duration": 5.68,
+    "words": "voice/k-lessons/explain-kCompare-bears.words.json"
+  },
+  "k-lessons/explain-kCompare-numbers": {
+    "file": "voice/k-lessons/explain-kCompare-numbers.mp3",
+    "hash": "83e028bf45",
+    "duration": 3.82,
+    "words": "voice/k-lessons/explain-kCompare-numbers.words.json"
+  },
+  "k-lessons/explain-kLetters-bigLittle": {
+    "file": "voice/k-lessons/explain-kLetters-bigLittle.mp3",
+    "hash": "ca11eaf61e",
+    "duration": 4.03,
+    "words": "voice/k-lessons/explain-kLetters-bigLittle.words.json"
+  },
+  "k-lessons/explain-kLetters-yourTurn": {
+    "file": "voice/k-lessons/explain-kLetters-yourTurn.mp3",
+    "hash": "63c2193434",
+    "duration": 3.08,
+    "words": "voice/k-lessons/explain-kLetters-yourTurn.words.json"
+  },
+  "k-lessons/explain-kMeasure-heavy": {
+    "file": "voice/k-lessons/explain-kMeasure-heavy.mp3",
+    "hash": "997222e406",
+    "duration": 4.2,
+    "words": "voice/k-lessons/explain-kMeasure-heavy.words.json"
+  },
+  "k-lessons/explain-kMeasure-yourTurn": {
+    "file": "voice/k-lessons/explain-kMeasure-yourTurn.mp3",
+    "hash": "2d15e4f1b6",
+    "duration": 4.85,
+    "words": "voice/k-lessons/explain-kMeasure-yourTurn.words.json"
+  },
+  "k-lessons/explain-kRhymes-moon": {
+    "file": "voice/k-lessons/explain-kRhymes-moon.mp3",
+    "hash": "dd894b6385",
+    "duration": 3.78,
+    "words": "voice/k-lessons/explain-kRhymes-moon.words.json"
+  },
+  "k-lessons/explain-kScience-push": {
+    "file": "voice/k-lessons/explain-kScience-push.mp3",
+    "hash": "58a009cf34",
+    "duration": 1.93,
+    "words": "voice/k-lessons/explain-kScience-push.words.json"
+  },
+  "k-lessons/explain-kScience-rain": {
+    "file": "voice/k-lessons/explain-kScience-rain.mp3",
+    "hash": "48a289ef18",
+    "duration": 2.17,
+    "words": "voice/k-lessons/explain-kScience-rain.words.json"
+  },
+  "k-lessons/explain-kShapes-circle": {
+    "file": "voice/k-lessons/explain-kShapes-circle.mp3",
+    "hash": "f90b5803e8",
+    "duration": 1.95,
+    "words": "voice/k-lessons/explain-kShapes-circle.words.json"
+  },
+  "k-lessons/explain-kShapes-solid": {
+    "file": "voice/k-lessons/explain-kShapes-solid.mp3",
+    "hash": "f84d5f693d",
+    "duration": 2.52,
+    "words": "voice/k-lessons/explain-kShapes-solid.words.json"
+  },
+  "k-lessons/explain-kSorting-more": {
+    "file": "voice/k-lessons/explain-kSorting-more.mp3",
+    "hash": "22ad7aebda",
+    "duration": 4.49,
+    "words": "voice/k-lessons/explain-kSorting-more.words.json"
+  },
+  "k-lessons/explain-kTeens-twelve": {
+    "file": "voice/k-lessons/explain-kTeens-twelve.mp3",
+    "hash": "13159fb192",
+    "duration": 2.58,
+    "words": "voice/k-lessons/explain-kTeens-twelve.words.json"
+  },
+  "k-lessons/explain-kTowers-stronger": {
+    "file": "voice/k-lessons/explain-kTowers-stronger.mp3",
+    "hash": "edc45016b8",
+    "duration": 1.69,
+    "words": "voice/k-lessons/explain-kTowers-stronger.words.json"
+  },
+  "k-lessons/explain-kTracing-dot": {
+    "file": "voice/k-lessons/explain-kTracing-dot.mp3",
+    "hash": "345f09e10d",
+    "duration": 1.98,
+    "words": "voice/k-lessons/explain-kTracing-dot.words.json"
+  },
+  "k-lessons/explain-kTracing-lineL": {
+    "file": "voice/k-lessons/explain-kTracing-lineL.mp3",
+    "hash": "37fff1bbb8",
+    "duration": 2.37,
+    "words": "voice/k-lessons/explain-kTracing-lineL.words.json"
+  },
   "k-lessons/fish": {
     "file": "voice/k-lessons/fish.mp3",
     "hash": "7b8e629847",
@@ -28274,7 +29090,7 @@
   "k-lessons/g1Writing-sentence": {
     "file": "voice/k-lessons/g1Writing-sentence.mp3",
     "hash": "101819ef1e",
-    "duration": 3.0,
+    "duration": 3,
     "words": "voice/k-lessons/g1Writing-sentence.words.json"
   },
   "k-lessons/kAddTake-away": {
@@ -28378,6 +29194,12 @@
     "hash": "05c603e788",
     "duration": 2.68,
     "words": "voice/k-lessons/lessonDone.words.json"
+  },
+  "k-lessons/littleA": {
+    "file": "voice/k-lessons/littleA.mp3",
+    "hash": "ff63af3983",
+    "duration": 0.87,
+    "words": "voice/k-lessons/littleA.words.json"
   },
   "k-lessons/littleB": {
     "file": "voice/k-lessons/littleB.mp3",
@@ -29195,6 +30017,312 @@
     "duration": 1.38,
     "words": "voice/k-letters/tapLetter/letter=z.words.json"
   },
+  "k-letters/thisIsLetter/letter=a": {
+    "file": "voice/k-letters/thisIsLetter/letter=a.mp3",
+    "hash": "1feca393a8",
+    "duration": 1.35,
+    "words": "voice/k-letters/thisIsLetter/letter=a.words.json"
+  },
+  "k-letters/thisIsLetter/letter=b": {
+    "file": "voice/k-letters/thisIsLetter/letter=b.mp3",
+    "hash": "2ab514ddc7",
+    "duration": 1.32,
+    "words": "voice/k-letters/thisIsLetter/letter=b.words.json"
+  },
+  "k-letters/thisIsLetter/letter=c": {
+    "file": "voice/k-letters/thisIsLetter/letter=c.mp3",
+    "hash": "37a362603e",
+    "duration": 1.34,
+    "words": "voice/k-letters/thisIsLetter/letter=c.words.json"
+  },
+  "k-letters/thisIsLetter/letter=d": {
+    "file": "voice/k-letters/thisIsLetter/letter=d.mp3",
+    "hash": "00d88a7b55",
+    "duration": 1.44,
+    "words": "voice/k-letters/thisIsLetter/letter=d.words.json"
+  },
+  "k-letters/thisIsLetter/letter=e": {
+    "file": "voice/k-letters/thisIsLetter/letter=e.mp3",
+    "hash": "8219e48469",
+    "duration": 1.39,
+    "words": "voice/k-letters/thisIsLetter/letter=e.words.json"
+  },
+  "k-letters/thisIsLetter/letter=f": {
+    "file": "voice/k-letters/thisIsLetter/letter=f.mp3",
+    "hash": "fd062feff1",
+    "duration": 1.43,
+    "words": "voice/k-letters/thisIsLetter/letter=f.words.json"
+  },
+  "k-letters/thisIsLetter/letter=g": {
+    "file": "voice/k-letters/thisIsLetter/letter=g.mp3",
+    "hash": "a3b194e290",
+    "duration": 1.38,
+    "words": "voice/k-letters/thisIsLetter/letter=g.words.json"
+  },
+  "k-letters/thisIsLetter/letter=h": {
+    "file": "voice/k-letters/thisIsLetter/letter=h.mp3",
+    "hash": "38187b80a9",
+    "duration": 1.5,
+    "words": "voice/k-letters/thisIsLetter/letter=h.words.json"
+  },
+  "k-letters/thisIsLetter/letter=i": {
+    "file": "voice/k-letters/thisIsLetter/letter=i.mp3",
+    "hash": "85074d08e7",
+    "duration": 1.45,
+    "words": "voice/k-letters/thisIsLetter/letter=i.words.json"
+  },
+  "k-letters/thisIsLetter/letter=j": {
+    "file": "voice/k-letters/thisIsLetter/letter=j.mp3",
+    "hash": "551eb71671",
+    "duration": 1.44,
+    "words": "voice/k-letters/thisIsLetter/letter=j.words.json"
+  },
+  "k-letters/thisIsLetter/letter=k": {
+    "file": "voice/k-letters/thisIsLetter/letter=k.mp3",
+    "hash": "a783606d1d",
+    "duration": 1.4,
+    "words": "voice/k-letters/thisIsLetter/letter=k.words.json"
+  },
+  "k-letters/thisIsLetter/letter=l": {
+    "file": "voice/k-letters/thisIsLetter/letter=l.mp3",
+    "hash": "6e6704fc0a",
+    "duration": 1.41,
+    "words": "voice/k-letters/thisIsLetter/letter=l.words.json"
+  },
+  "k-letters/thisIsLetter/letter=m": {
+    "file": "voice/k-letters/thisIsLetter/letter=m.mp3",
+    "hash": "cdca24116e",
+    "duration": 1.43,
+    "words": "voice/k-letters/thisIsLetter/letter=m.words.json"
+  },
+  "k-letters/thisIsLetter/letter=n": {
+    "file": "voice/k-letters/thisIsLetter/letter=n.mp3",
+    "hash": "0dc6dc651b",
+    "duration": 1.57,
+    "words": "voice/k-letters/thisIsLetter/letter=n.words.json"
+  },
+  "k-letters/thisIsLetter/letter=o": {
+    "file": "voice/k-letters/thisIsLetter/letter=o.mp3",
+    "hash": "4867672499",
+    "duration": 1.52,
+    "words": "voice/k-letters/thisIsLetter/letter=o.words.json"
+  },
+  "k-letters/thisIsLetter/letter=p": {
+    "file": "voice/k-letters/thisIsLetter/letter=p.mp3",
+    "hash": "0b4574d48b",
+    "duration": 1.27,
+    "words": "voice/k-letters/thisIsLetter/letter=p.words.json"
+  },
+  "k-letters/thisIsLetter/letter=q": {
+    "file": "voice/k-letters/thisIsLetter/letter=q.mp3",
+    "hash": "59f183a89d",
+    "duration": 1.49,
+    "words": "voice/k-letters/thisIsLetter/letter=q.words.json"
+  },
+  "k-letters/thisIsLetter/letter=r": {
+    "file": "voice/k-letters/thisIsLetter/letter=r.mp3",
+    "hash": "4f9397bc6a",
+    "duration": 1.59,
+    "words": "voice/k-letters/thisIsLetter/letter=r.words.json"
+  },
+  "k-letters/thisIsLetter/letter=s": {
+    "file": "voice/k-letters/thisIsLetter/letter=s.mp3",
+    "hash": "0f58f6243b",
+    "duration": 1.44,
+    "words": "voice/k-letters/thisIsLetter/letter=s.words.json"
+  },
+  "k-letters/thisIsLetter/letter=t": {
+    "file": "voice/k-letters/thisIsLetter/letter=t.mp3",
+    "hash": "6b511e3805",
+    "duration": 1.37,
+    "words": "voice/k-letters/thisIsLetter/letter=t.words.json"
+  },
+  "k-letters/thisIsLetter/letter=u": {
+    "file": "voice/k-letters/thisIsLetter/letter=u.mp3",
+    "hash": "f1f91efe5e",
+    "duration": 1.41,
+    "words": "voice/k-letters/thisIsLetter/letter=u.words.json"
+  },
+  "k-letters/thisIsLetter/letter=v": {
+    "file": "voice/k-letters/thisIsLetter/letter=v.mp3",
+    "hash": "51bccf7715",
+    "duration": 1.35,
+    "words": "voice/k-letters/thisIsLetter/letter=v.words.json"
+  },
+  "k-letters/thisIsLetter/letter=w": {
+    "file": "voice/k-letters/thisIsLetter/letter=w.mp3",
+    "hash": "eae06d882d",
+    "duration": 1.6,
+    "words": "voice/k-letters/thisIsLetter/letter=w.words.json"
+  },
+  "k-letters/thisIsLetter/letter=x": {
+    "file": "voice/k-letters/thisIsLetter/letter=x.mp3",
+    "hash": "4d62732261",
+    "duration": 1.53,
+    "words": "voice/k-letters/thisIsLetter/letter=x.words.json"
+  },
+  "k-letters/thisIsLetter/letter=y": {
+    "file": "voice/k-letters/thisIsLetter/letter=y.mp3",
+    "hash": "a8c141a59b",
+    "duration": 1.41,
+    "words": "voice/k-letters/thisIsLetter/letter=y.words.json"
+  },
+  "k-letters/thisIsLetter/letter=z": {
+    "file": "voice/k-letters/thisIsLetter/letter=z.mp3",
+    "hash": "9993fd93da",
+    "duration": 1.38,
+    "words": "voice/k-letters/thisIsLetter/letter=z.words.json"
+  },
+  "k-letters/thisIsLittle/letter=a": {
+    "file": "voice/k-letters/thisIsLittle/letter=a.mp3",
+    "hash": "278997b1de",
+    "duration": 1.12,
+    "words": "voice/k-letters/thisIsLittle/letter=a.words.json"
+  },
+  "k-letters/thisIsLittle/letter=b": {
+    "file": "voice/k-letters/thisIsLittle/letter=b.mp3",
+    "hash": "b2c0515268",
+    "duration": 1.66,
+    "words": "voice/k-letters/thisIsLittle/letter=b.words.json"
+  },
+  "k-letters/thisIsLittle/letter=c": {
+    "file": "voice/k-letters/thisIsLittle/letter=c.mp3",
+    "hash": "d3d414b946",
+    "duration": 1.36,
+    "words": "voice/k-letters/thisIsLittle/letter=c.words.json"
+  },
+  "k-letters/thisIsLittle/letter=d": {
+    "file": "voice/k-letters/thisIsLittle/letter=d.mp3",
+    "hash": "bd021262fb",
+    "duration": 1.24,
+    "words": "voice/k-letters/thisIsLittle/letter=d.words.json"
+  },
+  "k-letters/thisIsLittle/letter=e": {
+    "file": "voice/k-letters/thisIsLittle/letter=e.mp3",
+    "hash": "f4f5a5258a",
+    "duration": 1.23,
+    "words": "voice/k-letters/thisIsLittle/letter=e.words.json"
+  },
+  "k-letters/thisIsLittle/letter=f": {
+    "file": "voice/k-letters/thisIsLittle/letter=f.mp3",
+    "hash": "5028206124",
+    "duration": 1.08,
+    "words": "voice/k-letters/thisIsLittle/letter=f.words.json"
+  },
+  "k-letters/thisIsLittle/letter=g": {
+    "file": "voice/k-letters/thisIsLittle/letter=g.mp3",
+    "hash": "1a83b6ce72",
+    "duration": 1.2,
+    "words": "voice/k-letters/thisIsLittle/letter=g.words.json"
+  },
+  "k-letters/thisIsLittle/letter=h": {
+    "file": "voice/k-letters/thisIsLittle/letter=h.mp3",
+    "hash": "0f8408c08c",
+    "duration": 1.19,
+    "words": "voice/k-letters/thisIsLittle/letter=h.words.json"
+  },
+  "k-letters/thisIsLittle/letter=i": {
+    "file": "voice/k-letters/thisIsLittle/letter=i.mp3",
+    "hash": "7623305bc3",
+    "duration": 1.19,
+    "words": "voice/k-letters/thisIsLittle/letter=i.words.json"
+  },
+  "k-letters/thisIsLittle/letter=j": {
+    "file": "voice/k-letters/thisIsLittle/letter=j.mp3",
+    "hash": "cf1c77d408",
+    "duration": 1.32,
+    "words": "voice/k-letters/thisIsLittle/letter=j.words.json"
+  },
+  "k-letters/thisIsLittle/letter=k": {
+    "file": "voice/k-letters/thisIsLittle/letter=k.mp3",
+    "hash": "1bdf37a32b",
+    "duration": 1.29,
+    "words": "voice/k-letters/thisIsLittle/letter=k.words.json"
+  },
+  "k-letters/thisIsLittle/letter=l": {
+    "file": "voice/k-letters/thisIsLittle/letter=l.mp3",
+    "hash": "165f20dc81",
+    "duration": 1.34,
+    "words": "voice/k-letters/thisIsLittle/letter=l.words.json"
+  },
+  "k-letters/thisIsLittle/letter=m": {
+    "file": "voice/k-letters/thisIsLittle/letter=m.mp3",
+    "hash": "6b574406e5",
+    "duration": 1.09,
+    "words": "voice/k-letters/thisIsLittle/letter=m.words.json"
+  },
+  "k-letters/thisIsLittle/letter=n": {
+    "file": "voice/k-letters/thisIsLittle/letter=n.mp3",
+    "hash": "0a97675174",
+    "duration": 1.18,
+    "words": "voice/k-letters/thisIsLittle/letter=n.words.json"
+  },
+  "k-letters/thisIsLittle/letter=o": {
+    "file": "voice/k-letters/thisIsLittle/letter=o.mp3",
+    "hash": "a6f30a05ac",
+    "duration": 1.42,
+    "words": "voice/k-letters/thisIsLittle/letter=o.words.json"
+  },
+  "k-letters/thisIsLittle/letter=p": {
+    "file": "voice/k-letters/thisIsLittle/letter=p.mp3",
+    "hash": "eb15c40ffa",
+    "duration": 1.3,
+    "words": "voice/k-letters/thisIsLittle/letter=p.words.json"
+  },
+  "k-letters/thisIsLittle/letter=q": {
+    "file": "voice/k-letters/thisIsLittle/letter=q.mp3",
+    "hash": "838358094a",
+    "duration": 1.46,
+    "words": "voice/k-letters/thisIsLittle/letter=q.words.json"
+  },
+  "k-letters/thisIsLittle/letter=r": {
+    "file": "voice/k-letters/thisIsLittle/letter=r.mp3",
+    "hash": "91d62dac32",
+    "duration": 0.97,
+    "words": "voice/k-letters/thisIsLittle/letter=r.words.json"
+  },
+  "k-letters/thisIsLittle/letter=s": {
+    "file": "voice/k-letters/thisIsLittle/letter=s.mp3",
+    "hash": "05a319d2e7",
+    "duration": 1.34,
+    "words": "voice/k-letters/thisIsLittle/letter=s.words.json"
+  },
+  "k-letters/thisIsLittle/letter=t": {
+    "file": "voice/k-letters/thisIsLittle/letter=t.mp3",
+    "hash": "70c17dbbee",
+    "duration": 1.27,
+    "words": "voice/k-letters/thisIsLittle/letter=t.words.json"
+  },
+  "k-letters/thisIsLittle/letter=v": {
+    "file": "voice/k-letters/thisIsLittle/letter=v.mp3",
+    "hash": "45232edd61",
+    "duration": 1.31,
+    "words": "voice/k-letters/thisIsLittle/letter=v.words.json"
+  },
+  "k-letters/thisIsLittle/letter=w": {
+    "file": "voice/k-letters/thisIsLittle/letter=w.mp3",
+    "hash": "982ef64194",
+    "duration": 1.08,
+    "words": "voice/k-letters/thisIsLittle/letter=w.words.json"
+  },
+  "k-letters/thisIsLittle/letter=x": {
+    "file": "voice/k-letters/thisIsLittle/letter=x.mp3",
+    "hash": "77dd5eab04",
+    "duration": 1.43,
+    "words": "voice/k-letters/thisIsLittle/letter=x.words.json"
+  },
+  "k-letters/thisIsLittle/letter=y": {
+    "file": "voice/k-letters/thisIsLittle/letter=y.mp3",
+    "hash": "c91d9a1051",
+    "duration": 1.24,
+    "words": "voice/k-letters/thisIsLittle/letter=y.words.json"
+  },
+  "k-letters/thisIsLittle/letter=z": {
+    "file": "voice/k-letters/thisIsLittle/letter=z.mp3",
+    "hash": "c1ec092f4f",
+    "duration": 1.4,
+    "words": "voice/k-letters/thisIsLittle/letter=z.words.json"
+  },
   "k-letters/word/word=ant": {
     "file": "voice/k-letters/word/word=ant.mp3",
     "hash": "5d6dfbd327",
@@ -29510,7 +30638,7 @@
   "k-math/findGroup/n=11,thing=apples": {
     "file": "voice/k-math/findGroup/n=11,thing=apples.mp3",
     "hash": "1adc8205e8",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/k-math/findGroup/n=11,thing=apples.words.json"
   },
   "k-math/findGroup/n=11,thing=balls": {
@@ -29582,7 +30710,7 @@
   "k-math/findGroup/n=12,thing=bees": {
     "file": "voice/k-math/findGroup/n=12,thing=bees.mp3",
     "hash": "1bc7fe6900",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/k-math/findGroup/n=12,thing=bees.words.json"
   },
   "k-math/findGroup/n=12,thing=cars": {
@@ -30140,7 +31268,7 @@
   "k-math/findGroup/n=20,thing=ducks": {
     "file": "voice/k-math/findGroup/n=20,thing=ducks.mp3",
     "hash": "4db1044ae3",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/k-math/findGroup/n=20,thing=ducks.words.json"
   },
   "k-math/findGroup/n=20,thing=fish": {
@@ -30224,7 +31352,7 @@
   "k-math/findGroup/n=3,thing=stars": {
     "file": "voice/k-math/findGroup/n=3,thing=stars.mp3",
     "hash": "f2b3884f98",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/k-math/findGroup/n=3,thing=stars.words.json"
   },
   "k-math/findGroup/n=4,thing=apples": {
@@ -30917,6 +32045,12 @@
     "duration": 1.81,
     "words": "voice/k-math/putInBowl/n=5,thing=balls.words.json"
   },
+  "k-math/putInBowl/n=5,thing=bees": {
+    "file": "voice/k-math/putInBowl/n=5,thing=bees.mp3",
+    "hash": "f4bb0843f6",
+    "duration": 1.73,
+    "words": "voice/k-math/putInBowl/n=5,thing=bees.words.json"
+  },
   "k-math/putInBowl/n=5,thing=cars": {
     "file": "voice/k-math/putInBowl/n=5,thing=cars.mp3",
     "hash": "f0def262b9",
@@ -31547,6 +32681,78 @@
     "duration": 0.83,
     "words": "voice/k-nav/animal-unicorn.words.json"
   },
+  "k-nav/baby-bear": {
+    "file": "voice/k-nav/baby-bear.mp3",
+    "hash": "ef602af5cc",
+    "duration": 1.23,
+    "words": "voice/k-nav/baby-bear.words.json"
+  },
+  "k-nav/baby-dragon": {
+    "file": "voice/k-nav/baby-dragon.mp3",
+    "hash": "53677ae4c2",
+    "duration": 1.19,
+    "words": "voice/k-nav/baby-dragon.words.json"
+  },
+  "k-nav/baby-dragonet": {
+    "file": "voice/k-nav/baby-dragonet.mp3",
+    "hash": "99100272b9",
+    "duration": 1.91,
+    "words": "voice/k-nav/baby-dragonet.words.json"
+  },
+  "k-nav/baby-fox": {
+    "file": "voice/k-nav/baby-fox.mp3",
+    "hash": "3c93519fb1",
+    "duration": 1.65,
+    "words": "voice/k-nav/baby-fox.words.json"
+  },
+  "k-nav/baby-frog": {
+    "file": "voice/k-nav/baby-frog.mp3",
+    "hash": "3e902f47f2",
+    "duration": 1.38,
+    "words": "voice/k-nav/baby-frog.words.json"
+  },
+  "k-nav/baby-lion": {
+    "file": "voice/k-nav/baby-lion.mp3",
+    "hash": "c0423d338d",
+    "duration": 1.49,
+    "words": "voice/k-nav/baby-lion.words.json"
+  },
+  "k-nav/baby-octopus": {
+    "file": "voice/k-nav/baby-octopus.mp3",
+    "hash": "9555fb041c",
+    "duration": 1.81,
+    "words": "voice/k-nav/baby-octopus.words.json"
+  },
+  "k-nav/baby-owl": {
+    "file": "voice/k-nav/baby-owl.mp3",
+    "hash": "378f96b6cf",
+    "duration": 1.39,
+    "words": "voice/k-nav/baby-owl.words.json"
+  },
+  "k-nav/baby-panda": {
+    "file": "voice/k-nav/baby-panda.mp3",
+    "hash": "9f8b932b7a",
+    "duration": 1.7,
+    "words": "voice/k-nav/baby-panda.words.json"
+  },
+  "k-nav/baby-tiger": {
+    "file": "voice/k-nav/baby-tiger.mp3",
+    "hash": "4814ac9c57",
+    "duration": 1.35,
+    "words": "voice/k-nav/baby-tiger.words.json"
+  },
+  "k-nav/baby-trex": {
+    "file": "voice/k-nav/baby-trex.mp3",
+    "hash": "115e412aa2",
+    "duration": 1.44,
+    "words": "voice/k-nav/baby-trex.words.json"
+  },
+  "k-nav/baby-unicorn": {
+    "file": "voice/k-nav/baby-unicorn.mp3",
+    "hash": "417daa7c52",
+    "duration": 1.59,
+    "words": "voice/k-nav/baby-unicorn.words.json"
+  },
   "k-nav/color-blue": {
     "file": "voice/k-nav/color-blue.mp3",
     "hash": "3ea1b9cc5c",
@@ -31594,6 +32800,12 @@
     "hash": "2413ea3e7a",
     "duration": 1.65,
     "words": "voice/k-nav/lessonTime.words.json"
+  },
+  "k-nav/letsGo": {
+    "file": "voice/k-nav/letsGo.mp3",
+    "hash": "162ada172a",
+    "duration": 0.56,
+    "words": "voice/k-nav/letsGo.words.json"
   },
   "k-nav/mapHelp": {
     "file": "voice/k-nav/mapHelp.mp3",
@@ -31715,6 +32927,12 @@
     "duration": 1.15,
     "words": "voice/k-nav/name-writing-workshop.words.json"
   },
+  "k-nav/newBadge": {
+    "file": "voice/k-nav/newBadge.mp3",
+    "hash": "4993e6ce2f",
+    "duration": 1.32,
+    "words": "voice/k-nav/newBadge.words.json"
+  },
   "k-nav/petGrew": {
     "file": "voice/k-nav/petGrew.mp3",
     "hash": "f8b28bf1ee",
@@ -31732,6 +32950,12 @@
     "hash": "09bb3f3e24",
     "duration": 1.32,
     "words": "voice/k-nav/petHatched.words.json"
+  },
+  "k-nav/petsGrewAll": {
+    "file": "voice/k-nav/petsGrewAll.mp3",
+    "hash": "8ab34e3f44",
+    "duration": 2.28,
+    "words": "voice/k-nav/petsGrewAll.words.json"
   },
   "k-nav/petsHelp": {
     "file": "voice/k-nav/petsHelp.mp3",
@@ -32327,6 +33551,12 @@
     "duration": 2.68,
     "words": "voice/k-nav/welcome-g1-multiplication-mesa.words.json"
   },
+  "k-nav/welcome-g1-place-value-plateau": {
+    "file": "voice/k-nav/welcome-g1-place-value-plateau.mp3",
+    "hash": "eb8e9b0c05",
+    "duration": 2.79,
+    "words": "voice/k-nav/welcome-g1-place-value-plateau.words.json"
+  },
   "k-nav/welcome-g1-reading-reef": {
     "file": "voice/k-nav/welcome-g1-reading-reef.mp3",
     "hash": "d4b9a51fb7",
@@ -32756,7 +33986,7 @@
   "k-rhymes/verse-fatHen": {
     "file": "voice/k-rhymes/verse-fatHen.mp3",
     "hash": "a8e359e478",
-    "duration": 3.0,
+    "duration": 3,
     "words": "voice/k-rhymes/verse-fatHen.words.json"
   },
   "k-rhymes/verse-hickory": {
@@ -33578,7 +34808,7 @@
   "k-science/thirsty/animal=elephant": {
     "file": "voice/k-science/thirsty/animal=elephant.mp3",
     "hash": "8e668f8d36",
-    "duration": 3.0,
+    "duration": 3,
     "words": "voice/k-science/thirsty/animal=elephant.words.json"
   },
   "k-science/thirsty/animal=lion": {
@@ -33650,7 +34880,7 @@
   "k-science/why-cart": {
     "file": "voice/k-science/why-cart.mp3",
     "hash": "bac7bb3acf",
-    "duration": 3.0,
+    "duration": 3,
     "words": "voice/k-science/why-cart.words.json"
   },
   "k-science/why-door": {
@@ -33923,6 +35153,60 @@
     "duration": 1.75,
     "words": "voice/k-shapes/tapSolid.words.json"
   },
+  "k-shapes/teach-circle": {
+    "file": "voice/k-shapes/teach-circle.mp3",
+    "hash": "8c90f6c3d0",
+    "duration": 3.83,
+    "words": "voice/k-shapes/teach-circle.words.json"
+  },
+  "k-shapes/teach-cone": {
+    "file": "voice/k-shapes/teach-cone.mp3",
+    "hash": "e68194435d",
+    "duration": 2.79,
+    "words": "voice/k-shapes/teach-cone.words.json"
+  },
+  "k-shapes/teach-cube": {
+    "file": "voice/k-shapes/teach-cube.mp3",
+    "hash": "ba51cdbef0",
+    "duration": 2.78,
+    "words": "voice/k-shapes/teach-cube.words.json"
+  },
+  "k-shapes/teach-cylinder": {
+    "file": "voice/k-shapes/teach-cylinder.mp3",
+    "hash": "214ba40377",
+    "duration": 2.41,
+    "words": "voice/k-shapes/teach-cylinder.words.json"
+  },
+  "k-shapes/teach-hexagon": {
+    "file": "voice/k-shapes/teach-hexagon.mp3",
+    "hash": "da29a85807",
+    "duration": 3.25,
+    "words": "voice/k-shapes/teach-hexagon.words.json"
+  },
+  "k-shapes/teach-rectangle": {
+    "file": "voice/k-shapes/teach-rectangle.mp3",
+    "hash": "bb73fe7039",
+    "duration": 4.87,
+    "words": "voice/k-shapes/teach-rectangle.words.json"
+  },
+  "k-shapes/teach-sphere": {
+    "file": "voice/k-shapes/teach-sphere.mp3",
+    "hash": "dca3b5b417",
+    "duration": 3.93,
+    "words": "voice/k-shapes/teach-sphere.words.json"
+  },
+  "k-shapes/teach-square": {
+    "file": "voice/k-shapes/teach-square.mp3",
+    "hash": "08beef26d0",
+    "duration": 3.82,
+    "words": "voice/k-shapes/teach-square.words.json"
+  },
+  "k-shapes/teach-triangle": {
+    "file": "voice/k-shapes/teach-triangle.mp3",
+    "hash": "7359922d2a",
+    "duration": 2.84,
+    "words": "voice/k-shapes/teach-triangle.words.json"
+  },
   "k-shapes/youKnowShapes": {
     "file": "voice/k-shapes/youKnowShapes.mp3",
     "hash": "cde15e5dc5",
@@ -33938,7 +35222,7 @@
   "k-sort/box-animals": {
     "file": "voice/k-sort/box-animals.mp3",
     "hash": "4dfbc1b2a1",
-    "duration": 1.0,
+    "duration": 1,
     "words": "voice/k-sort/box-animals.words.json"
   },
   "k-sort/box-big": {
@@ -34700,7 +35984,7 @@
   "k-sounds/drumWord/word=tree": {
     "file": "voice/k-sounds/drumWord/word=tree.mp3",
     "hash": "86abb3a893",
-    "duration": 4.0,
+    "duration": 4,
     "words": "voice/k-sounds/drumWord/word=tree.words.json"
   },
   "k-sounds/drumWord/word=turtle": {
@@ -35186,7 +36470,7 @@
   "k-sounds/that-bus": {
     "file": "voice/k-sounds/that-bus.mp3",
     "hash": "7a2378f145",
-    "duration": 3.0,
+    "duration": 3,
     "words": "voice/k-sounds/that-bus.words.json"
   },
   "k-sounds/that-cake": {
@@ -36398,7 +37682,7 @@
   "k-towers/findGroup/n=12,thing=critters": {
     "file": "voice/k-towers/findGroup/n=12,thing=critters.mp3",
     "hash": "9667da7938",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/k-towers/findGroup/n=12,thing=critters.words.json"
   },
   "k-towers/findGroup/n=12,thing=gems": {
@@ -36788,7 +38072,7 @@
   "k-towers/findGroup/n=9,thing=gems": {
     "file": "voice/k-towers/findGroup/n=9,thing=gems.mp3",
     "hash": "97256271c6",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/k-towers/findGroup/n=9,thing=gems.words.json"
   },
   "k-towers/findGroup/n=9,thing=rockets": {
@@ -38006,7 +39290,7 @@
   "k-woods/bunnyTulips-a/n=3": {
     "file": "voice/k-woods/bunnyTulips-a/n=3.mp3",
     "hash": "17f09098b5",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/k-woods/bunnyTulips-a/n=3.words.json"
   },
   "k-woods/bunnyTulips-a/n=4": {
@@ -38162,7 +39446,7 @@
   "k-woods/crabShells-b/n=2": {
     "file": "voice/k-woods/crabShells-b/n=2.mp3",
     "hash": "c4bdf0a270",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/k-woods/crabShells-b/n=2.words.json"
   },
   "k-woods/crabShells-b/n=3": {
@@ -38288,7 +39572,7 @@
   "k-woods/foxLeaves-b/n=3": {
     "file": "voice/k-woods/foxLeaves-b/n=3.mp3",
     "hash": "def6644238",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/k-woods/foxLeaves-b/n=3.words.json"
   },
   "k-woods/foxLeaves-b/n=4": {
@@ -38384,7 +39668,7 @@
   "k-woods/henChicks-a/n=4": {
     "file": "voice/k-woods/henChicks-a/n=4.mp3",
     "hash": "e908e2dfd8",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/k-woods/henChicks-a/n=4.words.json"
   },
   "k-woods/henChicks-a/n=5": {
@@ -38564,7 +39848,7 @@
   "k-woods/monkeyBananas-a/n=6": {
     "file": "voice/k-woods/monkeyBananas-a/n=6.mp3",
     "hash": "450e575620",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/k-woods/monkeyBananas-a/n=6.words.json"
   },
   "k-woods/monkeyBananas-b/n=1": {
@@ -38702,7 +39986,7 @@
   "k-woods/monkeyShare-q": {
     "file": "voice/k-woods/monkeyShare-q.mp3",
     "hash": "e54ebc4d4c",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/k-woods/monkeyShare-q.words.json"
   },
   "k-woods/mouseCheese-a/n=2": {
@@ -38780,7 +40064,7 @@
   "k-woods/mouseSnack-a/n=5": {
     "file": "voice/k-woods/mouseSnack-a/n=5.mp3",
     "hash": "3efe628def",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/k-woods/mouseSnack-a/n=5.words.json"
   },
   "k-woods/mouseSnack-a/n=6": {
@@ -38822,7 +40106,7 @@
   "k-woods/owlBirds-a/n=3": {
     "file": "voice/k-woods/owlBirds-a/n=3.mp3",
     "hash": "696de7dc4b",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/k-woods/owlBirds-a/n=3.words.json"
   },
   "k-woods/owlBirds-a/n=4": {
@@ -39014,7 +40298,7 @@
   "k-woods/penguinSnowflakes-a/n=3": {
     "file": "voice/k-woods/penguinSnowflakes-a/n=3.mp3",
     "hash": "f5100ffa23",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/k-woods/penguinSnowflakes-a/n=3.words.json"
   },
   "k-woods/penguinSnowflakes-a/n=4": {
@@ -39332,7 +40616,7 @@
   "k-woods/puppyHats-a/n=5": {
     "file": "voice/k-woods/puppyHats-a/n=5.mp3",
     "hash": "b1d8132eef",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/k-woods/puppyHats-a/n=5.words.json"
   },
   "k-woods/puppyHats-a/n=6": {
@@ -39878,7 +41162,7 @@
   "listen/number/n=18": {
     "file": "voice/listen/number/n=18.mp3",
     "hash": "9e174543a4",
-    "duration": 1.0,
+    "duration": 1,
     "words": "voice/listen/number/n=18.words.json"
   },
   "listen/number/n=19": {
@@ -40172,7 +41456,7 @@
   "parade/intro": {
     "file": "voice/parade/intro.mp3",
     "hash": "4c7d98a394",
-    "duration": 4.0,
+    "duration": 4,
     "words": "voice/parade/intro.words.json"
   },
   "parade/introKeep": {
@@ -40718,7 +42002,7 @@
   "parade/plusOrPlus/a=8,b=4": {
     "file": "voice/parade/plusOrPlus/a=8,b=4.mp3",
     "hash": "7d6cf6cd5a",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/parade/plusOrPlus/a=8,b=4.words.json"
   },
   "parade/plusOrPlus/a=8,b=5": {
@@ -40760,13 +42044,13 @@
   "parade/plusOrPlus/a=9,b=10": {
     "file": "voice/parade/plusOrPlus/a=9,b=10.mp3",
     "hash": "44c59be79e",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/parade/plusOrPlus/a=9,b=10.words.json"
   },
   "parade/plusOrPlus/a=9,b=2": {
     "file": "voice/parade/plusOrPlus/a=9,b=2.mp3",
     "hash": "42653f9fb1",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/parade/plusOrPlus/a=9,b=2.words.json"
   },
   "parade/plusOrPlus/a=9,b=3": {
@@ -40916,7 +42200,7 @@
   "parade/plusOrTakeAway/a=3,b=6": {
     "file": "voice/parade/plusOrTakeAway/a=3,b=6.mp3",
     "hash": "c0bdd32263",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/parade/plusOrTakeAway/a=3,b=6.words.json"
   },
   "parade/plusOrTakeAway/a=4,b=1": {
@@ -41114,7 +42398,7 @@
   "parade/plusWouldHave/a=1,n=5": {
     "file": "voice/parade/plusWouldHave/a=1,n=5.mp3",
     "hash": "581dd83d04",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/parade/plusWouldHave/a=1,n=5.words.json"
   },
   "parade/plusWouldHave/a=1,n=6": {
@@ -41174,7 +42458,7 @@
   "parade/plusWouldHave/a=10,n=15": {
     "file": "voice/parade/plusWouldHave/a=10,n=15.mp3",
     "hash": "59f7383398",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/parade/plusWouldHave/a=10,n=15.words.json"
   },
   "parade/plusWouldHave/a=10,n=16": {
@@ -41252,7 +42536,7 @@
   "parade/plusWouldHave/a=10,n=9": {
     "file": "voice/parade/plusWouldHave/a=10,n=9.mp3",
     "hash": "02b6ca687a",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/parade/plusWouldHave/a=10,n=9.words.json"
   },
   "parade/plusWouldHave/a=2,n=10": {
@@ -42407,6 +43691,600 @@
     "duration": 1.42,
     "words": "voice/parade/tapGate.words.json"
   },
+  "parade/weHaveFriends/n=1": {
+    "file": "voice/parade/weHaveFriends/n=1.mp3",
+    "hash": "6f2bac1ce7",
+    "duration": 1.48,
+    "words": "voice/parade/weHaveFriends/n=1.words.json"
+  },
+  "parade/weHaveFriends/n=10": {
+    "file": "voice/parade/weHaveFriends/n=10.mp3",
+    "hash": "f46a9d7b9d",
+    "duration": 1.48,
+    "words": "voice/parade/weHaveFriends/n=10.words.json"
+  },
+  "parade/weHaveFriends/n=11": {
+    "file": "voice/parade/weHaveFriends/n=11.mp3",
+    "hash": "3554bd8c74",
+    "duration": 1.64,
+    "words": "voice/parade/weHaveFriends/n=11.words.json"
+  },
+  "parade/weHaveFriends/n=12": {
+    "file": "voice/parade/weHaveFriends/n=12.mp3",
+    "hash": "f6ed39d923",
+    "duration": 1.39,
+    "words": "voice/parade/weHaveFriends/n=12.words.json"
+  },
+  "parade/weHaveFriends/n=13": {
+    "file": "voice/parade/weHaveFriends/n=13.mp3",
+    "hash": "062108a901",
+    "duration": 2.2,
+    "words": "voice/parade/weHaveFriends/n=13.words.json"
+  },
+  "parade/weHaveFriends/n=14": {
+    "file": "voice/parade/weHaveFriends/n=14.mp3",
+    "hash": "2b1bceeb0c",
+    "duration": 1.78,
+    "words": "voice/parade/weHaveFriends/n=14.words.json"
+  },
+  "parade/weHaveFriends/n=15": {
+    "file": "voice/parade/weHaveFriends/n=15.mp3",
+    "hash": "8657104d8f",
+    "duration": 2.19,
+    "words": "voice/parade/weHaveFriends/n=15.words.json"
+  },
+  "parade/weHaveFriends/n=16": {
+    "file": "voice/parade/weHaveFriends/n=16.mp3",
+    "hash": "6947990369",
+    "duration": 1.88,
+    "words": "voice/parade/weHaveFriends/n=16.words.json"
+  },
+  "parade/weHaveFriends/n=17": {
+    "file": "voice/parade/weHaveFriends/n=17.mp3",
+    "hash": "957f7aa887",
+    "duration": 1.77,
+    "words": "voice/parade/weHaveFriends/n=17.words.json"
+  },
+  "parade/weHaveFriends/n=18": {
+    "file": "voice/parade/weHaveFriends/n=18.mp3",
+    "hash": "ede57f9471",
+    "duration": 1.93,
+    "words": "voice/parade/weHaveFriends/n=18.words.json"
+  },
+  "parade/weHaveFriends/n=19": {
+    "file": "voice/parade/weHaveFriends/n=19.mp3",
+    "hash": "2392171965",
+    "duration": 2.55,
+    "words": "voice/parade/weHaveFriends/n=19.words.json"
+  },
+  "parade/weHaveFriends/n=2": {
+    "file": "voice/parade/weHaveFriends/n=2.mp3",
+    "hash": "3b1d002289",
+    "duration": 1.64,
+    "words": "voice/parade/weHaveFriends/n=2.words.json"
+  },
+  "parade/weHaveFriends/n=20": {
+    "file": "voice/parade/weHaveFriends/n=20.mp3",
+    "hash": "465206d904",
+    "duration": 1.48,
+    "words": "voice/parade/weHaveFriends/n=20.words.json"
+  },
+  "parade/weHaveFriends/n=21": {
+    "file": "voice/parade/weHaveFriends/n=21.mp3",
+    "hash": "9474daf806",
+    "duration": 1.71,
+    "words": "voice/parade/weHaveFriends/n=21.words.json"
+  },
+  "parade/weHaveFriends/n=22": {
+    "file": "voice/parade/weHaveFriends/n=22.mp3",
+    "hash": "831bb8a271",
+    "duration": 2.06,
+    "words": "voice/parade/weHaveFriends/n=22.words.json"
+  },
+  "parade/weHaveFriends/n=23": {
+    "file": "voice/parade/weHaveFriends/n=23.mp3",
+    "hash": "35ab9aa73f",
+    "duration": 1.99,
+    "words": "voice/parade/weHaveFriends/n=23.words.json"
+  },
+  "parade/weHaveFriends/n=24": {
+    "file": "voice/parade/weHaveFriends/n=24.mp3",
+    "hash": "9bbfe55a42",
+    "duration": 1.89,
+    "words": "voice/parade/weHaveFriends/n=24.words.json"
+  },
+  "parade/weHaveFriends/n=25": {
+    "file": "voice/parade/weHaveFriends/n=25.mp3",
+    "hash": "7f960e4f9d",
+    "duration": 1.91,
+    "words": "voice/parade/weHaveFriends/n=25.words.json"
+  },
+  "parade/weHaveFriends/n=26": {
+    "file": "voice/parade/weHaveFriends/n=26.mp3",
+    "hash": "79433dc3bd",
+    "duration": 1.95,
+    "words": "voice/parade/weHaveFriends/n=26.words.json"
+  },
+  "parade/weHaveFriends/n=27": {
+    "file": "voice/parade/weHaveFriends/n=27.mp3",
+    "hash": "7ae85fce51",
+    "duration": 2.14,
+    "words": "voice/parade/weHaveFriends/n=27.words.json"
+  },
+  "parade/weHaveFriends/n=28": {
+    "file": "voice/parade/weHaveFriends/n=28.mp3",
+    "hash": "8cfdc14cd2",
+    "duration": 1.84,
+    "words": "voice/parade/weHaveFriends/n=28.words.json"
+  },
+  "parade/weHaveFriends/n=29": {
+    "file": "voice/parade/weHaveFriends/n=29.mp3",
+    "hash": "868e4a22c1",
+    "duration": 1.86,
+    "words": "voice/parade/weHaveFriends/n=29.words.json"
+  },
+  "parade/weHaveFriends/n=3": {
+    "file": "voice/parade/weHaveFriends/n=3.mp3",
+    "hash": "03aeeb90ec",
+    "duration": 1.79,
+    "words": "voice/parade/weHaveFriends/n=3.words.json"
+  },
+  "parade/weHaveFriends/n=30": {
+    "file": "voice/parade/weHaveFriends/n=30.mp3",
+    "hash": "16c883a967",
+    "duration": 1.73,
+    "words": "voice/parade/weHaveFriends/n=30.words.json"
+  },
+  "parade/weHaveFriends/n=31": {
+    "file": "voice/parade/weHaveFriends/n=31.mp3",
+    "hash": "19f0bdce6c",
+    "duration": 1.85,
+    "words": "voice/parade/weHaveFriends/n=31.words.json"
+  },
+  "parade/weHaveFriends/n=32": {
+    "file": "voice/parade/weHaveFriends/n=32.mp3",
+    "hash": "3d74838013",
+    "duration": 2.22,
+    "words": "voice/parade/weHaveFriends/n=32.words.json"
+  },
+  "parade/weHaveFriends/n=33": {
+    "file": "voice/parade/weHaveFriends/n=33.mp3",
+    "hash": "349e880952",
+    "duration": 1.94,
+    "words": "voice/parade/weHaveFriends/n=33.words.json"
+  },
+  "parade/weHaveFriends/n=34": {
+    "file": "voice/parade/weHaveFriends/n=34.mp3",
+    "hash": "b3dc01c9f7",
+    "duration": 2.08,
+    "words": "voice/parade/weHaveFriends/n=34.words.json"
+  },
+  "parade/weHaveFriends/n=35": {
+    "file": "voice/parade/weHaveFriends/n=35.mp3",
+    "hash": "bc2a1ebd16",
+    "duration": 1.97,
+    "words": "voice/parade/weHaveFriends/n=35.words.json"
+  },
+  "parade/weHaveFriends/n=36": {
+    "file": "voice/parade/weHaveFriends/n=36.mp3",
+    "hash": "5c7341af66",
+    "duration": 2.2,
+    "words": "voice/parade/weHaveFriends/n=36.words.json"
+  },
+  "parade/weHaveFriends/n=37": {
+    "file": "voice/parade/weHaveFriends/n=37.mp3",
+    "hash": "8a1b7a8efd",
+    "duration": 2.21,
+    "words": "voice/parade/weHaveFriends/n=37.words.json"
+  },
+  "parade/weHaveFriends/n=38": {
+    "file": "voice/parade/weHaveFriends/n=38.mp3",
+    "hash": "c7193a4aef",
+    "duration": 1.6,
+    "words": "voice/parade/weHaveFriends/n=38.words.json"
+  },
+  "parade/weHaveFriends/n=39": {
+    "file": "voice/parade/weHaveFriends/n=39.mp3",
+    "hash": "eccae1c816",
+    "duration": 2.14,
+    "words": "voice/parade/weHaveFriends/n=39.words.json"
+  },
+  "parade/weHaveFriends/n=4": {
+    "file": "voice/parade/weHaveFriends/n=4.mp3",
+    "hash": "5e1a4c05d7",
+    "duration": 1.57,
+    "words": "voice/parade/weHaveFriends/n=4.words.json"
+  },
+  "parade/weHaveFriends/n=40": {
+    "file": "voice/parade/weHaveFriends/n=40.mp3",
+    "hash": "f13247d984",
+    "duration": 1.59,
+    "words": "voice/parade/weHaveFriends/n=40.words.json"
+  },
+  "parade/weHaveFriends/n=41": {
+    "file": "voice/parade/weHaveFriends/n=41.mp3",
+    "hash": "1ee980b70c",
+    "duration": 2.04,
+    "words": "voice/parade/weHaveFriends/n=41.words.json"
+  },
+  "parade/weHaveFriends/n=42": {
+    "file": "voice/parade/weHaveFriends/n=42.mp3",
+    "hash": "1640421bf8",
+    "duration": 1.72,
+    "words": "voice/parade/weHaveFriends/n=42.words.json"
+  },
+  "parade/weHaveFriends/n=43": {
+    "file": "voice/parade/weHaveFriends/n=43.mp3",
+    "hash": "69bc117429",
+    "duration": 1.95,
+    "words": "voice/parade/weHaveFriends/n=43.words.json"
+  },
+  "parade/weHaveFriends/n=44": {
+    "file": "voice/parade/weHaveFriends/n=44.mp3",
+    "hash": "3dfaa33270",
+    "duration": 2.04,
+    "words": "voice/parade/weHaveFriends/n=44.words.json"
+  },
+  "parade/weHaveFriends/n=45": {
+    "file": "voice/parade/weHaveFriends/n=45.mp3",
+    "hash": "fc3a6b91e8",
+    "duration": 1.96,
+    "words": "voice/parade/weHaveFriends/n=45.words.json"
+  },
+  "parade/weHaveFriends/n=46": {
+    "file": "voice/parade/weHaveFriends/n=46.mp3",
+    "hash": "fa19e102f2",
+    "duration": 2.03,
+    "words": "voice/parade/weHaveFriends/n=46.words.json"
+  },
+  "parade/weHaveFriends/n=47": {
+    "file": "voice/parade/weHaveFriends/n=47.mp3",
+    "hash": "4334cc6dbd",
+    "duration": 2.24,
+    "words": "voice/parade/weHaveFriends/n=47.words.json"
+  },
+  "parade/weHaveFriends/n=48": {
+    "file": "voice/parade/weHaveFriends/n=48.mp3",
+    "hash": "b7f52eba29",
+    "duration": 2.43,
+    "words": "voice/parade/weHaveFriends/n=48.words.json"
+  },
+  "parade/weHaveFriends/n=49": {
+    "file": "voice/parade/weHaveFriends/n=49.mp3",
+    "hash": "49bdf2e10f",
+    "duration": 2.23,
+    "words": "voice/parade/weHaveFriends/n=49.words.json"
+  },
+  "parade/weHaveFriends/n=5": {
+    "file": "voice/parade/weHaveFriends/n=5.mp3",
+    "hash": "4709b87ec9",
+    "duration": 1.67,
+    "words": "voice/parade/weHaveFriends/n=5.words.json"
+  },
+  "parade/weHaveFriends/n=50": {
+    "file": "voice/parade/weHaveFriends/n=50.mp3",
+    "hash": "0f540b1d4a",
+    "duration": 1.74,
+    "words": "voice/parade/weHaveFriends/n=50.words.json"
+  },
+  "parade/weHaveFriends/n=51": {
+    "file": "voice/parade/weHaveFriends/n=51.mp3",
+    "hash": "dcff96a8d3",
+    "duration": 2.14,
+    "words": "voice/parade/weHaveFriends/n=51.words.json"
+  },
+  "parade/weHaveFriends/n=52": {
+    "file": "voice/parade/weHaveFriends/n=52.mp3",
+    "hash": "222bb862a9",
+    "duration": 1.91,
+    "words": "voice/parade/weHaveFriends/n=52.words.json"
+  },
+  "parade/weHaveFriends/n=53": {
+    "file": "voice/parade/weHaveFriends/n=53.mp3",
+    "hash": "1659c2194e",
+    "duration": 2.21,
+    "words": "voice/parade/weHaveFriends/n=53.words.json"
+  },
+  "parade/weHaveFriends/n=54": {
+    "file": "voice/parade/weHaveFriends/n=54.mp3",
+    "hash": "0c5a6d7a85",
+    "duration": 2.0,
+    "words": "voice/parade/weHaveFriends/n=54.words.json"
+  },
+  "parade/weHaveFriends/n=55": {
+    "file": "voice/parade/weHaveFriends/n=55.mp3",
+    "hash": "684f4a8746",
+    "duration": 1.88,
+    "words": "voice/parade/weHaveFriends/n=55.words.json"
+  },
+  "parade/weHaveFriends/n=56": {
+    "file": "voice/parade/weHaveFriends/n=56.mp3",
+    "hash": "c288b7bcbe",
+    "duration": 2.02,
+    "words": "voice/parade/weHaveFriends/n=56.words.json"
+  },
+  "parade/weHaveFriends/n=57": {
+    "file": "voice/parade/weHaveFriends/n=57.mp3",
+    "hash": "a3b9c489cd",
+    "duration": 1.95,
+    "words": "voice/parade/weHaveFriends/n=57.words.json"
+  },
+  "parade/weHaveFriends/n=58": {
+    "file": "voice/parade/weHaveFriends/n=58.mp3",
+    "hash": "3c4b67e6d9",
+    "duration": 1.93,
+    "words": "voice/parade/weHaveFriends/n=58.words.json"
+  },
+  "parade/weHaveFriends/n=59": {
+    "file": "voice/parade/weHaveFriends/n=59.mp3",
+    "hash": "4e0d7341c1",
+    "duration": 2.48,
+    "words": "voice/parade/weHaveFriends/n=59.words.json"
+  },
+  "parade/weHaveFriends/n=6": {
+    "file": "voice/parade/weHaveFriends/n=6.mp3",
+    "hash": "660da58bc9",
+    "duration": 1.68,
+    "words": "voice/parade/weHaveFriends/n=6.words.json"
+  },
+  "parade/weHaveFriends/n=60": {
+    "file": "voice/parade/weHaveFriends/n=60.mp3",
+    "hash": "5097a3b6c7",
+    "duration": 1.81,
+    "words": "voice/parade/weHaveFriends/n=60.words.json"
+  },
+  "parade/weHaveFriends/n=61": {
+    "file": "voice/parade/weHaveFriends/n=61.mp3",
+    "hash": "9c689b0fc7",
+    "duration": 1.92,
+    "words": "voice/parade/weHaveFriends/n=61.words.json"
+  },
+  "parade/weHaveFriends/n=62": {
+    "file": "voice/parade/weHaveFriends/n=62.mp3",
+    "hash": "bfcffeee11",
+    "duration": 1.79,
+    "words": "voice/parade/weHaveFriends/n=62.words.json"
+  },
+  "parade/weHaveFriends/n=63": {
+    "file": "voice/parade/weHaveFriends/n=63.mp3",
+    "hash": "17faf0555c",
+    "duration": 2.44,
+    "words": "voice/parade/weHaveFriends/n=63.words.json"
+  },
+  "parade/weHaveFriends/n=64": {
+    "file": "voice/parade/weHaveFriends/n=64.mp3",
+    "hash": "6eec83dda3",
+    "duration": 2.1,
+    "words": "voice/parade/weHaveFriends/n=64.words.json"
+  },
+  "parade/weHaveFriends/n=65": {
+    "file": "voice/parade/weHaveFriends/n=65.mp3",
+    "hash": "b3501d57df",
+    "duration": 2.14,
+    "words": "voice/parade/weHaveFriends/n=65.words.json"
+  },
+  "parade/weHaveFriends/n=66": {
+    "file": "voice/parade/weHaveFriends/n=66.mp3",
+    "hash": "0d7bb92702",
+    "duration": 2.24,
+    "words": "voice/parade/weHaveFriends/n=66.words.json"
+  },
+  "parade/weHaveFriends/n=67": {
+    "file": "voice/parade/weHaveFriends/n=67.mp3",
+    "hash": "03eec5386d",
+    "duration": 2.11,
+    "words": "voice/parade/weHaveFriends/n=67.words.json"
+  },
+  "parade/weHaveFriends/n=68": {
+    "file": "voice/parade/weHaveFriends/n=68.mp3",
+    "hash": "2509e081a4",
+    "duration": 1.99,
+    "words": "voice/parade/weHaveFriends/n=68.words.json"
+  },
+  "parade/weHaveFriends/n=69": {
+    "file": "voice/parade/weHaveFriends/n=69.mp3",
+    "hash": "bb8b6c2c1d",
+    "duration": 2.1,
+    "words": "voice/parade/weHaveFriends/n=69.words.json"
+  },
+  "parade/weHaveFriends/n=7": {
+    "file": "voice/parade/weHaveFriends/n=7.mp3",
+    "hash": "ac578d4028",
+    "duration": 1.94,
+    "words": "voice/parade/weHaveFriends/n=7.words.json"
+  },
+  "parade/weHaveFriends/n=70": {
+    "file": "voice/parade/weHaveFriends/n=70.mp3",
+    "hash": "2cda7ce606",
+    "duration": 1.87,
+    "words": "voice/parade/weHaveFriends/n=70.words.json"
+  },
+  "parade/weHaveFriends/n=71": {
+    "file": "voice/parade/weHaveFriends/n=71.mp3",
+    "hash": "3699cb3f44",
+    "duration": 2.21,
+    "words": "voice/parade/weHaveFriends/n=71.words.json"
+  },
+  "parade/weHaveFriends/n=72": {
+    "file": "voice/parade/weHaveFriends/n=72.mp3",
+    "hash": "4a5f5c69f2",
+    "duration": 2.18,
+    "words": "voice/parade/weHaveFriends/n=72.words.json"
+  },
+  "parade/weHaveFriends/n=73": {
+    "file": "voice/parade/weHaveFriends/n=73.mp3",
+    "hash": "7ce3c9b78c",
+    "duration": 2.14,
+    "words": "voice/parade/weHaveFriends/n=73.words.json"
+  },
+  "parade/weHaveFriends/n=74": {
+    "file": "voice/parade/weHaveFriends/n=74.mp3",
+    "hash": "8937a5fe22",
+    "duration": 2.2,
+    "words": "voice/parade/weHaveFriends/n=74.words.json"
+  },
+  "parade/weHaveFriends/n=75": {
+    "file": "voice/parade/weHaveFriends/n=75.mp3",
+    "hash": "ba94183b17",
+    "duration": 2.39,
+    "words": "voice/parade/weHaveFriends/n=75.words.json"
+  },
+  "parade/weHaveFriends/n=76": {
+    "file": "voice/parade/weHaveFriends/n=76.mp3",
+    "hash": "15d6c3c348",
+    "duration": 2.07,
+    "words": "voice/parade/weHaveFriends/n=76.words.json"
+  },
+  "parade/weHaveFriends/n=77": {
+    "file": "voice/parade/weHaveFriends/n=77.mp3",
+    "hash": "e533146cc9",
+    "duration": 2.36,
+    "words": "voice/parade/weHaveFriends/n=77.words.json"
+  },
+  "parade/weHaveFriends/n=78": {
+    "file": "voice/parade/weHaveFriends/n=78.mp3",
+    "hash": "43cdd0675e",
+    "duration": 1.99,
+    "words": "voice/parade/weHaveFriends/n=78.words.json"
+  },
+  "parade/weHaveFriends/n=79": {
+    "file": "voice/parade/weHaveFriends/n=79.mp3",
+    "hash": "e13d21714e",
+    "duration": 1.95,
+    "words": "voice/parade/weHaveFriends/n=79.words.json"
+  },
+  "parade/weHaveFriends/n=8": {
+    "file": "voice/parade/weHaveFriends/n=8.mp3",
+    "hash": "20fef2dad6",
+    "duration": 1.56,
+    "words": "voice/parade/weHaveFriends/n=8.words.json"
+  },
+  "parade/weHaveFriends/n=80": {
+    "file": "voice/parade/weHaveFriends/n=80.mp3",
+    "hash": "83858c479e",
+    "duration": 1.66,
+    "words": "voice/parade/weHaveFriends/n=80.words.json"
+  },
+  "parade/weHaveFriends/n=81": {
+    "file": "voice/parade/weHaveFriends/n=81.mp3",
+    "hash": "b39939563c",
+    "duration": 1.95,
+    "words": "voice/parade/weHaveFriends/n=81.words.json"
+  },
+  "parade/weHaveFriends/n=82": {
+    "file": "voice/parade/weHaveFriends/n=82.mp3",
+    "hash": "024a0ecf3c",
+    "duration": 1.88,
+    "words": "voice/parade/weHaveFriends/n=82.words.json"
+  },
+  "parade/weHaveFriends/n=83": {
+    "file": "voice/parade/weHaveFriends/n=83.mp3",
+    "hash": "d374b89e6f",
+    "duration": 2.23,
+    "words": "voice/parade/weHaveFriends/n=83.words.json"
+  },
+  "parade/weHaveFriends/n=84": {
+    "file": "voice/parade/weHaveFriends/n=84.mp3",
+    "hash": "fc3f53e089",
+    "duration": 2.11,
+    "words": "voice/parade/weHaveFriends/n=84.words.json"
+  },
+  "parade/weHaveFriends/n=85": {
+    "file": "voice/parade/weHaveFriends/n=85.mp3",
+    "hash": "d00c72c7c0",
+    "duration": 2.13,
+    "words": "voice/parade/weHaveFriends/n=85.words.json"
+  },
+  "parade/weHaveFriends/n=86": {
+    "file": "voice/parade/weHaveFriends/n=86.mp3",
+    "hash": "15f5d9a2f8",
+    "duration": 2.01,
+    "words": "voice/parade/weHaveFriends/n=86.words.json"
+  },
+  "parade/weHaveFriends/n=87": {
+    "file": "voice/parade/weHaveFriends/n=87.mp3",
+    "hash": "3c0c8bde23",
+    "duration": 2.31,
+    "words": "voice/parade/weHaveFriends/n=87.words.json"
+  },
+  "parade/weHaveFriends/n=88": {
+    "file": "voice/parade/weHaveFriends/n=88.mp3",
+    "hash": "33a4878d9a",
+    "duration": 1.89,
+    "words": "voice/parade/weHaveFriends/n=88.words.json"
+  },
+  "parade/weHaveFriends/n=89": {
+    "file": "voice/parade/weHaveFriends/n=89.mp3",
+    "hash": "85f142ea6c",
+    "duration": 2.14,
+    "words": "voice/parade/weHaveFriends/n=89.words.json"
+  },
+  "parade/weHaveFriends/n=9": {
+    "file": "voice/parade/weHaveFriends/n=9.mp3",
+    "hash": "fa9da3df5a",
+    "duration": 1.63,
+    "words": "voice/parade/weHaveFriends/n=9.words.json"
+  },
+  "parade/weHaveFriends/n=90": {
+    "file": "voice/parade/weHaveFriends/n=90.mp3",
+    "hash": "fefd3ab273",
+    "duration": 1.47,
+    "words": "voice/parade/weHaveFriends/n=90.words.json"
+  },
+  "parade/weHaveFriends/n=91": {
+    "file": "voice/parade/weHaveFriends/n=91.mp3",
+    "hash": "ea72fab85b",
+    "duration": 2.25,
+    "words": "voice/parade/weHaveFriends/n=91.words.json"
+  },
+  "parade/weHaveFriends/n=92": {
+    "file": "voice/parade/weHaveFriends/n=92.mp3",
+    "hash": "d15868c82b",
+    "duration": 2.17,
+    "words": "voice/parade/weHaveFriends/n=92.words.json"
+  },
+  "parade/weHaveFriends/n=93": {
+    "file": "voice/parade/weHaveFriends/n=93.mp3",
+    "hash": "5e8ea0655c",
+    "duration": 1.74,
+    "words": "voice/parade/weHaveFriends/n=93.words.json"
+  },
+  "parade/weHaveFriends/n=94": {
+    "file": "voice/parade/weHaveFriends/n=94.mp3",
+    "hash": "323a8d33b6",
+    "duration": 2.03,
+    "words": "voice/parade/weHaveFriends/n=94.words.json"
+  },
+  "parade/weHaveFriends/n=95": {
+    "file": "voice/parade/weHaveFriends/n=95.mp3",
+    "hash": "4467ab11b4",
+    "duration": 2.22,
+    "words": "voice/parade/weHaveFriends/n=95.words.json"
+  },
+  "parade/weHaveFriends/n=96": {
+    "file": "voice/parade/weHaveFriends/n=96.mp3",
+    "hash": "a7ea430fc9",
+    "duration": 2.15,
+    "words": "voice/parade/weHaveFriends/n=96.words.json"
+  },
+  "parade/weHaveFriends/n=97": {
+    "file": "voice/parade/weHaveFriends/n=97.mp3",
+    "hash": "7c0e590d44",
+    "duration": 2.58,
+    "words": "voice/parade/weHaveFriends/n=97.words.json"
+  },
+  "parade/weHaveFriends/n=98": {
+    "file": "voice/parade/weHaveFriends/n=98.mp3",
+    "hash": "c94ac02480",
+    "duration": 1.89,
+    "words": "voice/parade/weHaveFriends/n=98.words.json"
+  },
+  "parade/weHaveFriends/n=99": {
+    "file": "voice/parade/weHaveFriends/n=99.mp3",
+    "hash": "3d56d436ca",
+    "duration": 2.31,
+    "words": "voice/parade/weHaveFriends/n=99.words.json"
+  },
   "parade/weHaveMore": {
     "file": "voice/parade/weHaveMore.mp3",
     "hash": "37a5642685",
@@ -42824,7 +44702,7 @@
   "parade/winBy/n=70": {
     "file": "voice/parade/winBy/n=70.mp3",
     "hash": "94043f2898",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/parade/winBy/n=70.words.json"
   },
   "parade/winBy/n=71": {
@@ -42860,7 +44738,7 @@
   "parade/winBy/n=76": {
     "file": "voice/parade/winBy/n=76.mp3",
     "hash": "6e7c428079",
-    "duration": 2.0,
+    "duration": 2,
     "words": "voice/parade/winBy/n=76.words.json"
   },
   "parade/winBy/n=77": {
@@ -43139,6 +45017,12 @@
     "duration": 0.49,
     "words": "voice/slots/number/9.words.json"
   },
+  "slots/word/ant": {
+    "file": "voice/slots/word/ant.mp3",
+    "hash": "83d2366a3b",
+    "duration": 0.43,
+    "words": "voice/slots/word/ant.words.json"
+  },
   "slots/word/apple": {
     "file": "voice/slots/word/apple.mp3",
     "hash": "b166225e5c",
@@ -43168,6 +45052,18 @@
     "hash": "9c83153c36",
     "duration": 0.43,
     "words": "voice/slots/word/bear.words.json"
+  },
+  "slots/word/bed": {
+    "file": "voice/slots/word/bed.mp3",
+    "hash": "c1dd941a16",
+    "duration": 0.4,
+    "words": "voice/slots/word/bed.words.json"
+  },
+  "slots/word/bee": {
+    "file": "voice/slots/word/bee.mp3",
+    "hash": "6cf53332c9",
+    "duration": 0.34,
+    "words": "voice/slots/word/bee.words.json"
   },
   "slots/word/bell": {
     "file": "voice/slots/word/bell.mp3",
@@ -43342,6 +45238,12 @@
     "hash": "aa13192971",
     "duration": 0.43,
     "words": "voice/slots/word/honey.words.json"
+  },
+  "slots/word/horn": {
+    "file": "voice/slots/word/horn.mp3",
+    "hash": "4626aa80fd",
+    "duration": 0.51,
+    "words": "voice/slots/word/horn.words.json"
   },
   "slots/word/horse": {
     "file": "voice/slots/word/horse.mp3",
