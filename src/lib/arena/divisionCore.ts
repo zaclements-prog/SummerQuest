@@ -285,21 +285,35 @@ export const ARENA_LIMITS = { divisorMax: 9, quotientMax: 10 } as const
 /** Camels the pen can show; a quotient above this can't be modelled truthfully. */
 export const PEN_MARKS = 12
 
+/**
+ * The smallest divisor and quotient for the grade: 2, but 3 once the tier
+ * reaches ÷12 (4th grade). The pen caps the top at 3rd grade's ÷9 and 10
+ * camels, so 4th grade's step up is leaving the ÷2 and "2 each" facts behind.
+ */
+export function arenaFloor(tierDivMax: number): number {
+  return tierDivMax >= 12 ? 3 : 2
+}
+
 /** Grade's division ceiling → arena-bounded provider config (never harder than the grade). */
 export function arenaFactConfig(tierDivMax: number) {
   const cap = (arenaMax: number, floor: number) => Math.min(arenaMax, Math.max(floor, tierDivMax))
+  const floor = arenaFloor(tierDivMax)
   return {
-    divisorMin: 2,
+    divisorMin: floor,
     divisorMax: cap(ARENA_LIMITS.divisorMax, 2),
-    quotientMin: 2,
+    quotientMin: floor,
     quotientMax: cap(ARENA_LIMITS.quotientMax, 2),
   }
 }
 
-/** Warm-up facts: the friendly corner of the grade's range (÷2–5, quotients 2–5). */
+/**
+ * Warm-up facts: the friendly corner of the grade's range (÷2–5, quotients up
+ * to 5). 2nd grade (÷5 tier: its whole range is that corner) warms up on ÷2
+ * and ÷3 only, so its first golems aren't already the hardest facts it meets.
+ */
 export function warmFactConfig(tierDivMax: number) {
   const c = arenaFactConfig(tierDivMax)
-  return { ...c, divisorMax: Math.min(5, c.divisorMax), quotientMax: Math.min(5, c.quotientMax) }
+  return { ...c, divisorMax: Math.min(tierDivMax <= 5 ? 3 : 5, c.divisorMax), quotientMax: Math.min(5, c.quotientMax) }
 }
 
 /** Giant multiplier ceiling for the grade: ×2 for the youngest, up to ×3 after. */

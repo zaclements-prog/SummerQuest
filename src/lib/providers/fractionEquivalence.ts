@@ -39,6 +39,11 @@ interface Config {
   maxDenominator: number
   /** Shapes this stage asks (default: all four). */
   shapes?: readonly FracEqMode[]
+  /**
+   * The only denominators either fraction may have (default: any up to
+   * maxDenominator). The forge passes the grade's own list (3.NF: 2, 3, 4, 6, 8).
+   */
+  denominators?: readonly number[]
 }
 
 const BASE_DENOM_MIN = 2
@@ -49,6 +54,15 @@ const baseDenomMax = (cfg: Config) => Math.max(BASE_DENOM_MIN, Math.min(BASE_DEN
 
 /** Largest multiplier for a base denominator, so we land at most maxDenominator. */
 const maxMultiplier = (baseDenom: number, cfg: Config) => Math.max(2, Math.floor(cfg.maxDenominator / baseDenom))
+
+/** The denominator of the side that isn't the base. */
+function otherDenom(f: Fact): number {
+  if (f.mode === 'numUp' || f.mode === 'numDown') return f.known
+  return f.mode === 'denUp' ? f.baseDenom * f.mult : f.baseDenom / f.div
+}
+
+/** Both of the fact's denominators are on the config's list (when it has one). */
+const allowedDenoms = (f: Fact, cfg: Config) => !cfg.denominators || (cfg.denominators.includes(f.baseDenom) && cfg.denominators.includes(otherDenom(f)))
 
 /** Every fact this config can serve — a small finite shelf enumerated once. */
 function allFacts(cfg: Config): Fact[] {
@@ -89,6 +103,11 @@ function allFacts(cfg: Config): Fact[] {
  * parses to exactly one fact and ids are unique.
  */
 export function parseFracEqFactId(id: string, cfg: Config): Fact | null {
+  const f = parseAnyFracEqFactId(id, cfg)
+  return f && allowedDenoms(f, cfg) ? f : null
+}
+
+function parseAnyFracEqFactId(id: string, cfg: Config): Fact | null {
   const ok = (mode: FracEqMode) => !cfg.shapes || cfg.shapes.includes(mode)
   const withinBase = (baseNum: number, baseDenom: number) =>
     inRange(baseDenom, BASE_DENOM_MIN, Math.min(BASE_DENOM_MAX, cfg.maxDenominator)) && inRange(baseNum, 1, baseDenom - 1)
@@ -153,7 +172,7 @@ function optionSet(answer: number, candidates: number[], cfg: Config): number[] 
 export function makeFractionEquivalenceProvider(cfg: Config): ProblemProvider {
   let serial = 0
   const shapes = cfg.shapes && cfg.shapes.length > 0 ? new Set(cfg.shapes) : null
-  const facts = allFacts(cfg).filter((f) => !shapes || shapes.has(f.mode))
+  const facts = allFacts(cfg).filter((f) => (!shapes || shapes.has(f.mode)) && allowedDenoms(f, cfg))
   const sampler = createFactSampler<Fact>({
     key: fracEqFactId,
     parse: (id) => parseFracEqFactId(id, cfg),

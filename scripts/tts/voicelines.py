@@ -69,6 +69,13 @@ def ends_sentence(text: str) -> bool:
     return bool(re.search(r"[.!?][\"”’')]*$", text.strip()))
 
 
+def is_articulation(text: str) -> bool:
+    """Letter-sound articulations ("Kuh… aa… tuh.", "sss") — the script spells
+    the SOUND, not a word. ASR transcription cannot gate these; they ship on
+    the duration window + human sampling (handoff §7.6 note 4)."""
+    return "…" in text or "..." in text
+
+
 def prompt_text(entry: dict, slot_frame: str = "{w}", piece_frame: str = "{w}") -> str:
     """What the TTS model is given for a clip. Usually the clip text verbatim;
     for stitched clips the owner may add punctuation (never words) to steer the

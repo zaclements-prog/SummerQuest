@@ -7,7 +7,7 @@ import { Group, Vector3 } from 'three'
 import type { RefObject } from 'react'
 import type { GameProps } from '../screens/GameRunner'
 import type { Problem } from '../lib/problem'
-import { useProgress } from '../store/progress'
+import { currentFactStats, useProgress } from '../store/progress'
 import { sfx } from '../lib/sound'
 import { useWanderWalk } from '../world/useWanderWalk'
 import { creatureBuilder } from '../home/models/registry'
@@ -30,6 +30,7 @@ import {
   type Tile,
 } from '../lib/grove/groveCore'
 import { groveOrderWithAlts, grovePoolFor, groveProblem } from '../lib/providers/multiplicationGrove'
+import { createGroveFactDraw } from '../lib/grove/groveFacts'
 import { CrateStack, FieldLabels, Keeper, PlantField, RootRing, SeedBag, type FieldMode, type KeeperMood } from './TimesGrove.parts'
 import { GroveSet } from './TimesGrove.set'
 import { CAM_FOCUS_LOCAL, CAM_FOV, CAM_OFFSET, GROVE_FIT_ASPECT, CRATES, DWELL, FIELD_HALF, FRUITS, ISO_YAW, SEED_BAG, SPAWN_LOCAL, toWorld, wpos } from './TimesGrove.layout'
@@ -149,6 +150,8 @@ export default function TimesGrove({ params, onComplete, meta, paused: hostPause
   const maxFactor = groveMaxFactor(grade)
   // grade tiers: the order bank is filtered to the grade's factors
   const tasks = useMemo(() => planGroveRun(totalRounds, grovePoolFor(maxFactor)), [totalRounds, maxFactor])
+  // …and each round goes through the × fact sampler: a missed fact comes back, weak facts more often
+  const draws = useMemo(() => createGroveFactDraw({ tasks, shapes: grovePoolFor(maxFactor), stats: currentFactStats }), [tasks, maxFactor])
 
   const spawnWorld = useMemo(() => toWorld(...SPAWN_LOCAL), [])
   const posRef = useRef(new Vector3(spawnWorld[0], 0, spawnWorld[1]))
@@ -206,8 +209,8 @@ export default function TimesGrove({ params, onComplete, meta, paused: hostPause
 
   const startTask = useCallback(
     (index: number) => {
-      const task = tasks[index]
-      problemRef.current = groveProblem(groveOrderWithAlts(task.rows, task.cols, index))
+      const { task, factId } = draws.round(index)
+      problemRef.current = { ...groveProblem(groveOrderWithAlts(task.rows, task.cols, index)), factId }
       triedRef.current = false
       lastCommit.current = ''
       clockRef.current = 0
@@ -227,7 +230,7 @@ export default function TimesGrove({ params, onComplete, meta, paused: hostPause
       else if (task.kind === 'total') banner('Any equal rows!', '#8ab8ff', 1400)
       else if (index === tasks.findIndex((t) => !t.labels)) banner('No numbers now!', '#ffcf4d', 1400)
     },
-    [tasks, patchHud, react, banner],
+    [tasks, draws, patchHud, react, banner],
   )
 
   // the first order (deferred: no setState in the effect body)

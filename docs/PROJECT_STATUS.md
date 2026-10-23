@@ -93,13 +93,10 @@ Stage ids and lesson ids for every zone and band are fixed in the expansion plan
 
 1. **Voice rendering (local Mac):**
    - 97 K/1st-grade lesson steps;
-   - 7,633 voice-line clips (303 of them added by the playtest fixes);
+   - 7,672 voice-line clips (303 of them added by the playtest fixes, 39 by the new 1st-grade Sky Summit sky questions);
    - 56 5th-grade lesson steps (11 lessons).
 
    See the narration handoff, section 0. Until clips exist, the app uses the device's speech.
 2. **Listening pass** after rendering: phonics sounds, stitched number sentences, and "minus" vs "−". This is also the plan's phonics decision (owner decision 4): keep the Higgs sounds or record the 44 sounds.
 3. **Fire tablet check:** Parent area → Voice check, on a real device, to confirm the device-speech fallback works in the Amazon WebView.
-4. **Thin spots:**
-   - 1st-grade Sky Summit has only 16 questions.
-   - The Critter Parade results card shows a few English labels (e.g. "Smart picks") to 1st graders.
-5. **Store update** (plan phase 4): turn on `VITE_K1`/`VITE_G5` for release, a new title and screenshots, a rating re-check for 5-year-olds, and a privacy-policy line about the device voice.
+4. **Store update** (plan phase 4): turn on `VITE_K1`/`VITE_G5` for release, a new title and screenshots, a rating re-check for 5-year-olds, and a privacy-policy line about the device voice.

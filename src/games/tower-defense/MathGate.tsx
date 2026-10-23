@@ -6,7 +6,9 @@ import { useProgress } from '../../store/progress'
 import { skillOf } from '../../tutoring/skills'
 import { Card, Button } from '../../components/ui'
 import { QuestionPrompt, AnswerGrid, QuizSplit } from '../_shared/QuizUI'
-import { WIDE_SHORT, useMediaQuery } from '../../components/useViewport'
+import { SHORT_SCREEN, WIDE_SHORT, useMediaQuery } from '../../components/useViewport'
+import VisualRenderer from '../../components/VisualRenderer'
+import { visualSize } from '../../components/visualSize'
 
 /** Mount it when a purchase needs confirming (unmount to close) — it starts fresh each time. */
 interface Props {
@@ -28,6 +30,11 @@ export default function MathGate({ title, provider, onAnswer, onCorrect, onCance
   const reduced = useReducedMotion()
   // Question beside the answers on wide, short screens: give the card room for both.
   const wide = useMediaQuery(WIDE_SHORT)
+  const short = useMediaQuery(SHORT_SCREEN)
+  // 2nd grade multiplies with arrays (2.OA.4), not memorized facts: its gate
+  // shows the provider's array under "3 × 4 = ?". Older grades answer the fact.
+  const grade = useProgress((s) => s.player?.grade)
+  const showArray = grade !== undefined && grade <= 2
 
   // Escape cancels, like the Cancel button and a tap outside the card. (The host
   // re-renders every frame, so read the latest callback through a ref.)
@@ -109,7 +116,19 @@ export default function MathGate({ title, provider, onAnswer, onCorrect, onCance
           <QuizSplit
             gap="gap-4"
             center
-            question={<QuestionPrompt>{problem.prompt}</QuestionPrompt>}
+            question={
+              showArray && problem.visual?.kind === 'array' ? (
+                // beside the fact on a phone held sideways, so five rows still fit above the fold
+                <div className="w-full flex flex-col short:flex-row items-center gap-3">
+                  <div className="w-full short:flex-1 short:min-w-0">
+                    <QuestionPrompt>{problem.prompt}</QuestionPrompt>
+                  </div>
+                  <VisualRenderer visual={{ ...problem.visual, label: '' }} size={visualSize(problem.visual, short, wide)} />
+                </div>
+              ) : (
+                <QuestionPrompt>{problem.prompt}</QuestionPrompt>
+              )
+            }
             answers={
               <AnswerGrid
                 options={problem.options}

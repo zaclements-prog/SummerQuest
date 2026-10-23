@@ -154,8 +154,12 @@ export interface RetryItem<F> {
 export interface RetryQueue<F> {
   /** Compare watched facts with fresh stats; queue a retry for each new miss. */
   update(stats: FactStats): void
-  /** Remove and return a retry due at this draw — never `lastId`, so never back-to-back. */
-  take(lastId?: string): RetryItem<F> | undefined
+  /**
+   * Remove and return a retry due at this draw — never `lastId` (default: the
+   * fact this queue last saw served), so never back-to-back. `ok` skips (and keeps queued) retries the caller can't serve;
+   * `early` takes the oldest queued retry even before its turn (a run's last chance).
+   */
+  take(lastId?: string, opts?: { ok?: (factId: string) => boolean; early?: boolean }): RetryItem<F> | undefined
   /** Register the fact served at this draw (snapshots its counts to spot a later miss). */
   served(factId: string, fact: F, stats: FactStats): void
   queuedIds(): string[]
@@ -172,6 +176,7 @@ export function createRetryQueue<F>(rng: Rng = Math.random): RetryQueue<F> {
   let watching: { factId: string; fact: F; at: number; misses: number; attempts: number }[] = []
   let queue: { factId: string; fact: F; due: number }[] = []
   let retries = new Map<string, number>()
+  let lastServed: string | undefined
 
   return {
     update(stats) {
@@ -191,11 +196,12 @@ export function createRetryQueue<F>(rng: Rng = Math.random): RetryQueue<F> {
       }
       watching = still
     },
-    take(lastId) {
+    take(lastId = lastServed, opts) {
       let best = -1
       for (let i = 0; i < queue.length; i++) {
         const q = queue[i]
-        if (q.due <= draw && q.factId !== lastId && (best < 0 || q.due < queue[best].due)) best = i
+        const due = q.due <= draw || !!opts?.early
+        if (due && q.factId !== lastId && (!opts?.ok || opts.ok(q.factId)) && (best < 0 || q.due < queue[best].due)) best = i
       }
       if (best < 0) return undefined
       const [item] = queue.splice(best, 1)
@@ -204,6 +210,7 @@ export function createRetryQueue<F>(rng: Rng = Math.random): RetryQueue<F> {
     served(factId, fact, stats) {
       // Served again anyway (e.g. a uniform draw) — that counts as its retry.
       queue = queue.filter((q) => q.factId !== factId)
+      lastServed = factId
       const s = stats[factId]
       watching.push({ factId, fact, at: draw, misses: num(s?.misses), attempts: num(s?.attempts) })
       draw++
@@ -214,13 +221,15 @@ export function createRetryQueue<F>(rng: Rng = Math.random): RetryQueue<F> {
       watching = []
       queue = []
       retries = new Map()
+      lastServed = undefined
     },
   }
 }
 
 // ── Fact sampler: retry → weak-fact boost → uniform ─────────────────────────
 
-export type FactSource = 'retry' | 'boost' | 'uniform'
+/** `fixed`: the caller chose the fact (a game's warm-up or finale) and the sampler only watches it. */
+export type FactSource = 'retry' | 'boost' | 'uniform' | 'fixed'
 
 export interface FactDraw<F> {
   fact: F
@@ -237,20 +246,30 @@ export interface FactSamplerOptions<F> {
   uniform: () => F
   /** The child's current per-fact record (providers pass the store's `factStats`). */
   stats: () => FactStats | undefined
+  /**
+   * A retry queue shared with other samplers (a game drawing warm-ups and main
+   * rounds from two ranges), so a miss in one comes back in the other. Each
+   * sampler only takes the retries its own `parse` accepts.
+   */
+  queue?: RetryQueue<F>
   rng?: Rng
   now?: () => number
 }
 
 export interface FactSampler<F> {
-  next(): FactDraw<F>
+  /** `early`: a due-later retry may come now (the run has no later adaptive draw). */
+  next(opts?: { early?: boolean }): FactDraw<F>
+  /** Serve a fact the caller picked; a miss on it still queues a retry. */
+  pin(fact: F): FactDraw<F>
   reset(): void
 }
 
 export function createFactSampler<F>(opts: FactSamplerOptions<F>): FactSampler<F> {
   const rng = opts.rng ?? Math.random
   const now = opts.now ?? Date.now
-  const queue = createRetryQueue<F>(rng)
+  const queue = opts.queue ?? createRetryQueue<F>(rng)
   let recent: string[] = []
+  const canServe = (id: string) => opts.parse(id) !== null
 
   function serve(fact: F, source: FactSource, stats: FactStats): FactDraw<F> {
     const factId = opts.key(fact)
@@ -260,12 +279,13 @@ export function createFactSampler<F>(opts: FactSamplerOptions<F>): FactSampler<F
   }
 
   return {
-    next() {
+    next(drawOpts) {
       const stats = opts.stats() ?? {}
       const last = recent[recent.length - 1]
 
       queue.update(stats)
-      const retry = queue.take(last)
+      // a shared queue knows what was served last across its samplers; this one only its own
+      const retry = opts.queue ? queue.take(undefined, { ok: canServe, early: drawOpts?.early }) : queue.take(last, { early: drawOpts?.early })
       if (retry) return serve(retry.fact, 'retry', stats)
 
       const queued = new Set(queue.queuedIds())
@@ -289,6 +309,11 @@ export function createFactSampler<F>(opts: FactSamplerOptions<F>): FactSampler<F
       let fact = opts.uniform()
       for (let i = 0; i < MAX_REROLLS && clash(fact); i++) fact = opts.uniform()
       return serve(fact, 'uniform', stats)
+    },
+    pin(fact) {
+      const stats = opts.stats() ?? {}
+      queue.update(stats)
+      return serve(fact, 'fixed', stats)
     },
     reset() {
       queue.reset()

@@ -4,7 +4,8 @@ import { UPPER_LETTERS } from './k-letters'
 
 /** Numbers as the narrator says them in a fixed line ("Let's trace an eight!"). */
 const DIGIT_WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'] as const
-const article = (word: string) => (/^[aeiou]/.test(word) ? 'an' : 'a')
+// by sound, not spelling: "a one" (it starts with a "w" sound), "an eight"
+const article = (word: string) => (/^[aeiou]/.test(word) && word !== 'one' ? 'an' : 'a')
 
 /**
  * Tracing (Writing Workshop, K; and Counting Mesa's last question): what the

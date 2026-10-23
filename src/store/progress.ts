@@ -4,13 +4,14 @@ import { SESSION_SECONDS, SESSIONS_PER_DAY, SESSION_BONUS_COINS } from '../lib/d
 import type { Slot } from '../home/models/anchors'
 import { accessoryById } from '../lib/home/accessories'
 import { addDays, localDayKey } from '../lib/dates'
-import { migrateV0toV1, migrateV2toV3, type PersistedProgressV0 } from './migrations'
+import { migrateV0toV1, migrateV2toV3, migrateV3toV4, type PersistedProgressV0 } from './migrations'
 import { recordFactAnswer, type FactStats } from '../lib/adaptive'
 import type { Problem } from '../lib/problem'
 import { isGradeLevel, type GradeLevel } from '../lib/gradeTiers'
 import { adultPets, growthRank, hatchedPets, isPetGrowth, petStages, zoneStarTotals, type PetGrowth } from '../lib/pets/growth'
 import { getZone, zoneStages } from '../curriculum'
 import { petById } from '../lib/pets/catalog'
+import type { QuestReason } from '../lib/quest'
 
 export interface AvatarChoice {
   emoji: string
@@ -84,6 +85,26 @@ const GRAPHICS_QUALITIES: readonly GraphicsQuality[] = ['auto', 'high', 'low']
 const isGraphicsQuality = (v: unknown): v is GraphicsQuality =>
   typeof v === 'string' && (GRAPHICS_QUALITIES as readonly string[]).includes(v)
 
+/**
+ * The World's suggested quest for one day (lib/quest picks it): the first
+ * quest after setup, then "today's quest" on each new day. Earning a star on
+ * its stage completes it (+QUEST_BONUS coins); the World celebrates it once.
+ */
+export interface DailyQuest {
+  day: string
+  zoneId: string
+  stageId: string
+  reason: QuestReason
+  doneAt?: number
+  celebrated?: boolean
+  /** The big first-quest card was put away ("Look around first"); the small one stays. */
+  dismissed?: boolean
+}
+
+export const QUEST_BONUS = 10
+
+const QUEST_REASONS: readonly QuestReason[] = ['first', 'missedFacts', 'almostStar', 'nextStage', 'moreStars']
+
 const MAX_SESSIONS = 300
 const MAX_ATTEMPTS = 2000
 
@@ -127,6 +148,8 @@ interface ProgressState {
   buddyPet: string | null
   /** K–1 guided tours already given (e.g. 'world'): each plays once, then 🔊 brings it back. */
   toursSeen: string[]
+  /** The World's suggested quest (null: none picked yet). */
+  quest: DailyQuest | null
 
   // actions
   setAvatar: (avatar: AvatarChoice) => void
@@ -170,6 +193,10 @@ interface ProgressState {
   setBuddyPet: (creatureId: string | null) => void
   /** A K–1 guided tour has been given (it doesn't play by itself again). */
   markTourSeen: (id: string) => void
+  /** Today's pick (replaces any earlier one). */
+  setQuest: (q: Pick<DailyQuest, 'day' | 'zoneId' | 'stageId' | 'reason'>) => void
+  dismissQuestCard: () => void
+  markQuestCelebrated: () => void
 }
 
 type PetSlice = Pick<ProgressState, 'zones' | 'lessonsDone' | 'ownedCreatures' | 'buddyPet'> & {
@@ -231,6 +258,7 @@ export const useProgress = create<ProgressState>()(
       petsSeen: {},
       buddyPet: null,
       toursSeen: [],
+      quest: null,
 
       setAvatar: (avatar) => set({ player: avatar }),
 
@@ -275,6 +303,7 @@ export const useProgress = create<ProgressState>()(
           petsSeen: {},
           buddyPet: null,
           toursSeen: [],
+          quest: null,
           // (soundEnabled and graphicsQuality are device settings: kept)
         }),
 
@@ -300,7 +329,17 @@ export const useProgress = create<ProgressState>()(
           },
         }
         const before = get()
-        set({ zones, ...petSyncPatch(before, { ...before, zones }) })
+        // Earning a star on today's quest stage completes it.
+        const q = before.quest
+        const questPatch: Partial<ProgressState> =
+          q && !q.doneAt && stars > 0 && q.zoneId === zoneId && q.stageId === stageId
+            ? {
+                quest: { ...q, doneAt: Date.now() },
+                coins: before.coins + QUEST_BONUS,
+                totalCoinsEarned: before.totalCoinsEarned + QUEST_BONUS,
+              }
+            : {}
+        set({ zones, ...petSyncPatch(before, { ...before, zones }), ...questPatch })
       },
 
       addCoins: (n) => {
@@ -456,6 +495,15 @@ export const useProgress = create<ProgressState>()(
         if (!id || get().toursSeen.includes(id)) return
         set({ toursSeen: [...get().toursSeen, id] })
       },
+      setQuest: ({ day, zoneId, stageId, reason }) => set({ quest: { day, zoneId, stageId, reason } }),
+      dismissQuestCard: () => {
+        const q = get().quest
+        if (q && !q.dismissed) set({ quest: { ...q, dismissed: true } })
+      },
+      markQuestCelebrated: () => {
+        const q = get().quest
+        if (q?.doneAt && !q.celebrated) set({ quest: { ...q, celebrated: true } })
+      },
 
       recordSession: (rec) => {
         const at = rec.at ?? Date.now()
@@ -507,11 +555,13 @@ export const useProgress = create<ProgressState>()(
       //     (matches the pre-grade "3rd → 4th" content). Enforced in `merge` below.
       // v3: pets — lessonsDone, petsSeen (starting at every pet's current stage, so
       //     nothing is celebrated twice), buddyPet; grown-up pets join ownedCreatures.
-      version: 3,
+      // v4: the World's first / today's quest (`quest`, none yet: the World picks one).
+      version: 4,
       migrate: (persisted, version) => {
         let p = (persisted ?? {}) as PersistedProgressV0
         if (version < 1) p = migrateV0toV1(p)
         if (version < 3) p = migrateV2toV3(p)
+        if (version < 4) p = migrateV3toV4(p)
         return p as unknown as ProgressState
       },
       // Shallow-merge like the default, but deep-merge equippedAccessories so a save
@@ -548,6 +598,8 @@ export const useProgress = create<ProgressState>()(
             : c.ownedCreatures,
           // K–1 tours: saves from before them (or a bad value) have seen none.
           toursSeen: Array.isArray(p.toursSeen) ? p.toursSeen.filter((id): id is string => typeof id === 'string') : c.toursSeen,
+          // Quest: a malformed one is dropped (the World picks a new one).
+          quest: cleanQuest(p.quest),
         }
       },
     },
@@ -561,6 +613,21 @@ function cleanLessonsDone(v: unknown): Record<string, number> {
   const out: Record<string, number> = {}
   if (isRecord(v)) for (const [k, at] of Object.entries(v)) if (typeof at === 'number' && Number.isFinite(at)) out[k] = at
   return out
+}
+function cleanQuest(v: unknown): DailyQuest | null {
+  if (!isRecord(v)) return null
+  const { day, zoneId, stageId, reason, doneAt, celebrated, dismissed } = v
+  if (typeof day !== 'string' || typeof zoneId !== 'string' || typeof stageId !== 'string') return null
+  if (!QUEST_REASONS.includes(reason as QuestReason)) return null
+  return {
+    day,
+    zoneId,
+    stageId,
+    reason: reason as QuestReason,
+    ...(typeof doneAt === 'number' && Number.isFinite(doneAt) ? { doneAt } : {}),
+    ...(celebrated === true ? { celebrated } : {}),
+    ...(dismissed === true ? { dismissed } : {}),
+  }
 }
 function cleanPetsSeen(v: unknown): Record<string, PetGrowth> {
   const out: Record<string, PetGrowth> = {}

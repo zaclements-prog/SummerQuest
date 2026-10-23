@@ -7,7 +7,8 @@ import { seededRng } from '../../random'
 import type { Problem } from '../../problem'
 import {
   FORGE_LIMITS,
-  forgeFactConfig,
+  forgeDenominators,
+  forgeFactConfigForGrade,
   forgeModeOf,
   gaugeChoices,
   isCommonDenominator,
@@ -48,11 +49,30 @@ describe('the forge mode a stage plays', () => {
     expect(falls.stages[0]).toMatchObject({ id: 'frac-concept', gameId: 'fractionForge', params: { rounds: 5 }, providerConfig: { kind: 'fractionEquivalence', maxDenominator: 12 } })
   })
 
+  // Retuned 2026-10-23 (docs/research/2026-10-23-game-difficulty-audit.md):
+  // each grade's orders keep to its standards' denominators, so 3rd grade's and
+  // 4th grade's goldens moved; 2nd grade's (already on the list) did not.
+  it('each grade orders only its own denominators: 3.NF up to 3rd grade, 4.NF at 4th (no ninths)', () => {
+    for (const g of [2, 3, 4] as const) {
+      const p = makeFractionEquivalenceProvider(forgeFactConfigForGrade(g, GRADE_TIERS[g].fracEquivMaxDenom))
+      const seen = new Set<number>()
+      for (let i = 0; i < 400; i++) {
+        const r = parseFracEqRound(p.next() as Problem)
+        for (const d of [r.baseDenom, r.targetDenom]) {
+          expect(forgeDenominators(g), `grade ${g}: ${r.factId}`).toContain(d)
+          seen.add(d)
+        }
+      }
+      if (g <= 3) expect([...seen].sort((a, b) => a - b)).toEqual([2, 3, 4, 6, 8])
+      else expect([...seen].sort((a, b) => a - b)).toEqual([2, 3, 4, 5, 6, 8, 10, 12])
+    }
+  })
+
   it('the classic forge draws the same facts as before, grade by grade (golden)', () => {
     const got: Record<number, string> = {}
     for (const g of [2, 3, 4] as const) {
       vi.spyOn(Math, 'random').mockImplementation(seededRng(`forge-g${g}`))
-      const p = makeFractionEquivalenceProvider(forgeFactConfig(GRADE_TIERS[g].fracEquivMaxDenom))
+      const p = makeFractionEquivalenceProvider(forgeFactConfigForGrade(g, GRADE_TIERS[g].fracEquivMaxDenom))
       const rounds = Array.from({ length: 40 }, () => parseFracEqRound(p.next() as Problem))
       // a classic round has no grade-5 parts or gauge
       for (const r of rounds) expect(Object.keys(r).sort()).toEqual(['baseDenom', 'baseNum', 'factId', 'targetDenom', 'targetNum'])
@@ -62,8 +82,8 @@ describe('the forge mode a stage plays', () => {
     expect(got).toMatchInlineSnapshot(`
       {
         "2": "acca6186",
-        "3": "1b4689b",
-        "4": "a20f145e",
+        "3": "3cf3b5f1",
+        "4": "e6a4f9cd",
       }
     `)
   })

@@ -228,11 +228,20 @@ def render_verified(engine, aligner, text: str, tmp_dir: Path,
         out = tmp_dir / "verified.mp3"
         if out.exists():
             out.unlink()
-        (post or postprocess)(raw, out)
-        dur = mp3_duration(out)
+        try:
+            (post or postprocess)(raw, out)
+            dur = mp3_duration(out)
+        except (subprocess.CalledProcessError, ValueError, RuntimeError):
+            # an all-silence take trims to nothing and ffprobe can't read it: a bad draw
+            last = "empty/undecodable take"
+            continue
         if not (lo <= dur <= hi):
             last = f"duration {dur:.1f}s outside [{lo:.1f},{hi:.1f}]s for {words}w"
             continue
+        if vl.is_articulation(text):
+            # letter-sound spellings ("Kuh… aa… tuh."): ASR cannot gate these;
+            # duration + human sampling is the standard (handoff §7.6 note 4)
+            return out, dur
         recovery, span_wpm = aligner.verify(out, text)
         if recovery < 0.94:
             last = f"word recovery {recovery:.2f} < 0.94 (truncated/mangled?)"
@@ -262,8 +271,19 @@ def render_verified_short(engine, aligner, text: str, tmp_dir: Path, say: str,
         out = tmp_dir / "verified.mp3"
         if out.exists():
             out.unlink()
-        postprocess_voice(raw, out, tight)
-        dur = mp3_duration(out)
+        try:
+            postprocess_voice(raw, out, tight)
+            dur = mp3_duration(out)
+        except (subprocess.CalledProcessError, ValueError, RuntimeError):
+            last = "empty/undecodable take"
+            continue
+        if vl.is_articulation(text):
+            # letter-sound articulations ship on the duration window alone
+            why = vl.short_duration_window(vl.word_count(text))
+            if why[0] <= dur <= why[1]:
+                return out, dur
+            last = f"duration {dur:.2f}s outside [{why[0]:.2f},{why[1]:.2f}]s"
+            continue
         why = vl.short_gate(text, aligner.transcribe(out), dur)
         if why:
             last = why
@@ -296,6 +316,9 @@ def render_stitched(engine, aligner, text: str, tmp_dir: Path,
                 if one.exists():
                     one.unlink()
                 postprocess(raw, one)
+                if vl.is_articulation(sent):
+                    kept = one
+                    break
                 recovery, span_wpm = aligner.verify(one, sent)
             except Exception:
                 continue  # transient decode/verify failure: next draw
@@ -319,9 +342,21 @@ def render_stitched(engine, aligner, text: str, tmp_dir: Path,
     # recovery below 0.90 at this clip size). Per-unit gating already enforced
     # 0.94 + pace on every part; re-transcribing seams adds Whisper noise, so
     # the whole-clip bar is deliberately looser than the per-part bar.
-    recovery, span_wpm = aligner.verify(out, text)
+    # Articulation units (letter sounds) are excluded from the compare text —
+    # ASR can't transcribe them, and their garbage would sink recovery.
+    verify_text = " ".join(s for s in sentences if not vl.is_articulation(s))
+    if not verify_text.strip():
+        return out, dur
+    recovery, span_wpm = aligner.verify(out, verify_text)
     if recovery < 0.90:
         raise RuntimeError(f"stitched clip recovery {recovery:.2f} < 0.90")
+    # the word span covers our inserted 0.28 s seams; they are silence, not
+    # speech — pace on the speech span with the seams subtracted
+    seam = 0.28 * max(len(sentences) - 1, 0)
+    if span_wpm > 0:
+        raw_span = len(verify_text.split()) / (span_wpm / 60.0)
+        adj_span = max(raw_span - seam, 1.0)
+        span_wpm = len(verify_text.split()) / (adj_span / 60.0)
     if span_wpm > 210:
         raise RuntimeError(f"stitched clip {span_wpm:.0f} wpm > 210")
     return out, dur
@@ -573,7 +608,7 @@ def voice_main(args):
                         raise
                     print(f"  retry-stitched {key}: {e}", flush=True)
                     verified, dur = render_stitched(engine, aligner, text, tmp_dir)
-        except RuntimeError as e:
+        except Exception as e:  # one bad clip never ends the pack run
             print(f"FAILED {key}: {e}", flush=True)
             failed += 1
             continue
