@@ -274,6 +274,27 @@ describe('the sort activity (Sorting Delta)', () => {
     expectTextBudget(container, 0)
   })
 
+  it('a later question with the same rule names just its boxes; the idle re-prompt says only what to do now', async () => {
+    mount(sorting({ ...farm, brief: true }), 3)
+    await advance(100)
+    expect(getGuideSnapshot().run!.lines.map((l) => l.text)).toEqual(['Animals!', 'Food!', 'Put each one in its box!'])
+    await advance(5000)
+    said.length = 0
+    // no touch for a while: "Put each one in its box!", not the whole intro again
+    await advance(16000)
+    expect(said).toEqual(['Put each one in its box!'])
+  })
+
+  it("each box's picture is a sign tied on below a dashed line, not one of the things in the box", async () => {
+    mount(sorting(farm), 3)
+    await advance(100)
+    const tag = box(0)!.querySelector('[data-sort-tag]')!
+    expect(tag.textContent).toContain('🐶')
+    expect(tag.classList.contains('sort-tag')).toBe(true)
+    expect(tag.closest('.sort-item')).toBeNull()
+    expect(box(0)!.querySelector('.sort-tag-line')).not.toBeNull()
+  })
+
   it('a wrong box bounces the thing back with a word about it, the hand carries it to its box; then count, then which has more', async () => {
     let result: GameResult | null = null
     mount(sorting(farm), 1, (r) => (result = r))

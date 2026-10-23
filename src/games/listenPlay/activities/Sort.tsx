@@ -93,6 +93,18 @@ function moreSteps(spec: SortSpec, p: Progress): GuideStep[] {
   ]
 }
 
+/**
+ * The idle re-prompt ("did you hear me?"): just what to do now: "Put each one
+ * in its box!", or the count or the "more" question; never the whole intro.
+ */
+function sortRepromptSteps(problem: ListenProblem, spec: SortSpec): GuideStep[] {
+  const p = progress.get(problem) ?? fresh(spec)
+  const step = stepOf(spec, p)
+  if (step === 'count') return countSteps(spec, p)
+  if (step === 'more') return moreSteps(spec, p)
+  return [{ voice: { line: 'k-sort/putEach' }, target: 'sort-tray', hand: 'sweep', pad: 8 }]
+}
+
 function sortAskSteps(problem: ListenProblem, spec: SortSpec): GuideStep[] {
   const p = progress.get(problem) ?? fresh(spec)
   const step = stepOf(spec, p)
@@ -100,8 +112,10 @@ function sortAskSteps(problem: ListenProblem, spec: SortSpec): GuideStep[] {
   if (step === 'more') return moreSteps(spec, p)
   const put: GuideStep = { voice: { line: 'k-sort/putEach' }, target: 'sort-tray', hand: 'sweep', pad: 8 }
   if (p.named) return [put]
+  const rule: GuideStep = { voice: problem.speech ?? RULE_LINE[spec.rule], target: 'sort-boxes', hand: false, pad: 8 }
   return [
-    { voice: problem.speech ?? RULE_LINE[spec.rule], target: 'sort-boxes', hand: false, pad: 8 },
+    // (the rule once a round: the questions after it just name their boxes)
+    ...(spec.brief ? [] : [rule]),
     ...spec.groups.map((g, b): GuideStep => ({ voice: boxName(g), target: sortBox(b), hand: false, pad: 8, pause: 0.2, events: b === spec.groups.length - 1 ? [{ char: 0, run: () => progress.set(problem, { ...(progress.get(problem) ?? fresh(spec)), named: true }) }] : undefined })),
     put,
   ]
@@ -393,7 +407,10 @@ function SortActivity({ problem, spec, active, onAttempt, registerHelp }: Listen
             className="sort-box absolute rounded-b-[1.75rem] rounded-t-[0.9rem] border-[3px] border-line shadow-ledge outline-none focus-visible:ring-4 focus-visible:ring-ocean-600/70"
             style={{ ...box(L.bins[b]), background: color ? color.pale : TINTS[b % TINTS.length], borderTopColor: color?.swatch ?? RIMS[b % RIMS.length], borderTopWidth: 10 }}
           >
-            <span className="absolute left-1/2 -translate-x-1/2 bottom-2 grid place-items-center rounded-2xl border-[3px] border-line bg-paper shadow-ledge-sm" style={{ width: Math.min(L.bins[b].w - 16, L.sticker * 2.1), height: L.sticker }} aria-hidden="true">
+            {/* the box's sign: a tag tied on below a dashed line, not one of the things in it (it is never counted) */}
+            <span className="sort-tag-line absolute left-3 right-3 border-t-[3px] border-dashed border-line/30" style={{ bottom: L.sticker + 14 }} aria-hidden="true" />
+            <span data-sort-tag="" className="sort-tag absolute left-1/2 bottom-2 grid place-items-center rounded-xl border-[3px] border-line shadow-ledge-sm" style={{ width: Math.min(L.bins[b].w - 16, L.sticker * 2.1), height: L.sticker }} aria-hidden="true">
+              <span className="sort-tag-hole absolute rounded-full border-[3px] border-line bg-paper" />
               <BoxSticker group={g} h={L.sticker} />
             </span>
             {right && (
@@ -514,4 +531,5 @@ function BoxSticker({ group, h }: { group: SortGroup; h: number }) {
 export const sortActivity: ListenActivityDef<SortSpec> = {
   Component: SortActivity,
   askSteps: sortAskSteps,
+  repromptSteps: sortRepromptSteps,
 }

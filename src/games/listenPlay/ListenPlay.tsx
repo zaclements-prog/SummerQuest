@@ -317,7 +317,9 @@ export default function ListenPlay({ provider, params, onComplete, meta, paused 
   // leaving: stop talking, and 🔊 has nothing left to repeat
   useEffect(() => () => guide.clear({ forget: true }), [])
 
-  useIdleReprompt({ key: `${idx}:${token}`, enabled: phase === 'ask' && !paused })
+  // an activity with a long intro says just what to do now (Sorting Delta: "Put each one in its box!")
+  const reprompt = problem?.activity && activity?.repromptSteps ? () => void guide.sequence(activity.repromptSteps!(problem, problem.activity!), { gentle: true, repeatable: false }) : undefined
+  useIdleReprompt({ key: `${idx}:${token}`, enabled: phase === 'ask' && !paused, onIdle: reprompt })
 
   function pick(card: number) {
     if (phase !== 'ask' || !problem || paused) return

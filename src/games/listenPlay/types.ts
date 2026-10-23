@@ -129,4 +129,10 @@ export interface ListenActivityDef<S extends ListenActivitySpec = ListenActivity
    * can show where to go on rather than where to finish).
    */
   askSteps?(problem: ListenProblem, spec: S, misses: number): GuideStep[]
+  /**
+   * What the idle re-prompt (no touch for a while) says, gently, instead of
+   * the whole question again: a long intro (the boxes named one by one)
+   * shrinks to what to do now. Default: the question again.
+   */
+  repromptSteps?(problem: ListenProblem, spec: S): GuideStep[]
 }
