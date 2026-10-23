@@ -172,7 +172,8 @@ describe('v2 → v3 migration (pets)', () => {
     expect(st.activeCreature).toBe('frog')
     expect(st.buddyPet).toBe('lion')
     expect(pendingMoments(petStages(st.zones, st.lessonsDone, st.player?.grade), st.petsSeen)).toEqual([])
-    expect(JSON.parse(localStorage.getItem(KEY)!).version).toBe(3)
+    // (saved back at the current version: v4 added the World's quest)
+    expect(JSON.parse(localStorage.getItem(KEY)!).version).toBe(4)
   })
 
   it('a v3 save with broken pet fields loads clean', async () => {

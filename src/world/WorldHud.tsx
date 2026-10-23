@@ -16,6 +16,8 @@ import { ListenIconButton } from '../components/listen/ListenIconButton'
 import { SleepingBadge } from '../components/listen/ListenSleeping'
 import { useListenIntro } from '../components/listen/useListenIntro'
 import { npcGreeting, npcSleeping, npcTitle } from './listenWorld'
+import { QUEST_FIRST_LINE, useTodaysQuest } from './useTodaysQuest'
+import { FirstQuestCard, QuestCelebration, QuestChip } from './QuestCard'
 
 /** The Home room's decorate mode (the House in the World is that room). */
 const DECORATE_PATH = '/home?mode=decorate'
@@ -37,6 +39,9 @@ export default function WorldHud({ posRef }: { posRef: RefObject<Vector3> }) {
   // K–1 (voice-first): icon buttons, a 🔊 that explains, spoken gateways, sleeping places
   const grade = useProgress((s) => s.player?.grade)
   const listen = listenGrade(grade)
+  // The first quest (a new child) or today's quest; the big first-quest card until it's put away.
+  const today = useTodaysQuest()
+  const firstOpen = !!today && today.quest.reason === 'first' && !today.quest.dismissed && !today.quest.doneAt && !panel
 
   /** K–1: what a gateway says as you walk up (and on 🔊 next to it). */
   const greet = useCallback(
@@ -99,15 +104,17 @@ export default function WorldHud({ posRef }: { posRef: RefObject<Vector3> }) {
   }, [listen, npcKey, greet])
 
   // K–1: the first visit tours the HUD (map, pets, home); 🔊 brings it back.
-  const tour = useListenIntro('world', WORLD_TOUR, listen)
+  // (not over the first-quest card: that one speaks first, the tour waits for a later visit)
+  const tour = useListenIntro('world', WORLD_TOUR, listen && !firstOpen)
 
   /** 🔊 in the World: the panel's welcome, the gateway you stand at, or the tour. */
   const explain = useCallback(() => {
     const ui = useWorldUi.getState()
     if (ui.panel) void guide.replay()
+    else if (firstOpen) void guide.show(QUEST_FIRST_LINE)
     else if (ui.activeNpc) greet(ui.activeNpc)
     else tour()
-  }, [greet, tour])
+  }, [greet, tour, firstOpen])
 
   // Keyboard: E talks to the NPC you're standing next to (or decorates, inside your House).
   useEffect(() => {
@@ -125,6 +132,7 @@ export default function WorldHud({ posRef }: { posRef: RefObject<Vector3> }) {
     // the World canvas runs edge to edge, every chip and panel here stays clear of it.
     <div className="absolute pointer-events-none top-[var(--safe-top,env(safe-area-inset-top,0px))] right-[var(--safe-right,env(safe-area-inset-right,0px))] bottom-[var(--safe-bottom,env(safe-area-inset-bottom,0px))] left-[var(--safe-left,env(safe-area-inset-left,0px))]">
       <div className="absolute top-2 left-2 right-2 flex items-start gap-2">
+        <div className="flex flex-col items-start gap-2 short:gap-1.5 min-w-0">
         {listen ? (
           // K–1: pictures only, finger-sized; 🔊 says what to do here
           <div className="flex flex-wrap items-center gap-2 short:gap-1.5 min-w-0" data-listen-hud="">
@@ -156,6 +164,8 @@ export default function WorldHud({ posRef }: { posRef: RefObject<Vector3> }) {
           </span>
         </div>
         )}
+        {today && !firstOpen && <QuestChip today={today} listen={listen} onLaunch={launch} quiet={!!activeNpc || !!panel} />}
+        </div>
         <div className="ml-auto">
           <GraphicsToggle />
         </div>
@@ -180,6 +190,8 @@ export default function WorldHud({ posRef }: { posRef: RefObject<Vector3> }) {
         </button>
       )}
       {panel && <WorldPanel npc={panel} onLaunch={launch} onClose={close} />}
+      {today && firstOpen && <FirstQuestCard today={today} listen={listen} onLaunch={launch} />}
+      {today && <QuestCelebration today={today} />}
     </div>
   )
 }
