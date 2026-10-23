@@ -214,7 +214,7 @@ export default function ListenPlay({ provider, params, onComplete, meta, paused 
   }, [s.idx, provider])
 
   // ── what the narrator does in each phase (re-runs from the top after a pause) ──
-  const { phase, token, picked, tried, idx, firstTryCorrect } = s
+  const { phase, token, picked, tried, idx, firstTryCorrect, misses } = s
   useEffect(() => {
     if (paused || !problem) return
     let live = true
@@ -222,7 +222,7 @@ export default function ListenPlay({ provider, params, onComplete, meta, paused 
       switch (phase) {
         case 'ask': {
           if (problem.activity) {
-            await guide.sequence(activityAskSteps(problem, activityDef(problem.activity)))
+            await guide.sequence(activityAskSteps(problem, activityDef(problem.activity), misses))
             return
           }
           const open = cards.map((_, i) => i).filter((i) => !tried.includes(i))
@@ -308,7 +308,7 @@ export default function ListenPlay({ provider, params, onComplete, meta, paused 
     return () => {
       live = false
     }
-  }, [phase, token, paused, problem, cards, picked, tried, idx, firstTryCorrect, total])
+  }, [phase, token, paused, problem, cards, picked, tried, idx, firstTryCorrect, total, misses])
 
   // "Quit?" is open: hush (the phase starts over when it closes)
   useEffect(() => {

@@ -124,7 +124,9 @@ export interface ListenActivityDef<S extends ListenActivitySpec = ListenActivity
   /**
    * What the narrator says and points at as the question is asked. Default:
    * the question's `speech`, lighting the activity's area. Guide ids inside
-   * the activity are the activity's own (`data-guide`).
+   * the activity are the activity's own (`data-guide`). `misses`: tries on this
+   * question that weren't right yet (asked again after help, the pointing
+   * can show where to go on rather than where to finish).
    */
-  askSteps?(problem: ListenProblem, spec: S): GuideStep[]
+  askSteps?(problem: ListenProblem, spec: S, misses: number): GuideStep[]
 }

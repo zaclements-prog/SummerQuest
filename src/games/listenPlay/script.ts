@@ -102,8 +102,8 @@ export function questionSteps(p: ListenProblem, openCards: number[]): GuideStep[
 }
 
 /** Asking an activity's question: its own steps, else the line with the activity's area lit. */
-export function activityAskSteps(p: ListenProblem, def: ListenActivityDef | null): GuideStep[] {
-  const steps = def?.askSteps && p.activity ? def.askSteps(p, p.activity) : []
+export function activityAskSteps(p: ListenProblem, def: ListenActivityDef | null, misses = 0): GuideStep[] {
+  const steps = def?.askSteps && p.activity ? def.askSteps(p, p.activity, misses) : []
   return steps.length ? steps : [{ voice: p.speech ?? null, target: LP_ACTIVITY, hand: false, pad: 6 }]
 }
 

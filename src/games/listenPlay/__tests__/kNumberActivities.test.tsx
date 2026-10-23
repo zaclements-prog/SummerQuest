@@ -438,6 +438,14 @@ describe('Fill the frames (buildTeen)', () => {
     // the next try: a full ten in place, no rings yet
     expect(count()).toBe(10)
     expect(qa('[data-ghost]')).toHaveLength(0)
+    // asked again, the hand points where the ones go (the empty frame), never at ✓ before they're in
+    const again = asked()[0].marks
+    expect(again.map((m) => m.target)).not.toContain('build-check')
+    expect(again.at(-1)!.hand).toBe('tap')
+    const ones = q('[data-guide="build-frames"] [data-frame="1"]')!
+    const box = { x: 1, y: 2, width: 3, height: 4, top: 2, left: 1, right: 4, bottom: 6, toJSON: () => ({}) } as DOMRect
+    vi.spyOn(ones, 'getBoundingClientRect').mockReturnValue(box)
+    expect((again.at(-1)!.target as () => DOMRect)()).toBe(box)
     // a second miss (too many): rings show where the ones go
     await advance(5000)
     for (let i = 10; i < 15; i++) tap(cell(i))
