@@ -22,7 +22,7 @@ sys.path.insert(0, str(HERE))
 
 import render_local as rl  # noqa: E402  (no heavy imports at module level)
 import voicelines as vl  # noqa: E402
-from textnorm import normalize  # noqa: E402
+from textnorm import normalize, recovery  # noqa: E402
 
 REPO = HERE.parents[1]
 
@@ -41,6 +41,46 @@ class Rules(unittest.TestCase):
         for words, n in [("seven", 7), ("twenty-one", 21), ("one hundred five", 105),
                          ("one hundred twenty", 120), ("one thousand two hundred", 1200)]:
             self.assertEqual(normalize(words), [str(n)], words)
+
+    def test_spelled_vs_heard_recovery_battery(self):
+        # Every pair is a script line and a real Whisper transcript of correct
+        # audio that the naive normalizer wrongly failed (g5 Decimals/Division,
+        # g1 teens, K count-by lists, fractions, homophones).
+        pairs = [
+            ("Read three point four seven two as three and four hundred seventy-two thousandths.",
+             "Read 3 .472 as 3 and 472 thousandths."),
+            ("zero point five or zero point four five?", "0 .5 or 0 .45."),
+            ("four point five plus two point three seven is six point eight seven.",
+             "4 .5 plus 2 .37 is 6 .87."),
+            ("So six times ten to the third power is six thousand.",
+             "So, 6 times 10 to the third power is 6000."),
+            ("Let's divide six hundred seventy-two by twenty-eight.",
+             "Let's divide 672 by 28."),
+            ("and thirty fits in sixty-seven two times.", "and 30 fits in 67 two times."),
+            ("Twenty-eight fits in one hundred twelve four times,", "28 fits in 112, four times."),
+            ("Ten, twenty, thirty.", "10. 20. 30."),
+            ("Ten and three is thirteen!", "10 and 3 is 13."),
+            ("Count by tens: ten, twenty, thirty, forty.", "Count by tens. 10, 20, 30, 40."),
+            ("Bear has nine pears.", "Bear has nine pairs."),
+            ("one third plus one third equals two thirds", "1/3 + 1/3 = 2/3"),
+            ("What is six hundred forty-three minus two hundred eighty-six?",
+             "What is 643 minus 286?"),
+            ("one half", "1/2"),
+            ("twenty-four equals six times four", "24 = 6 x 4"),
+        ]
+        for script, heard in pairs:
+            r = recovery(script, heard)
+            self.assertGreaterEqual(r, 0.94, f"{script!r} vs {heard!r}: {r:.2f}")
+
+    def test_real_truncations_still_fail(self):
+        # the folds must not paper over genuine dropped content
+        self.assertLess(recovery("Count by tens: ten, twenty, thirty, forty.", "Count by tens."), 0.94)
+        self.assertLess(recovery("Bear has nine pears and four plums.", "Bear has nine pairs."), 0.94)
+
+    def test_articulation_detection(self):
+        self.assertTrue(vl.is_articulation("Kuh… aa… tuh."))
+        self.assertTrue(vl.is_articulation("sss..."))
+        self.assertFalse(vl.is_articulation("Cat starts with kuh."))
 
     def test_short_clips(self):
         self.assertTrue(vl.is_short("Great job!"))
