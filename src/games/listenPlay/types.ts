@@ -71,6 +71,12 @@ export interface ListenProblem extends Problem {
    * note about the picked card, before any count-along.
    */
   reteach?: VoiceRef
+  /**
+   * After a miss (and on the tries after it), shown under the question's
+   * picture: the counters to count on or take away (Counting Towers, 1st
+   * grade: "7 + 2" over seven red and two blue in ten-frames).
+   */
+  helpPicture?: Picture
   /** Praise for this question, taking turns with the kit's own. */
   praise?: readonly VoiceRef[]
   /**

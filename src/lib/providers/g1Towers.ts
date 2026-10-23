@@ -1,4 +1,4 @@
-import type { PictureOption, ProblemProvider } from '../problem'
+import type { Picture, PictureOption, ProblemProvider } from '../problem'
 import type { ListenProblem } from '../../games/listenPlay/types'
 import { ADD_10, ADD_20, SUB_10, SUB_20, factAnswer, factId, factQuestion, factText, type G1Fact } from '../../voice/packs/g1-towers'
 import type { VoiceRef } from '../../voice/types'
@@ -50,6 +50,22 @@ export function factDistractors(f: G1Fact, max = 20): number[] {
     if (ok(n) && !out.includes(n)) out.push(n)
   }
   return out
+}
+
+/**
+ * The picture after a miss: the counters in ten-frames. Adding: the bigger
+ * number in red, the one counted on in blue (ten and some more: a full frame
+ * and the rest). Taking away: the start, the ones taken crossed out.
+ */
+export function factHelpPicture(f: G1Fact): Picture {
+  if (f.op === '-') return { kind: 'tenFrame', count: f.a, gone: f.b }
+  return { kind: 'tenFrame', count: f.a + f.b, split: Math.max(f.a, f.b) }
+}
+
+/** What is said about a wrong card: ten and some more is just that ("Ten and nine more is nineteen."); else the strategy. */
+export function factNote(f: G1Fact): VoiceRef {
+  if (f.op === '+' && (f.a === 10 || f.b === 10)) return { line: `g1-facts/tenAnd-${f.a === 10 ? f.b : f.a}` }
+  return { line: `g1-towers/how-${factId(f)}` }
 }
 
 export function makeG1TowersProvider(cfg: G1TowersConfig): Omit<ProblemProvider, 'next'> & { next(): ListenProblem } {
@@ -105,8 +121,10 @@ export function makeG1TowersProvider(cfg: G1TowersConfig): Omit<ProblemProvider,
       pictureOptions: options.map(numeralCard),
       cues: [{ target: 'picture' }, { target: 'cards', cue: 'Tap' }],
       walkthrough: 'none',
-      // after a wrong pick, the strategy ("Start at four. Count on three: five, six, seven!")
-      notes: options.map((v) => (v === answer ? null : { line: `g1-towers/how-${factId(f)}` })),
+      // after a wrong pick, the strategy ("Start at four. Count on three: five, six, seven!"),
+      // or for ten and some more just that ("Ten and nine more is nineteen."), with the counters shown
+      notes: options.map((v) => (v === answer ? null : factNote(f))),
+      helpPicture: factHelpPicture(f),
     }
   }
 
