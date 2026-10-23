@@ -22,7 +22,7 @@ import {
   FORGE_LIMITS,
   MAX_STACK,
   ROUNDS,
-  forgeFactConfig,
+  forgeFactConfigForGrade,
   forgeModeOf,
   parseUnlikeRound,
   recipeText,
@@ -175,7 +175,7 @@ export default function FractionForge({ params, onComplete, meta, paused: hostPa
     () =>
       unlike
         ? makeForgeSumProvider(FORGE_LIMITS.denomMax)
-        : makeFractionEquivalenceProvider(forgeFactConfig(GRADE_TIERS[grade ?? DEFAULT_GRADE].fracEquivMaxDenom)),
+        : makeFractionEquivalenceProvider(forgeFactConfigForGrade(grade ?? DEFAULT_GRADE, GRADE_TIERS[grade ?? DEFAULT_GRADE].fracEquivMaxDenom)),
     [grade, unlike],
   )
   const recordAnswer = useProgress((s) => s.recordAnswer)
