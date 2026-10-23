@@ -66,6 +66,15 @@ packs once the campaign finishes — hash-skip touches only the missing clips:
 $PY scripts/tts/render_local.py --set voice --engine higgs --ref-audio $REF \
   --only g1-phonics,k-math,k-sounds,k-letters,k-addtake,g1-measure,parade,g5Decimals,g5Multiplication,g5Division
 ```
+The 10-22 22:00 partial re-run of `g1-phonics` (stopped at the pause; 18
+recovered) split the remainder cleanly: the gated-folds cases now pass, but
+~8 `starts-*` onset clips (`rat`, `hen`, `egg`, `fish`, `frog`, `cup`,
+`shirt`, `three`) failed every draw on all five temperatures — **genuine Higgs
+mispronunciations of stretched isolated onsets**, not checker noise. That is
+plan decision 4 territory (keep the approximation vs hand-record the 44
+sounds): surface to the owner before the next phonics pass; if "keep", render
+those with a relaxed exact-word gate + owner ear-check; if "record", schedule
+a hand session for the onset forms only.
 
 **Resume order after the remaining packs:** verify (§5 as before):
 `tts:check` (expect 198/198), `voice:check --strict`, `VOICE_STRICT=1 npx
