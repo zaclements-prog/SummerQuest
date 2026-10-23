@@ -11,6 +11,62 @@ listing. Field limits are from Amazon's docs as of October 2026:
 
 TODO(owner): check the limits against the live form.
 
+## v2 update (versionCode 2, prepared 2026-10-23)
+
+v2 offers **kindergarten through 5th grade** (v1: grades 2–4), with teacher-voice narration for
+K–1 and every lesson, a first quest and today's quest, per-grade game tuning and missed-fact
+practice in the 3D games. Paste these over the v1 text; everything not listed here stays as is.
+
+- **APK:** Replace with `summerquest-2.0-release.apk` (versionCode 2). Use Replace, not Add.
+- **Category:** Kids (Learning Subjects unchanged; add Alphabet and Reading if offered).
+- **Target audience:** 0–12, unchanged. **Content rating:** unchanged (all None, Academic yes).
+- **Significant changes (US parental-consent laws):** new grade levels are content, not new data
+  collection, ads or purchases. Answer **None** unless the owner decides otherwise.
+
+**Short description**
+
+> SummerQuest keeps young minds sharp over the summer, from kindergarten to 5th grade. Kids explore
+> a bright cartoon island and play short math, reading, writing and science games. Little ones
+> learn by listening and tapping pictures, with a friendly teacher voice and no reading needed;
+> older kids get spoken lessons with moving pictures, then mini-games that practice each idea.
+> Kids earn coins to decorate their own island home. No accounts and no internet needed:
+> everything stays on the tablet.
+
+**Long description: replace "The right level for your child"**
+
+> The right level for your child
+> Pick your child's grade when you start, from kindergarten to 5th grade. Kindergarten and 1st
+> grade are voice-first: every question is spoken and answered by tapping pictures, so no reading
+> is needed. Practice adapts as your child plays, coming back to the facts they find tricky,
+> even inside the mini-games.
+
+**Long description: add after "Motivation from learning"**
+
+> A quest every day
+> New explorers start with a first quest, and each day SummerQuest suggests one quest to try
+> next: a stage to finish, a zone close to its next star, or facts worth another go.
+
+**Feature bullets: replace 1 and 5**
+
+1. Math, reading, writing and science for kindergarten through 5th grade
+5. Adaptive practice brings back the facts your child finds tricky, in quizzes and mini-games
+
+**Keywords:** add `kindergarten, grade1, grade5, phonics, counting` (drop words if over the limit).
+
+**Testing instructions (re-enter right before Submit; not autosaved)**
+
+> SummerQuest works fully offline: no account, sign-in or internet needed.
+> First launch: tap "Start your quest", type any name, pick a grade (Kindergarten through 5th) and tap "Begin adventure!" to reach the 3D island. A first-quest card then offers one thing to start with.
+> Kindergarten and 1st grade are voice-first: questions are spoken and answered by tapping pictures.
+> Tap the ground to walk. "Map" opens the island map. Narrated lessons are under Tutor (tap "Watch"). The hardware Back button goes back a screen and exits the app from the island.
+> Grown-up areas (Parent area, reset progress, change grade) are behind a parental gate: it asks for the product of two numbers between 13 and 29 (for example 17 x 23 = 391). Type the answer. Three wrong answers lock it for 30 seconds.
+> Some stages unlock after earning a star on the stage before.
+
+**Screenshots:** keep the v1 set and add K–1 and 5th-grade screens (1280 × 800), up to 10 in all.
+
+**Public site:** `summerquest-site` says "starting with grades 2 to 4"; update it to K–5 before
+submitting (the privacy policy already covers the device voice).
+
 Amazon's listing rules forbid prices, ALL CAPS, emoji and repeated words in the listing text.
 The copy below follows them.
 

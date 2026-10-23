@@ -5,11 +5,10 @@
  * - `g5`: 5th grade.
  *
  * Each is on in the dev server (`import.meta.env.DEV`), or when the build sets
- * `VITE_K1=true` / `VITE_G5=true`. Production builds — `npm run build`,
- * `build:single` and the Amazon `build:store` — leave them off, so the grade
- * pickers offer only 2nd–4th grade until the K–1 and grade-5 content is
- * authored. The store build reads the two variables from the command line only
- * (never from .env.local; see vite.config.ts).
+ * `VITE_K1=true` / `VITE_G5=true`. The Amazon `build:store` turns both on
+ * (v2, 2026-10-23: K–5); `npm run build` and `build:single` leave them off.
+ * The store build reads the two variables from the command line only (never
+ * from .env.local; see vite.config.ts).
  *
  * The engine itself knows every grade (`GRADE_LEVELS`, 0–5): a profile saved
  * with a grade this build doesn't offer still loads and plays.
