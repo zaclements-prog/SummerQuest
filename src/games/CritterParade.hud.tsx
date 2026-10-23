@@ -69,13 +69,19 @@ export function LevelPips({ total, current, wins, done }: { total: number; curre
   )
 }
 
-/** "37 vs 25", then "We win by 12!" (K–1: "We have more!"). */
+/** "37 vs 25", then "We win by 12!" (K–1: no words, "🎉 37 > 25"; the voice says who has more). */
 export function FinaleReadout({ ours, gang, result, listen }: { ours: number; gang: number; result: FinaleOutcome | null; listen: boolean }) {
   return (
     <>
-      <div className="kid-text flex items-center gap-3 rounded-3xl px-5 py-0.5 text-3xl sm:text-4xl" style={{ background: UI.paper, color: UI.line, border: `3px solid ${UI.line}`, boxShadow: UI.ledge }}>
+      <div
+        className="kid-text flex items-center gap-3 rounded-3xl px-5 py-0.5 text-3xl sm:text-4xl"
+        style={{ background: UI.paper, color: UI.line, border: `3px solid ${UI.line}`, boxShadow: UI.ledge }}
+        aria-label={listen ? `${ours} for us, ${gang} for the Grumble Gang` : undefined}
+      >
         <span className="tabular-nums">🐾 {ours}</span>
-        <span className="text-xl opacity-70">vs</span>
+        <span className="text-xl opacity-70" aria-hidden={listen || undefined}>
+          {listen ? '🪢' : 'vs'}
+        </span>
         <span className="tabular-nums">{gang} 😠</span>
       </div>
       <AnimatePresence>
@@ -86,15 +92,18 @@ export function FinaleReadout({ ours, gang, result, listen }: { ours: number; ga
             transition={{ type: 'spring', stiffness: 380, damping: 14 }}
             className="kid-text rounded-2xl px-4 py-0.5 text-2xl sm:text-3xl whitespace-nowrap"
             style={{ background: result.win ? UI.correct : UI.wrongSoft, color: UI.line, border: `3px solid ${UI.line}`, boxShadow: UI.ledgeSm }}
+            aria-label={listen ? (result.margin > 0 ? 'We have more!' : result.margin === 0 ? 'A tie!' : 'They have more') : undefined}
           >
             {result.margin > 0
               ? listen
-                ? `We have more! ${ours} > ${gang}`
+                ? `🎉 ${ours} > ${gang}`
                 : `We win by ${result.margin}!`
               : result.margin === 0
-                ? 'A tie! Everybody wins!'
+                ? listen
+                  ? `🤝 ${ours} = ${gang}`
+                  : 'A tie! Everybody wins!'
                 : listen
-                  ? `They have more: ${gang} > ${ours}`
+                  ? `😠 ${gang} > ${ours}`
                   : `They win by ${-result.margin}`}
           </motion.div>
         )}
@@ -131,8 +140,14 @@ export function RevealChips({ reveal }: { reveal: Reveal }) {
   )
 }
 
-/** The voice caption: what the narrator is saying. */
-export function Caption({ text }: { text: string }) {
+/** The voice caption: what the narrator is saying. K–1 (`listen`) hear it and get it for screen readers only: nothing to read. */
+export function Caption({ text, listen = false }: { text: string; listen?: boolean }) {
+  if (listen)
+    return (
+      <div className="sr-only" aria-live="polite" data-parade-caption="">
+        {text}
+      </div>
+    )
   return (
     <motion.div
       key={text}

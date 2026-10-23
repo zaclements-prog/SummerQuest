@@ -20,7 +20,8 @@ import { LengthThingArt, START_GREEN } from './activities/measureArt'
  * - Sky Summit, the sky (1-ESS1): the day sky and the night sky; the sun on
  *   its path across the sky (coming up, high at lunch time, going down); a
  *   summer day and a winter day, each with a day-and-night bar (more yellow in
- *   summer: more daylight).
+ *   summer: more daylight); the moon full, half and thin on the night sky; a
+ *   sun-moon pattern strip with a question mark for what comes next.
  * - Sky Summit, animal families (1-LS1): a bird feeding its chicks, a hen
  *   keeping her eggs warm, a monkey carrying her baby.
  */
@@ -615,6 +616,68 @@ function Winter() {
   )
 }
 
+/** The moon's shape on the night sky: all round, half lit (its right half), or a thin curve. */
+function moonShape(shape: 'moonFull' | 'moonHalf' | 'moonThin') {
+  return () => (
+    <Backdrop sky="#1f2752">
+      {[
+        [18, 18, 3.6],
+        [84, 22, 3.2],
+        [20, 80, 3.2],
+        [82, 78, 3.8],
+      ].map(([x, y, r], i) => (
+        <Star key={i} x={x} y={y} r={r} />
+      ))}
+      {shape === 'moonThin' ? (
+        <Moon x={50} y={50} r={26} />
+      ) : (
+        <g>
+          {/* the moon's dark part, faint, so the half reads as half of a circle */}
+          <circle cx={50} cy={50} r={26} fill="#39427a" stroke={INK} strokeWidth={2.6} />
+          {shape === 'moonFull' ? <circle cx={50} cy={50} r={26} fill="#fff1a8" {...ink} strokeWidth={2.6} /> : <path d="M 50 24 A 26 26 0 0 1 50 76 Z" fill="#fff1a8" {...ink} strokeWidth={2.6} />}
+        </g>
+      )}
+    </Backdrop>
+  )
+}
+
+/** A pattern strip: four tiles (sun, moon, sun, ?), the last one dashed with a question mark. */
+function skyPattern(first: 'sun' | 'moon') {
+  return () => {
+    const tiles = [first, first === 'sun' ? 'moon' : 'sun', first] as const
+    return (
+      <g>
+        <rect x={4} y={4} width={92} height={92} rx={14} fill="#fffaf0" />
+        {tiles.map((t, i) => {
+          const x = 7 + i * 22.5
+          const cx = x + 9.5
+          return (
+            <g key={i}>
+              <rect x={x} y={30} width={19} height={40} rx={5} fill={t === 'sun' ? '#9fd8ff' : '#1f2752'} {...ink} strokeWidth={2.2} />
+              {t === 'sun' ? (
+                <g>
+                  {/* a small sun: short rays round a disc */}
+                  {Array.from({ length: 8 }, (_, k) => {
+                    const a = (k / 8) * Math.PI * 2
+                    return <line key={k} x1={cx + Math.cos(a) * 6.6} y1={50 + Math.sin(a) * 6.6} x2={cx + Math.cos(a) * 8.4} y2={50 + Math.sin(a) * 8.4} stroke={GOLD} strokeWidth={2} strokeLinecap="round" />
+                  })}
+                  <circle cx={cx} cy={50} r={5} fill="#ffd75e" stroke={INK} strokeWidth={1.8} />
+                </g>
+              ) : (
+                <Moon x={cx} y={50} r={7} />
+              )}
+            </g>
+          )
+        })}
+        <rect x={74.5} y={30} width={19} height={40} rx={5} fill="#ffffff" stroke={INK} strokeWidth={2.2} strokeDasharray="4 3" />
+        <path d="M 80.5 45 Q 80.5 40.5 84 40.5 Q 87.5 40.5 87.5 44.5 Q 87.5 47 84.5 48.5 L 84 52" fill="none" stroke={INK} strokeWidth={2.6} strokeLinecap="round" />
+        <circle cx={84} cy={57} r={1.7} fill={INK} />
+        <rect x={4} y={4} width={92} height={92} rx={14} fill="none" {...ink} />
+      </g>
+    )
+  }
+}
+
 // ── Sky Summit: animal families ──────────────────────────────────────────────
 
 function Bird({ x, y, s = 1, fill = '#4aa6d6', beak = true }: { x: number; y: number; s?: number; fill?: string; beak?: boolean }) {
@@ -736,6 +799,11 @@ export const G1_DRAWINGS: Record<string, () => ReactNode> = {
   sunSet: sunPath('sunSet'),
   summer: () => <Summer />,
   winter: () => <Winter />,
+  moonFull: moonShape('moonFull'),
+  moonHalf: moonShape('moonHalf'),
+  moonThin: moonShape('moonThin'),
+  patternSunMoon: skyPattern('sun'),
+  patternMoonSun: skyPattern('moon'),
   birdFeeds: () => <BirdFeeds />,
   henWarms: () => <HenWarms />,
   monkeyCarries: () => <MonkeyCarries />,

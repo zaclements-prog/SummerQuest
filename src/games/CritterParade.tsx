@@ -49,6 +49,7 @@ import { SAFE, UI } from './_runkit/uiTokens'
 import { WalkHint } from './_runkit/RunHud'
 import { RICH } from './_runkit/juiceExtras'
 import { ParadeScene, makeWorld, type Hooks, type ShownGate, type World } from './CritterParade.scene'
+import { paradeBanner } from './CritterParade.banners'
 import { Caption, CountBadge, FinaleReadout, GateButtons, LevelEndCard, LevelPips, ListenParadeResults, RevealChips, type LevelEnd, type Reveal } from './CritterParade.hud'
 import { CAM, GATE_COLORS, LANE_X, STEER_MAX, crowdCaps, marchSpeed } from './CritterParade.layout'
 import type { ThemeKey } from './CritterParade.set'
@@ -316,7 +317,7 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
       setLevelIdx(idx)
       showUpcoming(st)
       say(introLine(plan.opSet === 'divSub' || plan.opSet === 'sub20' ? 'keep' : 'more', listen))
-      flash(idx === 0 ? 'Critter Parade!' : `Parade ${idx + 1}!`, '#ffe58a', 1700)
+      flash(idx === 0 ? paradeBanner('start', listen) : paradeBanner('level', listen, idx + 1), '#ffe58a', 1700)
       later(2000, () => {
         worldRef.current!.sim.phase = 'march'
         setPhase('march')
@@ -390,7 +391,7 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
         later(120, () => sfx.combo(Math.min(8, 1 + Math.floor(Math.log2(Math.max(1, d.result - st.count + 1))))))
       } else if (d.result < st.count) {
         sfx.whoosh()
-        juice.text({ pos: [laneX + (laneX > 0 ? 2.6 : -2.6), 1.6, gz + 2], text: '🍉 snack break!', size: 'md', color: '#ffd0c8' })
+        juice.text({ pos: [laneX + (laneX > 0 ? 2.6 : -2.6), 1.6, gz + 2], text: listen ? '🍉' : '🍉 snack break!', size: 'md', color: '#ffd0c8' })
       }
       // the ghost parade on the other lane: what the other gate would have given
       w.ghost.restartGhost()
@@ -398,7 +399,7 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
       later(400, () => juice.text({ pos: [-laneX, 3.2, gz + 2.5], text: `👻 ${result(other.label, other.result)}`, size: 'lg', color: '#e6f3ff' }))
       setReveal({
         got: result(picked.label, d.result),
-        other: sentences ? result(other.label, other.result) : d.tie ? `${other.label} makes ${other.result} too!` : `${other.label} would have ${pair.goal === 'keep' ? 'kept' : 'made'} ${other.result}`,
+        other: listen ? result(other.label, other.result) : d.tie ? `${other.label} makes ${other.result} too!` : `${other.label} would have ${pair.goal === 'keep' ? 'kept' : 'made'} ${other.result}`,
         tone: d.tie ? 'tie' : d.smart ? 'smart' : 'weak',
         key: n,
       })
@@ -423,7 +424,7 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
       setWaiting(false)
       if (paradeFull(state) && !s.fullCalled && state.upcoming === null && state.next < st.plan.events.length) {
         s.fullCalled = true
-        flash('PARADE FULL!', '#9fe6c8', 1800)
+        flash(paradeBanner('full', listen), '#9fe6c8', 1800)
         say({ line: 'parade/paradeFull' })
       }
       showUpcoming(state)
@@ -455,7 +456,7 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
         })
       }
       juice.burst({ pos: [0, 1, cz], color: ['#ffd95e', '#ffffff', '#9fe6c8'], count: 24, speed: 2.5, up: 3, size: 0.09, life: 0.8 })
-      flash(`+${amount} friends!`, '#ffe58a', 1300)
+      flash(paradeBanner('join', listen, amount), '#ffe58a', 1300)
       say(cageLine(amount))
     }
     run.biggest = Math.max(run.biggest, state.count)
@@ -463,7 +464,7 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
     const s = worldRef.current!.sim
     if (paradeFull(state) && state.upcoming === null && !s.fullCalled) {
       s.fullCalled = true
-      later(1200, () => flash('PARADE FULL!', '#9fe6c8', 1800))
+      later(1200, () => flash(paradeBanner('full', listen), '#9fe6c8', 1800))
     }
     showUpcoming(state)
   }, [later, flash, say, showUpcoming, listen])
@@ -527,7 +528,7 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
     s.finale = finaleOutcome(st)
     setPhase('finale')
     setFinaleShow({ ours: st.count, gang: st.plan.gang, result: null })
-    flash('Tug of war!', '#ffb54d', 1500)
+    flash(paradeBanner('tug', listen), '#ffb54d', 1500)
     say({ line: listen ? 'parade/doWeHaveMore' : 'parade/finaleIntro' })
   }, [flash, say, listen])
 
@@ -642,7 +643,7 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
     s.slow = true
     setSlowLeft((n) => n - 1)
     sfx.whoosh()
-    flash('Slow motion!', '#cdb8f5', 1000)
+    flash(paradeBanner('slow', false), '#cdb8f5', 1000)
   }, [slowLeft, flash])
 
   // ── input: one-thumb drag, ← → / A D, taps for K–1 ────────────────────────
@@ -811,7 +812,7 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
       {/* ── HUD: the parade's size top-left; the prompt / reveal / tug readout top-centre ── */}
       <div className={`absolute ${SAFE.top2} ${SAFE.left2} z-10 flex flex-col items-start gap-1.5 pointer-events-none`}>
         <CountBadge count={count} />
-        <ScoreChip score={score} best={best} />
+        <ScoreChip score={score} best={best} pictureBest={listen} />
         <StreakMeter streak={streak} />
       </div>
 
@@ -836,7 +837,7 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
         ) : reveal && phase === 'march' ? (
           <RevealChips reveal={reveal} />
         ) : (phase === 'march' || phase === 'intro') && caption && !levelEnd ? (
-          <Caption text={caption} />
+          <Caption text={caption} listen={listen} />
         ) : null}
       </div>
 

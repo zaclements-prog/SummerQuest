@@ -11839,6 +11839,240 @@
       "kind": "line",
       "file": "voice/g1-science/note-winter.mp3"
     },
+    "g1-science/up-owl": {
+      "text": "The owl wakes up to hunt. Is it day or night?",
+      "hash": "24809797ab",
+      "kind": "line",
+      "file": "voice/g1-science/up-owl.mp3"
+    },
+    "g1-science/up-bat": {
+      "text": "The bat flies out to catch bugs. Is it day or night?",
+      "hash": "9093a7cdbf",
+      "kind": "line",
+      "file": "voice/g1-science/up-bat.mp3"
+    },
+    "g1-science/up-rooster": {
+      "text": "The rooster crows as the sun comes up. Is it day or night?",
+      "hash": "b78b0554cd",
+      "kind": "line",
+      "file": "voice/g1-science/up-rooster.mp3"
+    },
+    "g1-science/up-school": {
+      "text": "It is time to go to school. Is it day or night?",
+      "hash": "cced09e5c2",
+      "kind": "line",
+      "file": "voice/g1-science/up-school.mp3"
+    },
+    "g1-science/when-owl": {
+      "text": "Owls sleep in the day. They hunt at night, when it is dark!",
+      "hash": "edc2a370ce",
+      "kind": "line",
+      "file": "voice/g1-science/when-owl.mp3"
+    },
+    "g1-science/when-bat": {
+      "text": "Bats sleep in the day. They fly at night, when it is dark!",
+      "hash": "77263bd12e",
+      "kind": "line",
+      "file": "voice/g1-science/when-bat.mp3"
+    },
+    "g1-science/when-rooster": {
+      "text": "The sun is coming up, so it is day!",
+      "hash": "5cdcd10b74",
+      "kind": "line",
+      "file": "voice/g1-science/when-rooster.mp3"
+    },
+    "g1-science/when-school": {
+      "text": "We go to school in the day, when the sun is up!",
+      "hash": "fcb5f38058",
+      "kind": "line",
+      "file": "voice/g1-science/when-school.mp3"
+    },
+    "g1-science/moonFull": {
+      "text": "The moon looks different on different nights. Tap the full moon, round like a ball!",
+      "hash": "87b621d6e8",
+      "kind": "line",
+      "file": "voice/g1-science/moonFull.mp3"
+    },
+    "g1-science/moonHalf": {
+      "text": "The moon looks different on different nights. Tap the half moon!",
+      "hash": "18961b2b3f",
+      "kind": "line",
+      "file": "voice/g1-science/moonHalf.mp3"
+    },
+    "g1-science/moonThin": {
+      "text": "The moon looks different on different nights. Tap the thin moon, curved like a banana!",
+      "hash": "d10929e201",
+      "kind": "line",
+      "file": "voice/g1-science/moonThin.mp3"
+    },
+    "g1-science/say-moonFull": {
+      "text": "A full moon!",
+      "hash": "bcca33dde3",
+      "kind": "line",
+      "file": "voice/g1-science/say-moonFull.mp3"
+    },
+    "g1-science/say-moonHalf": {
+      "text": "A half moon!",
+      "hash": "2dd3bde7ae",
+      "kind": "line",
+      "file": "voice/g1-science/say-moonHalf.mp3"
+    },
+    "g1-science/say-moonThin": {
+      "text": "A thin moon!",
+      "hash": "b6e557421f",
+      "kind": "line",
+      "file": "voice/g1-science/say-moonThin.mp3"
+    },
+    "g1-science/note-moonFull": {
+      "text": "That moon is full. It is all round!",
+      "hash": "23fe833b73",
+      "kind": "line",
+      "file": "voice/g1-science/note-moonFull.mp3"
+    },
+    "g1-science/note-moonHalf": {
+      "text": "That moon is half lit, like half a circle.",
+      "hash": "400804f2e8",
+      "kind": "line",
+      "file": "voice/g1-science/note-moonHalf.mp3"
+    },
+    "g1-science/note-moonThin": {
+      "text": "That moon is thin and curved, like a banana.",
+      "hash": "78f06f6158",
+      "kind": "line",
+      "file": "voice/g1-science/note-moonThin.mp3"
+    },
+    "g1-science/patternSunMoon": {
+      "text": "Sun, moon, sun. What comes next?",
+      "hash": "7f8a107660",
+      "kind": "line",
+      "file": "voice/g1-science/patternSunMoon.mp3"
+    },
+    "g1-science/patternMoonSun": {
+      "text": "Moon, sun, moon. What comes next?",
+      "hash": "1c883fdafb",
+      "kind": "line",
+      "file": "voice/g1-science/patternMoonSun.mp3"
+    },
+    "g1-science/note-pattern": {
+      "text": "Day, then night, then day, then night. Day and night take turns!",
+      "hash": "2823a25f84",
+      "kind": "line",
+      "file": "voice/g1-science/note-pattern.mp3"
+    },
+    "g1-science/spring": {
+      "text": "Spring!",
+      "hash": "5f3a0e8003",
+      "kind": "line",
+      "file": "voice/g1-science/spring.mp3"
+    },
+    "g1-science/fall": {
+      "text": "Fall!",
+      "hash": "1cda474f34",
+      "kind": "line",
+      "file": "voice/g1-science/fall.mp3"
+    },
+    "g1-science/see-spring": {
+      "text": "It is spring. What might you see outside?",
+      "hash": "a83f51fe5a",
+      "kind": "line",
+      "file": "voice/g1-science/see-spring.mp3"
+    },
+    "g1-science/see-summer": {
+      "text": "It is summer. What might you see outside?",
+      "hash": "0b2ba77116",
+      "kind": "line",
+      "file": "voice/g1-science/see-summer.mp3"
+    },
+    "g1-science/see-fall": {
+      "text": "It is fall. What might you see outside?",
+      "hash": "f9d17832c4",
+      "kind": "line",
+      "file": "voice/g1-science/see-fall.mp3"
+    },
+    "g1-science/see-winter": {
+      "text": "It is winter. What might you see outside?",
+      "hash": "81658b9dc4",
+      "kind": "line",
+      "file": "voice/g1-science/see-winter.mp3"
+    },
+    "g1-science/thing-spring": {
+      "text": "Flowers!",
+      "hash": "b74ea16411",
+      "kind": "line",
+      "file": "voice/g1-science/thing-spring.mp3"
+    },
+    "g1-science/thing-summer": {
+      "text": "The beach!",
+      "hash": "e6499c360a",
+      "kind": "line",
+      "file": "voice/g1-science/thing-summer.mp3"
+    },
+    "g1-science/thing-fall": {
+      "text": "Falling leaves!",
+      "hash": "1241e68ec8",
+      "kind": "line",
+      "file": "voice/g1-science/thing-fall.mp3"
+    },
+    "g1-science/thing-winter": {
+      "text": "A snowman!",
+      "hash": "897746a915",
+      "kind": "line",
+      "file": "voice/g1-science/thing-winter.mp3"
+    },
+    "g1-science/seen-spring": {
+      "text": "Flowers bloom in the spring.",
+      "hash": "e076132903",
+      "kind": "line",
+      "file": "voice/g1-science/seen-spring.mp3"
+    },
+    "g1-science/seen-summer": {
+      "text": "We go to the beach in the hot summer.",
+      "hash": "2088d240d4",
+      "kind": "line",
+      "file": "voice/g1-science/seen-summer.mp3"
+    },
+    "g1-science/seen-fall": {
+      "text": "Leaves fall from the trees in the fall.",
+      "hash": "e2a483a359",
+      "kind": "line",
+      "file": "voice/g1-science/seen-fall.mp3"
+    },
+    "g1-science/seen-winter": {
+      "text": "We build snowmen in the cold winter.",
+      "hash": "22ee59f76f",
+      "kind": "line",
+      "file": "voice/g1-science/seen-winter.mp3"
+    },
+    "g1-science/afterSeason-spring": {
+      "text": "It is spring. Which season comes next?",
+      "hash": "141cfbb9dc",
+      "kind": "line",
+      "file": "voice/g1-science/afterSeason-spring.mp3"
+    },
+    "g1-science/afterSeason-summer": {
+      "text": "It is summer. Which season comes next?",
+      "hash": "bd13b19633",
+      "kind": "line",
+      "file": "voice/g1-science/afterSeason-summer.mp3"
+    },
+    "g1-science/afterSeason-fall": {
+      "text": "It is fall. Which season comes next?",
+      "hash": "baced84591",
+      "kind": "line",
+      "file": "voice/g1-science/afterSeason-fall.mp3"
+    },
+    "g1-science/afterSeason-winter": {
+      "text": "It is winter. Which season comes next?",
+      "hash": "a6d43bd74a",
+      "kind": "line",
+      "file": "voice/g1-science/afterSeason-winter.mp3"
+    },
+    "g1-science/seasonPattern": {
+      "text": "Every year: spring, then summer, then fall, then winter. Then spring again!",
+      "hash": "6bcfcdfcb0",
+      "kind": "line",
+      "file": "voice/g1-science/seasonPattern.mp3"
+    },
     "g1-science/hen": {
       "text": "A hen!",
       "hash": "695233531c",

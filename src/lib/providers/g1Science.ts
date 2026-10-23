@@ -4,7 +4,7 @@ import { G1_BABIES } from '../../voice/packs/g1-science'
 import { voiceText } from '../../voice/registry'
 import type { VoiceRef } from '../../voice/types'
 import { randInt, shuffle } from '../random'
-import { makeDeck, makeKindPicker, makePositionGuard, pickOne } from './kShared'
+import { makeDeck, makeKindPicker, makePositionGuard, makeRecent, pickOne } from './kShared'
 
 /**
  * Sky Summit (Science Summit for 1st grade; 1-PS4, 1-ESS1, 1-LS1/LS3), picture
@@ -21,7 +21,11 @@ import { makeDeck, makeKindPicker, makePositionGuard, pickOne } from './kShared'
  * - `sky` (g1-science-2, 1-ESS1): the day sky and the night sky; what we see in
  *   the sky by day (the sun, never the stars) and by night (the moon or the
  *   stars, never the sun); when we see the stars or the sun; the sun coming
- *   up, high at lunch time and going down; summer days are long, winter ones short.
+ *   up, high at lunch time and going down; summer days are long, winter ones short;
+ *   who is up by day or by night (an owl, a bat, a rooster, going to school);
+ *   the moon's changing shape (full, half, thin); what comes next in a
+ *   sun-moon pattern; what each season brings (flowers, the beach, falling
+ *   leaves, a snowman) and which season comes next.
  * - `families` (g1-science-3, 1-LS1/LS3): a baby and the parent it grows up
  *   to look like; how parents help (feeding, keeping eggs warm, carrying);
  *   body parts that help living things (a turtle's shell, a cactus's spines,
@@ -46,6 +50,11 @@ export type G1ScienceKind =
   | 'sunMove'
   | 'skyNext'
   | 'season'
+  | 'nightThing'
+  | 'moonShape'
+  | 'skyPattern'
+  | 'seasonSee'
+  | 'seasonNext'
   | 'baby'
   | 'helps'
   | 'parts'
@@ -86,6 +95,23 @@ export type SunPlace = (typeof G1_SUN_PLACES)[number]
 /** The day's pattern, and what comes after each part of it (night comes round to morning again). */
 export const G1_SKY_NEXT = { sunRise: 'sunHigh', sunHigh: 'sunSet', sunSet: 'nightSky', nightSky: 'sunRise' } as const
 export type SkyTime = keyof typeof G1_SKY_NEXT
+
+/** Who is up (or what happens) by day or by night: the question's picture, and when. */
+export const G1_DAY_NIGHT_THINGS = { owl: { emoji: '🦉', when: 'night' }, bat: { emoji: '🦇', when: 'night' }, rooster: { emoji: '🐓', when: 'day' }, school: { emoji: '🏫', when: 'day' } } as const
+export type DayNightThing = keyof typeof G1_DAY_NIGHT_THINGS
+/** The moon's shapes (drawings on the night sky). */
+export const G1_MOON_SHAPES = ['moonFull', 'moonHalf', 'moonThin'] as const
+export type MoonShape = (typeof G1_MOON_SHAPES)[number]
+/** A sun-moon pattern strip (sun, moon, sun, ? or moon, sun, moon, ?) and what comes next. */
+export const G1_SKY_PATTERNS = { patternSunMoon: 'night', patternMoonSun: 'day' } as const
+export type SkyPattern = keyof typeof G1_SKY_PATTERNS
+/** The seasons in their order through the year, each with a picture of what it brings. */
+export const G1_SEASONS = ['spring', 'summer', 'fall', 'winter'] as const
+export type Season = (typeof G1_SEASONS)[number]
+export const SEASON_PICS: Record<Season, string> = { spring: '🌷', summer: '🏖️', fall: '🍂', winter: '⛄' }
+/** The season across the year from each (the "what might you see?" wrong card: never arguably right). */
+export const SEASON_OPPOSITE: Record<Season, Season> = { spring: 'fall', summer: 'winter', fall: 'spring', winter: 'summer' }
+export const nextSeason = (x: Season): Season => G1_SEASONS[(G1_SEASONS.indexOf(x) + 1) % G1_SEASONS.length]
 
 // ── animal families ──────────────────────────────────────────────────────────
 
@@ -135,14 +161,25 @@ const PRAISE: Record<G1ScienceMode, VoiceRef[]> = {
 
 const MODE_KINDS: Record<G1ScienceMode, G1ScienceKind[]> = {
   lightSound: ['dark', 'sound', 'stopSound', 'shadow', 'material'],
-  sky: ['dayNight', 'seeSky', 'whenSee', 'sunMove', 'skyNext', 'season'],
+  sky: ['dayNight', 'seeSky', 'whenSee', 'sunMove', 'skyNext', 'season', 'nightThing', 'moonShape', 'skyPattern', 'seasonSee', 'seasonNext'],
   families: ['baby', 'helps', 'parts'],
 }
 
-/** The stage's first questions, easiest first (then any of its kinds). */
-const RAMP: Record<G1ScienceMode, G1ScienceKind[]> = {
+/** The sky's kinds by how hard they are (a round takes two of each, easiest first). */
+export const SKY_TIERS: readonly (readonly G1ScienceKind[])[] = [
+  ['dayNight', 'seeSky', 'nightThing', 'moonShape'],
+  ['whenSee', 'sunMove', 'seasonSee', 'skyPattern'],
+  ['skyNext', 'season', 'seasonNext'],
+]
+
+/**
+ * The stage's first questions, easiest first (then any of its kinds). A list
+ * in a slot is a choice: one of those kinds not yet asked this round, so the
+ * sky's eleven kinds share its rounds.
+ */
+const RAMP: Record<G1ScienceMode, (G1ScienceKind | readonly G1ScienceKind[])[]> = {
   lightSound: ['dark', 'sound', 'stopSound', 'shadow', 'material', 'material'],
-  sky: ['dayNight', 'seeSky', 'whenSee', 'sunMove', 'skyNext', 'season'],
+  sky: [SKY_TIERS[0], SKY_TIERS[0], SKY_TIERS[1], SKY_TIERS[1], SKY_TIERS[2], SKY_TIERS[2]],
   families: ['baby', 'baby', 'helps', 'parts', 'helps', 'parts'],
 }
 
@@ -151,6 +188,9 @@ const SKILL: Record<G1ScienceMode, { id: string; label: string }> = {
   sky: { id: 'g1-science-sky', label: 'the sun, the moon and the stars' },
   families: { id: 'g1-science-families', label: 'animal parents and babies' },
 }
+
+/** What makes a question the same question: what is said and shown, and its answer (not the cards' order). */
+export const questionKey = (q: ListenProblem) => `${q.prompt}|${JSON.stringify(q.picture ?? null)}|${String(q.answer)}`
 
 export function makeG1ScienceProvider(cfg: G1ScienceConfig): Omit<ProblemProvider, 'next'> & { next(): ListenProblem } {
   const mode: G1ScienceMode = cfg.mode in MODE_KINDS ? cfg.mode : 'lightSound'
@@ -165,7 +205,14 @@ export function makeG1ScienceProvider(cfg: G1ScienceConfig): Omit<ProblemProvide
   const babies = makeDeck(G1_BABIES)
   const helpAsks = makeDeck(Object.keys(G1_HELPS) as (keyof typeof G1_HELPS)[])
   const parts = makeDeck(Object.keys(G1_PARTS) as BodyPart[])
-  const flip = { dayNight: '', seeSky: '', whenSee: '', season: '', stop: '' }
+  const dayNightThings = makeDeck(Object.keys(G1_DAY_NIGHT_THINGS) as DayNightThing[])
+  const moons = makeDeck(G1_MOON_SHAPES)
+  const seenSeasons = makeDeck(G1_SEASONS)
+  const nowSeasons = makeDeck(G1_SEASONS)
+  const flip = { dayNight: '', seeSky: '', whenSee: '', season: '', stop: '', pattern: '' }
+  // this round's questions (what is said, shown and answered): none comes up twice
+  const recent = makeRecent<string>()
+  const kindsAsked: G1ScienceKind[] = []
   let asked = 0
   let serial = 0
   let lastSig = ''
@@ -276,6 +323,39 @@ export function makeG1ScienceProvider(cfg: G1ScienceConfig): Omit<ProblemProvide
     return { ...base('season', 3), ...c, speech: line(ask), nameCards: true, cues: [{ target: 'cards' }], walkthrough: 'none' }
   }
 
+  function nightThing(): Q {
+    const thing = dayNightThings.next()
+    const right = G1_DAY_NIGHT_THINGS[thing].when
+    const c = cards<string>(right, [right === 'day' ? 'night' : 'day'], (v) => ({ value: v, picture: art(`${v}Sky`), speech: line(v) }), () => line(`when-${thing}`))
+    return { ...base('nightThing', 1), ...c, speech: line(`up-${thing}`), picture: emoji(G1_DAY_NIGHT_THINGS[thing].emoji), cues: [{ target: 'picture' }, { target: 'cards', cue: 'Is it' }], walkthrough: 'none' }
+  }
+
+  function moonShape(): Q {
+    const want = moons.next()
+    const c = cards<MoonShape>(want, G1_MOON_SHAPES.filter((m) => m !== want), (v) => ({ value: v, picture: art(v), speech: line(`say-${v}`) }), (v) => line(`note-${v}`))
+    return { ...base('moonShape', 1), ...c, speech: line(want), cues: [{ target: 'cards', cue: 'Tap' }], walkthrough: 'none' }
+  }
+
+  function skyPattern(): Q {
+    const strip = turn('pattern', 'patternSunMoon', 'patternMoonSun')
+    const right = G1_SKY_PATTERNS[strip]
+    const c = cards<string>(right, [right === 'day' ? 'night' : 'day'], (v) => ({ value: v, picture: art(`${v}Sky`), speech: line(v) }), () => line('note-pattern'))
+    return { ...base('skyPattern', 2), ...c, speech: line(strip), picture: art(strip), cues: [{ target: 'picture' }, { target: 'cards', cue: 'What' }], walkthrough: 'none' }
+  }
+
+  function seasonSee(): Q {
+    const now = seenSeasons.next()
+    const c = cards<Season>(now, [SEASON_OPPOSITE[now]], (v) => ({ value: v, picture: emoji(SEASON_PICS[v]), speech: line(`thing-${v}`) }), (v) => line(`seen-${v}`))
+    return { ...base('seasonSee', 2), ...c, speech: line(`see-${now}`), nameCards: true, cues: [{ target: 'cards' }], walkthrough: 'none' }
+  }
+
+  function seasonNext(): Q {
+    const now = nowSeasons.next()
+    const right = nextSeason(now)
+    const c = cards<Season>(right, G1_SEASONS.filter((x) => x !== now && x !== right), (v) => ({ value: v, picture: emoji(SEASON_PICS[v]), speech: line(v) }), () => line('seasonPattern'))
+    return { ...base('seasonNext', 3), ...c, speech: line(`afterSeason-${now}`), picture: emoji(SEASON_PICS[now]), nameCards: true, cues: [{ target: 'picture' }, { target: 'cards', cue: 'Which' }], walkthrough: 'none' }
+  }
+
   // ── animal families ──
 
   function baby(): Q {
@@ -325,6 +405,16 @@ export function makeG1ScienceProvider(cfg: G1ScienceConfig): Omit<ProblemProvide
         return skyNext()
       case 'season':
         return season()
+      case 'nightThing':
+        return nightThing()
+      case 'moonShape':
+        return moonShape()
+      case 'skyPattern':
+        return skyPattern()
+      case 'seasonSee':
+        return seasonSee()
+      case 'seasonNext':
+        return seasonNext()
       case 'baby':
         return baby()
       case 'helps':
@@ -341,22 +431,30 @@ export function makeG1ScienceProvider(cfg: G1ScienceConfig): Omit<ProblemProvide
       serial = 0
       lastSig = ''
       for (const k of Object.keys(flip) as (keyof typeof flip)[]) flip[k] = ''
+      recent.clear()
+      kindsAsked.length = 0
       picker.reset()
       places.reset()
-      for (const d of [instruments, lights, shadowThings, materialAsks, sunAsks, skyNow, babies, helpAsks, parts]) d.reset()
+      for (const d of [instruments, lights, shadowThings, materialAsks, sunAsks, skyNow, babies, helpAsks, parts, dayNightThings, moons, seenSeasons, nowSeasons]) d.reset()
     },
     next(): ListenProblem {
       const ramp = RAMP[mode]
-      const planned = asked < ramp.length ? ramp[asked] : null
+      const slot = asked < ramp.length ? ramp[asked] : null
+      // (a choice of kinds: one this round hasn't asked yet)
+      const planned = slot === null ? null : typeof slot === 'string' ? slot : pickOne(slot, kindsAsked)
       asked++
-      // never the same question twice in a row
+      // never the same question twice in a row, nor twice in a round
       for (let tries = 0; ; tries++) {
-        const q = make(planned ?? picker.next())
+        const kind = planned ?? picker.next()
+        const q = make(kind)
         // (the prompt is what is said: the two never drift apart)
         const p: ListenProblem = { ...q, prompt: voiceText(q.speech) }
         const sig = `${p.prompt}|${JSON.stringify(p.picture ?? null)}|${JSON.stringify(p.options)}`
-        if (sig !== lastSig || tries >= 8) {
+        const key = questionKey(p)
+        if ((sig !== lastSig && !recent.has(key)) || tries >= 12) {
           lastSig = sig
+          recent.add(key)
+          kindsAsked.push(kind)
           places.note(p.options.indexOf(p.answer))
           return p
         }
