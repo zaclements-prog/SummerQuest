@@ -256,7 +256,7 @@ export default function GameRunner() {
   )
 }
 
-function ResultScreen({
+export function ResultScreen({
   result,
   coins,
   onContinue,
