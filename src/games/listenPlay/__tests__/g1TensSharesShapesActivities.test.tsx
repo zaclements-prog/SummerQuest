@@ -267,10 +267,11 @@ describe('Make the number (buildTens)', () => {
   const SPEC: BuildTensSpec = { kind: 'buildTens', n: 36 }
 
   it('rods and cubes onto the mat, the running count said; a wrong ✓ builds it together, then the tens stay for the next try', async () => {
-    mount(only(question(SPEC, { line: 'g1-tens/make-36' })))
+    mount(only(question(SPEC, { template: 'g1-tens/makeIt', slots: { n: 36 } })))
     await advance(100)
-    expect(asked()[0].text).toBe('Make thirty-six: three tens and six ones! Then tap the check.')
-    expect(asked()[0].marks.map((m) => m.target)).toEqual(['tens-number', 'tens-add-rod', 'tens-add-cube', 'tens-check'])
+    // asked: just the number (the tens and ones would say what to tap)
+    expect(asked()[0].text).toBe('Make 36! Then tap the check.')
+    expect(asked()[0].marks.map((m) => m.target)).toEqual(['tens-number', 'tens-check'])
     expectTextBudget(container, 0)
     await advance(6000)
     const mat = () => q('[data-tens-build]')!
@@ -286,8 +287,10 @@ describe('Make the number (buildTens)', () => {
     await until(() => said.includes('Now you try!'))
     expect(said).toEqual(["Hmm, let's look again.", "Let's make it together.", 'Ten, twenty, thirty.', '31!', '32!', '33!', '34!', '35!', '36!', 'Three tens and six ones: thirty-six.', 'Now you try!'])
     await until(() => phase() === 'ask')
-    // the next try starts with the tens in place
+    // the next try starts with the tens in place, and is asked with its tens and ones, as help
     expect([mat().getAttribute('data-tens-rods'), mat().getAttribute('data-tens-ones')]).toEqual(['3', '0'])
+    expect(asked()[0].text).toBe('Make thirty-six: three tens and six ones! Then tap the check.')
+    expect(asked()[0].marks.map((m) => m.target)).toEqual(['tens-number', 'tens-add-rod', 'tens-add-cube', 'tens-check'])
     await answerRight()
     await until(() => phase() === 'praise')
   })

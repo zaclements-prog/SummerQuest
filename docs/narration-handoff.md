@@ -109,7 +109,7 @@ grade 2–4 lessons are already recorded and need nothing.
 | Set | Fresh | To render | Voice id |
 |---|---|---|---|
 | Lessons (`npm run tts:check`) | 45 steps (the 11 grade 2–4 lessons) | **97 steps**: 13 K lessons (`k*`) and 11 1st-grade lessons (`g1*`), with the K reference. **56 steps**: 11 5th-grade lessons (`g5*`), with the normal lesson reference | `narrationVoice.json`: `…calm-teacher-v1` (unchanged) |
-| Voice lines (`npm run voice:check`) | 0 | **7,330 clips** in 36 packs | `voiceId.json`: `…calm-teacher-v1:k` |
+| Voice lines (`npm run voice:check`) | 0 | **7,633 clips** in 36 packs (303 added by the playtest fixes: re-teach lines, spoken reward moments, parade counts) | `voiceId.json`: `…calm-teacher-v1:k` |
 
 **1. The K delivery reference first.** K–1 should sound slower and warmer (§7.2, "K delivery").
 - If you don't have one yet, make the K reference pair with the same `calm-teacher-v1` persona.
@@ -149,7 +149,7 @@ $PY scripts/tts/render_local.py --engine higgs --ref-audio $K_REF --only kCounti
 
 Commit `public/tts/**` and `public/voice/**` with their manifests.
 
-**Size:** 7,330 short clips at 56 kbps is roughly 25–35 MB in `public/voice`. That is well over the 8 MB lesson budget, so tell the integrator the real total. If needed, the store build can ship K–1 packs separately later.
+**Size:** 7,633 short clips at 56 kbps is roughly 25–35 MB in `public/voice`. That is well over the 8 MB lesson budget, so tell the integrator the real total. If needed, the store build can ship K–1 packs separately later.
 
 **5th grade (merged).** Its 11 lessons are in "own" mode. Render them with the normal lesson reference (`sq_teacher_v2`), not the K one:
 ```bash

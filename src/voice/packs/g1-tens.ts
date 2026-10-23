@@ -94,5 +94,11 @@ export default defineVoicePack({
     tenMore: { text: 'Here is {n}. Ten more comes in! How many now?', slots: { n: { numbers: [G1_TENS_MIN, G1_TEN_MORE_MAX] } }, render: 'whole' },
     /** A rod rolls away on "Ten goes away". */
     tenLess: { text: 'Here is {n}. Ten goes away! How many now?', slots: { n: { numbers: [G1_TEN_LESS_MIN, G1_TENS_MAX] } }, render: 'whole' },
+    /**
+     * Make it (the `buildTens` activity), asked: just the number. The tens and
+     * ones (`make-<n>`, "Make thirty-six: three tens and six ones!…") are the
+     * help, asked again after a miss.
+     */
+    makeIt: { text: 'Make {n}! Then tap the check.', slots: { n: { numbers: [G1_TENS_MIN, G1_TENS_MAX] } }, render: 'whole' },
   },
 })

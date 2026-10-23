@@ -28,6 +28,8 @@ export const CAM_OFFSET: [number, number, number] = (() => {
   return [x, 9, z]
 })()
 export const CAM_FOV = 36
+/** Narrower than this (a tablet held upright), the camera backs off so the row numbers and the keeper stay in view. */
+export const GROVE_FIT_ASPECT = 1.45
 
 /** Fruit colour per order, so every harvest looks different. */
 export const FRUITS = ['#ef5b50', '#ffc93c', '#a77bec', '#ff9a3c', '#ff7aa8', '#e8504a', '#ffd23f']

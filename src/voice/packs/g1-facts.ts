@@ -82,6 +82,13 @@ export default defineVoicePack({
     biggerFirst: 'Start with the bigger number.',
     turnAround: 'Turn it around. The same numbers make the same total.',
     familyRule: 'Two parts make the whole. Take away a part, and the other part is left.',
+    // ── a first miss: the help stops one step short of the answer and asks ──
+    'stop-inAll': 'So how many in all?',
+    'stop-left': 'So how many are left?',
+    'stop-land': 'So where do we land?',
+    'stop-fill': 'So how many did we fill in?',
+    // a double's help: every counter counted, then the double said
+    countAll: "Let's count them all.",
     // "Start at eight." (then each dot is counted on: "nine!", "ten!")
     ...each(range(1, 19), (n) => [[`startAt-${n}`, `Start at ${w(n)}.`]]),
     // "Eight needs two more to make ten."

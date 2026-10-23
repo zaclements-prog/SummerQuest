@@ -7,8 +7,10 @@
  * parallel sides; a rectangle is a parallelogram with four right angles; a
  * rhombus is a parallelogram with four equal sides; a square is both. Nothing
  * here depends on which definition of trapezoid a class uses (a trapezoid is
- * only ever called a quadrilateral), and "isosceles" only comes up where an
- * equilateral triangle isn't one of the choices.
+ * only ever called a quadrilateral). Triangles are inclusive too: an
+ * isosceles triangle has at least two equal sides, so an equilateral triangle
+ * is also isosceles ("isosceles" is only ever the answer where an equilateral
+ * triangle isn't one of the choices, or the question asks for the best name).
  */
 
 /** "Always, sometimes or never?" items: the blank in `text` takes the answer. */
@@ -41,6 +43,7 @@ export const G5_ASN: readonly AsnItem[] = [
   { text: 'An acute triangle ___ has three acute angles.', answer: 'always', why: 'All three angles of an acute triangle are less than 90°.' },
   { text: 'A scalene triangle ___ has two equal sides.', answer: 'never', why: 'A scalene triangle has no equal sides.' },
   { text: 'An equilateral triangle ___ has three equal angles.', answer: 'always', why: 'Three equal sides make three equal angles: 60° each.' },
+  { text: 'An equilateral triangle is ___ an isosceles triangle.', answer: 'always', why: 'An isosceles triangle has at least two equal sides, and an equilateral triangle has three.' },
   { text: 'A trapezoid is ___ a quadrilateral.', answer: 'always', why: 'A trapezoid has four sides.' },
   { text: 'A quadrilateral ___ has four right angles.', answer: 'sometimes', why: 'Rectangles and squares do; many other quadrilaterals do not.' },
   { text: 'An obtuse triangle ___ has two obtuse angles.', answer: 'never', why: 'Two angles over 90° would add up to more than 180°.' },

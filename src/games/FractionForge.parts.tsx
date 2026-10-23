@@ -284,8 +284,13 @@ export function MoldTable({
     if (gp) gp.visible = fx === 'short' && k < 2.4 && Math.sin(clock.elapsedTime * 10) > -0.2
   })
   const chalkItems = useMemo(() => {
-    const f = fitChalk(equation, BAR - 0.2)
-    return chalkText(equation, { y: 0, z: 0.05, w: Math.min(0.26, f.w), h: 0.42, t: 0.06, gap: f.gap, color: TOON.white })
+    // A long sum ("3/12 + 2/12 = 5/12") drops its spaces for room, and its
+    // glyphs keep their shape as they narrow (squeezed into the full height
+    // and stroke, a 12 read as "l2/E"); a short one is drawn as before.
+    const text = equation.length > 12 ? equation.replace(/ /g, '') : equation
+    const f = fitChalk(text, BAR - 0.2)
+    const w = Math.min(0.26, f.w)
+    return chalkText(text, { y: 0, z: 0.05, w, h: Math.min(0.42, w * 1.75), t: Math.min(0.06, w * 0.3), gap: f.gap, color: TOON.white })
   }, [equation])
   const fitted = Math.min(mold, target)
   return (
@@ -887,10 +892,10 @@ export function ForgeYard() {
         ))}
       </group>
 
-      {/* bunting over the yard */}
-      <TCyl radiusTop={0.07} height={3.2} position={[-6.4, 1.6, -2.4]} color={TOON.woodDark} segments={6} />
-      <TCyl radiusTop={0.07} height={3.2} position={[6.6, 1.6, -3.4]} color={TOON.woodDark} segments={6} />
-      <Bunting from={[-6.4, 3.15, -2.4]} to={[6.6, 3.15, -3.4]} sag={0.55} />
+      {/* bunting over the yard (strung behind the recipe board: in front, its flags hid the + and = on the chalk) */}
+      <TCyl radiusTop={0.07} height={3.2} position={[-6.4, 1.6, -4.3]} color={TOON.woodDark} segments={6} />
+      <TCyl radiusTop={0.07} height={3.2} position={[6.6, 1.6, -5.2]} color={TOON.woodDark} segments={6} />
+      <Bunting from={[-6.4, 3.15, -4.3]} to={[6.6, 3.15, -5.2]} sag={0.55} />
 
       <Lamp position={[-2.0, 0, 1.9]} />
       <Lamp position={[3.4, 0, 1.5]} />

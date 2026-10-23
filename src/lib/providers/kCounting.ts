@@ -3,7 +3,7 @@ import type { ListenProblem } from '../../games/listenPlay/types'
 import { K_COUNT_THINGS } from '../../voice/packs/k-math'
 import type { VoiceRef } from '../../voice/types'
 import { randInt, shuffle } from '../random'
-import { makeKindPicker, makePositionGuard, pickOne } from './kShared'
+import { avoidUsed, makeKindPicker, makeRecent, makePositionGuard, pickOne } from './kShared'
 import { traceQuestion } from './kTrace'
 
 /**
@@ -109,14 +109,17 @@ export function makeKCountingProvider(cfg: KCountingConfig = {}): Omit<ProblemPr
   let serial = 0
   let lastN = -1
   let lastThing = ''
-  let lastSig = ''
+  /** This round's questions (prompt and answer) and the things counted: a round never asks one twice. */
+  const seen = makeRecent<string>()
+  const usedThings = makeRecent<KThing>()
   const sameAnswers: boolean[] = []
   const picker = makeKindPicker(kinds)
   const places = makePositionGuard()
 
   function pickThing(): KThing {
-    const t = pickOne(K_COUNT_THINGS, [lastThing as KThing])
+    const t = pickOne(K_COUNT_THINGS, avoidUsed(K_COUNT_THINGS, usedThings.list(), lastThing as KThing))
     lastThing = t
+    usedThings.add(t)
     return t
   }
 
@@ -275,7 +278,8 @@ export function makeKCountingProvider(cfg: KCountingConfig = {}): Omit<ProblemPr
       asked = 0
       lastN = -1
       lastThing = ''
-      lastSig = ''
+      seen.clear()
+      usedThings.clear()
       sameAnswers.length = 0
       picker.reset()
       places.reset()
@@ -296,13 +300,15 @@ export function makeKCountingProvider(cfg: KCountingConfig = {}): Omit<ProblemPr
       }
       // (the question before a trace counts to 9 at most: one numeral to trace)
       const cap = traceLast && asked % traceLast === traceLast - 1 ? 9 : max
-      // never the same question twice in a row
+      // never the same question twice in a round ("How many frogs?" with 7 frogs, twice)
+      // (a fresh question of the same kind: the kind picker's own rules stay as they are)
+      const kind = picker.next()
       for (let tries = 0; ; tries++) {
-        const kind = picker.next()
         const p = kind === 'howMany' || kind === 'findGroup' ? count(kind, cap) : compare(kind)
-        const sig = `${p.prompt}|${JSON.stringify(p.pair ?? p.pictureOptions?.map((o) => o.value))}`
-        if (sig !== lastSig || tries >= 8) {
-          lastSig = sig
+        const sig = `${p.prompt}|${JSON.stringify(p.pair ?? p.answer)}`
+        // (a fresh draw may land the answer in the same place a third time: draw again then too)
+        if ((!seen.has(sig) && !places.wouldRepeat(p.options.indexOf(p.answer))) || tries >= 8) {
+          seen.add(sig)
           if (typeof p.answer === 'number') lastN = p.answer
           places.note(p.options.indexOf(p.answer))
           return p

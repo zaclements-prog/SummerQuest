@@ -29,7 +29,7 @@ import {
 import { fmt } from '../lib/providers/g5Shared'
 import { CrateStack, Keeper, RootRing, type KeeperMood } from './TimesGrove.parts'
 import { GroveSet } from './TimesGrove.set'
-import { CAM_FOV, CAM_OFFSET, CRATES, DWELL, FIELD_HALF, FRUITS, ISO_YAW, toWorld, wpos } from './TimesGrove.layout'
+import { CAM_FOV, CAM_OFFSET, GROVE_FIT_ASPECT, CRATES, DWELL, FIELD_HALF, FRUITS, ISO_YAW, toWorld, wpos } from './TimesGrove.layout'
 import { AreaPlots, SeedPost } from './TimesGroveArea.parts'
 import { GameSky } from './_scene/GameSky'
 import { localX, localZ } from './_scene/isoFrame'
@@ -517,7 +517,7 @@ function AreaScene({
           <CreatureAccessories />
         </group>
       </group>
-      <GameCameraRig targetRef={posRef} focus={FOCUS} offset={CAM_OFFSET} follow={0.12} />
+      <GameCameraRig targetRef={posRef} focus={FOCUS} offset={CAM_OFFSET} follow={0.12} fitAspect={GROVE_FIT_ASPECT} />
       <JuiceLayer />
     </group>
   )

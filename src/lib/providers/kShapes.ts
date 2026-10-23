@@ -4,7 +4,7 @@ import { K_FLAT_SHAPES, K_SIDED_SHAPES, K_SOLID_SHAPES } from '../../voice/packs
 import type { VoiceRef } from '../../voice/types'
 import { randInt, shuffle } from '../random'
 import { countDistractors } from './kCounting'
-import { distinctColors, makeKindPicker, makePositionGuard, pickOne } from './kShared'
+import { avoidUsed, makeRecent, distinctColors, makeKindPicker, makePositionGuard, pickOne } from './kShared'
 
 /**
  * Kindergarten shapes (K.G.2–4), voice-first, for the Listen & Play shell
@@ -58,6 +58,8 @@ const TURNS = [0, 0, 90, 180, 270, -15, 15]
 
 const isSolid = (s: KShape): s is KSolidShape => (K_SOLID_SHAPES as readonly string[]).includes(s)
 const label = (s: KShape): VoiceRef => ({ template: 'k-shapes/label', slots: { shape: s } })
+/** After a miss, the right card lights up as it is named: "This is a square. Four sides, all the same." */
+const teach = (s: KShape): VoiceRef => ({ line: `k-shapes/teach-${s}` })
 const fact = (s: KShape): VoiceRef => (isSolid(s) ? { template: 'k-shapes/isSolid', slots: { shape: s } } : { template: 'k-shapes/isFlat', slots: { shape: s } })
 const PRAISE: VoiceRef[] = [{ line: 'k-shapes/youKnowShapes' }, { line: 'k-shapes/shapeSpotter' }]
 const SKILL = {
@@ -73,7 +75,11 @@ export function makeKShapesProvider(cfg: KShapesConfig = {}): Omit<ProblemProvid
   const turns = cfg.turn ?? mode === 'hunt'
   let serial = 0
   let lastTarget = ''
-  let lastSig = ''
+  /** This round's questions and the shapes they were about: never the same shape twice while others are left. */
+  const seen = makeRecent<string>()
+  const used = makeRecent<KShape>()
+  /** What to keep out of a pick from `pool`: the shapes this round already asked about (all used up: the last one). */
+  const avoid = <T extends KShape>(pool: readonly T[]): T[] => avoidUsed<T>(pool, used.list() as T[], lastTarget as T)
   const picker = makeKindPicker(kinds)
   const places = makePositionGuard()
 
@@ -93,7 +99,7 @@ export function makeKShapesProvider(cfg: KShapesConfig = {}): Omit<ProblemProvid
   function make(kind: KShapeKind): ListenProblem {
     switch (kind) {
       case 'name': {
-        const t = pickOne(K_FLAT_SHAPES, [lastTarget as KFlatShape])
+        const t = pickOne(K_FLAT_SHAPES, avoid(K_FLAT_SHAPES))
         // a square IS a rectangle: never a wrong answer to "Tap the rectangle"
         const others = some<KFlatShape>(K_FLAT_SHAPES, choices - 1, t === 'rectangle' ? [t, 'square'] : [t])
         const options = places.arrange([t, ...others], t)
@@ -105,10 +111,13 @@ export function makeKShapesProvider(cfg: KShapesConfig = {}): Omit<ProblemProvid
           skill: SKILL.flat,
           speech: { template: 'k-shapes/tapShape', slots: { shape: t } },
           ...shapeCards(options),
+          // a miss: the right shape is named, and its sides counted ("One, two, three, four.")
+          reteach: teach(t),
+          walkthrough: K_SHAPE_SIDES[t] ? ('answer' as const) : ('none' as const),
         }
       }
       case 'nameSolid': {
-        const t = pickOne(K_SOLID_SHAPES, [lastTarget as KSolidShape])
+        const t = pickOne(K_SOLID_SHAPES, avoid(K_SOLID_SHAPES))
         // its flat look-alike, and another solid
         const others = [FLAT_TWIN[t], ...some(K_SOLID_SHAPES, choices - 2, [t])]
         const options = places.arrange([t, ...others], t)
@@ -121,12 +130,13 @@ export function makeKShapesProvider(cfg: KShapesConfig = {}): Omit<ProblemProvid
           speech: { template: 'k-shapes/tapShape', slots: { shape: t } },
           // (a flat card tapped by mistake: "A circle is flat.")
           ...shapeCards(options, (s) => (s === t || isSolid(s) ? null : fact(s))),
+          reteach: teach(t),
         }
       }
       case 'flat':
       case 'solid': {
         // one of the kind asked for, among the other kind (its look-alike first)
-        const t: KShape = kind === 'flat' ? pickOne(K_FLAT_SHAPES, [lastTarget as KFlatShape]) : pickOne(K_SOLID_SHAPES, [lastTarget as KSolidShape])
+        const t: KShape = kind === 'flat' ? pickOne(K_FLAT_SHAPES, avoid(K_FLAT_SHAPES)) : pickOne(K_SOLID_SHAPES, avoid(K_SOLID_SHAPES))
         const twin: KShape | undefined = kind === 'flat' ? SOLID_TWIN[t as KFlatShape] : FLAT_TWIN[t as KSolidShape]
         const pool: readonly KShape[] = kind === 'flat' ? K_SOLID_SHAPES : K_FLAT_SHAPES
         const others = [...(twin ? [twin] : []), ...some(pool, choices - 1, twin ? [twin] : [])].slice(0, choices - 1)
@@ -140,6 +150,8 @@ export function makeKShapesProvider(cfg: KShapesConfig = {}): Omit<ProblemProvid
           speech: { line: kind === 'flat' ? 'k-shapes/tapFlat' : 'k-shapes/tapSolid' },
           // "A cube is solid." about a wrong card
           ...shapeCards(options, (s) => (s === t ? null : fact(s))),
+          // then "A circle is flat." about the right one
+          reteach: fact(t),
         }
       }
       case 'withSides': {
@@ -161,6 +173,8 @@ export function makeKShapesProvider(cfg: KShapesConfig = {}): Omit<ProblemProvid
           ...shapeCards(options),
           // a wrong card's sides are counted: "One, two, three, four."
           walkthrough: 'picked',
+          // then the right one is named: "This is a triangle. It has three sides."
+          reteach: teach(t),
         }
       }
       case 'noCorners': {
@@ -174,10 +188,11 @@ export function makeKShapesProvider(cfg: KShapesConfig = {}): Omit<ProblemProvid
           skill: SKILL.sides,
           speech: { line: 'k-shapes/noCorners' },
           ...shapeCards(options),
+          reteach: teach('circle'),
         }
       }
       case 'howManySides': {
-        const t = pickOne(K_SIDED_SHAPES, [lastTarget as (typeof K_SIDED_SHAPES)[number]])
+        const t = pickOne(K_SIDED_SHAPES, avoid(K_SIDED_SHAPES))
         const n = K_SHAPE_SIDES[t]
         const options = places.arrange([n, ...countDistractors(n, 3, 6, choices - 1)], n)
         const picture: Picture = { kind: 'shape', shape: t, color: randInt(0, 7), turn: turn(t) }
@@ -206,19 +221,21 @@ export function makeKShapesProvider(cfg: KShapesConfig = {}): Omit<ProblemProvid
     reset() {
       serial = 0
       lastTarget = ''
-      lastSig = ''
+      seen.clear()
+      used.clear()
       picker.reset()
       places.reset()
     },
     next(): ListenProblem {
-      // never the same question twice in a row
+      // never the same question twice in a round (nor in a row)
       for (let tries = 0; ; tries++) {
         const p = make(picker.next())
         const shown = p.picture?.kind === 'shape' ? p.picture.shape : p.answer
         const sig = `${p.prompt}|${shown}`
-        if (sig !== lastSig || tries >= 8) {
-          lastSig = sig
+        if ((!seen.has(sig) && String(shown) !== lastTarget) || tries >= 8) {
+          seen.add(sig)
           lastTarget = String(shown)
+          if (typeof shown === 'string') used.add(shown as KShape)
           places.note(p.options.indexOf(p.answer))
           return p
         }

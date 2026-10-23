@@ -150,6 +150,8 @@ export function makeKLettersProvider(cfg: KLettersConfig = {}): Omit<ProblemProv
       speech: { template: 'k-letters/tapLetter', slots: { letter: t } },
       pictureOptions: options.map<PictureOption>((c) => ({ value: c, picture: { kind: 'letter', ch: c }, speech: letterLabel(c) })),
       cues: [{ target: 'cards', cue: 'letter' }],
+      // a miss: "This is the letter A." as the A lights up
+      reteach: { template: 'k-letters/thisIsLetter', slots: { letter: t } },
     }
   }
 
@@ -171,6 +173,8 @@ export function makeKLettersProvider(cfg: KLettersConfig = {}): Omit<ProblemProv
         { target: 'picture' },
         { target: 'cards', cue: 'little' },
       ],
+      // a miss: "This is little b." as the b lights up
+      reteach: { template: 'k-letters/thisIsLittle', slots: { letter: t } },
     }
   }
 

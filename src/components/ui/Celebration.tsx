@@ -27,7 +27,7 @@ const CONFETTI = [
   { c: '#ffd95e', x: 146, y: -24, r: 80, s: 'rounded-[3px]' },
 ]
 
-function ConfettiBurst({ reduced }: { reduced: boolean }) {
+export function ConfettiBurst({ reduced }: { reduced: boolean }) {
   if (reduced) return null
   return (
     <div className="absolute left-1/2 top-16 pointer-events-none" aria-hidden="true">

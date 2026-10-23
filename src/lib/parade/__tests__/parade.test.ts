@@ -27,6 +27,10 @@ import {
   gatePrompt,
   introLine,
   paradeFamily,
+  friendsLine,
+  lossHintLine,
+  paradeBestKey,
+  worstPick,
 } from '..'
 
 const SETUPS: [OpFamily, number][] = [
@@ -218,6 +222,26 @@ describe('finale, stars, score and hint', () => {
     const hint = lossHint(state.decisions, plan.opSet)
     expect(hint).toMatch(/^With \d+, .+ made \d+ but .+ made \d+\./)
     expect(lossHint([], 'mulAdd')).toMatch(/×/)
+  })
+
+  it('K–1: the rematch tip is said (what the other gate would have given), and the parade size too', () => {
+    const plan = planLevel({ family: 'div', grade: 1, seed: 'hint-k1' }, 0)
+    const { state } = play(plan, (p) => (p.winner === 'tie' ? 'left' : other(bestSide(p))))
+    const worst = worstPick(state.decisions)!
+    expect(worst.smart).toBe(false)
+    const said = voiceText(lossHintLine(worst, plan.opSet))
+    expect(said, said).toMatch(/would have (left|made) \d+!$|^The other gate had more/)
+    // every pick smart: how to win instead
+    expect(voiceText(lossHintLine(null, 'sub20'))).toMatch(/keeps more friends/)
+    expect(voiceText(lossHintLine(null, 'addSub'))).toMatch(/gives us more friends/)
+    expect(voiceText(friendsLine(36)!)).toBe('We have 36 friends!')
+    expect(friendsLine(150)).toBeNull()
+  })
+
+  it('each parade stage keeps its own best score (a missing one is simply none)', () => {
+    expect(paradeBestKey('g1-sub-parade')).not.toBe(paradeBestKey('g1-add-parade'))
+    expect(paradeBestKey(undefined)).toBe('sq-best-critter-parade-v1')
+    expect(paradeBestKey('k-count-parade')).toBe('sq-best-critter-parade-v1:k-count-parade')
   })
 })
 

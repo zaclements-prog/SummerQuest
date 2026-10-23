@@ -3,7 +3,7 @@ import type { FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, useReducedMotion } from 'framer-motion'
 import { useProgress } from '../store/progress'
-import { GRADE_LABEL, GRADE_SHORT_LABEL, type GradeLevel } from '../lib/gradeTiers'
+import { GRADE_LABEL, GRADE_SHORT_LABEL, nextGradeShortLabel, type GradeLevel } from '../lib/gradeTiers'
 import { OFFERED_GRADES } from '../lib/features'
 import { sfx } from '../lib/sound'
 import { Card, Button, BackButton } from '../components/ui'
@@ -129,6 +129,13 @@ export default function AvatarCreate() {
   const colorName = COLORS.find((c) => c.value === color)?.name ?? ''
   // (K–1) a color has been tapped: after the next animal, go straight to Begin
   const colorTapped = useRef(false)
+  // (K–1) an animal has been tapped (before or after the grade): never ask for one again
+  const animalTapped = useRef(false)
+  // The grade grid stays open until a K–1 grade is picked; then it folds into one
+  // line with a small "Change" button, so a child's stray tap on a grade card can't
+  // switch the grade and undo what the voice has walked them through.
+  const [gradeOpen, setGradeOpen] = useState(true)
+  const gradeFolded = listen && !gradeOpen
 
   /** Bring a guide target into view, then say the line and point at it. */
   function guideTo(voice: VoiceRef, target: string, cue?: string) {
@@ -136,11 +143,14 @@ export default function AvatarCreate() {
     void guide.show({ voice, target, cue })
   }
 
-  // A grown-up picked K or 1st: the voice takes the child through the rest.
+  // A grown-up picked K or 1st: the voice takes the child through the rest,
+  // from the first step not done yet (a child who already tapped an animal
+  // isn't asked for one again).
   useEffect(() => {
     if (!listen) return
-    colorTapped.current = false
-    guideTo(PICK_ANIMAL, 'avatar-animals', 'animal')
+    if (colorTapped.current) guideTo(TAP_BEGIN, 'avatar-begin', 'button')
+    else if (animalTapped.current) guideTo(PICK_COLOR, 'avatar-colors', 'color')
+    else guideTo(PICK_ANIMAL, 'avatar-animals', 'animal')
     return () => guide.clear({ forget: true })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listen])
@@ -148,6 +158,7 @@ export default function AvatarCreate() {
   async function pickAnimal(e: string) {
     sfx.click()
     setEmoji(e)
+    animalTapped.current = true
     if (!listen) return
     const said = animalLine(e)
     if (said && !(await guide.say(said))) return
@@ -158,8 +169,8 @@ export default function AvatarCreate() {
   async function pickColor(c: (typeof COLORS)[number]) {
     sfx.click()
     setColor(c.value)
-    if (!listen) return
     colorTapped.current = true
+    if (!listen) return
     if (!(await guide.say({ line: `k-nav/color-${c.say}` }))) return
     guideTo(TAP_BEGIN, 'avatar-begin', 'button')
   }
@@ -186,9 +197,22 @@ export default function AvatarCreate() {
 
   // The keyboard's Go/Next key and the Go button next to the field do what
   // "Begin adventure!" does: begin, or show what's still missing.
+  // K–1: the field's button is a plain "OK" that just closes the keyboard, so
+  // the big green "Begin adventure!" is the only button that starts.
   function submitName(e: FormEvent) {
     e.preventDefault()
+    if (listen) {
+      inputRef.current?.blur()
+      return
+    }
     start()
+  }
+
+  function pickGrade(g: GradeLevel) {
+    sfx.click()
+    setGrade(g)
+    // (K–1: fold the grid away once the grown-up has picked)
+    if (isListenMode(g)) setGradeOpen(false)
   }
 
   function surprise() {
@@ -368,7 +392,7 @@ export default function AvatarCreate() {
                         'shrink-0 min-h-[60px] min-w-[60px] px-4 kid-text text-xl text-ink-900 bg-quest-300 hover:bg-quest-200',
                       ].join(' ')}
                     >
-                      {grade === null ? 'Next ↓' : 'Go! 🚀'}
+                      {grade === null ? 'Next ↓' : listen ? 'OK ✓' : 'Go! 🚀'}
                     </button>
                   </div>
                 </form>
@@ -383,10 +407,32 @@ export default function AvatarCreate() {
 
               {/* Grade picker (sets the difficulty of every adventure) */}
               <div ref={gradeRef} className={nudge && grade === null && name.trim() ? 'rounded-[1.25rem] ring-4 ring-wrong-500 ring-offset-4 ring-offset-paper' : ''}>
+                {/* (grown-ups answer this: the grade just FINISHED picks the quests, e.g. 3rd = times tables) */}
                 <SectionLabel id="grade-label">
-                  What grade are you finishing?{' '}
-                  <span className="text-ink-700 text-lg font-semibold">— this picks your quests</span>
+                  Which grade did your child just finish?{' '}
+                  <span className="text-ink-700 text-lg font-semibold">— this picks the quests</span>
                 </SectionLabel>
+                {gradeFolded && grade !== null ? (
+                  // K–1, once picked: one line, and a small Change button well away from Begin's path
+                  <div className="flex flex-wrap items-center gap-3" data-grade-folded="">
+                    <span className="relative kid-text font-bold text-2xl text-ink-900 bg-quest-300 border-[3px] border-line rounded-[1rem] px-4 py-1 shadow-ledge-sm">
+                      {GRADE_SHORT_LABEL[grade]}
+                    </span>
+                    <span className="kid-text text-lg text-ink-800">
+                      Finished {GRADE_SHORT_LABEL[grade]} · going into {nextGradeShortLabel(grade)}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        sfx.click()
+                        setGradeOpen(true)
+                      }}
+                      className="kid-text text-base text-ink-800 underline underline-offset-4 min-h-[44px] px-2 rounded-lg outline-none focus-visible:ring-4 focus-visible:ring-ocean-600/70"
+                    >
+                      Change grade
+                    </button>
+                  </div>
+                ) : (
                 <div
                   role="radiogroup"
                   aria-labelledby="grade-label"
@@ -401,10 +447,7 @@ export default function AvatarCreate() {
                         role="radio"
                         aria-checked={selected}
                         aria-label={GRADE_LABEL[g.grade]}
-                        onClick={() => {
-                          sfx.click()
-                          setGrade(g.grade)
-                        }}
+                        onClick={() => pickGrade(g.grade)}
                         className={[
                           tileBase,
                           'min-h-[88px] px-2 py-3 flex flex-col items-center gap-1 text-center',
@@ -412,12 +455,14 @@ export default function AvatarCreate() {
                         ].join(' ')}
                       >
                         <span className="kid-text font-bold text-3xl text-ink-900">{g.label}</span>
+                        <span className="kid-text text-sm text-ink-800 leading-tight">going into {nextGradeShortLabel(g.grade)}</span>
                         <span className="text-sm text-ink-700 leading-tight">{g.blurb}</span>
                         {selected && <Check />}
                       </button>
                     )
                   })}
                 </div>
+                )}
               </div>
             </Card>
 
@@ -433,6 +478,9 @@ export default function AvatarCreate() {
                 Begin adventure! 🚀
               </Button>
             </div>
+            {/* K–1: room under Begin, so the voice's pointing hand sits below the
+                button (on nothing tappable) instead of flipping up onto the card */}
+            {listen && <div aria-hidden="true" className="h-36" data-begin-room="" />}
           </motion.div>
         </motion.div>
         {/* While the keyboard covers the bottom of the page, room to scroll the name field up above it. */}

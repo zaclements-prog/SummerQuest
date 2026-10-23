@@ -155,6 +155,8 @@ export default function WritingPad({ provider, params, onComplete, meta }: GameP
       submitting={submitting}
       feedback={feedback}
       nextOrFinish={nextOrFinish}
+      // (grade 5: back to the pad with the text kept, for another try)
+      revise={isG5WritingProblem(problem) ? () => setFeedback(null) : undefined}
       llmEnabled={llmEnabled}
       llmAvailable={llmAvailable}
     />
@@ -187,6 +189,8 @@ interface WritingPadViewProps {
   submitting: boolean
   feedback: Feedback | null
   nextOrFinish: () => void
+  /** Back to the writing box with the text kept (grade 5). */
+  revise?: () => void
   llmEnabled: boolean
   llmAvailable: boolean | null
 }
@@ -212,6 +216,7 @@ function WritingPadView({
   submitting,
   feedback,
   nextOrFinish,
+  revise,
   llmEnabled,
   llmAvailable,
 }: WritingPadViewProps) {
@@ -430,14 +435,21 @@ function WritingPadView({
                 </div>
               )}
 
-              <Button
-                variant="primary"
-                size="lg"
-                onClick={nextOrFinish}
-                className="w-full"
-              >
-                {idx + 1 >= questionCount ? 'Finish ✓' : 'Next prompt →'}
-              </Button>
+              <div className="flex flex-col sm:flex-row gap-3">
+                {revise && (
+                  <Button variant="secondary" size="lg" onClick={revise} className="w-full sm:flex-1">
+                    ✏️ Revise
+                  </Button>
+                )}
+                <Button
+                  variant="primary"
+                  size="lg"
+                  onClick={nextOrFinish}
+                  className="w-full sm:flex-1"
+                >
+                  {idx + 1 >= questionCount ? 'Finish ✓' : 'Next prompt →'}
+                </Button>
+              </div>
             </Card>
           </motion.div>
         )}

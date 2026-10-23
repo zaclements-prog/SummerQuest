@@ -1,4 +1,4 @@
-import { curriculum } from '../curriculum'
+import { curriculum, zoneTitle } from '../curriculum'
 import type { GradeLevel } from './gradeTiers'
 import { zoneStageSets } from './pets/growth'
 
@@ -32,7 +32,8 @@ export interface BadgeCtx {
   /** Cumulative coins ever earned (monotonic) so a "collector" badge can't be un-earned by spending. */
   totalCoinsEarned: number
   /**
-   * The child's grade (`player.grade`). Badges are the same at every grade: a
+   * The child's grade (`player.grade`). It names the zone badges (`zoneBadgeLook`);
+   * otherwise badges are the same at every grade: a
    * zone badge is earned by a star on every stage of ANY of the zone's stage
    * sets (2–4, or K–1 / 5 once authored), so changing grade never takes one
    * away; star / stage milestones count every band's stars.
@@ -40,7 +41,7 @@ export interface BadgeCtx {
   grade: GradeLevel | null | undefined
 }
 
-const ZONE_BADGES: { zoneId: string; emoji: string; title: string }[] = [
+export const ZONE_BADGES: { zoneId: string; emoji: string; title: string }[] = [
   { zoneId: 'multiplication-mesa', emoji: '✖️', title: 'Multiplication Master' },
   { zoneId: 'division-dunes', emoji: '➗', title: 'Division Dynamo' },
   { zoneId: 'fraction-falls', emoji: '🍕', title: 'Fraction Chef' },
@@ -54,6 +55,23 @@ const ZONE_BADGES: { zoneId: string; emoji: string; title: string }[] = [
   { zoneId: 'science-summit', emoji: '🔬', title: 'Science Explorer' },
   { zoneId: 'tower-battlefront', emoji: '🏰', title: 'Tower Champion' },
 ]
+
+/**
+ * A zone badge's name and emoji at a grade. The classic names ("Multiplication
+ * Master") fit the zone's 2nd–5th grade content; where the grade plays the
+ * zone under its own name (1st grade's "Adding Mesa" is addition), the badge
+ * takes that name and the zone's own emoji ("Adding Mesa Hero"), so a 1st
+ * grader is never a "Multiplication Master" for adding.
+ */
+export function zoneBadgeLook(
+  zb: { zoneId: string; emoji: string; title: string },
+  grade: GradeLevel | null | undefined,
+): { emoji: string; title: string } {
+  const zone = curriculum.zones.find((z) => z.id === zb.zoneId)
+  if (!zone) return { emoji: zb.emoji, title: zb.title }
+  const name = zoneTitle(zone, grade)
+  return name === zone.title ? { emoji: zb.emoji, title: zb.title } : { emoji: zone.emoji, title: `${name} Hero` }
+}
 
 function clearedStages(zone?: { stages: Record<string, { stars: number }> }): number {
   if (!zone) return 0
@@ -98,12 +116,14 @@ export function computeBadges(ctx: BadgeCtx): BadgeStatus[] {
 
   const zoneBadges: BadgeStatus[] = ZONE_BADGES.map((zb) => {
     const zone = curriculum.zones.find((z) => z.id === zb.zoneId)
+    const { emoji, title } = zoneBadgeLook(zb, ctx.grade)
     return {
+      // (the id never changes with the grade: seen badges are saved by id)
       id: `zone-${zb.zoneId}`,
-      emoji: zb.emoji,
-      title: zb.title,
+      emoji,
+      title,
       category: 'zone',
-      description: `Earn a star on every stage of ${zone?.title ?? zb.title}.`,
+      description: `Earn a star on every stage of ${zone ? zoneTitle(zone, ctx.grade) : title}.`,
       earned: zoneMastered(ctx, zb.zoneId),
     }
   })

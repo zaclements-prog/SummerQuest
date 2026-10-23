@@ -7,7 +7,7 @@ import { PRAISE, countAlongSteps } from '../../games/listenPlay/script'
 import type { PictureOption } from '../../lib/problem'
 import { sfx } from '../../lib/sound'
 import type { LessonCheck } from '../types'
-import { LESSON_NEXT, LESSON_STAGE, askSteps, lessonCard } from './listenScript'
+import { LESSON_NEXT, LESSON_STAGE, askSteps, explainAloud, lessonCard } from './listenScript'
 
 type Phase = 'ask' | 'judge' | 'praise' | 'oops' | 'done'
 
@@ -104,6 +104,12 @@ export default function ListenCheck({
         case 'oops': {
           await guide.say({ line: 'ui/tryAgain' })
           if (!live) return
+          // nothing to count: the rule, said with the answer lit up ("A triangle has three sides.")
+          const explain = explainAloud(check)
+          if (explain && answerCard >= 0) {
+            await guide.show({ voice: explain, target: lessonCard(answerCard), hand: false, pad: 10 }, { repeatable: false })
+            if (!live) return
+          }
           if (check.countAlong) {
             await guide.sequence(countAlongSteps(check.countAlong, LESSON_STAGE, () => {}), { repeatable: false })
             if (!live) return

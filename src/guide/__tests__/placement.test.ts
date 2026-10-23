@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { handPlace, sameBox, spotBox, unionBox } from '../placement'
+import { SWEEP_PASS_S, handPlace, sameBox, spotBox, sweepShowing, unionBox } from '../placement'
 
 describe('guide placement', () => {
   it('unions boxes (a row of cards spotlit as one)', () => {
@@ -45,6 +45,18 @@ describe('guide placement', () => {
     expect(p.sweep).toBeGreaterThan(150)
     expect(p.x - p.sweep).toBeGreaterThanOrEqual(row.x - 64)
     expect(p.x + p.sweep + 64).toBeLessThanOrEqual(1024)
+  })
+
+  it('a sweeping hand fades after one glide once the line is said: it never rests on one answer', () => {
+    // while the question is said it glides along the row
+    expect(sweepShowing('sweep', true, 10)).toBe(true)
+    // the line is over: it finishes its glide, then fades (it would stop on the last card)
+    expect(sweepShowing('sweep', false, SWEEP_PASS_S - 0.5)).toBe(true)
+    expect(sweepShowing('sweep', false, SWEEP_PASS_S + 0.1)).toBe(false)
+    // a hand pointing at one thing (▶, a drag) stays
+    expect(sweepShowing('tap', false, 30)).toBe(true)
+    expect(sweepShowing('drag', false, 30)).toBe(true)
+    expect(sweepShowing(null, true, 0)).toBe(false)
   })
 
   it('compares boxes to the pixel', () => {

@@ -50,6 +50,27 @@
   outline: 5px solid #ffcf4d;
   outline-offset: 3px;
 }
+/* a box's sign: a kraft-paper tag, tilted, with a hole for its string, under a dashed line */
+.sort-tag {
+  background: #f3dcae;
+  transform: translateX(-50%) rotate(-3deg);
+  transition:
+    opacity 0.3s ease,
+    filter 0.3s ease;
+}
+.sort-tag-hole {
+  left: 6px;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  margin-top: -7px;
+}
+/* counting and comparing: the signs step back, so only what's in the boxes reads as a group */
+[data-sort-step='count'] .sort-tag,
+[data-sort-step='more'] .sort-tag {
+  opacity: 0.55;
+  filter: grayscale(0.8);
+}
 .sort-box[data-state='tried'] {
   opacity: 0.5;
 }

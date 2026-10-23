@@ -172,6 +172,26 @@ describe('the listen-mode lesson (K–1)', () => {
     expect(getGuideSnapshot().run!.lines[0].text).toBe('Tap little b!')
   })
 
+  it('a wrong pick with nothing to count: the rule is said with the answer lit up, then another try', async () => {
+    setGrade(0)
+    mount('/tutor/kLetters')
+    await tellStep()
+    click(button('Next'))
+    await tellStep()
+    const answerAt = cards().indexOf(rightCard())
+    const wrong = wrongCard()
+    click(wrong)
+    let explained: unknown = null
+    for (let k = 0; k < 60 && wrong.dataset.state !== 'tried'; k++) {
+      await advance(250)
+      const s = getGuideSnapshot()
+      const line = s.run?.lines[s.line]
+      if (line?.text === 'Little b is the small one. Big B is the tall one.') explained = line.marks[0]?.target
+    }
+    expect(explained).toBe(`lesson-card-${answerAt}`)
+    expect(wrong.dataset.state).toBe('tried')
+  })
+
   it('shows the words only when a grown-up turns them on', async () => {
     setGrade(0)
     mount('/tutor/kShapes')
@@ -285,6 +305,36 @@ describe('grades 2–5 lessons', () => {
     expect(container.querySelector('[data-listen-lesson]')).toBeNull()
     expect(container.textContent).toContain('Step 1 of 3')
     expect(container.textContent).toContain('Division is sharing fairly')
+  })
+
+  it('"Now practice" never skips an unanswered check: it brings the check into view; an answer scrolls its feedback above the dock', async () => {
+    const scrolls: (ScrollLogicalPosition | undefined)[] = []
+    const prev = Element.prototype.scrollIntoView
+    Element.prototype.scrollIntoView = function (this: Element, arg?: boolean | ScrollIntoViewOptions) {
+      if (this.getAttribute('data-testid') === 'lesson-check') scrolls.push(typeof arg === 'object' ? arg.block : undefined)
+    }
+    try {
+      setGrade(3)
+      mount('/tutor/division')
+      await advance(300)
+      const byText = (re: RegExp) => [...container.querySelectorAll('button')].find((b) => re.test(b.textContent ?? ''))!
+      click(byText(/^Next/)) // → step 2
+      click(byText(/^Next/)) // → step 3, the last, with its check
+      await advance(300)
+      const practice = byText(/Now practice/)
+      expect(practice.getAttribute('aria-disabled')).toBe('true')
+      scrolls.length = 0
+      click(practice)
+      expect(container.querySelector('[aria-label="Lesson complete"]')).toBeNull()
+      expect(scrolls).toEqual(['start'])
+      const opts = [...container.querySelectorAll<HTMLButtonElement>('[data-check-option]')]
+      click(opts.find((o) => o.textContent?.includes('4'))!)
+      await advance(500)
+      expect(scrolls.at(-1)).toBe('end')
+      expect(practice.getAttribute('aria-disabled')).toBeNull()
+    } finally {
+      Element.prototype.scrollIntoView = prev
+    }
   })
 
   it('a K–1 lesson opened by any grade is told the voice-first way', async () => {

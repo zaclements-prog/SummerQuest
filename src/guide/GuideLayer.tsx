@@ -1,7 +1,7 @@
 import { memo, useCallback, useEffect, useRef } from 'react'
 import { useVoice } from '../voice/useVoice'
 import type { VoicePlayback, VoiceRef } from '../voice/types'
-import { handPlace, sameBox, spotBox, type Box } from './placement'
+import { handPlace, sameBox, spotBox, sweepShowing, type Box } from './placement'
 import {
   cueTime,
   getGuideSnapshot,
@@ -133,6 +133,8 @@ function overlayLoop(els: Els, published: { current: Published | null }): () => 
   let dirty = true
   let serial = -1
   let markIdx = -1
+  /** performance.now() when the current mark (and its hand) appeared. */
+  let markSince = 0
   let box: Box | null = null
   let from: Box | null = null
   let lastKey = ''
@@ -196,6 +198,7 @@ function overlayLoop(els: Els, published: { current: Published | null }): () => 
     const mark: GuideMark | null = idx >= 0 ? line.marks[idx] : null
     if (idx !== markIdx) {
       markIdx = idx
+      markSince = performance.now()
       dirty = true
     }
 
@@ -209,10 +212,12 @@ function overlayLoop(els: Els, published: { current: Published | null }): () => 
     if (!mark || !box) return hideAll()
 
     const dimOn = mark.dim && !run.gentle && now < dur + DIM_HOLD_S
+    // a sweeping hand fades once the line is said and it has glided along the row once
+    const handOn = sweepShowing(mark.hand, s.speaking, (performance.now() - markSince) / 1000)
     const vw = window.innerWidth
     const vh = window.innerHeight
     const fromKey = from ? `${Math.round(from.x)},${Math.round(from.y)}` : ''
-    const key = `${serial}:${idx}:${Math.round(box.x)},${Math.round(box.y)},${Math.round(box.w)},${Math.round(box.h)}:${fromKey}:${dimOn}:${vw}x${vh}`
+    const key = `${serial}:${idx}:${Math.round(box.x)},${Math.round(box.y)},${Math.round(box.w)},${Math.round(box.h)}:${fromKey}:${dimOn}:${handOn}:${vw}x${vh}`
     if (key === lastKey) return
     lastKey = key
 
@@ -241,7 +246,7 @@ function overlayLoop(els: Els, published: { current: Published | null }): () => 
       els.hand.toggleAttribute('data-flip', hp.flip)
       els.hand.dataset.mode = drag ? 'drag' : hp.sweep > 0 ? 'sweep' : 'tap'
     }
-    setOn(els.hand, !!mark.hand)
+    setOn(els.hand, handOn)
     for (const el of [els.spot, els.ring, els.hand]) el.setAttribute('data-placed', '')
   }
   raf = requestAnimationFrame(tick)

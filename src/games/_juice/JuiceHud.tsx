@@ -108,15 +108,19 @@ export function SpeechBubble({ text }: { text: string }) {
   )
 }
 
-/** Run score in a chunky chip; the number springs each time it changes. */
+/**
+ * Run score in a chunky chip; the number springs each time it changes. Its
+ * icon is a target (🎯), not a star, so the score never reads as stars earned.
+ */
 export function ScoreChip({ score, best }: { score: number; best?: number }) {
   return (
     <div
       className="kid-text pointer-events-none select-none flex items-center gap-2 rounded-2xl px-3 py-1 text-white shadow-lg"
       style={{ background: 'rgba(58,44,56,.72)', border: '3px solid rgba(255,255,255,.75)' }}
+      aria-label={`Score ${score.toLocaleString()}`}
     >
       <span className="text-lg" aria-hidden="true">
-        ⭐
+        🎯
       </span>
       <motion.span
         key={score}
