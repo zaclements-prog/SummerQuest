@@ -59,11 +59,26 @@ export function fillState(chosen: number, target: number): FillState {
  */
 export const FORGE_LIMITS = { denomMax: 12 } as const
 
+/**
+ * The denominators a grade's forge orders may use: the standards' own lists.
+ * Up to 3rd grade 2, 3, 4, 6 and 8 (3.NF; 2nd grade's /8 ceiling only reaches
+ * halves, thirds and fourths doubled); 4th grade adds fifths, tenths and
+ * twelfths (4.NF.1; never ninths). 5th grade plays the unlike-denominator forge.
+ */
+export function forgeDenominators(grade: number): readonly number[] {
+  return grade <= 3 ? [2, 3, 4, 6, 8] : [2, 3, 4, 5, 6, 8, 10, 12]
+}
+
 /** Grade's equivalence denominator ceiling → forge-bounded provider config (never harder than the grade). */
-export function forgeFactConfig(tierDenomMax: number) {
+export function forgeFactConfig(tierDenomMax: number, denominators?: readonly number[]) {
   // The gauge prints the target denominator on the order, so the forge only asks
   // the blank-the-top scale-up shape (the provider's wider shapes are for quizzes).
-  return { maxDenominator: Math.min(FORGE_LIMITS.denomMax, Math.max(2, tierDenomMax)), shapes: ['numUp'] as const }
+  return { maxDenominator: Math.min(FORGE_LIMITS.denomMax, Math.max(2, tierDenomMax)), shapes: ['numUp'] as const, ...(denominators ? { denominators } : {}) }
+}
+
+/** A grade's classic forge facts: the tier's ceiling, bounded by the gauge, on the grade's denominator list. */
+export function forgeFactConfigForGrade(grade: number, tierDenomMax: number) {
+  return forgeFactConfig(tierDenomMax, forgeDenominators(grade))
 }
 
 /** Slab centers for an `n`-slab row of total length `span`, centered on 0. */
