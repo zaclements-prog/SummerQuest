@@ -61,6 +61,23 @@ export function gradeListText(grades: readonly GradeLevel[]): string {
   return `${g.slice(0, -1).map(name).join(', ')}${g.length > 2 ? ',' : ''} or ${name(g[g.length - 1])}${tail}`
 }
 
+/**
+ * The Welcome screen's grades: `gradeListText`, but never leading with
+ * kindergarten (a 10-year-old who reads "kindergarten" first takes the game
+ * for little kids): "1st through 5th grade, and kindergarten too";
+ * "2nd, 3rd, or 4th grade" as before when there's no kindergarten.
+ */
+export function welcomeGradeText(grades: readonly GradeLevel[]): string {
+  const older = grades.filter((g) => g !== 0)
+  if (older.length === 0 || older.length === grades.length) return gradeListText(grades)
+  return `${gradeListText(older)}, and kindergarten too`
+}
+
+/** The grade a child goes into after finishing `grade` ("1st" after K, "6th" after 5th). */
+export function nextGradeShortLabel(grade: GradeLevel): string {
+  return grade < 5 ? GRADE_SHORT_LABEL[(grade + 1) as GradeLevel] : '6th'
+}
+
 /** A compact span for meta copy: "2nd-to-4th grade", "K-to-5th grade". */
 export function gradeSpanText(grades: readonly GradeLevel[]): string {
   const g = [...grades].sort((a, b) => a - b)
