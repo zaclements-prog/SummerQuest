@@ -37214,8 +37214,8 @@
       "file": "voice/k-trace/digit-0.mp3"
     },
     "k-trace/digit-1": {
-      "text": "Let's trace an one!",
-      "hash": "78a480b57a",
+      "text": "Let's trace a one!",
+      "hash": "340830ac10",
       "kind": "line",
       "file": "voice/k-trace/digit-1.mp3"
     },
@@ -37268,8 +37268,8 @@
       "file": "voice/k-trace/digit-9.mp3"
     },
     "k-trace/counted-1": {
-      "text": "You counted one! Now trace an one.",
-      "hash": "6ac8f03856",
+      "text": "You counted one! Now trace a one.",
+      "hash": "5d1f954a44",
       "kind": "line",
       "file": "voice/k-trace/counted-1.mp3"
     },

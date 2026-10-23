@@ -73,6 +73,9 @@ describe('kindergarten tracing provider', () => {
     expect(voiceText({ line: 'k-trace/digit-8' })).toBe("Let's trace an eight!")
     expect(voiceText({ line: 'k-trace/digit-7' })).toBe("Let's trace a seven!")
     expect(voiceText({ line: 'k-trace/counted-8' })).toBe('You counted eight! Now trace an eight.')
+    // by sound: "one" starts with a "w"
+    expect(voiceText({ line: 'k-trace/digit-1' })).toBe("Let's trace a one!")
+    expect(voiceText({ line: 'k-trace/counted-1' })).toBe('You counted one! Now trace a one.')
   })
 
   it('a letter done shows (and says) its picture word: B is for ball; E has none', () => {

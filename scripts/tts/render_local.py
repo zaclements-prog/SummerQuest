@@ -228,8 +228,13 @@ def render_verified(engine, aligner, text: str, tmp_dir: Path,
         out = tmp_dir / "verified.mp3"
         if out.exists():
             out.unlink()
-        (post or postprocess)(raw, out)
-        dur = mp3_duration(out)
+        try:
+            (post or postprocess)(raw, out)
+            dur = mp3_duration(out)
+        except (subprocess.CalledProcessError, ValueError, RuntimeError):
+            # an all-silence take trims to nothing and ffprobe can't read it: a bad draw
+            last = "empty/undecodable take"
+            continue
         if not (lo <= dur <= hi):
             last = f"duration {dur:.1f}s outside [{lo:.1f},{hi:.1f}]s for {words}w"
             continue
@@ -266,8 +271,12 @@ def render_verified_short(engine, aligner, text: str, tmp_dir: Path, say: str,
         out = tmp_dir / "verified.mp3"
         if out.exists():
             out.unlink()
-        postprocess_voice(raw, out, tight)
-        dur = mp3_duration(out)
+        try:
+            postprocess_voice(raw, out, tight)
+            dur = mp3_duration(out)
+        except (subprocess.CalledProcessError, ValueError, RuntimeError):
+            last = "empty/undecodable take"
+            continue
         if vl.is_articulation(text):
             # letter-sound articulations ship on the duration window alone
             why = vl.short_duration_window(vl.word_count(text))
@@ -599,7 +608,7 @@ def voice_main(args):
                         raise
                     print(f"  retry-stitched {key}: {e}", flush=True)
                     verified, dur = render_stitched(engine, aligner, text, tmp_dir)
-        except RuntimeError as e:
+        except Exception as e:  # one bad clip never ends the pack run
             print(f"FAILED {key}: {e}", flush=True)
             failed += 1
             continue

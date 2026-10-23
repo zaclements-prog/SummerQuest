@@ -10,7 +10,7 @@ import whisper
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from textnorm import recovery
 
-ROOT = Path('/Users/clembot/Projects/sq-narration')
+ROOT = Path(__file__).resolve().parents[2]  # the repo this script lives in
 narr = json.loads((ROOT / 'src/tutoring/narration.json').read_text())
 texts = {f"{lid}/{s['stepId']}": s['text'] for lid, steps in narr.items() for s in steps}
 man = json.loads((ROOT / 'public/tts/manifest.json').read_text())
