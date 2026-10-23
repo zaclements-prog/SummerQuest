@@ -53,7 +53,11 @@ function useCountUp(value: number, ms = 600, onTick?: () => void): number {
   return shown
 }
 
-/** "⭐ 1240" with a count-up and a pop on every gain. */
+/**
+ * "🎯 1240" with a count-up and a pop on every gain. The score's icon is a
+ * target, not a star: next to the stars a stage awards, "⭐ 1,198" read like
+ * a star count.
+ */
 export function ScorePill({ score }: { score: number }) {
   const shown = useCountUp(score)
   return (
@@ -64,8 +68,9 @@ export function ScorePill({ score }: { score: number }) {
       transition={{ type: 'spring', stiffness: 500, damping: 14 }}
       className="kid-text pointer-events-none select-none rounded-full px-4 py-1 text-2xl font-bold tabular-nums"
       style={{ background: UI.quest, color: UI.line, border: `3px solid ${UI.line}`, boxShadow: UI.ledge }}
+      aria-label={`Score ${score.toLocaleString()}`}
     >
-      ⭐ {shown.toLocaleString()}
+      <span aria-hidden="true">🎯</span> {shown.toLocaleString()}
     </motion.div>
   )
 }
