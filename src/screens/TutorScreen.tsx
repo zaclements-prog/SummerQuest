@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useEffect, useRef, useState, type ReactNode } from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion, useAnimationControls, useReducedMotion } from 'framer-motion'
 import type { ProblemAnswer } from '../lib/problem'
 import { getLesson } from '../tutoring/lessons'
 import VisualRenderer from '../components/VisualRenderer'
@@ -171,6 +171,23 @@ function ReadLessonPlayer() {
     checkRef.current?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' })
   }, [waitingCheck, reduced])
 
+  // An answer was picked → once its feedback ("Not quite. Here's the trick…")
+  // has opened, bring the bottom of the check above the nav dock, so the
+  // feedback is never left hidden under it.
+  useEffect(() => {
+    if (picked === null) return
+    const id = window.setTimeout(() => checkRef.current?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'end' }), reduced ? 0 : 320)
+    return () => window.clearTimeout(id)
+  }, [picked, reduced])
+
+  // Next / Now practice tapped while the check is still unanswered: it doesn't
+  // skip the check; it brings the check into view and gives it a nudge.
+  const wiggle = useAnimationControls()
+  const showCheck = () => {
+    if (!reduced) void wiggle.start({ x: [0, -10, 10, -6, 6, 0], transition: { duration: 0.45 } })
+    checkRef.current?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' })
+  }
+
   // Lesson with no resolvable step yet → loading shimmer (id matched, content pending).
   if (lesson && !step) {
     return (
@@ -209,6 +226,7 @@ function ReadLessonPlayer() {
   const practice = () => navigate(practiceHref(lesson, zoneProgress, grade))
 
   const next = () => {
+    if (step.check && picked === null) return showCheck()
     if (last) {
       stop()
       setPicked(null)
@@ -221,7 +239,8 @@ function ReadLessonPlayer() {
 
   const goBack = () => goTo(Math.max(0, i - 1))
 
-  const invite = played && !reduced && (!step.check || picked !== null)
+  const checkWaiting = !!step.check && picked === null
+  const invite = played && !reduced && !checkWaiting
 
   const toggle = () => {
     if (playing) pause()
@@ -294,11 +313,13 @@ function ReadLessonPlayer() {
         <motion.button
           type="button"
           onClick={next}
-          disabled={!!step.check && picked === null}
+          // (still tappable while the check waits: the tap shows the check, it never skips it)
+          aria-disabled={checkWaiting || undefined}
+          data-waiting={checkWaiting || undefined}
           // once the step has played (and any check is answered) the button gently beckons
           animate={invite ? { scale: [1, 1.07, 1] } : { scale: 1 }}
           transition={invite ? { duration: 1.3, repeat: Infinity, ease: 'easeInOut' } : { duration: 0.2 }}
-          className="kid-text inline-flex min-h-[56px] flex-shrink-0 items-center gap-2 rounded-full px-4 sm:px-6 text-lg sm:text-xl whitespace-nowrap transition-opacity disabled:opacity-45 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ocean-500 short:min-h-12"
+          className="kid-text inline-flex min-h-[56px] flex-shrink-0 items-center gap-2 rounded-full px-4 sm:px-6 text-lg sm:text-xl whitespace-nowrap transition-opacity disabled:opacity-45 aria-disabled:opacity-45 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ocean-500 short:min-h-12"
           style={{ background: last ? M.coral : '#5fcf8f', color: M.ink, boxShadow: `${INK_RING}, 0 5px 0 0 rgba(58,44,56,0.3)` }}
         >
           {last ? '🚀 Now practice' : 'Next'}
@@ -309,7 +330,13 @@ function ReadLessonPlayer() {
   )
 
   const check = step.check && (
-    <div ref={checkRef} className="scroll-mt-4 scroll-mb-28">
+    <motion.div
+      ref={checkRef}
+      className="scroll-mt-4 scroll-mb-28"
+      data-testid="lesson-check"
+      // (a tap on Next while unanswered: a little wiggle says "answer me first")
+      animate={wiggle}
+    >
       <CheckPanel
         key={step.id}
         question={step.check.question}
@@ -325,7 +352,7 @@ function ReadLessonPlayer() {
           else sfx.wrong()
         }}
       />
-    </div>
+    </motion.div>
   )
 
   const playerFrame = { background: M.paper, boxShadow: `${INK_RING}, 0 8px 0 0 rgba(58,44,56,0.28), 0 18px 40px -12px rgba(30,40,90,0.45)` }
