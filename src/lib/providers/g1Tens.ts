@@ -150,7 +150,8 @@ export function makeG1TensProvider(cfg: G1TensConfig = {}): Omit<ProblemProvider
         const n = pickN(Math.max(G1_TENS_MIN, it.lo), Math.min(G1_TENS_MAX, it.hi), buildable)
         const spec: BuildTensSpec = { kind: 'buildTens', n }
         // (answered by building it and ✓: the activity checks the blocks)
-        return problem('build', 'tensOnes', { line: `g1-tens/make-${n}` }, spec, [])
+        // "Make thirty-six!": the tens and ones are said only as help, after a miss (BuildTens)
+        return problem('build', 'tensOnes', { template: 'g1-tens/makeIt', slots: { n } }, spec, [])
       }
       case 'shows': {
         const n = pickN(it.lo, it.hi, (x) => swapped(x) !== null)

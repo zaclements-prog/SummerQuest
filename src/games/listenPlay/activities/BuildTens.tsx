@@ -7,7 +7,7 @@ import { countAlongOffsets } from '../../../lib/numberWords'
 import { sfx } from '../../../lib/sound'
 import { Rod, UnitCube } from '../../../tutoring/motion/shapes'
 import { M } from '../../../tutoring/motion/palette'
-import { voiceText } from '../../../voice/registry'
+import { lineText, voiceText } from '../../../voice/registry'
 import type { ListenActivityDef, ListenActivityProps, ListenProblem } from '../types'
 import { BigNumeral, type BlockMarks } from './baseTen'
 import { countBlocksLines, onesOf, sayTens, tensOf, type BuildTensSpec } from './tensSpecs'
@@ -335,11 +335,14 @@ function RoundButton({ icon, label, onClick, disabled, guide: guideId, big = fal
 }
 
 /** The number as the line starts, the mat a moment later, the rod and cube buttons on "tens" / "ones", ✓ on "check". */
-function askSteps(problem: ListenProblem, spec: BuildTensSpec): GuideStep[] {
-  const text = problem.speech ? voiceText(problem.speech) : ''
+function askSteps(problem: ListenProblem, spec: BuildTensSpec, misses = 0): GuideStep[] {
+  // asked again after a miss: with its tens and ones ("Make thirty-six: three tens and six ones!…"), as help
+  const helpLine = { line: `g1-tens/make-${spec.n}` }
+  const voice = misses > 0 && lineText(helpLine.line) ? helpLine : (problem.speech ?? null)
+  const text = voice ? voiceText(voice) : ''
   const has = (p: string) => text.toLowerCase().includes(p)
   return [
-    { voice: problem.speech ?? null, target: TENS_NUMBER, hand: false, pad: 8 },
+    { voice, target: TENS_NUMBER, hand: false, pad: 8 },
     ...(tensOf(spec.n) && has(tensOf(spec.n) === 1 ? ' ten' : ' tens') ? [{ target: TENS_ADD_ROD, cue: tensOf(spec.n) === 1 ? ' ten' : ' tens', hand: 'tap' as const, pad: 8 }] : []),
     ...(onesOf(spec.n) && has(' one') ? [{ target: TENS_ADD_CUBE, cue: onesOf(spec.n) === 1 ? ' one!' : ' ones', hand: 'tap' as const, pad: 8 }] : []),
     { target: TENS_CHECK, cue: 'check', hand: 'tap', pad: 10 },

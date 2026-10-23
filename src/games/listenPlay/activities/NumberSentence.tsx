@@ -327,13 +327,17 @@ function sentencePieces(tokens: readonly SentenceToken[], x0: number, y: number,
   return { nodes, width: x - x0 }
 }
 
-function SentenceArt({ spec, solved }: { spec: NumberSentenceSpec; solved: boolean }) {
+/**
+ * The sentence asked, and (once there has been a miss: it would give the
+ * answer away first) the known turn-around fact before it.
+ */
+function SentenceArt({ spec, solved, reveal }: { spec: NumberSentenceSpec; solved: boolean; reveal: boolean }) {
   const gap = 110
-  const given = spec.given ? sentencePieces(spec.given, 0, TOKEN_H / 2, spec.answer, true, true) : null
+  const given = spec.given && reveal ? sentencePieces(spec.given, 0, TOKEN_H / 2, spec.answer, true, true) : null
   const asked = sentencePieces(spec.sentence, given ? given.width + gap : 0, TOKEN_H / 2, spec.answer, solved)
   const w = (given ? given.width + gap : 0) + asked.width
   return (
-    <svg viewBox={`-10 0 ${w + 20} ${TOKEN_H}`} className="absolute inset-0 w-full h-full" role="img" aria-label={[spec.given, spec.sentence].filter(Boolean).map((s) => s!.join(' ')).join(', ')}>
+    <svg viewBox={`-10 0 ${w + 20} ${TOKEN_H}`} className="absolute inset-0 w-full h-full" role="img" aria-label={[reveal ? spec.given : undefined, spec.sentence].filter(Boolean).map((s) => s!.join(' ')).join(', ')}>
       {given && (
         <g>
           {given.nodes}
@@ -358,6 +362,8 @@ interface ArtProps {
   live: boolean
   /** Acting it out: the things to tap pulse. */
   acting: boolean
+  /** The help is out (a miss, or solved): a fact family's other sentences show. */
+  reveal: boolean
   onStep(): void
   onTake(i: number): void
   onMark(i: number): void
@@ -585,7 +591,7 @@ function PartsArt({ spec, st, w, h, live, acting, onStep }: ArtProps) {
   )
 }
 
-function FamilyArt({ spec, st, w, h }: ArtProps) {
+function FamilyArt({ spec, st, w, h, reveal }: ArtProps) {
   const m = spec.model as Extract<FactModel, { kind: 'family' }>
   // the house in units: a roof over a body holding the four sentences (2 × 2 when wide, else 4 rows)
   const wide = w / h > 1.25
@@ -620,6 +626,14 @@ function FamilyArt({ spec, st, w, h }: ArtProps) {
         const pieces = sentencePieces(tokens, 0, TOKEN_H / 2, spec.answer, st.solved)
         const x = left + 40 + col * (sw + 80) + (sw - pieces.width) / 2
         const y = top + 20 + row * (TOKEN_H + 18)
+        // the family's other sentences wait for a miss: "10 − 4 = 6" beside "10 − ? = 4" would say the answer
+        if (k !== m.blank && !reveal) {
+          return (
+            <g key={k} transform={`translate(${left + 40 + col * (sw + 80)} ${y})`} data-sentence={k} data-hidden="">
+              <rect x={20} y={10} width={sw - 40} height={TOKEN_H - 20} rx={22} fill="none" stroke={INK} strokeWidth={4} strokeDasharray="14 12" opacity={0.18} />
+            </g>
+          )
+        }
         return (
           <g key={k} transform={`translate(${x} ${y})`} data-guide={k === m.blank ? NS_SENTENCE : undefined} data-sentence={k}>
             {k === m.blank && <rect x={-16} y={4} width={pieces.width + 32} height={TOKEN_H - 8} rx={22} fill="#fff3c4" opacity={0.75} />}
@@ -652,7 +666,7 @@ function ModelArt(props: ArtProps) {
 
 // ── the activity ─────────────────────────────────────────────────────────────
 
-function NumberSentence({ problem, spec, phase, active, onAttempt, registerHelp }: ListenActivityProps<NumberSentenceSpec>) {
+function NumberSentence({ problem, spec, phase, active, misses, onAttempt, registerHelp }: ListenActivityProps<NumberSentenceSpec>) {
   const [st, dispatch] = useReducer(reducer, FRESH)
   const [size, setSize] = useState({ w: 0, h: 0 })
   const boxRef = useRef<HTMLDivElement>(null)
@@ -808,7 +822,9 @@ function NumberSentence({ problem, spec, phase, active, onAttempt, registerHelp 
 
   const W = size.w || 640
   const H = size.h || 300
-  const artProps: ArtProps = { spec, st, w: W, h: H, live: canUse, acting, onStep, onTake, onMark }
+  // what would give the answer away (a turn-around's known fact, a family's other sentences) waits for a miss
+  const reveal = st.solved || misses > 0 || phase === 'oops'
+  const artProps: ArtProps = { spec, st, w: W, h: H, live: canUse, acting, reveal, onStep, onTake, onMark }
 
   return (
     <div
@@ -823,7 +839,7 @@ function NumberSentence({ problem, spec, phase, active, onAttempt, registerHelp 
         // the sentence, written big
         <div data-guide={NS_SENTENCE} className="relative shrink-0 h-[min(15vh,7.5rem)] short:h-[min(14vh,5rem)] rounded-[1.5rem] bg-paper/90 border-[3px] border-line shadow-card">
           <div className="absolute inset-x-3 inset-y-1.5">
-            <SentenceArt spec={spec} solved={st.solved} />
+            <SentenceArt spec={spec} solved={st.solved} reveal={reveal} />
           </div>
         </div>
       )}
