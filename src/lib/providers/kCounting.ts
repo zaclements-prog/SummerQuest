@@ -306,7 +306,8 @@ export function makeKCountingProvider(cfg: KCountingConfig = {}): Omit<ProblemPr
       for (let tries = 0; ; tries++) {
         const p = kind === 'howMany' || kind === 'findGroup' ? count(kind, cap) : compare(kind)
         const sig = `${p.prompt}|${JSON.stringify(p.pair ?? p.answer)}`
-        if (!seen.has(sig) || tries >= 8) {
+        // (a fresh draw may land the answer in the same place a third time: draw again then too)
+        if ((!seen.has(sig) && !places.wouldRepeat(p.options.indexOf(p.answer))) || tries >= 8) {
           seen.add(sig)
           if (typeof p.answer === 'number') lastN = p.answer
           places.note(p.options.indexOf(p.answer))
