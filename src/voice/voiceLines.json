@@ -28555,6 +28555,204 @@
       "kind": "line",
       "file": "voice/k-lessons/g1StoryMath-fewer.mp3"
     },
+    "k-lessons/explain-kShapes-circle": {
+      "text": "A triangle has three sides.",
+      "hash": "735a3fe4bc",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-kShapes-circle.mp3"
+    },
+    "k-lessons/explain-kShapes-solid": {
+      "text": "A cube is solid, like a box.",
+      "hash": "588617f24e",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-kShapes-solid.mp3"
+    },
+    "k-lessons/explain-kLetters-bigLittle": {
+      "text": "Little b is the small one. Big B is the tall one.",
+      "hash": "3727c18f27",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-kLetters-bigLittle.mp3"
+    },
+    "k-lessons/explain-kLetters-yourTurn": {
+      "text": "Banana starts with B, just like ball.",
+      "hash": "b0d0c6dfcc",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-kLetters-yourTurn.mp3"
+    },
+    "k-lessons/explain-kRhymes-moon": {
+      "text": "Spoon rhymes with moon. They sound the same at the end.",
+      "hash": "7e487d54f7",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-kRhymes-moon.mp3"
+    },
+    "k-lessons/explain-kTracing-dot": {
+      "text": "We always start at the green dot.",
+      "hash": "b3467737b1",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-kTracing-dot.mp3"
+    },
+    "k-lessons/explain-kTracing-lineL": {
+      "text": "Big lines start at the top and go down.",
+      "hash": "27eb0aec43",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-kTracing-lineL.mp3"
+    },
+    "k-lessons/explain-kCompare-bears": {
+      "text": "Every bear has a ball, and one ball is left over. There are more balls!",
+      "hash": "92b53bd84b",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-kCompare-bears.mp3"
+    },
+    "k-lessons/explain-kCompare-numbers": {
+      "text": "Nine has more dots than six. Nine is more!",
+      "hash": "8ecb7cb765",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-kCompare-numbers.mp3"
+    },
+    "k-lessons/explain-kTeens-twelve": {
+      "text": "Twelve is a full ten and two more.",
+      "hash": "417c6c54bf",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-kTeens-twelve.mp3"
+    },
+    "k-lessons/explain-kMeasure-yourTurn": {
+      "text": "They start at the same place, and the snake goes further. The snake is longer.",
+      "hash": "03d45866be",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-kMeasure-yourTurn.mp3"
+    },
+    "k-lessons/explain-kMeasure-heavy": {
+      "text": "The watermelon side goes down. The watermelon is heavier.",
+      "hash": "882fa62e1e",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-kMeasure-heavy.mp3"
+    },
+    "k-lessons/explain-kSorting-more": {
+      "text": "Four red ones and two blue ones. Four is more than two!",
+      "hash": "89e4d28d0b",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-kSorting-more.mp3"
+    },
+    "k-lessons/explain-kScience-rain": {
+      "text": "An umbrella keeps you dry in the rain.",
+      "hash": "23e46e742b",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-kScience-rain.mp3"
+    },
+    "k-lessons/explain-kScience-push": {
+      "text": "A push moves the box away.",
+      "hash": "77088d24d9",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-kScience-push.mp3"
+    },
+    "k-lessons/explain-kTowers-stronger": {
+      "text": "Five is more than two.",
+      "hash": "77ea8cb5c0",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-kTowers-stronger.mp3"
+    },
+    "k-lessons/explain-g1Reading-middle": {
+      "text": "Map has the short A in the middle, like cat.",
+      "hash": "267c214bc8",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-g1Reading-middle.mp3"
+    },
+    "k-lessons/explain-g1Reading-teams": {
+      "text": "Ship starts with shh: S and H.",
+      "hash": "da57daf081",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-g1Reading-teams.mp3"
+    },
+    "k-lessons/explain-g1Writing-lines": {
+      "text": "G has a tail that hangs below the line.",
+      "hash": "bb197025c2",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-g1Writing-lines.mp3"
+    },
+    "k-lessons/explain-g1Writing-sentence": {
+      "text": "The, with a capital T, can start a sentence.",
+      "hash": "33e0bfe29c",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-g1Writing-sentence.mp3"
+    },
+    "k-lessons/explain-g1Tens-count": {
+      "text": "Five tens and two ones make fifty-two.",
+      "hash": "06cc7639b7",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-g1Tens-count.mp3"
+    },
+    "k-lessons/explain-g1Tens-sign": {
+      "text": "Fifty-three is greater than thirty-five.",
+      "hash": "3a97e1f129",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-g1Tens-sign.mp3"
+    },
+    "k-lessons/explain-g1Shares-halves": {
+      "text": "Two equal shares: halves.",
+      "hash": "23f13cd2bd",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-g1Shares-halves.mp3"
+    },
+    "k-lessons/explain-g1Shares-smaller": {
+      "text": "A fourth is smaller than a half.",
+      "hash": "bba92bbbe3",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-g1Shares-smaller.mp3"
+    },
+    "k-lessons/explain-g1Shapes-still": {
+      "text": "Three straight sides, three corners, and closed: a triangle.",
+      "hash": "0345b4ea35",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-g1Shapes-still.mp3"
+    },
+    "k-lessons/explain-g1Shapes-solids": {
+      "text": "A sphere is round all over: it rolls.",
+      "hash": "2450d7e7af",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-g1Shapes-solids.mp3"
+    },
+    "k-lessons/explain-g1Measure-halfPast": {
+      "text": "The long hand points down to six, and the short hand is just past seven. It is half past seven.",
+      "hash": "af5ebaa4d5",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-g1Measure-halfPast.mp3"
+    },
+    "k-lessons/explain-g1Graphs-more": {
+      "text": "Match them up: two apples have no match. Two more friends like apples.",
+      "hash": "2c9fe0a851",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-g1Graphs-more.mp3"
+    },
+    "k-lessons/explain-g1Science-light": {
+      "text": "Wood blocks the light. You can not see through it.",
+      "hash": "e8469da678",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-g1Science-light.mp3"
+    },
+    "k-lessons/explain-g1Science-families": {
+      "text": "A chick grows up to be a hen. It looks like its mom!",
+      "hash": "c4425bace3",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-g1Science-families.mp3"
+    },
+    "k-lessons/explain-g1Adding-turnAround": {
+      "text": "Start at nine and count on two: ten, eleven.",
+      "hash": "6f9272c20e",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-g1Adding-turnAround.mp3"
+    },
+    "k-lessons/explain-g1Subtract-countBack": {
+      "text": "Start at twelve. Hop back: eleven, ten, nine.",
+      "hash": "09f9247566",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-g1Subtract-countBack.mp3"
+    },
+    "k-lessons/explain-g1Subtract-family": {
+      "text": "Three and five make eight. So eight minus five is three.",
+      "hash": "45b2b77a46",
+      "kind": "line",
+      "file": "voice/k-lessons/explain-g1Subtract-family.mp3"
+    },
     "k-lessons/triangle": {
       "text": "Triangle!",
       "hash": "da7385986c",
@@ -29700,6 +29898,318 @@
       "hash": "278ded0041",
       "kind": "whole",
       "file": "voice/k-letters/word/word=orange.mp3"
+    },
+    "k-letters/thisIsLetter/letter=a": {
+      "text": "This is the letter A.",
+      "hash": "f52bfa825f",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLetter/letter=a.mp3"
+    },
+    "k-letters/thisIsLetter/letter=b": {
+      "text": "This is the letter B.",
+      "hash": "c68e1d139d",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLetter/letter=b.mp3"
+    },
+    "k-letters/thisIsLetter/letter=c": {
+      "text": "This is the letter C.",
+      "hash": "23932a714f",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLetter/letter=c.mp3"
+    },
+    "k-letters/thisIsLetter/letter=d": {
+      "text": "This is the letter D.",
+      "hash": "29b6f3044d",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLetter/letter=d.mp3"
+    },
+    "k-letters/thisIsLetter/letter=e": {
+      "text": "This is the letter E.",
+      "hash": "6c3e6a9d4d",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLetter/letter=e.mp3"
+    },
+    "k-letters/thisIsLetter/letter=f": {
+      "text": "This is the letter F.",
+      "hash": "416d3d6b2f",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLetter/letter=f.mp3"
+    },
+    "k-letters/thisIsLetter/letter=g": {
+      "text": "This is the letter G.",
+      "hash": "3272b02dff",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLetter/letter=g.mp3"
+    },
+    "k-letters/thisIsLetter/letter=h": {
+      "text": "This is the letter H.",
+      "hash": "8188c3fd97",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLetter/letter=h.mp3"
+    },
+    "k-letters/thisIsLetter/letter=i": {
+      "text": "This is the letter I.",
+      "hash": "9f77562974",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLetter/letter=i.mp3"
+    },
+    "k-letters/thisIsLetter/letter=j": {
+      "text": "This is the letter J.",
+      "hash": "3d6a14aa45",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLetter/letter=j.mp3"
+    },
+    "k-letters/thisIsLetter/letter=k": {
+      "text": "This is the letter K.",
+      "hash": "125211a89f",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLetter/letter=k.mp3"
+    },
+    "k-letters/thisIsLetter/letter=l": {
+      "text": "This is the letter L.",
+      "hash": "2ec3fd94a5",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLetter/letter=l.mp3"
+    },
+    "k-letters/thisIsLetter/letter=m": {
+      "text": "This is the letter M.",
+      "hash": "62e2afa4c8",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLetter/letter=m.mp3"
+    },
+    "k-letters/thisIsLetter/letter=n": {
+      "text": "This is the letter N.",
+      "hash": "683805fa1c",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLetter/letter=n.mp3"
+    },
+    "k-letters/thisIsLetter/letter=o": {
+      "text": "This is the letter O.",
+      "hash": "af0d72e23e",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLetter/letter=o.mp3"
+    },
+    "k-letters/thisIsLetter/letter=p": {
+      "text": "This is the letter P.",
+      "hash": "a4ff2a9b1c",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLetter/letter=p.mp3"
+    },
+    "k-letters/thisIsLetter/letter=q": {
+      "text": "This is the letter Q.",
+      "hash": "0e55e2661a",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLetter/letter=q.mp3"
+    },
+    "k-letters/thisIsLetter/letter=r": {
+      "text": "This is the letter R.",
+      "hash": "323ca01605",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLetter/letter=r.mp3"
+    },
+    "k-letters/thisIsLetter/letter=s": {
+      "text": "This is the letter S.",
+      "hash": "0f69b16669",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLetter/letter=s.mp3"
+    },
+    "k-letters/thisIsLetter/letter=t": {
+      "text": "This is the letter T.",
+      "hash": "cef1a43cc3",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLetter/letter=t.mp3"
+    },
+    "k-letters/thisIsLetter/letter=u": {
+      "text": "This is the letter U.",
+      "hash": "e4d191996a",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLetter/letter=u.mp3"
+    },
+    "k-letters/thisIsLetter/letter=v": {
+      "text": "This is the letter V.",
+      "hash": "507c7d1ea5",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLetter/letter=v.mp3"
+    },
+    "k-letters/thisIsLetter/letter=w": {
+      "text": "This is the letter W.",
+      "hash": "ffe0717d02",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLetter/letter=w.mp3"
+    },
+    "k-letters/thisIsLetter/letter=x": {
+      "text": "This is the letter X.",
+      "hash": "129dbccc93",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLetter/letter=x.mp3"
+    },
+    "k-letters/thisIsLetter/letter=y": {
+      "text": "This is the letter Y.",
+      "hash": "691c620ef2",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLetter/letter=y.mp3"
+    },
+    "k-letters/thisIsLetter/letter=z": {
+      "text": "This is the letter Z.",
+      "hash": "12658b5314",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLetter/letter=z.mp3"
+    },
+    "k-letters/thisIsLittle/letter=a": {
+      "text": "This is little a.",
+      "hash": "51fb07163a",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLittle/letter=a.mp3"
+    },
+    "k-letters/thisIsLittle/letter=b": {
+      "text": "This is little b.",
+      "hash": "735406dd45",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLittle/letter=b.mp3"
+    },
+    "k-letters/thisIsLittle/letter=c": {
+      "text": "This is little c.",
+      "hash": "c2d8f76950",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLittle/letter=c.mp3"
+    },
+    "k-letters/thisIsLittle/letter=d": {
+      "text": "This is little d.",
+      "hash": "fefc48f4dd",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLittle/letter=d.mp3"
+    },
+    "k-letters/thisIsLittle/letter=e": {
+      "text": "This is little e.",
+      "hash": "c7ba3bd93e",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLittle/letter=e.mp3"
+    },
+    "k-letters/thisIsLittle/letter=f": {
+      "text": "This is little f.",
+      "hash": "54b3403efc",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLittle/letter=f.mp3"
+    },
+    "k-letters/thisIsLittle/letter=g": {
+      "text": "This is little g.",
+      "hash": "9b9d206919",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLittle/letter=g.mp3"
+    },
+    "k-letters/thisIsLittle/letter=h": {
+      "text": "This is little h.",
+      "hash": "94220ba707",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLittle/letter=h.mp3"
+    },
+    "k-letters/thisIsLittle/letter=i": {
+      "text": "This is little i.",
+      "hash": "a31b8b20cc",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLittle/letter=i.mp3"
+    },
+    "k-letters/thisIsLittle/letter=j": {
+      "text": "This is little j.",
+      "hash": "72c7bfb9e2",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLittle/letter=j.mp3"
+    },
+    "k-letters/thisIsLittle/letter=k": {
+      "text": "This is little k.",
+      "hash": "164510339d",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLittle/letter=k.mp3"
+    },
+    "k-letters/thisIsLittle/letter=l": {
+      "text": "This is little l.",
+      "hash": "d618674b17",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLittle/letter=l.mp3"
+    },
+    "k-letters/thisIsLittle/letter=m": {
+      "text": "This is little m.",
+      "hash": "66141e5bae",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLittle/letter=m.mp3"
+    },
+    "k-letters/thisIsLittle/letter=n": {
+      "text": "This is little n.",
+      "hash": "7b345a606b",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLittle/letter=n.mp3"
+    },
+    "k-letters/thisIsLittle/letter=o": {
+      "text": "This is little o.",
+      "hash": "2cbac51ed0",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLittle/letter=o.mp3"
+    },
+    "k-letters/thisIsLittle/letter=p": {
+      "text": "This is little p.",
+      "hash": "5091a69c7c",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLittle/letter=p.mp3"
+    },
+    "k-letters/thisIsLittle/letter=q": {
+      "text": "This is little q.",
+      "hash": "489e1d12c4",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLittle/letter=q.mp3"
+    },
+    "k-letters/thisIsLittle/letter=r": {
+      "text": "This is little r.",
+      "hash": "cec684d84d",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLittle/letter=r.mp3"
+    },
+    "k-letters/thisIsLittle/letter=s": {
+      "text": "This is little s.",
+      "hash": "fa38e3f13c",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLittle/letter=s.mp3"
+    },
+    "k-letters/thisIsLittle/letter=t": {
+      "text": "This is little t.",
+      "hash": "69053a5ded",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLittle/letter=t.mp3"
+    },
+    "k-letters/thisIsLittle/letter=u": {
+      "text": "This is little u.",
+      "hash": "8472d39dd3",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLittle/letter=u.mp3"
+    },
+    "k-letters/thisIsLittle/letter=v": {
+      "text": "This is little v.",
+      "hash": "9eb49be007",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLittle/letter=v.mp3"
+    },
+    "k-letters/thisIsLittle/letter=w": {
+      "text": "This is little w.",
+      "hash": "961a4d47e5",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLittle/letter=w.mp3"
+    },
+    "k-letters/thisIsLittle/letter=x": {
+      "text": "This is little x.",
+      "hash": "94d867512e",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLittle/letter=x.mp3"
+    },
+    "k-letters/thisIsLittle/letter=y": {
+      "text": "This is little y.",
+      "hash": "6c0b85b91e",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLittle/letter=y.mp3"
+    },
+    "k-letters/thisIsLittle/letter=z": {
+      "text": "This is little z.",
+      "hash": "620d4668cd",
+      "kind": "whole",
+      "file": "voice/k-letters/thisIsLittle/letter=z.mp3"
     },
     "k-math/greatCounting": {
       "text": "Great counting!",
@@ -34026,6 +34536,60 @@
       "hash": "752abbda95",
       "kind": "line",
       "file": "voice/k-shapes/shapeSpotter.mp3"
+    },
+    "k-shapes/teach-circle": {
+      "text": "This is a circle. It is round, with no corners.",
+      "hash": "ebd0e485b5",
+      "kind": "line",
+      "file": "voice/k-shapes/teach-circle.mp3"
+    },
+    "k-shapes/teach-square": {
+      "text": "This is a square. Four sides, all the same.",
+      "hash": "f015741b7e",
+      "kind": "line",
+      "file": "voice/k-shapes/teach-square.mp3"
+    },
+    "k-shapes/teach-triangle": {
+      "text": "This is a triangle. It has three sides.",
+      "hash": "4912cbb397",
+      "kind": "line",
+      "file": "voice/k-shapes/teach-triangle.mp3"
+    },
+    "k-shapes/teach-rectangle": {
+      "text": "This is a rectangle. Two long sides, two short sides.",
+      "hash": "e08b5160bd",
+      "kind": "line",
+      "file": "voice/k-shapes/teach-rectangle.mp3"
+    },
+    "k-shapes/teach-hexagon": {
+      "text": "This is a hexagon. It has six sides.",
+      "hash": "7d75126761",
+      "kind": "line",
+      "file": "voice/k-shapes/teach-hexagon.mp3"
+    },
+    "k-shapes/teach-cube": {
+      "text": "This is a cube. It looks like a box.",
+      "hash": "c0b79b91f7",
+      "kind": "line",
+      "file": "voice/k-shapes/teach-cube.mp3"
+    },
+    "k-shapes/teach-sphere": {
+      "text": "This is a sphere. It is round, like a ball.",
+      "hash": "e48445a6ad",
+      "kind": "line",
+      "file": "voice/k-shapes/teach-sphere.mp3"
+    },
+    "k-shapes/teach-cone": {
+      "text": "This is a cone, like an ice cream cone.",
+      "hash": "2eaaa7fa62",
+      "kind": "line",
+      "file": "voice/k-shapes/teach-cone.mp3"
+    },
+    "k-shapes/teach-cylinder": {
+      "text": "This is a cylinder, like a can.",
+      "hash": "b2c21c6631",
+      "kind": "line",
+      "file": "voice/k-shapes/teach-cylinder.mp3"
     },
     "k-shapes/tapShape/shape=circle": {
       "text": "Tap the circle.",

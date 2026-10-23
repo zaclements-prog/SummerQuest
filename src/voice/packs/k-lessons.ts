@@ -19,7 +19,7 @@ import { g1WritingLesson } from '../../tutoring/lessons/g1Writing'
 import { g1TensLesson } from '../../tutoring/lessons/g1Tens'
 import { g1SharesLesson } from '../../tutoring/lessons/g1Shares'
 import { g1ShapesLesson } from '../../tutoring/lessons/g1Shapes'
-import { K_LESSON_PACK } from '../../tutoring/lessons/k1Voice'
+import { K_LESSON_PACK, explainLineId } from '../../tutoring/lessons/k1Voice'
 // 1st grade (phase 2b): Measure Marsh, Graph Delta, Sky Summit
 import { g1MeasureLesson } from '../../tutoring/lessons/g1Measure'
 import { g1GraphsLesson } from '../../tutoring/lessons/g1Graphs'
@@ -39,6 +39,8 @@ import { g1StoryMathLesson } from '../../tutoring/lessons/g1StoryMath'
  * - the lesson-complete line.
  */
 const asked: Record<string, string> = {}
+/** After a miss on a picture check with nothing to count: the check's explanation ("A triangle has three sides."). */
+const explained: Record<string, string> = {}
 for (const lesson of [
   kCountingLesson,
   kShapesLesson,
@@ -73,6 +75,7 @@ for (const lesson of [
   for (const step of lesson.steps) {
     const ref = step.check?.speech
     if (ref && 'line' in ref && ref.line.startsWith(`${K_LESSON_PACK}/`)) asked[ref.line.slice(K_LESSON_PACK.length + 1)] = step.check!.question
+    if (step.check?.pictures && !step.check.countAlong) explained[explainLineId(lesson.id, step.id)] = step.check.explain
   }
 }
 
@@ -80,6 +83,7 @@ export default defineVoicePack({
   id: K_LESSON_PACK,
   lines: {
     ...asked,
+    ...explained,
     // shapes
     triangle: 'Triangle!',
     square: 'Square!',

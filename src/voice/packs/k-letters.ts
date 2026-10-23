@@ -57,5 +57,9 @@ export default defineVoicePack({
     startsWith: { text: 'Which one starts with {letter}?', slots: { letter: { words: K_FIRST_LETTERS } }, render: 'whole' },
     /** One clip per picture word: said as its picture lights up, and when it is tapped ("ball!"). */
     word: { text: '{word}!', slots: { word: { words: K_PICTURE_WORDS } }, render: 'whole' },
+    /** 26 clips, after a miss: the answer card lights up as it is named, then the child tries again. */
+    thisIsLetter: { text: 'This is the letter {letter}.', slots: { letter: { words: UPPER_LETTERS } }, render: 'whole' },
+    /** 26 clips, after a miss on "Find the little b.": the little letter lights up as it is named. */
+    thisIsLittle: { text: 'This is little {letter}.', slots: { letter: { words: LOWER_LETTERS } }, render: 'whole' },
   },
 })

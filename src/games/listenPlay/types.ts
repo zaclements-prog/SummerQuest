@@ -21,9 +21,12 @@ export type ListenTarget = 'picture' | 'cards' | 'pair0' | 'pair1' | `card${numb
  * - `picked`: the picked card: its group, or the sides of its shape;
  * - `countUp`: count up to the biggest numeral card, each numeral card lit as
  *   its number is said (the number said later is bigger);
+ * - `answer`: the answer card (its group, or the sides of its shape), right
+ *   after `reteach` has named it ("This is a square. Four sides, all the
+ *   same." "One, two, three, four.");
  * - `none`: nothing to count.
  */
-export type ListenWalkthrough = 'count' | 'each' | 'picked' | 'countUp' | 'none'
+export type ListenWalkthrough = 'count' | 'each' | 'picked' | 'countUp' | 'answer' | 'none'
 
 /**
  * A K–1 question as Listen & Play reads it: a `Problem` with `speech` and
@@ -61,6 +64,13 @@ export interface ListenProblem extends Problem {
    * count-along (by card index): "Cat starts with C.", "A cube is solid."
    */
   notes?: readonly (VoiceRef | null)[]
+  /**
+   * After a miss, the answer card lights up as this is said ("This is the
+   * letter A.", "This is a hexagon. It has six sides."): the miss re-teaches,
+   * so the next try isn't a guess between the cards left. Said after the
+   * note about the picked card, before any count-along.
+   */
+  reteach?: VoiceRef
   /** Praise for this question, taking turns with the kit's own. */
   praise?: readonly VoiceRef[]
   /**

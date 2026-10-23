@@ -28,6 +28,16 @@ export default defineVoicePack({
     // praise for this pack's questions (taking turns with the kit's own)
     youKnowShapes: 'You know your shapes!',
     shapeSpotter: 'Super shape spotting!',
+    // after a miss: the right shape lights up as it is named (a flat one's sides are then counted)
+    'teach-circle': 'This is a circle. It is round, with no corners.',
+    'teach-square': 'This is a square. Four sides, all the same.',
+    'teach-triangle': 'This is a triangle. It has three sides.',
+    'teach-rectangle': 'This is a rectangle. Two long sides, two short sides.',
+    'teach-hexagon': 'This is a hexagon. It has six sides.',
+    'teach-cube': 'This is a cube. It looks like a box.',
+    'teach-sphere': 'This is a sphere. It is round, like a ball.',
+    'teach-cone': 'This is a cone, like an ice cream cone.',
+    'teach-cylinder': 'This is a cylinder, like a can.',
   },
   templates: {
     /** 9 clips: "Tap the triangle." / "Tap the cube." */

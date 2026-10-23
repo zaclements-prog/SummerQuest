@@ -58,6 +58,8 @@ const TURNS = [0, 0, 90, 180, 270, -15, 15]
 
 const isSolid = (s: KShape): s is KSolidShape => (K_SOLID_SHAPES as readonly string[]).includes(s)
 const label = (s: KShape): VoiceRef => ({ template: 'k-shapes/label', slots: { shape: s } })
+/** After a miss, the right card lights up as it is named: "This is a square. Four sides, all the same." */
+const teach = (s: KShape): VoiceRef => ({ line: `k-shapes/teach-${s}` })
 const fact = (s: KShape): VoiceRef => (isSolid(s) ? { template: 'k-shapes/isSolid', slots: { shape: s } } : { template: 'k-shapes/isFlat', slots: { shape: s } })
 const PRAISE: VoiceRef[] = [{ line: 'k-shapes/youKnowShapes' }, { line: 'k-shapes/shapeSpotter' }]
 const SKILL = {
@@ -109,6 +111,9 @@ export function makeKShapesProvider(cfg: KShapesConfig = {}): Omit<ProblemProvid
           skill: SKILL.flat,
           speech: { template: 'k-shapes/tapShape', slots: { shape: t } },
           ...shapeCards(options),
+          // a miss: the right shape is named, and its sides counted ("One, two, three, four.")
+          reteach: teach(t),
+          walkthrough: K_SHAPE_SIDES[t] ? ('answer' as const) : ('none' as const),
         }
       }
       case 'nameSolid': {
@@ -125,6 +130,7 @@ export function makeKShapesProvider(cfg: KShapesConfig = {}): Omit<ProblemProvid
           speech: { template: 'k-shapes/tapShape', slots: { shape: t } },
           // (a flat card tapped by mistake: "A circle is flat.")
           ...shapeCards(options, (s) => (s === t || isSolid(s) ? null : fact(s))),
+          reteach: teach(t),
         }
       }
       case 'flat':
@@ -144,6 +150,8 @@ export function makeKShapesProvider(cfg: KShapesConfig = {}): Omit<ProblemProvid
           speech: { line: kind === 'flat' ? 'k-shapes/tapFlat' : 'k-shapes/tapSolid' },
           // "A cube is solid." about a wrong card
           ...shapeCards(options, (s) => (s === t ? null : fact(s))),
+          // then "A circle is flat." about the right one
+          reteach: fact(t),
         }
       }
       case 'withSides': {
@@ -165,6 +173,8 @@ export function makeKShapesProvider(cfg: KShapesConfig = {}): Omit<ProblemProvid
           ...shapeCards(options),
           // a wrong card's sides are counted: "One, two, three, four."
           walkthrough: 'picked',
+          // then the right one is named: "This is a triangle. It has three sides."
+          reteach: teach(t),
         }
       }
       case 'noCorners': {
@@ -178,6 +188,7 @@ export function makeKShapesProvider(cfg: KShapesConfig = {}): Omit<ProblemProvid
           skill: SKILL.sides,
           speech: { line: 'k-shapes/noCorners' },
           ...shapeCards(options),
+          reteach: teach('circle'),
         }
       }
       case 'howManySides': {

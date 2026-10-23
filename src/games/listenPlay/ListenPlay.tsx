@@ -30,6 +30,7 @@ import {
   praiseFor,
   questionPicture,
   questionSteps,
+  reteachSteps,
   walkthroughCounts,
   walkthroughSteps,
   type Where,
@@ -266,18 +267,35 @@ export default function ListenPlay({ provider, params, onComplete, meta, paused 
             await guide.show({ voice: note, target: lpCard(picked), hand: false, pad: 12 }, { repeatable: false })
             if (!live) return
           }
+          // the answer lit up and named ("This is the letter A."): the next try isn't a guess.
+          // Before counting the answer's sides; after counting the picked card's
+          const reteach = reteachSteps(problem, cards)
+          const teachFirst = problem.walkthrough === 'answer'
+          if (reteach.length && teachFirst) {
+            await guide.sequence(reteach, { repeatable: false })
+            if (!live) return
+          }
           const open = cards.map((_, i) => i).filter((i) => !tried.includes(i))
           const plan = walkthroughCounts(problem, cards, picked, open)
           const steps = plan.length
-            ? walkthroughSteps(plan, (where, i) => {
-                if (live) dispatch({ type: 'mark', where, obj: i, n: i + 1 })
-              })
+            ? walkthroughSteps(
+                plan,
+                (where, i) => {
+                  if (live) dispatch({ type: 'mark', where, obj: i, n: i + 1 })
+                },
+                // (straight after "…Four sides, all the same.": just the count)
+                !(teachFirst && reteach.length),
+              )
             : problem.walkthrough === 'countUp'
               ? countUpSteps(cards, open)
               : []
           if (steps.length) {
             dispatch({ type: 'clearMarks' })
             await guide.sequence(steps, { repeatable: false })
+            if (!live) return
+          }
+          if (reteach.length && !teachFirst) {
+            await guide.sequence(reteach, { repeatable: false })
             if (!live) return
           }
           await guide.say({ line: 'listen/yourTurn' })

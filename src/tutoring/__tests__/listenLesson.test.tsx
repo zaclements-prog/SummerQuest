@@ -172,6 +172,26 @@ describe('the listen-mode lesson (K–1)', () => {
     expect(getGuideSnapshot().run!.lines[0].text).toBe('Tap little b!')
   })
 
+  it('a wrong pick with nothing to count: the rule is said with the answer lit up, then another try', async () => {
+    setGrade(0)
+    mount('/tutor/kLetters')
+    await tellStep()
+    click(button('Next'))
+    await tellStep()
+    const answerAt = cards().indexOf(rightCard())
+    const wrong = wrongCard()
+    click(wrong)
+    let explained: unknown = null
+    for (let k = 0; k < 60 && wrong.dataset.state !== 'tried'; k++) {
+      await advance(250)
+      const s = getGuideSnapshot()
+      const line = s.run?.lines[s.line]
+      if (line?.text === 'Little b is the small one. Big B is the tall one.') explained = line.marks[0]?.target
+    }
+    expect(explained).toBe(`lesson-card-${answerAt}`)
+    expect(wrong.dataset.state).toBe('tried')
+  })
+
   it('shows the words only when a grown-up turns them on', async () => {
     setGrade(0)
     mount('/tutor/kShapes')
