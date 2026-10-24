@@ -16,15 +16,23 @@ import type { PetStage } from './types'
  * | Stage | When                                                                  |
  * |-------|-----------------------------------------------------------------------|
  * | egg   | nothing yet                                                           |
- * | baby  | a skill was cleared: it dropped off This Week's Focus because its     |
- * |       | accuracy recovered (≥ 80 % over its last 7 days, at least 4 tries),   |
- * |       | at the moment of a practice answer                                    |
+ * | baby  | whichever comes first: a skill was cleared (it dropped off This       |
+ * |       | Week's Focus because its accuracy recovered: ≥ 80 % over its last 7   |
+ * |       | days, at least 4 tries, at the moment of a practice answer), or 3     |
+ * |       | Daily Challenges were played (one a day)                              |
  * | kid   | hatched, and 5 "school points" (Daily Challenges + cleared skills)    |
  * | adult | 15 school points AND at least one full clear: the whole focus list   |
  * |       | went from non-empty to empty because of practice                     |
  *
+ * Hatching is an event, not just a count: `hatched` flips when a clear or a
+ * Daily Challenge brings the raven over the line, so the hatch always happens
+ * as the child plays and its celebration shows (a save migrated to v5 with 3+
+ * dailies already played stays an egg until the next daily or clear).
+ *
  * Why these numbers: a zone pet becomes a kid at 5 stars and grows up when the
- * zone is complete (≈ 10–15 stars). 5 points is about a school week of Daily
+ * zone is complete (≈ 10–15 stars). 3 Daily Challenges hatch the egg even for
+ * a child who never has a skill weak enough to land on This Week's Focus (the
+ * owner's call, 2026-10-23). 5 points is about a school week of Daily
  * Challenges (or a few dailies and a cleared skill or two); 15 is three weeks
  * of steady Schoolhouse visits. The full clear makes "grown up" mean the child
  * really worked through everything they were stuck on at least once, which is
@@ -44,6 +52,8 @@ import type { PetStage } from './types'
 /** The Schoolhouse pet's creature id (in `CREATURES` and the model registry). */
 export const SCHOOL_PET_ID = 'raven'
 
+/** Daily Challenges that hatch the egg (as does a single cleared skill, whichever comes first). */
+export const RAVEN_HATCH_DAILIES = 3
 /** School points (Daily Challenges + cleared skills) that grow a hatched raven into a kid. */
 export const RAVEN_KID_POINTS = 5
 /** School points a grown-up raven needs (and at least one full clear: `RAVEN_ADULT_FULL_CLEARS`). */
@@ -74,14 +84,27 @@ export interface SchoolPetProgress {
   rewardDay: string | null
   /** A paid reward whose celebration hasn't shown yet. */
   rewardPending: boolean
+  /**
+   * The egg has hatched: set by the clear or Daily Challenge that met the hatch
+   * rule (`meetsHatch`), never by a migration, so every hatch is celebrated.
+   */
+  hatched: boolean
 }
 
 export function emptySchoolPet(): SchoolPetProgress {
-  return { clearedSkills: {}, clears: 0, dailies: 0, fullClears: 0, rewardDay: null, rewardPending: false }
+  return { clearedSkills: {}, clears: 0, dailies: 0, fullClears: 0, rewardDay: null, rewardPending: false, hatched: false }
 }
 
-/** The slice growth reads (so tests and old saves can pass less). */
-export type SchoolPetLike = Pick<SchoolPetProgress, 'clears' | 'dailies' | 'fullClears'>
+/**
+ * The slice growth reads (so tests can pass less). Without `hatched`, the egg
+ * counts as hatched exactly when the counters meet the hatch rule.
+ */
+export type SchoolPetLike = Pick<SchoolPetProgress, 'clears' | 'dailies' | 'fullClears'> & { hatched?: boolean }
+
+/** The counters meet the hatch rule: a cleared skill, or `RAVEN_HATCH_DAILIES` Daily Challenges. */
+export function meetsHatch(p: Pick<SchoolPetProgress, 'clears' | 'dailies'>): boolean {
+  return p.clears >= 1 || p.dailies >= RAVEN_HATCH_DAILIES
+}
 
 /** Daily Challenges + cleared skills. */
 export function schoolPoints(p: SchoolPetLike | null | undefined): number {
@@ -90,7 +113,7 @@ export function schoolPoints(p: SchoolPetLike | null | undefined): number {
 
 /** The pure rule: the raven's stage from its counters. */
 export function ravenGrowth(p: SchoolPetLike | null | undefined): PetGrowth {
-  if (!p || p.clears < 1) return 'egg'
+  if (!p || !(p.hatched ?? meetsHatch(p))) return 'egg'
   const points = schoolPoints(p)
   if (points >= RAVEN_ADULT_POINTS && p.fullClears >= RAVEN_ADULT_FULL_CLEARS) return 'adult'
   if (points >= RAVEN_KID_POINTS) return 'kid'
@@ -130,7 +153,9 @@ export function schoolPetStatus(p: SchoolPetLike | null | undefined): SchoolPetS
   let next: SchoolPetNext | null = null
   let goal = 0
   if (stage === 'egg') {
-    next = { stage: 'baby', more: 0, fullClear: false }
+    // (more: Daily Challenges still to play; a cleared skill would do it too. A migrated
+    // save with 3+ already hatches on its next one.)
+    next = { stage: 'baby', more: Math.max(1, RAVEN_HATCH_DAILIES - Math.max(0, p?.dailies ?? 0)), fullClear: false }
   } else if (stage === 'baby') {
     goal = RAVEN_KID_POINTS
     next = { stage: 'kid', more: Math.max(1, RAVEN_KID_POINTS - points), fullClear: false }
@@ -236,12 +261,18 @@ export function applyFocusChange(
       rewardPending = true
     }
   }
-  return { next: { ...p, clearedSkills, clears, fullClears, rewardDay, rewardPending }, reward }
+  const hatched = p.hatched || meetsHatch({ clears, dailies: p.dailies })
+  return { next: { ...p, clearedSkills, clears, fullClears, rewardDay, rewardPending, hatched }, reward }
 }
 
-/** A finished Daily Challenge counts once a day: `claimedBefore` is the day already claimed (if any). */
+/**
+ * A finished Daily Challenge counts once a day (`claimedBefore` is the day
+ * already claimed, if any), and hatches the egg once the hatch rule is met.
+ */
 export function applyDaily(p: SchoolPetProgress, claimedBefore: string | undefined, today: string): SchoolPetProgress {
-  return claimedBefore === today ? p : { ...p, dailies: p.dailies + 1 }
+  if (claimedBefore === today) return p
+  const dailies = p.dailies + 1
+  return { ...p, dailies, hatched: p.hatched || meetsHatch({ clears: p.clears, dailies }) }
 }
 
 // ── Saved data ───────────────────────────────────────────────────────────────
@@ -262,5 +293,7 @@ export function cleanSchoolPet(v: unknown): SchoolPetProgress {
   out.fullClears = count(r.fullClears)
   out.rewardDay = isDay(r.rewardDay) ? r.rewardDay : null
   out.rewardPending = r.rewardPending === true
+  // (a record from before `hatched`: only a clear proves the egg hatched in play)
+  out.hatched = r.hatched === true || (r.hatched === undefined && out.clears >= 1)
   return out
 }

@@ -48,8 +48,8 @@ describe('the Schoolhouse raven', () => {
   it('2–5: the egg and how to hatch it, then the raven with its progress; 🐾 opens it on the Pets page', () => {
     show(3)
     expect(container.textContent).toContain('Raven egg')
-    expect(container.textContent).toContain("This Week's Focus until it's cleared to hatch")
-    act(() => useProgress.setState({ schoolPet: { ...emptySchoolPet(), clears: 1, dailies: 1 } }))
+    expect(container.textContent).toContain("Play 3 more 🌟 Daily Challenges, or clear a 🎯 skill on This Week's Focus, to hatch it!")
+    act(() => useProgress.setState({ schoolPet: { ...emptySchoolPet(), clears: 1, dailies: 1, hatched: true } }))
     expect(container.textContent).toContain('Baby Raven')
     expect(container.textContent).toContain('3 more 🌟 Daily Challenges or 🎯 cleared skills to grow!')
     const see = [...container.querySelectorAll('button')].find((b) => b.textContent?.includes('See'))!
@@ -68,6 +68,6 @@ describe('the Schoolhouse raven', () => {
     const egg = container.querySelector('[data-guide="school-pet"]') as HTMLButtonElement
     expect(egg.getAttribute('aria-label')).toBe('Raven egg')
     act(() => egg.click())
-    expect(getGuideSnapshot().run?.lines[0].text).toBe('This is the Schoolhouse egg. Practice the tricky ones to hatch it!')
+    expect(getGuideSnapshot().run?.lines[0].text).toBe('This is the Schoolhouse egg. Play the daily challenge, or practice the tricky ones, to hatch it!')
   })
 })

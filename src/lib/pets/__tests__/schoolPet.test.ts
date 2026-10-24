@@ -3,6 +3,7 @@ import type { SkillAttempt } from '../../../store/progress'
 import { localDayKey } from '../../dates'
 import {
   RAVEN_ADULT_POINTS,
+  RAVEN_HATCH_DAILIES,
   RAVEN_KID_POINTS,
   applyDaily,
   applyFocusChange,
@@ -34,10 +35,38 @@ function tries(skillId: string, right: number, wrong: number, at = NOW): SkillAt
 const one = (skillId: string, correct: boolean, at = NOW): SkillAttempt => ({ id: `a${n++}`, at, zoneId: 'multiplication-mesa', topic: 't', skillId, skillLabel: skillId, correct })
 
 describe('the raven grows from Schoolhouse practice', () => {
-  it('egg → baby on the first cleared skill; dailies alone never hatch it', () => {
+  it(`egg → baby on the first cleared skill or the ${RAVEN_HATCH_DAILIES}rd Daily Challenge, whichever comes first`, () => {
+    expect(RAVEN_HATCH_DAILIES).toBe(3)
     expect(ravenGrowth(null)).toBe('egg')
-    expect(ravenGrowth({ clears: 0, dailies: 30, fullClears: 3 })).toBe('egg')
+    expect(ravenGrowth({ clears: 0, dailies: 2, fullClears: 0 })).toBe('egg')
+    expect(ravenGrowth({ clears: 0, dailies: 3, fullClears: 0 })).toBe('baby')
     expect(ravenGrowth({ clears: 1, dailies: 0, fullClears: 0 })).toBe('baby')
+  })
+
+  it('hatching is an event: counters that meet the rule without it (a migrated save) are still an egg', () => {
+    expect(ravenGrowth({ clears: 0, dailies: 9, fullClears: 0, hatched: false })).toBe('egg')
+    expect(schoolPetStatus({ clears: 0, dailies: 9, fullClears: 0, hatched: false }).next).toEqual({ stage: 'baby', more: 1, fullClear: false })
+  })
+
+  it('the 3rd daily (once a day) hatches it, and so does a clear', () => {
+    let p = emptySchoolPet()
+    p = applyDaily(p, '2026-10-19', '2026-10-20')
+    p = applyDaily(p, '2026-10-20', '2026-10-20') // same day: not counted
+    p = applyDaily(p, '2026-10-20', '2026-10-21')
+    expect(p).toMatchObject({ dailies: 2, hatched: false })
+    p = applyDaily(p, '2026-10-21', '2026-10-22')
+    expect(p).toMatchObject({ dailies: 3, hatched: true })
+    expect(ravenGrowth(p)).toBe('baby')
+    expect(applyFocusChange(emptySchoolPet(), { cleared: ['s1'], emptied: false }, NOW).next.hatched).toBe(true)
+  })
+
+  it('a migrated egg with 3+ dailies hatches on the next daily or the next clear', () => {
+    const migrated = { ...emptySchoolPet(), dailies: 3 }
+    expect(ravenGrowth(migrated)).toBe('egg')
+    expect(ravenGrowth(applyDaily(migrated, '2026-10-01', '2026-10-22'))).toBe('baby')
+    expect(ravenGrowth(applyFocusChange(migrated, { cleared: ['s1'], emptied: false }, NOW).next)).toBe('baby')
+    // a non-event (an answer that clears nothing) doesn't hatch it
+    expect(applyFocusChange(migrated, { cleared: [], emptied: false }, NOW).next).toBe(migrated)
   })
 
   it(`kid at ${RAVEN_KID_POINTS} points (Daily Challenges + cleared skills)`, () => {
@@ -53,7 +82,8 @@ describe('the raven grows from Schoolhouse practice', () => {
   })
 
   it('status says what comes next', () => {
-    expect(schoolPetStatus(null).next).toEqual({ stage: 'baby', more: 0, fullClear: false })
+    expect(schoolPetStatus(null).next).toEqual({ stage: 'baby', more: 3, fullClear: false })
+    expect(schoolPetStatus({ clears: 0, dailies: 2, fullClears: 0 }).next).toEqual({ stage: 'baby', more: 1, fullClear: false })
     expect(schoolPetStatus({ clears: 1, dailies: 1, fullClears: 0 })).toMatchObject({ stage: 'baby', points: 2, goal: 5, next: { stage: 'kid', more: 3 } })
     expect(schoolPetStatus({ clears: 3, dailies: 12, fullClears: 0 }).next).toEqual({ stage: 'adult', more: 0, fullClear: true })
     expect(schoolPetStatus({ clears: 3, dailies: 3, fullClears: 1 }).next).toEqual({ stage: 'adult', more: 9, fullClear: false })
@@ -148,6 +178,11 @@ describe('counting clears and the "finished everything" reward', () => {
       fullClears: 0,
       rewardDay: null,
       rewardPending: false,
+      hatched: false,
     })
+    // a record from before `hatched`: a clear proves it hatched; dailies alone don't
+    expect(cleanSchoolPet({ clears: 1 }).hatched).toBe(true)
+    expect(cleanSchoolPet({ dailies: 5 }).hatched).toBe(false)
+    expect(cleanSchoolPet({ dailies: 5, hatched: true }).hatched).toBe(true)
   })
 })

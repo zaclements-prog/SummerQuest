@@ -75,8 +75,8 @@ export default defineVoicePack({
     'baby-dragon': "It's a baby dragon!",
     'baby-raven': "It's a baby raven!",
     // ── the Schoolhouse raven (lib/pets/schoolPet): its hatch, its button, and clearing the whole list ──
-    ravenHatched: 'You fixed a tricky one! Your egg hatched!',
-    ravenEgg: 'This is the Schoolhouse egg. Practice the tricky ones to hatch it!',
+    ravenHatched: 'You worked so hard! Your egg hatched!',
+    ravenEgg: 'This is the Schoolhouse egg. Play the daily challenge, or practice the tricky ones, to hatch it!',
     ravenGrowing: 'Your raven grows when you practice the tricky ones and play the daily challenge!',
     ravenGrownUp: 'Your raven is all grown up!',
     focusPractice: "Let's practice a tricky one!",

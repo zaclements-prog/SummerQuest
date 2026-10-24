@@ -33356,14 +33356,14 @@
       "file": "voice/k-nav/baby-raven.mp3"
     },
     "k-nav/ravenHatched": {
-      "text": "You fixed a tricky one! Your egg hatched!",
-      "hash": "f6331f6255",
+      "text": "You worked so hard! Your egg hatched!",
+      "hash": "efadcdcfe9",
       "kind": "line",
       "file": "voice/k-nav/ravenHatched.mp3"
     },
     "k-nav/ravenEgg": {
-      "text": "This is the Schoolhouse egg. Practice the tricky ones to hatch it!",
-      "hash": "cdb38332ef",
+      "text": "This is the Schoolhouse egg. Play the daily challenge, or practice the tricky ones, to hatch it!",
+      "hash": "46c52af462",
       "kind": "line",
       "file": "voice/k-nav/ravenEgg.mp3"
     },

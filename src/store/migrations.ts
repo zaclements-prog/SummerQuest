@@ -121,8 +121,9 @@ export function migrateV3toV4(p: PersistedProgressV0): PersistedProgressV0 {
  * Challenge count starts from the ones already played (one per day with a
  * daily session in the history; the history is capped, so this may undercount
  * a long-time player, never overcount). Nothing else can be recovered: skill
- * clears are judged answer by answer, so the egg waits for the first new one
- * (the raven stays an egg until then, so no celebration fires on update).
+ * clears are judged answer by answer. The egg is NOT hatched here, even with
+ * 3+ dailies already played (`hatched: false`): it hatches on the next Daily
+ * Challenge or cleared skill, in play, with its celebration.
  */
 export function migrateV4toV5(p: PersistedProgressV0): PersistedProgressV0 {
   const days = new Set<string>()

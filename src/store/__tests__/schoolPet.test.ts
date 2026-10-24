@@ -4,6 +4,7 @@ import { useProgress } from '../progress'
 import { migrateV4toV5 } from '../migrations'
 import { FOCUS_REWARD_COINS, emptySchoolPet } from '../../lib/pets/schoolPet'
 import { localDayKey } from '../../lib/dates'
+import { allPetStages, pendingMoments } from '../../lib/pets/growth'
 
 const KEY = 'summerquest-progress-v1'
 const DAY = 86_400_000
@@ -77,8 +78,16 @@ describe('the Schoolhouse raven in the store', () => {
     expect(s().schoolPet.dailies).toBe(1)
   })
 
+  it('the 3rd Daily Challenge hatches the raven (no cleared skill needed); it becomes the buddy', () => {
+    useProgress.setState({ schoolPet: { ...emptySchoolPet(), dailies: 2 }, dailyClaimedDate: '2000-01-01' })
+    expect(s().buddyPet).toBeNull()
+    s().claimDaily()
+    expect(s().schoolPet).toMatchObject({ dailies: 3, hatched: true })
+    expect(s().buddyPet).toBe('raven')
+  })
+
   it('a grown-up raven joins the avatars', () => {
-    useProgress.setState({ schoolPet: { ...emptySchoolPet(), clears: 3, dailies: 11, fullClears: 1 } })
+    useProgress.setState({ schoolPet: { ...emptySchoolPet(), clears: 3, dailies: 11, fullClears: 1, hatched: true } })
     s().claimDaily() // 15 points + a full clear
     expect(s().ownedCreatures).toContain('raven')
     s().becomeCreature('raven')
@@ -88,7 +97,7 @@ describe('the Schoolhouse raven in the store', () => {
   it('only a hatched raven can be the buddy; its celebrations are remembered', () => {
     s().setBuddyPet('raven')
     expect(s().buddyPet).toBeNull()
-    useProgress.setState({ schoolPet: { ...emptySchoolPet(), clears: 1 } })
+    useProgress.setState({ schoolPet: { ...emptySchoolPet(), clears: 1, hatched: true } })
     s().setBuddyPet('raven')
     expect(s().buddyPet).toBe('raven')
     s().markPetsSeen({ raven: 'baby' })
@@ -113,6 +122,22 @@ describe('v4 → v5 migration (the Schoolhouse raven)', () => {
     ]
     expect(migrateV4toV5({ sessions }).schoolPet).toEqual({ ...emptySchoolPet(), dailies: 2 })
     expect(migrateV4toV5({}).schoolPet).toEqual(emptySchoolPet())
+  })
+
+  it('3+ dailies played before the update: still an egg after it (no silent hatch), hatching with a celebration on the next daily', async () => {
+    const d1 = new Date(2026, 9, 1, 9).getTime()
+    const sessions = [0, 1, 2, 3].map((i) => ({ id: `d${i}`, at: d1 + i * DAY, zoneId: 'multiplication-mesa', zoneTitle: 'M', zoneEmoji: '✖️', stageId: 's', stageTitle: 'D', kind: 'daily', correct: 5, total: 5, stars: 3, score: 50 }))
+    localStorage.setItem(
+      KEY,
+      JSON.stringify({ state: { player: { emoji: '🦊', color: '#f97316', name: 'T', grade: 3 }, sessions, petsSeen: {}, quest: null, dailyClaimedDate: '2026-10-04' }, version: 4 }),
+    )
+    await useProgress.persist.rehydrate()
+    expect(s().schoolPet).toMatchObject({ dailies: 4, hatched: false })
+    expect(pendingMoments(allPetStages(s()), s().petsSeen)).toEqual([])
+    s().claimDaily()
+    expect(s().schoolPet).toMatchObject({ dailies: 5, hatched: true })
+    // the celebration is waiting (straight to kid: 5 points)
+    expect(pendingMoments(allPetStages(s()), s().petsSeen)).toEqual([{ creatureId: 'raven', from: 'egg', to: 'kid' }])
   })
 
   it('a saved v4 game rehydrates with the raven and is saved back as v5', async () => {

@@ -31,7 +31,10 @@ const schoolMore = (n: number) => `${n} more 🌟 Daily Challenge${n === 1 ? '' 
  */
 export function schoolNextText(s: SchoolPetStatus): string {
   if (!s.next) return s.stage === 'adult' ? 'All grown up! You can play as the Raven!' : 'Visit the Schoolhouse to play with it!'
-  if (s.next.stage === 'baby') return "Practice a skill on This Week's Focus until it's cleared to hatch it!"
+  if (s.next.stage === 'baby') {
+    const n = s.next.more
+    return `Play ${n} more 🌟 Daily Challenge${n === 1 ? '' : 's'}, or clear a 🎯 skill on This Week's Focus, to hatch it!`
+  }
   if (s.next.stage === 'kid') return `${schoolMore(s.next.more)} to grow!`
   if (s.next.fullClear && s.next.more > 0) return `${schoolMore(s.next.more)}, and clear your whole Focus list, to grow up!`
   if (s.next.fullClear) return "Clear every skill on This Week's Focus to grow up!"
@@ -41,7 +44,7 @@ export function schoolNextText(s: SchoolPetStatus): string {
 /** The same, short: "3 more 🌟/🎯 to grow", "Clear your Focus list to grow up". */
 export function schoolNextShort(s: SchoolPetStatus): string {
   if (!s.next) return s.stage === 'adult' ? 'All grown up!' : ''
-  if (s.next.stage === 'baby') return 'Clear a 🎯 skill to hatch'
+  if (s.next.stage === 'baby') return `${s.next.more} 🌟 or a 🎯 skill to hatch`
   if (s.next.stage === 'adult' && s.next.fullClear && s.next.more === 0) return 'Clear your 🎯 list to grow up'
   return `${s.next.more} more 🌟/🎯 to ${s.next.stage === 'adult' ? 'grow up' : 'grow'}`
 }
@@ -86,7 +89,7 @@ export function momentText(m: PetMoment): { title: string; line: string } {
   if (m.from === 'egg' && m.creatureId === SCHOOL_PET_ID) {
     return {
       title: 'Your Schoolhouse egg hatched!',
-      line: `You cleared a tricky skill! Say hi to your ${m.to === 'baby' ? 'baby ' : ''}${name}!`,
+      line: `You worked hard at the Schoolhouse! Say hi to your ${m.to === 'baby' ? 'baby ' : ''}${name}!`,
     }
   }
   if (m.from === 'egg') {

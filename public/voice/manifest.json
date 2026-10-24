@@ -33439,8 +33439,8 @@
   },
   "k-nav/ravenEgg": {
     "file": "voice/k-nav/ravenEgg.mp3",
-    "hash": "cdb38332ef",
-    "duration": 4.27,
+    "hash": "46c52af462",
+    "duration": 6.77,
     "words": "voice/k-nav/ravenEgg.words.json"
   },
   "k-nav/ravenGrowing": {
@@ -33457,8 +33457,8 @@
   },
   "k-nav/ravenHatched": {
     "file": "voice/k-nav/ravenHatched.mp3",
-    "hash": "f6331f6255",
-    "duration": 3.02,
+    "hash": "efadcdcfe9",
+    "duration": 2.88,
     "words": "voice/k-nav/ravenHatched.words.json"
   },
   "k-nav/sleeping": {
