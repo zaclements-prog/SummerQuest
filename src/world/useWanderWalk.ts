@@ -10,6 +10,8 @@ import { createTapMarker } from './tapMarker'
 import type { TapMarker } from './tapMarker'
 
 const WALK_SPEED = 3
+/** Default speed of an idle wander (units/s). */
+const WANDER_SPEED = 1.2
 const COLLIDE_RADIUS = 0.3
 /** After a walk the player directed (keys or a tap), a wandering creature waits this long (s) before wandering on. */
 const LINGER_S = 4
@@ -77,9 +79,14 @@ export function useWanderWalk(opts: {
    * non-stop wander). Pets toddle with it.
    */
   rest?: number
+  /**
+   * Wandering speed (units/s), read every frame; default 1.2. Pets walk at their
+   * gait's pace, and 0 holds a hopper in place between hops (still walking).
+   */
+  wanderSpeed?: () => number
 }) {
   // `groupRef`: the Group is mutated through the ref's `.current` inside the frame loop.
-  const { group: groupRef, collide, bound, paused, wander = true, walk = walkState, steer = true, rest = 0 } = opts
+  const { group: groupRef, collide, bound, paused, wander = true, walk = walkState, steer = true, rest = 0, wanderSpeed } = opts
   const tapToWalk = opts.tapToWalk ?? !wander
   const tapOnly = tapToWalk === 'tap'
   const keys = useRef({ w: false, a: false, s: false, d: false })
@@ -346,9 +353,14 @@ export function useWanderWalk(opts: {
       }
       const dir = _dir.copy(target.current).sub(pos)
       dir.y = 0
-      if (state.clock.elapsedTime >= lingerUntil.current && dir.length() > 0.01) {
+      const speed = wanderSpeed ? wanderSpeed() : WANDER_SPEED
+      if (state.clock.elapsedTime >= lingerUntil.current && dir.length() > 0.01 && speed <= 0) {
+        // a hopper between hops: still on its way, just not moving this frame
+        g.rotation.y = Math.atan2(dir.x, dir.z)
+        moving = true
+      } else if (state.clock.elapsedTime >= lingerUntil.current && dir.length() > 0.01) {
         dir.normalize()
-        const step = Math.min(1.2 * dt, pos.distanceTo(target.current))
+        const step = Math.min(speed * dt, pos.distanceTo(target.current))
         const moved = walkStepInto(_moved, pos.x, pos.z, dir.x * step, dir.z * step, collide, COLLIDE_RADIUS, bound)
         const movedAny = moved.x !== pos.x || moved.z !== pos.z
         pos.x = moved.x

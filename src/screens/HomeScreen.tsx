@@ -9,7 +9,7 @@ import { useHomeUi } from '../home/useHomeUi'
 import { useStarterCreature } from '../home/starterCreature'
 import { canvasQuality, useLowGraphics } from '../world/graphicsQuality'
 
-const STUDIO_KINDS: readonly StudioKind[] = ['creatures', 'anchors', 'accgrid', 'furniture', 'accessories', 'growth', 'eggs']
+const STUDIO_KINDS: readonly StudioKind[] = ['creatures', 'anchors', 'accgrid', 'furniture', 'accessories', 'growth', 'eggs', 'gaits']
 
 const HOME_SKY = 'radial-gradient(120% 90% at 50% 105%, #fff3dc 0%, #fde9d6 30%, #d9effa 68%, #b8e1f7 100%)'
 
@@ -59,7 +59,7 @@ export default function HomeScreen() {
         camera={{ position: isStudio ? studioCam : [11, 11, 11], fov: 42 }}
         style={{ position: 'absolute', inset: 0 }}
       >
-        {isStudio ? <ModelStudio kind={studio} only={only} target={nums('target')} /> : <HomeWorld />}
+        {isStudio ? <ModelStudio kind={studio} only={only} target={nums('target')} params={params} /> : <HomeWorld />}
       </GLCanvas>
       {!isStudio && <HomeHud />}
     </div>
