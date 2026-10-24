@@ -14,6 +14,7 @@ import { Unicorn } from './creatures/unicorn'
 import { Octopus } from './creatures/octopus'
 import { Trex } from './creatures/trex'
 import { Dragon } from './creatures/dragon'
+import { Raven } from './creatures/raven'
 import { Rug } from './furniture/rug'
 import { Bed } from './furniture/bed'
 import { Lamp } from './furniture/lamp'
@@ -61,6 +62,7 @@ const CREATURE_BUILDERS: Record<string, CreatureBuilder> = {
   octopus: Octopus,
   trex: Trex,
   dragon: Dragon,
+  raven: Raven,
 }
 const FURNITURE_BUILDERS: Record<string, ModelBuilder> = {
   rug: Rug,

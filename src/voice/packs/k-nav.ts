@@ -30,6 +30,8 @@ export default defineVoicePack({
     'animal-octopus': 'Octopus!',
     'animal-trex': 'Dinosaur!',
     'animal-dragon': 'Dragon!',
+    // (the Schoolhouse raven: not a starter, said on its Schoolhouse button)
+    'animal-raven': 'Raven!',
     // the color swatches
     'color-orange': 'Orange!',
     'color-pink': 'Pink!',
@@ -71,6 +73,14 @@ export default defineVoicePack({
     'baby-dragonet': "It's a baby dragonet!",
     'baby-tiger': "It's a baby tiger!",
     'baby-dragon': "It's a baby dragon!",
+    'baby-raven': "It's a baby raven!",
+    // ── the Schoolhouse raven (lib/pets/schoolPet): its hatch, its button, and clearing the whole list ──
+    ravenHatched: 'You worked so hard! Your egg hatched!',
+    ravenEgg: 'This is the Schoolhouse egg. Play the daily challenge, or practice the tricky ones, to hatch it!',
+    ravenGrowing: 'Your raven grows when you practice the tricky ones and play the daily challenge!',
+    ravenGrownUp: 'Your raven is all grown up!',
+    focusPractice: "Let's practice a tricky one!",
+    focusAllDone: 'You finished everything! Here are some coins and a new badge.',
     // several pets at once (the launch summary)
     petsGrewAll: 'Look! Your pets grew!',
     // a badge earned (the badge card)

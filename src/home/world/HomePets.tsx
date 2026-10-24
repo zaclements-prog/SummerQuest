@@ -6,7 +6,8 @@ import type { Group } from 'three'
 import { useProgress } from '../../store/progress'
 import { useHomeUi } from '../useHomeUi'
 import { creatureBuilder } from '../models/registry'
-import { WalkStateContext, newWalkState } from '../models/walkState'
+import { WalkStateContext, newPetWalkState } from '../models/walkState'
+import { gaitFor, petWanderSpeed, tempoFor } from '../models/gaits'
 import { GRID_SIZE, TILE } from '../../lib/home/grid'
 import { avatarSpawnPoint, blockerGrid, gridBlockedAt } from '../../lib/home/occupancy'
 import { useAvatarBlockers } from '../useOccupied'
@@ -21,8 +22,8 @@ import { sfx } from '../../lib/sound'
 
 const ROOM_LIMIT = (GRID_SIZE * TILE) / 2 - 0.6 // stay just inside the walls (as the avatar does)
 const HOP_MS = 650
-/** Seconds a pet sits before toddling on (randomized up to this). */
-const REST_S = 4
+/** Seconds a pet rests before wandering on (randomized up to this): long enough to lie down, sniff about or look around. */
+const REST_S = 7
 /** Pets come in one at a time once the room is up, so building them doesn't hold up its first frame. */
 const ARRIVE_FIRST_MS = 500
 const ARRIVE_EACH_MS = 300
@@ -80,7 +81,7 @@ function HomePet({
   const hopAt = useRef(0)
   const mode = useHomeUi((s) => s.mode)
   // Its own walk signal: the model's limbs read it through the provider below.
-  const walk = useMemo(() => newWalkState(), [])
+  const walk = useMemo(() => newPetWalkState(), [])
   const b = useMemo(() => ({ Builder: creatureBuilder(creatureId) }), [creatureId])
   // Spread out on a ring around the middle (the avatar stands in the middle), off the furniture.
   const [spawn] = useState(() => {
@@ -88,8 +89,10 @@ function HomePet({
     const p = avatarSpawnPoint(blockers, Math.cos(a) * 2.6, Math.sin(a) * 2.6)
     return [p.x, 0, p.z] as [number, number, number]
   })
-  const phase = index * 1.7
   const size = stage === 'baby' ? 0.6 : 1
+  // its gait sets its pace (a frog only moves mid-hop)
+  const gait = gaitFor(creatureId)
+  const tempo = tempoFor(stage)
 
   useWanderWalk({
     group,
@@ -102,17 +105,15 @@ function HomePet({
     collide: (x, z, fromX, fromZ) => gridBlockedAt(grid, x, z, fromX, fromZ),
     // stand still for a happy hop when tapped
     paused: () => hopAt.current !== 0 && performance.now() - hopAt.current < HOP_MS,
+    wanderSpeed: () => petWanderSpeed(gait, tempo, walk.advancing),
   })
 
-  // Its own bob and sway, from its own walk state (like the avatar's).
-  useFrame(({ clock }) => {
+  // The happy hop when tapped (its gait's own bob, roll and hops live in the model's pet rig).
+  useFrame(() => {
     const g = inner.current
     if (!g) return
     const hopT = hopAt.current ? (performance.now() - hopAt.current) / HOP_MS : 1
-    const jump = hopT < 1 ? Math.sin(hopT * Math.PI) * 0.32 * size : 0
-    const step = walk.moving ? Math.abs(Math.sin(walk.t * 9)) * 0.05 * size : 0
-    g.position.y = jump + step + Math.sin(clock.elapsedTime * 3.1 + phase) * 0.02 * size
-    g.rotation.z = walk.moving ? Math.sin(walk.t * 9) * 0.06 : 0
+    g.position.y = hopT < 1 ? Math.sin(hopT * Math.PI) * 0.32 * size : 0
   })
 
   const onClick = (e: ThreeEvent<MouseEvent>) => {
@@ -130,7 +131,7 @@ function HomePet({
         <WalkStateContext.Provider value={walk}>
           {/* its rigid parts merge into a few draw calls (the limbs keep moving): six pets stay cheap */}
           <StaticBatch>
-            <b.Builder stage={stage} />
+            <b.Builder stage={stage} posture="pet" />
           </StaticBatch>
         </WalkStateContext.Provider>
       </group>

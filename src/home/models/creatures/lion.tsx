@@ -1,14 +1,11 @@
-import { useRef } from 'react'
-import { useFrame } from '@react-three/fiber'
 import { Euler, Matrix4, Quaternion, Vector3 } from 'three'
-import type { BufferGeometry, Group } from 'three'
+import type { BufferGeometry } from 'three'
 import { TCapsule, TSphere } from '../../../toon/shapes'
 import { geo } from '../../../toon/geometry'
 import { mergeParts } from '../../../toon/batch'
 import { toonMaterial } from '../../../toon/materials'
-import { Arm, Blush, Eye, Ink, Leg, Smile, Staged, Wag, faceYaw, onFace } from '../parts'
-import type { CreatureProps } from '../parts'
-import { useWalkState } from '../walkState'
+import { Arm, Blush, Eye, Ink, Leg, Nub, PetBody, PetHead, Smile, Staged, Wag, faceYaw, onFace } from '../parts'
+import type { CreatureProps, PetRig } from '../parts'
 
 // One palette for all three ages.
 const GOLD = '#ffc45e'
@@ -64,25 +61,6 @@ function Baked({ geometry, color }: { geometry: BufferGeometry; color: string })
   )
 }
 
-/**
- * A baby's nub foot: one round pad under the hip that paddles like a `Leg`
- * while the baby toddles (no shin: the hip is barely off the floor).
- */
-function Nub({ x, phase }: { x: number; phase: number }) {
-  const hip = useRef<Group>(null)
-  const walk = useWalkState()
-  useFrame(() => {
-    if (hip.current) hip.current.rotation.x = walk.moving ? Math.sin(walk.t * 9 + phase) * 0.6 : 0
-  })
-  return (
-    <group ref={hip} position={[x, 0.075, 0.01]}>
-      <TSphere position={[0, -0.04, 0.022]} scale={[0.052, 0.036, 0.064]} color={CREAM} segments={12}>
-        <Ink />
-      </TSphere>
-    </group>
-  )
-}
-
 // Baby head ellipsoid.
 const BHC = [0, 0.345, 0.025] as const
 const BHR = [0.2, 0.175, 0.18] as const
@@ -112,8 +90,9 @@ const cubEars = once(() =>
 function LionBaby() {
   return (
     <group>
-      <Nub x={-0.065} phase={0} />
-      <Nub x={0.065} phase={Math.PI} />
+      <Nub x={-0.065} phase={0} color={CREAM} />
+      <Nub x={0.065} phase={Math.PI} color={CREAM} />
+      <PetBody>
 
       <TSphere position={[0, 0.14, 0]} scale={[0.125, 0.12, 0.112]} color={GOLD} segments={18}>
         <Ink />
@@ -133,6 +112,7 @@ function LionBaby() {
         </group>
       </Wag>
 
+      <PetHead>
       {/* the head, tipped to one side like a curious baby */}
       <group position={[0, 0.2, 0]} rotation={[0, 0, -0.1]}>
         <group position={[0, -0.2, 0]}>
@@ -153,6 +133,8 @@ function LionBaby() {
           ))}
         </group>
       </group>
+      </PetHead>
+      </PetBody>
     </group>
   )
 }
@@ -171,6 +153,7 @@ function LionKid() {
     <group>
       <Leg x={-0.1} y={0.17} color={gold} footColor={cream} phase={0} />
       <Leg x={0.1} y={0.17} color={gold} footColor={cream} phase={Math.PI} />
+      <PetBody>
 
       <TSphere position={[0, 0.33, 0]} scale={[0.22, 0.21, 0.2]} color={gold} segments={20}>
         <Ink />
@@ -192,6 +175,7 @@ function LionKid() {
         </group>
       </Wag>
 
+      <PetHead>
       {/* mane: a big back puff and a ring of tufts around the face */}
       <TSphere position={[0, 0.7, -0.05]} scale={[0.31, 0.3, 0.24]} color={mane} segments={20}>
         <Ink />
@@ -236,6 +220,8 @@ function LionKid() {
           <Blush position={onFace(HC, HR, s * 0.16, -0.045, -0.004)} yaw={faceYaw(HC, HR, s * 0.16, -0.045)} color="#ff8a96" />
         </group>
       ))}
+      </PetHead>
+      </PetBody>
     </group>
   )
 }
@@ -288,6 +274,7 @@ function LionAdult() {
     <group>
       <Leg x={-0.105} y={0.46} color={GOLD} footColor={CREAM} radius={0.072} foot={[0.088, 0.062, 0.12]} swing={0.45} phase={0} />
       <Leg x={0.105} y={0.46} color={GOLD} footColor={CREAM} radius={0.072} foot={[0.088, 0.062, 0.12]} swing={0.45} phase={Math.PI} />
+      <PetBody>
 
       {/* torso + cream tummy */}
       <TSphere position={[0, 0.63, 0]} scale={[0.21, 0.255, 0.185]} color={GOLD} segments={20}>
@@ -315,6 +302,7 @@ function LionAdult() {
         </group>
       </Wag>
 
+      <PetHead>
       {/* the big layered mane */}
       <Baked geometry={maneOuter()} color={MANE_DEEP} />
       <Baked geometry={maneInner()} color={MANE} />
@@ -347,11 +335,21 @@ function LionAdult() {
           <Blush position={onFace(AHC, AHR, s * 0.16, -0.04, -0.004)} yaw={faceYaw(AHC, AHR, s * 0.16, -0.04)} color={BLUSH} />
         </group>
       ))}
+      </PetHead>
+      </PetBody>
     </group>
   )
 }
 
-/** Lion: baby, kid and adult (see `Staged`). */
-export function Lion({ stage }: CreatureProps) {
-  return <Staged stage={stage} baby={LionBaby} kid={LionKid} adult={LionAdult} />
+// As a pet the lion walks on all fours: the body tips forward about the hips
+// until the arms reach the floor as front legs, and the head turns back up.
+const RIGS: Record<'baby' | 'kid' | 'adult', PetRig> = {
+  baby: { pivot: [0, 0.075, 0.01], pitch: 1.2, neck: [0, 0.22, 0.02], shift: [0, 0.05, -0.1], headLift: 0.02, frontLegs: true, lie: 0.06 },
+  kid: { pivot: [0, 0.17, 0], pitch: 1.35, neck: [0, 0.48, 0], shift: [0, 0.1, -0.16], headLift: 0.05, frontLegs: true, lie: 0.15 },
+  adult: { pivot: [0, 0.46, 0], pitch: 1.4, neck: [0, 0.85, 0], shift: [0, -0.06, -0.3], headLift: 0.12, frontLegs: true, lie: 0.3 },
+}
+
+/** Lion: baby, kid and adult (see `Staged`); `posture="pet"` walks it on four legs. */
+export function Lion({ stage, posture, pet }: CreatureProps) {
+  return <Staged id="lion" stage={stage} posture={posture} pet={pet} rigs={RIGS} baby={LionBaby} kid={LionKid} adult={LionAdult} />
 }

@@ -3,6 +3,7 @@ import { canPlace, footprintTiles, tileKey } from '../lib/home/grid'
 import { localDayKey } from '../lib/dates'
 import { adultPets, growthRank, hatchedPets, petStages } from '../lib/pets/growth'
 import type { PetGrowth, ZonesLike } from '../lib/pets/growth'
+import { emptySchoolPet } from '../lib/pets/schoolPet'
 
 /** Shape of the persisted fields the migrations touch (kept loose: old saves vary). */
 export interface PersistedProgressV0 {
@@ -113,4 +114,21 @@ export function migrateV2toV3(p: PersistedProgressV0): PersistedProgressV0 {
  */
 export function migrateV3toV4(p: PersistedProgressV0): PersistedProgressV0 {
   return { ...p, quest: null }
+}
+
+/**
+ * v4 → v5: the Schoolhouse raven (`schoolPet`, lib/pets/schoolPet). Its Daily
+ * Challenge count starts from the ones already played (one per day with a
+ * daily session in the history; the history is capped, so this may undercount
+ * a long-time player, never overcount). Nothing else can be recovered: skill
+ * clears are judged answer by answer. The egg is NOT hatched here, even with
+ * 3+ dailies already played (`hatched: false`): it hatches on the next Daily
+ * Challenge or cleared skill, in play, with its celebration.
+ */
+export function migrateV4toV5(p: PersistedProgressV0): PersistedProgressV0 {
+  const days = new Set<string>()
+  for (const s of Array.isArray(p.sessions) ? p.sessions : []) {
+    if (s && s.kind === 'daily' && typeof s.at === 'number' && Number.isFinite(s.at)) days.add(localDayKey(s.at))
+  }
+  return { ...p, schoolPet: { ...emptySchoolPet(), dailies: days.size } }
 }

@@ -5,8 +5,9 @@ import { MeshBasicMaterial, OctahedronGeometry } from 'three'
 import type { Group, Mesh, PerspectiveCamera } from 'three'
 import { creatureBuilder } from '../home/models/registry'
 import { WalkStateContext, newWalkState } from '../home/models/walkState'
+import { CALM_PET } from '../home/models/petRig'
 import { Egg, newEggAnim, setEggAnim } from '../home/models/egg'
-import { petById } from '../lib/pets/catalog'
+import { petEgg } from '../lib/pets/catalog'
 import type { PetMoment } from '../lib/pets/growth'
 import { registerSharedGpuCache } from '../platform/gl/release'
 import { sfx } from '../lib/sound'
@@ -128,7 +129,7 @@ function Framing({ tall }: { tall: number }) {
 }
 
 export default function CelebrationScene({ moment, reduced, onReveal }: { moment: PetMoment; reduced: boolean; onReveal: () => void }) {
-  const pet = petById(moment.creatureId)
+  const egg = petEgg(moment.creatureId)
   const b = useMemo(() => ({ Builder: creatureBuilder(moment.creatureId) }), [moment.creatureId])
   const still = useMemo(() => newWalkState(), [])
   const anim = useMemo(() => newEggAnim(), [])
@@ -214,17 +215,17 @@ export default function CelebrationScene({ moment, reduced, onReveal }: { moment
       <hemisphereLight args={['#fff6e8', '#e6c9a4', 1.1]} />
       <ambientLight intensity={0.35} />
       <directionalLight position={[2.5, 5, 4]} intensity={1.5} color="#fff1da" />
-      {hatch && pet ? (
+      {hatch && egg ? (
         <group ref={eggRef} scale={0.001}>
-          <Egg shell={pet.egg.shell} spot={pet.egg.spot} anim={anim} />
+          <Egg shell={egg.shell} spot={egg.spot} anim={anim} />
         </group>
       ) : (
         <group ref={oldRef}>
-          <b.Builder stage={from} />
+          <b.Builder stage={from} posture="pet" pet={CALM_PET} />
         </group>
       )}
       <group ref={newRef} visible={false}>
-        <b.Builder stage={to} />
+        <b.Builder stage={to} posture="pet" pet={CALM_PET} />
       </group>
       {!reduced && <Sparkles clock0={t0} swirlFrom={hatch ? HATCH.open - 0.05 : 0.25} burstAt={hatch ? HATCH.open + 0.05 : GROW.swap} height={tall} />}
       {/* a soft shadow on the ground */}

@@ -3,17 +3,23 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { getZone, zoneDescription } from '../curriculum'
 import { useProgress } from '../store/progress'
 import { todayStr } from '../lib/daily'
-import { Button, Pill, StarRating } from '../components/ui'
+import { Button, Pill, ProgressBar, StarRating } from '../components/ui'
 import type { ActiveNpc } from './useWorldUi'
 import { focusRows, lessonRows, zoneStageRows } from './hubContent'
 import { listenGrade } from '../lib/listenNav'
 import ListenWorldPanel from './ListenWorldPanel'
+import { EggIcon } from '../pets/EggIcon'
+import { FOCUS_REWARD_COOLDOWN_DAYS, SCHOOL_PET_ID, schoolPetStatus } from '../lib/pets/schoolPet'
+import { schoolNextText, stageLabel } from '../lib/pets/copy'
+import { petEmoji, petName } from '../lib/pets/catalog'
+import { addDays } from '../lib/dates'
 
 const KIND_ICON = { concept: '💡', practice: '⚡', mastery: '👹' } as const
 
 /**
  * The in-world card an NPC opens: pick a stage (or a lesson) without leaving the
- * World. Subject NPCs list their zone's stages; the Schoolhouse owl offers the
+ * World. Subject NPCs list their zone's stages; the Schoolhouse owl offers its
+ * pet (the raven, raised by the Daily Challenge and This Week's Focus), the
  * Daily Challenge, This Week's Focus and every Tutor lesson; the Library
  * bookworm offers Reading Reef plus the reading and writing lessons.
  * `onLaunch(path)` leaves the World for that route (and the game returns here).
@@ -166,9 +172,14 @@ function SchoolhouseContent({ onLaunch }: { onLaunch: (path: string) => void }) 
   const dailyDone = useProgress((s) => s.dailyClaimedDate) === todayStr()
   const grade = useProgress((s) => s.player?.grade)
   const focus = focusRows({ zones, attempts, sessions, grade })
+  const rewardDay = useProgress((s) => s.schoolPet.rewardDay)
+  // the whole list was cleared in the last week: say so instead of "play some quizzes"
+  const allClear = !!rewardDay && todayStr() < addDays(rewardDay, FOCUS_REWARD_COOLDOWN_DAYS)
 
   return (
     <>
+      <SchoolPetSection onLaunch={onLaunch} />
+
       <Section title="🌟 Daily Challenge">
         {dailyDone ? (
           <Pill tone="correct" icon="✅">Done for today — come back tomorrow!</Pill>
@@ -181,7 +192,9 @@ function SchoolhouseContent({ onLaunch }: { onLaunch: (path: string) => void }) 
 
       <Section title="🎯 This Week's Focus">
         {focus.length === 0 ? (
-          <p className="text-sm text-ink-700">Play some quizzes and I'll find the skills to practice next. Hoo!</p>
+          <p className="text-sm text-ink-700">
+            {allClear ? 'You cleared everything on your list this week. Hoo-ray! 🎉' : "Play some quizzes and I'll find the skills to practice next. Hoo!"}
+          </p>
         ) : (
           <ul className="flex flex-col gap-2">
             {focus.map((f) => (
@@ -207,5 +220,40 @@ function SchoolhouseContent({ onLaunch }: { onLaunch: (path: string) => void }) 
         <LessonList onLaunch={onLaunch} />
       </Section>
     </>
+  )
+}
+
+/**
+ * The Schoolhouse's own pet: the raven's egg (or the raven) with what it needs
+ * next. It grows from the Daily Challenge and from clearing skills off This
+ * Week's Focus (lib/pets/schoolPet), the two things right below it.
+ */
+function SchoolPetSection({ onLaunch }: { onLaunch: (path: string) => void }) {
+  const record = useProgress((s) => s.schoolPet)
+  const status = schoolPetStatus(record)
+  const name = petName(SCHOOL_PET_ID)
+  const counting = !!status.next && status.next.stage !== 'baby' && status.goal > 0
+  return (
+    <Section title={`${petEmoji(SCHOOL_PET_ID)} Your ${name}`}>
+      <div className="flex items-center gap-3 rounded-2xl bg-ocean-50 px-3 py-2">
+        <span className="grid place-items-center w-11 h-11 shrink-0 rounded-full bg-paper border-2 border-line text-2xl" aria-hidden="true">
+          {status.stage === 'egg' ? <EggIcon shell={status.pet.egg.shell} spot={status.pet.egg.spot} size="sm" /> : petEmoji(SCHOOL_PET_ID)}
+        </span>
+        <div className="flex-1 min-w-0">
+          <div className="kid-text text-base leading-tight">
+            {status.stage === 'egg' ? `${name} egg` : `${stageLabel(status.stage)} ${name}`}
+          </div>
+          <p className="text-xs text-ink-700 leading-snug">{schoolNextText(status)}</p>
+          {counting && (
+            <div className="mt-1">
+              <ProgressBar value={Math.min(status.points, status.goal)} max={status.goal} tone={status.next?.stage === 'adult' ? 'correct' : 'quest'} />
+            </div>
+          )}
+        </div>
+        <Button size="md" variant="ghost" onClick={() => onLaunch(`/pets?pet=${SCHOOL_PET_ID}`)}>
+          🐾 See
+        </Button>
+      </div>
+    </Section>
   )
 }

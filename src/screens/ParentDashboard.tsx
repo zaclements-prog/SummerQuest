@@ -25,15 +25,15 @@ import ParentGate from '../components/ParentGate'
 import { removeSavedKeys } from '../platform/web/storage'
 import { GRADE_LABEL, GRADE_SHORT_LABEL, type GradeLevel } from '../lib/gradeTiers'
 import { OFFERED_GRADES } from '../lib/features'
-import { adultPets, hatchedPets, petStages, zoneStarTotals } from '../lib/pets/growth'
-import { PETS } from '../lib/pets/catalog'
+import { adultPets, allPetStages, hatchedPets, zoneStarTotals } from '../lib/pets/growth'
+import { PET_IDS } from '../lib/pets/catalog'
 import VoiceCheck from '../voice/VoiceCheck'
 
 export default function ParentDashboard() {
-  const { player, coins, zones, stats, resetPlayer, setGrade, lessonsDone } = useProgress()
+  const { player, coins, zones, stats, resetPlayer, setGrade, lessonsDone, schoolPet } = useProgress()
   // Pets grow from learning: a grown-up one is "raised" (it joins the avatars).
   const grade = player?.grade
-  const petGrowth = petStages(zones, lessonsDone, grade)
+  const petGrowth = allPetStages({ zones, lessonsDone, schoolPet })
   const petsRaised = adultPets(petGrowth).length
   const petsHatched = hatchedPets(petGrowth).length
   const {
@@ -212,8 +212,8 @@ export default function ParentDashboard() {
         <motion.div variants={item}>
           <Panel emoji="🗺️" title="Zone progress" tone="ocean">
             <p className="text-base text-ink-700 mb-3">
-              🐾 Pets raised: <b className="text-ink-900">{petsRaised} of {PETS.length}</b>
-              <span className="text-ink-500"> · {petsHatched} hatched (each zone&apos;s pet grows as your child earns its stars)</span>
+              🐾 Pets raised: <b className="text-ink-900">{petsRaised} of {PET_IDS.length}</b>
+              <span className="text-ink-500"> · {petsHatched} hatched (each zone&apos;s pet grows as your child earns its stars; the Schoolhouse raven grows from Daily Challenges and from clearing This Week&apos;s Focus)</span>
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {curriculum.zones.map((z) => {

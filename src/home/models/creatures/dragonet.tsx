@@ -2,8 +2,8 @@ import { CatmullRomCurve3, TubeGeometry, Vector3 } from 'three'
 import { TCapsule, TCone, TSphere } from '../../../toon/shapes'
 import { TOON } from '../../../toon/palette'
 import { toonMaterial } from '../../../toon/materials'
-import { Arm, Blush, Eye, Ink, Leg, Smile, Staged, Wag, Wing, faceYaw, onFace } from '../parts'
-import type { CreatureProps } from '../parts'
+import { Arm, Blush, Eye, FrontFeet, Ink, Leg, PetBody, PetHead, Smile, Staged, Wag, Wing, faceYaw, onFace } from '../parts'
+import type { CreatureProps, PetRig } from '../parts'
 
 // One palette for all three ages.
 const AQUA = '#6fc8ea'
@@ -30,6 +30,7 @@ function DragonetKid() {
     <group>
       <Leg x={-0.1} y={0.17} color={aqua} phase={0} />
       <Leg x={0.1} y={0.17} color={aqua} phase={Math.PI} />
+      <PetBody>
 
       <TSphere position={[0, 0.33, 0]} scale={[0.22, 0.21, 0.2]} color={aqua} segments={20}>
         <Ink />
@@ -74,6 +75,7 @@ function DragonetKid() {
         </Wing>
       ))}
 
+      <PetHead>
       {/* head */}
       <TSphere position={[...HC]} scale={[...HR]} color={aqua} segments={24}>
         <Ink />
@@ -104,6 +106,8 @@ function DragonetKid() {
           <Blush position={onFace(HC, HR, s * 0.19, -0.04, -0.004)} yaw={faceYaw(HC, HR, s * 0.19, -0.04)} />
         </group>
       ))}
+      </PetHead>
+      </PetBody>
     </group>
   )
 }
@@ -125,6 +129,8 @@ function DragonetBaby() {
     <group>
       <Leg x={-0.072} y={0.08} color={AQUA} radius={0.04} foot={[0.052, 0.036, 0.066]} phase={0} />
       <Leg x={0.072} y={0.08} color={AQUA} radius={0.04} foot={[0.052, 0.036, 0.066]} phase={Math.PI} />
+      <PetBody>
+      <FrontFeet x={0.068} y={0.21} z={0.03} color={AQUA} radius={0.038} foot={[0.05, 0.034, 0.062]} />
 
       {/* bean body + cream tummy */}
       <TSphere position={[0, 0.148, 0]} scale={[0.138, 0.12, 0.13]} color={AQUA} segments={18}>
@@ -148,6 +154,7 @@ function DragonetBaby() {
         </Wing>
       ))}
 
+      <PetHead>
       {/* huge head */}
       <TSphere position={[...BC]} scale={[...BR]} color={AQUA} segments={24}>
         <Ink />
@@ -170,6 +177,8 @@ function DragonetBaby() {
           <Blush position={onFace(BC, BR, s * 0.145, -0.06, -0.004)} yaw={faceYaw(BC, BR, s * 0.145, -0.06)} size={0.04} />
         </group>
       ))}
+      </PetHead>
+      </PetBody>
     </group>
   )
 }
@@ -238,6 +247,7 @@ function DragonetAdult() {
     <group>
       <Leg x={-0.11} y={0.44} color={AQUA} radius={0.08} foot={[0.095, 0.058, 0.12]} phase={0} />
       <Leg x={0.11} y={0.44} color={AQUA} radius={0.08} foot={[0.095, 0.058, 0.12]} phase={Math.PI} />
+      <PetBody>
 
       {/* slim chest over rounded hips + cream tummy */}
       <TSphere position={[0, 0.72, 0]} scale={[0.185, 0.235, 0.175]} color={AQUA} segments={22}>
@@ -295,6 +305,7 @@ function DragonetAdult() {
         </Wing>
       ))}
 
+      <PetHead>
       {/* head */}
       <TSphere position={[...AC]} scale={[...AR]} color={AQUA} segments={24}>
         <Ink />
@@ -329,11 +340,22 @@ function DragonetAdult() {
           <Blush position={onFace(AC, AR, s * 0.19, -0.03, -0.004)} yaw={faceYaw(AC, AR, s * 0.19, -0.03)} />
         </group>
       ))}
+      </PetHead>
+      </PetBody>
     </group>
   )
 }
 
-/** Dragonet: baby, kid and adult (see `Staged`). */
-export function Dragonet({ stage }: CreatureProps) {
-  return <Staged stage={stage} baby={DragonetBaby} kid={DragonetKid} adult={DragonetAdult} />
+// As a pet it walks on all fours with its wings folded (the body tips forward
+// about the hips until the arms reach the floor), and now and then spreads
+// them for a hop-glide (see `GAITS`).
+const RIGS: Record<'baby' | 'kid' | 'adult', PetRig> = {
+  baby: { pivot: [0, 0.08, 0], pitch: 1.1, neck: [0, 0.25, 0.02], shift: [0, 0.04, -0.1], headLift: 0.02, frontLegs: true, lie: 0.06 },
+  kid: { pivot: [0, 0.17, 0], pitch: 1.35, neck: [0, 0.48, 0], shift: [0, 0.1, -0.16], headLift: 0.05, frontLegs: true, lie: 0.15 },
+  adult: { pivot: [0, 0.44, 0], pitch: 1.4, neck: [0, 0.85, 0], shift: [0, -0.06, -0.3], headLift: 0.12, frontLegs: true, lie: 0.3 },
+}
+
+/** Dragonet: baby, kid and adult (see `Staged`); `posture="pet"` re-poses it as a pet (see `gaits.ts`). */
+export function Dragonet({ stage, posture, pet }: CreatureProps) {
+  return <Staged id="dragonet" stage={stage} posture={posture} pet={pet} rigs={RIGS} baby={DragonetBaby} kid={DragonetKid} adult={DragonetAdult} />
 }

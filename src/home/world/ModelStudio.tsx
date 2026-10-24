@@ -1,4 +1,5 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
+import { useThree } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import { CREATURES, HOME_ITEMS } from '../../lib/home/catalog'
 import { creatureBuilder, furnitureBuilder } from '../models/registry'
@@ -11,10 +12,15 @@ import CreatureAccessories from './CreatureAccessories'
 import { StudioStage } from './Lights'
 import { TBox, TCyl } from '../../toon/shapes'
 import { PET_STAGES } from '../../lib/pets/types'
-import { PETS } from '../../lib/pets/catalog'
+import { PETS, PET_IDS, petEgg } from '../../lib/pets/catalog'
 import { Egg, newEggAnim, setEggAnim } from '../models/egg'
+import { WalkStateContext } from '../models/walkState'
+import type { WalkState } from '../models/walkState'
+import { cyclePeriod, gaitFor, tempoFor } from '../models/gaits'
+import type { Posture } from '../models/gaits'
+import type { PetStage } from '../../lib/pets/types'
 
-export type StudioKind = 'creatures' | 'furniture' | 'accessories' | 'anchors' | 'accgrid' | 'growth' | 'eggs'
+export type StudioKind = 'creatures' | 'furniture' | 'accessories' | 'anchors' | 'accgrid' | 'growth' | 'eggs' | 'gaits'
 
 const SLOTS: Slot[] = ['head', 'face', 'back', 'body']
 // One accessory per slot — the standard set used to verify every creature's anchors.
@@ -68,10 +74,25 @@ function AccessoryOn({ creatureId, accessoryId }: { creatureId: string; accessor
  *   /home?studio=furniture    — all furniture in a grid
  *   /home?studio=growth       — every creature as baby, kid and adult beside a height ruler
  *   /home?studio=growth&only=fox,lion — just those creatures (also for creatures / anchors)
- *   /home?studio=eggs         — the 12 pet eggs, and one egg cracking and opening
+ *   /home?studio=eggs         — the 13 pet eggs, and one egg cracking and opening
+ *   /home?studio=gaits&only=lion&stage=kid — one creature as a pet, side on, frozen at
+ *     `frames` (default 6) points across one stride (or `span` seconds from `t0`) plus
+ *     once mid-stride; `mode=still&still=6` stands it still that long (its idles);
+ *     `posture=avatar` shows the avatar's walk instead (see GaitStudio)
  * `cam=x,y,z` and `target=x,y,z` override the camera. Not linked from the UI.
  */
-export default function ModelStudio({ kind, only, target }: { kind: StudioKind; only?: string[]; target?: [number, number, number] }) {
+export default function ModelStudio({
+  kind,
+  only,
+  target,
+  params,
+}: {
+  kind: StudioKind
+  only?: string[]
+  target?: [number, number, number]
+  params?: URLSearchParams
+}) {
+  if (kind === 'gaits') return <GaitStudio id={only?.[0] ?? 'lion'} params={params} />
   if (kind === 'accessories') return <AccessoryStand />
   if (kind === 'accgrid') return <AccessoryGrid />
   if (kind === 'growth') return <GrowthStudio only={only} target={target} />
@@ -207,7 +228,7 @@ function Ruler({ position }: { position: [number, number, number] }) {
   )
 }
 
-/** The 12 pet eggs in a row of rows, and the lion's egg cracked, then opening (front). */
+/** Every pet egg (the 12 zone pets' and the Schoolhouse raven's) in rows, and the lion's egg cracked, then opening (front). */
 function EggStudio({ target }: { target?: [number, number, number] }) {
   const cracked = useMemo(() => {
     const a = newEggAnim()
@@ -224,17 +245,83 @@ function EggStudio({ target }: { target?: [number, number, number] }) {
     <>
       <OrbitControls makeDefault target={target ?? [0, 0.4, 0]} />
       <StudioStage size={14} />
-      {PETS.map((p, i) => (
-        <group key={p.creatureId} position={[((i % 6) - 2.5) * 0.75, 0, Math.floor(i / 6) * 0.9 - 1.6]}>
-          <Egg shell={p.egg.shell} spot={p.egg.spot} />
-        </group>
-      ))}
+      {PET_IDS.map((id, i) => {
+        const egg = petEgg(id)
+        return egg ? (
+          <group key={id} position={[((i % 7) - 3) * 0.75, 0, Math.floor(i / 7) * 0.9 - 1.6]}>
+            <Egg shell={egg.shell} spot={egg.spot} />
+          </group>
+        ) : null
+      })}
       <group position={[-0.6, 0, 0.6]} scale={1.6}>
         <Egg shell={lion.egg.shell} spot={lion.egg.spot} anim={cracked} />
       </group>
       <group position={[0.8, 0, 0.6]} scale={1.6}>
         <Egg shell={lion.egg.shell} spot={lion.egg.spot} anim={opening} />
       </group>
+    </>
+  )
+}
+
+/**
+ * One creature side on (facing right), frozen at `frames` points across one
+ * stride (from `t0`, over `span` seconds — default one stride), plus one more
+ * copy mid-stride: each copy has its own walk state pinned at its moment.
+ * `mode=still` stands them still instead (`still` seconds in: their idles).
+ * Dev hook for headless renders: `window.__sqGait.look(i, distance, height)`
+ * points the camera at copy i from the side; `.count` / `.period` describe them.
+ */
+function GaitStudio({ id, params }: { id: string; params?: URLSearchParams }) {
+  const num = (k: string, d: number) => {
+    const v = Number(params?.get(k))
+    return params?.has(k) && Number.isFinite(v) ? v : d
+  }
+  const stage = (params?.get('stage') ?? 'kid') as PetStage
+  const posture = (params?.get('posture') ?? 'pet') as Posture
+  const still = params?.get('mode') === 'still'
+  const frames = Math.max(1, Math.round(num('frames', 6)))
+  const period = cyclePeriod(gaitFor(id), tempoFor(stage))
+  const span = num('span', period)
+  const t0 = num('t0', 0)
+  const seed = num('seed', 0)
+  const stillFor = num('still', 0)
+  const GAP = 3
+  const Builder = creatureBuilder(id)
+  const walks = useMemo<WalkState[]>(
+    () => [
+      ...Array.from({ length: frames }, (_, i) => ({ moving: !still, t: t0 + (i / frames) * span })),
+      { moving: !still, t: t0 + period / 4 },
+    ],
+    [frames, still, t0, span, period],
+  )
+  const pet = useMemo(() => ({ seed, instant: true, stillFor }), [seed, stillFor])
+  const camera = useThree((st) => st.camera)
+  useEffect(() => {
+    const x = (i: number) => (i - (walks.length - 1) / 2) * GAP
+    const hook = {
+      count: walks.length,
+      period,
+      look(i: number, d: number, h: number) {
+        camera.position.set(x(i), h, d)
+        camera.lookAt(x(i), h, 0)
+        camera.updateProjectionMatrix()
+      },
+    }
+    Object.assign(window, { __sqGait: hook })
+    return () => {
+      if ((window as { __sqGait?: unknown }).__sqGait === hook) delete (window as { __sqGait?: unknown }).__sqGait
+    }
+  }, [camera, walks.length, period])
+  return (
+    <>
+      <StudioStage size={40} />
+      {walks.map((w, i) => (
+        <group key={i} position={[(i - (walks.length - 1) / 2) * GAP, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
+          <WalkStateContext.Provider value={w}>
+            <Builder stage={stage} posture={posture} pet={pet} />
+          </WalkStateContext.Provider>
+        </group>
+      ))}
     </>
   )
 }

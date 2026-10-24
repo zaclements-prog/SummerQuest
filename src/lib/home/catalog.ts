@@ -22,7 +22,7 @@ export interface Creature {
 /**
  * One per avatar animal. ids are stable slugs; emoji matches AvatarCreate's roster.
  * Not for sale: the starter matches the emoji picked at sign-up, and every other
- * one comes from raising its zone's pet (lib/pets) until it's grown up.
+ * one comes from raising its pet (lib/pets: a zone's, or the Schoolhouse raven) until it's grown up.
  */
 export const CREATURES: Creature[] = [
   { id: 'fox',      emoji: '🦊', name: 'Fox' },
@@ -37,6 +37,10 @@ export const CREATURES: Creature[] = [
   { id: 'trex',     emoji: '🦖', name: 'T-Rex' },
   { id: 'unicorn',  emoji: '🦄', name: 'Unicorn' },
   { id: 'dragon',   emoji: '🐉', name: 'Dragon' },
+  // The Schoolhouse pet (lib/pets/schoolPet). Plain 🐦, not the black bird 🐦‍⬛:
+  // that one is a ZWJ sequence (Emoji 15, 2022) that older Fire / Android
+  // WebViews draw as two pictures, a bird and a black square.
+  { id: 'raven',    emoji: '🐦', name: 'Raven' },
 ]
 
 export function creatureForEmoji(emoji: string): Creature | undefined {

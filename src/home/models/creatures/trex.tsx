@@ -2,8 +2,8 @@ import { SphereGeometry } from 'three'
 import { TCone, TSphere } from '../../../toon/shapes'
 import { TOON } from '../../../toon/palette'
 import { toonMaterial } from '../../../toon/materials'
-import { Arm, Blush, Eye, Ink, Leg, Smile, Staged, Wag, faceYaw, frontZ, onFace } from '../parts'
-import type { CreatureProps } from '../parts'
+import { Arm, Blush, Eye, Ink, Leg, PetBody, PetHead, Smile, Staged, Wag, faceYaw, frontZ, onFace } from '../parts'
+import type { CreatureProps, PetRig } from '../parts'
 
 // One palette for all three ages.
 const GREEN = '#68c27a'
@@ -36,6 +36,7 @@ function TrexKid() {
     <group>
       <Leg x={-0.11} y={0.17} color={green} radius={0.075} foot={[0.09, 0.055, 0.12]} phase={0} />
       <Leg x={0.11} y={0.17} color={green} radius={0.075} foot={[0.09, 0.055, 0.12]} phase={Math.PI} />
+      <PetBody>
 
       <TSphere position={[0, 0.33, -0.02]} scale={[0.22, 0.22, 0.21]} color={green} segments={20}>
         <Ink />
@@ -72,6 +73,7 @@ function TrexKid() {
         </group>
       </Wag>
 
+      <PetHead>
       {/* big head, crown spots */}
       <TSphere position={[...HC]} scale={[...HR]} color={green} segments={24}>
         <Ink />
@@ -117,6 +119,8 @@ function TrexKid() {
           <Blush position={[s * 0.165, 0.67, 0.27]} yaw={s * 0.65} />
         </group>
       ))}
+      </PetHead>
+      </PetBody>
     </group>
   )
 }
@@ -165,6 +169,7 @@ function TrexBaby() {
     <group>
       <Leg x={-0.075} y={0.085} color={GREEN} radius={0.045} foot={[0.058, 0.038, 0.074]} phase={0} />
       <Leg x={0.075} y={0.085} color={GREEN} radius={0.045} foot={[0.058, 0.038, 0.074]} phase={Math.PI} />
+      <PetBody>
 
       {/* bean body + pale tummy */}
       <TSphere position={[0, 0.15, -0.01]} scale={[0.145, 0.13, 0.14]} color={GREEN} segments={18}>
@@ -186,6 +191,7 @@ function TrexBaby() {
         </TSphere>
       </Wag>
 
+      <PetHead>
       {/* huge head + the cracked eggshell cap, tipped to one side */}
       <TSphere position={[...BC]} scale={[...BR]} color={GREEN} segments={24}>
         <Ink />
@@ -213,6 +219,8 @@ function TrexBaby() {
           <Blush position={onFace(BC, BR, s * 0.14, -0.055, -0.004)} yaw={faceYaw(BC, BR, s * 0.14, -0.055)} size={0.038} />
         </group>
       ))}
+      </PetHead>
+      </PetBody>
     </group>
   )
 }
@@ -241,6 +249,7 @@ function TrexAdult() {
     <group>
       <Leg x={-0.14} y={0.44} color={GREEN} radius={0.09} foot={[0.11, 0.064, 0.15]} phase={0} />
       <Leg x={0.14} y={0.44} color={GREEN} radius={0.09} foot={[0.11, 0.064, 0.15]} phase={Math.PI} />
+      <PetBody>
       {/* strong haunches */}
       {[-1, 1].map((s) => (
         <TSphere key={`thigh${s}`} position={[s * 0.165, 0.45, -0.05]} rotation={[0.25, 0, s * 0.12]} scale={[0.125, 0.175, 0.17]} color={GREEN} segments={16}>
@@ -284,6 +293,7 @@ function TrexAdult() {
         </group>
       </Wag>
 
+      <PetHead>
       {/* big head, crown spots */}
       <TSphere position={[...AC]} scale={[...AR]} color={GREEN} segments={24}>
         <Ink />
@@ -328,11 +338,22 @@ function TrexAdult() {
           <Blush position={onFace(ASC, ASR, s * 0.15, 0.02, 0.002)} yaw={s * 0.65} />
         </group>
       ))}
+      </PetHead>
+      </PetBody>
     </group>
   )
 }
 
-/** Trex: baby, kid and adult (see `Staged`). */
-export function Trex({ stage }: CreatureProps) {
-  return <Staged stage={stage} baby={TrexBaby} kid={TrexKid} adult={TrexAdult} />
+// As a pet it stays on two legs but leans into a dinosaur stance: the body
+// tips forward about the hips, the head turns back up to look ahead and the
+// tail lifts out level behind for balance; it walks with heavy stomps.
+const RIGS: Record<'baby' | 'kid' | 'adult', PetRig> = {
+  baby: { pivot: [0, 0.085, 0], pitch: 0.4, neck: [0, 0.22, 0], shift: [0, 0, -0.04], tailLift: 0.3, lie: 0.04 },
+  kid: { pivot: [0, 0.17, 0], pitch: 0.5, neck: [0, 0.5, 0], shift: [0, 0.02, -0.08], tailLift: 0.45, lie: 0.08 },
+  adult: { pivot: [0, 0.44, 0], pitch: 0.45, neck: [0, 0.88, 0], shift: [0, 0, -0.15], tailLift: 0.4, lie: 0.2 },
+}
+
+/** Trex: baby, kid and adult (see `Staged`); `posture="pet"` re-poses it as a pet (see `gaits.ts`). */
+export function Trex({ stage, posture, pet }: CreatureProps) {
+  return <Staged id="trex" stage={stage} posture={posture} pet={pet} rigs={RIGS} baby={TrexBaby} kid={TrexKid} adult={TrexAdult} />
 }

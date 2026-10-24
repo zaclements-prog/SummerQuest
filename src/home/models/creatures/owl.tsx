@@ -1,6 +1,6 @@
 import { TCone, TSphere } from '../../../toon/shapes'
-import { Blush, Eye, Ink, Leg, Staged, Wing, faceYaw, onFace } from '../parts'
-import type { CreatureProps } from '../parts'
+import { Blush, Eye, Ink, Leg, PetBody, PetHead, Staged, Wing, faceYaw, onFace } from '../parts'
+import type { CreatureProps, PetRig } from '../parts'
 
 // One palette for all three ages.
 const CARAMEL = '#c99064'
@@ -31,6 +31,7 @@ function OwlKid() {
     <group>
       <Leg x={-0.1} y={0.12} color={beak} radius={0.045} foot={[0.07, 0.04, 0.09]} phase={0} />
       <Leg x={0.1} y={0.12} color={beak} radius={0.045} foot={[0.07, 0.04, 0.09]} phase={Math.PI} />
+      <PetBody>
 
       {/* egg body + cream chest with feather chevrons */}
       <TSphere position={[0, 0.38, 0]} scale={[0.255, 0.27, 0.235]} color={caramel} segments={22}>
@@ -68,6 +69,7 @@ function OwlKid() {
         </Wing>
       ))}
 
+      <PetHead>
       {/* head */}
       <TSphere position={[...HC]} scale={[...HR]} color={caramel} segments={24}>
         <Ink />
@@ -107,6 +109,8 @@ function OwlKid() {
       <TCone position={onFace(HC, HR, 0, -0.065, 0.012)} rotation={[Math.PI - 0.35, 0, 0]} radius={0.032} height={0.06} segments={8} color={beak}>
         <Ink crease />
       </TCone>
+      </PetHead>
+      </PetBody>
     </group>
   )
 }
@@ -127,6 +131,7 @@ function OwlBaby() {
     <group>
       <Leg x={-0.07} y={0.075} color={BEAK} radius={0.03} foot={[0.05, 0.03, 0.064]} phase={0} />
       <Leg x={0.07} y={0.075} color={BEAK} radius={0.03} foot={[0.05, 0.03, 0.064]} phase={Math.PI} />
+      <PetBody>
 
       {/* fluffy bean + cream tummy fluff */}
       <TSphere position={[0, 0.155, 0]} scale={[0.16, 0.135, 0.15]} color={CARAMEL} segments={18}>
@@ -143,6 +148,7 @@ function OwlBaby() {
         </Wing>
       ))}
 
+      <PetHead>
       {/* huge round head */}
       <TSphere position={[...BC]} scale={[...BR]} color={CARAMEL} segments={24}>
         <Ink />
@@ -171,6 +177,8 @@ function OwlBaby() {
       <TCone position={onFace(BC, BR, 0, -0.075, 0.008)} rotation={[Math.PI - 0.35, 0, 0]} radius={0.022} height={0.04} segments={8} color={BEAK}>
         <Ink crease />
       </TCone>
+      </PetHead>
+      </PetBody>
     </group>
   )
 }
@@ -197,6 +205,7 @@ function OwlAdult() {
     <group>
       <Leg x={-0.1} y={0.44} color={CARAMEL} footColor={BEAK} radius={0.06} foot={[0.085, 0.048, 0.11]} phase={0} />
       <Leg x={0.1} y={0.44} color={CARAMEL} footColor={BEAK} radius={0.06} foot={[0.085, 0.048, 0.11]} phase={Math.PI} />
+      <PetBody>
 
       {/* tall egg body + cream chest with chevron rows */}
       <TSphere position={[...TC]} scale={[...TR]} color={CARAMEL} segments={22}>
@@ -244,6 +253,7 @@ function OwlAdult() {
         </Wing>
       ))}
 
+      <PetHead>
       {/* head */}
       <TSphere position={[...AC]} scale={[...AR]} color={CARAMEL} segments={24}>
         <Ink />
@@ -279,11 +289,21 @@ function OwlAdult() {
       <TCone position={onFace(AC, AR, 0, -0.07, 0.012)} rotation={[Math.PI - 0.35, 0, 0]} radius={0.034} height={0.066} segments={8} color={BEAK}>
         <Ink crease />
       </TCone>
+      </PetHead>
+      </PetBody>
     </group>
   )
 }
 
-/** Owl: baby, kid and adult (see `Staged`). */
-export function Owl({ stage }: CreatureProps) {
-  return <Staged stage={stage} baby={OwlBaby} kid={OwlKid} adult={OwlAdult} />
+// As a pet the owl stays upright (a slight forward lean) and hop-waddles on
+// both feet with a wing flutter on each hop (see `BIRD_HOP` in `gaits.ts`).
+const RIGS: Record<'baby' | 'kid' | 'adult', PetRig> = {
+  baby: { pivot: [0, 0.075, 0], pitch: 0.08, neck: [0, 0.22, 0], lie: 0.03 },
+  kid: { pivot: [0, 0.12, 0], pitch: 0.12, neck: [0, 0.55, 0], lie: 0.07 },
+  adult: { pivot: [0, 0.44, 0], pitch: 0.12, neck: [0, 0.9, 0], lie: 0.22 },
+}
+
+/** Owl: baby, kid and adult (see `Staged`); `posture="pet"` re-poses it as a pet (see `gaits.ts`). */
+export function Owl({ stage, posture, pet }: CreatureProps) {
+  return <Staged id="owl" stage={stage} posture={posture} pet={pet} rigs={RIGS} baby={OwlBaby} kid={OwlKid} adult={OwlAdult} />
 }

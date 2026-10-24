@@ -8,6 +8,7 @@ import { SESSIONS_PER_DAY, SESSION_BONUS_COINS } from '../lib/dailyGoal'
 import { parentGateOpen } from '../lib/parentGateSession'
 import ParentGate from './ParentGate'
 import PetMoments from '../pets/PetMoments'
+import FocusReward from '../pets/FocusReward'
 import GuideLayer from '../guide/GuideLayer'
 
 /*
@@ -209,7 +210,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         )}
       </AnimatePresence>
 
-      {/* Pet hatch / grow-up celebrations, at calm moments only. */}
+      {/* The weekly "finished everything" reward (This Week's Focus cleared), then pet celebrations: at calm moments only. */}
+      <FocusReward />
       <PetMoments />
 
       {/* The guide's narrator, spotlight and pointing hand (src/guide); a new screen hushes it. */}

@@ -1,11 +1,7 @@
-import { useRef } from 'react'
-import { useFrame } from '@react-three/fiber'
-import type { Group } from 'three'
 import { TCone, TSphere } from '../../../toon/shapes'
 import { TOON } from '../../../toon/palette'
-import { Arm, Blush, Eye, Ink, Leg, Smile, Staged, Wag, faceYaw, onFace } from '../parts'
-import type { CreatureProps } from '../parts'
-import { useWalkState } from '../walkState'
+import { Arm, Blush, Eye, Ink, Leg, Nub, PetBody, PetHead, Smile, Staged, Wag, faceYaw, onFace } from '../parts'
+import type { CreatureProps, PetRig } from '../parts'
 
 // One palette for all three ages.
 const ORANGE = '#f7924a'
@@ -17,25 +13,6 @@ const BLUSH = '#ff7f97'
 // Head ellipsoid (centre + radii): face features and the anchors are measured from it.
 const HC = [0, 0.69, 0.02] as const
 const HR = [0.27, 0.245, 0.25] as const
-
-/**
- * A baby's nub foot: one round pad under the hip that paddles like a `Leg`
- * while the baby toddles (no shin: the hip is barely off the floor).
- */
-function Nub({ x, phase }: { x: number; phase: number }) {
-  const hip = useRef<Group>(null)
-  const walk = useWalkState()
-  useFrame(() => {
-    if (hip.current) hip.current.rotation.x = walk.moving ? Math.sin(walk.t * 9 + phase) * 0.6 : 0
-  })
-  return (
-    <group ref={hip} position={[x, 0.075, 0.01]}>
-      <TSphere position={[0, -0.04, 0.022]} scale={[0.052, 0.036, 0.064]} color={SOCK} segments={12}>
-        <Ink />
-      </TSphere>
-    </group>
-  )
-}
 
 // Baby head and muzzle ellipsoids.
 const BHC = [0, 0.345, 0.02] as const
@@ -51,8 +28,9 @@ const BMR = [0.09, 0.052, 0.075] as const
 function FoxBaby() {
   return (
     <group>
-      <Nub x={-0.065} phase={0} />
-      <Nub x={0.065} phase={Math.PI} />
+      <Nub x={-0.065} phase={0} color={SOCK} />
+      <Nub x={0.065} phase={Math.PI} color={SOCK} />
+      <PetBody>
 
       <TSphere position={[0, 0.14, 0]} scale={[0.125, 0.12, 0.112]} color={ORANGE} segments={18}>
         <Ink />
@@ -72,6 +50,7 @@ function FoxBaby() {
         </group>
       </Wag>
 
+      <PetHead>
       {/* the head, tipped to one side like a curious baby */}
       <group position={[0, 0.2, 0]} rotation={[0, 0, 0.1]}>
         <group position={[0, -0.2, 0]}>
@@ -101,6 +80,8 @@ function FoxBaby() {
           ))}
         </group>
       </group>
+      </PetHead>
+      </PetBody>
     </group>
   )
 }
@@ -119,6 +100,7 @@ function FoxKid() {
     <group>
       <Leg x={-0.1} y={0.17} color={sock} phase={0} />
       <Leg x={0.1} y={0.17} color={sock} phase={Math.PI} />
+      <PetBody>
 
       {/* body + cream tummy */}
       <TSphere position={[0, 0.33, 0]} scale={[0.22, 0.21, 0.2]} color={orange} segments={20}>
@@ -141,6 +123,7 @@ function FoxKid() {
         </group>
       </Wag>
 
+      <PetHead>
       {/* head */}
       <TSphere position={[...HC]} scale={[...HR]} color={orange} segments={24}>
         <Ink />
@@ -169,6 +152,8 @@ function FoxKid() {
           <TCone radius={0.048} height={0.08} segments={12} scale={[1, 1, 0.6]} position={[0, 0.17, 0.002]} color={sock} castShadow={false} />
         </group>
       ))}
+      </PetHead>
+      </PetBody>
     </group>
   )
 }
@@ -190,6 +175,7 @@ function FoxAdult() {
       {/* long legs in dark socks */}
       <Leg x={-0.105} y={0.46} color={ORANGE} footColor={SOCK} radius={0.068} foot={[0.082, 0.095, 0.115]} swing={0.45} phase={0} />
       <Leg x={0.105} y={0.46} color={ORANGE} footColor={SOCK} radius={0.068} foot={[0.082, 0.095, 0.115]} swing={0.45} phase={Math.PI} />
+      <PetBody>
 
       {/* torso + cream chest */}
       <TSphere position={[0, 0.635, 0]} scale={[0.205, 0.255, 0.18]} color={ORANGE} segments={20}>
@@ -215,6 +201,7 @@ function FoxAdult() {
         </group>
       </Wag>
 
+      <PetHead>
       {/* head */}
       <TSphere position={[...AHC]} scale={[...AHR]} color={ORANGE} segments={24}>
         <Ink />
@@ -248,11 +235,21 @@ function FoxAdult() {
           <TCone radius={0.052} height={0.09} segments={12} scale={[1, 1, 0.6]} position={[0, 0.19, 0.002]} color={SOCK} castShadow={false} />
         </group>
       ))}
+      </PetHead>
+      </PetBody>
     </group>
   )
 }
 
-/** Fox: baby, kid and adult (see `Staged`). */
-export function Fox({ stage }: CreatureProps) {
-  return <Staged stage={stage} baby={FoxBaby} kid={FoxKid} adult={FoxAdult} />
+// As a pet it walks on all fours: the body tips forward about the hips until
+// the arms reach the floor as front legs, and the head turns back up.
+const RIGS: Record<'baby' | 'kid' | 'adult', PetRig> = {
+  baby: { pivot: [0, 0.075, 0.01], pitch: 1.2, neck: [0, 0.22, 0.02], shift: [0, 0.05, -0.1], headLift: 0.02, frontLegs: true, lie: 0.06 },
+  kid: { pivot: [0, 0.17, 0], pitch: 1.35, neck: [0, 0.48, 0], shift: [0, 0.1, -0.16], headLift: 0.05, frontLegs: true, lie: 0.15 },
+  adult: { pivot: [0, 0.46, 0], pitch: 1.4, neck: [0, 0.85, 0], shift: [0, -0.06, -0.3], headLift: 0.12, frontLegs: true, lie: 0.3 },
+}
+
+/** Fox: baby, kid and adult (see `Staged`); `posture="pet"` re-poses it as a pet (see `gaits.ts`). */
+export function Fox({ stage, posture, pet }: CreatureProps) {
+  return <Staged id="fox" stage={stage} posture={posture} pet={pet} rigs={RIGS} baby={FoxBaby} kid={FoxKid} adult={FoxAdult} />
 }

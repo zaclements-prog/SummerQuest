@@ -1,7 +1,7 @@
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useProgress } from '../store/progress'
-import { pendingMoments, petStages } from '../lib/pets/growth'
+import { allPetStages, pendingMoments } from '../lib/pets/growth'
 import type { PetMoment } from '../lib/pets/growth'
 import { isCalmRoute, nextMomentShow } from '../lib/pets/moments'
 import type { MomentShow } from '../lib/pets/moments'
@@ -49,13 +49,13 @@ export default function PetMoments() {
   const player = useProgress((s) => s.player)
   const zones = useProgress((s) => s.zones)
   const lessonsDone = useProgress((s) => s.lessonsDone)
+  const schoolPet = useProgress((s) => s.schoolPet)
   const petsSeen = useProgress((s) => s.petsSeen)
   const markPetsSeen = useProgress((s) => s.markPetsSeen)
   const becomeCreature = useProgress((s) => s.becomeCreature)
   const lessonOpen = usePetUi((s) => s.lessonCompleteOpen)
   const calm = !!player && isCalmRoute(pathname, lessonOpen)
-  const grade = player?.grade
-  const pending = useMemo(() => pendingMoments(petStages(zones, lessonsDone, grade), petsSeen), [zones, lessonsDone, grade, petsSeen])
+  const pending = useMemo(() => pendingMoments(allPetStages({ zones, lessonsDone, schoolPet }), petsSeen), [zones, lessonsDone, schoolPet, petsSeen])
   // The screen a celebration opened on: leaving it closes the card (already marked seen).
   const screen = `${pathname}|${lessonOpen}`
   const [shown, setShown] = useState<{ show: MomentShow; screen: string } | null>(null)

@@ -5,6 +5,7 @@ import type { VoiceRef } from '../voice/types'
 import { lessonBand, lessonsFor } from '../tutoring/lessons'
 import { isListenBand } from '../lib/gradeBand'
 import type { ActiveNpc } from './useWorldUi'
+import type { PetGrowth } from '../lib/pets/growth'
 
 /**
  * The World's gateways for a K–1 (voice-first) child: which are open, what
@@ -37,4 +38,14 @@ export function npcTitle(npc: NpcLike, grade: Grade): string {
   const zone = npc.zoneId ? getZone(npc.zoneId) : undefined
   if (npc.hub || !zone) return npc.label
   return zoneTitle(zone, grade)
+}
+
+/**
+ * What the Schoolhouse's pet says when a K–1 child taps it: how the raven's
+ * egg hatches, how the raven grows, or that it's grown up (lib/pets/schoolPet).
+ */
+export function schoolPetVoice(stage: PetGrowth): VoiceRef {
+  if (stage === 'egg') return { line: 'k-nav/ravenEgg' }
+  if (stage === 'adult') return { line: 'k-nav/ravenGrownUp' }
+  return { line: 'k-nav/ravenGrowing' }
 }
