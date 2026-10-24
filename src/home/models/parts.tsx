@@ -866,11 +866,23 @@ function PetArm({
 
 /** Wing roll and extra sweep-back when folded against the body. */
 const WING_FOLD = { roll: -0.12, sweep: 0.55 } as const
+/**
+ * A dragon's hop-glide: wings out to the side and close to level (`roll`),
+ * swept a little back (`sweep`), stroking slowly ±`beat` (see `glideWing`).
+ */
+const WING_GLIDE = { roll: 0.12, sweep: 0.32, beat: 0.3 } as const
+/**
+ * A bird's hop: wings raised `raise` away from the body and tipped `back`
+ * and `sweep` toward the tail (so it shows from the side too), flapping
+ * ±`beat` (see `hopWing`).
+ */
+const WING_HOP = { raise: 1.25, back: 1.1, sweep: 0.45, beat: 0.4 } as const
 
 /**
  * A pet's wing: held level while the body tips; dragons keep theirs folded
- * while they walk and spread and flap them for a hop-glide; birds flutter on
- * each hop. A gentle breathing flap otherwise.
+ * while they walk and spread them out wide for a hop-glide; birds lift theirs
+ * away from the body on each hop. A gentle breathing flap otherwise. The pose
+ * (`wing`, `beat`) drives it, so it follows the gait's own clock.
  */
 function PetWing({ pet, x, y, z, side, rest = [0, 0.5, 0.35], flap = 0.35, children }: WingProps & { pet: PetCtx }) {
   const lvl = useRef<Group>(null)
@@ -879,14 +891,22 @@ function PetWing({ pet, x, y, z, side, rest = [0, 0.5, 0.35], flap = 0.35, child
   const ph = useRef(0)
   useFrame((_, dt) => {
     const p = pet.pose
-    const spread = Math.min(1, p.flap * 1.6)
-    const fold = pet.gait.foldWings ? 1 - spread : 0
-    ph.current += Math.min(dt, 0.1) * (5 + 15 * p.flap)
+    ph.current += Math.min(dt, 0.1) * 5
+    const breathe = Math.sin(ph.current) * flap
     if (lvl.current) lvl.current.rotation.x = pet.inHead ? 0 : -bodyTilt(pet)
-    if (sweep.current) sweep.current.rotation.y = rest[1] + WING_FOLD.sweep * fold
-    if (root.current) {
-      const amp = flap * ((1 - fold) * 0.6 + 0.15 + 1.6 * p.flap)
-      root.current.rotation.z = rest[2] * (1 - fold) + WING_FOLD.roll * fold + Math.sin(ph.current) * amp
+    const sw = sweep.current
+    const r = root.current
+    if (!sw || !r) return
+    if (pet.gait.foldWings) {
+      const open = p.wing
+      const fold = 1 - open
+      sw.rotation.x = rest[0]
+      sw.rotation.y = (rest[1] + WING_FOLD.sweep) * fold + WING_GLIDE.sweep * open
+      r.rotation.z = WING_FOLD.roll * fold + WING_GLIDE.roll * open + WING_GLIDE.beat * p.beat + 0.15 * breathe * fold
+    } else {
+      sw.rotation.x = rest[0] + WING_HOP.back * p.wing
+      sw.rotation.y = rest[1] + WING_HOP.sweep * p.wing
+      r.rotation.z = rest[2] + WING_HOP.raise * p.wing + WING_HOP.beat * p.beat + 0.75 * breathe * (1 - p.wing)
     }
   })
   return (

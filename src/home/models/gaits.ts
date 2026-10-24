@@ -104,6 +104,8 @@ export interface GaitProfile {
   glide?: GlideSpec
   /** wing flap strength on each hop (owl) */
   flutter: number
+  /** two-footed hoppers: how far the body leans into each hop (rad, at full air) */
+  lean: number
   /** wings held folded while walking (dragons) */
   foldWings: boolean
   /** what it does while standing still */
@@ -124,6 +126,7 @@ const BASE: GaitProfile = {
   stomp: 0,
   speed: 1,
   flutter: 0,
+  lean: 0,
   foldWings: false,
   idles: ['lie', 'sniff', 'look', 'wag'],
 }
@@ -143,12 +146,13 @@ export const BIRD_HOP: GaitProfile = gait({
   swing: 0.12,
   lift: 0,
   bob: 0,
-  nod: 0.08,
+  nod: 0.1,
   roll: 0.1,
   tail: 0.2,
   speed: 0.6,
   hop: { every: 0.5, air: 0.55, height: 0.07, reach: 0.22 },
   flutter: 0.9,
+  lean: 0.17,
   idles: ['sit', 'look', 'look', 'hopInPlace'],
 })
 
@@ -272,10 +276,31 @@ export function walkSpeed(g: GaitProfile, tempo: StageTempo): number {
  * for the pauses). `advancing` is the walk state's flag (see `PetRoot`).
  */
 export function petWanderSpeed(g: GaitProfile, tempo: StageTempo, advancing: boolean | undefined): number {
-  const v = walkSpeed(g, tempo)
+  return hopPace(g, walkSpeed(g, tempo), advancing)
+}
+
+/**
+ * Ground speed this frame (units/s) for a pet that should average `v`: a
+ * walker moves at `v` all the time; a hopper only while airborne
+ * (`advancing`), at `v / air` then, so it keeps the same average without ever
+ * sliding along the ground between hops.
+ */
+export function hopPace(g: GaitProfile, v: number, advancing: boolean | undefined): number {
   if (!g.hop) return v
-  if (!advancing) return 0
-  return v / g.hop.air
+  return advancing ? v / g.hop.air : 0
+}
+
+/** How much quicker a hopper's hops come when it has fallen behind: +`perUnit` per unit behind, at most `max`×. */
+export const HOP_HURRY = { perUnit: 0.35, max: 1.8 } as const
+
+/**
+ * Rate (≥ 1) a following hopper's hop clock runs at when it is `behind` units
+ * further back than it likes to be: it catches up with more frequent hops
+ * (and, with `hopPace`, longer ones). Walkers and pets in place: 1.
+ */
+export function hopHurry(g: GaitProfile, behind: number): number {
+  if (!g.hop || !(behind > 0)) return 1
+  return Math.min(HOP_HURRY.max, 1 + behind * HOP_HURRY.perUnit)
 }
 
 // ── Leg phases ───────────────────────────────────────────────────────────────
@@ -407,6 +432,85 @@ export function hopArc(u: number, hop: HopSpec, out: HopFrame): HopFrame {
 export function hopMoving(u: number, hop: HopSpec): boolean {
   const v = u - Math.floor(u)
   return v >= HOP_SHAPE.crouch && v < HOP_SHAPE.crouch + hop.air
+}
+
+// ── Wings ────────────────────────────────────────────────────────────────────
+
+/** What a pet's wings do this frame: `spread` 0 (at rest / folded) → 1 (open), and a stroke −1 (down) … 1 (up). */
+export interface WingFrame {
+  spread: number
+  beat: number
+}
+
+/**
+ * A bird's wings through one hop (`u`: the hop cycle, as `hopArc`): they lift
+ * away from the body as it gathers to jump, open fully in the air with one
+ * soft flap (up, then a downstroke) and settle back against the body on
+ * landing, before the pause. Writes into `out`.
+ */
+export function hopWing(u: number, hop: HopSpec, out: WingFrame): WingFrame {
+  const v = u - Math.floor(u)
+  // the wing window: from halfway through the crouch to most of the way through the landing
+  const a = HOP_SHAPE.crouch * 0.5
+  const b = HOP_SHAPE.crouch + hop.air + HOP_SHAPE.land * 0.8
+  if (v <= a || v >= b) {
+    out.spread = 0
+    out.beat = 0
+    return out
+  }
+  const x = (v - a) / (b - a)
+  out.spread = Math.pow(Math.sin(x * Math.PI), 0.7)
+  out.beat = Math.sin(x * TAU) * out.spread
+  return out
+}
+
+/** Strokes a dragon's wings make in one hop-glide (slow and few: it glides, it doesn't flap). */
+export const GLIDE_STROKES = 1.5
+
+/**
+ * A dragon's wings through one hop-glide (`s`: 0 → 1 across it): they unfold
+ * quickly on take-off, stay spread through the glide with `GLIDE_STROKES`
+ * slow strokes (a downstroke first) and fold away again as it lands. Writes
+ * into `out`.
+ */
+export function glideWing(s: number, out: WingFrame): WingFrame {
+  if (s <= 0 || s >= 1) {
+    out.spread = 0
+    out.beat = 0
+    return out
+  }
+  out.spread = smooth(s / 0.16) * smooth((1 - s) / 0.18)
+  out.beat = -Math.sin(s * GLIDE_STROKES * TAU) * out.spread
+  return out
+}
+
+// ── On show (lineups, celebrations) ──────────────────────────────────────────
+
+/**
+ * How a pet stands on show: four-legged pets turn `yaw` (rad) off the camera —
+ * head-on they read as a thin stack — swaying `sway` either side of it, and
+ * every `every` s look round at the camera for `turn` s (turning `toward` of
+ * the way to face it).
+ */
+export const SHOW = { yaw: 0.8, sway: 0.1, every: 9, turn: 3.4, toward: 0.75 } as const
+
+/** True when a pet stands at three-quarters on show (it walks on four legs). */
+export function showsThreeQuarter(g: GaitProfile): boolean {
+  return g.body === 'quad'
+}
+
+/**
+ * Yaw (rad, + turns its face to the viewer's right) for a four-legged pet on
+ * show `t` s in: a flattering three-quarter view with a slow sway, and now and
+ * then a slow turn to look at the camera and back (late in each `SHOW.every`,
+ * so it never starts on one).
+ */
+export function showYaw(t: number): number {
+  const k = t / SHOW.every
+  const into = (k - Math.floor(k)) * SHOW.every
+  const from = SHOW.every - SHOW.turn
+  const look = into > from ? Math.pow(Math.sin(((into - from) / SHOW.turn) * Math.PI), 2) : 0
+  return SHOW.yaw * (1 - SHOW.toward * look) + SHOW.sway * Math.sin(t * 0.55) * (1 - look)
 }
 
 // ── Idles ────────────────────────────────────────────────────────────────────
@@ -571,6 +675,10 @@ export interface PetPose {
   air: number
   /** wing flap strength 0 → 1 */
   flap: number
+  /** wings spread / lifted away from the body: 0 → 1 (birds' hops, dragons' glides) */
+  wing: number
+  /** the wings' stroke: −1 (down) … 1 (up), already scaled by `wing` */
+  beat: number
   /** the hop/glide is carrying it forward this frame (hoppers only move then) */
   advancing: boolean
 }
@@ -595,6 +703,8 @@ export function newPetPose(seed: number): PetPose {
     legs: 0,
     air: 0,
     flap: 0,
+    wing: 0,
+    beat: 0,
     advancing: false,
   }
 }
@@ -606,6 +716,7 @@ function approach(cur: number, target: number, rate: number, dt: number): number
 // reused by `stepPose`
 const _hop: HopFrame = { y: 0, squash: 1, air: 0, legs: 0, travel: 0 }
 const _idle: IdleNow = { kind: null, w: 0, u: 0 }
+const _wing: WingFrame = { spread: 0, beat: 0 }
 
 /**
  * Advance a pet's pose by `dt` seconds. `t` is the pet's walk clock (its
@@ -642,6 +753,8 @@ export function stepPose(
   let legs = 0
   let air = 0
   let flap = 0
+  let wing = 0
+  let beat = 0
   pose.advancing = moving
   switch (g.kind) {
     case 'hop':
@@ -652,14 +765,20 @@ export function stepPose(
       squash = 1 + (_hop.squash - 1) * w
       legs = _hop.legs * w
       air = _hop.air * w
-      pitch = (g.kind === 'hop' ? -0.25 * _hop.air + 0.12 * Math.max(0, -_hop.legs) : 0.05 * _hop.air) * w
-      pose.advancing = moving && hopMoving(cyc, hop)
+      pitch = (g.kind === 'hop' ? -0.25 * _hop.air + 0.12 * Math.max(0, -_hop.legs) : g.lean * (0.3 + 0.7 * _hop.air)) * w
+      // (only once the hop is really under way: a hop it eases into mid-air carries it nowhere)
+      pose.advancing = moving && hopMoving(cyc, hop) && w > 0.5
       if (g.kind === 'hopWaddle') {
         // waddle: tip toward the foot it lands on, a hop each side
         const side = Math.floor(cyc) % 2 === 0 ? 1 : -1
         roll = side * g.roll * Math.sin((cyc - Math.floor(cyc)) * Math.PI) * w
-        nod = g.nod * Math.sin(q) * w
+        // head bob: it dips as the body gathers and lands, and comes up in the air
+        nod = g.nod * (1.3 * Math.max(0, -_hop.legs) - 0.6 * _hop.air) * w
         flap = g.flutter * _hop.air * w
+        // the wings lift away on each hop, flap once and settle on landing
+        hopWing(cyc, hop, _wing)
+        wing = g.flutter * _wing.spread * w
+        beat = g.flutter * _wing.beat * w
       }
       break
     }
@@ -702,6 +821,10 @@ export function stepPose(
       y += gl.height * size * arc * w
       air = Math.max(air, arc * w)
       flap = Math.max(flap, g.flutter * Math.min(1, arc * 2.5) * w)
+      // wings spread wide and nearly level, with a slow stroke or two (see `glideWing`)
+      glideWing(s, _wing)
+      wing = Math.max(wing, g.flutter * _wing.spread * w)
+      beat = g.flutter * _wing.beat * w
       pitch -= 0.12 * arc * w
     }
   }
@@ -724,6 +847,7 @@ export function stepPose(
     y += 0.06 * size * h
     air = Math.max(air, h)
     flap = Math.max(flap, g.flutter * h)
+    wing = Math.max(wing, g.flutter * h)
   }
 
   pose.bob = g.kind === 'trot' || g.kind === 'lumber' || g.kind === 'stomp' ? stepY : 0
@@ -735,5 +859,7 @@ export function stepPose(
   pose.legs = legs
   pose.air = air
   pose.flap = flap
+  pose.wing = wing
+  pose.beat = beat
   return pose
 }

@@ -17,6 +17,11 @@ export const BUDDY = {
   trotMax: 4.2,
   /** …and how much faster it goes per metre behind. */
   catchUp: 4,
+  /**
+   * A hopper's catch-up per metre behind: gentler, so each leap carries it
+   * along through the whole hop instead of lunging at the start of it.
+   */
+  hopCatchUp: 1.8,
 } as const
 
 export interface BuddyBody {
@@ -28,6 +33,31 @@ export interface BuddyBody {
   moving: boolean
   /** Seconds spent making (almost) no headway. */
   stuck: number
+}
+
+/**
+ * A buddy whose gait hops (the frog, the birds): it only covers ground while
+ * it is in the air. Mutated in place each frame (no allocation).
+ */
+export interface HopFollow {
+  /** share of its hop cycle spent in the air (see `HopSpec.air`) */
+  air: number
+  /** its hop is carrying it forward this frame (the pet's `WalkState.advancing`) */
+  advancing: boolean
+}
+
+/** Its pace (units/s) when it is `behind` units further back than it likes to be: quicker the further behind. */
+export function trotSpeed(behind: number): number {
+  return Math.min(BUDDY.trotMax, 0.8 + behind * BUDDY.catchUp)
+}
+
+/**
+ * A hopper's ground speed in the air (units/s), `behind` units further back
+ * than it likes to be: its average pace (at most the trot's) over the share of
+ * the hop cycle it spends airborne, so the further behind, the longer the leap.
+ */
+export function leapSpeed(behind: number, air: number): number {
+  return Math.min(BUDDY.trotMax, 0.8 + behind * BUDDY.hopCatchUp) / Math.max(0.05, air)
 }
 
 /** True when the World blocks the point (x, z) (see `collidesAt`). */
@@ -71,8 +101,12 @@ export function placeBuddy(b: BuddyBody, px: number, pz: number, fx: number, fz:
  * way you do, and turn smoothly toward where it's going (toward you while it
  * waits). Returns true when it popped back beside you instead (too far behind,
  * or stuck behind something).
+ *
+ * A hopper (`hop`) never slides: it only moves while airborne (`leapSpeed`:
+ * longer leaps the further behind it is), and `moving` stays on until the
+ * hop in progress lands. Its `stuck` time only counts while it tries to move.
  */
-export function followStep(b: BuddyBody, px: number, pz: number, dt: number, blocked: Blocked): boolean {
+export function followStep(b: BuddyBody, px: number, pz: number, dt: number, blocked: Blocked, hop?: HopFollow): boolean {
   let dx = px - b.x
   let dz = pz - b.z
   let dist = Math.hypot(dx, dz)
@@ -81,9 +115,14 @@ export function followStep(b: BuddyBody, px: number, pz: number, dt: number, blo
     return true
   }
   let moving = false
-  if (dist > BUDDY.follow + 0.05) {
-    const speed = Math.min(BUDDY.trotMax, 0.8 + (dist - BUDDY.follow) * BUDDY.catchUp)
-    const step = Math.min(speed * dt, dist - BUDDY.follow)
+  const behind = dist - BUDDY.follow
+  // a hopper keeps hopping while it's behind, and lands the hop it is in before it stops…
+  if (hop) moving = behind > 0.05 || hop.advancing
+  // …but only covers ground in the air
+  const go = hop ? hop.advancing && behind > 0 : behind > 0.05
+  if (go) {
+    const pace = hop ? leapSpeed(behind, hop.air) : trotSpeed(behind)
+    const step = Math.min(pace * dt, behind)
     const ox = b.x
     const oz = b.z
     // axis-separated sub-steps, each probing the leading edge: it slides along walls
@@ -97,12 +136,14 @@ export function followStep(b: BuddyBody, px: number, pz: number, dt: number, blo
       if (!blocked(b.x, b.z + sz + ez)) b.z += sz
     }
     const moved = Math.hypot(b.x - ox, b.z - oz)
-    moving = moved > step * 0.2
+    // (a hopper keeps hopping at a wall, and pops round it once stuck; a walker's legs stop)
+    if (!hop) moving = moved > step * 0.2
     b.stuck = moved < step * 0.25 ? b.stuck + dt : 0
     dx = px - b.x
     dz = pz - b.z
     dist = Math.hypot(dx, dz)
-  } else {
+  } else if (!moving) {
+    // (a hopper waiting on the ground for its next hop keeps its stuck time)
     b.stuck = 0
   }
   b.moving = moving

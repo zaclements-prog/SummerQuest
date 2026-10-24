@@ -6,6 +6,7 @@ import type { Group, Mesh, PerspectiveCamera } from 'three'
 import { creatureBuilder } from '../home/models/registry'
 import { WalkStateContext, newWalkState } from '../home/models/walkState'
 import { CALM_PET } from '../home/models/petRig'
+import { gaitFor, showYaw, showsThreeQuarter } from '../home/models/gaits'
 import { Egg, newEggAnim, setEggAnim } from '../home/models/egg'
 import { petEgg } from '../lib/pets/catalog'
 import type { PetMoment } from '../lib/pets/growth'
@@ -137,6 +138,8 @@ export default function CelebrationScene({ moment, reduced, onReveal }: { moment
   const from = moment.from === 'egg' ? 'baby' : moment.from
   const to = moment.to === 'egg' ? 'baby' : moment.to
   const tall = to === 'baby' ? 0.75 : to === 'kid' ? 1.0 : 1.3
+  // four-legged pets are shown at three-quarters (head-on they read as a thin stack)
+  const quarter = showsThreeQuarter(gaitFor(moment.creatureId))
 
   const t0 = useRef<number | null>(null)
   const cues = useRef(0)
@@ -177,7 +180,7 @@ export default function CelebrationScene({ moment, reduced, onReveal }: { moment
         // spins up faster and faster, then gives way to the new stage
         const k = clamp01(t / GROW.swap)
         o.visible = t < GROW.swap
-        o.rotation.y = k * k * 9
+        o.rotation.y = (quarter ? showYaw(0) : 0) + k * k * 9
         o.scale.setScalar(1 + Math.sin(t * 22) * 0.04 * k)
       }
       cue(cues, t, reduced, 1, 0.3, sfx.sparkle)
@@ -190,6 +193,9 @@ export default function CelebrationScene({ moment, reduced, onReveal }: { moment
         nw.position.y = k > 0 && k < 1 ? Math.sin(k * Math.PI) * 0.3 : 0
       }
     }
+    // the new stage comes out at three-quarters (four-legged), or facing you
+    const inAt = hatch ? HATCH.petIn : GROW.swap
+    if (nw && quarter) nw.rotation.y = showYaw(Math.max(0, t - inAt))
     const revealAt = hatch ? HATCH.reveal : GROW.reveal
     if (t >= revealAt) {
       if (!revealed.current) {
@@ -202,7 +208,7 @@ export default function CelebrationScene({ moment, reduced, onReveal }: { moment
       if (nw) {
         const u = t - revealAt
         nw.position.y = Math.abs(Math.sin(u * 4.2)) * 0.06
-        nw.rotation.y = Math.sin(u * 1.3) * 0.35
+        if (!quarter) nw.rotation.y = Math.sin(u * 1.3) * 0.35
       }
     }
   }

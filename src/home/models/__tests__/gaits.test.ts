@@ -3,14 +3,21 @@ import {
   BIRD_HOP,
   DEFAULT_GAIT,
   GAITS,
+  GLIDE_STROKES,
+  HOP_HURRY,
   HOP_SHAPE,
+  SHOW,
   IDLE_BEAT_S,
   IDLE_SETTLE_S,
   STAGE_TEMPO,
   cyclePeriod,
   gaitFor,
+  glideWing,
   hopArc,
+  hopHurry,
   hopMoving,
+  hopPace,
+  hopWing,
   idleAt,
   legPhase,
   legSlot,
@@ -19,12 +26,16 @@ import {
   newPetPose,
   petWanderSpeed,
   plantDrop,
+  showYaw,
+  showsThreeQuarter,
   splayToFloor,
   stepPose,
   tempoFor,
   tipPoint,
 } from '../gaits'
-import type { HopFrame, IdleNow, PetRig } from '../gaits'
+import type { HopFrame, IdleNow, PetRig, WingFrame } from '../gaits'
+import { BUDDY, followStep, leapSpeed } from '../../../world/buddyFollow'
+import type { BuddyBody, HopFollow } from '../../../world/buddyFollow'
 import { CREATURES } from '../../../lib/home/catalog'
 import { PET_STAGES } from '../../../lib/pets/types'
 
@@ -274,5 +285,186 @@ describe('stepPose', () => {
   it('is allocation-free in shape: returns the same pose object', () => {
     const p = newPetPose(0)
     expect(stepPose(p, GAITS.bear, STAGE_TEMPO.adult, 1, true, 1 / 60, false)).toBe(p)
+  })
+})
+
+const wingF = (): WingFrame => ({ spread: 0, beat: 0 })
+
+describe('hoppers only move in the air', () => {
+  it('hopPace: nothing on the ground, the average over the air share in the air; walkers always', () => {
+    const air = GAITS.frog.hop!.air
+    expect(hopPace(GAITS.frog, 2, false)).toBe(0)
+    expect(hopPace(GAITS.frog, 2, true)).toBeCloseTo(2 / air)
+    expect(hopPace(GAITS.lion, 2, false)).toBe(2)
+  })
+
+  it('hopHurry: hops come quicker the further behind, up to a cap; walkers never hurry', () => {
+    expect(hopHurry(GAITS.frog, 0)).toBe(1)
+    expect(hopHurry(GAITS.frog, -1)).toBe(1)
+    expect(hopHurry(GAITS.frog, 1)).toBeCloseTo(1 + HOP_HURRY.perUnit)
+    expect(hopHurry(GAITS.frog, 100)).toBe(HOP_HURRY.max)
+    expect(hopHurry(GAITS.lion, 3)).toBe(1)
+  })
+
+  it('leapSpeed: longer leaps the further behind, never faster than the trot over the air share', () => {
+    expect(leapSpeed(1, 0.36)).toBeGreaterThan(leapSpeed(0.2, 0.36))
+    expect(leapSpeed(100, 0.36)).toBeCloseTo(BUDDY.trotMax / 0.36)
+  })
+
+  /**
+   * A frog following a player who walks off at 3/s, then stops: its hop clock
+   * runs as the World buddy's does (faster when behind), and it is airborne
+   * for the air share of each hop cycle while it hops.
+   */
+  function frogFollow(walkFor: number, total: number) {
+    const hop = GAITS.frog.hop!
+    const period = cyclePeriod(GAITS.frog, STAGE_TEMPO.kid)
+    const b: BuddyBody = { x: 0, z: 1.2, yaw: Math.PI, moving: false, stuck: 0 }
+    const h: HopFollow = { air: hop.air, advancing: false }
+    let t = 0
+    let pz = 0
+    let slid = 0
+    let flew = 0
+    let maxDist = 0
+    const dt = 1 / 60
+    for (let i = 0; i < total * 60; i++) {
+      if (i < walkFor * 60) pz -= 3 * dt
+      const ox = b.x
+      const oz = b.z
+      followStep(b, 0, pz, dt, () => false, h)
+      const moved = Math.hypot(b.x - ox, b.z - oz)
+      if (h.advancing) flew += moved
+      else slid += moved
+      const behind = Math.hypot(b.x, pz - b.z) - BUDDY.follow
+      t += dt * (b.moving ? hopHurry(GAITS.frog, behind) : 1)
+      // the pet rig's flag, from this frame's walk (see stepPose)
+      h.advancing = b.moving && hopMoving(t / period, hop)
+      maxDist = Math.max(maxDist, behind + BUDDY.follow)
+    }
+    return { b, pz, slid, flew, maxDist }
+  }
+
+  it('the frog buddy never slides: every bit of ground is covered in the air', () => {
+    const r = frogFollow(4, 8)
+    expect(r.slid).toBe(0)
+    expect(r.flew).toBeGreaterThan(11)
+  })
+
+  it('keeps up with you walking (never far enough behind to pop), and settles about 1.2 behind', () => {
+    const r = frogFollow(4, 8)
+    expect(r.maxDist).toBeLessThan(BUDDY.popDist)
+    const d = Math.hypot(r.b.x, r.pz - r.b.z)
+    expect(d).toBeGreaterThanOrEqual(BUDDY.follow - 1e-9)
+    expect(d).toBeLessThan(BUDDY.follow + 0.1)
+    expect(r.b.moving).toBe(false)
+  })
+
+  it('a hopper on the ground keeps hopping (moving) without moving, and lands the hop it is in', () => {
+    const b: BuddyBody = { x: 0, z: 3, yaw: 0, moving: false, stuck: 0 }
+    followStep(b, 0, 0, 1 / 60, () => false, { air: 0.36, advancing: false })
+    expect(b.moving).toBe(true)
+    expect(b.z).toBe(3)
+    expect(b.stuck).toBe(0)
+    // close enough, but still in the air: it keeps going until it lands
+    const c: BuddyBody = { x: 0, z: 1.2, yaw: 0, moving: true, stuck: 0 }
+    followStep(c, 0, 0, 1 / 60, () => false, { air: 0.36, advancing: true })
+    expect(c.moving).toBe(true)
+    expect(c.z).toBe(1.2)
+  })
+
+  it('stepPose: a frog eased into mid-air does not advance until the hop is under way', () => {
+    const p = newPetPose(0)
+    const period = cyclePeriod(GAITS.frog, STAGE_TEMPO.kid)
+    const tAir = (HOP_SHAPE.crouch + 0.1) * period
+    stepPose(p, GAITS.frog, STAGE_TEMPO.kid, tAir, true, 1 / 60, false)
+    expect(p.advancing).toBe(false)
+    stepPose(p, GAITS.frog, STAGE_TEMPO.kid, tAir, true, 1 / 60, false, true)
+    expect(p.advancing).toBe(true)
+  })
+})
+
+describe('wings', () => {
+  const hop = BIRD_HOP.hop!
+
+  it('hopWing: wings rest through the pause, lift away in the air and settle by landing', () => {
+    const f = wingF()
+    expect(hopWing(0, hop, f).spread).toBe(0)
+    expect(hopWing(HOP_SHAPE.crouch + hop.air + HOP_SHAPE.land + 0.01, hop, f).spread).toBe(0)
+    const mid = hopWing(HOP_SHAPE.crouch + hop.air * 0.4, hop, f).spread
+    expect(mid).toBeGreaterThan(0.8)
+    // just before landing they are on their way back down
+    expect(hopWing(HOP_SHAPE.crouch + hop.air + HOP_SHAPE.land * 0.7, hop, f).spread).toBeLessThan(0.4)
+  })
+
+  it('hopWing: one flap per hop (up, then a downstroke)', () => {
+    const f = wingF()
+    let changes = 0
+    let prev = 0
+    for (let u = 0; u < 1; u += 0.005) {
+      const b = hopWing(u, hop, f).beat
+      if (Math.abs(b) > 1e-3 && Math.abs(prev) > 1e-3 && Math.sign(b) !== Math.sign(prev)) changes++
+      if (Math.abs(b) > 1e-3) prev = b
+    }
+    expect(changes).toBe(1)
+    expect(hopWing(HOP_SHAPE.crouch + hop.air * 0.2, hop, f).beat).toBeGreaterThan(0)
+  })
+
+  it('glideWing: spread wide through the glide, folded at either end, with one or two slow strokes', () => {
+    const f = wingF()
+    expect(glideWing(0, f).spread).toBe(0)
+    expect(glideWing(1, f).spread).toBe(0)
+    for (const s of [0.3, 0.5, 0.7]) expect(glideWing(s, f).spread).toBeGreaterThan(0.95)
+    expect(GLIDE_STROKES).toBeGreaterThanOrEqual(1)
+    expect(GLIDE_STROKES).toBeLessThanOrEqual(2)
+    // a downstroke first
+    expect(glideWing(0.15, f).beat).toBeLessThan(0)
+    // the stroke never exceeds the spread (the wing stays near level when barely open)
+    for (let s = 0; s <= 1; s += 0.01) {
+      glideWing(s, f)
+      expect(Math.abs(f.beat)).toBeLessThanOrEqual(f.spread + 1e-9)
+    }
+  })
+
+  it('stepPose: a dragon spreads its wings for the hop-glide and keeps them folded while it walks', () => {
+    const p = newPetPose(0)
+    const gl = GAITS.dragon.glide!
+    stepPose(p, GAITS.dragon, STAGE_TEMPO.kid, gl.dur * 0.5, true, 1 / 60, false, true)
+    expect(p.wing).toBeGreaterThan(0.9)
+    stepPose(p, GAITS.dragon, STAGE_TEMPO.kid, gl.dur + 1, true, 1 / 60, false, true)
+    expect(p.wing).toBe(0)
+  })
+
+  it('stepPose: a bird leans into each hop, lifts its wings and bobs its head', () => {
+    const p = newPetPose(0)
+    const period = cyclePeriod(BIRD_HOP, STAGE_TEMPO.kid)
+    stepPose(p, BIRD_HOP, STAGE_TEMPO.kid, (HOP_SHAPE.crouch + hop.air * 0.5) * period, true, 1 / 60, false, true)
+    expect(p.pitch).toBeGreaterThan(0.12)
+    expect(p.wing).toBeGreaterThan(0.6)
+    const nodAir = p.nod
+    stepPose(p, BIRD_HOP, STAGE_TEMPO.kid, (HOP_SHAPE.crouch + hop.air + HOP_SHAPE.land * 0.5) * period, true, 1 / 60, false, true)
+    // the head dips on landing, lifts in the air
+    expect(p.nod).toBeGreaterThan(nodAir + 0.05)
+  })
+})
+
+describe('on show', () => {
+  it('four-legged pets stand at three-quarters; birds, the octopus and the trex do not', () => {
+    expect(showsThreeQuarter(GAITS.lion)).toBe(true)
+    expect(showsThreeQuarter(GAITS.dragon)).toBe(true)
+    expect(showsThreeQuarter(GAITS.owl)).toBe(false)
+    expect(showsThreeQuarter(GAITS.octopus)).toBe(false)
+    expect(showsThreeQuarter(GAITS.trex)).toBe(false)
+  })
+
+  it('showYaw: well off head-on most of the time, now and then turning round toward the camera', () => {
+    let min = Infinity
+    for (let t = 0; t < SHOW.every - SHOW.turn; t += 0.05) min = Math.min(min, showYaw(t))
+    expect(min).toBeGreaterThan(SHOW.yaw - SHOW.sway - 1e-9)
+    expect(showYaw(0)).toBeCloseTo(SHOW.yaw)
+    // the middle of the look: mostly toward the camera
+    const look = showYaw(SHOW.every - SHOW.turn / 2)
+    expect(look).toBeLessThan(SHOW.yaw * (1 - SHOW.toward) + 1e-9)
+    // smooth: no jumps between frames
+    for (let t = 0; t < 30; t += 1 / 60) expect(Math.abs(showYaw(t + 1 / 60) - showYaw(t))).toBeLessThan(0.02)
   })
 })
