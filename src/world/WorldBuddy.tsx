@@ -11,9 +11,10 @@ import type { PetStage } from '../lib/pets/types'
 import { worldColliders } from './worldLayout'
 import { collidesAt, MAX_WALK_DT } from './collision'
 import { useWorldUi } from './useWorldUi'
-import { followStep, placeBuddy } from './buddyFollow'
+import { BUDDY, followStep, placeBuddy } from './buddyFollow'
+import { gaitFor, hopHurry } from '../home/models/gaits'
 import StaticBatch from '../toon/StaticBatch'
-import type { BuddyBody } from './buddyFollow'
+import type { BuddyBody, HopFollow } from './buddyFollow'
 
 /** Seconds to pop in (it scales up from nothing). */
 const POP_S = 0.3
@@ -22,7 +23,9 @@ const POP_S = 0.3
  * Your buddy pet in the World: it trots after you, keeping about 1.2 behind,
  * slides along walls like you do (the World's colliders), pops back next to
  * you if it falls more than about 6 behind or gets stuck, and waits outside
- * (not drawn) while you're inside a building. See `buddyFollow.ts`.
+ * (not drawn) while you're inside a building. See `buddyFollow.ts`. A hopper
+ * (the frog, the birds) only moves while it's in the air, and hops longer and
+ * more often to catch up.
  *
  * Cheap on purpose: one creature, its own walk state (so its legs move on their
  * own), all motion written straight into the scene graph from one frame
@@ -55,8 +58,16 @@ function Buddy({ creatureId, stage, posRef }: { creatureId: string; stage: PetSt
   const walk = useMemo(() => newPetWalkState(), [])
   const b = useMemo(() => ({ Builder: creatureBuilder(creatureId) }), [creatureId])
   const colliders = useMemo(() => worldColliders(), [])
+  const gait = gaitFor(creatureId)
   // Frame-to-frame state, mutated in place.
-  const st = useRef({ placed: false, away: false, pop: 1, body: { x: 0, z: 0, yaw: 0, moving: false, stuck: 0 } as BuddyBody })
+  // (a hopper's `hop`: whether its hop carries it forward this frame, from its pet rig)
+  const st = useRef({
+    placed: false,
+    away: false,
+    pop: 1,
+    body: { x: 0, z: 0, yaw: 0, moving: false, stuck: 0 } as BuddyBody,
+    hop: (gait.hop ? { air: gait.hop.air, advancing: false } : undefined) as HopFollow | undefined,
+  })
 
   const blocked = (x: number, z: number) => collidesAt(colliders, x, z, 0)
 
@@ -66,6 +77,7 @@ function Buddy({ creatureId, stage, posRef }: { creatureId: string; stage: PetSt
     if (!g || !p) return
     const s = st.current
     const body = s.body
+    const hop = s.hop
     const dt = Math.min(frameDt, MAX_WALK_DT)
 
     // Inside a building: not drawn; it waits to pop out beside you.
@@ -73,6 +85,7 @@ function Buddy({ creatureId, stage, posRef }: { creatureId: string; stage: PetSt
       g.visible = false
       s.away = true
       stepWalk(walk, dt, false)
+      if (hop) hop.advancing = false
       return
     }
     if (!s.placed || s.away) {
@@ -83,11 +96,14 @@ function Buddy({ creatureId, stage, posRef }: { creatureId: string; stage: PetSt
       s.pop = 0
       g.visible = true
     }
-    if (followStep(body, p.x, p.z, dt, blocked)) s.pop = 0
+    if (hop) hop.advancing = walk.advancing === true
+    if (followStep(body, p.x, p.z, dt, blocked, hop)) s.pop = 0
 
     g.position.set(body.x, 0, body.z)
     g.rotation.y = body.yaw
-    stepWalk(walk, dt, body.moving)
+    // a hopper that has fallen behind hops more often (its hop clock runs faster)
+    const behind = Math.hypot(p.x - body.x, p.z - body.z) - BUDDY.follow
+    stepWalk(walk, dt * (body.moving ? hopHurry(gait, behind) : 1), body.moving)
     s.pop = Math.min(1, s.pop + dt / POP_S)
     const k = inner.current
     if (k) {

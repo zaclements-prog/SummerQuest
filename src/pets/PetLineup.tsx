@@ -5,6 +5,7 @@ import type { Group, PerspectiveCamera } from 'three'
 import { creatureBuilder } from '../home/models/registry'
 import { WalkStateContext, newWalkState } from '../home/models/walkState'
 import { CALM_PET } from '../home/models/petRig'
+import { SHOW, gaitFor, showYaw, showsThreeQuarter } from '../home/models/gaits'
 import { Egg } from '../home/models/egg'
 import { growthRank } from '../lib/pets/growth'
 import type { PetGrowth } from '../lib/pets/growth'
@@ -38,14 +39,19 @@ function FitCamera() {
   return null
 }
 
-/** A reached stage turns gently from side to side, so you can see it. */
-function Sway({ index, children }: { index: number; children: ReactNode }) {
+/**
+ * A reached stage turns gently from side to side, so you can see it. A
+ * four-legged pet (`quarter`) stands at three-quarters instead (head-on it
+ * reads as a thin stack), swaying a little and now and then looking round at
+ * you (see `showYaw`); the stages take turns.
+ */
+function Sway({ index, quarter, children }: { index: number; quarter: boolean; children: ReactNode }) {
   const ref = useRef<Group>(null)
   useFrame(({ clock }) => {
     const g = ref.current
     if (!g) return
     const t = clock.elapsedTime + index * 1.3
-    g.rotation.y = Math.sin(t * 0.7) * 0.45
+    g.rotation.y = quarter ? showYaw(clock.elapsedTime + index * 3.1) : Math.sin(t * 0.7) * 0.45
     g.position.y = Math.abs(Math.sin(t * 2.2)) * 0.03
   })
   return <group ref={ref}>{children}</group>
@@ -79,6 +85,7 @@ export default function PetLineup({
   // They stand still here (not marching in step with wherever the avatar last walked).
   const still = useMemo(() => newWalkState(), [])
   const reached = growthRank(stage)
+  const quarter = showsThreeQuarter(gaitFor(creatureId))
   return (
     <WalkStateContext.Provider value={still}>
       <FitCamera />
@@ -101,13 +108,15 @@ export default function PetLineup({
         return (
           <group key={`${creatureId}-${s}-${shown ? 'on' : 'off'}`} position={[x, 0, 0]}>
             {shown ? (
-              <Sway index={i}>
+              <Sway index={i} quarter={quarter}>
                 <b.Builder stage={s} posture="pet" pet={CALM_PET} />
               </Sway>
             ) : (
-              <Silhouette>
-                <b.Builder stage={s} posture="pet" pet={CALM_PET} />
-              </Silhouette>
+              <group rotation={[0, quarter ? SHOW.yaw : 0, 0]}>
+                <Silhouette>
+                  <b.Builder stage={s} posture="pet" pet={CALM_PET} />
+                </Silhouette>
+              </group>
             )}
             <Puddle r={s === 'baby' ? 0.3 : 0.42} />
           </group>

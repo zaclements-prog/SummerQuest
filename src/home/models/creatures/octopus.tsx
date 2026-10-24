@@ -1,10 +1,15 @@
+import { useRef } from 'react'
+import { useFrame } from '@react-three/fiber'
 import { SphereGeometry } from 'three'
-import type { BufferGeometry } from 'three'
+import type { BufferGeometry, Group } from 'three'
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
 import { TSphere } from '../../../toon/shapes'
 import { toonMaterial } from '../../../toon/materials'
 import { Arm, Blush, Eye, Ink, PetBody, Smile, Staged, Tentacle, faceYaw, onFace } from '../parts'
 import type { CreatureProps, PetRig } from '../parts'
+import { usePet } from '../petRig'
+import type { PetCtx } from '../petRig'
+import { cyclePeriod } from '../gaits'
 
 type V3 = readonly [number, number, number]
 
@@ -48,6 +53,80 @@ function upperArms(): BufferGeometry {
   for (const g of parts) g.dispose()
   upperArmsGeo = merged
   return merged
+}
+
+// As a pet each arm swings as one piece from a joint under the mantle (ARM_ROOT:
+// [distance from the centre line, height]), so the whole arm streams back in
+// the glide's wave, not only its curling end. One arm's two beads, in the
+// arm's own frame (+z pointing out from the centre line), shared by all eight.
+const ARM_ROOT: [number, number] = [0.06, 0.62]
+let petArmGeo: BufferGeometry | null = null
+function petArm(): BufferGeometry {
+  if (petArmGeo) return petArmGeo
+  const parts = UPPER.map(([d, y, r]) => {
+    const g = new SphereGeometry(1, 14, 10)
+    g.scale(r, r * 1.12, r)
+    g.translate(0, y - ARM_ROOT[1], d - ARM_ROOT[0])
+    return g
+  })
+  const merged = mergeGeometries(parts)
+  for (const g of parts) g.dispose()
+  petArmGeo = merged
+  return merged
+}
+
+/** How far an arm swings back while it glides (rad), and its wave either side of that (at rest / gliding). */
+const ARM_SWING = { trail: 0.24, rest: 0.05, glide: 0.1 } as const
+
+/**
+ * The grown-up's eight arms as a pet: each upper arm (two beads, one mesh)
+ * swings from its root under the mantle, carrying the curling end with it,
+ * so the whole arm joins the wave and trails behind as it glides. One frame
+ * callback for all eight; nothing allocated per frame.
+ */
+function PetArms({ pet }: { pet: PetCtx }) {
+  const arms = useRef<(Group | null)[]>([])
+  const ph = useRef(0)
+  useFrame((_, dt) => {
+    const p = pet.pose
+    const w = p.walk
+    ph.current += Math.min(dt, 0.1) * (2.6 * (1 - w) + ((Math.PI * 2) / cyclePeriod(pet.gait, pet.tempo)) * w)
+    const amp = ARM_SWING.rest + (ARM_SWING.glide - ARM_SWING.rest) * w
+    for (let i = 0; i < ARMS.length; i++) {
+      const g = arms.current[i]
+      if (!g) continue
+      // +1 for an arm pointing straight ahead, −1 straight back: the front arms sweep in under, the back ones out
+      const ahead = Math.cos(ARMS[i])
+      // a little ahead of the curling end's own wave (see `PetTentacle`), so it runs down the arm
+      const t = ph.current + i * 0.8 * 0.35 + 1.4 * ahead * w + 0.9
+      g.rotation.x = ARM_SWING.trail * ahead * w + Math.sin(t) * amp
+    }
+  })
+  const geo = petArm()
+  const mat = toonMaterial(LILAC)
+  return (
+    <>
+      {ARMS.map((a, i) => (
+        <group key={a} position={[Math.sin(a) * ARM_ROOT[0], ARM_ROOT[1], Math.cos(a) * ARM_ROOT[0] * 0.93]} rotation={[0, a, 0]}>
+          <group
+            ref={(el) => {
+              arms.current[i] = el
+            }}
+          >
+            <mesh geometry={geo} material={mat} castShadow>
+              <Ink />
+            </mesh>
+            {/* the curling end hangs from the knee */}
+            <group position={[0, KNEE[1] - ARM_ROOT[1], KNEE[0] - ARM_ROOT[0]]} rotation={[0, Math.PI, 0]}>
+              <group rotation={[-0.33, 0, 0]} scale={[1, 1.15, 1]}>
+                <Tentacle x={0} y={0} z={0} yaw={0} dir={a} radius={0.082} color={LILAC} tipColor={TIP} phase={i * 0.8} />
+              </group>
+            </group>
+          </group>
+        </group>
+      ))}
+    </>
+  )
 }
 
 /** Pale spots lying flat over the top of a mantle (centre `c`, radii `r`): [x, z, radius]. */
@@ -171,23 +250,31 @@ function OctopusBaby() {
  * front, rosy cheeks and a smile, standing up on eight long beaded tentacles:
  * each bows out from under the mantle, then hangs down and curls out at the
  * tip on the floor; the curling ends sway at rest and paddle as it walks.
- * 40 shapes (the sixteen upper-arm beads are one merged mesh).
+ * 40 shapes (the sixteen upper-arm beads are one merged mesh; as a pet, one
+ * mesh per arm, so each arm can swing as a whole — see `PetArms`).
  */
 function OctopusAdult() {
+  const pet = usePet()
   return (
     <group>
       {/* eight long arms: big beads bow out from under the mantle, then the
           curling ends hang down from the knee and curl out on the floor */}
-      <mesh geometry={upperArms()} material={toonMaterial(LILAC)} castShadow>
-        <Ink />
-      </mesh>
-      {ARMS.map((a, i) => (
-        <group key={a} position={[Math.sin(a) * KNEE[0], KNEE[1], Math.cos(a) * KNEE[0] * 0.93]} rotation={[0, a + Math.PI, 0]}>
-          <group rotation={[-0.33, 0, 0]} scale={[1, 1.15, 1]}>
-            <Tentacle x={0} y={0} z={0} yaw={0} dir={a} radius={0.082} color={LILAC} tipColor={TIP} phase={i * 0.8} />
-          </group>
-        </group>
-      ))}
+      {pet ? (
+        <PetArms pet={pet} />
+      ) : (
+        <>
+          <mesh geometry={upperArms()} material={toonMaterial(LILAC)} castShadow>
+            <Ink />
+          </mesh>
+          {ARMS.map((a, i) => (
+            <group key={a} position={[Math.sin(a) * KNEE[0], KNEE[1], Math.cos(a) * KNEE[0] * 0.93]} rotation={[0, a + Math.PI, 0]}>
+              <group rotation={[-0.33, 0, 0]} scale={[1, 1.15, 1]}>
+                <Tentacle x={0} y={0} z={0} yaw={0} dir={a} radius={0.082} color={LILAC} tipColor={TIP} phase={i * 0.8} />
+              </group>
+            </group>
+          ))}
+        </>
+      )}
 
       <PetBody>
       {/* tall mantle */}
