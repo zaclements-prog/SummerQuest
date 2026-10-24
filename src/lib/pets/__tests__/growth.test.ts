@@ -34,7 +34,8 @@ const pet = (id: string) => petById(id)!
 describe('pet catalog', () => {
   it('has one pet per creature and one per zone', () => {
     expect(PETS).toHaveLength(12)
-    expect(new Set(PETS.map((p) => p.creatureId))).toEqual(new Set(CREATURES.map((c) => c.id)))
+    // every creature is a pet: a zone's, or the Schoolhouse raven
+    expect(new Set([...PETS.map((p) => p.creatureId), 'raven'])).toEqual(new Set(CREATURES.map((c) => c.id)))
     expect(new Set(PETS.map((p) => p.zoneId))).toEqual(new Set(curriculum.zones.map((z) => z.id)))
   })
 

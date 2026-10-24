@@ -1,10 +1,12 @@
 import { getZone, zoneStages } from '../../curriculum'
 import type { Stage, Zone } from '../../curriculum'
 import type { GradeLevel } from '../gradeTiers'
-import { PETS } from './catalog'
+import { PETS, PET_IDS } from './catalog'
 import type { PetDef } from './catalog'
 import type { PetStage } from './types'
 import { isLessonFor } from '../../tutoring/lessons'
+import { SCHOOL_PET_ID, ravenGrowth } from './schoolPet'
+import type { SchoolPetLike, SchoolPetStatus } from './schoolPet'
 
 /**
  * How far a pet has grown, derived from learning progress (never stored):
@@ -192,6 +194,28 @@ export function petStages(
   return out
 }
 
+/** What every pet grows from: the zones' stars, finished lessons, and the Schoolhouse raven's record. */
+export interface PetProgressLike {
+  zones: ZonesLike
+  lessonsDone: LessonsDoneLike
+  schoolPet?: SchoolPetLike | null
+}
+
+/**
+ * creatureId → stage for EVERY pet: the zone pets (`petStages`, best band) and
+ * the Schoolhouse raven (`ravenGrowth`).
+ */
+export function allPetStages(p: PetProgressLike, zoneLookup: ZoneLookup = getZone): Record<string, PetGrowth> {
+  return { ...petStages(p.zones, p.lessonsDone, null, zoneLookup), [SCHOOL_PET_ID]: ravenGrowth(p.schoolPet) }
+}
+
+/** A zone pet's status or the Schoolhouse raven's. */
+export type AnyPetStatus = PetStatus | SchoolPetStatus
+
+export function isSchoolStatus(s: AnyPetStatus): s is SchoolPetStatus {
+  return 'school' in s && s.school === true
+}
+
 /** A growth moment the child hasn't seen celebrated yet. */
 export interface PetMoment {
   creatureId: string
@@ -201,13 +225,13 @@ export interface PetMoment {
   to: PetGrowth
 }
 
-/** Pets whose stage is ahead of the one last celebrated, in catalog order. */
+/** Pets whose stage is ahead of the one last celebrated, in catalog order (the raven last). */
 export function pendingMoments(stages: Record<string, PetGrowth>, seen: Record<string, PetGrowth | undefined>): PetMoment[] {
   const out: PetMoment[] = []
-  for (const p of PETS) {
-    const to = stages[p.creatureId] ?? 'egg'
-    const from = isPetGrowth(seen[p.creatureId]) ? (seen[p.creatureId] as PetGrowth) : 'egg'
-    if (growthRank(to) > growthRank(from)) out.push({ creatureId: p.creatureId, from, to })
+  for (const id of PET_IDS) {
+    const to = stages[id] ?? 'egg'
+    const from = isPetGrowth(seen[id]) ? (seen[id] as PetGrowth) : 'egg'
+    if (growthRank(to) > growthRank(from)) out.push({ creatureId: id, from, to })
   }
   return out
 }
@@ -225,10 +249,10 @@ export function shownStage(stage: PetGrowth, seen: PetGrowth | undefined): PetGr
 
 /** Creatures whose pet is grown up (they belong among the avatars). */
 export function adultPets(stages: Record<string, PetGrowth>): string[] {
-  return PETS.filter((p) => stages[p.creatureId] === 'adult').map((p) => p.creatureId)
+  return PET_IDS.filter((id) => stages[id] === 'adult')
 }
 
 /** Creatures whose pet has hatched (any stage but egg), in catalog order. */
 export function hatchedPets(stages: Record<string, PetGrowth>): string[] {
-  return PETS.filter((p) => growthRank(stages[p.creatureId]) > 0).map((p) => p.creatureId)
+  return PET_IDS.filter((id) => growthRank(stages[id]) > 0)
 }

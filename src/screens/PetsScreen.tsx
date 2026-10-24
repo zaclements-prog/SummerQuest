@@ -3,13 +3,15 @@ import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import GLCanvas from '../platform/gl/GLCanvas'
 import { canvasQuality, useLowGraphics } from '../world/graphicsQuality'
 import PetLineup, { LINEUP_SLOT_SHARE } from '../pets/PetLineup'
+import { EggIcon } from '../pets/EggIcon'
 import { useProgress } from '../store/progress'
-import { usePetStatuses } from '../lib/pets/usePets'
-import { petById, petEmoji, petName } from '../lib/pets/catalog'
+import { useAllPetStatuses } from '../lib/pets/usePets'
+import { isPetId, petEmoji, petName } from '../lib/pets/catalog'
 import { zoneLessonFor } from '../tutoring/lessons'
 import { nextStepText, stageLabel, zoneTitle } from '../lib/pets/copy'
-import { growthRank, kidStarsFor } from '../lib/pets/growth'
-import type { PetGrowth, PetStatus } from '../lib/pets/growth'
+import { growthRank, isSchoolStatus, kidStarsFor } from '../lib/pets/growth'
+import type { AnyPetStatus, PetGrowth } from '../lib/pets/growth'
+import { focusRows } from '../world/hubContent'
 import { PET_STAGES } from '../lib/pets/types'
 import { Button, ProgressBar } from '../components/ui'
 import { sfx } from '../lib/sound'
@@ -22,38 +24,29 @@ import { ListenIconButton } from '../components/listen/ListenIconButton'
 import { SayAgainButton } from '../guide/SayAgainButton'
 
 /** The selected pet when the link doesn't name one: your buddy, else the most grown, else the first. */
-function defaultPet(list: PetStatus[], buddy: string | null): string {
+function defaultPet(list: AnyPetStatus[], buddy: string | null): string {
   if (buddy && list.some((s) => s.pet.creatureId === buddy)) return buddy
   let best = list[0]
   for (const s of list) if (growthRank(s.stage) > growthRank(best.stage)) best = s
   return best.pet.creatureId
 }
 
-/** The zone's stars toward the next stage, as [have, need] (null: nothing to count, like an egg). */
-function stageProgress(s: PetStatus): [number, number] | null {
+/**
+ * Progress toward the next stage, as [have, need] (null: nothing to count, like
+ * an egg): the zone's stars, or the raven's Daily Challenges + cleared skills.
+ */
+function stageProgress(s: AnyPetStatus): [number, number] | null {
   if (!s.next || s.next.stage === 'baby') return null
+  if (isSchoolStatus(s)) return [Math.min(s.points, s.goal), s.goal]
   return [s.stars, s.next.stage === 'adult' ? s.total : kidStarsFor(s.total)]
 }
 
 const chip = 'kid-text inline-flex items-center gap-1 text-sm leading-none rounded-full border-2 border-line px-2.5 py-1.5'
 
-/** A little CSS egg in its zone's colors, for tiles. */
-function EggIcon({ shell, spot, size = 'md' }: { shell: string; spot: string; size?: 'md' | 'sm' }) {
-  return (
-    <span
-      className={`block border-2 border-line rounded-[50%_50%_46%_46%/60%_60%_40%_40%] ${size === 'md' ? 'w-8 h-10' : 'w-6 h-7'}`}
-      style={{
-        background: `radial-gradient(circle at 32% 36%, ${spot} 0 11%, transparent 12%), radial-gradient(circle at 68% 58%, ${spot} 0 10%, transparent 11%), radial-gradient(circle at 40% 78%, ${spot} 0 8%, transparent 9%), radial-gradient(circle at 35% 25%, #ffffffaa 0 9%, transparent 10%), ${shell}`,
-      }}
-      aria-hidden="true"
-    />
-  )
-}
-
 const EMOJI_SIZE: Record<PetGrowth, string> = { egg: 'text-2xl', baby: 'text-2xl', kid: 'text-3xl', adult: 'text-4xl' }
 
 /**
- * The Pets page: all twelve zone pets. Pick one to see it in 3D as baby, kid
+ * The Pets page: the twelve zone pets and the Schoolhouse raven. Pick one to see it in 3D as baby, kid
  * and grown-up (the stages it hasn't reached are silhouettes), what it needs
  * next, and buttons to make it your World buddy, become it (grown-ups), or go
  * learn in its zone. `?pet=<id>` picks the pet to show.
@@ -65,7 +58,7 @@ function goSteps(zoneId: string, grade: GradeLevel | null | undefined): GuideSte
 }
 
 export default function PetsScreen() {
-  const statuses = usePetStatuses()
+  const statuses = useAllPetStatuses()
   const [params, setParams] = useSearchParams()
   const buddy = useProgress((s) => s.buddyPet)
   const active = useProgress((s) => s.activeCreature)
@@ -74,10 +67,14 @@ export default function PetsScreen() {
   const setBuddyPet = useProgress((s) => s.setBuddyPet)
   const becomeCreature = useProgress((s) => s.becomeCreature)
   const navigate = useNavigate()
+  const zones = useProgress((s) => s.zones)
+  const attempts = useProgress((s) => s.attempts)
+  const sessions = useProgress((s) => s.sessions)
   const location = useLocation()
   const gfx = canvasQuality(useLowGraphics())
 
-  const selectedId = petById(params.get('pet'))?.creatureId ?? defaultPet(statuses, buddy)
+  const asked = params.get('pet')
+  const selectedId = isPetId(asked) ? asked : defaultPet(statuses, buddy)
   const sel = statuses.find((s) => s.pet.creatureId === selectedId) ?? statuses[0]
   const id = sel.pet.creatureId
   const name = petName(id)
@@ -86,12 +83,17 @@ export default function PetsScreen() {
   const isAdult = sel.stage === 'adult'
   const isYou = active === id
   const progress = stageProgress(sel)
+  // the Schoolhouse raven grows from This Week's Focus and the Daily Challenge, not a zone
+  const school = isSchoolStatus(sel) ? sel : null
+  const zonePet = isSchoolStatus(sel) ? null : sel
   // the egg's lesson in the child's band (K–1: its K–1 lesson; a zone without one has none)
-  const lessonId = zoneLessonFor(sel.pet.zoneId, grade)?.id ?? null
+  const lessonId = zonePet ? (zoneLessonFor(zonePet.pet.zoneId, grade)?.id ?? null) : null
   // K–1: pictures for the way back and the pet's place; the voice says what this page is
   const listen = listenGrade(grade)
   const explain = useListenIntro('pets', { voice: { line: 'k-nav/petsHelp' } }, listen)
-  const petZone = getZone(sel.pet.zoneId)
+  const petZone = zonePet ? getZone(zonePet.pet.zoneId) : undefined
+  // the raven: the trickiest skill on This Week's Focus to practice (K–1 get a picture for it)
+  const practiceHref = school ? (focusRows({ zones, attempts, sessions, grade }, 1)[0]?.practiceHref ?? null) : null
   const zoneOpen = !!petZone && !isZoneSleeping(petZone, grade)
 
   const select = (petId: string) => {
@@ -190,7 +192,11 @@ export default function PetsScreen() {
                 value={progress[0]}
                 max={progress[1]}
                 tone={sel.next?.stage === 'adult' ? 'correct' : 'quest'}
-                label={`⭐ Stars in ${listen && petZone ? bandZoneTitle(petZone, grade) : zoneTitle(sel.pet.zoneId)}`}
+                label={
+                  zonePet
+                    ? `⭐ Stars in ${listen && petZone ? bandZoneTitle(petZone, grade) : zoneTitle(zonePet.pet.zoneId)}`
+                    : '🌟 Daily Challenges + 🎯 cleared skills'
+                }
               />
             )}
 
@@ -227,7 +233,26 @@ export default function PetsScreen() {
                     {petEmoji(id)} Become {name}
                   </Button>
                 ))}
-              {listen ? (
+              {school ? (
+                // the raven: its Schoolhouse practice (K–1: pictures, said first)
+                listen ? (
+                  <>
+                    <ListenIconButton icon="🌟" label="Daily Challenge" onClick={() => sayThenGo([{ voice: { line: 'k-nav/letsGo' }, dim: false }], '/daily')} tone="sun" />
+                    {practiceHref && (
+                      <ListenIconButton icon="🎯" label="Practice a tricky one" onClick={() => sayThenGo([{ voice: { line: 'k-nav/focusPractice' }, dim: false }], practiceHref)} tone="ocean" />
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <Button variant={sel.stage === 'egg' ? 'primary' : 'secondary'} to="/focus">
+                      🎯 This Week&apos;s Focus
+                    </Button>
+                    <Button variant="secondary" to="/daily">
+                      🌟 Daily Challenge
+                    </Button>
+                  </>
+                )
+              ) : listen ? (
                 // K–1: the pet's place as a picture (only once it's awake), and its lesson
                 <>
                   {zoneOpen && petZone && (
@@ -239,9 +264,11 @@ export default function PetsScreen() {
                 </>
               ) : (
                 <>
-                  <Button variant={sel.stage === 'egg' ? 'primary' : 'secondary'} to={`/zone/${sel.pet.zoneId}`}>
-                    🗺️ Go to {zoneTitle(sel.pet.zoneId)}
-                  </Button>
+                  {zonePet && (
+                    <Button variant={sel.stage === 'egg' ? 'primary' : 'secondary'} to={`/zone/${zonePet.pet.zoneId}`}>
+                      🗺️ Go to {zoneTitle(zonePet.pet.zoneId)}
+                    </Button>
+                  )}
                   {sel.stage === 'egg' && lessonId && (
                     <Button variant="secondary" to={`/tutor/${lessonId}`}>
                       📚 Lesson
@@ -253,7 +280,7 @@ export default function PetsScreen() {
             {isBuddy && <p className="kid-text text-base text-ink-700 short:hidden">{name} follows you around the World!</p>}
           </section>
 
-          {/* ── All twelve ─────────────────────────────────────────────────── */}
+          {/* ── All thirteen: the zone pets, then the Schoolhouse raven ──────── */}
           <section aria-label="All your pets" className="grid grid-cols-3 min-[420px]:grid-cols-4 gap-2">
             {statuses.map((s) => {
               const pid = s.pet.creatureId

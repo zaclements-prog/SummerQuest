@@ -4,13 +4,22 @@ import { SESSION_SECONDS, SESSIONS_PER_DAY, SESSION_BONUS_COINS } from '../lib/d
 import type { Slot } from '../home/models/anchors'
 import { accessoryById } from '../lib/home/accessories'
 import { addDays, localDayKey } from '../lib/dates'
-import { migrateV0toV1, migrateV2toV3, migrateV3toV4, type PersistedProgressV0 } from './migrations'
+import { migrateV0toV1, migrateV2toV3, migrateV3toV4, migrateV4toV5, type PersistedProgressV0 } from './migrations'
 import { recordFactAnswer, type FactStats } from '../lib/adaptive'
 import type { Problem } from '../lib/problem'
 import { isGradeLevel, type GradeLevel } from '../lib/gradeTiers'
-import { adultPets, growthRank, hatchedPets, isPetGrowth, petStages, zoneStarTotals, type PetGrowth } from '../lib/pets/growth'
+import { adultPets, allPetStages, growthRank, hatchedPets, isPetGrowth, zoneStarTotals, type PetGrowth } from '../lib/pets/growth'
 import { getZone, zoneStages } from '../curriculum'
-import { petById } from '../lib/pets/catalog'
+import { isPetId } from '../lib/pets/catalog'
+import {
+  FOCUS_REWARD_COINS,
+  applyDaily,
+  applyFocusChange,
+  cleanSchoolPet,
+  emptySchoolPet,
+  focusChange,
+  type SchoolPetProgress,
+} from '../lib/pets/schoolPet'
 import type { QuestReason } from '../lib/quest'
 
 export interface AvatarChoice {
@@ -150,6 +159,12 @@ interface ProgressState {
   toursSeen: string[]
   /** The World's suggested quest (null: none picked yet). */
   quest: DailyQuest | null
+  /**
+   * The Schoolhouse raven's record (lib/pets/schoolPet): skills cleared off This
+   * Week's Focus, Daily Challenges, whole-list clears, and the weekly
+   * "finished everything" reward.
+   */
+  schoolPet: SchoolPetProgress
 
   // actions
   setAvatar: (avatar: AvatarChoice) => void
@@ -197,9 +212,13 @@ interface ProgressState {
   setQuest: (q: Pick<DailyQuest, 'day' | 'zoneId' | 'stageId' | 'reason'>) => void
   dismissQuestCard: () => void
   markQuestCelebrated: () => void
+  /** The "finished everything" celebration has shown. */
+  markFocusRewardCelebrated: () => void
 }
 
 type PetSlice = Pick<ProgressState, 'zones' | 'lessonsDone' | 'ownedCreatures' | 'buddyPet'> & {
+  /** The Schoolhouse raven's record (missing: an egg). */
+  schoolPet?: SchoolPetProgress | null
   /** The child's grade (it no longer changes a pet's stage: kept for callers that pass a whole state). */
   player?: Pick<AvatarChoice, 'grade'> | null
 }
@@ -210,14 +229,15 @@ type PetSlice = Pick<ProgressState, 'zones' | 'lessonsDone' | 'ownedCreatures' |
  * `before` is the state the change started from. A pet's stage is the best it
  * reaches in any of its zone's bands (lib/pets/growth), so new stars or a
  * finished lesson (2–4 or K–1) can grow it, and a grade change never shrinks
- * it; a grown-up pet stays an avatar for good.
+ * it; a grown-up pet stays an avatar for good. The Schoolhouse raven grows
+ * from its own record (`schoolPet`) and joins the same way.
  */
 export function petSyncPatch(before: PetSlice, after: PetSlice): Partial<Pick<PetSlice, 'ownedCreatures' | 'buddyPet'>> {
-  const stages = petStages(after.zones, after.lessonsDone, null)
+  const stages = allPetStages(after)
   const patch: Partial<Pick<PetSlice, 'ownedCreatures' | 'buddyPet'>> = {}
   const newAdults = adultPets(stages).filter((id) => !after.ownedCreatures.includes(id))
   if (newAdults.length) patch.ownedCreatures = [...after.ownedCreatures, ...newAdults]
-  if (after.buddyPet == null && hatchedPets(petStages(before.zones, before.lessonsDone, null)).length === 0) {
+  if (after.buddyPet == null && hatchedPets(allPetStages(before)).length === 0) {
     const first = hatchedPets(stages)[0]
     if (first) patch.buddyPet = first
   }
@@ -259,6 +279,7 @@ export const useProgress = create<ProgressState>()(
       buddyPet: null,
       toursSeen: [],
       quest: null,
+      schoolPet: emptySchoolPet(),
 
       setAvatar: (avatar) => set({ player: avatar }),
 
@@ -304,6 +325,7 @@ export const useProgress = create<ProgressState>()(
           buddyPet: null,
           toursSeen: [],
           quest: null,
+          schoolPet: emptySchoolPet(),
           // (soundEnabled and graphicsQuality are device settings: kept)
         }),
 
@@ -413,7 +435,13 @@ export const useProgress = create<ProgressState>()(
       markBadgesSeen: (ids) =>
         set({ seenBadges: Array.from(new Set([...get().seenBadges, ...ids])) }),
 
-      claimDaily: () => set({ dailyClaimedDate: todayKey() }),
+      claimDaily: () => {
+        // A finished Daily Challenge also grows the Schoolhouse raven (once a day).
+        const before = get()
+        const today = todayKey()
+        const schoolPet = applyDaily(before.schoolPet, before.dailyClaimedDate, today)
+        set({ dailyClaimedDate: today, schoolPet, ...petSyncPatch(before, { ...before, schoolPet }) })
+      },
 
       buyAccessory: (id, price) => {
         const { coins, ownedAccessories } = get()
@@ -473,7 +501,7 @@ export const useProgress = create<ProgressState>()(
         const petsSeen = { ...get().petsSeen }
         let changed = false
         for (const [id, stage] of Object.entries(seen)) {
-          if (!petById(id) || !isPetGrowth(stage)) continue
+          if (!isPetId(id) || !isPetGrowth(stage)) continue
           if (growthRank(stage) > growthRank(petsSeen[id])) {
             petsSeen[id] = stage
             changed = true
@@ -486,9 +514,8 @@ export const useProgress = create<ProgressState>()(
           set({ buddyPet: null })
           return
         }
-        const { zones, lessonsDone, player } = get()
         // only a hatched pet can come along
-        if (!petById(creatureId) || petStages(zones, lessonsDone, player?.grade)[creatureId] === 'egg') return
+        if (!isPetId(creatureId) || allPetStages(get())[creatureId] === 'egg') return
         set({ buddyPet: creatureId })
       },
       markTourSeen: (id) => {
@@ -504,6 +531,10 @@ export const useProgress = create<ProgressState>()(
         const q = get().quest
         if (q?.doneAt && !q.celebrated) set({ quest: { ...q, celebrated: true } })
       },
+      markFocusRewardCelebrated: () => {
+        const sp = get().schoolPet
+        if (sp.rewardPending) set({ schoolPet: { ...sp, rewardPending: false } })
+      },
 
       recordSession: (rec) => {
         const at = rec.at ?? Date.now()
@@ -516,7 +547,24 @@ export const useProgress = create<ProgressState>()(
         const at = a.at ?? Date.now()
         const id = `${at.toString(36)}-${Math.random().toString(36).slice(2, 7)}`
         const entry: SkillAttempt = { ...a, id, at }
-        set({ attempts: [...get().attempts, entry].slice(-MAX_ATTEMPTS) })
+        const before = get()
+        const attempts = [...before.attempts, entry].slice(-MAX_ATTEMPTS)
+        // Did this answer clear a skill off This Week's Focus (or the whole list)? Judged at
+        // this moment, before vs after, so only practice counts (lib/pets/schoolPet).
+        const change = focusChange(before.attempts, attempts, before.player?.grade, at)
+        const { next: schoolPet, reward } = applyFocusChange(before.schoolPet, change, at)
+        if (schoolPet === before.schoolPet) {
+          set({ attempts })
+          return
+        }
+        set({
+          attempts,
+          schoolPet,
+          ...petSyncPatch(before, { ...before, schoolPet }),
+          ...(reward
+            ? { coins: before.coins + FOCUS_REWARD_COINS, totalCoinsEarned: before.totalCoinsEarned + FOCUS_REWARD_COINS }
+            : {}),
+        })
       },
 
       tickPlay: (seconds) => {
@@ -556,12 +604,14 @@ export const useProgress = create<ProgressState>()(
       // v3: pets — lessonsDone, petsSeen (starting at every pet's current stage, so
       //     nothing is celebrated twice), buddyPet; grown-up pets join ownedCreatures.
       // v4: the World's first / today's quest (`quest`, none yet: the World picks one).
-      version: 4,
+      // v5: the Schoolhouse raven (`schoolPet`): Daily Challenges already played count.
+      version: 5,
       migrate: (persisted, version) => {
         let p = (persisted ?? {}) as PersistedProgressV0
         if (version < 1) p = migrateV0toV1(p)
         if (version < 3) p = migrateV2toV3(p)
         if (version < 4) p = migrateV3toV4(p)
+        if (version < 5) p = migrateV4toV5(p)
         return p as unknown as ProgressState
       },
       // Shallow-merge like the default, but deep-merge equippedAccessories so a save
@@ -592,7 +642,7 @@ export const useProgress = create<ProgressState>()(
           // Pets: anything malformed falls back to "nothing yet" (missing: keep what's here).
           lessonsDone: p.lessonsDone === undefined ? c.lessonsDone : cleanLessonsDone(p.lessonsDone),
           petsSeen: p.petsSeen === undefined ? c.petsSeen : cleanPetsSeen(p.petsSeen),
-          buddyPet: p.buddyPet === undefined ? c.buddyPet : typeof p.buddyPet === 'string' && petById(p.buddyPet) ? p.buddyPet : null,
+          buddyPet: p.buddyPet === undefined ? c.buddyPet : isPetId(p.buddyPet) ? p.buddyPet : null,
           ownedCreatures: Array.isArray(p.ownedCreatures)
             ? p.ownedCreatures.filter((id): id is string => typeof id === 'string')
             : c.ownedCreatures,
@@ -600,6 +650,8 @@ export const useProgress = create<ProgressState>()(
           toursSeen: Array.isArray(p.toursSeen) ? p.toursSeen.filter((id): id is string => typeof id === 'string') : c.toursSeen,
           // Quest: a malformed one is dropped (the World picks a new one).
           quest: cleanQuest(p.quest),
+          // The Schoolhouse raven: anything malformed counts as nothing yet.
+          schoolPet: p.schoolPet === undefined ? c.schoolPet : cleanSchoolPet(p.schoolPet),
         }
       },
     },
@@ -631,7 +683,7 @@ function cleanQuest(v: unknown): DailyQuest | null {
 }
 function cleanPetsSeen(v: unknown): Record<string, PetGrowth> {
   const out: Record<string, PetGrowth> = {}
-  if (isRecord(v)) for (const [k, g] of Object.entries(v)) if (petById(k) && isPetGrowth(g)) out[k] = g
+  if (isRecord(v)) for (const [k, g] of Object.entries(v)) if (isPetId(k) && isPetGrowth(g)) out[k] = g
   return out
 }
 

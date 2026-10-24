@@ -38,6 +38,7 @@ export const CREATURE_ANCHORS: Record<string, AnchorSet> = {
   octopus:  { head: [0, 1.187, -0.01], face: [0, 0.82, 0.242],  back: [0, 0.82, -0.266], body: [0, 0.625, 0.15], scale: 1.12 },
   trex:     { head: [0, 1.24, -0.02],  face: [0, 1.15, 0.26],   back: [0, 0.82, -0.23],  body: [0, 0.76, 0.18],  scale: 1.12 },
   dragon:   { head: [0, 1.239, 0.03],  face: [0, 1.12, 0.281],  back: [0, 0.8, -0.18],   body: [0, 0.82, 0.18],  scale: 1.12 },
+  raven:    { head: [0, 1.23, 0.04],   face: [0, 1.07, 0.29],   back: [0, 0.8, -0.2],    body: [0, 0.84, 0.17],  scale: 1.04 },
 }
 
 const FALLBACK: AnchorSet = { head: [0, 0.865, 0.02], face: [0, 0.705, 0.27], back: [0, 0.43, -0.175], body: [0, 0.47, 0.15], scale: 1.0 }

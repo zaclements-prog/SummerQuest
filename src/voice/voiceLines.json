@@ -33145,6 +33145,12 @@
       "kind": "line",
       "file": "voice/k-nav/animal-dragon.mp3"
     },
+    "k-nav/animal-raven": {
+      "text": "Raven!",
+      "hash": "7e8389e92f",
+      "kind": "line",
+      "file": "voice/k-nav/animal-raven.mp3"
+    },
     "k-nav/color-orange": {
       "text": "Orange!",
       "hash": "95b60f9f45",
@@ -33342,6 +33348,48 @@
       "hash": "53677ae4c2",
       "kind": "line",
       "file": "voice/k-nav/baby-dragon.mp3"
+    },
+    "k-nav/baby-raven": {
+      "text": "It's a baby raven!",
+      "hash": "fcff152729",
+      "kind": "line",
+      "file": "voice/k-nav/baby-raven.mp3"
+    },
+    "k-nav/ravenHatched": {
+      "text": "You fixed a tricky one! Your egg hatched!",
+      "hash": "f6331f6255",
+      "kind": "line",
+      "file": "voice/k-nav/ravenHatched.mp3"
+    },
+    "k-nav/ravenEgg": {
+      "text": "This is the Schoolhouse egg. Practice the tricky ones to hatch it!",
+      "hash": "cdb38332ef",
+      "kind": "line",
+      "file": "voice/k-nav/ravenEgg.mp3"
+    },
+    "k-nav/ravenGrowing": {
+      "text": "Your raven grows when you practice the tricky ones and play the daily challenge!",
+      "hash": "0763c23299",
+      "kind": "line",
+      "file": "voice/k-nav/ravenGrowing.mp3"
+    },
+    "k-nav/ravenGrownUp": {
+      "text": "Your raven is all grown up!",
+      "hash": "7c44d7f8d6",
+      "kind": "line",
+      "file": "voice/k-nav/ravenGrownUp.mp3"
+    },
+    "k-nav/focusPractice": {
+      "text": "Let's practice a tricky one!",
+      "hash": "49c55d4490",
+      "kind": "line",
+      "file": "voice/k-nav/focusPractice.mp3"
+    },
+    "k-nav/focusAllDone": {
+      "text": "You finished everything! Here are some coins and a new badge.",
+      "hash": "3449c4c536",
+      "kind": "line",
+      "file": "voice/k-nav/focusAllDone.mp3"
     },
     "k-nav/petsGrewAll": {
       "text": "Look! Your pets grew!",

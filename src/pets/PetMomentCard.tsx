@@ -5,6 +5,7 @@ import { canvasQuality, useLowGraphics } from '../world/graphicsQuality'
 import { Button, Modal } from '../components/ui'
 import { petEmoji, petName } from '../lib/pets/catalog'
 import { momentText } from '../lib/pets/copy'
+import { SCHOOL_PET_ID } from '../lib/pets/schoolPet'
 import type { PetMoment } from '../lib/pets/growth'
 import CelebrationScene from './CelebrationScene'
 import { useProgress } from '../store/progress'
@@ -52,7 +53,9 @@ export default function PetMomentCard({
       guide.clear()
       return
     }
-    const line = moment.to === 'adult' ? 'k-nav/petGrownUp' : moment.from === 'egg' ? 'k-nav/petHatched' : 'k-nav/petGrew'
+    // (the Schoolhouse raven hatches from practice: its own line says so)
+    const hatched = moment.creatureId === SCHOOL_PET_ID ? 'k-nav/ravenHatched' : 'k-nav/petHatched'
+    const line = moment.to === 'adult' ? 'k-nav/petGrownUp' : moment.from === 'egg' ? hatched : 'k-nav/petGrew'
     // hatched: and what came out ("It's a baby lion!")
     const baby = moment.from === 'egg' && moment.to === 'baby' && lineText(`k-nav/baby-${moment.creatureId}`) ? `k-nav/baby-${moment.creatureId}` : null
     void guide.sequence([{ voice: { line }, target: 'pet-moment-ok', dim: false }, ...(baby ? [{ voice: { line: baby }, target: 'pet-moment-ok', dim: false }] : [])])

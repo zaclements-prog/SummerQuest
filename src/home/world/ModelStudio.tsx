@@ -11,7 +11,7 @@ import CreatureAccessories from './CreatureAccessories'
 import { StudioStage } from './Lights'
 import { TBox, TCyl } from '../../toon/shapes'
 import { PET_STAGES } from '../../lib/pets/types'
-import { PETS } from '../../lib/pets/catalog'
+import { PETS, PET_IDS, petEgg } from '../../lib/pets/catalog'
 import { Egg, newEggAnim, setEggAnim } from '../models/egg'
 
 export type StudioKind = 'creatures' | 'furniture' | 'accessories' | 'anchors' | 'accgrid' | 'growth' | 'eggs'
@@ -68,7 +68,7 @@ function AccessoryOn({ creatureId, accessoryId }: { creatureId: string; accessor
  *   /home?studio=furniture    — all furniture in a grid
  *   /home?studio=growth       — every creature as baby, kid and adult beside a height ruler
  *   /home?studio=growth&only=fox,lion — just those creatures (also for creatures / anchors)
- *   /home?studio=eggs         — the 12 pet eggs, and one egg cracking and opening
+ *   /home?studio=eggs         — the 13 pet eggs, and one egg cracking and opening
  * `cam=x,y,z` and `target=x,y,z` override the camera. Not linked from the UI.
  */
 export default function ModelStudio({ kind, only, target }: { kind: StudioKind; only?: string[]; target?: [number, number, number] }) {
@@ -207,7 +207,7 @@ function Ruler({ position }: { position: [number, number, number] }) {
   )
 }
 
-/** The 12 pet eggs in a row of rows, and the lion's egg cracked, then opening (front). */
+/** Every pet egg (the 12 zone pets' and the Schoolhouse raven's) in rows, and the lion's egg cracked, then opening (front). */
 function EggStudio({ target }: { target?: [number, number, number] }) {
   const cracked = useMemo(() => {
     const a = newEggAnim()
@@ -224,11 +224,14 @@ function EggStudio({ target }: { target?: [number, number, number] }) {
     <>
       <OrbitControls makeDefault target={target ?? [0, 0.4, 0]} />
       <StudioStage size={14} />
-      {PETS.map((p, i) => (
-        <group key={p.creatureId} position={[((i % 6) - 2.5) * 0.75, 0, Math.floor(i / 6) * 0.9 - 1.6]}>
-          <Egg shell={p.egg.shell} spot={p.egg.spot} />
-        </group>
-      ))}
+      {PET_IDS.map((id, i) => {
+        const egg = petEgg(id)
+        return egg ? (
+          <group key={id} position={[((i % 7) - 3) * 0.75, 0, Math.floor(i / 7) * 0.9 - 1.6]}>
+            <Egg shell={egg.shell} spot={egg.spot} />
+          </group>
+        ) : null
+      })}
       <group position={[-0.6, 0, 0.6]} scale={1.6}>
         <Egg shell={lion.egg.shell} spot={lion.egg.spot} anim={cracked} />
       </group>

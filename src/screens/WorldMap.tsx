@@ -11,8 +11,8 @@ import { Button, Celebration, Medallion, TONES, toneOf, type Tone } from '../com
 import IslandArt from '../components/map/IslandArt'
 import { ZONE_SPOTS, toPct } from '../components/map/islandMap'
 import { useWorldUi } from '../world/useWorldUi'
-import { hatchedPets, petStages } from '../lib/pets/growth'
-import { PETS } from '../lib/pets/catalog'
+import { allPetStages, hatchedPets } from '../lib/pets/growth'
+import { PET_IDS } from '../lib/pets/catalog'
 import type { GradeLevel } from '../lib/gradeTiers'
 import { isZoneSleeping, listenGrade, SLEEPING_LINE, zoneNameVoice } from '../lib/listenNav'
 import { guide } from '../guide/store'
@@ -39,14 +39,15 @@ export default function WorldMap() {
   const markBadgesSeen = useProgress((s) => s.markBadgesSeen)
   const dailyDone = useProgress((s) => s.dailyClaimedDate) === todayStr()
   const grade = useProgress((s) => s.player?.grade)
+  const schoolPet = useProgress((s) => s.schoolPet)
 
   const badges = useMemo(
-    () => computeBadges({ zones, stats, totalCoinsEarned, grade }),
-    [zones, stats, totalCoinsEarned, grade],
+    () => computeBadges({ zones, stats, totalCoinsEarned, grade, focusClears: schoolPet.fullClears }),
+    [zones, stats, totalCoinsEarned, grade, schoolPet.fullClears],
   )
   const earned = badges.filter((b) => b.earned)
   const lessonsDone = useProgress((s) => s.lessonsDone)
-  const hatched = useMemo(() => hatchedPets(petStages(zones, lessonsDone, grade)).length, [zones, lessonsDone, grade])
+  const hatched = useMemo(() => hatchedPets(allPetStages({ zones, lessonsDone, schoolPet })).length, [zones, lessonsDone, schoolPet])
 
   // Badges earned since the last time the map was opened (computed once, at mount).
   const [celebrating, setCelebrating] = useState<BadgeStatus[]>(() =>
@@ -132,7 +133,7 @@ export default function WorldMap() {
             <NavTile to="/badges" icon="🏅" tone="monster" label={`Badges ${earned.length}/${badges.length}`} />
             <NavTile to="/progress" icon="📈" tone="correct" label="Progress" />
             <NavTile to="/home" icon="🏠" tone="wrong" label="Home" />
-            <NavTile to="/pets" icon="🐾" tone="island" label={`Pets ${hatched}/${PETS.length}`} />
+            <NavTile to="/pets" icon="🐾" tone="island" label={`Pets ${hatched}/${PET_IDS.length}`} />
           </nav>
         </div>
         )}

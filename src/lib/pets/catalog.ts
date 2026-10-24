@@ -1,4 +1,5 @@
 import { creatureById } from '../home/catalog'
+import { SCHOOL_PET_EGG, SCHOOL_PET_ID } from './schoolPet'
 
 /**
  * The twelve zone pets (see docs/superpowers/specs/2026-10-18-pets-plan.md).
@@ -38,9 +39,27 @@ export const PETS: readonly PetDef[] = [
   { creatureId: 'dragon', zoneId: 'tower-battlefront', lessonIds: ['kTowers'], egg: { shell: '#ffd0c4', spot: '#c94c42' } },
 ]
 
-/** The pet that grows into this creature (every creature is one zone's pet). */
+/** The zone pet that grows into this creature (the Schoolhouse raven is not one: see `isPetId`). */
 export function petById(creatureId: string | null | undefined): PetDef | undefined {
   return creatureId ? PETS.find((p) => p.creatureId === creatureId) : undefined
+}
+
+/**
+ * Every pet, in the order the Pets page shows them: the twelve zone pets in
+ * zone order, then the Schoolhouse raven (lib/pets/schoolPet), which grows
+ * from This Week's Focus and the Daily Challenge instead of one zone's stars.
+ */
+export const PET_IDS: readonly string[] = [...PETS.map((p) => p.creatureId), SCHOOL_PET_ID]
+
+/** Any pet: a zone pet or the Schoolhouse raven. */
+export function isPetId(id: unknown): id is string {
+  return typeof id === 'string' && PET_IDS.includes(id)
+}
+
+/** A pet's egg colors (zone pet or raven). */
+export function petEgg(creatureId: string | null | undefined): { shell: string; spot: string } | undefined {
+  if (creatureId === SCHOOL_PET_ID) return SCHOOL_PET_EGG
+  return petById(creatureId)?.egg
 }
 
 /** A pet's display name and emoji (from the creature roster). */

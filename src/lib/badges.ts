@@ -1,6 +1,7 @@
 import { curriculum, zoneTitle } from '../curriculum'
 import type { GradeLevel } from './gradeTiers'
 import { zoneStageSets } from './pets/growth'
+import { FOCUS_BADGE_ID } from './pets/schoolPet'
 
 /**
  * Badge / achievement catalog. Every badge is DERIVED from progress the game
@@ -39,6 +40,12 @@ export interface BadgeCtx {
    * away; star / stage milestones count every band's stars.
    */
   grade: GradeLevel | null | undefined
+  /**
+   * Times the child cleared every skill on This Week's Focus by practice (the
+   * Schoolhouse raven's record, `schoolPet.fullClears`; never decreases).
+   * Missing: none.
+   */
+  focusClears?: number
 }
 
 export const ZONE_BADGES: { zoneId: string; emoji: string; title: string }[] = [
@@ -178,6 +185,13 @@ export function computeBadges(ctx: BadgeCtx): BadgeStatus[] {
       title: 'Coin Collector',
       description: 'Earn 200 coins in all.',
       earned: ctx.totalCoinsEarned >= 200,
+    },
+    {
+      id: FOCUS_BADGE_ID,
+      emoji: '🎯',
+      title: 'Focus Finisher',
+      description: "Clear every skill on This Week's Focus.",
+      earned: (ctx.focusClears ?? 0) >= 1,
     },
     {
       id: 'grand-champion',
