@@ -33089,6 +33089,12 @@
     "duration": 0.79,
     "words": "voice/k-nav/animal-panda.words.json"
   },
+  "k-nav/animal-raven": {
+    "file": "voice/k-nav/animal-raven.mp3",
+    "hash": "7e8389e92f",
+    "duration": 0.79,
+    "words": "voice/k-nav/animal-raven.words.json"
+  },
   "k-nav/animal-tiger": {
     "file": "voice/k-nav/animal-tiger.mp3",
     "hash": "e3f3efe023",
@@ -33161,6 +33167,12 @@
     "duration": 1.7,
     "words": "voice/k-nav/baby-panda.words.json"
   },
+  "k-nav/baby-raven": {
+    "file": "voice/k-nav/baby-raven.mp3",
+    "hash": "fcff152729",
+    "duration": 1.63,
+    "words": "voice/k-nav/baby-raven.words.json"
+  },
   "k-nav/baby-tiger": {
     "file": "voice/k-nav/baby-tiger.mp3",
     "hash": "4814ac9c57",
@@ -33214,6 +33226,18 @@
     "hash": "32f83075fb",
     "duration": 0.72,
     "words": "voice/k-nav/color-red.words.json"
+  },
+  "k-nav/focusAllDone": {
+    "file": "voice/k-nav/focusAllDone.mp3",
+    "hash": "3449c4c536",
+    "duration": 3.89,
+    "words": "voice/k-nav/focusAllDone.words.json"
+  },
+  "k-nav/focusPractice": {
+    "file": "voice/k-nav/focusPractice.mp3",
+    "hash": "49c55d4490",
+    "duration": 1.61,
+    "words": "voice/k-nav/focusPractice.words.json"
   },
   "k-nav/homeHelp": {
     "file": "voice/k-nav/homeHelp.mp3",
@@ -33412,6 +33436,30 @@
     "hash": "a973e92878",
     "duration": 1.44,
     "words": "voice/k-nav/quitAsk.words.json"
+  },
+  "k-nav/ravenEgg": {
+    "file": "voice/k-nav/ravenEgg.mp3",
+    "hash": "cdb38332ef",
+    "duration": 4.27,
+    "words": "voice/k-nav/ravenEgg.words.json"
+  },
+  "k-nav/ravenGrowing": {
+    "file": "voice/k-nav/ravenGrowing.mp3",
+    "hash": "0763c23299",
+    "duration": 4.76,
+    "words": "voice/k-nav/ravenGrowing.words.json"
+  },
+  "k-nav/ravenGrownUp": {
+    "file": "voice/k-nav/ravenGrownUp.mp3",
+    "hash": "7c44d7f8d6",
+    "duration": 2.28,
+    "words": "voice/k-nav/ravenGrownUp.words.json"
+  },
+  "k-nav/ravenHatched": {
+    "file": "voice/k-nav/ravenHatched.mp3",
+    "hash": "f6331f6255",
+    "duration": 3.02,
+    "words": "voice/k-nav/ravenHatched.words.json"
   },
   "k-nav/sleeping": {
     "file": "voice/k-nav/sleeping.mp3",
