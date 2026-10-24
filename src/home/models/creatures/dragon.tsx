@@ -2,8 +2,8 @@ import { CatmullRomCurve3, TubeGeometry, Vector3 } from 'three'
 import { TCapsule, TCone, TSphere } from '../../../toon/shapes'
 import { TOON } from '../../../toon/palette'
 import { toonMaterial } from '../../../toon/materials'
-import { Arm, Blush, Eye, Ink, Leg, Smile, Staged, Wag, Wing, faceYaw, onFace } from '../parts'
-import type { CreatureProps } from '../parts'
+import { Arm, Blush, Eye, FrontFeet, Ink, Leg, PetBody, PetHead, Smile, Staged, Wag, Wing, faceYaw, onFace } from '../parts'
+import type { CreatureProps, PetRig } from '../parts'
 
 // One palette for all three ages.
 const RED = '#f0665a'
@@ -34,6 +34,7 @@ function DragonKid() {
     <group>
       <Leg x={-0.11} y={0.18} color={red} radius={0.07} foot={[0.085, 0.055, 0.11]} phase={0} />
       <Leg x={0.11} y={0.18} color={red} radius={0.07} foot={[0.085, 0.055, 0.11]} phase={Math.PI} />
+      <PetBody>
 
       <TSphere position={[0, 0.35, 0]} scale={[0.235, 0.225, 0.215]} color={red} segments={20}>
         <Ink />
@@ -85,6 +86,7 @@ function DragonKid() {
         </Wing>
       ))}
 
+      <PetHead>
       {/* head */}
       <TSphere position={[...HC]} scale={[...HR]} color={red} segments={24}>
         <Ink />
@@ -120,6 +122,8 @@ function DragonKid() {
           <Blush position={onFace(HC, HR, s * 0.19, -0.035, -0.004)} yaw={faceYaw(HC, HR, s * 0.19, -0.035)} color="#ffb0a8" />
         </group>
       ))}
+      </PetHead>
+      </PetBody>
     </group>
   )
 }
@@ -143,6 +147,8 @@ function DragonBaby() {
     <group>
       <Leg x={-0.075} y={0.085} color={RED} radius={0.042} foot={[0.055, 0.038, 0.07]} phase={0} />
       <Leg x={0.075} y={0.085} color={RED} radius={0.042} foot={[0.055, 0.038, 0.07]} phase={Math.PI} />
+      <PetBody>
+      <FrontFeet x={0.072} y={0.22} z={0.03} color={RED} radius={0.04} foot={[0.052, 0.036, 0.066]} />
 
       {/* bean body + gold tummy */}
       <TSphere position={[0, 0.15, 0]} scale={[0.145, 0.125, 0.135]} color={RED} segments={18}>
@@ -166,6 +172,7 @@ function DragonBaby() {
         </Wing>
       ))}
 
+      <PetHead>
       {/* huge head */}
       <TSphere position={[...BC]} scale={[...BR]} color={RED} segments={24}>
         <Ink />
@@ -188,6 +195,8 @@ function DragonBaby() {
           <Blush position={onFace(BC, BR, s * 0.148, -0.06, -0.004)} yaw={faceYaw(BC, BR, s * 0.148, -0.06)} size={0.04} color={BLUSH} />
         </group>
       ))}
+      </PetHead>
+      </PetBody>
     </group>
   )
 }
@@ -275,6 +284,7 @@ function DragonAdult() {
     <group>
       <Leg x={-0.125} y={0.46} color={RED} radius={0.09} foot={[0.105, 0.062, 0.135]} phase={0} />
       <Leg x={0.125} y={0.46} color={RED} radius={0.09} foot={[0.105, 0.062, 0.135]} phase={Math.PI} />
+      <PetBody>
 
       {/* deep chest over sturdy hips (the neck pinches in under the head) + golden belly plate */}
       <TSphere position={[0, 0.74, 0]} scale={[0.205, 0.25, 0.19]} color={RED} segments={22}>
@@ -336,6 +346,7 @@ function DragonAdult() {
         </Wing>
       ))}
 
+      <PetHead>
       {/* head */}
       <TSphere position={[...AC]} scale={[...AR]} color={RED} segments={24}>
         <Ink />
@@ -368,11 +379,22 @@ function DragonAdult() {
           <Blush position={onFace(AC, AR, s * 0.195, -0.025, -0.004)} yaw={faceYaw(AC, AR, s * 0.195, -0.025)} color={BLUSH} />
         </group>
       ))}
+      </PetHead>
+      </PetBody>
     </group>
   )
 }
 
-/** Dragon: baby, kid and adult (see `Staged`). */
-export function Dragon({ stage }: CreatureProps) {
-  return <Staged stage={stage} baby={DragonBaby} kid={DragonKid} adult={DragonAdult} />
+// As a pet it walks on all fours with its wings folded (the body tips forward
+// about the hips until the arms reach the floor), and now and then spreads
+// them for a hop-glide (see `GAITS`).
+const RIGS: Record<'baby' | 'kid' | 'adult', PetRig> = {
+  baby: { pivot: [0, 0.085, 0], pitch: 1.1, neck: [0, 0.25, 0.03], shift: [0, 0.04, -0.1], headLift: 0.02, frontLegs: true, lie: 0.06 },
+  kid: { pivot: [0, 0.18, 0], pitch: 1.35, neck: [0, 0.5, 0], shift: [0, 0.1, -0.16], headLift: 0.05, frontLegs: true, lie: 0.15 },
+  adult: { pivot: [0, 0.46, 0], pitch: 1.4, neck: [0, 0.85, 0], shift: [0, -0.06, -0.3], headLift: 0.12, frontLegs: true, lie: 0.3 },
+}
+
+/** Dragon: baby, kid and adult (see `Staged`); `posture="pet"` re-poses it as a pet (see `gaits.ts`). */
+export function Dragon({ stage, posture, pet }: CreatureProps) {
+  return <Staged id="dragon" stage={stage} posture={posture} pet={pet} rigs={RIGS} baby={DragonBaby} kid={DragonKid} adult={DragonAdult} />
 }

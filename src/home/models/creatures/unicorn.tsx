@@ -4,8 +4,8 @@ import { mergeVertices } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
 import { TCone, TSphere, TTorus } from '../../../toon/shapes'
 import { TOON } from '../../../toon/palette'
 import { toonMaterial } from '../../../toon/materials'
-import { Arm, Blush, Eye, Ink, Leg, Smile, Staged, Wag, faceYaw, onFace } from '../parts'
-import type { CreatureProps } from '../parts'
+import { Arm, Blush, Eye, FrontFeet, Ink, Leg, PetBody, PetHead, Smile, Staged, Wag, faceYaw, onFace } from '../parts'
+import type { CreatureProps, PetRig } from '../parts'
 
 // Head ellipsoids (centre, radii) of the three growth stages.
 const HC = [0, 0.69, 0.02] as const
@@ -91,6 +91,7 @@ function UnicornKid() {
     <group>
       <Leg x={-0.1} y={0.17} color={white} footColor={hoof} phase={0} />
       <Leg x={0.1} y={0.17} color={white} footColor={hoof} phase={Math.PI} />
+      <PetBody>
 
       <TSphere position={[0, 0.33, 0]} scale={[0.22, 0.21, 0.2]} color={white} segments={20}>
         <Ink />
@@ -112,6 +113,7 @@ function UnicornKid() {
         ))}
       </Wag>
 
+      <PetHead>
       {/* head */}
       <TSphere position={[...HC]} scale={[...HR]} color={white} segments={24}>
         <Ink />
@@ -165,6 +167,8 @@ function UnicornKid() {
           <Blush position={onFace(HC, HR, s * 0.19, -0.04, -0.004)} yaw={faceYaw(HC, HR, s * 0.19, -0.04)} />
         </group>
       ))}
+      </PetHead>
+      </PetBody>
     </group>
   )
 }
@@ -180,12 +184,15 @@ function UnicornBaby() {
     <group>
       <Leg x={-0.07} y={0.08} color={WHITE} footColor={HOOF} radius={0.044} foot={[0.056, 0.044, 0.066]} phase={0} swing={0.5} />
       <Leg x={0.07} y={0.08} color={WHITE} footColor={HOOF} radius={0.044} foot={[0.056, 0.044, 0.066]} phase={Math.PI} swing={0.5} />
+      <PetBody>
+      <FrontFeet x={0.068} y={0.21} z={0.03} color={WHITE} footColor={HOOF} radius={0.042} foot={[0.052, 0.042, 0.062]} />
 
       {/* bean body */}
       <TSphere position={[0, 0.16, 0]} scale={[0.13, 0.12, 0.125]} color={WHITE} segments={18}>
         <Ink />
       </TSphere>
 
+      <PetHead>
       {/* big round head */}
       <TSphere position={[...BHC]} scale={[...BHR]} color={WHITE} segments={24}>
         <Ink />
@@ -223,6 +230,8 @@ function UnicornBaby() {
           <Blush position={onFace(BHC, BHR, s * 0.138, -0.058, -0.004)} yaw={faceYaw(BHC, BHR, s * 0.138, -0.058)} size={0.04} />
         </group>
       ))}
+      </PetHead>
+      </PetBody>
     </group>
   )
 }
@@ -240,6 +249,7 @@ function UnicornAdult() {
     <group>
       <Leg x={-0.105} y={0.46} color={WHITE} footColor={HOOF} radius={0.074} foot={[0.084, 0.066, 0.094]} phase={0} swing={0.5} />
       <Leg x={0.105} y={0.46} color={WHITE} footColor={HOOF} radius={0.074} foot={[0.084, 0.066, 0.094]} phase={Math.PI} swing={0.5} />
+      <PetBody>
 
       {/* torso */}
       <TSphere position={[0, 0.63, 0]} scale={[0.215, 0.245, 0.188]} color={WHITE} segments={22}>
@@ -269,6 +279,7 @@ function UnicornAdult() {
         ))}
       </Wag>
 
+      <PetHead>
       {/* head */}
       <TSphere position={[...AHC]} scale={[...AHR]} color={WHITE} segments={24}>
         <Ink />
@@ -335,11 +346,21 @@ function UnicornAdult() {
           <Blush position={onFace(AHC, AHR, s * 0.19, -0.045, -0.004)} yaw={faceYaw(AHC, AHR, s * 0.19, -0.045)} />
         </group>
       ))}
+      </PetHead>
+      </PetBody>
     </group>
   )
 }
 
-/** Unicorn: baby, kid and adult (see `Staged`). */
-export function Unicorn({ stage }: CreatureProps) {
-  return <Staged stage={stage} baby={UnicornBaby} kid={UnicornKid} adult={UnicornAdult} />
+// As a pet it walks on all fours: the body tips forward about the hips until
+// the arms reach the floor as front legs, and the head turns back up.
+const RIGS: Record<'baby' | 'kid' | 'adult', PetRig> = {
+  baby: { pivot: [0, 0.08, 0], pitch: 1.1, neck: [0, 0.25, 0.02], shift: [0, 0.04, -0.1], headLift: 0.02, frontLegs: true, lie: 0.06 },
+  kid: { pivot: [0, 0.17, 0], pitch: 1.35, neck: [0, 0.48, 0], shift: [0, 0.1, -0.16], headLift: 0.05, frontLegs: true, lie: 0.15 },
+  adult: { pivot: [0, 0.46, 0], pitch: 1.4, neck: [0, 0.85, 0], shift: [0, -0.06, -0.3], headLift: 0.12, frontLegs: true, lie: 0.3 },
+}
+
+/** Unicorn: baby, kid and adult (see `Staged`); `posture="pet"` re-poses it as a pet (see `gaits.ts`). */
+export function Unicorn({ stage, posture, pet }: CreatureProps) {
+  return <Staged id="unicorn" stage={stage} posture={posture} pet={pet} rigs={RIGS} baby={UnicornBaby} kid={UnicornKid} adult={UnicornAdult} />
 }

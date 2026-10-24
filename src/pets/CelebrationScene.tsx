@@ -5,6 +5,7 @@ import { MeshBasicMaterial, OctahedronGeometry } from 'three'
 import type { Group, Mesh, PerspectiveCamera } from 'three'
 import { creatureBuilder } from '../home/models/registry'
 import { WalkStateContext, newWalkState } from '../home/models/walkState'
+import { CALM_PET } from '../home/models/petRig'
 import { Egg, newEggAnim, setEggAnim } from '../home/models/egg'
 import { petEgg } from '../lib/pets/catalog'
 import type { PetMoment } from '../lib/pets/growth'
@@ -220,11 +221,11 @@ export default function CelebrationScene({ moment, reduced, onReveal }: { moment
         </group>
       ) : (
         <group ref={oldRef}>
-          <b.Builder stage={from} />
+          <b.Builder stage={from} posture="pet" pet={CALM_PET} />
         </group>
       )}
       <group ref={newRef} visible={false}>
-        <b.Builder stage={to} />
+        <b.Builder stage={to} posture="pet" pet={CALM_PET} />
       </group>
       {!reduced && <Sparkles clock0={t0} swirlFrom={hatch ? HATCH.open - 0.05 : 0.25} burstAt={hatch ? HATCH.open + 0.05 : GROW.swap} height={tall} />}
       {/* a soft shadow on the ground */}

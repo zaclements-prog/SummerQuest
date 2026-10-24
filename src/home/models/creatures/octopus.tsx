@@ -3,8 +3,8 @@ import type { BufferGeometry } from 'three'
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
 import { TSphere } from '../../../toon/shapes'
 import { toonMaterial } from '../../../toon/materials'
-import { Arm, Blush, Eye, Ink, Smile, Staged, Tentacle, faceYaw, onFace } from '../parts'
-import type { CreatureProps } from '../parts'
+import { Arm, Blush, Eye, Ink, PetBody, Smile, Staged, Tentacle, faceYaw, onFace } from '../parts'
+import type { CreatureProps, PetRig } from '../parts'
 
 type V3 = readonly [number, number, number]
 
@@ -94,6 +94,7 @@ function OctopusKid() {
         />
       ))}
 
+      <PetBody>
       {/* mantle */}
       <TSphere position={[...HC]} scale={[...HR]} color={lilac} segments={24}>
         <Ink />
@@ -118,6 +119,7 @@ function OctopusKid() {
         </group>
       ))}
       <Smile position={onFace(HC, HR, 0, -0.15, 0.002)} width={0.035} pitch={-0.45} />
+      </PetBody>
     </group>
   )
 }
@@ -137,6 +139,7 @@ function OctopusBaby() {
         </group>
       ))}
 
+      <PetBody>
       {/* mantle */}
       <TSphere position={[...BHC]} scale={[...BHR]} color={LILAC} segments={24}>
         <Ink />
@@ -158,6 +161,7 @@ function OctopusBaby() {
         </group>
       ))}
       <Smile position={onFace(BHC, BHR, 0, -0.105, 0.002)} width={0.026} thickness={0.008} pitch={-0.45} />
+      </PetBody>
     </group>
   )
 }
@@ -180,11 +184,12 @@ function OctopusAdult() {
       {ARMS.map((a, i) => (
         <group key={a} position={[Math.sin(a) * KNEE[0], KNEE[1], Math.cos(a) * KNEE[0] * 0.93]} rotation={[0, a + Math.PI, 0]}>
           <group rotation={[-0.33, 0, 0]} scale={[1, 1.15, 1]}>
-            <Tentacle x={0} y={0} z={0} yaw={0} radius={0.082} color={LILAC} tipColor={TIP} phase={i * 0.8} />
+            <Tentacle x={0} y={0} z={0} yaw={0} dir={a} radius={0.082} color={LILAC} tipColor={TIP} phase={i * 0.8} />
           </group>
         </group>
       ))}
 
+      <PetBody>
       {/* tall mantle */}
       <TSphere position={[...AHC]} scale={[...AHR]} color={LILAC} segments={26}>
         <Ink />
@@ -208,11 +213,20 @@ function OctopusAdult() {
         </group>
       ))}
       <Smile position={onFace(AHC, AHR, 0, -0.215, 0.002)} width={0.04} pitch={-0.45} />
+      </PetBody>
     </group>
   )
 }
 
-/** Octopus: baby, kid and adult (see `Staged`). */
-export function Octopus({ stage }: CreatureProps) {
-  return <Staged stage={stage} baby={OctopusBaby} kid={OctopusKid} adult={OctopusAdult} />
+// As a pet the octopus glides: no steps, its mantle leans into the glide and
+// swells gently while the arms stream behind in a rippling wave (see `GAITS`).
+const RIGS: Record<'baby' | 'kid' | 'adult', PetRig> = {
+  baby: { pivot: [0, 0.12, 0], pitch: 0, neck: [0, 0.2, 0], lie: 0.02 },
+  kid: { pivot: [0, 0.24, 0], pitch: 0, neck: [0, 0.4, 0], lie: 0.04 },
+  adult: { pivot: [0, 0.4, 0], pitch: 0, neck: [0, 0.7, 0], lie: 0.06 },
+}
+
+/** Octopus: baby, kid and adult (see `Staged`); `posture="pet"` re-poses it as a pet (see `gaits.ts`). */
+export function Octopus({ stage, posture, pet }: CreatureProps) {
+  return <Staged id="octopus" stage={stage} posture={posture} pet={pet} rigs={RIGS} baby={OctopusBaby} kid={OctopusKid} adult={OctopusAdult} />
 }

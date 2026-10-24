@@ -11,8 +11,14 @@ import { TOON } from '../../toon/palette'
 import { useWalkState } from './walkState'
 import { Outline } from '../../toon/outline'
 import type { PetStage } from '../../lib/pets/types'
+import { PetRoot, bodyTilt, usePet } from './petRig'
+import type { PetCtx, PetOptions } from './petRig'
+import { cyclePeriod, legPhase, legSlot, legSwing, splayToFloor, tipPoint } from './gaits'
+import type { PetRig, Posture } from './gaits'
 
 export type { Vec3 }
+export { PetBody, PetHead } from './petRig'
+export type { PetRig } from './gaits'
 
 /**
  * The building blocks every creature and accessory is made of: a soft-toon
@@ -28,33 +34,59 @@ const CADENCE = 9 // walk-cycle speed: matches the avatar's step bob (sin(t * 9)
 export interface CreatureProps {
   /** The growth stage to draw (see `PetStage`); avatars are adults, the default. */
   stage?: PetStage
+  /**
+   * `avatar` (default): the upright chibi the player walks as. `pet`: the same
+   * model re-posed as the animal it is, with its own gait and idles (see
+   * `gaits.ts`). Pet mode needs the model's walk state to be the pet's own.
+   */
+  posture?: Posture
+  /** pet mode: scene options (calm idles, a fixed seed for renders) */
+  pet?: PetOptions
 }
 
 /**
  * Picks a creature's model for its growth stage. A stage without its own model
  * shows the kid model instead (a baby at 60 % size), so a creature can gain its
- * baby and adult art one at a time.
+ * baby and adult art one at a time. As a pet (`posture="pet"`) the model is
+ * wrapped in its `PetRoot`, using the rig authored for that stage (`rigs`) and
+ * the gait profile for `id` (`GAITS`).
  */
 export function Staged({
+  id,
   stage = 'adult',
+  posture = 'avatar',
+  pet,
+  rigs,
   baby: Baby,
   kid: Kid,
   adult: Adult,
 }: {
+  /** the creature id (its gait profile) */
+  id?: string
   stage?: PetStage
+  posture?: Posture
+  pet?: PetOptions
+  /** pet-mode rigs per stage (a stage without one stands upright) */
+  rigs?: Partial<Record<PetStage, PetRig>>
   baby?: () => ReactNode
   kid: () => ReactNode
   adult?: () => ReactNode
 }) {
+  let model: ReactNode
   if (stage === 'baby') {
-    return Baby ? <Baby /> : (
+    model = Baby ? <Baby /> : (
       <group scale={0.6}>
         <Kid />
       </group>
     )
-  }
-  if (stage === 'adult' && Adult) return <Adult />
-  return <Kid />
+  } else if (stage === 'adult' && Adult) model = <Adult />
+  else model = <Kid />
+  if (posture !== 'pet') return model
+  return (
+    <PetRoot id={id ?? ''} stage={stage} rig={rigs?.[stage]} options={pet}>
+      {model}
+    </PetRoot>
+  )
 }
 
 // ── Line work ────────────────────────────────────────────────────────────────
@@ -299,7 +331,7 @@ export function Smile({
  * (y = 0) and ends in a rounded foot that pokes forward. Give the two legs
  * opposite phases (0 and π).
  */
-export function Leg({
+function AvatarLeg({
   x,
   y,
   z = 0,
@@ -353,7 +385,7 @@ export function Leg({
  * A little arm hanging from the shoulder `(x, y, z)`, splayed out to its side
  * and swinging opposite the same-side leg while walking. Ends in a round paw.
  */
-export function Arm({
+function AvatarArm({
   x,
   y,
   z = 0,
@@ -409,7 +441,7 @@ export function Arm({
  * is the resting [pitch, sweep-back yaw, raise roll]. Children are the wing shape, authored for the
  * RIGHT side (+x) — the left wing is mirrored automatically.
  */
-export function Wing({
+function AvatarWing({
   x,
   y,
   z,
@@ -453,7 +485,7 @@ export function Wing({
  * while walking. Children are the tail, authored pointing back (−z) from the
  * root at `position`.
  */
-export function Wag({
+function AvatarWag({
   position,
   rotation,
   amp = 0.3,
@@ -485,7 +517,7 @@ export function Wag({
  * and splayed out along `yaw`. Each bead joint bends a little, rippling with a
  * phase so the arms wiggle softly at rest and paddle while walking.
  */
-export function Tentacle({
+function AvatarTentacle({
   x,
   y,
   z,
@@ -517,6 +549,423 @@ export function Tentacle({
     if (j0.current) j0.current.rotation.x = 0.55 + Math.sin(t) * a
     if (j1.current) j1.current.rotation.x = 0.5 + Math.sin(t - 0.9) * a
     if (j2.current) j2.current.rotation.x = 0.6 + Math.sin(t - 1.8) * a * 1.2
+  })
+  const r = radius
+  return (
+    <group position={[x, y, z]} rotation={[0, yaw, 0]}>
+      <group ref={j0}>
+        <TSphere position={[0, -r * 0.6, 0]} scale={[r, r * 1.15, r]} color={color} segments={12}>
+          {outline && <Ink />}
+        </TSphere>
+        <group ref={j1} position={[0, -r * 1.3, 0]}>
+          <TSphere position={[0, -r * 0.55, 0]} scale={[r * 0.82, r, r * 0.82]} color={color} segments={12}>
+            {outline && <Ink />}
+          </TSphere>
+          <group ref={j2} position={[0, -r * 1.1, 0]}>
+            <TSphere position={[0, -r * 0.45, 0]} scale={r * 0.62} color={tipColor ?? color} segments={10}>
+              {outline && <Ink />}
+            </TSphere>
+          </group>
+        </group>
+      </group>
+    </group>
+  )
+}
+
+/**
+ * A baby's nub foot: one round pad under the hip that paddles like a `Leg`
+ * while the baby toddles (no shin: the hip is barely off the floor).
+ */
+function AvatarNub({ x, phase, color, size }: { x: number; phase: number; color: ColorRepresentation; size: Vec3 }) {
+  const hip = useRef<Group>(null)
+  const walk = useWalkState()
+  useFrame(() => {
+    if (hip.current) hip.current.rotation.x = walk.moving ? Math.sin(walk.t * 9 + phase) * 0.6 : 0
+  })
+  return (
+    <group ref={hip} position={[x, 0.075, 0.01]}>
+      <TSphere position={[0, -0.04, 0.022]} scale={size} color={color} segments={12}>
+        <Ink />
+      </TSphere>
+    </group>
+  )
+}
+
+// ── Pet mode ─────────────────────────────────────────────────────────────────
+// The exported limbs below pick the avatar part (unchanged) or its pet-mode
+// twin, depending on whether the model sits in a `PetRoot` (see `petRig.tsx`).
+
+type LegProps = Parameters<typeof AvatarLeg>[0]
+type ArmProps = Parameters<typeof AvatarArm>[0]
+type WingProps = Parameters<typeof AvatarWing>[0]
+type WagProps = Parameters<typeof AvatarWag>[0]
+type TentacleProps = Parameters<typeof AvatarTentacle>[0]
+
+/**
+ * A stubby leg that pivots at the hip `(x, y, z)` and swings while the creature
+ * walks (reads the creature's walk state, see `useWalkState`). The leg hangs
+ * straight down to the floor (y = 0) and ends in a rounded foot that pokes
+ * forward. Give the two legs opposite phases (0 and π). As a pet it is a hind
+ * leg in the gait (see `PetLimb`).
+ */
+export function Leg(props: LegProps) {
+  const pet = usePet()
+  if (!pet) return <AvatarLeg {...props} />
+  return (
+    <PetLimb
+      pet={pet}
+      front={false}
+      x={props.x}
+      y={props.y}
+      z={props.z ?? 0}
+      color={props.color}
+      footColor={props.footColor}
+      radius={props.radius ?? 0.065}
+      foot={props.foot ?? [0.08, 0.055, 0.1]}
+      swing={props.swing ?? 0.6}
+      outline={props.outline ?? true}
+    />
+  )
+}
+
+/**
+ * A little arm hanging from the shoulder `(x, y, z)`, splayed out to its side
+ * and swinging opposite the same-side leg while walking. Ends in a round paw.
+ * As a four-legged pet (`rig.frontLegs`) it becomes a front leg reaching the
+ * floor; otherwise it swings on the pet's stride.
+ */
+export function Arm(props: ArmProps) {
+  const pet = usePet()
+  if (!pet) return <AvatarArm {...props} />
+  if (pet.rig.frontLegs && !pet.inHead) {
+    const r = props.radius ?? 0.05
+    return (
+      <PetLimb
+        pet={pet}
+        front
+        x={props.x}
+        y={props.y}
+        z={props.z ?? 0}
+        color={props.color}
+        footColor={props.pawColor ?? props.color}
+        radius={r * 1.05}
+        foot={[r * 1.22, r * 0.9, r * 1.42]}
+        swing={props.swing ?? 0.5}
+        outline={props.outline ?? true}
+      />
+    )
+  }
+  return <PetArm pet={pet} {...props} />
+}
+
+/** A baby's nub foot (see `AvatarNub`); as a pet, a stubby hind leg. */
+export function Nub({ x, phase, color, size = [0.052, 0.036, 0.064] }: { x: number; phase: number; color: ColorRepresentation; size?: Vec3 }) {
+  const pet = usePet()
+  if (!pet) return <AvatarNub x={x} phase={phase} color={color} size={size} />
+  return <PetLimb pet={pet} front={false} x={x} y={0.075} z={0.01} color={color} radius={size[0] * 0.62} foot={size} swing={0.55} outline />
+}
+
+/**
+ * Front feet for a pet whose baby model has no arms (they'd stand on its two
+ * legs alone): a pair of stubby front legs at the shoulders `(±x, y, z)` of
+ * the tipped body. Draws nothing for the avatar. Put it inside `PetBody`.
+ */
+export function FrontFeet({
+  x,
+  y,
+  z = 0,
+  color,
+  footColor,
+  radius,
+  foot,
+}: {
+  x: number
+  y: number
+  z?: number
+  color: ColorRepresentation
+  footColor?: ColorRepresentation
+  radius: number
+  foot: Vec3
+}) {
+  const pet = usePet()
+  if (!pet || !pet.rig.frontLegs) return null
+  return (
+    <>
+      {[-1, 1].map((s) => (
+        <PetLimb key={s} pet={pet} front x={s * x} y={y} z={z} color={color} footColor={footColor} radius={radius} foot={foot} swing={0.5} outline />
+      ))}
+    </>
+  )
+}
+
+/**
+ * A wing that flaps gently and continuously (winged creatures look alive even at
+ * rest) and faster while walking. Pivots at the shoulder `(x, y, z)`; `rest`
+ * is the resting [pitch, sweep-back yaw, raise roll]. Children are the wing shape, authored for the
+ * RIGHT side (+x) — the left wing is mirrored automatically. As a pet it
+ * folds (dragons) or flutters on each hop (birds).
+ */
+export function Wing(props: WingProps) {
+  const pet = usePet()
+  if (!pet) return <AvatarWing {...props} />
+  return <PetWing pet={pet} {...props} />
+}
+
+/**
+ * A tail root that wags side to side (around y) all the time, a little faster
+ * while walking. Children are the tail, authored pointing back (−z) from the
+ * root at `position`. As a pet it keeps its authored angle while the body
+ * tips, and swishes with the stride.
+ */
+export function Wag(props: WagProps) {
+  const pet = usePet()
+  if (!pet) return <AvatarWag {...props} />
+  return <PetWag pet={pet} {...props} />
+}
+
+/**
+ * A curling octopus tentacle: a chain of shrinking beads hanging from `(x, y, z)`
+ * and splayed out along `yaw`. Each bead joint bends a little, rippling with a
+ * phase so the arms wiggle softly at rest and paddle while walking. As a pet
+ * the arms stream out behind in a travelling wave as it glides (`dir`: the
+ * arm's outward heading, 0 = ahead, when it sits in a turned group).
+ */
+export function Tentacle({ dir, ...props }: TentacleProps & { dir?: number }) {
+  const pet = usePet()
+  if (!pet) return <AvatarTentacle {...props} />
+  return <PetTentacle pet={pet} dir={dir} {...props} />
+}
+
+const _tip: [number, number] = [0, 0]
+
+/**
+ * One leg of a pet: a hind leg at the hip (`front` false) or a front leg at
+ * the shoulder of the tipped body (`front`: an arm turned leg). Its length is
+ * fitted once so the foot stands on the floor; each frame it swings on its
+ * slot's phase of the gait, lifts its foot mid-swing, stretches a touch to
+ * keep a planted foot down, and splays out to keep its foot on the floor as
+ * the pet lies down.
+ */
+function PetLimb({
+  pet,
+  front,
+  x,
+  y,
+  z,
+  color,
+  footColor,
+  radius,
+  foot,
+  swing,
+  outline,
+}: {
+  pet: PetCtx
+  front: boolean
+  x: number
+  y: number
+  z: number
+  color: ColorRepresentation
+  footColor?: ColorRepresentation
+  radius: number
+  foot: Vec3
+  swing: number
+  outline: boolean
+}) {
+  const hip = useRef<Group>(null)
+  const shin = useRef<Group>(null)
+  const sole = useRef<Group>(null)
+  const rig = pet.rig
+  const rides = front && !pet.inHead
+  // where the joint ends up on the re-posed pet, and the leg that reaches the floor from there
+  const jointY = rides ? tipPoint(rig, y, z, _tip)[0] : y + (rig.shift?.[1] ?? 0)
+  const reach = Math.max(0.02, jointY - foot[1])
+  const len = Math.max(0.001, reach - radius * 0.5)
+  const dz = (front ? rig.frontZ : rig.hindZ) ?? 0
+  // a front leg rides the tipped body: its z nudge is along the floor, so turn it into body space
+  const pos: Vec3 = rides ? [x, y + dz * Math.sin(rig.pitch), z + dz * Math.cos(rig.pitch)] : [x, y, z + dz]
+  const slot = legSlot(front, x)
+  useFrame(() => {
+    const g = hip.current
+    if (!g) return
+    const p = pet.pose
+    const gait = pet.gait
+    const q = p.q + legPhase(gait.kind, slot)
+    const sw = legSwing(q, gait.swing * pet.tempo.swing * (swing / 0.55), gait.lift, front ? gait.prance : 0)
+    let a = sw.angle * p.walk
+    const lift = sw.lift * p.walk
+    // hops: hind legs fling back in the air and gather under for the crouch; front legs reach ahead
+    if (gait.hop) a += front ? -p.legs * 0.55 : p.legs * (gait.kind === 'hop' ? 1.15 : 0.3)
+    // lying down: splay out so the foot stays on the floor as the body sinks
+    // (four-legged: front paws forward, hind legs back; two-legged: feet forward, sitting)
+    const drop = (rig.lie ?? 0) * p.lie
+    if (drop > 0) {
+      const sp = splayToFloor(jointY - drop, foot[1], reach)
+      a = a * (1 - p.lie) + (front || gait.body !== 'quad' ? -sp : sp)
+    }
+    // a planted foot stays on the floor through the bob and the swing; a swinging one lifts
+    const c = Math.max(0.3, Math.cos(a))
+    let k = (jointY - drop + p.bob - foot[1]) / (reach * c)
+    k = Math.min(1.3, Math.max(0.55, k)) * (1 - lift)
+    g.rotation.x = (rides ? -bodyTilt(pet) : 0) + a
+    if (shin.current) shin.current.scale.y = k
+    if (sole.current) sole.current.position.y = -reach * k
+  })
+  return (
+    <group ref={hip} position={pos}>
+      <group ref={shin}>
+        <TCapsule radius={radius} length={len} position={[0, -len / 2, 0]} color={color} segments={10}>
+          {outline && <Ink />}
+        </TCapsule>
+      </group>
+      <group ref={sole} position={[0, -reach, 0]}>
+        <TSphere position={[0, 0, foot[2] * 0.3]} scale={foot} color={footColor ?? color} segments={14}>
+          {outline && <Ink />}
+        </TSphere>
+      </group>
+    </group>
+  )
+}
+
+/** A pet's arm that stays an arm (the trex's little arms, the baby octopus' nubs): it swings on the stride. */
+function PetArm({
+  pet,
+  x,
+  y,
+  z = 0,
+  color,
+  pawColor,
+  radius = 0.05,
+  length = 0.1,
+  splay = 0.45,
+  pitch = 0,
+  phase = 0,
+  swing = 0.5,
+  outline = true,
+}: ArmProps & { pet: PetCtx }) {
+  const side = x >= 0 ? 1 : -1
+  const sh = useRef<Group>(null)
+  useFrame(() => {
+    const g = sh.current
+    if (!g) return
+    const p = pet.pose
+    g.rotation.x = -pitch + Math.sin(p.q + phase) * swing * p.walk + Math.sin(p.clock * 2.6 + phase) * 0.12 * (1 - p.walk)
+  })
+  return (
+    <group position={[x, y, z]} rotation={[0, 0, side * splay]}>
+      <group ref={sh} rotation={[-pitch, 0, 0]}>
+        <TCapsule radius={radius} length={length} position={[0, -length / 2, 0]} color={color} segments={10}>
+          {outline && <Ink />}
+        </TCapsule>
+        {pawColor && (
+          <TSphere position={[0, -length - radius * 0.2, 0]} scale={radius * 1.12} color={pawColor} segments={12} />
+        )}
+      </group>
+    </group>
+  )
+}
+
+/** Wing roll and extra sweep-back when folded against the body. */
+const WING_FOLD = { roll: -0.12, sweep: 0.55 } as const
+
+/**
+ * A pet's wing: held level while the body tips; dragons keep theirs folded
+ * while they walk and spread and flap them for a hop-glide; birds flutter on
+ * each hop. A gentle breathing flap otherwise.
+ */
+function PetWing({ pet, x, y, z, side, rest = [0, 0.5, 0.35], flap = 0.35, children }: WingProps & { pet: PetCtx }) {
+  const lvl = useRef<Group>(null)
+  const sweep = useRef<Group>(null)
+  const root = useRef<Group>(null)
+  const ph = useRef(0)
+  useFrame((_, dt) => {
+    const p = pet.pose
+    const spread = Math.min(1, p.flap * 1.6)
+    const fold = pet.gait.foldWings ? 1 - spread : 0
+    ph.current += Math.min(dt, 0.1) * (5 + 15 * p.flap)
+    if (lvl.current) lvl.current.rotation.x = pet.inHead ? 0 : -bodyTilt(pet)
+    if (sweep.current) sweep.current.rotation.y = rest[1] + WING_FOLD.sweep * fold
+    if (root.current) {
+      const amp = flap * ((1 - fold) * 0.6 + 0.15 + 1.6 * p.flap)
+      root.current.rotation.z = rest[2] * (1 - fold) + WING_FOLD.roll * fold + Math.sin(ph.current) * amp
+    }
+  })
+  return (
+    <group position={[x, y, z]} scale={[side, 1, 1]}>
+      <group ref={lvl}>
+        <group ref={sweep} rotation={[rest[0], rest[1], 0]}>
+          <group ref={root} rotation={[0, 0, rest[2]]}>
+            {children}
+          </group>
+        </group>
+      </group>
+    </group>
+  )
+}
+
+/**
+ * A pet's tail: it keeps its authored angle as the body tips (raised by the
+ * rig's `tailLift`), swishes once per stride while walking, and wags fast for
+ * the wag idle.
+ */
+function PetWag({ pet, position, rotation, amp = 0.3, speed = 3, children }: WagProps & { pet: PetCtx }) {
+  const lvl = useRef<Group>(null)
+  const g = useRef<Group>(null)
+  const ph = useRef(0)
+  useFrame((_, dt) => {
+    const p = pet.pose
+    const w = p.walk
+    const strideRate = (Math.PI * 2) / cyclePeriod(pet.gait, pet.tempo)
+    const rate = speed * (1 - w) + strideRate * w
+    ph.current += Math.min(dt, 0.1) * rate * (1 + 1.8 * p.wag)
+    const a = (amp * (1 - w) + pet.gait.tail * w) * (1 + 1.1 * p.wag)
+    if (g.current) g.current.rotation.y = Math.sin(ph.current) * a
+    if (lvl.current) lvl.current.rotation.x = pet.inHead ? 0 : -bodyTilt(pet) + (pet.rig.tailLift ?? 0)
+  })
+  return (
+    <group position={position}>
+      <group ref={lvl}>
+        <group rotation={rotation}>
+          <group ref={g}>{children}</group>
+        </group>
+      </group>
+    </group>
+  )
+}
+
+/**
+ * A pet octopus arm: while it glides the arms stream back (the front ones
+ * sweep under and back, the back ones trail out) and a wave runs down each
+ * arm and from the front arms to the back.
+ */
+function PetTentacle({
+  pet,
+  x,
+  y,
+  z,
+  yaw,
+  dir,
+  color,
+  tipColor,
+  phase = 0,
+  radius = 0.078,
+  outline = true,
+}: TentacleProps & { pet: PetCtx; dir?: number }) {
+  const j0 = useRef<Group>(null)
+  const j1 = useRef<Group>(null)
+  const j2 = useRef<Group>(null)
+  const ph = useRef(0)
+  // how far ahead this arm points (+1 straight ahead, −1 straight back); it bends out along −z of its yaw
+  const ahead = dir !== undefined ? Math.cos(dir) : -Math.cos(yaw)
+  useFrame((_, dt) => {
+    const p = pet.pose
+    const w = p.walk
+    ph.current += Math.min(dt, 0.1) * (2.6 * (1 - w) + ((Math.PI * 2) / cyclePeriod(pet.gait, pet.tempo)) * w)
+    const t = ph.current + phase * 0.35 + 1.4 * ahead * w
+    const a = 0.14 + 0.16 * w
+    const trail = 0.6 * w
+    if (j0.current) j0.current.rotation.x = 0.55 - trail * ahead + Math.sin(t) * a
+    if (j1.current) j1.current.rotation.x = 0.5 - trail * 0.7 * ahead + Math.sin(t - 0.9) * a
+    if (j2.current) j2.current.rotation.x = 0.6 - trail * 0.3 * ahead + Math.sin(t - 1.8) * a * 1.2
   })
   const r = radius
   return (

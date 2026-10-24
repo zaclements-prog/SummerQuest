@@ -4,7 +4,7 @@ import { useFrame } from '@react-three/fiber'
 import type { Group, Vector3 } from 'three'
 import { useProgress } from '../store/progress'
 import { creatureBuilder } from '../home/models/registry'
-import { WalkStateContext, newWalkState } from '../home/models/walkState'
+import { WalkStateContext, newPetWalkState } from '../home/models/walkState'
 import type { WalkState } from '../home/models/walkState'
 import { useShownPetStages } from '../lib/pets/usePets'
 import type { PetStage } from '../lib/pets/types'
@@ -52,12 +52,12 @@ function popEase(t: number): number {
 function Buddy({ creatureId, stage, posRef }: { creatureId: string; stage: PetStage; posRef: RefObject<Vector3> }) {
   const group = useRef<Group>(null)
   const inner = useRef<Group>(null)
-  const walk = useMemo(() => newWalkState(), [])
+  const walk = useMemo(() => newPetWalkState(), [])
   const b = useMemo(() => ({ Builder: creatureBuilder(creatureId) }), [creatureId])
   const colliders = useMemo(() => worldColliders(), [])
   // Frame-to-frame state, mutated in place.
   const st = useRef({ placed: false, away: false, pop: 1, body: { x: 0, z: 0, yaw: 0, moving: false, stuck: 0 } as BuddyBody })
-  const size = stage === 'baby' ? 0.6 : 1
+
   const blocked = (x: number, z: number) => collidesAt(colliders, x, z, 0)
 
   useFrame((_, frameDt) => {
@@ -91,10 +91,8 @@ function Buddy({ creatureId, stage, posRef }: { creatureId: string; stage: PetSt
     s.pop = Math.min(1, s.pop + dt / POP_S)
     const k = inner.current
     if (k) {
+      // (its gait's own bob and roll live in the model's pet rig)
       k.scale.setScalar(Math.max(0.001, popEase(s.pop)))
-      const bob = body.moving ? Math.abs(Math.sin(walk.t * 9)) * 0.05 * size : 0
-      k.position.y = bob + Math.sin(walk.t * 2.6) * 0.02 * size
-      k.rotation.z = body.moving ? Math.sin(walk.t * 9) * 0.06 : 0
     }
   })
 
@@ -105,7 +103,7 @@ function Buddy({ creatureId, stage, posRef }: { creatureId: string; stage: PetSt
         <WalkStateContext.Provider value={walk}>
           {/* its rigid parts merge into a few draw calls (the limbs keep moving) */}
           <StaticBatch>
-            <b.Builder stage={stage} />
+            <b.Builder stage={stage} posture="pet" />
           </StaticBatch>
         </WalkStateContext.Provider>
       </group>

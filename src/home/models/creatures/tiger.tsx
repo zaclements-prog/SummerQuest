@@ -1,6 +1,6 @@
 import { TCapsule, TSphere, TTorus } from '../../../toon/shapes'
-import { Arm, Blush, Eye, Ink, Leg, Smile, Staged, Wag, faceYaw, onFace } from '../parts'
-import type { CreatureProps } from '../parts'
+import { Arm, Blush, Eye, FrontFeet, Ink, Leg, PetBody, PetHead, Smile, Staged, Wag, faceYaw, onFace } from '../parts'
+import type { CreatureProps, PetRig } from '../parts'
 
 type V3 = readonly [number, number, number]
 
@@ -95,6 +95,7 @@ function TigerKid() {
     <group>
       <Leg x={-0.1} y={0.17} color={ORANGE} footColor={WHITE} phase={0} />
       <Leg x={0.1} y={0.17} color={ORANGE} footColor={WHITE} phase={Math.PI} />
+      <PetBody>
 
       {/* body, tummy, back stripes */}
       <TSphere position={[0, 0.33, 0]} scale={[0.22, 0.21, 0.2]} color={ORANGE} segments={20}>
@@ -123,6 +124,7 @@ function TigerKid() {
         </group>
       </Wag>
 
+      <PetHead>
       {/* head */}
       <TSphere position={[...HC]} scale={[...HR]} color={ORANGE} segments={24}>
         <Ink />
@@ -160,6 +162,8 @@ function TigerKid() {
           </group>
         </group>
       ))}
+      </PetHead>
+      </PetBody>
     </group>
   )
 }
@@ -175,12 +179,15 @@ function TigerBaby() {
     <group>
       <Leg x={-0.072} y={0.08} color={ORANGE} footColor={WHITE} radius={0.046} foot={[0.06, 0.042, 0.072]} phase={0} swing={0.5} />
       <Leg x={0.072} y={0.08} color={ORANGE} footColor={WHITE} radius={0.046} foot={[0.06, 0.042, 0.072]} phase={Math.PI} swing={0.5} />
+      <PetBody>
+      <FrontFeet x={0.07} y={0.21} z={0.03} color={ORANGE} footColor={WHITE} radius={0.042} foot={[0.055, 0.04, 0.066]} />
 
       {/* bean body */}
       <TSphere position={[0, 0.16, 0]} scale={[0.135, 0.125, 0.125]} color={ORANGE} segments={18}>
         <Ink />
       </TSphere>
 
+      <PetHead>
       {/* big round head */}
       <TSphere position={[...BHC]} scale={[...BHR]} color={ORANGE} segments={24}>
         <Ink />
@@ -205,6 +212,8 @@ function TigerBaby() {
           </TSphere>
         </group>
       ))}
+      </PetHead>
+      </PetBody>
     </group>
   )
 }
@@ -220,6 +229,7 @@ function TigerAdult() {
     <group>
       <Leg x={-0.11} y={0.46} color={ORANGE} footColor={WHITE} radius={0.08} foot={[0.092, 0.064, 0.122]} phase={0} swing={0.5} />
       <Leg x={0.11} y={0.46} color={ORANGE} footColor={WHITE} radius={0.08} foot={[0.092, 0.064, 0.122]} phase={Math.PI} swing={0.5} />
+      <PetBody>
 
       {/* torso, tummy, bold stripes round the back */}
       <TSphere position={[...ABC]} scale={[...ABR]} color={ORANGE} segments={22}>
@@ -251,6 +261,7 @@ function TigerAdult() {
         </group>
       </Wag>
 
+      <PetHead>
       {/* head */}
       <TSphere position={[...AHC]} scale={[...AHR]} color={ORANGE} segments={24}>
         <Ink />
@@ -285,11 +296,21 @@ function TigerAdult() {
           </group>
         </group>
       ))}
+      </PetHead>
+      </PetBody>
     </group>
   )
 }
 
-/** Tiger: baby, kid and adult (see `Staged`). */
-export function Tiger({ stage }: CreatureProps) {
-  return <Staged stage={stage} baby={TigerBaby} kid={TigerKid} adult={TigerAdult} />
+// As a pet it walks on all fours: the body tips forward about the hips until
+// the arms reach the floor as front legs, and the head turns back up.
+const RIGS: Record<'baby' | 'kid' | 'adult', PetRig> = {
+  baby: { pivot: [0, 0.08, 0], pitch: 1.1, neck: [0, 0.25, 0.02], shift: [0, 0.04, -0.1], headLift: 0.02, frontLegs: true, lie: 0.06 },
+  kid: { pivot: [0, 0.17, 0], pitch: 1.35, neck: [0, 0.48, 0], shift: [0, 0.1, -0.16], headLift: 0.05, frontLegs: true, lie: 0.15 },
+  adult: { pivot: [0, 0.46, 0], pitch: 1.4, neck: [0, 0.85, 0], shift: [0, -0.06, -0.3], headLift: 0.12, frontLegs: true, lie: 0.3 },
+}
+
+/** Tiger: baby, kid and adult (see `Staged`); `posture="pet"` re-poses it as a pet (see `gaits.ts`). */
+export function Tiger({ stage, posture, pet }: CreatureProps) {
+  return <Staged id="tiger" stage={stage} posture={posture} pet={pet} rigs={RIGS} baby={TigerBaby} kid={TigerKid} adult={TigerAdult} />
 }

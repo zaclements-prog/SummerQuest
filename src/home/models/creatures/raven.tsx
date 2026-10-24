@@ -1,7 +1,7 @@
 import { TCone, TSphere } from '../../../toon/shapes'
 import type { Vec3 } from '../../../toon/shapes'
-import { Blush, Eye, Ink, Leg, Staged, Wag, Wing, faceYaw, onFace } from '../parts'
-import type { CreatureProps } from '../parts'
+import { Blush, Eye, Ink, Leg, PetBody, PetHead, Staged, Wag, Wing, faceYaw, onFace } from '../parts'
+import type { CreatureProps, PetRig } from '../parts'
 
 // One palette for all three ages: an inky indigo bird (a raven's black, kept
 // light enough to read in toon shading), a violet sheen on the wings, a soft
@@ -64,6 +64,7 @@ function RavenKid() {
     <group>
       <Leg x={-0.095} y={0.12} color={BEAK} radius={0.042} foot={[0.068, 0.038, 0.095]} phase={0} />
       <Leg x={0.095} y={0.12} color={BEAK} radius={0.042} foot={[0.068, 0.038, 0.095]} phase={Math.PI} />
+      <PetBody>
 
       {/* egg body + slate chest */}
       <TSphere position={[0, 0.37, 0]} scale={[0.24, 0.26, 0.225]} color={PLUME} segments={22}>
@@ -90,6 +91,7 @@ function RavenKid() {
         </Wing>
       ))}
 
+      <PetHead>
       {/* head */}
       <TSphere position={[...HC]} scale={[...HR]} color={PLUME} segments={24}>
         <Ink />
@@ -117,6 +119,8 @@ function RavenKid() {
         </group>
       ))}
       <Beak base={onFace(HC, HR, 0, -0.06, -0.025)} length={0.2} radius={0.06} />
+      </PetHead>
+      </PetBody>
     </group>
   )
 }
@@ -136,6 +140,7 @@ function RavenBaby() {
     <group>
       <Leg x={-0.068} y={0.075} color={BEAK} radius={0.03} foot={[0.05, 0.03, 0.064]} phase={0} />
       <Leg x={0.068} y={0.075} color={BEAK} radius={0.03} foot={[0.05, 0.03, 0.064]} phase={Math.PI} />
+      <PetBody>
 
       {/* fluffy bean + slate tummy */}
       <TSphere position={[0, 0.155, 0]} scale={[0.15, 0.13, 0.14]} color={PLUME} segments={18}>
@@ -157,6 +162,7 @@ function RavenBaby() {
         </Wing>
       ))}
 
+      <PetHead>
       {/* huge round head */}
       <TSphere position={[...BC]} scale={[...BR]} color={PLUME} segments={24}>
         <Ink />
@@ -175,6 +181,8 @@ function RavenBaby() {
         </group>
       ))}
       <Beak base={onFace(BC, BR, 0, -0.07, -0.02)} length={0.11} radius={0.042} droop={0.32} />
+      </PetHead>
+      </PetBody>
     </group>
   )
 }
@@ -202,6 +210,7 @@ function RavenAdult() {
     <group>
       <Leg x={-0.095} y={0.43} color={BEAK} radius={0.042} foot={[0.08, 0.045, 0.12]} phase={0} />
       <Leg x={0.095} y={0.43} color={BEAK} radius={0.042} foot={[0.08, 0.045, 0.12]} phase={Math.PI} />
+      <PetBody>
 
       {/* tall egg body + slate chest */}
       <TSphere position={[...TC]} scale={[...TR]} color={PLUME} segments={22}>
@@ -255,6 +264,7 @@ function RavenAdult() {
         </TCone>
       ))}
 
+      <PetHead>
       {/* head */}
       <TSphere position={[...AC]} scale={[...AR]} color={PLUME} segments={24}>
         <Ink />
@@ -277,11 +287,20 @@ function RavenAdult() {
         </group>
       ))}
       <Beak base={onFace(AC, AR, 0, -0.065, -0.025)} length={0.26} radius={0.068} droop={0.3} />
+      </PetHead>
+      </PetBody>
     </group>
   )
 }
 
-/** Raven (the Schoolhouse pet): baby, kid and adult (see `Staged`). */
-export function Raven({ stage }: CreatureProps) {
-  return <Staged stage={stage} baby={RavenBaby} kid={RavenKid} adult={RavenAdult} />
+// As a pet the raven hop-waddles like the owl (`BIRD_HOP` in `gaits.ts`), with the same rig.
+const RIGS: Record<'baby' | 'kid' | 'adult', PetRig> = {
+  baby: { pivot: [0, 0.075, 0], pitch: 0.08, neck: [0, 0.22, 0], lie: 0.03 },
+  kid: { pivot: [0, 0.12, 0], pitch: 0.12, neck: [0, 0.55, 0], lie: 0.07 },
+  adult: { pivot: [0, 0.43, 0], pitch: 0.12, neck: [0, 0.9, 0], lie: 0.22 },
+}
+
+/** Raven (the Schoolhouse pet): baby, kid and adult (see `Staged`); `posture="pet"` re-poses it as a pet. */
+export function Raven({ stage, posture, pet }: CreatureProps) {
+  return <Staged id="raven" stage={stage} posture={posture} pet={pet} rigs={RIGS} baby={RavenBaby} kid={RavenKid} adult={RavenAdult} />
 }
