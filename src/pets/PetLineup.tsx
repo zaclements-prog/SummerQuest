@@ -4,6 +4,7 @@ import { useFrame, useThree } from '@react-three/fiber'
 import type { Group, PerspectiveCamera } from 'three'
 import { creatureBuilder } from '../home/models/registry'
 import { WalkStateContext, newWalkState } from '../home/models/walkState'
+import { CALM_PET } from '../home/models/petRig'
 import { Egg } from '../home/models/egg'
 import { growthRank } from '../lib/pets/growth'
 import type { PetGrowth } from '../lib/pets/growth'
@@ -101,11 +102,11 @@ export default function PetLineup({
           <group key={`${creatureId}-${s}-${shown ? 'on' : 'off'}`} position={[x, 0, 0]}>
             {shown ? (
               <Sway index={i}>
-                <b.Builder stage={s} />
+                <b.Builder stage={s} posture="pet" pet={CALM_PET} />
               </Sway>
             ) : (
               <Silhouette>
-                <b.Builder stage={s} />
+                <b.Builder stage={s} posture="pet" pet={CALM_PET} />
               </Silhouette>
             )}
             <Puddle r={s === 'baby' ? 0.3 : 0.42} />
