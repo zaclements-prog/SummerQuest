@@ -163,13 +163,28 @@ export type WalkVisual =
    * on a 12-hour clock), each of `jumps` (minutes) done so far, then a
    * `pending` jump whose landing is still "?" (the child's turn).
    */
-  | { kind: 'timeJumps'; start: number; jumps: number[]; pending?: number }
+  | {
+      kind: 'timeJumps'
+      start: number
+      jumps: number[]
+      pending?: number
+      /** Every jump of the walkthrough (pending one included): the timeline keeps its scale from step to step. */
+      plan?: number[]
+    }
   /**
    * Making change the shopkeeper's way: count up from `cost` (cents) to
    * `paid` (cents) with `hops` of coins or bills done so far. `askTotal`: the
    * hops are lined up as a sum "= ?" (the child adds them up).
    */
-  | { kind: 'countUp'; cost: number; paid: number; hops: WalkCoinHop[]; askTotal?: boolean }
+  | {
+      kind: 'countUp'
+      cost: number
+      paid: number
+      hops: WalkCoinHop[]
+      askTotal?: boolean
+      /** How many hops the walkthrough makes in all (the line keeps its scale). */
+      plan?: number
+    }
   /**
    * Rounding on a number line from `lo` to `hi` (the two round numbers):
    * optionally the halfway mark, the number itself, and its deciding digit

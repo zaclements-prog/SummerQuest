@@ -65,6 +65,12 @@ describe('elapsed time walkthrough', () => {
       // …then the minutes (the last chunk is the child's)
       expect(sum(v.jumps.slice(hours)) + v.pending!).toBe(minutes)
       expect(clockTime(start + sum(v.jumps) + v.pending!)).toBe(p.answer)
+      // every step draws on the same plan: what's done so far, then the pending hop
+      for (const s of w) {
+        const sv = kind(s.visual, 'timeJumps')
+        expect(sv.plan).toEqual([...v.jumps, v.pending])
+        expect(sv.plan!.slice(0, sv.jumps.length)).toEqual(sv.jumps)
+      }
       // the opening step says the prompt's start time
       expect(w[0].say).toContain(`${m[1]}:${m[2]}`)
     }
@@ -97,13 +103,20 @@ describe('elapsed time walkthrough', () => {
       'Now the minutes: 30 more.',
       'So what time will it be? Your turn!',
     ])
+    // minutes only: one jump shown, the rest for the child
+    expect(timeWalkthrough(6 * 60 + 5, 0, 15).map((s) => s.say)).toEqual([
+      'We start at 6:05.',
+      'Jump 10 minutes: 6:05 to 6:15.',
+      'Then 5 more minutes.',
+      'So what time will it be? Your turn!',
+    ])
     const x = timeWalkthrough(11 * 60 + 45, 1, 30) // 11:45 → 12:45 → +15 → 1:00 → +15 = 1:15
     expect(x.map((s) => s.say).slice(1, 4)).toEqual([
       'Jump 1 hour: 11:45 to 12:45.',
       'Jump 15 minutes to the next hour: 12:45 to 1:00.',
       'Then 15 more minutes.',
     ])
-    expect(kind(last(x).visual, 'timeJumps')).toEqual({ kind: 'timeJumps', start: 705, jumps: [60, 15], pending: 15 })
+    expect(kind(last(x).visual, 'timeJumps')).toEqual({ kind: 'timeJumps', start: 705, jumps: [60, 15], pending: 15, plan: [60, 15, 15] })
   })
 })
 

@@ -153,7 +153,15 @@ export function minuteChunks(fromMinute: number, minutes: number): number[] {
 export function timeWalkthrough(start: number, hours: number, minutes: number): WalkStep[] {
   const steps: WalkStep[] = []
   const jumps: number[] = []
-  const vis = (pending?: number) => ({ kind: 'timeJumps' as const, start, jumps: [...jumps], ...(pending ? { pending } : {}) })
+  // the whole plan first (hours, then the minutes' chunks), so every step's timeline has the same scale
+  let chunks = minuteChunks((start + hours * 60) % 60, minutes)
+  // minutes only, in one jump: show one jump first anyway (+15 → +10, then +5 for the child)
+  if (hours === 0 && chunks.length === 1 && minutes > 5) {
+    const tail = minutes % 10 === 5 ? 5 : minutes >= 20 ? 10 : 5
+    chunks = [minutes - tail, tail]
+  }
+  const plan = [...Array<number>(hours).fill(60), ...chunks]
+  const vis = (pending?: number) => ({ kind: 'timeJumps' as const, start, jumps: [...jumps], ...(pending ? { pending } : {}), plan })
   let cur = start
   steps.push({ say: `We start at ${clockTime(cur)}.`, visual: vis() })
   for (let i = 0; i < hours; i++) {
@@ -162,9 +170,8 @@ export function timeWalkthrough(start: number, hours: number, minutes: number): 
     jumps.push(60)
     steps.push({ say: `Jump ${i === 0 ? '1 hour' : '1 more hour'}: ${clockTime(from)} to ${clockTime(cur)}.`, visual: vis() })
   }
-  const chunks = minuteChunks(cur % 60, minutes)
   const last = chunks.pop()!
-  for (const c of chunks) {
+  for (const [k, c] of chunks.entries()) {
     const from = cur
     cur += c
     jumps.push(c)
@@ -172,7 +179,7 @@ export function timeWalkthrough(start: number, hours: number, minutes: number): 
     steps.push({
       say: toHour
         ? `Jump ${c} minutes to the next hour: ${clockTime(from)} to ${clockTime(cur)}.`
-        : `Now the minutes. Jump ${c} minutes: ${clockTime(from)} to ${clockTime(cur)}.`,
+        : `${hours && k === 0 ? 'Now the minutes. ' : ''}Jump ${c} minutes: ${clockTime(from)} to ${clockTime(cur)}.`,
       visual: vis(),
     })
   }
@@ -236,7 +243,7 @@ export function moneyWalkthrough(cost: number, paid: number): WalkStep[] {
   const hops = countUpHops(cost, paid)
   const steps: WalkStep[] = []
   const done: WalkCoinHop[] = []
-  const vis = (askTotal = false) => ({ kind: 'countUp' as const, cost, paid, hops: done.map((h) => ({ ...h })), ...(askTotal ? { askTotal } : {}) })
+  const vis = (askTotal = false) => ({ kind: 'countUp' as const, cost, paid, hops: done.map((h) => ({ ...h })), ...(askTotal ? { askTotal } : {}), plan: hops.length })
   steps.push({ say: `It costs ${formatMoney(cost)}. Let's count up to the ${formatMoney(paid)} we paid, like a shopkeeper!`, visual: vis() })
   let cur = cost
   for (const h of hops) {

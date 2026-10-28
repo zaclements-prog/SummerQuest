@@ -271,21 +271,22 @@ export function MissNote({
             The answer is <span className="whitespace-nowrap">{String(answer)}</span>.
           </div>
           {hint && <div className="text-ink-800">{hint}</div>}
+          {onShowMe && (
+            <button
+              type="button"
+              data-guide="miss-show-me"
+              onClick={onShowMe}
+              className="mt-1.5 inline-flex items-center gap-1.5 rounded-full px-4 min-h-11 kid-text font-bold text-base text-ink-900 bg-quest-300 hover:bg-quest-200 border-[3px] border-line shadow-ledge-sm active:translate-y-0.5 outline-none focus-visible:ring-4 focus-visible:ring-ocean-600/70"
+            >
+              <span aria-hidden="true">💡</span> Show me how
+            </button>
+          )}
         </div>
       </div>
-      {(onGotIt || onShowMe) && (
-        <div className="flex flex-wrap items-center justify-center gap-3 short:gap-2">
-          {onShowMe && (
-            <Button variant="primary" size="lg" guide="miss-show-me" onClick={onShowMe}>
-              💡 Show me how
-            </Button>
-          )}
-          {onGotIt && (
-            <Button variant="secondary" size="lg" guide="miss-got-it" onClick={onGotIt} className="min-w-[10rem]">
-              Got it →
-            </Button>
-          )}
-        </div>
+      {onGotIt && (
+        <Button variant="secondary" size="lg" guide="miss-got-it" onClick={onGotIt} className="min-w-[10rem]">
+          Got it →
+        </Button>
       )}
     </motion.div>
   )

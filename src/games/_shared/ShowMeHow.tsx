@@ -26,7 +26,7 @@ import { TOON } from '../../toon/palette'
 
 const INK = TOON.outline
 const GOLD = TOON.gold
-const LINE_Y = 118
+const LINE_Y = 130
 
 // ── Buttons and the reminder strip ───────────────────────────────────────────
 
@@ -293,17 +293,33 @@ interface Hop {
  * more than `hops`; a `pending` hop ends on "?" (the child's). The newest hop
  * draws itself and a ball bounces along it.
  */
-function HopLine({ stops, hops, pending, compact }: { stops: string[]; hops: Hop[]; pending?: Hop; compact: boolean }) {
+function HopLine({
+  stops,
+  hops,
+  pending,
+  layout,
+  compact,
+}: {
+  stops: string[]
+  hops: Hop[]
+  pending?: Hop
+  /** The weights of every hop the walkthrough will make: the line keeps its scale from step to step. */
+  layout?: number[]
+  compact: boolean
+}) {
   const reduced = useReducedMotion() ?? false
   const W = 560
-  const H = compact ? 150 : 162
+  const H = 178
+  // the reminder strip leaves out the coins' row above the hops
+  const top = compact ? 38 : 0
   const L = 46
   const R = W - 46
   const all = pending ? [...hops, pending] : hops
-  const total = all.reduce((s, h) => s + h.weight, 0) || 1
+  const weights = layout && layout.length >= all.length ? layout : all.map((h) => h.weight)
+  const total = weights.reduce((s, w) => s + w, 0) || 1
   const xs = [L]
-  for (const h of all) xs.push(xs[xs.length - 1] + ((R - L) * h.weight) / total)
-  if (all.length === 0) xs[0] = W / 2
+  for (const w of weights.slice(0, all.length)) xs.push(xs[xs.length - 1] + ((R - L) * w) / total)
+  if (weights.length === 0) xs[0] = W / 2
   const animate = !compact && !reduced
   const newest = pending ? all.length - 1 : hops.length - 1
   const arc = (i: number) => {
@@ -313,8 +329,8 @@ function HopLine({ stops, hops, pending, compact }: { stops: string[]; hops: Hop
     return { x0, x1, cy: LINE_Y - lift * 2, apex: LINE_Y - lift }
   }
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} className={`w-full ${compact ? 'max-h-20' : 'max-h-[11rem] short:max-h-[8.5rem]'}`} role="img" aria-label={stops.join(', then ')}>
-      <line x1={all.length ? L - 22 : W / 2 - 60} y1={LINE_Y} x2={all.length ? R + 22 : W / 2 + 60} y2={LINE_Y} stroke={INK} strokeWidth="4" strokeLinecap="round" />
+    <svg viewBox={`0 ${top} ${W} ${H - top}`} className={`w-full ${compact ? 'max-h-24' : 'max-h-[12rem] short:max-h-[9.5rem]'}`} role="img" aria-label={stops.join(', then ')}>
+      <line x1={weights.length ? L - 22 : W / 2 - 60} y1={LINE_Y} x2={weights.length ? R + 22 : W / 2 + 60} y2={LINE_Y} stroke={INK} strokeWidth="4" strokeLinecap="round" />
       {all.map((h, i) => {
         const { x0, x1, cy, apex } = arc(i)
         const isPending = pending && i === all.length - 1
@@ -328,16 +344,17 @@ function HopLine({ stops, hops, pending, compact }: { stops: string[]; hops: Hop
               stroke={isPending ? TOON.flowerRed : TOON.waterDeep}
               strokeWidth="4"
               strokeLinecap="round"
+              // (a pending hop is dashed: no draw-on, which would replace its dashes)
               strokeDasharray={isPending ? '9 8' : undefined}
-              initial={fresh ? { pathLength: 0 } : false}
-              animate={{ pathLength: 1 }}
+              initial={fresh && !isPending ? { pathLength: 0 } : fresh ? { opacity: 0 } : false}
+              animate={isPending ? { opacity: 1 } : { pathLength: 1 }}
               transition={{ duration: 0.7, ease: 'easeInOut' }}
             />
             {fresh && !isPending && <Bouncer x0={x0} x1={x1} cy={cy} />}
             <motion.g initial={fresh ? { opacity: 0, y: 6 } : false} animate={{ opacity: 1, y: 0 }} transition={{ delay: fresh ? 0.35 : 0 }}>
-              {h.coin && !compact && <Coins hop={h.coin} cx={(x0 + x1) / 2} y={apex - 44} />}
+              {h.coin && !compact && <Coins hop={h.coin} cx={(x0 + x1) / 2} y={apex - 58} />}
               <rect x={(x0 + x1) / 2 - labelW(h.label) / 2} y={apex - 26} width={labelW(h.label)} height={28} rx={14} fill={isPending ? TOON.blossomLight : TOON.flowerWhite} stroke={INK} strokeWidth="2.5" />
-              <text x={(x0 + x1) / 2} y={apex - 6} textAnchor="middle" fontSize="16" fontWeight={700} fill={INK} className="kid-text">
+              <text x={(x0 + x1) / 2} y={apex - 5} textAnchor="middle" fontSize="18" fontWeight={700} fill={INK} className="kid-text">
                 {h.label}
               </text>
             </motion.g>
@@ -357,7 +374,7 @@ function HopLine({ stops, hops, pending, compact }: { stops: string[]; hops: Hop
                 <text x={x} y={LINE_Y + 34} textAnchor="middle" fontSize="22" fontWeight={800} fill={INK} className="kid-text">?</text>
               </g>
             ) : (
-              <text x={x} y={LINE_Y + 32} textAnchor="middle" fontSize={i === 0 || i === xs.length - 1 ? 21 : 18} fontWeight={700} fill={INK} className="kid-text">
+              <text x={x} y={LINE_Y + 34} textAnchor="middle" fontSize={i === 0 || i === xs.length - 1 ? 23 : 20} fontWeight={700} fill={INK} className="kid-text">
                 {label}
               </text>
             )}
@@ -369,7 +386,7 @@ function HopLine({ stops, hops, pending, compact }: { stops: string[]; hops: Hop
 }
 
 /** Width of a hop's label pill. */
-const labelW = (label: string) => Math.max(52, label.length * 10 + 16)
+const labelW = (label: string) => Math.max(56, label.length * 11 + 18)
 
 /** A ball hopping along the newest arc. */
 function Bouncer({ x0, x1, cy }: { x0: number; x1: number; cy: number }) {
@@ -396,8 +413,8 @@ function Bouncer({ x0, x1, cy }: { x0: number; x1: number; cy: number }) {
 function Coins({ hop, cx, y }: { hop: WalkCoinHop; cx: number; y: number }) {
   const n = Math.min(hop.count, 4)
   const bill = hop.coin === 'dollar' || hop.coin === 'five'
-  const w = bill ? 34 : hop.coin === 'quarter' ? 24 : hop.coin === 'nickel' ? 21 : hop.coin === 'penny' ? 19 : 17
-  const gap = bill ? 4 : 3
+  const w = bill ? 46 : hop.coin === 'quarter' ? 30 : hop.coin === 'nickel' ? 27 : hop.coin === 'penny' ? 25 : 23
+  const gap = bill ? 5 : 4
   const span = n * w + (n - 1) * gap
   const fill = bill ? '#9fd8a0' : hop.coin === 'penny' ? '#e0a370' : '#d6dbe3'
   const text = bill ? `$${hop.each / 100}` : String(hop.each)
@@ -407,18 +424,18 @@ function Coins({ hop, cx, y }: { hop: WalkCoinHop; cx: number; y: number }) {
         const x = cx - span / 2 + i * (w + gap)
         return bill ? (
           <g key={i}>
-            <rect x={x} y={y} width={w} height={19} rx={3} fill={fill} stroke={INK} strokeWidth="2" />
-            <text x={x + w / 2} y={y + 14} textAnchor="middle" fontSize="11" fontWeight={800} fill={INK}>{text}</text>
+            <rect x={x} y={y + 3} width={w} height={24} rx={4} fill={fill} stroke={INK} strokeWidth="2" />
+            <text x={x + w / 2} y={y + 20} textAnchor="middle" fontSize="15" fontWeight={800} fill={INK}>{text}</text>
           </g>
         ) : (
           <g key={i}>
-            <circle cx={x + w / 2} cy={y + 10} r={w / 2} fill={fill} stroke={INK} strokeWidth="2" />
-            <text x={x + w / 2} y={y + 14} textAnchor="middle" fontSize={w > 20 ? 10 : 9} fontWeight={800} fill={INK}>{text}</text>
+            <circle cx={x + w / 2} cy={y + 15} r={w / 2} fill={fill} stroke={INK} strokeWidth="2" />
+            <text x={x + w / 2} y={y + 20} textAnchor="middle" fontSize={w >= 27 ? 13 : 12} fontWeight={800} fill={INK}>{text}</text>
           </g>
         )
       })}
       {hop.count > 4 && (
-        <text x={cx + span / 2 + 6} y={y + 14} fontSize="12" fontWeight={800} fill={INK}>…</text>
+        <text x={cx + span / 2 + 6} y={y + 20} fontSize="16" fontWeight={800} fill={INK}>…</text>
       )}
     </g>
   )
@@ -427,9 +444,10 @@ function Coins({ hop, cx, y }: { hop: WalkCoinHop; cx: number; y: number }) {
 function Frame({ children, side, compact }: { children: ReactNode; side?: ReactNode; compact: boolean }) {
   if (compact || !side) return <div className="w-full">{children}</div>
   return (
-    <div className="w-full flex flex-wrap items-center justify-center gap-3 short:gap-2">
+    // (a narrow screen: the clock above the timeline, so the timeline gets the whole width)
+    <div className="w-full flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-3 short:gap-2">
       {side}
-      <div className="flex-1 min-w-[17rem]">{children}</div>
+      <div className="w-full sm:flex-1 sm:min-w-[17rem]">{children}</div>
     </div>
   )
 }
@@ -438,8 +456,9 @@ function TimeJumps({ visual, compact }: { visual: Extract<WalkVisual, { kind: 't
   const stops = [visual.start]
   for (const j of visual.jumps) stops.push(stops[stops.length - 1] + j)
   const now = stops[stops.length - 1] % 720
-  const hops: Hop[] = visual.jumps.map((j) => ({ label: j === 60 ? '+1 hour' : `+${j} min`, weight: 50 + j }))
-  const pending = visual.pending ? { label: `+${visual.pending} min`, weight: 50 + visual.pending } : undefined
+  const weight = (j: number) => 50 + j
+  const hops: Hop[] = visual.jumps.map((j) => ({ label: j === 60 ? '+1 hour' : `+${j} min`, weight: weight(j) }))
+  const pending = visual.pending ? { label: `+${visual.pending} min`, weight: weight(visual.pending) } : undefined
   const clock = (
     <motion.div key={now} initial={{ scale: 0.9 }} animate={{ scale: 1 }} className="shrink-0 short:scale-[0.8] short:-my-3">
       <VisualRenderer visual={{ kind: 'clock', hour: Math.floor(now / 60) || 12, minute: now % 60 }} />
@@ -447,7 +466,7 @@ function TimeJumps({ visual, compact }: { visual: Extract<WalkVisual, { kind: 't
   )
   return (
     <Frame side={clock} compact={compact}>
-      <HopLine stops={stops.map(clock12)} hops={hops} pending={pending} compact={compact} />
+      <HopLine stops={stops.map(clock12)} hops={hops} pending={pending} layout={visual.plan?.map(weight)} compact={compact} />
     </Frame>
   )
 }
@@ -473,7 +492,7 @@ function CountUp({ visual, compact }: { visual: Extract<WalkVisual, { kind: 'cou
           </motion.span>
         </div>
       )}
-      <HopLine stops={stops.map(money)} hops={hops} compact={compact} />
+      <HopLine stops={stops.map(money)} hops={hops} layout={visual.plan ? Array(visual.plan).fill(1) : undefined} compact={compact} />
       {visual.askTotal && (
         <motion.div
           initial={compact ? false : { opacity: 0, y: 8 }}
@@ -517,7 +536,7 @@ function RoundLine({ visual, compact }: { visual: Extract<WalkVisual, { kind: 'r
   return (
     <div className="w-full flex flex-col items-center">
       {!compact && visual.digitAt && (
-        <motion.div initial={animate ? { opacity: 0, y: -6 } : false} animate={{ opacity: 1, y: 0 }} className="kid-text font-bold text-4xl short:text-3xl tracking-wide flex items-end gap-0.5">
+        <motion.div initial={animate ? { opacity: 0, y: -6 } : false} animate={{ opacity: 1, y: 0 }} className="kid-text font-bold text-4xl short:text-3xl flex items-end">
           {[...digits].map((ch, i) =>
             i === digitIdx ? (
               <motion.span
@@ -530,7 +549,7 @@ function RoundLine({ visual, compact }: { visual: Extract<WalkVisual, { kind: 'r
                 {ch}
               </motion.span>
             ) : (
-              <span key={i} className="inline-block px-0.5">{ch}</span>
+              <span key={i} className={`inline-block ${ch === ',' ? '' : 'px-0.5'}`}>{ch}</span>
             ),
           )}
         </motion.div>
