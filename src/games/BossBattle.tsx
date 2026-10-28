@@ -10,6 +10,8 @@ import { QuizProgress, QuestionPrompt, AnswerGrid, QuizSplit, MissNote } from '.
 import VisualRenderer from '../components/VisualRenderer'
 import { visualSize } from '../components/visualSize'
 import { SHORT_SCREEN, WIDE_SHORT, useMediaQuery } from '../components/useViewport'
+import { ShowMeButton, ShowMePanel, ShowMeStrip } from './_shared/ShowMeHow'
+import { useShowMe } from './_shared/useShowMe'
 
 // Visuals the question can't be answered without (a reading passage, a bar graph).
 // Teaching aids like multiplication arrays or fraction bars stay hidden in the boss
@@ -68,6 +70,8 @@ export default function BossBattle({ provider, params, onComplete, meta }: GameP
   // squeeze long word answers.)
   const broad = useMediaQuery('(min-width: 960px)')
   const sideAnswers = wide && broad
+  // "💡 Show me how": opening it is never a miss and never costs a heart
+  const showMe = useShowMe(problem)
 
   useEffect(() => {
     let cancel = false
@@ -106,7 +110,7 @@ export default function BossBattle({ provider, params, onComplete, meta }: GameP
   }, [bossHp, playerHp, questionsAnswered, questionCount, correct, maxHearts, missed, onComplete])
 
   function pick(opt: string | number) {
-    if (!problem || state !== 'idle' || missed) return
+    if (!problem || state !== 'idle' || missed || showMe.open) return
     if (bossHp <= 0 || playerHp <= 0 || questionsAnswered >= questionCount) return
 
     const isCorrect = opt === problem.answer
@@ -114,7 +118,15 @@ export default function BossBattle({ provider, params, onComplete, meta }: GameP
     recordAnswer(isCorrect, problem)
     if (meta) {
       const sk = skillOf(problem)
-      recordAttempt({ zoneId: meta.zoneId, topic: provider.topic, skillId: sk.id, skillLabel: sk.label, correct: isCorrect })
+      recordAttempt({
+        zoneId: meta.zoneId,
+        topic: provider.topic,
+        skillId: sk.id,
+        skillLabel: sk.label,
+        correct: isCorrect,
+        // watched "Show me how" first: still a hit, but marked helped
+        ...(showMe.helped ? { helped: true } : {}),
+      })
     }
     const answeredNow = questionsAnswered + 1
     setQuestionsAnswered(answeredNow)
@@ -179,6 +191,11 @@ export default function BossBattle({ provider, params, onComplete, meta }: GameP
   const question = (
     <>
       <QuestionPrompt>{problem.prompt}</QuestionPrompt>
+      {showMe.available && picked === null && !missed && (
+        showMe.finished
+          ? <ShowMeStrip steps={problem.showMe!} onReplay={showMe.show} />
+          : <ShowMeButton onClick={showMe.show} className="mt-3 short:mt-2" />
+      )}
       {problem.visual && REQUIRED_VISUALS.has(problem.visual.kind) && (
         <div className="mt-4 short:mt-3 w-full flex justify-center">
           <VisualRenderer visual={problem.visual} size={visualSize(problem.visual, short, wide)} />
@@ -189,7 +206,14 @@ export default function BossBattle({ provider, params, onComplete, meta }: GameP
   const answers = (
     <>
       <AnswerGrid options={problem.options} answer={problem.answer} picked={picked} onPick={pick} disabled={state !== 'idle' || missed} />
-      {missed && <MissNote answer={problem.answer} hint={problem.hint} onGotIt={state === 'idle' ? gotIt : undefined} />}
+      {missed && (
+        <MissNote
+          answer={problem.answer}
+          hint={problem.hint}
+          onGotIt={state === 'idle' ? gotIt : undefined}
+          onShowMe={showMe.available && state === 'idle' ? showMe.show : undefined}
+        />
+      )}
     </>
   )
 
@@ -294,6 +318,7 @@ export default function BossBattle({ provider, params, onComplete, meta }: GameP
         )}
         </div>
       </div>
+      <ShowMePanel open={showMe.open && !isOver} steps={problem.showMe} afterAnswer={missed} onClose={showMe.close} />
     </div>
   )
 }
