@@ -80,6 +80,16 @@ export interface SkillAttempt {
   skillId: string
   skillLabel: string
   correct: boolean
+  /** "Show me how" was opened on this question before it was answered (a right answer still counts). */
+  helped?: boolean
+}
+
+/** "Show me how" opens for one skill (the Parent Dashboard's "Asked for help" list). Local only. */
+export interface HelpAsk {
+  label: string
+  count: number
+  /** When it was last opened (ms). */
+  lastAt: number
 }
 
 export interface PlacedItem { uid: string; itemId: string; gx: number; gz: number; rot: number }
@@ -126,6 +136,8 @@ interface ProgressState {
   stats: SessionStats
   sessions: SessionRecord[]
   attempts: SkillAttempt[]
+  /** skillId → how often "Show me how" was opened on it, and when last. */
+  helpAsks: Record<string, HelpAsk>
   /** Per-fact record ("mult:6x8" → attempts/misses/streak) behind adaptive practice. Capped. */
   factStats: FactStats
   soundEnabled: boolean
@@ -193,6 +205,8 @@ interface ProgressState {
   unequipSlot: (slot: Slot) => void
   recordSession: (rec: Omit<SessionRecord, 'id' | 'at'> & { at?: number }) => void
   recordAttempt: (a: Omit<SkillAttempt, 'id' | 'at'> & { at?: number }) => void
+  /** "Show me how" was opened on a question of this skill. */
+  recordHelpAsk: (skillId: string, skillLabel: string, at?: number) => void
   tickPlay: (seconds: number) => void
   clearTimeCelebration: () => void
   buyHomeItem: (id: string, price: number) => boolean
@@ -261,6 +275,7 @@ export const useProgress = create<ProgressState>()(
       },
       sessions: [],
       attempts: [],
+      helpAsks: {},
       factStats: {},
       soundEnabled: true,
       graphicsQuality: 'auto',
@@ -311,6 +326,7 @@ export const useProgress = create<ProgressState>()(
           equippedAccessories: { head: null, face: null, back: null, body: null },
           sessions: [],
           attempts: [],
+          helpAsks: {},
           factStats: {},
           playDate: undefined,
           playSecondsToday: 0,
@@ -567,6 +583,12 @@ export const useProgress = create<ProgressState>()(
         })
       },
 
+      recordHelpAsk: (skillId, skillLabel, at = Date.now()) => {
+        const { helpAsks } = get()
+        const prev = helpAsks[skillId]
+        set({ helpAsks: { ...helpAsks, [skillId]: { label: skillLabel || prev?.label || skillId, count: (prev?.count ?? 0) + 1, lastAt: at } } })
+      },
+
       tickPlay: (seconds) => {
         const add = Math.max(0, seconds)
         if (add <= 0) return
@@ -605,6 +627,8 @@ export const useProgress = create<ProgressState>()(
       //     nothing is celebrated twice), buddyPet; grown-up pets join ownedCreatures.
       // v4: the World's first / today's quest (`quest`, none yet: the World picks one).
       // v5: the Schoolhouse raven (`schoolPet`): Daily Challenges already played count.
+      // (`helpAsks`, the "Show me how" record, needs no version: `merge` starts any save
+      //  without it, or with a malformed one, at {} — nothing to recover from older saves.)
       version: 5,
       migrate: (persisted, version) => {
         let p = (persisted ?? {}) as PersistedProgressV0
@@ -639,6 +663,8 @@ export const useProgress = create<ProgressState>()(
             p.factStats && typeof p.factStats === 'object' && !Array.isArray(p.factStats)
               ? p.factStats
               : c.factStats,
+          // "Show me how" opens: saves from before them (or a malformed record) have none.
+          helpAsks: cleanHelpAsks(p.helpAsks),
           // Pets: anything malformed falls back to "nothing yet" (missing: keep what's here).
           lessonsDone: p.lessonsDone === undefined ? c.lessonsDone : cleanLessonsDone(p.lessonsDone),
           petsSeen: p.petsSeen === undefined ? c.petsSeen : cleanPetsSeen(p.petsSeen),
@@ -660,6 +686,19 @@ export const useProgress = create<ProgressState>()(
 
 function isRecord(v: unknown): v is Record<string, unknown> {
   return !!v && typeof v === 'object' && !Array.isArray(v)
+}
+/** Keep only well-formed help records (a save from before "Show me how" has none: {}). */
+export function cleanHelpAsks(v: unknown): Record<string, HelpAsk> {
+  const out: Record<string, HelpAsk> = {}
+  if (!isRecord(v)) return out
+  for (const [id, r] of Object.entries(v)) {
+    if (!isRecord(r)) continue
+    const { label, count, lastAt } = r
+    if (typeof count !== 'number' || !Number.isFinite(count) || count < 1) continue
+    if (typeof lastAt !== 'number' || !Number.isFinite(lastAt)) continue
+    out[id] = { label: typeof label === 'string' ? label : id, count: Math.floor(count), lastAt }
+  }
+  return out
 }
 function cleanLessonsDone(v: unknown): Record<string, number> {
   const out: Record<string, number> = {}

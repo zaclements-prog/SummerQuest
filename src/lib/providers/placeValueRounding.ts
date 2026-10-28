@@ -44,7 +44,7 @@ export function makePlaceValueRoundingProvider(cfg: Config): ProblemProvider {
         difficulty: Math.log10(cfg.maxPlace),
         skill: { id: 'pv-round', label: 'rounding numbers' },
         hint: `Look at the ${DECIDING_PLACE[cfg.roundTo]} digit (the place just to the right) — if it's 5 or more, round up.`,
-        walkthrough: roundWalkthrough(n, cfg.roundTo),
+        showMe: roundWalkthrough(n, cfg.roundTo),
       }
     },
   }

@@ -50,7 +50,7 @@ describe('elapsed time walkthrough', () => {
 
   it('jumps from the start time and adds up to the answer, over many seeds', () => {
     for (const p of ps) {
-      const w = p.walkthrough!
+      const w = p.showMe!
       checkShape(w)
       const m = /^It is (\d+):(\d\d)\. What time will it be in (?:(\d) hours? and )?(\d+) minutes\?$/.exec(p.prompt)!
       expect(m, p.prompt).not.toBeNull()
@@ -72,7 +72,7 @@ describe('elapsed time walkthrough', () => {
 
   it('each step says the times it lands on, and no step says the answer', () => {
     for (const p of ps) {
-      const w = p.walkthrough!
+      const w = p.showMe!
       for (const s of w) {
         const v = kind(s.visual, 'timeJumps')
         const to = /to (\d+:\d\d)\.$/.exec(s.say)
@@ -112,7 +112,7 @@ describe('making change walkthrough', () => {
 
   it('counts up from the cost to what was paid; the hops add up to the answer, over many seeds', () => {
     for (const p of ps) {
-      const w = p.walkthrough!
+      const w = p.showMe!
       checkShape(w)
       const m = /^Something costs \$(\d+)\.(\d\d)\. You pay with \$(\d+)\./.exec(p.prompt)!
       const cost = Number(m[1]) * 100 + Number(m[2])
@@ -158,7 +158,7 @@ describe('rounding walkthrough', () => {
     it(`nearest ${roundTo}: the number sits between the two round numbers and the closer one is the answer`, () => {
       const ps = problems(() => makePlaceValueRoundingProvider({ maxPlace, roundTo }), `round${roundTo}`)
       for (const p of ps) {
-        const w = p.walkthrough!
+        const w = p.showMe!
         checkShape(w)
         const v = kind(last(w).visual, 'roundLine')
         expect(p.prompt).toContain(v.n.toLocaleString('en-US'))
@@ -196,7 +196,7 @@ describe('rounding walkthrough', () => {
 
 describe('only the demo question types carry a walkthrough', () => {
   it('area and perimeter have none (yet)', () => {
-    for (const p of problems(() => makeMeasurementProvider({ type: 'area' }), 'area', 20)) expect(p.walkthrough).toBeUndefined()
-    for (const p of problems(() => makeMeasurementProvider({ type: 'perimeter' }), 'perim', 20)) expect(p.walkthrough).toBeUndefined()
+    for (const p of problems(() => makeMeasurementProvider({ type: 'area' }), 'area', 20)) expect(p.showMe).toBeUndefined()
+    for (const p of problems(() => makeMeasurementProvider({ type: 'perimeter' }), 'perim', 20)) expect(p.showMe).toBeUndefined()
   })
 })

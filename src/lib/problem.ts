@@ -225,8 +225,9 @@ export interface Problem {
    * "Show me how": a short worked example of THIS problem, built by the
    * provider from the same numbers (so it always adds up), stopping one step
    * short of the answer. Games offer the 💡 button when it is present.
+   * (Not the K–1 Listen & Play `walkthrough`, which is a ListenProblem's own.)
    */
-  walkthrough?: WalkStep[]
+  showMe?: WalkStep[]
 }
 
 export interface ProblemProvider {

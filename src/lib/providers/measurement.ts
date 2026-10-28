@@ -91,7 +91,7 @@ function time(idx: number): Problem {
     visual: { kind: 'clock', hour: startH, minute: startM },
     hint: `Add ${elapsedStr}.`,
     skill: { id: 'meas-time', label: 'telling time' },
-    walkthrough: timeWalkthrough(startH * 60 + startM, elapsedH, elapsedM),
+    showMe: timeWalkthrough(startH * 60 + startM, elapsedH, elapsedM),
   }
 }
 
@@ -122,7 +122,7 @@ function money(idx: number): Problem {
     visual: { kind: 'money', cents: costCents },
     hint: `Subtract ${formatMoney(costCents)} from $${paidDollars}.00`,
     skill: { id: 'meas-money', label: 'money' },
-    walkthrough: moneyWalkthrough(costCents, paidDollars * 100),
+    showMe: moneyWalkthrough(costCents, paidDollars * 100),
   }
 }
 
