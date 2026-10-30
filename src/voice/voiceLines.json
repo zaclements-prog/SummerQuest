@@ -35833,6 +35833,12 @@
       "kind": "line",
       "file": "voice/k-nav/stage-k-addsub-2.mp3"
     },
+    "k-nav/stage-k-addsub-shack": {
+      "text": "Snack Shack!",
+      "hash": "584d5cd656",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-addsub-shack.mp3"
+    },
     "k-nav/stage-k-addsub-3": {
       "text": "Make ten!",
       "hash": "8bad61c7b8",
@@ -36216,6 +36222,12 @@
       "hash": "1c9ba1c9e5",
       "kind": "line",
       "file": "voice/k-nav/stage-g1-measure-2.mp3"
+    },
+    "k-nav/stage-g1-measure-shack": {
+      "text": "Snack Shack!",
+      "hash": "584d5cd656",
+      "kind": "line",
+      "file": "voice/k-nav/stage-g1-measure-shack.mp3"
     },
     "k-nav/stage-g1-measure-3": {
       "text": "What time is it?",
@@ -47695,6 +47707,1110 @@
       "kind": "line",
       "file": "voice/show-me/roundExactYourTurn.mp3"
     },
+    "snack-shack/introListen": {
+      "text": "Welcome to the Snack Shack! Hungry critters are coming. Let's fill their orders!",
+      "hash": "e2252e0763",
+      "kind": "line",
+      "file": "voice/snack-shack/introListen.mp3"
+    },
+    "snack-shack/introListenClock": {
+      "text": "Welcome to the Snack Shack! Fill each order, then set the pick-up clock.",
+      "hash": "884c603e92",
+      "kind": "line",
+      "file": "voice/snack-shack/introListenClock.mp3"
+    },
+    "snack-shack/intro": {
+      "text": "Welcome to the Snack Shack! Fill each order, add up the price, and give the right change.",
+      "hash": "a4d5f89f33",
+      "kind": "line",
+      "file": "voice/snack-shack/intro.mp3"
+    },
+    "snack-shack/tapFood": {
+      "text": "Tap the food to put it on the tray.",
+      "hash": "a17cbc2160",
+      "kind": "line",
+      "file": "voice/snack-shack/tapFood.mp3"
+    },
+    "snack-shack/ringBell": {
+      "text": "Then ring the bell!",
+      "hash": "5a255389e9",
+      "kind": "line",
+      "file": "voice/snack-shack/ringBell.mp3"
+    },
+    "snack-shack/howManyInAll": {
+      "text": "How many snacks in all?",
+      "hash": "6fce001f1a",
+      "kind": "line",
+      "file": "voice/snack-shack/howManyInAll.mp3"
+    },
+    "snack-shack/countTogether": {
+      "text": "Let's count them together.",
+      "hash": "09563da2cc",
+      "kind": "line",
+      "file": "voice/snack-shack/countTogether.mp3"
+    },
+    "snack-shack/tooMany": {
+      "text": "Too many! Tap one to put it back.",
+      "hash": "2a37f0a185",
+      "kind": "line",
+      "file": "voice/snack-shack/tooMany.mp3"
+    },
+    "snack-shack/needMore": {
+      "text": "We need more. Tap the food!",
+      "hash": "2287af86c5",
+      "kind": "line",
+      "file": "voice/snack-shack/needMore.mp3"
+    },
+    "snack-shack/tryAgain": {
+      "text": "Try again. You can do it!",
+      "hash": "3edf941a3c",
+      "kind": "line",
+      "file": "voice/snack-shack/tryAgain.mp3"
+    },
+    "snack-shack/thanks1": {
+      "text": "Yum! Thank you!",
+      "hash": "8ddc8b5f5d",
+      "kind": "line",
+      "file": "voice/snack-shack/thanks1.mp3"
+    },
+    "snack-shack/thanks2": {
+      "text": "Ka-ching! Happy customer!",
+      "hash": "aa850e12da",
+      "kind": "line",
+      "file": "voice/snack-shack/thanks2.mp3"
+    },
+    "snack-shack/thanks3": {
+      "text": "Wow, that looks delicious!",
+      "hash": "53cea0390a",
+      "kind": "line",
+      "file": "voice/snack-shack/thanks3.mp3"
+    },
+    "snack-shack/tipStars": {
+      "text": "They gave you stars!",
+      "hash": "42dcb8ac0c",
+      "kind": "line",
+      "file": "voice/snack-shack/tipStars.mp3"
+    },
+    "snack-shack/pickDecor": {
+      "text": "Pick something new for the shack!",
+      "hash": "b750b3e602",
+      "kind": "line",
+      "file": "voice/snack-shack/pickDecor.mp3"
+    },
+    "snack-shack/shackFancier": {
+      "text": "The Snack Shack is getting fancier!",
+      "hash": "dcb93ce84c",
+      "kind": "line",
+      "file": "voice/snack-shack/shackFancier.mp3"
+    },
+    "snack-shack/shiftDone": {
+      "text": "What a great day at the Snack Shack!",
+      "hash": "c5fef4fac8",
+      "kind": "line",
+      "file": "voice/snack-shack/shiftDone.mp3"
+    },
+    "snack-shack/setClock": {
+      "text": "Move the long hand to set the clock.",
+      "hash": "bf972e02ea",
+      "kind": "line",
+      "file": "voice/snack-shack/setClock.mp3"
+    },
+    "snack-shack/longHand12": {
+      "text": "The long hand points straight up to the 12.",
+      "hash": "81b2f61f9b",
+      "kind": "line",
+      "file": "voice/snack-shack/longHand12.mp3"
+    },
+    "snack-shack/longHand6": {
+      "text": "The long hand points down to the 6.",
+      "hash": "653cc79bab",
+      "kind": "line",
+      "file": "voice/snack-shack/longHand6.mp3"
+    },
+    "snack-shack/whatTotal": {
+      "text": "What is the total?",
+      "hash": "01eef90df0",
+      "kind": "line",
+      "file": "voice/snack-shack/whatTotal.mp3"
+    },
+    "snack-shack/addPrices": {
+      "text": "Add up the prices on the tags.",
+      "hash": "65555c2965",
+      "kind": "line",
+      "file": "voice/snack-shack/addPrices.mp3"
+    },
+    "snack-shack/giveChange": {
+      "text": "Count out the change. Drag the coins and bills to the tray.",
+      "hash": "f636457f35",
+      "kind": "line",
+      "file": "voice/snack-shack/giveChange.mp3"
+    },
+    "snack-shack/countUp": {
+      "text": "Let's count up from the price to what they paid, like a shopkeeper.",
+      "hash": "7de1744258",
+      "kind": "line",
+      "file": "voice/snack-shack/countUp.mp3"
+    },
+    "snack-shack/clockTower": {
+      "text": "Clock Tower order! Move the clock hands to the right time.",
+      "hash": "94c67ddd33",
+      "kind": "line",
+      "file": "voice/snack-shack/clockTower.mp3"
+    },
+    "snack-shack/jumpAlong": {
+      "text": "Let's jump along the timeline.",
+      "hash": "9d2283aaab",
+      "kind": "line",
+      "file": "voice/snack-shack/jumpAlong.mp3"
+    },
+    "snack-shack/overNoon": {
+      "text": "We went past 12 noon, so it's p.m. now!",
+      "hash": "e17dde64c3",
+      "kind": "line",
+      "file": "voice/snack-shack/overNoon.mp3"
+    },
+    "snack-shack/orderOne/food=apples,n=2": {
+      "text": "two apples, please!",
+      "hash": "bc37f13e24",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=apples,n=2.mp3"
+    },
+    "snack-shack/orderOne/food=apples,n=3": {
+      "text": "three apples, please!",
+      "hash": "647a872a64",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=apples,n=3.mp3"
+    },
+    "snack-shack/orderOne/food=apples,n=4": {
+      "text": "four apples, please!",
+      "hash": "08aa7d8c02",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=apples,n=4.mp3"
+    },
+    "snack-shack/orderOne/food=apples,n=5": {
+      "text": "five apples, please!",
+      "hash": "36fc071235",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=apples,n=5.mp3"
+    },
+    "snack-shack/orderOne/food=apples,n=6": {
+      "text": "six apples, please!",
+      "hash": "368c618d5f",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=apples,n=6.mp3"
+    },
+    "snack-shack/orderOne/food=apples,n=7": {
+      "text": "seven apples, please!",
+      "hash": "6f80a4c90e",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=apples,n=7.mp3"
+    },
+    "snack-shack/orderOne/food=apples,n=8": {
+      "text": "eight apples, please!",
+      "hash": "c4e131b045",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=apples,n=8.mp3"
+    },
+    "snack-shack/orderOne/food=bananas,n=2": {
+      "text": "two bananas, please!",
+      "hash": "9647b17b30",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=bananas,n=2.mp3"
+    },
+    "snack-shack/orderOne/food=bananas,n=3": {
+      "text": "three bananas, please!",
+      "hash": "3f1c9941ce",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=bananas,n=3.mp3"
+    },
+    "snack-shack/orderOne/food=bananas,n=4": {
+      "text": "four bananas, please!",
+      "hash": "01413e4666",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=bananas,n=4.mp3"
+    },
+    "snack-shack/orderOne/food=bananas,n=5": {
+      "text": "five bananas, please!",
+      "hash": "9b92be8ca5",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=bananas,n=5.mp3"
+    },
+    "snack-shack/orderOne/food=bananas,n=6": {
+      "text": "six bananas, please!",
+      "hash": "41b26b51da",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=bananas,n=6.mp3"
+    },
+    "snack-shack/orderOne/food=bananas,n=7": {
+      "text": "seven bananas, please!",
+      "hash": "928a84df72",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=bananas,n=7.mp3"
+    },
+    "snack-shack/orderOne/food=bananas,n=8": {
+      "text": "eight bananas, please!",
+      "hash": "72003b6719",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=bananas,n=8.mp3"
+    },
+    "snack-shack/orderOne/food=cookies,n=2": {
+      "text": "two cookies, please!",
+      "hash": "76004d00a6",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=cookies,n=2.mp3"
+    },
+    "snack-shack/orderOne/food=cookies,n=3": {
+      "text": "three cookies, please!",
+      "hash": "003d7adf4b",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=cookies,n=3.mp3"
+    },
+    "snack-shack/orderOne/food=cookies,n=4": {
+      "text": "four cookies, please!",
+      "hash": "9c31e6ae94",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=cookies,n=4.mp3"
+    },
+    "snack-shack/orderOne/food=cookies,n=5": {
+      "text": "five cookies, please!",
+      "hash": "a9da2a5796",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=cookies,n=5.mp3"
+    },
+    "snack-shack/orderOne/food=cookies,n=6": {
+      "text": "six cookies, please!",
+      "hash": "8f6a79f84b",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=cookies,n=6.mp3"
+    },
+    "snack-shack/orderOne/food=cookies,n=7": {
+      "text": "seven cookies, please!",
+      "hash": "e96fb79f3e",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=cookies,n=7.mp3"
+    },
+    "snack-shack/orderOne/food=cookies,n=8": {
+      "text": "eight cookies, please!",
+      "hash": "04cc690b68",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=cookies,n=8.mp3"
+    },
+    "snack-shack/orderOne/food=strawberries,n=2": {
+      "text": "two strawberries, please!",
+      "hash": "63062b5801",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=strawberries,n=2.mp3"
+    },
+    "snack-shack/orderOne/food=strawberries,n=3": {
+      "text": "three strawberries, please!",
+      "hash": "af5d0c0701",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=strawberries,n=3.mp3"
+    },
+    "snack-shack/orderOne/food=strawberries,n=4": {
+      "text": "four strawberries, please!",
+      "hash": "398ca62a48",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=strawberries,n=4.mp3"
+    },
+    "snack-shack/orderOne/food=strawberries,n=5": {
+      "text": "five strawberries, please!",
+      "hash": "bfa50fb77a",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=strawberries,n=5.mp3"
+    },
+    "snack-shack/orderOne/food=strawberries,n=6": {
+      "text": "six strawberries, please!",
+      "hash": "a9d02620a9",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=strawberries,n=6.mp3"
+    },
+    "snack-shack/orderOne/food=strawberries,n=7": {
+      "text": "seven strawberries, please!",
+      "hash": "9fdd2fc145",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=strawberries,n=7.mp3"
+    },
+    "snack-shack/orderOne/food=strawberries,n=8": {
+      "text": "eight strawberries, please!",
+      "hash": "5c819095ef",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=strawberries,n=8.mp3"
+    },
+    "snack-shack/orderOne/food=donuts,n=2": {
+      "text": "two donuts, please!",
+      "hash": "943c98ff7d",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=donuts,n=2.mp3"
+    },
+    "snack-shack/orderOne/food=donuts,n=3": {
+      "text": "three donuts, please!",
+      "hash": "c68724f23c",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=donuts,n=3.mp3"
+    },
+    "snack-shack/orderOne/food=donuts,n=4": {
+      "text": "four donuts, please!",
+      "hash": "ec140363e6",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=donuts,n=4.mp3"
+    },
+    "snack-shack/orderOne/food=donuts,n=5": {
+      "text": "five donuts, please!",
+      "hash": "56480d4cf0",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=donuts,n=5.mp3"
+    },
+    "snack-shack/orderOne/food=donuts,n=6": {
+      "text": "six donuts, please!",
+      "hash": "b1efbc688f",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=donuts,n=6.mp3"
+    },
+    "snack-shack/orderOne/food=donuts,n=7": {
+      "text": "seven donuts, please!",
+      "hash": "cff54589a1",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=donuts,n=7.mp3"
+    },
+    "snack-shack/orderOne/food=donuts,n=8": {
+      "text": "eight donuts, please!",
+      "hash": "3130cd277a",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=donuts,n=8.mp3"
+    },
+    "snack-shack/orderOne/food=lemons,n=2": {
+      "text": "two lemons, please!",
+      "hash": "3a56b51f51",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=lemons,n=2.mp3"
+    },
+    "snack-shack/orderOne/food=lemons,n=3": {
+      "text": "three lemons, please!",
+      "hash": "70e9308388",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=lemons,n=3.mp3"
+    },
+    "snack-shack/orderOne/food=lemons,n=4": {
+      "text": "four lemons, please!",
+      "hash": "82071e5e55",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=lemons,n=4.mp3"
+    },
+    "snack-shack/orderOne/food=lemons,n=5": {
+      "text": "five lemons, please!",
+      "hash": "4ca0f779c8",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=lemons,n=5.mp3"
+    },
+    "snack-shack/orderOne/food=lemons,n=6": {
+      "text": "six lemons, please!",
+      "hash": "53db8cb86a",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=lemons,n=6.mp3"
+    },
+    "snack-shack/orderOne/food=lemons,n=7": {
+      "text": "seven lemons, please!",
+      "hash": "e53bf3d288",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=lemons,n=7.mp3"
+    },
+    "snack-shack/orderOne/food=lemons,n=8": {
+      "text": "eight lemons, please!",
+      "hash": "e291a0a01e",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=lemons,n=8.mp3"
+    },
+    "snack-shack/orderTwo#2": {
+      "text": "and",
+      "hash": "26922921dc",
+      "kind": "piece",
+      "file": "voice/snack-shack/orderTwo.part2.mp3"
+    },
+    "snack-shack/orderTwo#4": {
+      "text": "please!",
+      "hash": "65dd20d4a5",
+      "kind": "piece",
+      "file": "voice/snack-shack/orderTwo.part4.mp3"
+    },
+    "snack-shack/count/n=1": {
+      "text": "one!",
+      "hash": "d0fadf8ef2",
+      "kind": "whole",
+      "file": "voice/snack-shack/count/n=1.mp3"
+    },
+    "snack-shack/count/n=2": {
+      "text": "two!",
+      "hash": "dd6bef1170",
+      "kind": "whole",
+      "file": "voice/snack-shack/count/n=2.mp3"
+    },
+    "snack-shack/count/n=3": {
+      "text": "three!",
+      "hash": "a77b6838dd",
+      "kind": "whole",
+      "file": "voice/snack-shack/count/n=3.mp3"
+    },
+    "snack-shack/count/n=4": {
+      "text": "four!",
+      "hash": "708aa3394c",
+      "kind": "whole",
+      "file": "voice/snack-shack/count/n=4.mp3"
+    },
+    "snack-shack/count/n=5": {
+      "text": "five!",
+      "hash": "afe4c4b1f6",
+      "kind": "whole",
+      "file": "voice/snack-shack/count/n=5.mp3"
+    },
+    "snack-shack/count/n=6": {
+      "text": "six!",
+      "hash": "0a0f7c2f13",
+      "kind": "whole",
+      "file": "voice/snack-shack/count/n=6.mp3"
+    },
+    "snack-shack/count/n=7": {
+      "text": "seven!",
+      "hash": "e01c730bb1",
+      "kind": "whole",
+      "file": "voice/snack-shack/count/n=7.mp3"
+    },
+    "snack-shack/count/n=8": {
+      "text": "eight!",
+      "hash": "d098266522",
+      "kind": "whole",
+      "file": "voice/snack-shack/count/n=8.mp3"
+    },
+    "snack-shack/count/n=9": {
+      "text": "nine!",
+      "hash": "b0fd717999",
+      "kind": "whole",
+      "file": "voice/snack-shack/count/n=9.mp3"
+    },
+    "snack-shack/count/n=10": {
+      "text": "ten!",
+      "hash": "765f4ad994",
+      "kind": "whole",
+      "file": "voice/snack-shack/count/n=10.mp3"
+    },
+    "snack-shack/count/n=11": {
+      "text": "eleven!",
+      "hash": "02feb9df00",
+      "kind": "whole",
+      "file": "voice/snack-shack/count/n=11.mp3"
+    },
+    "snack-shack/count/n=12": {
+      "text": "twelve!",
+      "hash": "8da045bcc2",
+      "kind": "whole",
+      "file": "voice/snack-shack/count/n=12.mp3"
+    },
+    "snack-shack/weNeed/food=apples,n=2": {
+      "text": "We need two apples.",
+      "hash": "a02cd319c9",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=apples,n=2.mp3"
+    },
+    "snack-shack/weNeed/food=apples,n=3": {
+      "text": "We need three apples.",
+      "hash": "c78c6cf5b1",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=apples,n=3.mp3"
+    },
+    "snack-shack/weNeed/food=apples,n=4": {
+      "text": "We need four apples.",
+      "hash": "1ce0bc6128",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=apples,n=4.mp3"
+    },
+    "snack-shack/weNeed/food=apples,n=5": {
+      "text": "We need five apples.",
+      "hash": "e8e7543eb6",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=apples,n=5.mp3"
+    },
+    "snack-shack/weNeed/food=apples,n=6": {
+      "text": "We need six apples.",
+      "hash": "66127e379b",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=apples,n=6.mp3"
+    },
+    "snack-shack/weNeed/food=apples,n=7": {
+      "text": "We need seven apples.",
+      "hash": "237dd20a6d",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=apples,n=7.mp3"
+    },
+    "snack-shack/weNeed/food=apples,n=8": {
+      "text": "We need eight apples.",
+      "hash": "5282459d3a",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=apples,n=8.mp3"
+    },
+    "snack-shack/weNeed/food=bananas,n=2": {
+      "text": "We need two bananas.",
+      "hash": "03e09dc11e",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=bananas,n=2.mp3"
+    },
+    "snack-shack/weNeed/food=bananas,n=3": {
+      "text": "We need three bananas.",
+      "hash": "b353e19a60",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=bananas,n=3.mp3"
+    },
+    "snack-shack/weNeed/food=bananas,n=4": {
+      "text": "We need four bananas.",
+      "hash": "e312e28e6b",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=bananas,n=4.mp3"
+    },
+    "snack-shack/weNeed/food=bananas,n=5": {
+      "text": "We need five bananas.",
+      "hash": "697086ff6b",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=bananas,n=5.mp3"
+    },
+    "snack-shack/weNeed/food=bananas,n=6": {
+      "text": "We need six bananas.",
+      "hash": "332d4deaa1",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=bananas,n=6.mp3"
+    },
+    "snack-shack/weNeed/food=bananas,n=7": {
+      "text": "We need seven bananas.",
+      "hash": "5807b818d5",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=bananas,n=7.mp3"
+    },
+    "snack-shack/weNeed/food=bananas,n=8": {
+      "text": "We need eight bananas.",
+      "hash": "9d5373524a",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=bananas,n=8.mp3"
+    },
+    "snack-shack/weNeed/food=cookies,n=2": {
+      "text": "We need two cookies.",
+      "hash": "56509f395a",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=cookies,n=2.mp3"
+    },
+    "snack-shack/weNeed/food=cookies,n=3": {
+      "text": "We need three cookies.",
+      "hash": "584a65afd9",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=cookies,n=3.mp3"
+    },
+    "snack-shack/weNeed/food=cookies,n=4": {
+      "text": "We need four cookies.",
+      "hash": "a39828a025",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=cookies,n=4.mp3"
+    },
+    "snack-shack/weNeed/food=cookies,n=5": {
+      "text": "We need five cookies.",
+      "hash": "cf89193f5c",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=cookies,n=5.mp3"
+    },
+    "snack-shack/weNeed/food=cookies,n=6": {
+      "text": "We need six cookies.",
+      "hash": "f1125000a1",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=cookies,n=6.mp3"
+    },
+    "snack-shack/weNeed/food=cookies,n=7": {
+      "text": "We need seven cookies.",
+      "hash": "1abc8bed34",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=cookies,n=7.mp3"
+    },
+    "snack-shack/weNeed/food=cookies,n=8": {
+      "text": "We need eight cookies.",
+      "hash": "fdcd699496",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=cookies,n=8.mp3"
+    },
+    "snack-shack/weNeed/food=strawberries,n=2": {
+      "text": "We need two strawberries.",
+      "hash": "dc1b4fbd6c",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=strawberries,n=2.mp3"
+    },
+    "snack-shack/weNeed/food=strawberries,n=3": {
+      "text": "We need three strawberries.",
+      "hash": "108c85b82c",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=strawberries,n=3.mp3"
+    },
+    "snack-shack/weNeed/food=strawberries,n=4": {
+      "text": "We need four strawberries.",
+      "hash": "848e1e15a3",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=strawberries,n=4.mp3"
+    },
+    "snack-shack/weNeed/food=strawberries,n=5": {
+      "text": "We need five strawberries.",
+      "hash": "2ad0dc32b6",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=strawberries,n=5.mp3"
+    },
+    "snack-shack/weNeed/food=strawberries,n=6": {
+      "text": "We need six strawberries.",
+      "hash": "43e288a190",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=strawberries,n=6.mp3"
+    },
+    "snack-shack/weNeed/food=strawberries,n=7": {
+      "text": "We need seven strawberries.",
+      "hash": "ff9585fead",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=strawberries,n=7.mp3"
+    },
+    "snack-shack/weNeed/food=strawberries,n=8": {
+      "text": "We need eight strawberries.",
+      "hash": "974da901e3",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=strawberries,n=8.mp3"
+    },
+    "snack-shack/weNeed/food=donuts,n=2": {
+      "text": "We need two donuts.",
+      "hash": "e6ac93f1d4",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=donuts,n=2.mp3"
+    },
+    "snack-shack/weNeed/food=donuts,n=3": {
+      "text": "We need three donuts.",
+      "hash": "2e6cd54c36",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=donuts,n=3.mp3"
+    },
+    "snack-shack/weNeed/food=donuts,n=4": {
+      "text": "We need four donuts.",
+      "hash": "c6a6ae9dcd",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=donuts,n=4.mp3"
+    },
+    "snack-shack/weNeed/food=donuts,n=5": {
+      "text": "We need five donuts.",
+      "hash": "1047990654",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=donuts,n=5.mp3"
+    },
+    "snack-shack/weNeed/food=donuts,n=6": {
+      "text": "We need six donuts.",
+      "hash": "27d68e0751",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=donuts,n=6.mp3"
+    },
+    "snack-shack/weNeed/food=donuts,n=7": {
+      "text": "We need seven donuts.",
+      "hash": "31ea521e5e",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=donuts,n=7.mp3"
+    },
+    "snack-shack/weNeed/food=donuts,n=8": {
+      "text": "We need eight donuts.",
+      "hash": "accad1ad02",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=donuts,n=8.mp3"
+    },
+    "snack-shack/weNeed/food=lemons,n=2": {
+      "text": "We need two lemons.",
+      "hash": "c83242ac9b",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=lemons,n=2.mp3"
+    },
+    "snack-shack/weNeed/food=lemons,n=3": {
+      "text": "We need three lemons.",
+      "hash": "9331438fc6",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=lemons,n=3.mp3"
+    },
+    "snack-shack/weNeed/food=lemons,n=4": {
+      "text": "We need four lemons.",
+      "hash": "d141bd72fa",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=lemons,n=4.mp3"
+    },
+    "snack-shack/weNeed/food=lemons,n=5": {
+      "text": "We need five lemons.",
+      "hash": "b93f82334f",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=lemons,n=5.mp3"
+    },
+    "snack-shack/weNeed/food=lemons,n=6": {
+      "text": "We need six lemons.",
+      "hash": "3d8e1ec0c5",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=lemons,n=6.mp3"
+    },
+    "snack-shack/weNeed/food=lemons,n=7": {
+      "text": "We need seven lemons.",
+      "hash": "0073a34095",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=lemons,n=7.mp3"
+    },
+    "snack-shack/weNeed/food=lemons,n=8": {
+      "text": "We need eight lemons.",
+      "hash": "6e5cf7bdba",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=lemons,n=8.mp3"
+    },
+    "snack-shack/inAll/n=2": {
+      "text": "two snacks in all!",
+      "hash": "72afe44f03",
+      "kind": "whole",
+      "file": "voice/snack-shack/inAll/n=2.mp3"
+    },
+    "snack-shack/inAll/n=3": {
+      "text": "three snacks in all!",
+      "hash": "ccade56a0d",
+      "kind": "whole",
+      "file": "voice/snack-shack/inAll/n=3.mp3"
+    },
+    "snack-shack/inAll/n=4": {
+      "text": "four snacks in all!",
+      "hash": "dab6c03352",
+      "kind": "whole",
+      "file": "voice/snack-shack/inAll/n=4.mp3"
+    },
+    "snack-shack/inAll/n=5": {
+      "text": "five snacks in all!",
+      "hash": "478bc09f2f",
+      "kind": "whole",
+      "file": "voice/snack-shack/inAll/n=5.mp3"
+    },
+    "snack-shack/inAll/n=6": {
+      "text": "six snacks in all!",
+      "hash": "b7bc0f9824",
+      "kind": "whole",
+      "file": "voice/snack-shack/inAll/n=6.mp3"
+    },
+    "snack-shack/inAll/n=7": {
+      "text": "seven snacks in all!",
+      "hash": "5a86a2fb4e",
+      "kind": "whole",
+      "file": "voice/snack-shack/inAll/n=7.mp3"
+    },
+    "snack-shack/inAll/n=8": {
+      "text": "eight snacks in all!",
+      "hash": "cf4691f1e4",
+      "kind": "whole",
+      "file": "voice/snack-shack/inAll/n=8.mp3"
+    },
+    "snack-shack/inAll/n=9": {
+      "text": "nine snacks in all!",
+      "hash": "97c5ffed95",
+      "kind": "whole",
+      "file": "voice/snack-shack/inAll/n=9.mp3"
+    },
+    "snack-shack/inAll/n=10": {
+      "text": "ten snacks in all!",
+      "hash": "370e3fee5e",
+      "kind": "whole",
+      "file": "voice/snack-shack/inAll/n=10.mp3"
+    },
+    "snack-shack/inAll/n=11": {
+      "text": "eleven snacks in all!",
+      "hash": "b5c41a4f37",
+      "kind": "whole",
+      "file": "voice/snack-shack/inAll/n=11.mp3"
+    },
+    "snack-shack/inAll/n=12": {
+      "text": "twelve snacks in all!",
+      "hash": "993bf364f7",
+      "kind": "whole",
+      "file": "voice/snack-shack/inAll/n=12.mp3"
+    },
+    "snack-shack/backAt/h=1": {
+      "text": "I'll be back at one o'clock. Set the clock!",
+      "hash": "57ce014116",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAt/h=1.mp3"
+    },
+    "snack-shack/backAt/h=2": {
+      "text": "I'll be back at two o'clock. Set the clock!",
+      "hash": "bd7161043c",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAt/h=2.mp3"
+    },
+    "snack-shack/backAt/h=3": {
+      "text": "I'll be back at three o'clock. Set the clock!",
+      "hash": "a8aa0fdd89",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAt/h=3.mp3"
+    },
+    "snack-shack/backAt/h=4": {
+      "text": "I'll be back at four o'clock. Set the clock!",
+      "hash": "1489da88ba",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAt/h=4.mp3"
+    },
+    "snack-shack/backAt/h=5": {
+      "text": "I'll be back at five o'clock. Set the clock!",
+      "hash": "0d4c0c1242",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAt/h=5.mp3"
+    },
+    "snack-shack/backAt/h=6": {
+      "text": "I'll be back at six o'clock. Set the clock!",
+      "hash": "51829d8acb",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAt/h=6.mp3"
+    },
+    "snack-shack/backAt/h=7": {
+      "text": "I'll be back at seven o'clock. Set the clock!",
+      "hash": "eb6eb5c6e6",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAt/h=7.mp3"
+    },
+    "snack-shack/backAt/h=8": {
+      "text": "I'll be back at eight o'clock. Set the clock!",
+      "hash": "6463d9cee9",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAt/h=8.mp3"
+    },
+    "snack-shack/backAt/h=9": {
+      "text": "I'll be back at nine o'clock. Set the clock!",
+      "hash": "2672e56252",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAt/h=9.mp3"
+    },
+    "snack-shack/backAt/h=10": {
+      "text": "I'll be back at ten o'clock. Set the clock!",
+      "hash": "041c9b2ddc",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAt/h=10.mp3"
+    },
+    "snack-shack/backAt/h=11": {
+      "text": "I'll be back at eleven o'clock. Set the clock!",
+      "hash": "f0ce786190",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAt/h=11.mp3"
+    },
+    "snack-shack/backAt/h=12": {
+      "text": "I'll be back at twelve o'clock. Set the clock!",
+      "hash": "fc8f07c468",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAt/h=12.mp3"
+    },
+    "snack-shack/backAtHalf/h=1": {
+      "text": "I'll be back at half past one. Set the clock!",
+      "hash": "b731534116",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAtHalf/h=1.mp3"
+    },
+    "snack-shack/backAtHalf/h=2": {
+      "text": "I'll be back at half past two. Set the clock!",
+      "hash": "be7c460dd6",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAtHalf/h=2.mp3"
+    },
+    "snack-shack/backAtHalf/h=3": {
+      "text": "I'll be back at half past three. Set the clock!",
+      "hash": "c5edf2b5da",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAtHalf/h=3.mp3"
+    },
+    "snack-shack/backAtHalf/h=4": {
+      "text": "I'll be back at half past four. Set the clock!",
+      "hash": "33894275de",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAtHalf/h=4.mp3"
+    },
+    "snack-shack/backAtHalf/h=5": {
+      "text": "I'll be back at half past five. Set the clock!",
+      "hash": "38491b9960",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAtHalf/h=5.mp3"
+    },
+    "snack-shack/backAtHalf/h=6": {
+      "text": "I'll be back at half past six. Set the clock!",
+      "hash": "60bcfd046b",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAtHalf/h=6.mp3"
+    },
+    "snack-shack/backAtHalf/h=7": {
+      "text": "I'll be back at half past seven. Set the clock!",
+      "hash": "0b7c9e273a",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAtHalf/h=7.mp3"
+    },
+    "snack-shack/backAtHalf/h=8": {
+      "text": "I'll be back at half past eight. Set the clock!",
+      "hash": "b27dcf36e3",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAtHalf/h=8.mp3"
+    },
+    "snack-shack/backAtHalf/h=9": {
+      "text": "I'll be back at half past nine. Set the clock!",
+      "hash": "e6c3be31a2",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAtHalf/h=9.mp3"
+    },
+    "snack-shack/backAtHalf/h=10": {
+      "text": "I'll be back at half past ten. Set the clock!",
+      "hash": "e7f1c9a67d",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAtHalf/h=10.mp3"
+    },
+    "snack-shack/backAtHalf/h=11": {
+      "text": "I'll be back at half past eleven. Set the clock!",
+      "hash": "67f952c196",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAtHalf/h=11.mp3"
+    },
+    "snack-shack/backAtHalf/h=12": {
+      "text": "I'll be back at half past twelve. Set the clock!",
+      "hash": "95cee92208",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAtHalf/h=12.mp3"
+    },
+    "snack-shack/shortHandAt/h=1": {
+      "text": "The short hand points to the one.",
+      "hash": "4735c0259f",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandAt/h=1.mp3"
+    },
+    "snack-shack/shortHandAt/h=2": {
+      "text": "The short hand points to the two.",
+      "hash": "6739d3fdde",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandAt/h=2.mp3"
+    },
+    "snack-shack/shortHandAt/h=3": {
+      "text": "The short hand points to the three.",
+      "hash": "5e69cf2baf",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandAt/h=3.mp3"
+    },
+    "snack-shack/shortHandAt/h=4": {
+      "text": "The short hand points to the four.",
+      "hash": "e16f402e16",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandAt/h=4.mp3"
+    },
+    "snack-shack/shortHandAt/h=5": {
+      "text": "The short hand points to the five.",
+      "hash": "0e0ef8c6b0",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandAt/h=5.mp3"
+    },
+    "snack-shack/shortHandAt/h=6": {
+      "text": "The short hand points to the six.",
+      "hash": "abbd505b57",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandAt/h=6.mp3"
+    },
+    "snack-shack/shortHandAt/h=7": {
+      "text": "The short hand points to the seven.",
+      "hash": "3cbf9c4657",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandAt/h=7.mp3"
+    },
+    "snack-shack/shortHandAt/h=8": {
+      "text": "The short hand points to the eight.",
+      "hash": "8641b8e8b2",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandAt/h=8.mp3"
+    },
+    "snack-shack/shortHandAt/h=9": {
+      "text": "The short hand points to the nine.",
+      "hash": "c365239a40",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandAt/h=9.mp3"
+    },
+    "snack-shack/shortHandAt/h=10": {
+      "text": "The short hand points to the ten.",
+      "hash": "924330ca93",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandAt/h=10.mp3"
+    },
+    "snack-shack/shortHandAt/h=11": {
+      "text": "The short hand points to the eleven.",
+      "hash": "9d66c907e9",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandAt/h=11.mp3"
+    },
+    "snack-shack/shortHandAt/h=12": {
+      "text": "The short hand points to the twelve.",
+      "hash": "6c81e830e2",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandAt/h=12.mp3"
+    },
+    "snack-shack/shortHandPast/h=1": {
+      "text": "The short hand is just past the one.",
+      "hash": "393cfbc991",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandPast/h=1.mp3"
+    },
+    "snack-shack/shortHandPast/h=2": {
+      "text": "The short hand is just past the two.",
+      "hash": "9ffe977178",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandPast/h=2.mp3"
+    },
+    "snack-shack/shortHandPast/h=3": {
+      "text": "The short hand is just past the three.",
+      "hash": "e3420120fe",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandPast/h=3.mp3"
+    },
+    "snack-shack/shortHandPast/h=4": {
+      "text": "The short hand is just past the four.",
+      "hash": "91bef72d15",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandPast/h=4.mp3"
+    },
+    "snack-shack/shortHandPast/h=5": {
+      "text": "The short hand is just past the five.",
+      "hash": "43b0fe21a2",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandPast/h=5.mp3"
+    },
+    "snack-shack/shortHandPast/h=6": {
+      "text": "The short hand is just past the six.",
+      "hash": "e625697832",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandPast/h=6.mp3"
+    },
+    "snack-shack/shortHandPast/h=7": {
+      "text": "The short hand is just past the seven.",
+      "hash": "d60134321a",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandPast/h=7.mp3"
+    },
+    "snack-shack/shortHandPast/h=8": {
+      "text": "The short hand is just past the eight.",
+      "hash": "0e26f308b3",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandPast/h=8.mp3"
+    },
+    "snack-shack/shortHandPast/h=9": {
+      "text": "The short hand is just past the nine.",
+      "hash": "61d0f982e9",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandPast/h=9.mp3"
+    },
+    "snack-shack/shortHandPast/h=10": {
+      "text": "The short hand is just past the ten.",
+      "hash": "e646aedfa3",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandPast/h=10.mp3"
+    },
+    "snack-shack/shortHandPast/h=11": {
+      "text": "The short hand is just past the eleven.",
+      "hash": "0109ce83e0",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandPast/h=11.mp3"
+    },
+    "snack-shack/shortHandPast/h=12": {
+      "text": "The short hand is just past the twelve.",
+      "hash": "6b97987461",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandPast/h=12.mp3"
+    },
     "ui/tapToStart": {
       "text": "Tap the star to start!",
       "hash": "54d693b052",
@@ -48349,6 +49465,12 @@
       "kind": "slot",
       "file": "voice/slots/word/apple.mp3"
     },
+    "slots/word/apples": {
+      "text": "apples",
+      "hash": "c2e0095c5a",
+      "kind": "slot",
+      "file": "voice/slots/word/apples.mp3"
+    },
     "slots/word/ball": {
       "text": "ball",
       "hash": "0322525e0f",
@@ -48360,6 +49482,12 @@
       "hash": "addfa56fff",
       "kind": "slot",
       "file": "voice/slots/word/balloon.mp3"
+    },
+    "slots/word/bananas": {
+      "text": "bananas",
+      "hash": "e254994735",
+      "kind": "slot",
+      "file": "voice/slots/word/bananas.mp3"
     },
     "slots/word/bat": {
       "text": "bat",
@@ -48451,6 +49579,12 @@
       "kind": "slot",
       "file": "voice/slots/word/clown.mp3"
     },
+    "slots/word/cookies": {
+      "text": "cookies",
+      "hash": "0491151782",
+      "kind": "slot",
+      "file": "voice/slots/word/cookies.mp3"
+    },
     "slots/word/corn": {
       "text": "corn",
       "hash": "878e169198",
@@ -48474,6 +49608,12 @@
       "hash": "c0b614f2db",
       "kind": "slot",
       "file": "voice/slots/word/dog.mp3"
+    },
+    "slots/word/donuts": {
+      "text": "donuts",
+      "hash": "ee8fc6d170",
+      "kind": "slot",
+      "file": "voice/slots/word/donuts.mp3"
     },
     "slots/word/door": {
       "text": "door",
@@ -48606,6 +49746,12 @@
       "hash": "6a59f78800",
       "kind": "slot",
       "file": "voice/slots/word/lemon.mp3"
+    },
+    "slots/word/lemons": {
+      "text": "lemons",
+      "hash": "02dcc31fa2",
+      "kind": "slot",
+      "file": "voice/slots/word/lemons.mp3"
     },
     "slots/word/lion": {
       "text": "lion",
@@ -48792,6 +49938,12 @@
       "hash": "a4825da4b6",
       "kind": "slot",
       "file": "voice/slots/word/star.mp3"
+    },
+    "slots/word/strawberries": {
+      "text": "strawberries",
+      "hash": "405c38b64f",
+      "kind": "slot",
+      "file": "voice/slots/word/strawberries.mp3"
     },
     "slots/word/sun": {
       "text": "sun",

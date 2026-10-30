@@ -29,6 +29,8 @@ const TimesGroveAreaGame = lazyWithRetry(() => import('./TimesGroveArea'))
 const ListenPlayGame = lazyWithRetry(() => import('./listenPlay/ListenPlay'))
 const CritterParadeGame = lazyWithRetry(() => import('./CritterParade'))
 const GobbleGardenGame = lazyWithRetry(() => import('./GobbleGarden'))
+// Snack Shack (2D, every band): its own chunk, like the others
+const SnackShackGame = lazyWithRetry(() => import('./SnackShack'))
 
 function Loader({ children }: { children: ReactNode }) {
   return (
@@ -88,6 +90,14 @@ export function GobbleGarden(props: GameProps) {
   return (
     <Loader>
       <GobbleGardenGame {...props} />
+    </Loader>
+  )
+}
+
+export function SnackShack(props: GameProps) {
+  return (
+    <Loader>
+      <SnackShackGame {...props} />
     </Loader>
   )
 }

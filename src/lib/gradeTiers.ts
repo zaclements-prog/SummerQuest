@@ -303,6 +303,9 @@ export function effectiveConfig(
       if (config.set === 'whole') return { ...config, maxPlace: t.pvIdentifyMaxPlace }
       if (config.set === 'frac') return { ...config, maxDen: t.fracCompareMaxDenom }
       return config
+    // Snack Shack: grades 2–4 share a stage, so the grade picks the money and the clock
+    case 'snackShack':
+      return config.band === 'g24' ? { ...config, grade } : config
   }
 }
 

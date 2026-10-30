@@ -413,6 +413,8 @@ describe('the K stages play these questions', () => {
     expect(kinds('fraction-falls')).toEqual([
       { kind: 'kAddTake', mode: 'within5' },
       { kind: 'kAddTake', mode: 'within10' },
+      // (the Snack Shack: count the snacks, then how many in all)
+      { kind: 'snackShack', band: 'k1' },
       { kind: 'kAddTake', mode: 'make10' },
     ])
     expect(kinds('word-problem-woods')).toEqual([

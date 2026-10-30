@@ -75,6 +75,8 @@ import { makeG5ExprProvider, type G5ExprConfig } from './g5Expr'
 // Gobble Garden (every band): the snacks a cloud of a number may eat
 import { makeGobbleProvider } from './gobble'
 import type { GobbleConfig } from '../gobble'
+// Snack Shack (all bands): the beach stand's orders, change and Clock Tower times
+import { makeSnackShackProvider, type SnackShackConfig } from './snackShack'
 
 export type ProviderConfig =
   | { kind: 'multiplication'; factorMin: number; factorMax: number }
@@ -181,6 +183,9 @@ export type ProviderConfig =
   // ── new games ──
   /** Gobble Garden: snacks smaller or bigger than the cloud's number (dots, two-digit, whole numbers and expressions, fractions, decimals). */
   | ({ kind: 'gobble' } & GobbleConfig)
+  // ── Snack Shack (every band; src/games/SnackShack.tsx) ──
+  /** The beach stand: count snacks (K), the pick-up clock (1st), totals, change and elapsed time (2–5). */
+  | ({ kind: 'snackShack' } & SnackShackConfig)
 
 export function createProvider(config: ProviderConfig): ProblemProvider {
   switch (config.kind) {
@@ -302,5 +307,8 @@ export function createProvider(config: ProviderConfig): ProblemProvider {
       return makeG5ExprProvider(config)
     case 'gobble':
       return makeGobbleProvider(config)
+    // Snack Shack (every band)
+    case 'snackShack':
+      return makeSnackShackProvider(config)
   }
 }

@@ -158,6 +158,12 @@ export const sfx = {
     tone(base, 70, 'triangle', 0.12, 0)
     tone(base * 1.5, 110, 'triangle', 0.1, 60)
   },
+  /** Cash register — the drawer slides out, then the bell (Snack Shack's sale). */
+  kaching: () => {
+    noise(120, 1800, 600, 0.08)
+    tone(1318.51, 90, 'triangle', 0.1, 90)
+    tone(1760, 260, 'sine', 0.12, 160)
+  },
   /** Big finish — a short fanfare for a perfect run or a boss beaten. */
   fanfare: () => {
     tone(523.25, 110, 'triangle', 0.12, 0)

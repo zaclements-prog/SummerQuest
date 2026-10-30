@@ -462,7 +462,7 @@ describe('ZoneDetail, 1st grade (phase 2b)', () => {
 
 describe('1st grade (phase 2b): Measure Marsh, Graph Delta, Sky Summit', () => {
   const G1 = {
-    'measurement-marsh': { title: 'Measure Marsh', welcome: 'k-nav/welcome-measurement-marsh', stages: ['g1-measure-1', 'g1-measure-2', 'g1-measure-3'] },
+    'measurement-marsh': { title: 'Measure Marsh', welcome: 'k-nav/welcome-measurement-marsh', stages: ['g1-measure-1', 'g1-measure-2', 'g1-measure-shack', 'g1-measure-3'] },
     'data-delta': { title: 'Graph Delta', welcome: 'k-nav/welcome-g1-data-delta', stages: ['g1-graphs-1', 'g1-graphs-2', 'g1-graphs-3'] },
     'science-summit': { title: 'Sky Summit', welcome: 'k-nav/welcome-g1-science-summit', stages: ['g1-science-1', 'g1-science-2', 'g1-science-3'] },
   }

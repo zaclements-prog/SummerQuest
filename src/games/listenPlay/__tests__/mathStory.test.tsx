@@ -429,7 +429,8 @@ describe('the real stages', () => {
   it.each([
     ['fraction-falls', 0],
     ['fraction-falls', 1],
-    ['fraction-falls', 2],
+    // (stage 2 is the Snack Shack, its own game)
+    ['fraction-falls', 3],
     ['word-problem-woods', 0],
     ['word-problem-woods', 1],
     ['word-problem-woods', 2],
