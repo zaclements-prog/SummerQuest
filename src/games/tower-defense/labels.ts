@@ -139,11 +139,11 @@ export function ruleBadge(id: RuleId): CanvasTexture {
     ctx.fill()
     if (r.badgeDots) {
       const { n, arrow } = r.badgeDots
-      drawDots(ctx, n, arrow ? 108 : 128, 96, n > 4 ? 15 : 20, r.color)
+      drawDots(ctx, n, arrow ? 98 : 128, 96, n > 4 ? 15 : 20, r.color)
       if (arrow) {
         // ▲ more / ▼ fewer, beside the five
         ctx.beginPath()
-        const x = 206
+        const x = 210
         if (arrow === 'up') {
           ctx.moveTo(x, 62)
           ctx.lineTo(x + 20, 104)

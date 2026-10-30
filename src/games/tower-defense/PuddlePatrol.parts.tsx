@@ -257,9 +257,9 @@ function Body({ id }: { id: RuleId }) {
     case 'shell':
       return (
         <group>
-          <TBlob position={[0, 0.5, 0]} scale={[0.75, 0.42, 0.7]} color={TOON.rock} />
+          <TCyl radiusTop={0.5} radiusBottom={0.62} height={0.5} position={[0, 0.45, 0]} color={TOON.sand} />
           {[-2, -1, 0, 1, 2].map((i) => (
-            <TBox key={i} size={[0.26, 1.15, 0.2]} radius={0.1} position={[i * 0.2, 1.3 - Math.abs(i) * 0.08, -0.05]} rotation={[0, 0, -i * 0.28]} color={i % 2 ? WHITE : c} outline={i === 0} />
+            <TBox key={i} size={[0.34, 1.45, 0.24]} radius={0.12} position={[i * 0.26, 1.35 - Math.abs(i) * 0.1, -0.05]} rotation={[0, 0, -i * 0.3]} color={i % 2 ? WHITE : c} outline={i === 0} />
           ))}
           <TSphere position={[0, 1.95, 0]} scale={0.2} color={TOON.flowerPink} />
         </group>

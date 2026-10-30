@@ -179,7 +179,7 @@ export default function PuddlePatrol({ provider, params, onComplete, meta, pause
         void guide.sequence(
           [
             { voice: line(say ?? (n === 0 ? 'intro' : 'buildMore')), target: cards, hand: 'sweep', dim: false },
-            ...(slot !== null ? [{ target: 'pp-slot', cue: say ? 0.6 : 'tap a spot', hand: 'tap' as const, dim: false }] : []),
+            ...(slot !== null ? [{ target: 'pp-slot', cue: !say && n === 0 ? 'tap a spot' : 0.6, hand: 'tap' as const, dim: false }] : []),
           ],
           { repeatable: true },
         )
