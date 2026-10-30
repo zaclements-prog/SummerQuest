@@ -111,6 +111,16 @@ export const divisionZone: Zone = {
         starsToEarn: 3,
       },
       {
+        id: 'k-dunes-gobble',
+        kind: 'practice',
+        title: 'Gobble Garden',
+        description: 'Feed the cloud snacks smaller than its number!',
+        gameId: 'gobbleGarden',
+        // dot groups and numerals 1–10, said aloud; no clock
+        providerConfig: { kind: 'gobble', set: 'k' },
+        starsToEarn: 3,
+      },
+      {
         id: 'k-dunes-3',
         kind: 'mastery',
         title: 'Numbers in order',

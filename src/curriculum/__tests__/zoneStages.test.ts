@@ -257,8 +257,9 @@ const G5_IDS: Record<string, string[]> = {
   'writing-workshop': ['g5-write-1', 'g5-write-2', 'g5-write-3'],
   'science-summit': ['g5-sci-1', 'g5-sci-cycle', 'g5-sci-2', 'g5-sci-3'],
   // Fraction Falls, Place Value Plateau, Tower Battlefront (phase 3)
-  'fraction-falls': ['g5-frac-1', 'g5-frac-2', 'g5-frac-3'],
-  'place-value-plateau': ['g5-dec-1', 'g5-dec-2', 'g5-dec-3'],
+  // (Gobble Garden before each boss)
+  'fraction-falls': ['g5-frac-1', 'g5-frac-2', 'g5-frac-gobble', 'g5-frac-3'],
+  'place-value-plateau': ['g5-dec-1', 'g5-dec-2', 'g5-dec-gobble', 'g5-dec-3'],
   'tower-battlefront': ['g5-td-1'],
   // Measurement Marsh, Geometry Grove, Data Delta (phase 3)
   'measurement-marsh': ['g5-measure-1', 'g5-measure-2', 'g5-measure-3'],
@@ -281,7 +282,7 @@ const G1_IDS: Record<string, string[]> = {
   'writing-workshop': ['g1-trace-1', 'g1-spell-1', 'g1-sentence-1'],
   'tower-battlefront': ['g1-towers-1', 'g1-towers-2', 'g1-towers-3'],
   // Tens Plateau, Fair Share Falls, Shape Grove (phase 2b)
-  'place-value-plateau': ['g1-tens-1', 'g1-tens-2', 'g1-tens-3'],
+  'place-value-plateau': ['g1-tens-1', 'g1-tens-2', 'g1-tens-gobble', 'g1-tens-3'],
   'fraction-falls': ['g1-shares-1', 'g1-shares-2', 'g1-shares-3'],
   'geometry-grove': ['g1-shapes-1', 'g1-shapes-2', 'g1-shapes-3'],
   // Measure Marsh, Graph Delta, Sky Summit (phase 2b)
@@ -321,7 +322,8 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
     'fraction-falls': ['k-addsub-1', 'k-addsub-2', 'k-addsub-3'],
     'word-problem-woods': ['k-woods-1', 'k-woods-2', 'k-woods-3'],
     // (K complete, phase 2a: Number Dunes, Ten Frame Plateau)
-    'division-dunes': ['k-dunes-1', 'k-dunes-2', 'k-dunes-3'],
+    // (Gobble Garden before the last stage)
+    'division-dunes': ['k-dunes-1', 'k-dunes-2', 'k-dunes-gobble', 'k-dunes-3'],
     'place-value-plateau': ['k-teens-1', 'k-teens-2', 'k-teens-3'],
     // K complete (phase 2a)
     'measurement-marsh': ['k-measure-1', 'k-measure-2', 'k-measure-3'],
@@ -379,6 +381,13 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
         expect(s.params?.ops).not.toBe('div')
         continue
       }
+      // Gobble Garden: kindergarten's dots and numerals to 10 (no clock: no `seconds`)
+      if (s.id === 'k-dunes-gobble') {
+        expect(s.gameId).toBe('gobbleGarden')
+        expect(s.providerConfig).toEqual({ kind: 'gobble', set: 'k' })
+        expect(s.params?.seconds).toBeUndefined()
+        continue
+      }
       // Counting Towers: the tower defense in its K–1 mode (its questions build the towers)
       if (s.id.startsWith('k-towers-')) {
         expect(s.gameId, s.id).toBe('towerDefense')
@@ -396,7 +405,7 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
       // (K complete, phase 2a)
       ...['kAddTake', 'kAddTake', 'kAddTake'],
       ...['kStoryMath', 'kStoryMath', 'kStoryMath'],
-      ...['kCompare', 'kCompare', 'kCompare', 'kTeens', 'kTeens', 'kTeens'],
+      ...['kCompare', 'kCompare', 'gobble', 'kCompare', 'kTeens', 'kTeens', 'kTeens'],
       // K complete (phase 2a), in K1_IDS order
       ...['kMeasure', 'kMeasure', 'kMeasure', 'kSort', 'kSort', 'kSort'],
       ...['kScience', 'kScience', 'kScience', 'kTowers', 'kTowers', 'kTowers'],
@@ -492,7 +501,7 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
       expect(q.activity?.kind).toBe('mathStory')
     }
     // the 2–4 stages are unchanged
-    expect(falls.stages.map((s) => s.id)).toEqual(['frac-concept', 'frac-practice', 'frac-mastery'])
+    expect(falls.stages.map((s) => s.id)).toEqual(['frac-concept', 'frac-practice', 'frac-gobble', 'frac-mastery'])
     expect(woods.stages.map((s) => s.id)).toEqual(['wp-concept', 'wp-practice', 'wp-mastery'])
   })
 
@@ -513,11 +522,13 @@ describe('K complete (phase-2a contract): Number Dunes and Ten Frame Plateau', (
     expect(set.map((s) => [s.id, s.kind, s.title])).toEqual([
       ['k-dunes-1', 'concept', 'Line them up'],
       ['k-dunes-2', 'practice', 'Which is more?'],
+      ['k-dunes-gobble', 'practice', 'Gobble Garden'],
       ['k-dunes-3', 'mastery', 'Numbers in order'],
     ])
     expect(set.map((s) => s.providerConfig)).toEqual([
       { kind: 'kCompare', mode: 'match' },
       { kind: 'kCompare', mode: 'numbers' },
+      { kind: 'gobble', set: 'k' },
       { kind: 'kCompare', mode: 'lineUp' },
     ])
     expect(zoneTitle(dunes, 0)).toBe('Number Dunes')
@@ -544,7 +555,7 @@ describe('K complete (phase-2a contract): Number Dunes and Ten Frame Plateau', (
     expect(zoneTitle(plateau, 0)).toBe('Ten Frame Plateau')
     expect(isZoneSleeping(plateau, 0)).toBe(false)
     expect(zoneTitle(plateau, 4)).toBe('Place Value Plateau')
-    expect(plateau.stages.map((s) => s.id)).toEqual(['pv-concept', 'pv-practice', 'pv-mastery'])
+    expect(plateau.stages.map((s) => s.id)).toEqual(['pv-concept', 'pv-practice', 'pv-gobble', 'pv-mastery'])
   })
 
   it('every question is answered by doing a number activity (no plain cards), and each unlocks after the one before', () => {
@@ -552,6 +563,8 @@ describe('K complete (phase-2a contract): Number Dunes and Ten Frame Plateau', (
       const zone = getZone(zoneId)!
       const set = zoneStages(zone, 0)
       for (const s of set) {
+        // (Gobble Garden is its own game: the cloud's number and the snacks are its activity)
+        if (s.gameId === 'gobbleGarden') continue
         const p = createProvider(s.providerConfig)
         for (let i = 0; i < 6; i++) expect((p.next() as ListenProblem).activity, `${s.id} #${i}`).toBeDefined()
       }
@@ -716,6 +729,7 @@ describe('1st grade (phase-2b contract): Tens Plateau, Fair Share Falls, Shape G
       stages: [
         ['g1-tens-1', 'concept', 'Tens and ones', { kind: 'g1Tens', mode: 'tensOnes' }],
         ['g1-tens-2', 'practice', 'Bigger or smaller', { kind: 'g1Tens', mode: 'compare' }],
+        ['g1-tens-gobble', 'practice', 'Gobble Garden', { kind: 'gobble', set: 'g1' }],
         ['g1-tens-3', 'mastery', 'Count to 120', { kind: 'g1Tens', mode: 'to120' }],
       ],
     },
@@ -764,14 +778,20 @@ describe('1st grade (phase-2b contract): Tens Plateau, Fair Share Falls, Shape G
       const zone = getZone(z.zoneId)!
       const set = zoneStages(zone, 1)
       set.forEach((s, i) => {
-        expect(s.gameId, s.id).toBe('listenPlay')
         expect(s.starsToEarn, s.id).toBe(3)
-        expect(s.params?.questionCount, s.id).toBeGreaterThanOrEqual(5)
-        expect(s.params?.questionCount, s.id).toBeLessThanOrEqual(6)
         expect(s.description.split(' ').length, s.id).toBeLessThanOrEqual(10)
         expect(s.description, s.id).toMatch(/[.!?]$/)
         expect(isStageUnlocked(zone, s.id, stars(set.slice(0, i).map((x) => x.id)), 1), s.id).toBe(true)
         if (i > 0) expect(isStageUnlocked(zone, s.id, stars(set.slice(0, i - 1).map((x) => x.id)), 1), s.id).toBe(false)
+        // (Tens Plateau's Gobble Garden: two-digit snacks, said aloud, no clock)
+        if (s.id === 'g1-tens-gobble') {
+          expect(s.gameId).toBe('gobbleGarden')
+          expect(s.params?.seconds).toBeUndefined()
+          return
+        }
+        expect(s.gameId, s.id).toBe('listenPlay')
+        expect(s.params?.questionCount, s.id).toBeGreaterThanOrEqual(5)
+        expect(s.params?.questionCount, s.id).toBeLessThanOrEqual(6)
         // every question is said, and comes from the stage's own provider
         const p = createProvider(s.providerConfig)
         for (let k = 0; k < 6; k++) expect((p.next() as ListenProblem).speech, `${s.id} #${k}`).toBeDefined()

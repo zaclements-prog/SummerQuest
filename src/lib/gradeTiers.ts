@@ -298,6 +298,11 @@ export function effectiveConfig(
     case 'g5Div':
     case 'g5Expr':
       return config
+    // Gobble Garden: whole numbers follow the grade's place-value reach, fractions its denominators
+    case 'gobble':
+      if (config.set === 'whole') return { ...config, maxPlace: t.pvIdentifyMaxPlace }
+      if (config.set === 'frac') return { ...config, maxDen: t.fracCompareMaxDenom }
+      return config
   }
 }
 

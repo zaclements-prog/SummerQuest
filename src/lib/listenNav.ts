@@ -66,7 +66,17 @@ export function zoneWelcomeVoice(zoneId: string, grade?: Grade): VoiceRef {
 
 /** A stage's title, said when its picture button is focused or tapped ("Count with me!"). */
 export function stageVoice(stageId: string): VoiceRef | null {
-  return line(`stage-${stageId}`)
+  return line(`stage-${stageId}`) ?? gameStageLine(stageId)
+}
+
+/** The new games keep their K–1 stage names in their own packs (`<pack>/stage-<stageId>`). */
+const GAME_STAGE_PACKS = ['gobble-garden']
+function gameStageLine(stageId: string): VoiceRef | null {
+  for (const pack of GAME_STAGE_PACKS) {
+    const id = `${pack}/stage-${stageId}`
+    if (lineText(id) !== undefined) return { line: id }
+  }
+  return null
 }
 
 /** Pictures for the pilot's stage buttons (a stage may also bring its own `emoji`). */
@@ -101,6 +111,7 @@ const STAGE_PICTURE: Record<string, string> = {
   // Number Dunes and Ten Frame Plateau (K, phase 2a)
   'k-dunes-1': '🐰',
   'k-dunes-2': '🎲',
+  'k-dunes-gobble': '☁️',
   'k-dunes-3': '🚂',
   'k-teens-1': '🔟',
   'k-teens-2': '🔴',
@@ -135,6 +146,7 @@ const STAGE_PICTURE: Record<string, string> = {
   // 1st grade (phase 2b): Tens Plateau, Fair Share Falls, Shape Grove
   'g1-tens-1': '🔟',
   'g1-tens-2': '⚖️',
+  'g1-tens-gobble': '☁️',
   'g1-tens-3': '💯',
   'g1-shares-1': '🍕',
   'g1-shares-2': '🍰',

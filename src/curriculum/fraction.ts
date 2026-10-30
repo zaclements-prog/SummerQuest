@@ -38,6 +38,17 @@ export const fractionZone: Zone = {
       starsToEarn: 3,
     },
     {
+      id: 'frac-gobble',
+      kind: 'practice',
+      title: 'Gobble Garden',
+      description: 'Gobble the fractions smaller than the cloud: same bottoms, same tops, and halves!',
+      gameId: 'gobbleGarden',
+      // the grade's denominators (lib/gradeTiers): same denominator → same numerator → benchmarks against ½
+      providerConfig: { kind: 'gobble', set: 'frac' },
+      params: { seconds: 80 },
+      starsToEarn: 3,
+    },
+    {
       id: 'frac-mastery',
       kind: 'mastery',
       title: 'Compare the Pour',
@@ -142,6 +153,16 @@ export const fractionZone: Zone = {
         gameId: 'conceptPlay',
         providerConfig: { kind: 'g5Fractions', mode: 'timesShare' },
         params: { questionCount: 8 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g5-frac-gobble',
+        kind: 'practice',
+        title: 'Gobble Garden',
+        description: 'You are 0.7: can you eat 5/8? Gobble fractions and decimals smaller than the cloud!',
+        gameId: 'gobbleGarden',
+        providerConfig: { kind: 'gobble', set: 'fracDec' },
+        params: { seconds: 80 },
         starsToEarn: 3,
       },
       {

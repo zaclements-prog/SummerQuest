@@ -235,7 +235,8 @@ describe('petStatus', () => {
 
 describe('all pets', () => {
   it('petStatuses / petStages cover every pet in catalog order', () => {
-    const zones = { ...zonesWith('fraction-falls', [3, 3, 3]), ...zonesWith('reading-reef', [2]) }
+    // (Fraction Falls has four stages for 2nd–4th grade: Gobble Garden before the boss)
+    const zones = { ...zonesWith('fraction-falls', [3, 3, 3, 3]), ...zonesWith('reading-reef', [2]) }
     const list = petStatuses(zones, { geometry: 1 }, 3)
     expect(list.map((s) => s.pet.creatureId)).toEqual(PETS.map((p) => p.creatureId))
     const stages = petStages(zones, { geometry: 1 }, 3)

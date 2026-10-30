@@ -72,6 +72,9 @@ import { makeG5DataProvider, type G5DataConfig } from './g5Data'
 import { makeG5MultProvider, type G5MultConfig } from './g5Mult'
 import { makeG5DivProvider, type G5DivConfig } from './g5Div'
 import { makeG5ExprProvider, type G5ExprConfig } from './g5Expr'
+// Gobble Garden (every band): the snacks a cloud of a number may eat
+import { makeGobbleProvider } from './gobble'
+import type { GobbleConfig } from '../gobble'
 
 export type ProviderConfig =
   | { kind: 'multiplication'; factorMin: number; factorMax: number }
@@ -175,6 +178,9 @@ export type ProviderConfig =
   | ({ kind: 'g5Div' } & G5DivConfig)
   /** Word Problem Woods (5th grade): writing and working out expressions, two-rule patterns, multi-step stories. */
   | ({ kind: 'g5Expr' } & G5ExprConfig)
+  // ── new games ──
+  /** Gobble Garden: snacks smaller or bigger than the cloud's number (dots, two-digit, whole numbers and expressions, fractions, decimals). */
+  | ({ kind: 'gobble' } & GobbleConfig)
 
 export function createProvider(config: ProviderConfig): ProblemProvider {
   switch (config.kind) {
@@ -294,5 +300,7 @@ export function createProvider(config: ProviderConfig): ProblemProvider {
       return makeG5DivProvider(config)
     case 'g5Expr':
       return makeG5ExprProvider(config)
+    case 'gobble':
+      return makeGobbleProvider(config)
   }
 }

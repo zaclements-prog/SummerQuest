@@ -432,7 +432,12 @@ describe('Put shapes together (snap)', () => {
 // ── every 1st-grade stage, played through ───────────────────────────────────
 
 describe('every 1st-grade stage of Tens Plateau, Fair Share Falls and Shape Grove', () => {
-  const STAGES = ['place-value-plateau', 'fraction-falls', 'geometry-grove'].flatMap((z) => zoneStages(getZone(z)!, 1).map((s) => ({ zone: z, stage: s })))
+  // (Listen & Play's own: Tens Plateau's Gobble Garden is its own game)
+  const STAGES = ['place-value-plateau', 'fraction-falls', 'geometry-grove'].flatMap((z) =>
+    zoneStages(getZone(z)!, 1)
+      .filter((s) => s.gameId === 'listenPlay')
+      .map((s) => ({ zone: z, stage: s })),
+  )
 
   it.each(STAGES.map((x) => [x.stage.id, x]))('%s: right every time → three stars, never more than three words to read', async (_id, { stage }) => {
     let result: GameResult | null = null

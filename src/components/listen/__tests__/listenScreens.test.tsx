@@ -424,7 +424,7 @@ describe('ZoneDetail, 1st grade (phase 2b)', () => {
 
   it('Tens Plateau, Fair Share Falls and Shape Grove: their 1st-grade picture buttons, name and welcome; no paragraphs', () => {
     for (const [zoneId, title, welcome, ids] of [
-      ['place-value-plateau', 'Tens Plateau', 'k-nav/welcome-g1-place-value-plateau', ['g1-tens-1', 'g1-tens-2', 'g1-tens-3']],
+      ['place-value-plateau', 'Tens Plateau', 'k-nav/welcome-g1-place-value-plateau', ['g1-tens-1', 'g1-tens-2', 'g1-tens-gobble', 'g1-tens-3']],
       ['fraction-falls', 'Fair Share Falls', 'k-nav/welcome-g1-fraction-falls', ['g1-shares-1', 'g1-shares-2', 'g1-shares-3']],
       ['geometry-grove', 'Shape Grove', 'k-nav/welcome-geometry-grove', ['g1-shapes-1', 'g1-shapes-2', 'g1-shapes-3']],
     ] as const) {
