@@ -1,5 +1,5 @@
 import { addDays, localDayKey } from '../dates'
-import { weeklyFocus, withinDays } from '../analytics'
+import { attemptCredit, weeklyFocus, withinDays } from '../analytics'
 import { isLessonFor } from '../../tutoring/lessons'
 import type { GradeLevel } from '../gradeTiers'
 import type { SessionRecord, SkillAttempt } from '../../store/progress'
@@ -205,7 +205,7 @@ export function skillRecovered(attempts: readonly SkillAttempt[], skillId: strin
   for (const a of withinDays([...attempts], 7, now)) {
     if (a.skillId !== skillId) continue
     tries++
-    if (a.correct) right++
+    right += attemptCredit(a) // (a right answer after "Show me how" counts half, as on the list)
   }
   return tries >= FOCUS_MIN_ATTEMPTS && Math.round((right / tries) * 100) >= FOCUS_MAX_ACCURACY
 }

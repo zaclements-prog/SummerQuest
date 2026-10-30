@@ -28,9 +28,10 @@ import { OFFERED_GRADES } from '../lib/features'
 import { adultPets, allPetStages, hatchedPets, zoneStarTotals } from '../lib/pets/growth'
 import { PET_IDS } from '../lib/pets/catalog'
 import VoiceCheck from '../voice/VoiceCheck'
+import { helpAskRows } from '../lib/analytics'
 
 export default function ParentDashboard() {
-  const { player, coins, zones, stats, resetPlayer, setGrade, lessonsDone, schoolPet } = useProgress()
+  const { player, coins, zones, stats, resetPlayer, setGrade, lessonsDone, schoolPet, helpAsks } = useProgress()
   // Pets grow from learning: a grown-up one is "raised" (it joins the avatars).
   const grade = player?.grade
   const petGrowth = allPetStages({ zones, lessonsDone, schoolPet })
@@ -198,6 +199,13 @@ export default function ParentDashboard() {
             >
               📈 Sessions & performance trends →
             </Button>
+          </Panel>
+        </motion.div>
+
+        {/* ── Asked for help ("💡 Show me how" opens, per skill; kept on this device) ── */}
+        <motion.div variants={item}>
+          <Panel emoji="💡" title="Asked for help" tone="quest">
+            <HelpAskList rows={helpAskRows(helpAsks)} />
           </Panel>
         </motion.div>
 
@@ -443,6 +451,40 @@ const GRADE_PICK_COLS = !GRADE_PICK_SHORT
       : 'grid-cols-3 min-[480px]:grid-cols-6'
 
 // ── Inline sub-components ──────────────────────────────────────────────────────
+
+/** Where "💡 Show me how" was opened: skill, how often, when last. */
+function HelpAskList({ rows }: { rows: ReturnType<typeof helpAskRows> }) {
+  if (rows.length === 0) {
+    return (
+      <p className="text-base text-ink-700">
+        Nothing yet. When your child taps <b className="text-ink-900">💡 Show me how</b> on a question, its skill shows up
+        here, so you can see where a hand is wanted.
+      </p>
+    )
+  }
+  return (
+    <>
+      <p className="text-sm text-ink-700 mb-3">
+        Times your child opened <b className="text-ink-900">💡 Show me how</b>, a step-by-step walkthrough of the
+        question. A right answer after it still counts, and the skill gets a little more practice on This Week&apos;s Focus.
+      </p>
+      <ul className="flex flex-col gap-2" data-help-asks="">
+        {rows.map((r) => (
+          <li
+            key={r.skillId}
+            className="flex items-center gap-3 px-3 py-2.5 rounded-[1.25rem] bg-cream-100 border-2 border-line/10"
+          >
+            <span className="kid-text text-lg text-ink-900 flex-1 min-w-0 truncate first-letter:uppercase">{r.label}</span>
+            <Pill tone="quest" icon="💡">
+              {r.count} {r.count === 1 ? 'time' : 'times'}
+            </Pill>
+            <span className="text-sm text-ink-700 whitespace-nowrap w-[6.5rem] text-right">last {r.lastLabel}</span>
+          </li>
+        ))}
+      </ul>
+    </>
+  )
+}
 
 /** A titled section panel: a toon Card with a colored token + heading. */
 function Panel({

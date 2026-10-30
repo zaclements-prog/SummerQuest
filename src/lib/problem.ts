@@ -152,6 +152,64 @@ export type ProblemVisual =
   /** 5th grade (Division Dunes): a long division set up; `highlight` lights the dividend's first digits. */
   | { kind: 'longDivision'; dividend: number; divisor: number; highlight?: number }
 
+/**
+ * "Show me how" (src/games/_shared/ShowMeHow.tsx): the picture for one step of
+ * a worked example. Each step carries the whole picture as it stands at that
+ * step (earlier jumps included), so any step can be drawn on its own.
+ */
+export type WalkVisual =
+  /**
+   * Elapsed time as hops along a timeline: from `start` (minutes after 12:00
+   * on a 12-hour clock), each of `jumps` (minutes) done so far, then a
+   * `pending` jump whose landing is still "?" (the child's turn).
+   */
+  | {
+      kind: 'timeJumps'
+      start: number
+      jumps: number[]
+      pending?: number
+      /** Every jump of the walkthrough (pending one included): the timeline keeps its scale from step to step. */
+      plan?: number[]
+    }
+  /**
+   * Making change the shopkeeper's way: count up from `cost` (cents) to
+   * `paid` (cents) with `hops` of coins or bills done so far. `askTotal`: the
+   * hops are lined up as a sum "= ?" (the child adds them up).
+   */
+  | {
+      kind: 'countUp'
+      cost: number
+      paid: number
+      hops: WalkCoinHop[]
+      askTotal?: boolean
+      /** How many hops the walkthrough makes in all (the line keeps its scale). */
+      plan?: number
+    }
+  /**
+   * Rounding on a number line from `lo` to `hi` (the two round numbers):
+   * optionally the halfway mark, the number itself, and its deciding digit
+   * (`digitAt`: the digit's place value, 1 / 10 / 100) highlighted.
+   */
+  | { kind: 'roundLine'; n: number; lo: number; hi: number; showMid?: boolean; showN?: boolean; digitAt?: number }
+
+/** One hop of a count-up: `count` of the same coin or bill (`each` cents apiece). */
+export interface WalkCoinHop {
+  coin: 'penny' | 'nickel' | 'dime' | 'quarter' | 'dollar' | 'five'
+  each: number
+  count: number
+}
+
+/** One step of a "Show me how" walkthrough. */
+export interface WalkStep {
+  /** What the step says (shown as its caption and spoken). */
+  say: string
+  /** A fixed, recordable voice line saying exactly `say` (else device speech reads it). */
+  voice?: VoiceRef
+  visual: WalkVisual
+  /** The last step: hands the problem back to the child ("…Your turn!"). Never states the answer. */
+  yourTurn?: boolean
+}
+
 export interface Problem {
   id: string
   prompt: string
@@ -178,6 +236,13 @@ export interface Problem {
    * (each `value` is in `options`, so `answer` checking is unchanged).
    */
   pictureOptions?: PictureOption[]
+  /**
+   * "Show me how": a short worked example of THIS problem, built by the
+   * provider from the same numbers (so it always adds up), stopping one step
+   * short of the answer. Games offer the 💡 button when it is present.
+   * (Not the K–1 Listen & Play `walkthrough`, which is a ListenProblem's own.)
+   */
+  showMe?: WalkStep[]
 }
 
 export interface ProblemProvider {

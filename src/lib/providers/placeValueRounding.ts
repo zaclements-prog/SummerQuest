@@ -1,4 +1,5 @@
-import type { Problem, ProblemProvider } from '../problem'
+import type { Problem, ProblemProvider, WalkStep } from '../problem'
+import { lineText } from '../../voice/registry'
 import { randInt, shuffle } from '../random'
 
 interface Config {
@@ -43,9 +44,55 @@ export function makePlaceValueRoundingProvider(cfg: Config): ProblemProvider {
         difficulty: Math.log10(cfg.maxPlace),
         skill: { id: 'pv-round', label: 'rounding numbers' },
         hint: `Look at the ${DECIDING_PLACE[cfg.roundTo]} digit (the place just to the right) — if it's 5 or more, round up.`,
+        showMe: roundWalkthrough(n, cfg.roundTo),
       }
     },
   }
+}
+
+const PLACE_WORD: Record<Config['roundTo'], 'ten' | 'hundred' | 'thousand'> = { 10: 'ten', 100: 'hundred', 1000: 'thousand' }
+const YOUR_TURN_LINE: Record<Config['roundTo'], string> = {
+  10: 'show-me/roundTenYourTurn',
+  100: 'show-me/roundHundredYourTurn',
+  1000: 'show-me/roundThousandYourTurn',
+}
+
+/**
+ * "Show me how" for rounding (src/games/_shared/ShowMeHow.tsx), from the
+ * problem's own number: a number line between the two round numbers, the
+ * halfway mark, the number on it, its deciding digit, then the child decides
+ * which round number it is closer to. Never says which.
+ */
+export function roundWalkthrough(n: number, roundTo: Config['roundTo']): WalkStep[] {
+  const fmt = (x: number) => x.toLocaleString('en-US')
+  const lo = Math.floor(n / roundTo) * roundTo
+  const hi = lo + roundTo
+  const mid = lo + roundTo / 2
+  const digitAt = roundTo / 10
+  const digit = Math.floor(n / digitAt) % 10
+  const digitName = DECIDING_PLACE[roundTo]
+  const aDigit = `${digit === 8 ? 'an' : 'a'} ${digit}`
+  const base = { kind: 'roundLine' as const, n, lo, hi }
+  const fixed = (id: string) => ({ say: lineText(id) ?? '', voice: { line: id } })
+  if (n === lo) {
+    // already a round number: it sits on the line's start
+    const vis = { ...base, showN: true, digitAt }
+    return [
+      { say: `Find ${fmt(n)} on the number line, between ${fmt(lo)} and ${fmt(hi)}.`, visual: { ...base, showN: true } },
+      { say: `Look at the ${digitName} digit: it's a 0. ${fmt(n)} sits right on a ${PLACE_WORD[roundTo]}!`, visual: vis },
+      { ...fixed('show-me/roundExactYourTurn'), visual: vis, yourTurn: true },
+    ]
+  }
+  const full = { ...base, showMid: true, showN: true, digitAt }
+  return [
+    { say: `${fmt(n)} is between ${fmt(lo)} and ${fmt(hi)}.`, visual: base },
+    { say: `Halfway between them is ${fmt(mid)}.`, visual: { ...base, showMid: true } },
+    { say: `Here is ${fmt(n)} on the line.`, visual: { ...base, showMid: true, showN: true } },
+    n === mid
+      ? { say: `Look at the ${digitName} digit: it's a 5. ${fmt(n)} is exactly halfway!`, visual: full }
+      : { say: `Look at the ${digitName} digit: it's ${aDigit}.`, visual: full },
+    { ...fixed(n === mid ? 'show-me/roundHalfYourTurn' : YOUR_TURN_LINE[roundTo]), visual: full, yourTurn: true },
+  ]
 }
 
 function roundToNearest(n: number, multiple: number): number {

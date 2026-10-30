@@ -45415,6 +45415,48 @@
       "kind": "line",
       "file": "voice/quest/done.mp3"
     },
+    "show-me/timeYourTurn": {
+      "text": "So what time will it be? Your turn!",
+      "hash": "0862831e30",
+      "kind": "line",
+      "file": "voice/show-me/timeYourTurn.mp3"
+    },
+    "show-me/moneyYourTurn": {
+      "text": "So how much did we count up? Add them! Your turn!",
+      "hash": "f517f6527d",
+      "kind": "line",
+      "file": "voice/show-me/moneyYourTurn.mp3"
+    },
+    "show-me/roundTenYourTurn": {
+      "text": "So which ten is it closer to? Your turn!",
+      "hash": "8d0e3b5007",
+      "kind": "line",
+      "file": "voice/show-me/roundTenYourTurn.mp3"
+    },
+    "show-me/roundHundredYourTurn": {
+      "text": "So which hundred is it closer to? Your turn!",
+      "hash": "7dc1a08ddd",
+      "kind": "line",
+      "file": "voice/show-me/roundHundredYourTurn.mp3"
+    },
+    "show-me/roundThousandYourTurn": {
+      "text": "So which thousand is it closer to? Your turn!",
+      "hash": "586b541568",
+      "kind": "line",
+      "file": "voice/show-me/roundThousandYourTurn.mp3"
+    },
+    "show-me/roundHalfYourTurn": {
+      "text": "Halfway or more rounds up. So what does it round to? Your turn!",
+      "hash": "3f65515fd7",
+      "kind": "line",
+      "file": "voice/show-me/roundHalfYourTurn.mp3"
+    },
+    "show-me/roundExactYourTurn": {
+      "text": "So what does it round to? Your turn!",
+      "hash": "60c4ecef0f",
+      "kind": "line",
+      "file": "voice/show-me/roundExactYourTurn.mp3"
+    },
     "ui/tapToStart": {
       "text": "Tap the star to start!",
       "hash": "54d693b052",

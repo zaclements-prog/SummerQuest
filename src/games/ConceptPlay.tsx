@@ -9,6 +9,8 @@ import { skillOf } from '../tutoring/skills'
 import { Loading } from '../components/ui'
 import { QuizProgress, QuestionPrompt, AnswerGrid, QuizSplit, MissNote } from './_shared/QuizUI'
 import { SHORT_SCREEN, WIDE_SHORT, useMediaQuery } from '../components/useViewport'
+import { ShowMeButton, ShowMePanel, ShowMeStrip } from './_shared/ShowMeHow'
+import { useShowMe } from './_shared/useShowMe'
 
 /**
  * Generic concept stage. Shows a problem with its visual representation, presents
@@ -30,6 +32,8 @@ export default function ConceptPlay({ provider, params, onComplete, meta }: Game
   // Phone held sideways: smaller pictures, question beside the answers.
   const short = useMediaQuery(SHORT_SCREEN)
   const wide = useMediaQuery(WIDE_SHORT)
+  // "💡 Show me how" (questions with a worked example): free to open, before or after answering
+  const showMe = useShowMe(loadedIdx === idx ? problem : null)
 
   useEffect(() => {
     let cancel = false
@@ -46,13 +50,21 @@ export default function ConceptPlay({ provider, params, onComplete, meta }: Game
   }, [idx, provider])
 
   function pick(opt: string | number) {
-    if (!problem || answered !== null) return
+    if (!problem || answered !== null || showMe.open) return
     setAnswered(opt)
     const isCorrect = opt === problem.answer
     recordAnswer(isCorrect, problem)
     if (meta) {
       const sk = skillOf(problem)
-      recordAttempt({ zoneId: meta.zoneId, topic: provider.topic, skillId: sk.id, skillLabel: sk.label, correct: isCorrect })
+      recordAttempt({
+        zoneId: meta.zoneId,
+        topic: provider.topic,
+        skillId: sk.id,
+        skillLabel: sk.label,
+        correct: isCorrect,
+        // watched "Show me how" first: still right (and still a star), but marked helped
+        ...(showMe.helped ? { helped: true } : {}),
+      })
     }
     if (isCorrect) {
       sfx.correct()
@@ -117,6 +129,11 @@ export default function ConceptPlay({ provider, params, onComplete, meta }: Game
         question={
           <>
             <QuestionPrompt>{problem.prompt}</QuestionPrompt>
+            {showMe.available && answered === null && (
+              showMe.finished
+                ? <ShowMeStrip steps={problem.showMe!} onReplay={showMe.show} />
+                : <ShowMeButton onClick={showMe.show} className="mt-3 short:mt-2" />
+            )}
             {hasGenuineVisual && (
               <div className="my-5 max-sm:my-3.5 short:my-3 flex justify-center">
                 <VisualRenderer visual={problem.visual} size={visualSize(problem.visual, short, wide)} />
@@ -136,12 +153,18 @@ export default function ConceptPlay({ provider, params, onComplete, meta }: Game
               />
             </div>
             {answered !== null && answered !== problem.answer && (
-              <MissNote answer={problem.answer} hint={problem.hint} onGotIt={() => advance(correctCount)} />
+              <MissNote
+                answer={problem.answer}
+                hint={problem.hint}
+                onGotIt={() => advance(correctCount)}
+                onShowMe={showMe.available ? showMe.show : undefined}
+              />
             )}
           </>
         }
       />
       </div>
+      <ShowMePanel open={showMe.open} steps={problem.showMe} afterAnswer={answered !== null} onClose={showMe.close} />
     </div>
   )
 }

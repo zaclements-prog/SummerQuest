@@ -1,5 +1,5 @@
 import type { SessionRecord } from '../store/progress'
-import { localDayKey } from './dates'
+import { addDays, localDayKey } from './dates'
 
 /**
  * Pure aggregations over the recorded session history. Drives the per-session
@@ -114,7 +114,7 @@ export function recentAccuracy(sessions: SessionRecord[], n = 8): RecentPoint[] 
   }))
 }
 
-import type { SkillAttempt } from '../store/progress'
+import type { HelpAsk, SkillAttempt } from '../store/progress'
 import { skillMeta } from '../tutoring/skills'
 
 const DAY_MS = 86_400_000
@@ -132,6 +132,16 @@ export interface WeakSkill {
   accuracy: number
 }
 
+/**
+ * How much an answer counts toward a skill's accuracy on This Week's Focus: a
+ * right answer 1, a wrong one 0, and a right answer after "Show me how" half
+ * (it was right, but the child needed the walkthrough: the skill isn't solid
+ * yet). Stars and the session's score are unaffected: there it is simply right.
+ */
+export function attemptCredit(a: Pick<SkillAttempt, 'correct' | 'helped'>): number {
+  return a.correct ? (a.helped ? 0.5 : 1) : 0
+}
+
 export function weakSkills(
   attempts: SkillAttempt[],
   opts: { days?: number; minAttempts?: number; max?: number; maxAccuracy?: number; now?: number } = {},
@@ -139,14 +149,17 @@ export function weakSkills(
   const { days = 7, minAttempts = 4, max = 5, maxAccuracy = 80, now = Date.now() } = opts
   const recent = withinDays(attempts, days, now)
   const map = new Map<string, WeakSkill>()
+  const credit = new Map<string, number>()
   for (const a of recent) {
     const w = map.get(a.skillId) ?? { skillId: a.skillId, label: a.skillLabel, attempts: 0, correct: 0, accuracy: 0 }
     w.attempts += 1
     w.correct += a.correct ? 1 : 0
     map.set(a.skillId, w)
+    credit.set(a.skillId, (credit.get(a.skillId) ?? 0) + attemptCredit(a))
   }
   const arr = [...map.values()].filter((w) => w.attempts >= minAttempts)
-  for (const w of arr) w.accuracy = Math.round((w.correct / w.attempts) * 100)
+  // (a helped right answer weighs half: see attemptCredit)
+  for (const w of arr) w.accuracy = Math.round(((credit.get(w.skillId) ?? 0) / w.attempts) * 100)
   // Only surface skills the student is actually struggling with (accuracy below the
   // mastery bar) — a student acing everything should see an empty focus list.
   return arr
@@ -170,4 +183,27 @@ export function weeklyFocus(
     const m = skillMeta(w.skillId)
     return { ...w, label: w.label || m.label, zoneId: m.zoneId, lessonId: m.lessonId, practiceStageId: m.practiceStageId }
   })
+}
+
+// ── "Show me how": where help was asked (the Parent Dashboard) ───────────────
+
+export interface HelpAskRow extends HelpAsk {
+  skillId: string
+  /** "today", "yesterday", "3 days ago", or the date ("10/2"). */
+  lastLabel: string
+}
+
+/** The "Asked for help" list: every skill "Show me how" was opened on, most recent first. */
+export function helpAskRows(helpAsks: Record<string, HelpAsk>, now = Date.now()): HelpAskRow[] {
+  const today = localDayKey(now)
+  return Object.entries(helpAsks)
+    .map(([skillId, h]) => ({ ...h, skillId, lastLabel: whenLabel(localDayKey(h.lastAt), today) }))
+    .sort((a, b) => b.lastAt - a.lastAt || b.count - a.count)
+}
+
+function whenLabel(day: string, today: string): string {
+  if (day >= today) return 'today'
+  if (day === addDays(today, -1)) return 'yesterday'
+  for (let n = 2; n <= 6; n++) if (day === addDays(today, -n)) return `${n} days ago`
+  return dayLabel(day)
 }
