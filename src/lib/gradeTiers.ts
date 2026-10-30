@@ -298,6 +298,9 @@ export function effectiveConfig(
     case 'g5Div':
     case 'g5Expr':
       return config
+    // Puddle Patrol: the grade widens grades 2–4's numbers (2nd grade to 30 / 60, 3rd–4th to 100)
+    case 'puddlePatrol':
+      return { ...config, grade }
   }
 }
 

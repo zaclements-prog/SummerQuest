@@ -45397,6 +45397,252 @@
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=99.mp3"
     },
+    "puddle-patrol/intro": {
+      "text": "Mud Puddings are coming! Pick a sprinkler, then tap a spot by the path.",
+      "hash": "0325a0dc3a",
+      "kind": "line",
+      "file": "voice/puddle-patrol/intro.mp3"
+    },
+    "puddle-patrol/introOlder": {
+      "text": "Each sprinkler washes only the Puddings that fit its rule. Put the right ones by the path!",
+      "hash": "80b667cf29",
+      "kind": "line",
+      "file": "voice/puddle-patrol/introOlder.mp3"
+    },
+    "puddle-patrol/pickSpot": {
+      "text": "Now tap a spot by the path.",
+      "hash": "53ce04645f",
+      "kind": "line",
+      "file": "voice/puddle-patrol/pickSpot.mp3"
+    },
+    "puddle-patrol/pickSprinkler": {
+      "text": "Now pick a sprinkler.",
+      "hash": "baeabddfdc",
+      "kind": "line",
+      "file": "voice/puddle-patrol/pickSprinkler.mp3"
+    },
+    "puddle-patrol/buildMore": {
+      "text": "Add another sprinkler!",
+      "hash": "44b70ad6b3",
+      "kind": "line",
+      "file": "voice/puddle-patrol/buildMore.mp3"
+    },
+    "puddle-patrol/ready": {
+      "text": "Ready? Tap the arrow to send the Puddings!",
+      "hash": "df0fbd0548",
+      "kind": "line",
+      "file": "voice/puddle-patrol/ready.mp3"
+    },
+    "puddle-patrol/lookComing": {
+      "text": "Look who is coming next!",
+      "hash": "81495ea708",
+      "kind": "line",
+      "file": "voice/puddle-patrol/lookComing.mp3"
+    },
+    "puddle-patrol/swapHint": {
+      "text": "Tap a sprinkler to change what it washes.",
+      "hash": "217ce7f1d6",
+      "kind": "line",
+      "file": "voice/puddle-patrol/swapHint.mp3"
+    },
+    "puddle-patrol/newSprinkler": {
+      "text": "A new sprinkler!",
+      "hash": "cb9148f79c",
+      "kind": "line",
+      "file": "voice/puddle-patrol/newSprinkler.mp3"
+    },
+    "puddle-patrol/squeaky": {
+      "text": "Squeaky clean!",
+      "hash": "eef94ecc43",
+      "kind": "line",
+      "file": "voice/puddle-patrol/squeaky.mp3"
+    },
+    "puddle-patrol/waveClean": {
+      "text": "The pond is clean!",
+      "hash": "7111ad7713",
+      "kind": "line",
+      "file": "voice/puddle-patrol/waveClean.mp3"
+    },
+    "puddle-patrol/waveSplash": {
+      "text": "A few splashed in the pond. That is okay!",
+      "hash": "f9f9b2f3ac",
+      "kind": "line",
+      "file": "voice/puddle-patrol/waveSplash.mp3"
+    },
+    "puddle-patrol/noDrops": {
+      "text": "Wash more Puddings to get drops for a new sprinkler.",
+      "hash": "9ebd7b2bfa",
+      "kind": "line",
+      "file": "voice/puddle-patrol/noDrops.mp3"
+    },
+    "puddle-patrol/allDone": {
+      "text": "Patrol done! The pond is sparkling!",
+      "hash": "e71ba8f295",
+      "kind": "line",
+      "file": "voice/puddle-patrol/allDone.mp3"
+    },
+    "puddle-patrol/runDone": {
+      "text": "Patrol done! Tap to collect your stars.",
+      "hash": "ca6568e5ec",
+      "kind": "line",
+      "file": "voice/puddle-patrol/runDone.mp3"
+    },
+    "puddle-patrol/rule-dots-2": {
+      "text": "This sprinkler washes groups of two.",
+      "hash": "18178210d4",
+      "kind": "line",
+      "file": "voice/puddle-patrol/rule-dots-2.mp3"
+    },
+    "puddle-patrol/rule-dots-3": {
+      "text": "This sprinkler washes groups of three.",
+      "hash": "f321a0383d",
+      "kind": "line",
+      "file": "voice/puddle-patrol/rule-dots-3.mp3"
+    },
+    "puddle-patrol/rule-dots-4": {
+      "text": "This sprinkler washes groups of four.",
+      "hash": "75d88b6837",
+      "kind": "line",
+      "file": "voice/puddle-patrol/rule-dots-4.mp3"
+    },
+    "puddle-patrol/rule-dots-5": {
+      "text": "This sprinkler washes groups of five.",
+      "hash": "ab755c1d9c",
+      "kind": "line",
+      "file": "voice/puddle-patrol/rule-dots-5.mp3"
+    },
+    "puddle-patrol/rule-more-5": {
+      "text": "This sprinkler washes groups with more than five.",
+      "hash": "6b8273a4b2",
+      "kind": "line",
+      "file": "voice/puddle-patrol/rule-more-5.mp3"
+    },
+    "puddle-patrol/rule-fewer-5": {
+      "text": "This sprinkler washes groups with fewer than five.",
+      "hash": "8dad68ede0",
+      "kind": "line",
+      "file": "voice/puddle-patrol/rule-fewer-5.mp3"
+    },
+    "puddle-patrol/rule-make-3": {
+      "text": "This sprinkler washes the ones that make three.",
+      "hash": "0864263316",
+      "kind": "line",
+      "file": "voice/puddle-patrol/rule-make-3.mp3"
+    },
+    "puddle-patrol/rule-make-4": {
+      "text": "This sprinkler washes the ones that make four.",
+      "hash": "155581cab4",
+      "kind": "line",
+      "file": "voice/puddle-patrol/rule-make-4.mp3"
+    },
+    "puddle-patrol/rule-make-5": {
+      "text": "This sprinkler washes the ones that make five.",
+      "hash": "5f6ad21f80",
+      "kind": "line",
+      "file": "voice/puddle-patrol/rule-make-5.mp3"
+    },
+    "puddle-patrol/rule-make-7": {
+      "text": "This sprinkler washes the ones that make seven.",
+      "hash": "a615b299a4",
+      "kind": "line",
+      "file": "voice/puddle-patrol/rule-make-7.mp3"
+    },
+    "puddle-patrol/rule-make-10": {
+      "text": "This sprinkler washes the ones that make ten.",
+      "hash": "911328aead",
+      "kind": "line",
+      "file": "voice/puddle-patrol/rule-make-10.mp3"
+    },
+    "puddle-patrol/rule-make-15": {
+      "text": "This sprinkler washes the ones that make fifteen.",
+      "hash": "efe50384dd",
+      "kind": "line",
+      "file": "voice/puddle-patrol/rule-make-15.mp3"
+    },
+    "puddle-patrol/hasDots/n=1": {
+      "text": "That one has one.",
+      "hash": "d4e111f1ea",
+      "kind": "whole",
+      "file": "voice/puddle-patrol/hasDots/n=1.mp3"
+    },
+    "puddle-patrol/hasDots/n=2": {
+      "text": "That one has two.",
+      "hash": "ceebe9a700",
+      "kind": "whole",
+      "file": "voice/puddle-patrol/hasDots/n=2.mp3"
+    },
+    "puddle-patrol/hasDots/n=3": {
+      "text": "That one has three.",
+      "hash": "9406d6fed7",
+      "kind": "whole",
+      "file": "voice/puddle-patrol/hasDots/n=3.mp3"
+    },
+    "puddle-patrol/hasDots/n=4": {
+      "text": "That one has four.",
+      "hash": "2634c41be1",
+      "kind": "whole",
+      "file": "voice/puddle-patrol/hasDots/n=4.mp3"
+    },
+    "puddle-patrol/hasDots/n=5": {
+      "text": "That one has five.",
+      "hash": "056b452e8a",
+      "kind": "whole",
+      "file": "voice/puddle-patrol/hasDots/n=5.mp3"
+    },
+    "puddle-patrol/hasDots/n=6": {
+      "text": "That one has six.",
+      "hash": "cebb965a22",
+      "kind": "whole",
+      "file": "voice/puddle-patrol/hasDots/n=6.mp3"
+    },
+    "puddle-patrol/hasDots/n=7": {
+      "text": "That one has seven.",
+      "hash": "8638eb973f",
+      "kind": "whole",
+      "file": "voice/puddle-patrol/hasDots/n=7.mp3"
+    },
+    "puddle-patrol/hasDots/n=8": {
+      "text": "That one has eight.",
+      "hash": "2ec54049a5",
+      "kind": "whole",
+      "file": "voice/puddle-patrol/hasDots/n=8.mp3"
+    },
+    "puddle-patrol/hasDots/n=9": {
+      "text": "That one has nine.",
+      "hash": "22b27cbc7a",
+      "kind": "whole",
+      "file": "voice/puddle-patrol/hasDots/n=9.mp3"
+    },
+    "puddle-patrol/hasDots/n=10": {
+      "text": "That one has ten.",
+      "hash": "bcbbc66743",
+      "kind": "whole",
+      "file": "voice/puddle-patrol/hasDots/n=10.mp3"
+    },
+    "puddle-patrol/plusMakes#1": {
+      "text": "plus",
+      "hash": "6711c0a6df",
+      "kind": "piece",
+      "file": "voice/puddle-patrol/plusMakes.part1.mp3"
+    },
+    "puddle-patrol/plusMakes#2": {
+      "text": "makes",
+      "hash": "b1a3a72b1e",
+      "kind": "piece",
+      "file": "voice/puddle-patrol/plusMakes.part2.mp3"
+    },
+    "puddle-patrol/minusMakes#1": {
+      "text": "take away",
+      "hash": "602062ca07",
+      "kind": "piece",
+      "file": "voice/puddle-patrol/minusMakes.part1.mp3"
+    },
+    "puddle-patrol/minusMakes#2": {
+      "text": "makes",
+      "hash": "b1a3a72b1e",
+      "kind": "piece",
+      "file": "voice/puddle-patrol/minusMakes.part2.mp3"
+    },
     "quest/first": {
       "text": "Here is your first quest! Tap the big star to start.",
       "hash": "2bf2c363fd",

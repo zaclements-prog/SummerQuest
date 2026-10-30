@@ -259,7 +259,8 @@ const G5_IDS: Record<string, string[]> = {
   // Fraction Falls, Place Value Plateau, Tower Battlefront (phase 3)
   'fraction-falls': ['g5-frac-1', 'g5-frac-2', 'g5-frac-3'],
   'place-value-plateau': ['g5-dec-1', 'g5-dec-2', 'g5-dec-3'],
-  'tower-battlefront': ['g5-td-1'],
+  // (Puddle Patrol: factors, then primes, before the fraction-and-decimal mastery)
+  'tower-battlefront': ['g5-td-factors', 'g5-td-primes', 'g5-td-1'],
   // Measurement Marsh, Geometry Grove, Data Delta (phase 3)
   'measurement-marsh': ['g5-measure-1', 'g5-measure-2', 'g5-measure-3'],
   'geometry-grove': ['g5-geo-1', 'g5-geo-2', 'g5-geo-3'],
@@ -605,17 +606,25 @@ describe('Nature Summit and Counting Towers (phase-2a contract)', () => {
     ])
     // K–1 behaviour lives behind the stage's params (the 2–4 stage has none)
     expect(set.map((s) => s.params)).toEqual([
-      { listen: true, waves: 3 },
-      { listen: true, waves: 3 },
-      { listen: true, waves: 4 },
+      { listen: true, patrol: 'k-count' },
+      { listen: true, patrol: 'k-compare' },
+      { listen: true, patrol: 'k-mixed' },
     ])
     expect(zoneTitle(zone, 0)).toBe('Counting Towers')
     expect(isZoneSleeping(zone, 0)).toBe(false)
-    // grades 2–4 keep today's one stage, exactly
-    expect(zone.stages).toHaveLength(1)
-    expect(zone.stages[0]).toMatchObject({ id: 'td-arena', gameId: 'towerDefense', providerConfig: { kind: 'multiplication', factorMin: 2, factorMax: 10 } })
-    expect(zone.stages[0].params).toBeUndefined()
-    for (const g of [2, 3, 4] as const) expect(zoneStages(zone, g).map((s) => s.id)).toEqual(['td-arena'])
+    // grades 2–4: Puddle Patrol's even / odd and skip-counting stages, then today's mastery stage (its id kept)
+    expect(zone.stages.map((s) => [s.id, s.kind])).toEqual([
+      ['td-even-odd', 'concept'],
+      ['td-skip-count', 'practice'],
+      ['td-arena', 'mastery'],
+    ])
+    expect(zone.stages.map((s) => s.providerConfig)).toEqual([
+      { kind: 'puddlePatrol', set: 'g24-evenOdd' },
+      { kind: 'puddlePatrol', set: 'g24-skip' },
+      { kind: 'puddlePatrol', set: 'g24-mixed' },
+    ])
+    for (const s of zone.stages) expect(s.gameId).toBe('towerDefense')
+    for (const g of [2, 3, 4] as const) expect(zoneStages(zone, g).map((s) => s.id)).toEqual(['td-even-odd', 'td-skip-count', 'td-arena'])
   })
 })
 
