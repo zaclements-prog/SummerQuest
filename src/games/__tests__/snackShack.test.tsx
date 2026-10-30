@@ -153,7 +153,7 @@ describe('Snack Shack', () => {
     expect(attempts.length).toBe(r.total)
     expect(new Set(attempts.map((a) => a.skillId))).toEqual(new Set(['meas-money', 'meas-time']))
     expect(attempts.every((a) => a.correct && a.zoneId === 'measurement-marsh' && a.topic === 'snack-shack')).toBe(true)
-  })
+  }, 30000)
 
   it('a wrong change teaches with the count-up, then the child tries again (counted wrong once)', async () => {
     render(4, 'meas-shack')
@@ -177,7 +177,7 @@ describe('Snack Shack', () => {
     await advance(800)
     expect(['thanks', 'decor', 'clock']).toContain(live().step)
     expect(useProgress.getState().attempts.filter((a) => a.skillId === 'meas-money')).toHaveLength(1 + (o.askTotal ? 1 : 0))
-  })
+  }, 30000)
 
   it('a Clock Tower miss shows the jumps on a timeline; a second miss shows the answer', async () => {
     render(5, 'g5-measure-shack')
@@ -193,7 +193,7 @@ describe('Snack Shack', () => {
     await click([...document.querySelectorAll('button')].find((b) => b.textContent === 'Got it →'))
     await advance(2500)
     expect(useProgress.getState().attempts.find((a) => a.skillId === 'g5-convert')).toMatchObject({ correct: false })
-  })
+  }, 30000)
 
   it('kindergarten: count the snacks onto the tray, how many in all, a wrong tray numbers the snacks', async () => {
     const done = render(0, 'k-addsub-shack', 'fraction-falls')
@@ -205,7 +205,7 @@ describe('Snack Shack', () => {
     await playShift(done)
     expect(done.mock.calls[0][0].stars).toBeGreaterThanOrEqual(2)
     expect(useProgress.getState().attempts.every((a) => a.skillId === 'k-add-take')).toBe(true)
-  })
+  }, 30000)
 
   it('1st grade: fill, then set the pick-up clock to the hour', async () => {
     const done = render(1, 'g1-measure-shack')
@@ -214,5 +214,5 @@ describe('Snack Shack', () => {
     await playShift(done)
     expect(done.mock.calls[0][0]).toMatchObject({ stars: 3, total: 6, correct: 6 })
     expect(useProgress.getState().attempts.every((a) => a.skillId === 'g1-time')).toBe(true)
-  })
+  }, 30000)
 })

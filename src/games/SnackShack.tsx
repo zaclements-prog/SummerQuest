@@ -26,7 +26,7 @@ import { dollars, fewestPieces, priceText, trayAdd, trayTotal, type Denom, type 
 import { UPGRADE_AT, shackBestKey, shiftStars, stepPoints, tipFor, upgradesFor, type StepResult } from '../lib/shack/score'
 import { RunResults } from './_juice/RunResults'
 import { loadBest, recordRun } from './_juice/bests'
-import { ShowMeButton, ShowMePanel, ShowMeStrip, WalkPicture } from './_shared/ShowMeHow'
+import { ShowMeButton, ShowMePanel, WalkPicture } from './_shared/ShowMeHow'
 import { useShowMe } from './_shared/useShowMe'
 import { UI } from './_runkit/uiTokens'
 import { HappyMeter, StandArt } from './SnackShack.stand'
@@ -321,16 +321,17 @@ export default function SnackShack({ params, onComplete, meta, paused = false }:
       setStep('thanks')
       sfx.kaching()
       later(450, () => sfx.sparkle())
-      say([THANKS[oi % THANKS.length]])
+      say(listen ? [THANKS[oi % THANKS.length], { line: 'snack-shack/tipStars' }] : [THANKS[oi % THANKS.length]])
       const upgrade = upgradesFor(newTips) > decor.length && decor.length < DECOR_CHOICES.length
-      later(reduced ? 1200 : 2100, () => {
+      // (K–1: time for the thank-you and "They gave you stars!" to be said)
+      later(listen ? 3200 : reduced ? 1200 : 2100, () => {
         if (upgrade) {
           setStep('decor')
           say([{ line: 'snack-shack/pickDecor' }])
         } else nextOrder(newTips, servedN)
       })
     },
-    [tips, served, later, say, oi, decor.length, reduced, nextOrder],
+    [tips, served, later, say, oi, decor.length, reduced, nextOrder, listen],
   )
 
   /** A graded step ended (right, helped, retried or shown): on to the order's next step. */
@@ -574,10 +575,12 @@ export default function SnackShack({ params, onComplete, meta, paused = false }:
           <div className="relative w-full flex justify-center">
             {teach && (step === 'change' || (step === 'clock' && order.kind === 'elapsed')) ? (
               <TeachCard order={order} teach={teach} />
+            ) : showMe.finished && showSteps ? (
+              <ReminderCard steps={showSteps} onReplay={showMe.show} />
             ) : (
-            <StandArt decor={decor} served={served} critter={step === 'results' ? null : order.critter.emoji} mood={mood} animate={!low} className={`w-full h-auto ${portrait ? 'max-h-[26vh]' : short ? 'max-h-[40vh]' : 'max-h-[46vh]'}`} />
+            <StandArt decor={decor} served={served} critter={step === 'results' ? null : order.critter.emoji} mood={mood} animate={!low} className={`w-full h-auto ${portrait ? 'max-h-[30vh]' : short ? 'max-h-[40vh]' : 'max-h-[46vh]'}`} />
             )}
-            {!(teach && (step === 'change' || step === 'clock')) && step !== 'results' && (
+            {!(teach && (step === 'change' || step === 'clock')) && !(showMe.finished && showSteps) && step !== 'results' && (
               <div className="absolute top-1 left-1">
                 <HappyMeter filled={hearts} of={3} />
               </div>
@@ -707,9 +710,26 @@ interface ShowMeHook {
   show: () => void
 }
 
+/** 💡 under the work (after a walkthrough, its last picture waits in the stand's place: ReminderCard). */
 function HelpButton({ showMe }: { showMe: ShowMeHook | null }) {
   if (!showMe) return null
-  return showMe.finished ? <ShowMeStrip steps={showMe.steps} onReplay={showMe.show} /> : <ShowMeButton onClick={showMe.show} />
+  return <ShowMeButton onClick={showMe.show} />
+}
+
+/** After "Show me how": the walkthrough's last picture, where the stand was, until the step is done. */
+function ReminderCard({ steps, onReplay }: { steps: WalkStep[]; onReplay: () => void }) {
+  const last = steps[steps.length - 1].visual
+  return (
+    <Card tone="quest" className="w-full px-2 py-1 relative" teach="reminder">
+      <div className="flex items-center justify-between gap-2 kid-text text-lg short:text-base" style={{ color: UI.line }}>
+        <span>💡 Your work so far</span>
+        <button type="button" onClick={onReplay} aria-label="Show me again" className="grid place-items-center w-11 h-11 rounded-full text-xl shrink-0" style={{ background: UI.paper, border: `2px solid ${UI.line}`, boxShadow: UI.ledgeSm }}>
+          ↺
+        </button>
+      </div>
+      <WalkPicture visual={last} compact={last.kind === 'timeJumps'} />
+    </Card>
+  )
 }
 
 function ChangeStep({

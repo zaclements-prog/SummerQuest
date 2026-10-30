@@ -30,7 +30,7 @@ export function shiftStars(right: number, total: number): number {
 }
 
 /** Tip stars at which the stand gets a new decoration (the child picks one of two). */
-export const UPGRADE_AT: readonly number[] = [3, 7, 11, 15]
+export const UPGRADE_AT: readonly number[] = [2, 5, 8, 11]
 
 /** How many upgrades `tips` stars have paid for. */
 export function upgradesFor(tips: number): number {

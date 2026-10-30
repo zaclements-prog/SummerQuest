@@ -45,7 +45,8 @@ export const measurementZone: Zone = {
       gameId: 'snackShack',
       // the grade (2–4) picks the prices, the bills and the clock (lib/gradeTiers)
       providerConfig: { kind: 'snackShack', band: 'g24' },
-      params: { customers: 6 },
+      // two money orders and two Clock Tower orders: about two minutes
+      params: { customers: 4 },
       starsToEarn: 3,
     },
     {
@@ -131,7 +132,7 @@ export const measurementZone: Zone = {
         gameId: 'snackShack',
         // (its own orders: a few snacks, then a pick-up time to the hour, then the half hour; all spoken)
         providerConfig: { kind: 'snackShack', band: 'g1' },
-        params: { customers: 6 },
+        params: { customers: 5 },
         starsToEarn: 3,
       },
       {
@@ -178,7 +179,7 @@ export const measurementZone: Zone = {
         description: 'Decimal prices, change from $20, and Clock Tower times across noon.',
         gameId: 'snackShack',
         providerConfig: { kind: 'snackShack', band: 'g5' },
-        params: { customers: 6 },
+        params: { customers: 4 },
         starsToEarn: 3,
       },
       {

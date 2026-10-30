@@ -45631,18 +45631,6 @@
       "kind": "line",
       "file": "voice/snack-shack/overNoon.mp3"
     },
-    "snack-shack/nextCustomer": {
-      "text": "Here comes the next customer!",
-      "hash": "cafb268cc0",
-      "kind": "line",
-      "file": "voice/snack-shack/nextCustomer.mp3"
-    },
-    "snack-shack/tapToFinish": {
-      "text": "Tap to collect your stars.",
-      "hash": "6021d4658e",
-      "kind": "line",
-      "file": "voice/snack-shack/tapToFinish.mp3"
-    },
     "snack-shack/orderOne/food=apples,n=2": {
       "text": "two apples, please!",
       "hash": "bc37f13e24",

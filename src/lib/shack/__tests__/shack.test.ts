@@ -139,8 +139,8 @@ describe('shack score', () => {
     expect(upgradesFor(0)).toBe(0)
     expect(upgradesFor(UPGRADE_AT[0])).toBe(1)
     expect(upgradesFor(18)).toBe(UPGRADE_AT.length)
-    // six customers tipping the minimum one star each
-    expect(upgradesFor(6)).toBeGreaterThanOrEqual(1)
+    // a short shift (four customers) tipping the minimum one star each still decorates the stand
+    expect(upgradesFor(4)).toBeGreaterThanOrEqual(1)
     expect(stepPoints('first')).toBeGreaterThan(stepPoints('helped'))
     expect(stepPoints('helped')).toBeGreaterThan(stepPoints('shown'))
   })

@@ -330,10 +330,15 @@ export function totalChoices(r: Rng, lines: readonly OrderLine[]): number[] {
   return shuffled(r, [total, wrong[0], wrong[1]])
 }
 
-/** The bill the customer pays with: more than the total (so there is change), from the tier's bills. */
+/**
+ * The bill the customer pays with: more than the total (so there is change),
+ * from the tier's bills, and not silly ($20 for a $1 snack): the smallest
+ * bill that covers it, or the next one when it is under five times the total.
+ */
 function payWith(r: Rng, total: number, bills: readonly number[]): number {
   const ok = bills.filter((b) => b > total)
-  return ok.length ? pickOf(r, ok.slice(0, 2)) : Math.ceil((total + 1) / 500) * 500
+  const sensible = ok.filter((b, i) => i === 0 || (i === 1 && b < total * 5))
+  return sensible.length ? pickOf(r, sensible) : Math.ceil((total + 1) / 500) * 500
 }
 
 function moneySay(lines: readonly OrderLine[]): string {
@@ -367,12 +372,12 @@ interface ElapsedSpec {
 }
 
 /**
- * Clock Tower order `j` of a shift (0, 1, 2…): grade 2 whole and half hours
- * from an o'clock or half past; grade 3 minutes that cross the hour; grade 4
- * a.m. / p.m. (the last one past noon); grade 5 across noon, once in minutes.
- * Never past 9 p.m. (no midnight).
+ * Clock Tower order `j` of a shift (0, 1, 2…; `last`: the shift's last one):
+ * grade 2 whole and half hours from an o'clock or half past; grade 3 minutes
+ * that cross the hour; grade 4 a.m. / p.m. (the last one past noon); grade 5
+ * across noon, once in minutes. Never past 9 p.m. (no midnight).
  */
-function elapsedSpec(r: Rng, j: number, grade: number): ElapsedSpec {
+function elapsedSpec(r: Rng, j: number, grade: number, last: boolean): ElapsedSpec {
   if (grade <= 2) {
     const start = int(r, 1, 10) * 60 + (j === 0 ? 0 : pickOf(r, [0, 30]))
     const [hours, minutes] = j === 0 ? [int(r, 1, 2), 0] : j === 1 ? [0, 30] : [int(r, 1, 2), 30]
@@ -388,11 +393,11 @@ function elapsedSpec(r: Rng, j: number, grade: number): ElapsedSpec {
   }
   if (grade === 4) {
     // morning starts; the last order crosses noon
-    const start = (j === 2 ? int(r, 9, 11) : int(r, 7, 10)) * 60 + 15 * int(r, 0, 3)
+    const start = (last && j > 0 ? int(r, 9, 11) : int(r, 7, 10)) * 60 + 15 * int(r, 0, 3)
     const hours = j === 0 ? int(r, 1, 3) : int(r, 1, 4)
     const minutes = j === 0 ? pickOf(r, [0, 30]) : 15 * int(r, 1, 3)
     const spec: ElapsedSpec = { start, hours, minutes, style: minutes === 30 ? 'half' : 'plain' }
-    return j === 2 ? forceNoon(spec) : spec
+    return last && j > 0 ? forceNoon(spec) : spec
   }
   // grade 5: crosses noon (after the first), and once said in minutes
   const start = int(r, 8, 11) * 60 + 5 * int(r, 0, 11)
@@ -414,8 +419,8 @@ function forceNoon(s: ElapsedSpec): ElapsedSpec {
   return { ...s, hours }
 }
 
-function makeElapsed(r: Rng, j: number, grade: number, base: OrderBase): ElapsedOrder {
-  const spec = elapsedSpec(r, j, grade)
+function makeElapsed(r: Rng, j: number, last: boolean, grade: number, base: OrderBase): ElapsedOrder {
+  const spec = elapsedSpec(r, j, grade, last)
   const meridiem = grade >= 4
   const end = spec.start + spec.hours * 60 + spec.minutes
   const story = pickOf(r, STORIES)
@@ -433,8 +438,8 @@ function makeElapsed(r: Rng, j: number, grade: number, base: OrderBase): Elapsed
     ask: story.ask,
     duration,
   }
-  // 4th–5th grade, the last Clock Tower order: the customer changes their mind once (read carefully!)
-  if (grade >= 4 && j === 2) {
+  // 4th–5th grade, the last Clock Tower order (not the first): the customer changes their mind once (read carefully!)
+  if (grade >= 4 && last && j > 0) {
     const dh = spec.hours + 3 > 9 ? Math.max(0, spec.hours - 2) : spec.hours + 3
     order.decoy = durationText(dh, 30, 'half')
   }
@@ -473,7 +478,8 @@ export function planShift({ grade, seed, customers = DEFAULT_CUSTOMERS, band }: 
       const speech: VoiceRef = time % 60 === 0 ? { template: 'snack-shack/backAt', slots: { h } } : { template: 'snack-shack/backAtHalf', slots: { h } }
       orders.push({ ...base(i), kind: 'clockAt', lines, time, start: 0, speech, fillSpeech: orderSpeech(lines) })
     } else if (i % 2 === 1) {
-      orders.push(makeElapsed(r, clockJ++, g, base(i)))
+      const j = clockJ++
+      orders.push(makeElapsed(r, j, j === Math.floor(customers / 2) - 1, g, base(i)))
     } else {
       const t = moneyTier(g)
       const lines = moneyLines(r, moneyJ++, g, menu)

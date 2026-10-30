@@ -173,6 +173,20 @@ describe('Snack Shack orders: grades 2–5 (money and the Clock Tower)', () => {
     })
   }
 
+  it('a short shift (the stages play four customers) still ramps to its hardest Clock Tower order', () => {
+    for (const seed of SEEDS) {
+      const g4 = planShift({ grade: 4, seed, customers: 4 }).orders.filter((o): o is ElapsedOrder => o.kind === 'elapsed')
+      expect(g4).toHaveLength(2)
+      expect(crossesNoon(g4[1].start, g4[1].end)).toBe(true)
+      expect(g4[1].decoy).toBeDefined()
+      const g5 = planShift({ grade: 5, seed, customers: 4 }).orders.filter((o): o is ElapsedOrder => o.kind === 'elapsed')
+      expect(crossesNoon(g5[1].start, g5[1].end)).toBe(true)
+      expect(g5[1].duration).toMatch(/^\d+ minutes$/)
+      const g1 = planShift({ grade: 1, seed, customers: 5 }).orders as ClockAtOrder[]
+      expect(g1.map((o) => o.time % 60)).toEqual([0, 0, 0, 30, 30])
+    }
+  })
+
   it('is deterministic for a seed', () => {
     expect(planShift({ grade: 4, seed: 'x' })).toEqual(planShift({ grade: 4, seed: 'x' }))
     expect(planShift({ grade: 4, seed: 'x' })).not.toEqual(planShift({ grade: 4, seed: 'y' }))

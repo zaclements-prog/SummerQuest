@@ -45,8 +45,6 @@ export default defineVoicePack({
     clockTower: 'Clock Tower order! Move the clock hands to the right time.',
     jumpAlong: "Let's jump along the timeline.",
     overNoon: "We went past 12 noon, so it's p.m. now!",
-    nextCustomer: 'Here comes the next customer!',
-    tapToFinish: 'Tap to collect your stars.',
   },
   templates: {
     /** "3 apples, please!" (42 clips) */

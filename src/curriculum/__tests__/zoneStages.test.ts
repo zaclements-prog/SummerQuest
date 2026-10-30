@@ -822,9 +822,9 @@ describe('Grade 1 (phase-2b contract): Measure Marsh, Graph Delta, Sky Summit', 
       expect(s.starsToEarn, s.id).toBe(3)
       expect(s.description.split(' ').length, s.id).toBeLessThanOrEqual(10)
       expect(s.description, s.id).toMatch(/[.!?]$/)
-      // (the Snack Shack: six spoken customers, a round of its own)
+      // (the Snack Shack: a few spoken customers, a round of its own)
       if (s.gameId === 'snackShack') {
-        expect(s.params?.customers, s.id).toBe(6)
+        expect(s.params?.customers, s.id).toBe(5)
         continue
       }
       expect(s.gameId, s.id).toBe('listenPlay')
