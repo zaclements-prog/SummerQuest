@@ -29,8 +29,8 @@ export default function BadgesScreen() {
   const focusClears = useProgress((s) => s.schoolPet.fullClears)
 
   const badges = useMemo(
-    () => computeBadges({ zones, stats, totalCoinsEarned, grade, focusClears }),
-    [zones, stats, totalCoinsEarned, grade, focusClears],
+    () => computeBadges({ zones, stats, totalCoinsEarned, grade, focusClears, seenBadges }),
+    [zones, stats, totalCoinsEarned, grade, focusClears, seenBadges],
   )
   const earned = badges.filter((b) => b.earned)
   const zoneBadges = badges.filter((b) => b.category === 'zone')

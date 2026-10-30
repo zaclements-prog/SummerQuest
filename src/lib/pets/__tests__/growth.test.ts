@@ -307,3 +307,33 @@ describe('pet words', () => {
     expect(momentText({ creatureId: 'frog', from: 'baby', to: 'kid' }).title).toBe('Frog grew bigger!')
   })
 })
+
+describe('a zone that gains a stage', () => {
+  // Place Value Plateau's 2–4 set grew a Gobble Garden stage: a child who
+  // starred every OTHER stage had a grown-up pet, celebrated as one
+  const zone = getZone('place-value-plateau')!
+  const newStage = 'pv-gobble'
+  const allButNew: ZonesLike = {
+    'place-value-plateau': { stages: Object.fromEntries(zone.stages.filter((s) => s.id !== newStage).map((s) => [s.id, { stars: s.starsToEarn }])) },
+  }
+  const p = PETS.find((x) => x.zoneId === 'place-value-plateau')!
+
+  it('derives a smaller stage from the stars alone', () => {
+    expect(zone.stages.some((s) => s.id === newStage)).toBe(true)
+    expect(petStatus(p, allButNew, {}, 3).stage).not.toBe('adult')
+  })
+
+  it('keeps the stage already celebrated, and asks for nothing more', () => {
+    const s = petStatus(p, allButNew, {}, 3, getZone, 'adult')
+    expect(s.stage).toBe('adult')
+    expect(s.next).toBeNull()
+    const list = petStatuses(allButNew, {}, 3, getZone, { [p.creatureId]: 'adult' })
+    expect(list.find((x) => x.pet.creatureId === p.creatureId)!.stage).toBe('adult')
+  })
+
+  it('never lets a celebrated stage hold a pet back', () => {
+    expect(petStatus(p, allButNew, {}, 3, getZone, 'egg').stage).toBe(petStatus(p, allButNew, {}, 3).stage)
+    // junk in a saved record counts as nothing
+    expect(petStatus(p, allButNew, {}, 3, getZone, 'giant' as never).stage).toBe(petStatus(p, allButNew, {}, 3).stage)
+  })
+})

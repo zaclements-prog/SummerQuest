@@ -42,8 +42,8 @@ export default function WorldMap() {
   const schoolPet = useProgress((s) => s.schoolPet)
 
   const badges = useMemo(
-    () => computeBadges({ zones, stats, totalCoinsEarned, grade, focusClears: schoolPet.fullClears }),
-    [zones, stats, totalCoinsEarned, grade, schoolPet.fullClears],
+    () => computeBadges({ zones, stats, totalCoinsEarned, grade, focusClears: schoolPet.fullClears, seenBadges }),
+    [zones, stats, totalCoinsEarned, grade, schoolPet.fullClears, seenBadges],
   )
   const earned = badges.filter((b) => b.earned)
   const lessonsDone = useProgress((s) => s.lessonsDone)
