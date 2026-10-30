@@ -38,6 +38,17 @@ export const measurementZone: Zone = {
       starsToEarn: 3,
     },
     {
+      id: 'meas-shack',
+      kind: 'practice',
+      title: 'Snack Shack',
+      description: 'Run the beach stand: add up orders, count out change, and work out Clock Tower times.',
+      gameId: 'snackShack',
+      // the grade (2–4) picks the prices, the bills and the clock (lib/gradeTiers)
+      providerConfig: { kind: 'snackShack', band: 'g24' },
+      params: { customers: 6 },
+      starsToEarn: 3,
+    },
+    {
       id: 'meas-mastery',
       kind: 'mastery',
       title: 'Frog King Quiz',
@@ -89,7 +100,8 @@ export const measurementZone: Zone = {
     // order by length, and compare two through a string (the `lengthOrder`
     // activity) → measure with paper clips and cubes laid end to end (the `units`
     // activity, and "which one is measured the right way?") → tell time to the
-    // hour and half hour, analog and digital (the `clockMatch` activity).
+    // hour and half hour, analog and digital (the `clockMatch` activity). The Snack
+    // Shack comes before the clock stage: fill an order, then set the pick-up clock.
     g1: [
       {
         id: 'g1-measure-1',
@@ -112,6 +124,17 @@ export const measurementZone: Zone = {
         starsToEarn: 3,
       },
       {
+        id: 'g1-measure-shack',
+        kind: 'practice',
+        title: 'Snack Shack',
+        description: 'Fill the order. Then set the pick-up clock!',
+        gameId: 'snackShack',
+        // (its own orders: a few snacks, then a pick-up time to the hour, then the half hour; all spoken)
+        providerConfig: { kind: 'snackShack', band: 'g1' },
+        params: { customers: 6 },
+        starsToEarn: 3,
+      },
+      {
         id: 'g1-measure-3',
         kind: 'mastery',
         title: 'What time is it?',
@@ -124,7 +147,8 @@ export const measurementZone: Zone = {
     ],
     // 5th grade (phase 3; 5.MD.1, 5.MD.3–5): volume of rectangular prisms (unit
     // cubes, l × w × h, B × h, two prisms joined) → converting units within one
-    // system, a speed round → the boss mixes volume (and a missing edge) with
+    // system, a speed round → the Snack Shack (decimal money, elapsed time across
+    // noon) → the boss mixes volume (and a missing edge) with
     // multi-step conversion story problems.
     g5: [
       {
@@ -145,6 +169,16 @@ export const measurementZone: Zone = {
         gameId: 'speedRun',
         providerConfig: { kind: 'g5Measure', mode: 'convert' },
         params: { timeLimitSec: 90, starThresholds: [5, 8, 11] },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g5-measure-shack',
+        kind: 'practice',
+        title: 'Snack Shack',
+        description: 'Decimal prices, change from $20, and Clock Tower times across noon.',
+        gameId: 'snackShack',
+        providerConfig: { kind: 'snackShack', band: 'g5' },
+        params: { customers: 6 },
         starsToEarn: 3,
       },
       {

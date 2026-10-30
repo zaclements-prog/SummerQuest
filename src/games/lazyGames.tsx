@@ -28,6 +28,8 @@ const TimesGroveAreaGame = lazyWithRetry(() => import('./TimesGroveArea'))
 // The K–1 Listen & Play shell (2D, but only K–1 stages need it).
 const ListenPlayGame = lazyWithRetry(() => import('./listenPlay/ListenPlay'))
 const CritterParadeGame = lazyWithRetry(() => import('./CritterParade'))
+// Snack Shack (2D, every band): its own chunk, like the others
+const SnackShackGame = lazyWithRetry(() => import('./SnackShack'))
 
 function Loader({ children }: { children: ReactNode }) {
   return (
@@ -79,6 +81,14 @@ export function CritterParade(props: GameProps) {
   return (
     <Loader>
       <CritterParadeGame {...props} />
+    </Loader>
+  )
+}
+
+export function SnackShack(props: GameProps) {
+  return (
+    <Loader>
+      <SnackShackGame {...props} />
     </Loader>
   )
 }

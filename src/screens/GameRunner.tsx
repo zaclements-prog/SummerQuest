@@ -11,7 +11,7 @@ import SpeedRun from '../games/SpeedRun'
 import BossBattle from '../games/BossBattle'
 import TowerDefense from '../games/tower-defense/TowerDefense'
 import WritingPad from '../games/WritingPad'
-import { CloudKeeper, CritterParade, DivisionArena, FractionForge, ListenPlay, TimesGrove } from '../games/lazyGames'
+import { CloudKeeper, CritterParade, DivisionArena, FractionForge, ListenPlay, SnackShack, TimesGrove } from '../games/lazyGames'
 import { ListenResultCard } from '../games/listenPlay/ListenResultCard'
 import { ListenQuitDialog } from '../components/listen/ListenQuitDialog'
 import { isListenMode } from '../lib/gradeBand'
@@ -191,6 +191,8 @@ export default function GameRunner() {
         return TimesGrove
       case 'critterParade':
         return CritterParade
+      case 'snackShack':
+        return SnackShack
       case 'writingPad':
         return WritingPad
       case 'listenPlay':

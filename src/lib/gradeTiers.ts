@@ -298,6 +298,9 @@ export function effectiveConfig(
     case 'g5Div':
     case 'g5Expr':
       return config
+    // Snack Shack: grades 2–4 share a stage, so the grade picks the money and the clock
+    case 'snackShack':
+      return config.band === 'g24' ? { ...config, grade } : config
   }
 }
 

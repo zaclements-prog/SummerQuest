@@ -51,7 +51,8 @@ export const fractionZone: Zone = {
   stagesByBand: {
     // K "Add-and-Take Falls" (K.OA.1, K.OA.5, K.OA.4): things join and leave on screen as
     // the voice says so (the `mathStory` activity), answered with numeral cards: within 5,
-    // then within 10, then make ten on a ten-frame. Titles and descriptions are said aloud.
+    // then within 10, then the Snack Shack (count snacks onto the tray, then "how many in
+    // all?"), then make ten on a ten-frame. Titles and descriptions are said aloud.
     k1: [
       {
         id: 'k-addsub-1',
@@ -71,6 +72,17 @@ export const fractionZone: Zone = {
         gameId: 'listenPlay',
         providerConfig: { kind: 'kAddTake', mode: 'within10' },
         params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-addsub-shack',
+        kind: 'practice',
+        title: 'Snack Shack',
+        description: 'Fill the orders. How many snacks in all?',
+        gameId: 'snackShack',
+        // (the shack makes its own orders: count the snacks onto the tray, then add the two kinds; all spoken)
+        providerConfig: { kind: 'snackShack', band: 'k1' },
+        params: { customers: 6 },
         starsToEarn: 3,
       },
       {

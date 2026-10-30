@@ -93,6 +93,7 @@ const STAGE_PICTURE: Record<string, string> = {
   // Add-and-Take Falls
   'k-addsub-1': '🐸',
   'k-addsub-2': '🦆',
+  'k-addsub-shack': '🍦',
   'k-addsub-3': '🔟',
   // Story Woods
   'k-woods-1': '🐻',
@@ -145,6 +146,7 @@ const STAGE_PICTURE: Record<string, string> = {
   // 1st grade (phase 2b): Measure Marsh, Graph Delta, Sky Summit
   'g1-measure-1': '📏',
   'g1-measure-2': '📎',
+  'g1-measure-shack': '🍦',
   'g1-measure-3': '🕒',
   'g1-graphs-1': '🍎',
   'g1-graphs-2': '📊',

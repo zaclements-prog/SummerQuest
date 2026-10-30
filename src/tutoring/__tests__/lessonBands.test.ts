@@ -232,7 +232,8 @@ describe('practice links stay in the band', () => {
       kRhymes: ['k-letters-1', 'k-rhyme-1', 'k-letters-2', 'k-syllables-1', 'k-letters-3', 'k-rhyme-2', 'k-blend-1', 'k-sight-1'],
       kTracing: ['k-trace-1', 'k-trace-2', 'k-trace-3', 'k-story-1'],
       // (K complete, phase 2a)
-      kAddTake: ['k-addsub-1', 'k-addsub-2', 'k-addsub-3'],
+      // (the Snack Shack is a practice stage before Make ten)
+      kAddTake: ['k-addsub-1', 'k-addsub-2', 'k-addsub-shack', 'k-addsub-3'],
       kStoryMath: ['k-woods-1', 'k-woods-2', 'k-woods-3'],
       kCompare: ['k-dunes-1', 'k-dunes-2', 'k-dunes-3'],
       kTeens: ['k-teens-1', 'k-teens-2', 'k-teens-3'],
@@ -265,7 +266,8 @@ describe('practice links stay in the band', () => {
   it('the 1st-grade lessons practice their own first stages, and never cross bands', () => {
     const fixed: Record<string, string[]> = {
       // Measure Marsh, Graph Delta, Sky Summit
-      g1Measure: ['g1-measure-1', 'g1-measure-2', 'g1-measure-3'],
+      // (the Snack Shack is a practice stage before the clock stage)
+      g1Measure: ['g1-measure-1', 'g1-measure-2', 'g1-measure-shack', 'g1-measure-3'],
       g1Graphs: ['g1-graphs-1', 'g1-graphs-2', 'g1-graphs-3'],
       g1Science: ['g1-science-1', 'g1-science-2', 'g1-science-3'],
     }

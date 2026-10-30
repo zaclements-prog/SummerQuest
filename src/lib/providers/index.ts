@@ -72,6 +72,8 @@ import { makeG5DataProvider, type G5DataConfig } from './g5Data'
 import { makeG5MultProvider, type G5MultConfig } from './g5Mult'
 import { makeG5DivProvider, type G5DivConfig } from './g5Div'
 import { makeG5ExprProvider, type G5ExprConfig } from './g5Expr'
+// Snack Shack (all bands): the beach stand's orders, change and Clock Tower times
+import { makeSnackShackProvider, type SnackShackConfig } from './snackShack'
 
 export type ProviderConfig =
   | { kind: 'multiplication'; factorMin: number; factorMax: number }
@@ -175,6 +177,9 @@ export type ProviderConfig =
   | ({ kind: 'g5Div' } & G5DivConfig)
   /** Word Problem Woods (5th grade): writing and working out expressions, two-rule patterns, multi-step stories. */
   | ({ kind: 'g5Expr' } & G5ExprConfig)
+  // ── Snack Shack (every band; src/games/SnackShack.tsx) ──
+  /** The beach stand: count snacks (K), the pick-up clock (1st), totals, change and elapsed time (2–5). */
+  | ({ kind: 'snackShack' } & SnackShackConfig)
 
 export function createProvider(config: ProviderConfig): ProblemProvider {
   switch (config.kind) {
@@ -294,5 +299,8 @@ export function createProvider(config: ProviderConfig): ProblemProvider {
       return makeG5DivProvider(config)
     case 'g5Expr':
       return makeG5ExprProvider(config)
+    // Snack Shack (every band)
+    case 'snackShack':
+      return makeSnackShackProvider(config)
   }
 }
