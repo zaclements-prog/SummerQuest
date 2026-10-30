@@ -123,6 +123,8 @@ function render(grade: number, stageId: string, zoneId = 'measurement-marsh') {
 
 beforeEach(() => {
   vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout', 'setInterval', 'clearInterval', 'Date'] })
+  // the game's seed reads Date.now(): pin it so every run plays the same game
+  vi.setSystemTime(new Date('2026-07-01T10:00:00'))
   // the same shift every run
   vi.spyOn(Math, 'random').mockImplementation(seededRng('snack-shack-test'))
   useProgress.getState().resetPlayer()

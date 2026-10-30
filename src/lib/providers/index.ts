@@ -77,6 +77,8 @@ import { makeGobbleProvider } from './gobble'
 import type { GobbleConfig } from '../gobble'
 // Snack Shack (all bands): the beach stand's orders, change and Clock Tower times
 import { makeSnackShackProvider, type SnackShackConfig } from './snackShack'
+// Puddle Patrol (Tower Battlefront, grades 2–5): the planned waves and the game's own question
+import { makePuddlePatrolProvider, type PuddlePatrolConfig } from './puddlePatrol'
 
 export type ProviderConfig =
   | { kind: 'multiplication'; factorMin: number; factorMax: number }
@@ -186,6 +188,9 @@ export type ProviderConfig =
   // ── Snack Shack (every band; src/games/SnackShack.tsx) ──
   /** The beach stand: count snacks (K), the pick-up clock (1st), totals, change and elapsed time (2–5). */
   | ({ kind: 'snackShack' } & SnackShackConfig)
+  // ── Puddle Patrol (Tower Battlefront, grades 2–5) ──
+  /** Which Pudding does this sprinkler wash? Even / odd, multiples, factors, primes, fractions equal to ½…; plus the stage's waves. */
+  | ({ kind: 'puddlePatrol' } & PuddlePatrolConfig)
 
 export function createProvider(config: ProviderConfig): ProblemProvider {
   switch (config.kind) {
@@ -310,5 +315,8 @@ export function createProvider(config: ProviderConfig): ProblemProvider {
     // Snack Shack (every band)
     case 'snackShack':
       return makeSnackShackProvider(config)
+    // Puddle Patrol (Tower Battlefront, grades 2–5)
+    case 'puddlePatrol':
+      return makePuddlePatrolProvider(config)
   }
 }

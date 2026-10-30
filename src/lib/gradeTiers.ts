@@ -306,6 +306,9 @@ export function effectiveConfig(
     // Snack Shack: grades 2–4 share a stage, so the grade picks the money and the clock
     case 'snackShack':
       return config.band === 'g24' ? { ...config, grade } : config
+    // Puddle Patrol: the grade widens grades 2–4's numbers (2nd grade to 30 / 60, 3rd–4th to 100)
+    case 'puddlePatrol':
+      return { ...config, grade }
   }
 }
 

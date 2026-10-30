@@ -9,8 +9,9 @@ import { makeKindPicker, makePositionGuard, pickOne } from './kShared'
 /**
  * Counting Towers (Tower Battlefront for K–1): the questions that build and
  * power the towers, voice-first, answered with big numeral or group cards.
- * The tower game (src/games/tower-defense/KTowers.tsx) asks one per build;
- * the K Daily Challenge plays them in Listen & Play.
+ * The K Daily Challenge plays them in Listen & Play; the tower stages
+ * themselves play Puddle Patrol (src/games/tower-defense/PuddlePatrol.tsx),
+ * whose sprinklers wash dot groups.
  *
  * - `count` (k-towers-1, K.CC.5): "How many critters? Tap the number." —
  *   groups within 10, starting small (2–5, then up to 8, then 10);

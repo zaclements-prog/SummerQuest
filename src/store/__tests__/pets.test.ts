@@ -85,8 +85,8 @@ describe('lessons and pets in the store', () => {
     expect(s().ownedCreatures).toEqual(['fox', 'lion'])
   })
 
-  it("Tower Battlefront's dragon grows up on its 3 stars", () => {
-    award('tower-battlefront', [3])
+  it("Tower Battlefront's dragon grows up on its stars (three Puddle Patrol stages)", () => {
+    award('tower-battlefront', [3, 3, 3])
     expect(s().ownedCreatures).toContain('dragon')
   })
 

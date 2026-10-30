@@ -158,6 +158,14 @@ For grades 2–4 it replaces some practice stages that are Speed Run today. Spee
 
 **Tech:** the tower defense engine exists. This mostly changes the rules and the UI.
 
+**As built (2026-10-30).** Code: `src/lib/puddle` (values, rules, stage sets, the seeded wave planner), `src/lib/providers/puddlePatrol.ts`, `src/games/tower-defense/` (pure fixed-timestep `engine.ts`, playtest `bots.ts`, the R3F diorama `PuddlePatrol*.tsx`). One engine for every band; the SVG game, `MathGate`, `KTowers` and `ListenGate` are gone.
+
+- **Placement is the move.** Tap a spot then a card, a card then a spot, or drag a card onto the field. Swapping a standing tower's rule is free; a new tower costs drops (earned one per wash). A wave never needs more rules than the towers you can have.
+- **Plan, then send.** Between waves nothing moves; the "incoming" lineup shows the next wave's values (dots for K, number sentences for 1st grade). Each wave leans on one rule (the new one, the wave it arrives), and the lean moves.
+- **Teaching.** A spray that doesn't fit bounces off and a bubble says why ("21 is not a multiple of 5: 5 × 4 = 20, 5 × 5 = 25"); K–1 hear the count or the sentence instead. Tap any Pudding for how it fits each rule on offer.
+- **No fail state.** Leaks splash into the pond (it clouds a little). Stars come from the pond-clean share, per band (K 75 % / 90 %, 1st 80 / 90, 2–4 80 / 93, 5th 72 / 88), tuned so the matching bot earns 3, a sensible child with slips 2–3, random placement mostly 1.
+- **Stages.** K: groups of 2 / 3 / 4, then 5 / more than 5 / fewer than 5, then mixed. 1st: makes 5 / 10 / 7, makes 5 / 3 / 4 (take away), makes 10 / 5 / 15. 2–4: even & odd (`td-even-odd`), multiples of 2, 5, 10 (`td-skip-count`), mixed 10 waves (`td-arena`; 2nd grade's last rule is odd, 3rd–4th's ×3). 5th: factors of 24 and multiples (`g5-td-factors`), primes (`g5-td-primes`), = ½ ¼ ¾ ⅕ (`g5-td-1`). Balance: `node --import tsx scripts/puddle-balance.mjs`.
+
 ### Later candidates (from the research's 10)
 
 - **Make-Ten Jam** (sort puzzle): pour number candies until each jar hits its target, with a free undo. Targets: 10 for K–1, 100 for 2–3, 1 whole for 4–5. Very cheap.

@@ -90,6 +90,8 @@ async function go(edible: boolean) {
 
 beforeEach(() => {
   vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout', 'setInterval', 'clearInterval', 'Date'] })
+  // the park's seed reads Date.now(): pin it, or each run lays out a different park
+  vi.setSystemTime(new Date('2026-07-01T10:00:00'))
   vi.spyOn(Math, 'random').mockImplementation(seededRng('gobble-garden'))
   useProgress.getState().resetPlayer()
   container = document.createElement('div')
