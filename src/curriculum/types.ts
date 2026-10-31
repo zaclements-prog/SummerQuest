@@ -16,6 +16,10 @@ export type GameId =
   /** K–1 voice-first picture quiz (src/games/listenPlay). */
   | 'listenPlay'
   | 'critterParade'
+  /** Gobble Garden: steer a hungry number cloud to the snacks smaller than it (every band). */
+  | 'gobbleGarden'
+  /** The beach snack stand: orders, making change and Clock Tower times (src/games/SnackShack.tsx). */
+  | 'snackShack'
 
 export interface Stage {
   id: string

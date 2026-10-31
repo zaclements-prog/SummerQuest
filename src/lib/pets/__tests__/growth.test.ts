@@ -119,7 +119,8 @@ describe('zoneStarTotals', () => {
   it("adds up the curriculum's maximums", () => {
     expect(zoneStarTotals(getZone('multiplication-mesa')!, undefined, 3).total).toBe(9)
     expect(zoneStarTotals(getZone('division-dunes')!, undefined, 3).total).toBe(12)
-    expect(zoneStarTotals(getZone('tower-battlefront')!, undefined, 3).total).toBe(3)
+    // (Puddle Patrol: three stages for grades 2–4)
+    expect(zoneStarTotals(getZone('tower-battlefront')!, undefined, 3).total).toBe(9)
   })
 
   it('caps a stage that over-reports its stars', () => {
@@ -208,13 +209,13 @@ describe('petStatus', () => {
     expect(petStatus(pet('trex'), zonesWith('division-dunes', [3, 3, 3, 3]), {}, 3).stage).toBe('adult')
   })
 
-  it('Tower Battlefront: the dragon has no 2–4 lesson (K–1 hatches it with kTowers) and grows on 1, 2 and 3 stars', () => {
+  it('Tower Battlefront: the dragon has no 2–4 lesson (K–1 hatches it with kTowers) and grows over its three Puddle Patrol stages', () => {
     expect(petStatus(pet('dragon'), {}, {}, 3).next).toEqual({ stage: 'baby', more: 1, lesson: false })
     expect(petStatus(pet('dragon'), {}, {}, 0).next).toEqual({ stage: 'baby', more: 1, lesson: true })
     expect(petStatus(pet('dragon'), {}, { kTowers: 1 }, 0).stage).toBe('baby')
     expect(petStatus(pet('dragon'), zonesWith('tower-battlefront', [1]), {}, 3).stage).toBe('baby')
-    expect(petStatus(pet('dragon'), zonesWith('tower-battlefront', [2]), {}, 3)).toMatchObject({ stage: 'kid', next: { stage: 'adult', more: 1 } })
-    expect(petStatus(pet('dragon'), zonesWith('tower-battlefront', [3]), {}, 3).stage).toBe('adult')
+    expect(petStatus(pet('dragon'), zonesWith('tower-battlefront', [3, 3]), {}, 3)).toMatchObject({ stage: 'kid', next: { stage: 'adult', more: 3 } })
+    expect(petStatus(pet('dragon'), zonesWith('tower-battlefront', [3, 3, 3]), {}, 3).stage).toBe('adult')
   })
 
   it("stages over-reporting stars can't grow a pet past what the zone allows", () => {
@@ -222,8 +223,8 @@ describe('petStatus', () => {
     expect(petStatus(pet('lion'), zonesWith('multiplication-mesa', [99]), {}, 3).stage).toBe('baby')
     // two stages at 5 count as 3 + 3: a kid, three short of grown up
     expect(petStatus(pet('lion'), zonesWith('multiplication-mesa', [5, 5, 0]), {}, 3)).toMatchObject({ stage: 'kid', stars: 6 })
-    // Tower Battlefront's one stage at 7 is simply complete
-    expect(petStatus(pet('dragon'), zonesWith('tower-battlefront', [7]), {}, 3)).toMatchObject({ stage: 'adult', stars: 3 })
+    // Tower Battlefront's stages at 7 are simply complete
+    expect(petStatus(pet('dragon'), zonesWith('tower-battlefront', [7, 7, 7]), {}, 3)).toMatchObject({ stage: 'adult', stars: 9 })
   })
 
   it('a pet whose zone is missing stays an egg (or a baby from its lesson)', () => {
@@ -235,7 +236,8 @@ describe('petStatus', () => {
 
 describe('all pets', () => {
   it('petStatuses / petStages cover every pet in catalog order', () => {
-    const zones = { ...zonesWith('fraction-falls', [3, 3, 3]), ...zonesWith('reading-reef', [2]) }
+    // (Fraction Falls has four stages for 2nd–4th grade: Gobble Garden before the boss)
+    const zones = { ...zonesWith('fraction-falls', [3, 3, 3, 3]), ...zonesWith('reading-reef', [2]) }
     const list = petStatuses(zones, { geometry: 1 }, 3)
     expect(list.map((s) => s.pet.creatureId)).toEqual(PETS.map((p) => p.creatureId))
     const stages = petStages(zones, { geometry: 1 }, 3)
@@ -303,5 +305,35 @@ describe('pet words', () => {
     })
     expect(momentText({ creatureId: 'frog', from: 'egg', to: 'baby' }).line).toBe('Say hi to your baby Frog!')
     expect(momentText({ creatureId: 'frog', from: 'baby', to: 'kid' }).title).toBe('Frog grew bigger!')
+  })
+})
+
+describe('a zone that gains a stage', () => {
+  // Place Value Plateau's 2–4 set grew a Gobble Garden stage: a child who
+  // starred every OTHER stage had a grown-up pet, celebrated as one
+  const zone = getZone('place-value-plateau')!
+  const newStage = 'pv-gobble'
+  const allButNew: ZonesLike = {
+    'place-value-plateau': { stages: Object.fromEntries(zone.stages.filter((s) => s.id !== newStage).map((s) => [s.id, { stars: s.starsToEarn }])) },
+  }
+  const p = PETS.find((x) => x.zoneId === 'place-value-plateau')!
+
+  it('derives a smaller stage from the stars alone', () => {
+    expect(zone.stages.some((s) => s.id === newStage)).toBe(true)
+    expect(petStatus(p, allButNew, {}, 3).stage).not.toBe('adult')
+  })
+
+  it('keeps the stage already celebrated, and asks for nothing more', () => {
+    const s = petStatus(p, allButNew, {}, 3, getZone, 'adult')
+    expect(s.stage).toBe('adult')
+    expect(s.next).toBeNull()
+    const list = petStatuses(allButNew, {}, 3, getZone, { [p.creatureId]: 'adult' })
+    expect(list.find((x) => x.pet.creatureId === p.creatureId)!.stage).toBe('adult')
+  })
+
+  it('never lets a celebrated stage hold a pet back', () => {
+    expect(petStatus(p, allButNew, {}, 3, getZone, 'egg').stage).toBe(petStatus(p, allButNew, {}, 3).stage)
+    // junk in a saved record counts as nothing
+    expect(petStatus(p, allButNew, {}, 3, getZone, 'giant' as never).stage).toBe(petStatus(p, allButNew, {}, 3).stage)
   })
 })

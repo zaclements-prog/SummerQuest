@@ -25909,6 +25909,2244 @@
       "kind": "whole",
       "file": "voice/g1-writing/spell/word=cup.mp3"
     },
+    "gobble-garden/intro": {
+      "text": "Steer the hungry cloud. Eat the snacks that are smaller than its number!",
+      "hash": "c62d6ad37c",
+      "kind": "line",
+      "file": "voice/gobble-garden/intro.mp3"
+    },
+    "gobble-garden/introListen": {
+      "text": "Drag the hungry cloud to a snack. It eats snacks smaller than its number!",
+      "hash": "e8a4800d4c",
+      "kind": "line",
+      "file": "voice/gobble-garden/introListen.mp3"
+    },
+    "gobble-garden/tooBig": {
+      "text": "Too big, burp!",
+      "hash": "1d5606232e",
+      "kind": "line",
+      "file": "voice/gobble-garden/tooBig.mp3"
+    },
+    "gobble-garden/yum": {
+      "text": "Yum!",
+      "hash": "ae6751bfed",
+      "kind": "line",
+      "file": "voice/gobble-garden/yum.mp3"
+    },
+    "gobble-garden/delicious": {
+      "text": "Delicious!",
+      "hash": "f7126a94ee",
+      "kind": "line",
+      "file": "voice/gobble-garden/delicious.mp3"
+    },
+    "gobble-garden/smartSnacking": {
+      "text": "Smart snacking!",
+      "hash": "aa54f395b9",
+      "kind": "line",
+      "file": "voice/gobble-garden/smartSnacking.mp3"
+    },
+    "gobble-garden/greatComparing": {
+      "text": "Great comparing!",
+      "hash": "a5184233cf",
+      "kind": "line",
+      "file": "voice/gobble-garden/greatComparing.mp3"
+    },
+    "gobble-garden/grew": {
+      "text": "Your cloud grew! Look at its new number.",
+      "hash": "84329f0722",
+      "kind": "line",
+      "file": "voice/gobble-garden/grew.mp3"
+    },
+    "gobble-garden/topCloud": {
+      "text": "What a full cloud! Bonus points!",
+      "hash": "848b598042",
+      "kind": "line",
+      "file": "voice/gobble-garden/topCloud.mp3"
+    },
+    "gobble-garden/parkTidy": {
+      "text": "The park is tidy! Great eating!",
+      "hash": "3e25ae12d3",
+      "kind": "line",
+      "file": "voice/gobble-garden/parkTidy.mp3"
+    },
+    "gobble-garden/timeUp": {
+      "text": "Time's up! What a feast!",
+      "hash": "ec4bb260c7",
+      "kind": "line",
+      "file": "voice/gobble-garden/timeUp.mp3"
+    },
+    "gobble-garden/nextPark": {
+      "text": "Ready for the next park?",
+      "hash": "66c1fa613b",
+      "kind": "line",
+      "file": "voice/gobble-garden/nextPark.mp3"
+    },
+    "gobble-garden/allDone": {
+      "text": "What a feast! Tap to collect your stars.",
+      "hash": "827ecc2171",
+      "kind": "line",
+      "file": "voice/gobble-garden/allDone.mp3"
+    },
+    "gobble-garden/stage-k-dunes-gobble": {
+      "text": "Gobble Garden!",
+      "hash": "b5f66df0a8",
+      "kind": "line",
+      "file": "voice/gobble-garden/stage-k-dunes-gobble.mp3"
+    },
+    "gobble-garden/stage-g1-tens-gobble": {
+      "text": "Gobble Garden!",
+      "hash": "b5f66df0a8",
+      "kind": "line",
+      "file": "voice/gobble-garden/stage-g1-tens-gobble.mp3"
+    },
+    "gobble-garden/youAre/n=1": {
+      "text": "You are one. Eat the snacks smaller than one!",
+      "hash": "5621f988c7",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=1.mp3"
+    },
+    "gobble-garden/youAre/n=2": {
+      "text": "You are two. Eat the snacks smaller than two!",
+      "hash": "f86ff979d5",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=2.mp3"
+    },
+    "gobble-garden/youAre/n=3": {
+      "text": "You are three. Eat the snacks smaller than three!",
+      "hash": "317407b420",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=3.mp3"
+    },
+    "gobble-garden/youAre/n=4": {
+      "text": "You are four. Eat the snacks smaller than four!",
+      "hash": "58992ca0bb",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=4.mp3"
+    },
+    "gobble-garden/youAre/n=5": {
+      "text": "You are five. Eat the snacks smaller than five!",
+      "hash": "7f6cf6d541",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=5.mp3"
+    },
+    "gobble-garden/youAre/n=6": {
+      "text": "You are six. Eat the snacks smaller than six!",
+      "hash": "338e2477e7",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=6.mp3"
+    },
+    "gobble-garden/youAre/n=7": {
+      "text": "You are seven. Eat the snacks smaller than seven!",
+      "hash": "ee9b7ca79b",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=7.mp3"
+    },
+    "gobble-garden/youAre/n=8": {
+      "text": "You are eight. Eat the snacks smaller than eight!",
+      "hash": "524262f38a",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=8.mp3"
+    },
+    "gobble-garden/youAre/n=9": {
+      "text": "You are nine. Eat the snacks smaller than nine!",
+      "hash": "05b4a58277",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=9.mp3"
+    },
+    "gobble-garden/youAre/n=10": {
+      "text": "You are ten. Eat the snacks smaller than ten!",
+      "hash": "d976dc7ff8",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=10.mp3"
+    },
+    "gobble-garden/youAre/n=11": {
+      "text": "You are eleven. Eat the snacks smaller than eleven!",
+      "hash": "c002451267",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=11.mp3"
+    },
+    "gobble-garden/youAre/n=12": {
+      "text": "You are twelve. Eat the snacks smaller than twelve!",
+      "hash": "5fee76a60f",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=12.mp3"
+    },
+    "gobble-garden/youAre/n=13": {
+      "text": "You are thirteen. Eat the snacks smaller than thirteen!",
+      "hash": "e131c5446d",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=13.mp3"
+    },
+    "gobble-garden/youAre/n=14": {
+      "text": "You are fourteen. Eat the snacks smaller than fourteen!",
+      "hash": "8164476809",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=14.mp3"
+    },
+    "gobble-garden/youAre/n=15": {
+      "text": "You are fifteen. Eat the snacks smaller than fifteen!",
+      "hash": "cf537dd55b",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=15.mp3"
+    },
+    "gobble-garden/youAre/n=16": {
+      "text": "You are sixteen. Eat the snacks smaller than sixteen!",
+      "hash": "ab274150b3",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=16.mp3"
+    },
+    "gobble-garden/youAre/n=17": {
+      "text": "You are seventeen. Eat the snacks smaller than seventeen!",
+      "hash": "d2604354d4",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=17.mp3"
+    },
+    "gobble-garden/youAre/n=18": {
+      "text": "You are eighteen. Eat the snacks smaller than eighteen!",
+      "hash": "fde62e33f1",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=18.mp3"
+    },
+    "gobble-garden/youAre/n=19": {
+      "text": "You are nineteen. Eat the snacks smaller than nineteen!",
+      "hash": "7be6e4e7b1",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=19.mp3"
+    },
+    "gobble-garden/youAre/n=20": {
+      "text": "You are twenty. Eat the snacks smaller than twenty!",
+      "hash": "873fd43779",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=20.mp3"
+    },
+    "gobble-garden/youAre/n=21": {
+      "text": "You are twenty-one. Eat the snacks smaller than twenty-one!",
+      "hash": "7ff5fcf302",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=21.mp3"
+    },
+    "gobble-garden/youAre/n=22": {
+      "text": "You are twenty-two. Eat the snacks smaller than twenty-two!",
+      "hash": "113481e1a2",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=22.mp3"
+    },
+    "gobble-garden/youAre/n=23": {
+      "text": "You are twenty-three. Eat the snacks smaller than twenty-three!",
+      "hash": "c0197484c8",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=23.mp3"
+    },
+    "gobble-garden/youAre/n=24": {
+      "text": "You are twenty-four. Eat the snacks smaller than twenty-four!",
+      "hash": "0666225818",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=24.mp3"
+    },
+    "gobble-garden/youAre/n=25": {
+      "text": "You are twenty-five. Eat the snacks smaller than twenty-five!",
+      "hash": "5ac6b8856f",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=25.mp3"
+    },
+    "gobble-garden/youAre/n=26": {
+      "text": "You are twenty-six. Eat the snacks smaller than twenty-six!",
+      "hash": "40ca5b942a",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=26.mp3"
+    },
+    "gobble-garden/youAre/n=27": {
+      "text": "You are twenty-seven. Eat the snacks smaller than twenty-seven!",
+      "hash": "3725d92e20",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=27.mp3"
+    },
+    "gobble-garden/youAre/n=28": {
+      "text": "You are twenty-eight. Eat the snacks smaller than twenty-eight!",
+      "hash": "00f7b3e987",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=28.mp3"
+    },
+    "gobble-garden/youAre/n=29": {
+      "text": "You are twenty-nine. Eat the snacks smaller than twenty-nine!",
+      "hash": "37e87716be",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=29.mp3"
+    },
+    "gobble-garden/youAre/n=30": {
+      "text": "You are thirty. Eat the snacks smaller than thirty!",
+      "hash": "ecbab23709",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=30.mp3"
+    },
+    "gobble-garden/youAre/n=31": {
+      "text": "You are thirty-one. Eat the snacks smaller than thirty-one!",
+      "hash": "6d2109aaf3",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=31.mp3"
+    },
+    "gobble-garden/youAre/n=32": {
+      "text": "You are thirty-two. Eat the snacks smaller than thirty-two!",
+      "hash": "295747727b",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=32.mp3"
+    },
+    "gobble-garden/youAre/n=33": {
+      "text": "You are thirty-three. Eat the snacks smaller than thirty-three!",
+      "hash": "b7700c2540",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=33.mp3"
+    },
+    "gobble-garden/youAre/n=34": {
+      "text": "You are thirty-four. Eat the snacks smaller than thirty-four!",
+      "hash": "858e1e748e",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=34.mp3"
+    },
+    "gobble-garden/youAre/n=35": {
+      "text": "You are thirty-five. Eat the snacks smaller than thirty-five!",
+      "hash": "07eb9e1d03",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=35.mp3"
+    },
+    "gobble-garden/youAre/n=36": {
+      "text": "You are thirty-six. Eat the snacks smaller than thirty-six!",
+      "hash": "fb684a65a7",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=36.mp3"
+    },
+    "gobble-garden/youAre/n=37": {
+      "text": "You are thirty-seven. Eat the snacks smaller than thirty-seven!",
+      "hash": "80f8a6c504",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=37.mp3"
+    },
+    "gobble-garden/youAre/n=38": {
+      "text": "You are thirty-eight. Eat the snacks smaller than thirty-eight!",
+      "hash": "4a943f35e0",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=38.mp3"
+    },
+    "gobble-garden/youAre/n=39": {
+      "text": "You are thirty-nine. Eat the snacks smaller than thirty-nine!",
+      "hash": "462f1fde9f",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=39.mp3"
+    },
+    "gobble-garden/youAre/n=40": {
+      "text": "You are forty. Eat the snacks smaller than forty!",
+      "hash": "9bcb95ccca",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=40.mp3"
+    },
+    "gobble-garden/youAre/n=41": {
+      "text": "You are forty-one. Eat the snacks smaller than forty-one!",
+      "hash": "9143c748c7",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=41.mp3"
+    },
+    "gobble-garden/youAre/n=42": {
+      "text": "You are forty-two. Eat the snacks smaller than forty-two!",
+      "hash": "02ba6329b5",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=42.mp3"
+    },
+    "gobble-garden/youAre/n=43": {
+      "text": "You are forty-three. Eat the snacks smaller than forty-three!",
+      "hash": "cd146ff8f2",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=43.mp3"
+    },
+    "gobble-garden/youAre/n=44": {
+      "text": "You are forty-four. Eat the snacks smaller than forty-four!",
+      "hash": "82ba55368e",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=44.mp3"
+    },
+    "gobble-garden/youAre/n=45": {
+      "text": "You are forty-five. Eat the snacks smaller than forty-five!",
+      "hash": "bfd06c4afc",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=45.mp3"
+    },
+    "gobble-garden/youAre/n=46": {
+      "text": "You are forty-six. Eat the snacks smaller than forty-six!",
+      "hash": "4c4051dcec",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=46.mp3"
+    },
+    "gobble-garden/youAre/n=47": {
+      "text": "You are forty-seven. Eat the snacks smaller than forty-seven!",
+      "hash": "57135528b2",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=47.mp3"
+    },
+    "gobble-garden/youAre/n=48": {
+      "text": "You are forty-eight. Eat the snacks smaller than forty-eight!",
+      "hash": "7705d7847d",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=48.mp3"
+    },
+    "gobble-garden/youAre/n=49": {
+      "text": "You are forty-nine. Eat the snacks smaller than forty-nine!",
+      "hash": "6f62076dfe",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=49.mp3"
+    },
+    "gobble-garden/youAre/n=50": {
+      "text": "You are fifty. Eat the snacks smaller than fifty!",
+      "hash": "1f273beb31",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=50.mp3"
+    },
+    "gobble-garden/youAre/n=51": {
+      "text": "You are fifty-one. Eat the snacks smaller than fifty-one!",
+      "hash": "bef5026429",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=51.mp3"
+    },
+    "gobble-garden/youAre/n=52": {
+      "text": "You are fifty-two. Eat the snacks smaller than fifty-two!",
+      "hash": "ee58132d8f",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=52.mp3"
+    },
+    "gobble-garden/youAre/n=53": {
+      "text": "You are fifty-three. Eat the snacks smaller than fifty-three!",
+      "hash": "be2898dc44",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=53.mp3"
+    },
+    "gobble-garden/youAre/n=54": {
+      "text": "You are fifty-four. Eat the snacks smaller than fifty-four!",
+      "hash": "b6621133bc",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=54.mp3"
+    },
+    "gobble-garden/youAre/n=55": {
+      "text": "You are fifty-five. Eat the snacks smaller than fifty-five!",
+      "hash": "38cea46a00",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=55.mp3"
+    },
+    "gobble-garden/youAre/n=56": {
+      "text": "You are fifty-six. Eat the snacks smaller than fifty-six!",
+      "hash": "39d991df9b",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=56.mp3"
+    },
+    "gobble-garden/youAre/n=57": {
+      "text": "You are fifty-seven. Eat the snacks smaller than fifty-seven!",
+      "hash": "c43456a712",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=57.mp3"
+    },
+    "gobble-garden/youAre/n=58": {
+      "text": "You are fifty-eight. Eat the snacks smaller than fifty-eight!",
+      "hash": "00870428cc",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=58.mp3"
+    },
+    "gobble-garden/youAre/n=59": {
+      "text": "You are fifty-nine. Eat the snacks smaller than fifty-nine!",
+      "hash": "b203e6ab22",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=59.mp3"
+    },
+    "gobble-garden/youAre/n=60": {
+      "text": "You are sixty. Eat the snacks smaller than sixty!",
+      "hash": "911f04c1e3",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=60.mp3"
+    },
+    "gobble-garden/youAre/n=61": {
+      "text": "You are sixty-one. Eat the snacks smaller than sixty-one!",
+      "hash": "de1a338c17",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=61.mp3"
+    },
+    "gobble-garden/youAre/n=62": {
+      "text": "You are sixty-two. Eat the snacks smaller than sixty-two!",
+      "hash": "e2927e8a7b",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=62.mp3"
+    },
+    "gobble-garden/youAre/n=63": {
+      "text": "You are sixty-three. Eat the snacks smaller than sixty-three!",
+      "hash": "36c2eebf7a",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=63.mp3"
+    },
+    "gobble-garden/youAre/n=64": {
+      "text": "You are sixty-four. Eat the snacks smaller than sixty-four!",
+      "hash": "6b51b18924",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=64.mp3"
+    },
+    "gobble-garden/youAre/n=65": {
+      "text": "You are sixty-five. Eat the snacks smaller than sixty-five!",
+      "hash": "ced702f256",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=65.mp3"
+    },
+    "gobble-garden/youAre/n=66": {
+      "text": "You are sixty-six. Eat the snacks smaller than sixty-six!",
+      "hash": "f92d25b9f9",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=66.mp3"
+    },
+    "gobble-garden/youAre/n=67": {
+      "text": "You are sixty-seven. Eat the snacks smaller than sixty-seven!",
+      "hash": "feefd5b4b1",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=67.mp3"
+    },
+    "gobble-garden/youAre/n=68": {
+      "text": "You are sixty-eight. Eat the snacks smaller than sixty-eight!",
+      "hash": "547d68b904",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=68.mp3"
+    },
+    "gobble-garden/youAre/n=69": {
+      "text": "You are sixty-nine. Eat the snacks smaller than sixty-nine!",
+      "hash": "98fdeaeb01",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=69.mp3"
+    },
+    "gobble-garden/youAre/n=70": {
+      "text": "You are seventy. Eat the snacks smaller than seventy!",
+      "hash": "2c78e3e3d7",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=70.mp3"
+    },
+    "gobble-garden/youAre/n=71": {
+      "text": "You are seventy-one. Eat the snacks smaller than seventy-one!",
+      "hash": "ca31809c46",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=71.mp3"
+    },
+    "gobble-garden/youAre/n=72": {
+      "text": "You are seventy-two. Eat the snacks smaller than seventy-two!",
+      "hash": "c86bbce4f7",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=72.mp3"
+    },
+    "gobble-garden/youAre/n=73": {
+      "text": "You are seventy-three. Eat the snacks smaller than seventy-three!",
+      "hash": "d804195b9f",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=73.mp3"
+    },
+    "gobble-garden/youAre/n=74": {
+      "text": "You are seventy-four. Eat the snacks smaller than seventy-four!",
+      "hash": "f5d8933556",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=74.mp3"
+    },
+    "gobble-garden/youAre/n=75": {
+      "text": "You are seventy-five. Eat the snacks smaller than seventy-five!",
+      "hash": "37bb81f373",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=75.mp3"
+    },
+    "gobble-garden/youAre/n=76": {
+      "text": "You are seventy-six. Eat the snacks smaller than seventy-six!",
+      "hash": "f0f808069e",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=76.mp3"
+    },
+    "gobble-garden/youAre/n=77": {
+      "text": "You are seventy-seven. Eat the snacks smaller than seventy-seven!",
+      "hash": "9145910063",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=77.mp3"
+    },
+    "gobble-garden/youAre/n=78": {
+      "text": "You are seventy-eight. Eat the snacks smaller than seventy-eight!",
+      "hash": "29314de573",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=78.mp3"
+    },
+    "gobble-garden/youAre/n=79": {
+      "text": "You are seventy-nine. Eat the snacks smaller than seventy-nine!",
+      "hash": "81869bfc0a",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=79.mp3"
+    },
+    "gobble-garden/youAre/n=80": {
+      "text": "You are eighty. Eat the snacks smaller than eighty!",
+      "hash": "195a1fbcc3",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=80.mp3"
+    },
+    "gobble-garden/youAre/n=81": {
+      "text": "You are eighty-one. Eat the snacks smaller than eighty-one!",
+      "hash": "205279e196",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=81.mp3"
+    },
+    "gobble-garden/youAre/n=82": {
+      "text": "You are eighty-two. Eat the snacks smaller than eighty-two!",
+      "hash": "9bb399fb01",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=82.mp3"
+    },
+    "gobble-garden/youAre/n=83": {
+      "text": "You are eighty-three. Eat the snacks smaller than eighty-three!",
+      "hash": "99e880c208",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=83.mp3"
+    },
+    "gobble-garden/youAre/n=84": {
+      "text": "You are eighty-four. Eat the snacks smaller than eighty-four!",
+      "hash": "cd237b6657",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=84.mp3"
+    },
+    "gobble-garden/youAre/n=85": {
+      "text": "You are eighty-five. Eat the snacks smaller than eighty-five!",
+      "hash": "23f630cb0c",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=85.mp3"
+    },
+    "gobble-garden/youAre/n=86": {
+      "text": "You are eighty-six. Eat the snacks smaller than eighty-six!",
+      "hash": "a6e4320ffb",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=86.mp3"
+    },
+    "gobble-garden/youAre/n=87": {
+      "text": "You are eighty-seven. Eat the snacks smaller than eighty-seven!",
+      "hash": "72e34b22e0",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=87.mp3"
+    },
+    "gobble-garden/youAre/n=88": {
+      "text": "You are eighty-eight. Eat the snacks smaller than eighty-eight!",
+      "hash": "0a1992d84f",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=88.mp3"
+    },
+    "gobble-garden/youAre/n=89": {
+      "text": "You are eighty-nine. Eat the snacks smaller than eighty-nine!",
+      "hash": "4a096a89bd",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=89.mp3"
+    },
+    "gobble-garden/youAre/n=90": {
+      "text": "You are ninety. Eat the snacks smaller than ninety!",
+      "hash": "0c86f4d53a",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=90.mp3"
+    },
+    "gobble-garden/youAre/n=91": {
+      "text": "You are ninety-one. Eat the snacks smaller than ninety-one!",
+      "hash": "1dcf965f7c",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=91.mp3"
+    },
+    "gobble-garden/youAre/n=92": {
+      "text": "You are ninety-two. Eat the snacks smaller than ninety-two!",
+      "hash": "87fc18eb5a",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=92.mp3"
+    },
+    "gobble-garden/youAre/n=93": {
+      "text": "You are ninety-three. Eat the snacks smaller than ninety-three!",
+      "hash": "ea791badc1",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=93.mp3"
+    },
+    "gobble-garden/youAre/n=94": {
+      "text": "You are ninety-four. Eat the snacks smaller than ninety-four!",
+      "hash": "174d8d8fba",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=94.mp3"
+    },
+    "gobble-garden/youAre/n=95": {
+      "text": "You are ninety-five. Eat the snacks smaller than ninety-five!",
+      "hash": "7c93192876",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=95.mp3"
+    },
+    "gobble-garden/youAre/n=96": {
+      "text": "You are ninety-six. Eat the snacks smaller than ninety-six!",
+      "hash": "71b7e70c4c",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=96.mp3"
+    },
+    "gobble-garden/youAre/n=97": {
+      "text": "You are ninety-seven. Eat the snacks smaller than ninety-seven!",
+      "hash": "bdde07c4df",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=97.mp3"
+    },
+    "gobble-garden/youAre/n=98": {
+      "text": "You are ninety-eight. Eat the snacks smaller than ninety-eight!",
+      "hash": "4fdccfcf25",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=98.mp3"
+    },
+    "gobble-garden/youAre/n=99": {
+      "text": "You are ninety-nine. Eat the snacks smaller than ninety-nine!",
+      "hash": "1005c992d5",
+      "kind": "whole",
+      "file": "voice/gobble-garden/youAre/n=99.mp3"
+    },
+    "gobble-garden/nowYouAre/n=1": {
+      "text": "Now you are one!",
+      "hash": "14861e21d7",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=1.mp3"
+    },
+    "gobble-garden/nowYouAre/n=2": {
+      "text": "Now you are two!",
+      "hash": "3add63257f",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=2.mp3"
+    },
+    "gobble-garden/nowYouAre/n=3": {
+      "text": "Now you are three!",
+      "hash": "e612b2c2fc",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=3.mp3"
+    },
+    "gobble-garden/nowYouAre/n=4": {
+      "text": "Now you are four!",
+      "hash": "a40fc531c2",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=4.mp3"
+    },
+    "gobble-garden/nowYouAre/n=5": {
+      "text": "Now you are five!",
+      "hash": "a43beb8869",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=5.mp3"
+    },
+    "gobble-garden/nowYouAre/n=6": {
+      "text": "Now you are six!",
+      "hash": "fdcf9dc821",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=6.mp3"
+    },
+    "gobble-garden/nowYouAre/n=7": {
+      "text": "Now you are seven!",
+      "hash": "6393c0ffdc",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=7.mp3"
+    },
+    "gobble-garden/nowYouAre/n=8": {
+      "text": "Now you are eight!",
+      "hash": "5cef2311be",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=8.mp3"
+    },
+    "gobble-garden/nowYouAre/n=9": {
+      "text": "Now you are nine!",
+      "hash": "dff7c2ac46",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=9.mp3"
+    },
+    "gobble-garden/nowYouAre/n=10": {
+      "text": "Now you are ten!",
+      "hash": "23bd05a71d",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=10.mp3"
+    },
+    "gobble-garden/nowYouAre/n=11": {
+      "text": "Now you are eleven!",
+      "hash": "8a76c3449f",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=11.mp3"
+    },
+    "gobble-garden/nowYouAre/n=12": {
+      "text": "Now you are twelve!",
+      "hash": "1bfda9683f",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=12.mp3"
+    },
+    "gobble-garden/nowYouAre/n=13": {
+      "text": "Now you are thirteen!",
+      "hash": "345bce1058",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=13.mp3"
+    },
+    "gobble-garden/nowYouAre/n=14": {
+      "text": "Now you are fourteen!",
+      "hash": "56233f9525",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=14.mp3"
+    },
+    "gobble-garden/nowYouAre/n=15": {
+      "text": "Now you are fifteen!",
+      "hash": "bf98808ce8",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=15.mp3"
+    },
+    "gobble-garden/nowYouAre/n=16": {
+      "text": "Now you are sixteen!",
+      "hash": "78a5962d55",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=16.mp3"
+    },
+    "gobble-garden/nowYouAre/n=17": {
+      "text": "Now you are seventeen!",
+      "hash": "ec5c8ba215",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=17.mp3"
+    },
+    "gobble-garden/nowYouAre/n=18": {
+      "text": "Now you are eighteen!",
+      "hash": "2544c408f0",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=18.mp3"
+    },
+    "gobble-garden/nowYouAre/n=19": {
+      "text": "Now you are nineteen!",
+      "hash": "d2cb45e014",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=19.mp3"
+    },
+    "gobble-garden/nowYouAre/n=20": {
+      "text": "Now you are twenty!",
+      "hash": "c2a91253c9",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=20.mp3"
+    },
+    "gobble-garden/nowYouAre/n=21": {
+      "text": "Now you are twenty-one!",
+      "hash": "9f3829bb5b",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=21.mp3"
+    },
+    "gobble-garden/nowYouAre/n=22": {
+      "text": "Now you are twenty-two!",
+      "hash": "7747ed6d8a",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=22.mp3"
+    },
+    "gobble-garden/nowYouAre/n=23": {
+      "text": "Now you are twenty-three!",
+      "hash": "fb2a05f4e1",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=23.mp3"
+    },
+    "gobble-garden/nowYouAre/n=24": {
+      "text": "Now you are twenty-four!",
+      "hash": "3ee4eaeea9",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=24.mp3"
+    },
+    "gobble-garden/nowYouAre/n=25": {
+      "text": "Now you are twenty-five!",
+      "hash": "c82d10d8a8",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=25.mp3"
+    },
+    "gobble-garden/nowYouAre/n=26": {
+      "text": "Now you are twenty-six!",
+      "hash": "b8e4bc9a0c",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=26.mp3"
+    },
+    "gobble-garden/nowYouAre/n=27": {
+      "text": "Now you are twenty-seven!",
+      "hash": "defbc8fd8b",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=27.mp3"
+    },
+    "gobble-garden/nowYouAre/n=28": {
+      "text": "Now you are twenty-eight!",
+      "hash": "0594d479f7",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=28.mp3"
+    },
+    "gobble-garden/nowYouAre/n=29": {
+      "text": "Now you are twenty-nine!",
+      "hash": "6da2b12a28",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=29.mp3"
+    },
+    "gobble-garden/nowYouAre/n=30": {
+      "text": "Now you are thirty!",
+      "hash": "8f5dfb887c",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=30.mp3"
+    },
+    "gobble-garden/nowYouAre/n=31": {
+      "text": "Now you are thirty-one!",
+      "hash": "258d00684b",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=31.mp3"
+    },
+    "gobble-garden/nowYouAre/n=32": {
+      "text": "Now you are thirty-two!",
+      "hash": "aadff7020b",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=32.mp3"
+    },
+    "gobble-garden/nowYouAre/n=33": {
+      "text": "Now you are thirty-three!",
+      "hash": "da943d12ff",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=33.mp3"
+    },
+    "gobble-garden/nowYouAre/n=34": {
+      "text": "Now you are thirty-four!",
+      "hash": "ece764b674",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=34.mp3"
+    },
+    "gobble-garden/nowYouAre/n=35": {
+      "text": "Now you are thirty-five!",
+      "hash": "ff310a8488",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=35.mp3"
+    },
+    "gobble-garden/nowYouAre/n=36": {
+      "text": "Now you are thirty-six!",
+      "hash": "77c8597e72",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=36.mp3"
+    },
+    "gobble-garden/nowYouAre/n=37": {
+      "text": "Now you are thirty-seven!",
+      "hash": "e8d9ba8a2b",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=37.mp3"
+    },
+    "gobble-garden/nowYouAre/n=38": {
+      "text": "Now you are thirty-eight!",
+      "hash": "6fedd4fb94",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=38.mp3"
+    },
+    "gobble-garden/nowYouAre/n=39": {
+      "text": "Now you are thirty-nine!",
+      "hash": "97715a4708",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=39.mp3"
+    },
+    "gobble-garden/nowYouAre/n=40": {
+      "text": "Now you are forty!",
+      "hash": "91d6fc7e7f",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=40.mp3"
+    },
+    "gobble-garden/nowYouAre/n=41": {
+      "text": "Now you are forty-one!",
+      "hash": "acde2d5ed5",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=41.mp3"
+    },
+    "gobble-garden/nowYouAre/n=42": {
+      "text": "Now you are forty-two!",
+      "hash": "d3d167caf7",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=42.mp3"
+    },
+    "gobble-garden/nowYouAre/n=43": {
+      "text": "Now you are forty-three!",
+      "hash": "1cd6e8f1e1",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=43.mp3"
+    },
+    "gobble-garden/nowYouAre/n=44": {
+      "text": "Now you are forty-four!",
+      "hash": "d4cfacfb50",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=44.mp3"
+    },
+    "gobble-garden/nowYouAre/n=45": {
+      "text": "Now you are forty-five!",
+      "hash": "0842d85658",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=45.mp3"
+    },
+    "gobble-garden/nowYouAre/n=46": {
+      "text": "Now you are forty-six!",
+      "hash": "beb1a0d65b",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=46.mp3"
+    },
+    "gobble-garden/nowYouAre/n=47": {
+      "text": "Now you are forty-seven!",
+      "hash": "4652e8ae61",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=47.mp3"
+    },
+    "gobble-garden/nowYouAre/n=48": {
+      "text": "Now you are forty-eight!",
+      "hash": "481cef4ab0",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=48.mp3"
+    },
+    "gobble-garden/nowYouAre/n=49": {
+      "text": "Now you are forty-nine!",
+      "hash": "613ef04a52",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=49.mp3"
+    },
+    "gobble-garden/nowYouAre/n=50": {
+      "text": "Now you are fifty!",
+      "hash": "143a2d6a0c",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=50.mp3"
+    },
+    "gobble-garden/nowYouAre/n=51": {
+      "text": "Now you are fifty-one!",
+      "hash": "2267c39ec2",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=51.mp3"
+    },
+    "gobble-garden/nowYouAre/n=52": {
+      "text": "Now you are fifty-two!",
+      "hash": "070fb9d9c9",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=52.mp3"
+    },
+    "gobble-garden/nowYouAre/n=53": {
+      "text": "Now you are fifty-three!",
+      "hash": "eede3d3c8a",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=53.mp3"
+    },
+    "gobble-garden/nowYouAre/n=54": {
+      "text": "Now you are fifty-four!",
+      "hash": "e4276648f4",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=54.mp3"
+    },
+    "gobble-garden/nowYouAre/n=55": {
+      "text": "Now you are fifty-five!",
+      "hash": "2f484eb4d6",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=55.mp3"
+    },
+    "gobble-garden/nowYouAre/n=56": {
+      "text": "Now you are fifty-six!",
+      "hash": "1813a9fe6a",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=56.mp3"
+    },
+    "gobble-garden/nowYouAre/n=57": {
+      "text": "Now you are fifty-seven!",
+      "hash": "161042901c",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=57.mp3"
+    },
+    "gobble-garden/nowYouAre/n=58": {
+      "text": "Now you are fifty-eight!",
+      "hash": "12e110e144",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=58.mp3"
+    },
+    "gobble-garden/nowYouAre/n=59": {
+      "text": "Now you are fifty-nine!",
+      "hash": "25f547b7e3",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=59.mp3"
+    },
+    "gobble-garden/nowYouAre/n=60": {
+      "text": "Now you are sixty!",
+      "hash": "61e8ae3e81",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=60.mp3"
+    },
+    "gobble-garden/nowYouAre/n=61": {
+      "text": "Now you are sixty-one!",
+      "hash": "3c838d79ec",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=61.mp3"
+    },
+    "gobble-garden/nowYouAre/n=62": {
+      "text": "Now you are sixty-two!",
+      "hash": "be30653f28",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=62.mp3"
+    },
+    "gobble-garden/nowYouAre/n=63": {
+      "text": "Now you are sixty-three!",
+      "hash": "4d0c67d9be",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=63.mp3"
+    },
+    "gobble-garden/nowYouAre/n=64": {
+      "text": "Now you are sixty-four!",
+      "hash": "c62775dc3b",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=64.mp3"
+    },
+    "gobble-garden/nowYouAre/n=65": {
+      "text": "Now you are sixty-five!",
+      "hash": "8c299fdacc",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=65.mp3"
+    },
+    "gobble-garden/nowYouAre/n=66": {
+      "text": "Now you are sixty-six!",
+      "hash": "b78574e568",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=66.mp3"
+    },
+    "gobble-garden/nowYouAre/n=67": {
+      "text": "Now you are sixty-seven!",
+      "hash": "7d7ccc0159",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=67.mp3"
+    },
+    "gobble-garden/nowYouAre/n=68": {
+      "text": "Now you are sixty-eight!",
+      "hash": "2467d47971",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=68.mp3"
+    },
+    "gobble-garden/nowYouAre/n=69": {
+      "text": "Now you are sixty-nine!",
+      "hash": "44398de3c4",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=69.mp3"
+    },
+    "gobble-garden/nowYouAre/n=70": {
+      "text": "Now you are seventy!",
+      "hash": "d9e062540d",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=70.mp3"
+    },
+    "gobble-garden/nowYouAre/n=71": {
+      "text": "Now you are seventy-one!",
+      "hash": "82fa23dc39",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=71.mp3"
+    },
+    "gobble-garden/nowYouAre/n=72": {
+      "text": "Now you are seventy-two!",
+      "hash": "6cdc85948c",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=72.mp3"
+    },
+    "gobble-garden/nowYouAre/n=73": {
+      "text": "Now you are seventy-three!",
+      "hash": "fc7d7caa9c",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=73.mp3"
+    },
+    "gobble-garden/nowYouAre/n=74": {
+      "text": "Now you are seventy-four!",
+      "hash": "4e07a5a431",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=74.mp3"
+    },
+    "gobble-garden/nowYouAre/n=75": {
+      "text": "Now you are seventy-five!",
+      "hash": "66663fe13e",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=75.mp3"
+    },
+    "gobble-garden/nowYouAre/n=76": {
+      "text": "Now you are seventy-six!",
+      "hash": "8f632d6f46",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=76.mp3"
+    },
+    "gobble-garden/nowYouAre/n=77": {
+      "text": "Now you are seventy-seven!",
+      "hash": "7c80ba21d5",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=77.mp3"
+    },
+    "gobble-garden/nowYouAre/n=78": {
+      "text": "Now you are seventy-eight!",
+      "hash": "fbd7e95c3d",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=78.mp3"
+    },
+    "gobble-garden/nowYouAre/n=79": {
+      "text": "Now you are seventy-nine!",
+      "hash": "e5ff0fb086",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=79.mp3"
+    },
+    "gobble-garden/nowYouAre/n=80": {
+      "text": "Now you are eighty!",
+      "hash": "a7d10703bb",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=80.mp3"
+    },
+    "gobble-garden/nowYouAre/n=81": {
+      "text": "Now you are eighty-one!",
+      "hash": "5500d0da5f",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=81.mp3"
+    },
+    "gobble-garden/nowYouAre/n=82": {
+      "text": "Now you are eighty-two!",
+      "hash": "87680b20ac",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=82.mp3"
+    },
+    "gobble-garden/nowYouAre/n=83": {
+      "text": "Now you are eighty-three!",
+      "hash": "9835b21f6d",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=83.mp3"
+    },
+    "gobble-garden/nowYouAre/n=84": {
+      "text": "Now you are eighty-four!",
+      "hash": "f58f6d993a",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=84.mp3"
+    },
+    "gobble-garden/nowYouAre/n=85": {
+      "text": "Now you are eighty-five!",
+      "hash": "9010f7612e",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=85.mp3"
+    },
+    "gobble-garden/nowYouAre/n=86": {
+      "text": "Now you are eighty-six!",
+      "hash": "a7e84369d0",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=86.mp3"
+    },
+    "gobble-garden/nowYouAre/n=87": {
+      "text": "Now you are eighty-seven!",
+      "hash": "6f033ce0e1",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=87.mp3"
+    },
+    "gobble-garden/nowYouAre/n=88": {
+      "text": "Now you are eighty-eight!",
+      "hash": "2f6d765415",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=88.mp3"
+    },
+    "gobble-garden/nowYouAre/n=89": {
+      "text": "Now you are eighty-nine!",
+      "hash": "9f18a08821",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=89.mp3"
+    },
+    "gobble-garden/nowYouAre/n=90": {
+      "text": "Now you are ninety!",
+      "hash": "0b20956a57",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=90.mp3"
+    },
+    "gobble-garden/nowYouAre/n=91": {
+      "text": "Now you are ninety-one!",
+      "hash": "63fa76bff6",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=91.mp3"
+    },
+    "gobble-garden/nowYouAre/n=92": {
+      "text": "Now you are ninety-two!",
+      "hash": "b34c8e09dc",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=92.mp3"
+    },
+    "gobble-garden/nowYouAre/n=93": {
+      "text": "Now you are ninety-three!",
+      "hash": "dcdd075ac5",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=93.mp3"
+    },
+    "gobble-garden/nowYouAre/n=94": {
+      "text": "Now you are ninety-four!",
+      "hash": "6b62eeaa28",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=94.mp3"
+    },
+    "gobble-garden/nowYouAre/n=95": {
+      "text": "Now you are ninety-five!",
+      "hash": "d81fe9cdde",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=95.mp3"
+    },
+    "gobble-garden/nowYouAre/n=96": {
+      "text": "Now you are ninety-six!",
+      "hash": "13e300d486",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=96.mp3"
+    },
+    "gobble-garden/nowYouAre/n=97": {
+      "text": "Now you are ninety-seven!",
+      "hash": "fb44d8a007",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=97.mp3"
+    },
+    "gobble-garden/nowYouAre/n=98": {
+      "text": "Now you are ninety-eight!",
+      "hash": "03fabd9b77",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=98.mp3"
+    },
+    "gobble-garden/nowYouAre/n=99": {
+      "text": "Now you are ninety-nine!",
+      "hash": "60ef6fb06e",
+      "kind": "whole",
+      "file": "voice/gobble-garden/nowYouAre/n=99.mp3"
+    },
+    "gobble-garden/findSmaller/n=1": {
+      "text": "Find a snack smaller than one!",
+      "hash": "ec92fd3fce",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=1.mp3"
+    },
+    "gobble-garden/findSmaller/n=2": {
+      "text": "Find a snack smaller than two!",
+      "hash": "f467b19d99",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=2.mp3"
+    },
+    "gobble-garden/findSmaller/n=3": {
+      "text": "Find a snack smaller than three!",
+      "hash": "9004b7f203",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=3.mp3"
+    },
+    "gobble-garden/findSmaller/n=4": {
+      "text": "Find a snack smaller than four!",
+      "hash": "23702320a5",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=4.mp3"
+    },
+    "gobble-garden/findSmaller/n=5": {
+      "text": "Find a snack smaller than five!",
+      "hash": "91168e1465",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=5.mp3"
+    },
+    "gobble-garden/findSmaller/n=6": {
+      "text": "Find a snack smaller than six!",
+      "hash": "119b90cc2f",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=6.mp3"
+    },
+    "gobble-garden/findSmaller/n=7": {
+      "text": "Find a snack smaller than seven!",
+      "hash": "c16bb1adfd",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=7.mp3"
+    },
+    "gobble-garden/findSmaller/n=8": {
+      "text": "Find a snack smaller than eight!",
+      "hash": "c4c7845419",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=8.mp3"
+    },
+    "gobble-garden/findSmaller/n=9": {
+      "text": "Find a snack smaller than nine!",
+      "hash": "d30d5f8776",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=9.mp3"
+    },
+    "gobble-garden/findSmaller/n=10": {
+      "text": "Find a snack smaller than ten!",
+      "hash": "d9f7732864",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=10.mp3"
+    },
+    "gobble-garden/findSmaller/n=11": {
+      "text": "Find a snack smaller than eleven!",
+      "hash": "9da224dd8a",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=11.mp3"
+    },
+    "gobble-garden/findSmaller/n=12": {
+      "text": "Find a snack smaller than twelve!",
+      "hash": "71896d7e69",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=12.mp3"
+    },
+    "gobble-garden/findSmaller/n=13": {
+      "text": "Find a snack smaller than thirteen!",
+      "hash": "eab057be50",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=13.mp3"
+    },
+    "gobble-garden/findSmaller/n=14": {
+      "text": "Find a snack smaller than fourteen!",
+      "hash": "bf47fb1e39",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=14.mp3"
+    },
+    "gobble-garden/findSmaller/n=15": {
+      "text": "Find a snack smaller than fifteen!",
+      "hash": "07478c4df4",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=15.mp3"
+    },
+    "gobble-garden/findSmaller/n=16": {
+      "text": "Find a snack smaller than sixteen!",
+      "hash": "ae92a23752",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=16.mp3"
+    },
+    "gobble-garden/findSmaller/n=17": {
+      "text": "Find a snack smaller than seventeen!",
+      "hash": "a8924882bc",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=17.mp3"
+    },
+    "gobble-garden/findSmaller/n=18": {
+      "text": "Find a snack smaller than eighteen!",
+      "hash": "b1af122ba9",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=18.mp3"
+    },
+    "gobble-garden/findSmaller/n=19": {
+      "text": "Find a snack smaller than nineteen!",
+      "hash": "0be65bfb61",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=19.mp3"
+    },
+    "gobble-garden/findSmaller/n=20": {
+      "text": "Find a snack smaller than twenty!",
+      "hash": "abe564c0ba",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=20.mp3"
+    },
+    "gobble-garden/findSmaller/n=21": {
+      "text": "Find a snack smaller than twenty-one!",
+      "hash": "1fda458e07",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=21.mp3"
+    },
+    "gobble-garden/findSmaller/n=22": {
+      "text": "Find a snack smaller than twenty-two!",
+      "hash": "47719ee278",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=22.mp3"
+    },
+    "gobble-garden/findSmaller/n=23": {
+      "text": "Find a snack smaller than twenty-three!",
+      "hash": "68cb3a8f21",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=23.mp3"
+    },
+    "gobble-garden/findSmaller/n=24": {
+      "text": "Find a snack smaller than twenty-four!",
+      "hash": "14c4cc129f",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=24.mp3"
+    },
+    "gobble-garden/findSmaller/n=25": {
+      "text": "Find a snack smaller than twenty-five!",
+      "hash": "9765abe809",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=25.mp3"
+    },
+    "gobble-garden/findSmaller/n=26": {
+      "text": "Find a snack smaller than twenty-six!",
+      "hash": "160a93383e",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=26.mp3"
+    },
+    "gobble-garden/findSmaller/n=27": {
+      "text": "Find a snack smaller than twenty-seven!",
+      "hash": "169c7609a8",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=27.mp3"
+    },
+    "gobble-garden/findSmaller/n=28": {
+      "text": "Find a snack smaller than twenty-eight!",
+      "hash": "4322b59a95",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=28.mp3"
+    },
+    "gobble-garden/findSmaller/n=29": {
+      "text": "Find a snack smaller than twenty-nine!",
+      "hash": "1cd7e204c7",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=29.mp3"
+    },
+    "gobble-garden/findSmaller/n=30": {
+      "text": "Find a snack smaller than thirty!",
+      "hash": "f2d43eb1f2",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=30.mp3"
+    },
+    "gobble-garden/findSmaller/n=31": {
+      "text": "Find a snack smaller than thirty-one!",
+      "hash": "dd9a6a1962",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=31.mp3"
+    },
+    "gobble-garden/findSmaller/n=32": {
+      "text": "Find a snack smaller than thirty-two!",
+      "hash": "2de32273e8",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=32.mp3"
+    },
+    "gobble-garden/findSmaller/n=33": {
+      "text": "Find a snack smaller than thirty-three!",
+      "hash": "834ae0e25f",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=33.mp3"
+    },
+    "gobble-garden/findSmaller/n=34": {
+      "text": "Find a snack smaller than thirty-four!",
+      "hash": "0e48e6b401",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=34.mp3"
+    },
+    "gobble-garden/findSmaller/n=35": {
+      "text": "Find a snack smaller than thirty-five!",
+      "hash": "5ee737d86c",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=35.mp3"
+    },
+    "gobble-garden/findSmaller/n=36": {
+      "text": "Find a snack smaller than thirty-six!",
+      "hash": "258af0c39a",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=36.mp3"
+    },
+    "gobble-garden/findSmaller/n=37": {
+      "text": "Find a snack smaller than thirty-seven!",
+      "hash": "a7616d8f58",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=37.mp3"
+    },
+    "gobble-garden/findSmaller/n=38": {
+      "text": "Find a snack smaller than thirty-eight!",
+      "hash": "7b0278e9f6",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=38.mp3"
+    },
+    "gobble-garden/findSmaller/n=39": {
+      "text": "Find a snack smaller than thirty-nine!",
+      "hash": "ac7c2bce56",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=39.mp3"
+    },
+    "gobble-garden/findSmaller/n=40": {
+      "text": "Find a snack smaller than forty!",
+      "hash": "b483988840",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=40.mp3"
+    },
+    "gobble-garden/findSmaller/n=41": {
+      "text": "Find a snack smaller than forty-one!",
+      "hash": "3457f4e315",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=41.mp3"
+    },
+    "gobble-garden/findSmaller/n=42": {
+      "text": "Find a snack smaller than forty-two!",
+      "hash": "cbfcdf6b2c",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=42.mp3"
+    },
+    "gobble-garden/findSmaller/n=43": {
+      "text": "Find a snack smaller than forty-three!",
+      "hash": "51fc82f13c",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=43.mp3"
+    },
+    "gobble-garden/findSmaller/n=44": {
+      "text": "Find a snack smaller than forty-four!",
+      "hash": "26615f80bd",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=44.mp3"
+    },
+    "gobble-garden/findSmaller/n=45": {
+      "text": "Find a snack smaller than forty-five!",
+      "hash": "6a38449d43",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=45.mp3"
+    },
+    "gobble-garden/findSmaller/n=46": {
+      "text": "Find a snack smaller than forty-six!",
+      "hash": "c3ce61f03b",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=46.mp3"
+    },
+    "gobble-garden/findSmaller/n=47": {
+      "text": "Find a snack smaller than forty-seven!",
+      "hash": "bde2e92838",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=47.mp3"
+    },
+    "gobble-garden/findSmaller/n=48": {
+      "text": "Find a snack smaller than forty-eight!",
+      "hash": "2d1e431bf7",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=48.mp3"
+    },
+    "gobble-garden/findSmaller/n=49": {
+      "text": "Find a snack smaller than forty-nine!",
+      "hash": "2207158a30",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=49.mp3"
+    },
+    "gobble-garden/findSmaller/n=50": {
+      "text": "Find a snack smaller than fifty!",
+      "hash": "1cc1c244ee",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=50.mp3"
+    },
+    "gobble-garden/findSmaller/n=51": {
+      "text": "Find a snack smaller than fifty-one!",
+      "hash": "3441c4710d",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=51.mp3"
+    },
+    "gobble-garden/findSmaller/n=52": {
+      "text": "Find a snack smaller than fifty-two!",
+      "hash": "6023e65455",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=52.mp3"
+    },
+    "gobble-garden/findSmaller/n=53": {
+      "text": "Find a snack smaller than fifty-three!",
+      "hash": "36b4e3c513",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=53.mp3"
+    },
+    "gobble-garden/findSmaller/n=54": {
+      "text": "Find a snack smaller than fifty-four!",
+      "hash": "b6b7f11940",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=54.mp3"
+    },
+    "gobble-garden/findSmaller/n=55": {
+      "text": "Find a snack smaller than fifty-five!",
+      "hash": "55a38e0c14",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=55.mp3"
+    },
+    "gobble-garden/findSmaller/n=56": {
+      "text": "Find a snack smaller than fifty-six!",
+      "hash": "dd295d8465",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=56.mp3"
+    },
+    "gobble-garden/findSmaller/n=57": {
+      "text": "Find a snack smaller than fifty-seven!",
+      "hash": "e0a5ca6e80",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=57.mp3"
+    },
+    "gobble-garden/findSmaller/n=58": {
+      "text": "Find a snack smaller than fifty-eight!",
+      "hash": "ad822c8a7f",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=58.mp3"
+    },
+    "gobble-garden/findSmaller/n=59": {
+      "text": "Find a snack smaller than fifty-nine!",
+      "hash": "9a29e80ef4",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=59.mp3"
+    },
+    "gobble-garden/findSmaller/n=60": {
+      "text": "Find a snack smaller than sixty!",
+      "hash": "4a07de995c",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=60.mp3"
+    },
+    "gobble-garden/findSmaller/n=61": {
+      "text": "Find a snack smaller than sixty-one!",
+      "hash": "b067171f3f",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=61.mp3"
+    },
+    "gobble-garden/findSmaller/n=62": {
+      "text": "Find a snack smaller than sixty-two!",
+      "hash": "5085083833",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=62.mp3"
+    },
+    "gobble-garden/findSmaller/n=63": {
+      "text": "Find a snack smaller than sixty-three!",
+      "hash": "427c5d2900",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=63.mp3"
+    },
+    "gobble-garden/findSmaller/n=64": {
+      "text": "Find a snack smaller than sixty-four!",
+      "hash": "98a2e7f5fd",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=64.mp3"
+    },
+    "gobble-garden/findSmaller/n=65": {
+      "text": "Find a snack smaller than sixty-five!",
+      "hash": "5b24551f4a",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=65.mp3"
+    },
+    "gobble-garden/findSmaller/n=66": {
+      "text": "Find a snack smaller than sixty-six!",
+      "hash": "54848b5eee",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=66.mp3"
+    },
+    "gobble-garden/findSmaller/n=67": {
+      "text": "Find a snack smaller than sixty-seven!",
+      "hash": "fb9a5351f3",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=67.mp3"
+    },
+    "gobble-garden/findSmaller/n=68": {
+      "text": "Find a snack smaller than sixty-eight!",
+      "hash": "007afb352c",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=68.mp3"
+    },
+    "gobble-garden/findSmaller/n=69": {
+      "text": "Find a snack smaller than sixty-nine!",
+      "hash": "12dd4dab0b",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=69.mp3"
+    },
+    "gobble-garden/findSmaller/n=70": {
+      "text": "Find a snack smaller than seventy!",
+      "hash": "eeec330eb2",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=70.mp3"
+    },
+    "gobble-garden/findSmaller/n=71": {
+      "text": "Find a snack smaller than seventy-one!",
+      "hash": "4e638689f9",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=71.mp3"
+    },
+    "gobble-garden/findSmaller/n=72": {
+      "text": "Find a snack smaller than seventy-two!",
+      "hash": "26907c0fdb",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=72.mp3"
+    },
+    "gobble-garden/findSmaller/n=73": {
+      "text": "Find a snack smaller than seventy-three!",
+      "hash": "8155d8cc7c",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=73.mp3"
+    },
+    "gobble-garden/findSmaller/n=74": {
+      "text": "Find a snack smaller than seventy-four!",
+      "hash": "61a40c868e",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=74.mp3"
+    },
+    "gobble-garden/findSmaller/n=75": {
+      "text": "Find a snack smaller than seventy-five!",
+      "hash": "1edad2b67b",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=75.mp3"
+    },
+    "gobble-garden/findSmaller/n=76": {
+      "text": "Find a snack smaller than seventy-six!",
+      "hash": "0d8b614f60",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=76.mp3"
+    },
+    "gobble-garden/findSmaller/n=77": {
+      "text": "Find a snack smaller than seventy-seven!",
+      "hash": "14a1e10d0a",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=77.mp3"
+    },
+    "gobble-garden/findSmaller/n=78": {
+      "text": "Find a snack smaller than seventy-eight!",
+      "hash": "cb018462d7",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=78.mp3"
+    },
+    "gobble-garden/findSmaller/n=79": {
+      "text": "Find a snack smaller than seventy-nine!",
+      "hash": "d1590c7217",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=79.mp3"
+    },
+    "gobble-garden/findSmaller/n=80": {
+      "text": "Find a snack smaller than eighty!",
+      "hash": "025e8b46eb",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=80.mp3"
+    },
+    "gobble-garden/findSmaller/n=81": {
+      "text": "Find a snack smaller than eighty-one!",
+      "hash": "f03ea8af2f",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=81.mp3"
+    },
+    "gobble-garden/findSmaller/n=82": {
+      "text": "Find a snack smaller than eighty-two!",
+      "hash": "739bc9e515",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=82.mp3"
+    },
+    "gobble-garden/findSmaller/n=83": {
+      "text": "Find a snack smaller than eighty-three!",
+      "hash": "b437e20859",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=83.mp3"
+    },
+    "gobble-garden/findSmaller/n=84": {
+      "text": "Find a snack smaller than eighty-four!",
+      "hash": "c51c15d2d0",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=84.mp3"
+    },
+    "gobble-garden/findSmaller/n=85": {
+      "text": "Find a snack smaller than eighty-five!",
+      "hash": "0becac14dc",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=85.mp3"
+    },
+    "gobble-garden/findSmaller/n=86": {
+      "text": "Find a snack smaller than eighty-six!",
+      "hash": "dfdcfa80db",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=86.mp3"
+    },
+    "gobble-garden/findSmaller/n=87": {
+      "text": "Find a snack smaller than eighty-seven!",
+      "hash": "9dbc032039",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=87.mp3"
+    },
+    "gobble-garden/findSmaller/n=88": {
+      "text": "Find a snack smaller than eighty-eight!",
+      "hash": "094e41abc2",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=88.mp3"
+    },
+    "gobble-garden/findSmaller/n=89": {
+      "text": "Find a snack smaller than eighty-nine!",
+      "hash": "9677b9d88d",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=89.mp3"
+    },
+    "gobble-garden/findSmaller/n=90": {
+      "text": "Find a snack smaller than ninety!",
+      "hash": "8d22f106b0",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=90.mp3"
+    },
+    "gobble-garden/findSmaller/n=91": {
+      "text": "Find a snack smaller than ninety-one!",
+      "hash": "967c5ecf8d",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=91.mp3"
+    },
+    "gobble-garden/findSmaller/n=92": {
+      "text": "Find a snack smaller than ninety-two!",
+      "hash": "9f2713775f",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=92.mp3"
+    },
+    "gobble-garden/findSmaller/n=93": {
+      "text": "Find a snack smaller than ninety-three!",
+      "hash": "800ce544df",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=93.mp3"
+    },
+    "gobble-garden/findSmaller/n=94": {
+      "text": "Find a snack smaller than ninety-four!",
+      "hash": "73620d2626",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=94.mp3"
+    },
+    "gobble-garden/findSmaller/n=95": {
+      "text": "Find a snack smaller than ninety-five!",
+      "hash": "44e9386b72",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=95.mp3"
+    },
+    "gobble-garden/findSmaller/n=96": {
+      "text": "Find a snack smaller than ninety-six!",
+      "hash": "21fb127ac4",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=96.mp3"
+    },
+    "gobble-garden/findSmaller/n=97": {
+      "text": "Find a snack smaller than ninety-seven!",
+      "hash": "1aa0bf2338",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=97.mp3"
+    },
+    "gobble-garden/findSmaller/n=98": {
+      "text": "Find a snack smaller than ninety-eight!",
+      "hash": "5d9289453f",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=98.mp3"
+    },
+    "gobble-garden/findSmaller/n=99": {
+      "text": "Find a snack smaller than ninety-nine!",
+      "hash": "8bc6ffafc0",
+      "kind": "whole",
+      "file": "voice/gobble-garden/findSmaller/n=99.mp3"
+    },
+    "gobble-garden/bigger#1": {
+      "text": "is bigger than",
+      "hash": "f4553e9ad9",
+      "kind": "piece",
+      "file": "voice/gobble-garden/bigger.part1.mp3"
+    },
+    "gobble-garden/ateSnacks/n=1": {
+      "text": "You ate one snacks!",
+      "hash": "0439b1f950",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=1.mp3"
+    },
+    "gobble-garden/ateSnacks/n=2": {
+      "text": "You ate two snacks!",
+      "hash": "5e664a9c08",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=2.mp3"
+    },
+    "gobble-garden/ateSnacks/n=3": {
+      "text": "You ate three snacks!",
+      "hash": "30b0bb9f92",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=3.mp3"
+    },
+    "gobble-garden/ateSnacks/n=4": {
+      "text": "You ate four snacks!",
+      "hash": "7943dd826b",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=4.mp3"
+    },
+    "gobble-garden/ateSnacks/n=5": {
+      "text": "You ate five snacks!",
+      "hash": "d97337f52d",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=5.mp3"
+    },
+    "gobble-garden/ateSnacks/n=6": {
+      "text": "You ate six snacks!",
+      "hash": "cd22e84a3c",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=6.mp3"
+    },
+    "gobble-garden/ateSnacks/n=7": {
+      "text": "You ate seven snacks!",
+      "hash": "09ffd3ce80",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=7.mp3"
+    },
+    "gobble-garden/ateSnacks/n=8": {
+      "text": "You ate eight snacks!",
+      "hash": "e51b706acb",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=8.mp3"
+    },
+    "gobble-garden/ateSnacks/n=9": {
+      "text": "You ate nine snacks!",
+      "hash": "558252452e",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=9.mp3"
+    },
+    "gobble-garden/ateSnacks/n=10": {
+      "text": "You ate ten snacks!",
+      "hash": "e2e9ad534d",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=10.mp3"
+    },
+    "gobble-garden/ateSnacks/n=11": {
+      "text": "You ate eleven snacks!",
+      "hash": "f4c31a42ce",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=11.mp3"
+    },
+    "gobble-garden/ateSnacks/n=12": {
+      "text": "You ate twelve snacks!",
+      "hash": "0595733c95",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=12.mp3"
+    },
+    "gobble-garden/ateSnacks/n=13": {
+      "text": "You ate thirteen snacks!",
+      "hash": "b17c07e97a",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=13.mp3"
+    },
+    "gobble-garden/ateSnacks/n=14": {
+      "text": "You ate fourteen snacks!",
+      "hash": "953b72fad4",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=14.mp3"
+    },
+    "gobble-garden/ateSnacks/n=15": {
+      "text": "You ate fifteen snacks!",
+      "hash": "3102481ea5",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=15.mp3"
+    },
+    "gobble-garden/ateSnacks/n=16": {
+      "text": "You ate sixteen snacks!",
+      "hash": "7d374d9a50",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=16.mp3"
+    },
+    "gobble-garden/ateSnacks/n=17": {
+      "text": "You ate seventeen snacks!",
+      "hash": "c34d6f0a77",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=17.mp3"
+    },
+    "gobble-garden/ateSnacks/n=18": {
+      "text": "You ate eighteen snacks!",
+      "hash": "f8d46af7ae",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=18.mp3"
+    },
+    "gobble-garden/ateSnacks/n=19": {
+      "text": "You ate nineteen snacks!",
+      "hash": "af60a00040",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=19.mp3"
+    },
+    "gobble-garden/ateSnacks/n=20": {
+      "text": "You ate twenty snacks!",
+      "hash": "972c301e12",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=20.mp3"
+    },
+    "gobble-garden/ateSnacks/n=21": {
+      "text": "You ate twenty-one snacks!",
+      "hash": "75db1d15f1",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=21.mp3"
+    },
+    "gobble-garden/ateSnacks/n=22": {
+      "text": "You ate twenty-two snacks!",
+      "hash": "17d5e0aebb",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=22.mp3"
+    },
+    "gobble-garden/ateSnacks/n=23": {
+      "text": "You ate twenty-three snacks!",
+      "hash": "002b1f6920",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=23.mp3"
+    },
+    "gobble-garden/ateSnacks/n=24": {
+      "text": "You ate twenty-four snacks!",
+      "hash": "c23d800496",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=24.mp3"
+    },
+    "gobble-garden/ateSnacks/n=25": {
+      "text": "You ate twenty-five snacks!",
+      "hash": "cf6f9abbb8",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=25.mp3"
+    },
+    "gobble-garden/ateSnacks/n=26": {
+      "text": "You ate twenty-six snacks!",
+      "hash": "b975cc855d",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=26.mp3"
+    },
+    "gobble-garden/ateSnacks/n=27": {
+      "text": "You ate twenty-seven snacks!",
+      "hash": "1d225622b7",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=27.mp3"
+    },
+    "gobble-garden/ateSnacks/n=28": {
+      "text": "You ate twenty-eight snacks!",
+      "hash": "d4ccc1deea",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=28.mp3"
+    },
+    "gobble-garden/ateSnacks/n=29": {
+      "text": "You ate twenty-nine snacks!",
+      "hash": "8c13989828",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=29.mp3"
+    },
+    "gobble-garden/ateSnacks/n=30": {
+      "text": "You ate thirty snacks!",
+      "hash": "24e2f5da4f",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=30.mp3"
+    },
+    "gobble-garden/ateSnacks/n=31": {
+      "text": "You ate thirty-one snacks!",
+      "hash": "89a1034810",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=31.mp3"
+    },
+    "gobble-garden/ateSnacks/n=32": {
+      "text": "You ate thirty-two snacks!",
+      "hash": "e3dbf90ec3",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=32.mp3"
+    },
+    "gobble-garden/ateSnacks/n=33": {
+      "text": "You ate thirty-three snacks!",
+      "hash": "d61ed4c223",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=33.mp3"
+    },
+    "gobble-garden/ateSnacks/n=34": {
+      "text": "You ate thirty-four snacks!",
+      "hash": "b402cd0eae",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=34.mp3"
+    },
+    "gobble-garden/ateSnacks/n=35": {
+      "text": "You ate thirty-five snacks!",
+      "hash": "c7f4f6f323",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=35.mp3"
+    },
+    "gobble-garden/ateSnacks/n=36": {
+      "text": "You ate thirty-six snacks!",
+      "hash": "7adba95731",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=36.mp3"
+    },
+    "gobble-garden/ateSnacks/n=37": {
+      "text": "You ate thirty-seven snacks!",
+      "hash": "2b278ad70b",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=37.mp3"
+    },
+    "gobble-garden/ateSnacks/n=38": {
+      "text": "You ate thirty-eight snacks!",
+      "hash": "9a911e0cec",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=38.mp3"
+    },
+    "gobble-garden/ateSnacks/n=39": {
+      "text": "You ate thirty-nine snacks!",
+      "hash": "23d919f147",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=39.mp3"
+    },
+    "gobble-garden/ateSnacks/n=40": {
+      "text": "You ate forty snacks!",
+      "hash": "2acdb2b86b",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=40.mp3"
+    },
+    "gobble-garden/ateSnacks/n=41": {
+      "text": "You ate forty-one snacks!",
+      "hash": "412513eeaa",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=41.mp3"
+    },
+    "gobble-garden/ateSnacks/n=42": {
+      "text": "You ate forty-two snacks!",
+      "hash": "636a1a90ff",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=42.mp3"
+    },
+    "gobble-garden/ateSnacks/n=43": {
+      "text": "You ate forty-three snacks!",
+      "hash": "8ef3ff56b9",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=43.mp3"
+    },
+    "gobble-garden/ateSnacks/n=44": {
+      "text": "You ate forty-four snacks!",
+      "hash": "3fd29ef332",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=44.mp3"
+    },
+    "gobble-garden/ateSnacks/n=45": {
+      "text": "You ate forty-five snacks!",
+      "hash": "0abbbafd0e",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=45.mp3"
+    },
+    "gobble-garden/ateSnacks/n=46": {
+      "text": "You ate forty-six snacks!",
+      "hash": "0970a67c9b",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=46.mp3"
+    },
+    "gobble-garden/ateSnacks/n=47": {
+      "text": "You ate forty-seven snacks!",
+      "hash": "cb44fdf2c5",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=47.mp3"
+    },
+    "gobble-garden/ateSnacks/n=48": {
+      "text": "You ate forty-eight snacks!",
+      "hash": "31bc8cf135",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=48.mp3"
+    },
+    "gobble-garden/ateSnacks/n=49": {
+      "text": "You ate forty-nine snacks!",
+      "hash": "1d49367db9",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=49.mp3"
+    },
+    "gobble-garden/ateSnacks/n=50": {
+      "text": "You ate fifty snacks!",
+      "hash": "f943867f23",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=50.mp3"
+    },
+    "gobble-garden/ateSnacks/n=51": {
+      "text": "You ate fifty-one snacks!",
+      "hash": "3b0fe55c5e",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=51.mp3"
+    },
+    "gobble-garden/ateSnacks/n=52": {
+      "text": "You ate fifty-two snacks!",
+      "hash": "c271231ee9",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=52.mp3"
+    },
+    "gobble-garden/ateSnacks/n=53": {
+      "text": "You ate fifty-three snacks!",
+      "hash": "17865412b3",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=53.mp3"
+    },
+    "gobble-garden/ateSnacks/n=54": {
+      "text": "You ate fifty-four snacks!",
+      "hash": "09e989706d",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=54.mp3"
+    },
+    "gobble-garden/ateSnacks/n=55": {
+      "text": "You ate fifty-five snacks!",
+      "hash": "7e03acddc5",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=55.mp3"
+    },
+    "gobble-garden/ateSnacks/n=56": {
+      "text": "You ate fifty-six snacks!",
+      "hash": "1f8d9dcfc3",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=56.mp3"
+    },
+    "gobble-garden/ateSnacks/n=57": {
+      "text": "You ate fifty-seven snacks!",
+      "hash": "7947856e8c",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=57.mp3"
+    },
+    "gobble-garden/ateSnacks/n=58": {
+      "text": "You ate fifty-eight snacks!",
+      "hash": "5f234b7d97",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=58.mp3"
+    },
+    "gobble-garden/ateSnacks/n=59": {
+      "text": "You ate fifty-nine snacks!",
+      "hash": "a6f78f955c",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=59.mp3"
+    },
+    "gobble-garden/ateSnacks/n=60": {
+      "text": "You ate sixty snacks!",
+      "hash": "44bba2b8ad",
+      "kind": "whole",
+      "file": "voice/gobble-garden/ateSnacks/n=60.mp3"
+    },
     "k-addtake/howManyNow": {
       "text": "How many now?",
       "hash": "84be58bd2c",
@@ -33595,6 +35833,12 @@
       "kind": "line",
       "file": "voice/k-nav/stage-k-addsub-2.mp3"
     },
+    "k-nav/stage-k-addsub-shack": {
+      "text": "Snack Shack!",
+      "hash": "584d5cd656",
+      "kind": "line",
+      "file": "voice/k-nav/stage-k-addsub-shack.mp3"
+    },
     "k-nav/stage-k-addsub-3": {
       "text": "Make ten!",
       "hash": "8bad61c7b8",
@@ -33978,6 +36222,12 @@
       "hash": "1c9ba1c9e5",
       "kind": "line",
       "file": "voice/k-nav/stage-g1-measure-2.mp3"
+    },
+    "k-nav/stage-g1-measure-shack": {
+      "text": "Snack Shack!",
+      "hash": "584d5cd656",
+      "kind": "line",
+      "file": "voice/k-nav/stage-g1-measure-shack.mp3"
     },
     "k-nav/stage-g1-measure-3": {
       "text": "What time is it?",
@@ -45397,6 +47647,270 @@
       "kind": "whole",
       "file": "voice/parade/weHaveFriends/n=99.mp3"
     },
+    "puddle-patrol/intro": {
+      "text": "Mud Puddings are coming! Pick a sprinkler, then tap a spot by the path.",
+      "hash": "0325a0dc3a",
+      "kind": "line",
+      "file": "voice/puddle-patrol/intro.mp3"
+    },
+    "puddle-patrol/introOlder": {
+      "text": "Each sprinkler washes only the Puddings that fit its rule. Put the right ones by the path!",
+      "hash": "80b667cf29",
+      "kind": "line",
+      "file": "voice/puddle-patrol/introOlder.mp3"
+    },
+    "puddle-patrol/pickSpot": {
+      "text": "Now tap a spot by the path.",
+      "hash": "53ce04645f",
+      "kind": "line",
+      "file": "voice/puddle-patrol/pickSpot.mp3"
+    },
+    "puddle-patrol/pickSprinkler": {
+      "text": "Now pick a sprinkler.",
+      "hash": "baeabddfdc",
+      "kind": "line",
+      "file": "voice/puddle-patrol/pickSprinkler.mp3"
+    },
+    "puddle-patrol/buildMore": {
+      "text": "Add another sprinkler!",
+      "hash": "44b70ad6b3",
+      "kind": "line",
+      "file": "voice/puddle-patrol/buildMore.mp3"
+    },
+    "puddle-patrol/ready": {
+      "text": "Ready? Tap the arrow to send the Puddings!",
+      "hash": "df0fbd0548",
+      "kind": "line",
+      "file": "voice/puddle-patrol/ready.mp3"
+    },
+    "puddle-patrol/lookComing": {
+      "text": "Look who is coming next!",
+      "hash": "81495ea708",
+      "kind": "line",
+      "file": "voice/puddle-patrol/lookComing.mp3"
+    },
+    "puddle-patrol/swapHint": {
+      "text": "Tap a sprinkler to change what it washes.",
+      "hash": "217ce7f1d6",
+      "kind": "line",
+      "file": "voice/puddle-patrol/swapHint.mp3"
+    },
+    "puddle-patrol/newSprinkler": {
+      "text": "A new sprinkler!",
+      "hash": "cb9148f79c",
+      "kind": "line",
+      "file": "voice/puddle-patrol/newSprinkler.mp3"
+    },
+    "puddle-patrol/squeaky": {
+      "text": "Squeaky clean!",
+      "hash": "eef94ecc43",
+      "kind": "line",
+      "file": "voice/puddle-patrol/squeaky.mp3"
+    },
+    "puddle-patrol/waveClean": {
+      "text": "The pond is clean!",
+      "hash": "7111ad7713",
+      "kind": "line",
+      "file": "voice/puddle-patrol/waveClean.mp3"
+    },
+    "puddle-patrol/waveSplash": {
+      "text": "A few splashed in the pond. That is okay!",
+      "hash": "f9f9b2f3ac",
+      "kind": "line",
+      "file": "voice/puddle-patrol/waveSplash.mp3"
+    },
+    "puddle-patrol/noDrops": {
+      "text": "Wash more Puddings to get drops for a new sprinkler.",
+      "hash": "9ebd7b2bfa",
+      "kind": "line",
+      "file": "voice/puddle-patrol/noDrops.mp3"
+    },
+    "puddle-patrol/allDone": {
+      "text": "Patrol done! The pond is sparkling!",
+      "hash": "e71ba8f295",
+      "kind": "line",
+      "file": "voice/puddle-patrol/allDone.mp3"
+    },
+    "puddle-patrol/runDone": {
+      "text": "Patrol done! Tap to collect your stars.",
+      "hash": "ca6568e5ec",
+      "kind": "line",
+      "file": "voice/puddle-patrol/runDone.mp3"
+    },
+    "puddle-patrol/superHint": {
+      "text": "You have lots of drops! Give a sprinkler its own card again to make it super.",
+      "hash": "ce3d14e9c4",
+      "kind": "line",
+      "file": "voice/puddle-patrol/superHint.mp3"
+    },
+    "puddle-patrol/superSoak": {
+      "text": "Super soak! It sprays extra fast this wave.",
+      "hash": "7ae4acacb4",
+      "kind": "line",
+      "file": "voice/puddle-patrol/superSoak.mp3"
+    },
+    "puddle-patrol/refilling": {
+      "text": "It fills up with water first.",
+      "hash": "03bbb91324",
+      "kind": "line",
+      "file": "voice/puddle-patrol/refilling.mp3"
+    },
+    "puddle-patrol/rule-dots-2": {
+      "text": "This sprinkler washes groups of two.",
+      "hash": "18178210d4",
+      "kind": "line",
+      "file": "voice/puddle-patrol/rule-dots-2.mp3"
+    },
+    "puddle-patrol/rule-dots-3": {
+      "text": "This sprinkler washes groups of three.",
+      "hash": "f321a0383d",
+      "kind": "line",
+      "file": "voice/puddle-patrol/rule-dots-3.mp3"
+    },
+    "puddle-patrol/rule-dots-4": {
+      "text": "This sprinkler washes groups of four.",
+      "hash": "75d88b6837",
+      "kind": "line",
+      "file": "voice/puddle-patrol/rule-dots-4.mp3"
+    },
+    "puddle-patrol/rule-dots-5": {
+      "text": "This sprinkler washes groups of five.",
+      "hash": "ab755c1d9c",
+      "kind": "line",
+      "file": "voice/puddle-patrol/rule-dots-5.mp3"
+    },
+    "puddle-patrol/rule-more-5": {
+      "text": "This sprinkler washes groups with more than five.",
+      "hash": "6b8273a4b2",
+      "kind": "line",
+      "file": "voice/puddle-patrol/rule-more-5.mp3"
+    },
+    "puddle-patrol/rule-fewer-5": {
+      "text": "This sprinkler washes groups with fewer than five.",
+      "hash": "8dad68ede0",
+      "kind": "line",
+      "file": "voice/puddle-patrol/rule-fewer-5.mp3"
+    },
+    "puddle-patrol/rule-make-3": {
+      "text": "This sprinkler washes the ones that make three.",
+      "hash": "0864263316",
+      "kind": "line",
+      "file": "voice/puddle-patrol/rule-make-3.mp3"
+    },
+    "puddle-patrol/rule-make-4": {
+      "text": "This sprinkler washes the ones that make four.",
+      "hash": "155581cab4",
+      "kind": "line",
+      "file": "voice/puddle-patrol/rule-make-4.mp3"
+    },
+    "puddle-patrol/rule-make-5": {
+      "text": "This sprinkler washes the ones that make five.",
+      "hash": "5f6ad21f80",
+      "kind": "line",
+      "file": "voice/puddle-patrol/rule-make-5.mp3"
+    },
+    "puddle-patrol/rule-make-7": {
+      "text": "This sprinkler washes the ones that make seven.",
+      "hash": "a615b299a4",
+      "kind": "line",
+      "file": "voice/puddle-patrol/rule-make-7.mp3"
+    },
+    "puddle-patrol/rule-make-10": {
+      "text": "This sprinkler washes the ones that make ten.",
+      "hash": "911328aead",
+      "kind": "line",
+      "file": "voice/puddle-patrol/rule-make-10.mp3"
+    },
+    "puddle-patrol/rule-make-15": {
+      "text": "This sprinkler washes the ones that make fifteen.",
+      "hash": "efe50384dd",
+      "kind": "line",
+      "file": "voice/puddle-patrol/rule-make-15.mp3"
+    },
+    "puddle-patrol/hasDots/n=1": {
+      "text": "That one has one.",
+      "hash": "d4e111f1ea",
+      "kind": "whole",
+      "file": "voice/puddle-patrol/hasDots/n=1.mp3"
+    },
+    "puddle-patrol/hasDots/n=2": {
+      "text": "That one has two.",
+      "hash": "ceebe9a700",
+      "kind": "whole",
+      "file": "voice/puddle-patrol/hasDots/n=2.mp3"
+    },
+    "puddle-patrol/hasDots/n=3": {
+      "text": "That one has three.",
+      "hash": "9406d6fed7",
+      "kind": "whole",
+      "file": "voice/puddle-patrol/hasDots/n=3.mp3"
+    },
+    "puddle-patrol/hasDots/n=4": {
+      "text": "That one has four.",
+      "hash": "2634c41be1",
+      "kind": "whole",
+      "file": "voice/puddle-patrol/hasDots/n=4.mp3"
+    },
+    "puddle-patrol/hasDots/n=5": {
+      "text": "That one has five.",
+      "hash": "056b452e8a",
+      "kind": "whole",
+      "file": "voice/puddle-patrol/hasDots/n=5.mp3"
+    },
+    "puddle-patrol/hasDots/n=6": {
+      "text": "That one has six.",
+      "hash": "cebb965a22",
+      "kind": "whole",
+      "file": "voice/puddle-patrol/hasDots/n=6.mp3"
+    },
+    "puddle-patrol/hasDots/n=7": {
+      "text": "That one has seven.",
+      "hash": "8638eb973f",
+      "kind": "whole",
+      "file": "voice/puddle-patrol/hasDots/n=7.mp3"
+    },
+    "puddle-patrol/hasDots/n=8": {
+      "text": "That one has eight.",
+      "hash": "2ec54049a5",
+      "kind": "whole",
+      "file": "voice/puddle-patrol/hasDots/n=8.mp3"
+    },
+    "puddle-patrol/hasDots/n=9": {
+      "text": "That one has nine.",
+      "hash": "22b27cbc7a",
+      "kind": "whole",
+      "file": "voice/puddle-patrol/hasDots/n=9.mp3"
+    },
+    "puddle-patrol/hasDots/n=10": {
+      "text": "That one has ten.",
+      "hash": "bcbbc66743",
+      "kind": "whole",
+      "file": "voice/puddle-patrol/hasDots/n=10.mp3"
+    },
+    "puddle-patrol/plusMakes#1": {
+      "text": "plus",
+      "hash": "6711c0a6df",
+      "kind": "piece",
+      "file": "voice/puddle-patrol/plusMakes.part1.mp3"
+    },
+    "puddle-patrol/plusMakes#2": {
+      "text": "makes",
+      "hash": "b1a3a72b1e",
+      "kind": "piece",
+      "file": "voice/puddle-patrol/plusMakes.part2.mp3"
+    },
+    "puddle-patrol/minusMakes#1": {
+      "text": "take away",
+      "hash": "602062ca07",
+      "kind": "piece",
+      "file": "voice/puddle-patrol/minusMakes.part1.mp3"
+    },
+    "puddle-patrol/minusMakes#2": {
+      "text": "makes",
+      "hash": "b1a3a72b1e",
+      "kind": "piece",
+      "file": "voice/puddle-patrol/minusMakes.part2.mp3"
+    },
     "quest/first": {
       "text": "Here is your first quest! Tap the big star to start.",
       "hash": "2bf2c363fd",
@@ -45456,6 +47970,1122 @@
       "hash": "60c4ecef0f",
       "kind": "line",
       "file": "voice/show-me/roundExactYourTurn.mp3"
+    },
+    "snack-shack/introListen": {
+      "text": "Welcome to the Snack Shack! Hungry critters are coming. Let's fill their orders!",
+      "hash": "e2252e0763",
+      "kind": "line",
+      "file": "voice/snack-shack/introListen.mp3"
+    },
+    "snack-shack/introListenClock": {
+      "text": "Welcome to the Snack Shack! Fill each order, then set the pick-up clock.",
+      "hash": "884c603e92",
+      "kind": "line",
+      "file": "voice/snack-shack/introListenClock.mp3"
+    },
+    "snack-shack/intro": {
+      "text": "Welcome to the Snack Shack! Fill each order, add up the price, and give the right change.",
+      "hash": "a4d5f89f33",
+      "kind": "line",
+      "file": "voice/snack-shack/intro.mp3"
+    },
+    "snack-shack/tapFood": {
+      "text": "Tap the food to put it on the tray.",
+      "hash": "a17cbc2160",
+      "kind": "line",
+      "file": "voice/snack-shack/tapFood.mp3"
+    },
+    "snack-shack/ringBell": {
+      "text": "Then ring the bell!",
+      "hash": "5a255389e9",
+      "kind": "line",
+      "file": "voice/snack-shack/ringBell.mp3"
+    },
+    "snack-shack/howManyInAll": {
+      "text": "How many snacks in all?",
+      "hash": "6fce001f1a",
+      "kind": "line",
+      "file": "voice/snack-shack/howManyInAll.mp3"
+    },
+    "snack-shack/countTogether": {
+      "text": "Let's count them together.",
+      "hash": "09563da2cc",
+      "kind": "line",
+      "file": "voice/snack-shack/countTogether.mp3"
+    },
+    "snack-shack/tooMany": {
+      "text": "Too many! Tap one to put it back.",
+      "hash": "2a37f0a185",
+      "kind": "line",
+      "file": "voice/snack-shack/tooMany.mp3"
+    },
+    "snack-shack/needMore": {
+      "text": "We need more. Tap the food!",
+      "hash": "2287af86c5",
+      "kind": "line",
+      "file": "voice/snack-shack/needMore.mp3"
+    },
+    "snack-shack/tryAgain": {
+      "text": "Try again. You can do it!",
+      "hash": "3edf941a3c",
+      "kind": "line",
+      "file": "voice/snack-shack/tryAgain.mp3"
+    },
+    "snack-shack/thanks1": {
+      "text": "Yum! Thank you!",
+      "hash": "8ddc8b5f5d",
+      "kind": "line",
+      "file": "voice/snack-shack/thanks1.mp3"
+    },
+    "snack-shack/thanks2": {
+      "text": "Ka-ching! Happy customer!",
+      "hash": "aa850e12da",
+      "kind": "line",
+      "file": "voice/snack-shack/thanks2.mp3"
+    },
+    "snack-shack/thanks3": {
+      "text": "Wow, that looks delicious!",
+      "hash": "53cea0390a",
+      "kind": "line",
+      "file": "voice/snack-shack/thanks3.mp3"
+    },
+    "snack-shack/tipStars": {
+      "text": "They gave you stars!",
+      "hash": "42dcb8ac0c",
+      "kind": "line",
+      "file": "voice/snack-shack/tipStars.mp3"
+    },
+    "snack-shack/pickDecor": {
+      "text": "Pick something new for the shack!",
+      "hash": "b750b3e602",
+      "kind": "line",
+      "file": "voice/snack-shack/pickDecor.mp3"
+    },
+    "snack-shack/shackFancier": {
+      "text": "The Snack Shack is getting fancier!",
+      "hash": "dcb93ce84c",
+      "kind": "line",
+      "file": "voice/snack-shack/shackFancier.mp3"
+    },
+    "snack-shack/shiftDone": {
+      "text": "What a great day at the Snack Shack!",
+      "hash": "c5fef4fac8",
+      "kind": "line",
+      "file": "voice/snack-shack/shiftDone.mp3"
+    },
+    "snack-shack/setClock": {
+      "text": "Move the long hand to set the clock.",
+      "hash": "bf972e02ea",
+      "kind": "line",
+      "file": "voice/snack-shack/setClock.mp3"
+    },
+    "snack-shack/longHand12": {
+      "text": "The long hand points straight up to the 12.",
+      "hash": "81b2f61f9b",
+      "kind": "line",
+      "file": "voice/snack-shack/longHand12.mp3"
+    },
+    "snack-shack/longHand6": {
+      "text": "The long hand points down to the 6.",
+      "hash": "653cc79bab",
+      "kind": "line",
+      "file": "voice/snack-shack/longHand6.mp3"
+    },
+    "snack-shack/whatTotal": {
+      "text": "What is the total?",
+      "hash": "01eef90df0",
+      "kind": "line",
+      "file": "voice/snack-shack/whatTotal.mp3"
+    },
+    "snack-shack/addPrices": {
+      "text": "Add up the prices on the tags.",
+      "hash": "65555c2965",
+      "kind": "line",
+      "file": "voice/snack-shack/addPrices.mp3"
+    },
+    "snack-shack/giveChange": {
+      "text": "Count out the change. Drag the coins and bills to the tray.",
+      "hash": "f636457f35",
+      "kind": "line",
+      "file": "voice/snack-shack/giveChange.mp3"
+    },
+    "snack-shack/countUp": {
+      "text": "Let's count up from the price to what they paid, like a shopkeeper.",
+      "hash": "7de1744258",
+      "kind": "line",
+      "file": "voice/snack-shack/countUp.mp3"
+    },
+    "snack-shack/clockTower": {
+      "text": "Clock Tower order! Move the clock hands to the right time.",
+      "hash": "94c67ddd33",
+      "kind": "line",
+      "file": "voice/snack-shack/clockTower.mp3"
+    },
+    "snack-shack/jumpAlong": {
+      "text": "Let's jump along the timeline.",
+      "hash": "9d2283aaab",
+      "kind": "line",
+      "file": "voice/snack-shack/jumpAlong.mp3"
+    },
+    "snack-shack/overNoon": {
+      "text": "We went past 12 noon, so it's p.m. now!",
+      "hash": "e17dde64c3",
+      "kind": "line",
+      "file": "voice/snack-shack/overNoon.mp3"
+    },
+    "snack-shack/finishCountUp": {
+      "text": "Put those in the tray. Then count up the rest of the way. Your turn!",
+      "hash": "9014c34b2e",
+      "kind": "line",
+      "file": "voice/snack-shack/finishCountUp.mp3"
+    },
+    "snack-shack/setClockShort": {
+      "text": "Turn the short hand to the hour. Then check the long hand!",
+      "hash": "ac307a5bc4",
+      "kind": "line",
+      "file": "voice/snack-shack/setClockShort.mp3"
+    },
+    "snack-shack/orderOne/food=apples,n=2": {
+      "text": "two apples, please!",
+      "hash": "bc37f13e24",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=apples,n=2.mp3"
+    },
+    "snack-shack/orderOne/food=apples,n=3": {
+      "text": "three apples, please!",
+      "hash": "647a872a64",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=apples,n=3.mp3"
+    },
+    "snack-shack/orderOne/food=apples,n=4": {
+      "text": "four apples, please!",
+      "hash": "08aa7d8c02",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=apples,n=4.mp3"
+    },
+    "snack-shack/orderOne/food=apples,n=5": {
+      "text": "five apples, please!",
+      "hash": "36fc071235",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=apples,n=5.mp3"
+    },
+    "snack-shack/orderOne/food=apples,n=6": {
+      "text": "six apples, please!",
+      "hash": "368c618d5f",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=apples,n=6.mp3"
+    },
+    "snack-shack/orderOne/food=apples,n=7": {
+      "text": "seven apples, please!",
+      "hash": "6f80a4c90e",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=apples,n=7.mp3"
+    },
+    "snack-shack/orderOne/food=apples,n=8": {
+      "text": "eight apples, please!",
+      "hash": "c4e131b045",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=apples,n=8.mp3"
+    },
+    "snack-shack/orderOne/food=bananas,n=2": {
+      "text": "two bananas, please!",
+      "hash": "9647b17b30",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=bananas,n=2.mp3"
+    },
+    "snack-shack/orderOne/food=bananas,n=3": {
+      "text": "three bananas, please!",
+      "hash": "3f1c9941ce",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=bananas,n=3.mp3"
+    },
+    "snack-shack/orderOne/food=bananas,n=4": {
+      "text": "four bananas, please!",
+      "hash": "01413e4666",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=bananas,n=4.mp3"
+    },
+    "snack-shack/orderOne/food=bananas,n=5": {
+      "text": "five bananas, please!",
+      "hash": "9b92be8ca5",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=bananas,n=5.mp3"
+    },
+    "snack-shack/orderOne/food=bananas,n=6": {
+      "text": "six bananas, please!",
+      "hash": "41b26b51da",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=bananas,n=6.mp3"
+    },
+    "snack-shack/orderOne/food=bananas,n=7": {
+      "text": "seven bananas, please!",
+      "hash": "928a84df72",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=bananas,n=7.mp3"
+    },
+    "snack-shack/orderOne/food=bananas,n=8": {
+      "text": "eight bananas, please!",
+      "hash": "72003b6719",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=bananas,n=8.mp3"
+    },
+    "snack-shack/orderOne/food=cookies,n=2": {
+      "text": "two cookies, please!",
+      "hash": "76004d00a6",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=cookies,n=2.mp3"
+    },
+    "snack-shack/orderOne/food=cookies,n=3": {
+      "text": "three cookies, please!",
+      "hash": "003d7adf4b",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=cookies,n=3.mp3"
+    },
+    "snack-shack/orderOne/food=cookies,n=4": {
+      "text": "four cookies, please!",
+      "hash": "9c31e6ae94",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=cookies,n=4.mp3"
+    },
+    "snack-shack/orderOne/food=cookies,n=5": {
+      "text": "five cookies, please!",
+      "hash": "a9da2a5796",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=cookies,n=5.mp3"
+    },
+    "snack-shack/orderOne/food=cookies,n=6": {
+      "text": "six cookies, please!",
+      "hash": "8f6a79f84b",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=cookies,n=6.mp3"
+    },
+    "snack-shack/orderOne/food=cookies,n=7": {
+      "text": "seven cookies, please!",
+      "hash": "e96fb79f3e",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=cookies,n=7.mp3"
+    },
+    "snack-shack/orderOne/food=cookies,n=8": {
+      "text": "eight cookies, please!",
+      "hash": "04cc690b68",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=cookies,n=8.mp3"
+    },
+    "snack-shack/orderOne/food=strawberries,n=2": {
+      "text": "two strawberries, please!",
+      "hash": "63062b5801",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=strawberries,n=2.mp3"
+    },
+    "snack-shack/orderOne/food=strawberries,n=3": {
+      "text": "three strawberries, please!",
+      "hash": "af5d0c0701",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=strawberries,n=3.mp3"
+    },
+    "snack-shack/orderOne/food=strawberries,n=4": {
+      "text": "four strawberries, please!",
+      "hash": "398ca62a48",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=strawberries,n=4.mp3"
+    },
+    "snack-shack/orderOne/food=strawberries,n=5": {
+      "text": "five strawberries, please!",
+      "hash": "bfa50fb77a",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=strawberries,n=5.mp3"
+    },
+    "snack-shack/orderOne/food=strawberries,n=6": {
+      "text": "six strawberries, please!",
+      "hash": "a9d02620a9",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=strawberries,n=6.mp3"
+    },
+    "snack-shack/orderOne/food=strawberries,n=7": {
+      "text": "seven strawberries, please!",
+      "hash": "9fdd2fc145",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=strawberries,n=7.mp3"
+    },
+    "snack-shack/orderOne/food=strawberries,n=8": {
+      "text": "eight strawberries, please!",
+      "hash": "5c819095ef",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=strawberries,n=8.mp3"
+    },
+    "snack-shack/orderOne/food=donuts,n=2": {
+      "text": "two donuts, please!",
+      "hash": "943c98ff7d",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=donuts,n=2.mp3"
+    },
+    "snack-shack/orderOne/food=donuts,n=3": {
+      "text": "three donuts, please!",
+      "hash": "c68724f23c",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=donuts,n=3.mp3"
+    },
+    "snack-shack/orderOne/food=donuts,n=4": {
+      "text": "four donuts, please!",
+      "hash": "ec140363e6",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=donuts,n=4.mp3"
+    },
+    "snack-shack/orderOne/food=donuts,n=5": {
+      "text": "five donuts, please!",
+      "hash": "56480d4cf0",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=donuts,n=5.mp3"
+    },
+    "snack-shack/orderOne/food=donuts,n=6": {
+      "text": "six donuts, please!",
+      "hash": "b1efbc688f",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=donuts,n=6.mp3"
+    },
+    "snack-shack/orderOne/food=donuts,n=7": {
+      "text": "seven donuts, please!",
+      "hash": "cff54589a1",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=donuts,n=7.mp3"
+    },
+    "snack-shack/orderOne/food=donuts,n=8": {
+      "text": "eight donuts, please!",
+      "hash": "3130cd277a",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=donuts,n=8.mp3"
+    },
+    "snack-shack/orderOne/food=lemons,n=2": {
+      "text": "two lemons, please!",
+      "hash": "3a56b51f51",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=lemons,n=2.mp3"
+    },
+    "snack-shack/orderOne/food=lemons,n=3": {
+      "text": "three lemons, please!",
+      "hash": "70e9308388",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=lemons,n=3.mp3"
+    },
+    "snack-shack/orderOne/food=lemons,n=4": {
+      "text": "four lemons, please!",
+      "hash": "82071e5e55",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=lemons,n=4.mp3"
+    },
+    "snack-shack/orderOne/food=lemons,n=5": {
+      "text": "five lemons, please!",
+      "hash": "4ca0f779c8",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=lemons,n=5.mp3"
+    },
+    "snack-shack/orderOne/food=lemons,n=6": {
+      "text": "six lemons, please!",
+      "hash": "53db8cb86a",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=lemons,n=6.mp3"
+    },
+    "snack-shack/orderOne/food=lemons,n=7": {
+      "text": "seven lemons, please!",
+      "hash": "e53bf3d288",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=lemons,n=7.mp3"
+    },
+    "snack-shack/orderOne/food=lemons,n=8": {
+      "text": "eight lemons, please!",
+      "hash": "e291a0a01e",
+      "kind": "whole",
+      "file": "voice/snack-shack/orderOne/food=lemons,n=8.mp3"
+    },
+    "snack-shack/orderTwo#2": {
+      "text": "and",
+      "hash": "26922921dc",
+      "kind": "piece",
+      "file": "voice/snack-shack/orderTwo.part2.mp3"
+    },
+    "snack-shack/orderTwo#4": {
+      "text": "please!",
+      "hash": "65dd20d4a5",
+      "kind": "piece",
+      "file": "voice/snack-shack/orderTwo.part4.mp3"
+    },
+    "snack-shack/count/n=1": {
+      "text": "one!",
+      "hash": "d0fadf8ef2",
+      "kind": "whole",
+      "file": "voice/snack-shack/count/n=1.mp3"
+    },
+    "snack-shack/count/n=2": {
+      "text": "two!",
+      "hash": "dd6bef1170",
+      "kind": "whole",
+      "file": "voice/snack-shack/count/n=2.mp3"
+    },
+    "snack-shack/count/n=3": {
+      "text": "three!",
+      "hash": "a77b6838dd",
+      "kind": "whole",
+      "file": "voice/snack-shack/count/n=3.mp3"
+    },
+    "snack-shack/count/n=4": {
+      "text": "four!",
+      "hash": "708aa3394c",
+      "kind": "whole",
+      "file": "voice/snack-shack/count/n=4.mp3"
+    },
+    "snack-shack/count/n=5": {
+      "text": "five!",
+      "hash": "afe4c4b1f6",
+      "kind": "whole",
+      "file": "voice/snack-shack/count/n=5.mp3"
+    },
+    "snack-shack/count/n=6": {
+      "text": "six!",
+      "hash": "0a0f7c2f13",
+      "kind": "whole",
+      "file": "voice/snack-shack/count/n=6.mp3"
+    },
+    "snack-shack/count/n=7": {
+      "text": "seven!",
+      "hash": "e01c730bb1",
+      "kind": "whole",
+      "file": "voice/snack-shack/count/n=7.mp3"
+    },
+    "snack-shack/count/n=8": {
+      "text": "eight!",
+      "hash": "d098266522",
+      "kind": "whole",
+      "file": "voice/snack-shack/count/n=8.mp3"
+    },
+    "snack-shack/count/n=9": {
+      "text": "nine!",
+      "hash": "b0fd717999",
+      "kind": "whole",
+      "file": "voice/snack-shack/count/n=9.mp3"
+    },
+    "snack-shack/count/n=10": {
+      "text": "ten!",
+      "hash": "765f4ad994",
+      "kind": "whole",
+      "file": "voice/snack-shack/count/n=10.mp3"
+    },
+    "snack-shack/count/n=11": {
+      "text": "eleven!",
+      "hash": "02feb9df00",
+      "kind": "whole",
+      "file": "voice/snack-shack/count/n=11.mp3"
+    },
+    "snack-shack/count/n=12": {
+      "text": "twelve!",
+      "hash": "8da045bcc2",
+      "kind": "whole",
+      "file": "voice/snack-shack/count/n=12.mp3"
+    },
+    "snack-shack/weNeed/food=apples,n=2": {
+      "text": "We need two apples.",
+      "hash": "a02cd319c9",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=apples,n=2.mp3"
+    },
+    "snack-shack/weNeed/food=apples,n=3": {
+      "text": "We need three apples.",
+      "hash": "c78c6cf5b1",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=apples,n=3.mp3"
+    },
+    "snack-shack/weNeed/food=apples,n=4": {
+      "text": "We need four apples.",
+      "hash": "1ce0bc6128",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=apples,n=4.mp3"
+    },
+    "snack-shack/weNeed/food=apples,n=5": {
+      "text": "We need five apples.",
+      "hash": "e8e7543eb6",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=apples,n=5.mp3"
+    },
+    "snack-shack/weNeed/food=apples,n=6": {
+      "text": "We need six apples.",
+      "hash": "66127e379b",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=apples,n=6.mp3"
+    },
+    "snack-shack/weNeed/food=apples,n=7": {
+      "text": "We need seven apples.",
+      "hash": "237dd20a6d",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=apples,n=7.mp3"
+    },
+    "snack-shack/weNeed/food=apples,n=8": {
+      "text": "We need eight apples.",
+      "hash": "5282459d3a",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=apples,n=8.mp3"
+    },
+    "snack-shack/weNeed/food=bananas,n=2": {
+      "text": "We need two bananas.",
+      "hash": "03e09dc11e",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=bananas,n=2.mp3"
+    },
+    "snack-shack/weNeed/food=bananas,n=3": {
+      "text": "We need three bananas.",
+      "hash": "b353e19a60",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=bananas,n=3.mp3"
+    },
+    "snack-shack/weNeed/food=bananas,n=4": {
+      "text": "We need four bananas.",
+      "hash": "e312e28e6b",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=bananas,n=4.mp3"
+    },
+    "snack-shack/weNeed/food=bananas,n=5": {
+      "text": "We need five bananas.",
+      "hash": "697086ff6b",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=bananas,n=5.mp3"
+    },
+    "snack-shack/weNeed/food=bananas,n=6": {
+      "text": "We need six bananas.",
+      "hash": "332d4deaa1",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=bananas,n=6.mp3"
+    },
+    "snack-shack/weNeed/food=bananas,n=7": {
+      "text": "We need seven bananas.",
+      "hash": "5807b818d5",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=bananas,n=7.mp3"
+    },
+    "snack-shack/weNeed/food=bananas,n=8": {
+      "text": "We need eight bananas.",
+      "hash": "9d5373524a",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=bananas,n=8.mp3"
+    },
+    "snack-shack/weNeed/food=cookies,n=2": {
+      "text": "We need two cookies.",
+      "hash": "56509f395a",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=cookies,n=2.mp3"
+    },
+    "snack-shack/weNeed/food=cookies,n=3": {
+      "text": "We need three cookies.",
+      "hash": "584a65afd9",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=cookies,n=3.mp3"
+    },
+    "snack-shack/weNeed/food=cookies,n=4": {
+      "text": "We need four cookies.",
+      "hash": "a39828a025",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=cookies,n=4.mp3"
+    },
+    "snack-shack/weNeed/food=cookies,n=5": {
+      "text": "We need five cookies.",
+      "hash": "cf89193f5c",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=cookies,n=5.mp3"
+    },
+    "snack-shack/weNeed/food=cookies,n=6": {
+      "text": "We need six cookies.",
+      "hash": "f1125000a1",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=cookies,n=6.mp3"
+    },
+    "snack-shack/weNeed/food=cookies,n=7": {
+      "text": "We need seven cookies.",
+      "hash": "1abc8bed34",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=cookies,n=7.mp3"
+    },
+    "snack-shack/weNeed/food=cookies,n=8": {
+      "text": "We need eight cookies.",
+      "hash": "fdcd699496",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=cookies,n=8.mp3"
+    },
+    "snack-shack/weNeed/food=strawberries,n=2": {
+      "text": "We need two strawberries.",
+      "hash": "dc1b4fbd6c",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=strawberries,n=2.mp3"
+    },
+    "snack-shack/weNeed/food=strawberries,n=3": {
+      "text": "We need three strawberries.",
+      "hash": "108c85b82c",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=strawberries,n=3.mp3"
+    },
+    "snack-shack/weNeed/food=strawberries,n=4": {
+      "text": "We need four strawberries.",
+      "hash": "848e1e15a3",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=strawberries,n=4.mp3"
+    },
+    "snack-shack/weNeed/food=strawberries,n=5": {
+      "text": "We need five strawberries.",
+      "hash": "2ad0dc32b6",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=strawberries,n=5.mp3"
+    },
+    "snack-shack/weNeed/food=strawberries,n=6": {
+      "text": "We need six strawberries.",
+      "hash": "43e288a190",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=strawberries,n=6.mp3"
+    },
+    "snack-shack/weNeed/food=strawberries,n=7": {
+      "text": "We need seven strawberries.",
+      "hash": "ff9585fead",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=strawberries,n=7.mp3"
+    },
+    "snack-shack/weNeed/food=strawberries,n=8": {
+      "text": "We need eight strawberries.",
+      "hash": "974da901e3",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=strawberries,n=8.mp3"
+    },
+    "snack-shack/weNeed/food=donuts,n=2": {
+      "text": "We need two donuts.",
+      "hash": "e6ac93f1d4",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=donuts,n=2.mp3"
+    },
+    "snack-shack/weNeed/food=donuts,n=3": {
+      "text": "We need three donuts.",
+      "hash": "2e6cd54c36",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=donuts,n=3.mp3"
+    },
+    "snack-shack/weNeed/food=donuts,n=4": {
+      "text": "We need four donuts.",
+      "hash": "c6a6ae9dcd",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=donuts,n=4.mp3"
+    },
+    "snack-shack/weNeed/food=donuts,n=5": {
+      "text": "We need five donuts.",
+      "hash": "1047990654",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=donuts,n=5.mp3"
+    },
+    "snack-shack/weNeed/food=donuts,n=6": {
+      "text": "We need six donuts.",
+      "hash": "27d68e0751",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=donuts,n=6.mp3"
+    },
+    "snack-shack/weNeed/food=donuts,n=7": {
+      "text": "We need seven donuts.",
+      "hash": "31ea521e5e",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=donuts,n=7.mp3"
+    },
+    "snack-shack/weNeed/food=donuts,n=8": {
+      "text": "We need eight donuts.",
+      "hash": "accad1ad02",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=donuts,n=8.mp3"
+    },
+    "snack-shack/weNeed/food=lemons,n=2": {
+      "text": "We need two lemons.",
+      "hash": "c83242ac9b",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=lemons,n=2.mp3"
+    },
+    "snack-shack/weNeed/food=lemons,n=3": {
+      "text": "We need three lemons.",
+      "hash": "9331438fc6",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=lemons,n=3.mp3"
+    },
+    "snack-shack/weNeed/food=lemons,n=4": {
+      "text": "We need four lemons.",
+      "hash": "d141bd72fa",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=lemons,n=4.mp3"
+    },
+    "snack-shack/weNeed/food=lemons,n=5": {
+      "text": "We need five lemons.",
+      "hash": "b93f82334f",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=lemons,n=5.mp3"
+    },
+    "snack-shack/weNeed/food=lemons,n=6": {
+      "text": "We need six lemons.",
+      "hash": "3d8e1ec0c5",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=lemons,n=6.mp3"
+    },
+    "snack-shack/weNeed/food=lemons,n=7": {
+      "text": "We need seven lemons.",
+      "hash": "0073a34095",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=lemons,n=7.mp3"
+    },
+    "snack-shack/weNeed/food=lemons,n=8": {
+      "text": "We need eight lemons.",
+      "hash": "6e5cf7bdba",
+      "kind": "whole",
+      "file": "voice/snack-shack/weNeed/food=lemons,n=8.mp3"
+    },
+    "snack-shack/inAll/n=2": {
+      "text": "two snacks in all!",
+      "hash": "72afe44f03",
+      "kind": "whole",
+      "file": "voice/snack-shack/inAll/n=2.mp3"
+    },
+    "snack-shack/inAll/n=3": {
+      "text": "three snacks in all!",
+      "hash": "ccade56a0d",
+      "kind": "whole",
+      "file": "voice/snack-shack/inAll/n=3.mp3"
+    },
+    "snack-shack/inAll/n=4": {
+      "text": "four snacks in all!",
+      "hash": "dab6c03352",
+      "kind": "whole",
+      "file": "voice/snack-shack/inAll/n=4.mp3"
+    },
+    "snack-shack/inAll/n=5": {
+      "text": "five snacks in all!",
+      "hash": "478bc09f2f",
+      "kind": "whole",
+      "file": "voice/snack-shack/inAll/n=5.mp3"
+    },
+    "snack-shack/inAll/n=6": {
+      "text": "six snacks in all!",
+      "hash": "b7bc0f9824",
+      "kind": "whole",
+      "file": "voice/snack-shack/inAll/n=6.mp3"
+    },
+    "snack-shack/inAll/n=7": {
+      "text": "seven snacks in all!",
+      "hash": "5a86a2fb4e",
+      "kind": "whole",
+      "file": "voice/snack-shack/inAll/n=7.mp3"
+    },
+    "snack-shack/inAll/n=8": {
+      "text": "eight snacks in all!",
+      "hash": "cf4691f1e4",
+      "kind": "whole",
+      "file": "voice/snack-shack/inAll/n=8.mp3"
+    },
+    "snack-shack/inAll/n=9": {
+      "text": "nine snacks in all!",
+      "hash": "97c5ffed95",
+      "kind": "whole",
+      "file": "voice/snack-shack/inAll/n=9.mp3"
+    },
+    "snack-shack/inAll/n=10": {
+      "text": "ten snacks in all!",
+      "hash": "370e3fee5e",
+      "kind": "whole",
+      "file": "voice/snack-shack/inAll/n=10.mp3"
+    },
+    "snack-shack/inAll/n=11": {
+      "text": "eleven snacks in all!",
+      "hash": "b5c41a4f37",
+      "kind": "whole",
+      "file": "voice/snack-shack/inAll/n=11.mp3"
+    },
+    "snack-shack/inAll/n=12": {
+      "text": "twelve snacks in all!",
+      "hash": "993bf364f7",
+      "kind": "whole",
+      "file": "voice/snack-shack/inAll/n=12.mp3"
+    },
+    "snack-shack/backAt/h=1": {
+      "text": "I'll be back at one o'clock. Set the clock!",
+      "hash": "57ce014116",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAt/h=1.mp3"
+    },
+    "snack-shack/backAt/h=2": {
+      "text": "I'll be back at two o'clock. Set the clock!",
+      "hash": "bd7161043c",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAt/h=2.mp3"
+    },
+    "snack-shack/backAt/h=3": {
+      "text": "I'll be back at three o'clock. Set the clock!",
+      "hash": "a8aa0fdd89",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAt/h=3.mp3"
+    },
+    "snack-shack/backAt/h=4": {
+      "text": "I'll be back at four o'clock. Set the clock!",
+      "hash": "1489da88ba",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAt/h=4.mp3"
+    },
+    "snack-shack/backAt/h=5": {
+      "text": "I'll be back at five o'clock. Set the clock!",
+      "hash": "0d4c0c1242",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAt/h=5.mp3"
+    },
+    "snack-shack/backAt/h=6": {
+      "text": "I'll be back at six o'clock. Set the clock!",
+      "hash": "51829d8acb",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAt/h=6.mp3"
+    },
+    "snack-shack/backAt/h=7": {
+      "text": "I'll be back at seven o'clock. Set the clock!",
+      "hash": "eb6eb5c6e6",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAt/h=7.mp3"
+    },
+    "snack-shack/backAt/h=8": {
+      "text": "I'll be back at eight o'clock. Set the clock!",
+      "hash": "6463d9cee9",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAt/h=8.mp3"
+    },
+    "snack-shack/backAt/h=9": {
+      "text": "I'll be back at nine o'clock. Set the clock!",
+      "hash": "2672e56252",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAt/h=9.mp3"
+    },
+    "snack-shack/backAt/h=10": {
+      "text": "I'll be back at ten o'clock. Set the clock!",
+      "hash": "041c9b2ddc",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAt/h=10.mp3"
+    },
+    "snack-shack/backAt/h=11": {
+      "text": "I'll be back at eleven o'clock. Set the clock!",
+      "hash": "f0ce786190",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAt/h=11.mp3"
+    },
+    "snack-shack/backAt/h=12": {
+      "text": "I'll be back at twelve o'clock. Set the clock!",
+      "hash": "fc8f07c468",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAt/h=12.mp3"
+    },
+    "snack-shack/backAtHalf/h=1": {
+      "text": "I'll be back at half past one. Set the clock!",
+      "hash": "b731534116",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAtHalf/h=1.mp3"
+    },
+    "snack-shack/backAtHalf/h=2": {
+      "text": "I'll be back at half past two. Set the clock!",
+      "hash": "be7c460dd6",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAtHalf/h=2.mp3"
+    },
+    "snack-shack/backAtHalf/h=3": {
+      "text": "I'll be back at half past three. Set the clock!",
+      "hash": "c5edf2b5da",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAtHalf/h=3.mp3"
+    },
+    "snack-shack/backAtHalf/h=4": {
+      "text": "I'll be back at half past four. Set the clock!",
+      "hash": "33894275de",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAtHalf/h=4.mp3"
+    },
+    "snack-shack/backAtHalf/h=5": {
+      "text": "I'll be back at half past five. Set the clock!",
+      "hash": "38491b9960",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAtHalf/h=5.mp3"
+    },
+    "snack-shack/backAtHalf/h=6": {
+      "text": "I'll be back at half past six. Set the clock!",
+      "hash": "60bcfd046b",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAtHalf/h=6.mp3"
+    },
+    "snack-shack/backAtHalf/h=7": {
+      "text": "I'll be back at half past seven. Set the clock!",
+      "hash": "0b7c9e273a",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAtHalf/h=7.mp3"
+    },
+    "snack-shack/backAtHalf/h=8": {
+      "text": "I'll be back at half past eight. Set the clock!",
+      "hash": "b27dcf36e3",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAtHalf/h=8.mp3"
+    },
+    "snack-shack/backAtHalf/h=9": {
+      "text": "I'll be back at half past nine. Set the clock!",
+      "hash": "e6c3be31a2",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAtHalf/h=9.mp3"
+    },
+    "snack-shack/backAtHalf/h=10": {
+      "text": "I'll be back at half past ten. Set the clock!",
+      "hash": "e7f1c9a67d",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAtHalf/h=10.mp3"
+    },
+    "snack-shack/backAtHalf/h=11": {
+      "text": "I'll be back at half past eleven. Set the clock!",
+      "hash": "67f952c196",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAtHalf/h=11.mp3"
+    },
+    "snack-shack/backAtHalf/h=12": {
+      "text": "I'll be back at half past twelve. Set the clock!",
+      "hash": "95cee92208",
+      "kind": "whole",
+      "file": "voice/snack-shack/backAtHalf/h=12.mp3"
+    },
+    "snack-shack/shortHandAt/h=1": {
+      "text": "The short hand points to the one.",
+      "hash": "4735c0259f",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandAt/h=1.mp3"
+    },
+    "snack-shack/shortHandAt/h=2": {
+      "text": "The short hand points to the two.",
+      "hash": "6739d3fdde",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandAt/h=2.mp3"
+    },
+    "snack-shack/shortHandAt/h=3": {
+      "text": "The short hand points to the three.",
+      "hash": "5e69cf2baf",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandAt/h=3.mp3"
+    },
+    "snack-shack/shortHandAt/h=4": {
+      "text": "The short hand points to the four.",
+      "hash": "e16f402e16",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandAt/h=4.mp3"
+    },
+    "snack-shack/shortHandAt/h=5": {
+      "text": "The short hand points to the five.",
+      "hash": "0e0ef8c6b0",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandAt/h=5.mp3"
+    },
+    "snack-shack/shortHandAt/h=6": {
+      "text": "The short hand points to the six.",
+      "hash": "abbd505b57",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandAt/h=6.mp3"
+    },
+    "snack-shack/shortHandAt/h=7": {
+      "text": "The short hand points to the seven.",
+      "hash": "3cbf9c4657",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandAt/h=7.mp3"
+    },
+    "snack-shack/shortHandAt/h=8": {
+      "text": "The short hand points to the eight.",
+      "hash": "8641b8e8b2",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandAt/h=8.mp3"
+    },
+    "snack-shack/shortHandAt/h=9": {
+      "text": "The short hand points to the nine.",
+      "hash": "c365239a40",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandAt/h=9.mp3"
+    },
+    "snack-shack/shortHandAt/h=10": {
+      "text": "The short hand points to the ten.",
+      "hash": "924330ca93",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandAt/h=10.mp3"
+    },
+    "snack-shack/shortHandAt/h=11": {
+      "text": "The short hand points to the eleven.",
+      "hash": "9d66c907e9",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandAt/h=11.mp3"
+    },
+    "snack-shack/shortHandAt/h=12": {
+      "text": "The short hand points to the twelve.",
+      "hash": "6c81e830e2",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandAt/h=12.mp3"
+    },
+    "snack-shack/shortHandPast/h=1": {
+      "text": "The short hand is just past the one.",
+      "hash": "393cfbc991",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandPast/h=1.mp3"
+    },
+    "snack-shack/shortHandPast/h=2": {
+      "text": "The short hand is just past the two.",
+      "hash": "9ffe977178",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandPast/h=2.mp3"
+    },
+    "snack-shack/shortHandPast/h=3": {
+      "text": "The short hand is just past the three.",
+      "hash": "e3420120fe",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandPast/h=3.mp3"
+    },
+    "snack-shack/shortHandPast/h=4": {
+      "text": "The short hand is just past the four.",
+      "hash": "91bef72d15",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandPast/h=4.mp3"
+    },
+    "snack-shack/shortHandPast/h=5": {
+      "text": "The short hand is just past the five.",
+      "hash": "43b0fe21a2",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandPast/h=5.mp3"
+    },
+    "snack-shack/shortHandPast/h=6": {
+      "text": "The short hand is just past the six.",
+      "hash": "e625697832",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandPast/h=6.mp3"
+    },
+    "snack-shack/shortHandPast/h=7": {
+      "text": "The short hand is just past the seven.",
+      "hash": "d60134321a",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandPast/h=7.mp3"
+    },
+    "snack-shack/shortHandPast/h=8": {
+      "text": "The short hand is just past the eight.",
+      "hash": "0e26f308b3",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandPast/h=8.mp3"
+    },
+    "snack-shack/shortHandPast/h=9": {
+      "text": "The short hand is just past the nine.",
+      "hash": "61d0f982e9",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandPast/h=9.mp3"
+    },
+    "snack-shack/shortHandPast/h=10": {
+      "text": "The short hand is just past the ten.",
+      "hash": "e646aedfa3",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandPast/h=10.mp3"
+    },
+    "snack-shack/shortHandPast/h=11": {
+      "text": "The short hand is just past the eleven.",
+      "hash": "0109ce83e0",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandPast/h=11.mp3"
+    },
+    "snack-shack/shortHandPast/h=12": {
+      "text": "The short hand is just past the twelve.",
+      "hash": "6b97987461",
+      "kind": "whole",
+      "file": "voice/snack-shack/shortHandPast/h=12.mp3"
     },
     "ui/tapToStart": {
       "text": "Tap the star to start!",
@@ -45625,6 +49255,480 @@
       "kind": "slot",
       "file": "voice/slots/number/20.mp3"
     },
+    "slots/number/21": {
+      "text": "twenty-one",
+      "hash": "142f856ed8",
+      "kind": "slot",
+      "file": "voice/slots/number/21.mp3"
+    },
+    "slots/number/22": {
+      "text": "twenty-two",
+      "hash": "888f0ddd62",
+      "kind": "slot",
+      "file": "voice/slots/number/22.mp3"
+    },
+    "slots/number/23": {
+      "text": "twenty-three",
+      "hash": "e7995e114e",
+      "kind": "slot",
+      "file": "voice/slots/number/23.mp3"
+    },
+    "slots/number/24": {
+      "text": "twenty-four",
+      "hash": "369d7e885f",
+      "kind": "slot",
+      "file": "voice/slots/number/24.mp3"
+    },
+    "slots/number/25": {
+      "text": "twenty-five",
+      "hash": "e240fcc4bb",
+      "kind": "slot",
+      "file": "voice/slots/number/25.mp3"
+    },
+    "slots/number/26": {
+      "text": "twenty-six",
+      "hash": "0818a27526",
+      "kind": "slot",
+      "file": "voice/slots/number/26.mp3"
+    },
+    "slots/number/27": {
+      "text": "twenty-seven",
+      "hash": "adea656a5a",
+      "kind": "slot",
+      "file": "voice/slots/number/27.mp3"
+    },
+    "slots/number/28": {
+      "text": "twenty-eight",
+      "hash": "422a8b5770",
+      "kind": "slot",
+      "file": "voice/slots/number/28.mp3"
+    },
+    "slots/number/29": {
+      "text": "twenty-nine",
+      "hash": "eb3874edd6",
+      "kind": "slot",
+      "file": "voice/slots/number/29.mp3"
+    },
+    "slots/number/30": {
+      "text": "thirty",
+      "hash": "557d6663ca",
+      "kind": "slot",
+      "file": "voice/slots/number/30.mp3"
+    },
+    "slots/number/31": {
+      "text": "thirty-one",
+      "hash": "87b007b014",
+      "kind": "slot",
+      "file": "voice/slots/number/31.mp3"
+    },
+    "slots/number/32": {
+      "text": "thirty-two",
+      "hash": "241e4187e7",
+      "kind": "slot",
+      "file": "voice/slots/number/32.mp3"
+    },
+    "slots/number/33": {
+      "text": "thirty-three",
+      "hash": "451c272c92",
+      "kind": "slot",
+      "file": "voice/slots/number/33.mp3"
+    },
+    "slots/number/34": {
+      "text": "thirty-four",
+      "hash": "d22569688f",
+      "kind": "slot",
+      "file": "voice/slots/number/34.mp3"
+    },
+    "slots/number/35": {
+      "text": "thirty-five",
+      "hash": "78b46b262d",
+      "kind": "slot",
+      "file": "voice/slots/number/35.mp3"
+    },
+    "slots/number/36": {
+      "text": "thirty-six",
+      "hash": "8bf29a5ce8",
+      "kind": "slot",
+      "file": "voice/slots/number/36.mp3"
+    },
+    "slots/number/37": {
+      "text": "thirty-seven",
+      "hash": "9743bf667f",
+      "kind": "slot",
+      "file": "voice/slots/number/37.mp3"
+    },
+    "slots/number/38": {
+      "text": "thirty-eight",
+      "hash": "521121e77b",
+      "kind": "slot",
+      "file": "voice/slots/number/38.mp3"
+    },
+    "slots/number/39": {
+      "text": "thirty-nine",
+      "hash": "d6b98d6440",
+      "kind": "slot",
+      "file": "voice/slots/number/39.mp3"
+    },
+    "slots/number/40": {
+      "text": "forty",
+      "hash": "b9f8c59ef9",
+      "kind": "slot",
+      "file": "voice/slots/number/40.mp3"
+    },
+    "slots/number/41": {
+      "text": "forty-one",
+      "hash": "484bfcb372",
+      "kind": "slot",
+      "file": "voice/slots/number/41.mp3"
+    },
+    "slots/number/42": {
+      "text": "forty-two",
+      "hash": "c1138fa551",
+      "kind": "slot",
+      "file": "voice/slots/number/42.mp3"
+    },
+    "slots/number/43": {
+      "text": "forty-three",
+      "hash": "c1ab75b639",
+      "kind": "slot",
+      "file": "voice/slots/number/43.mp3"
+    },
+    "slots/number/44": {
+      "text": "forty-four",
+      "hash": "dcaeabc4bf",
+      "kind": "slot",
+      "file": "voice/slots/number/44.mp3"
+    },
+    "slots/number/45": {
+      "text": "forty-five",
+      "hash": "5e2cb4fbcf",
+      "kind": "slot",
+      "file": "voice/slots/number/45.mp3"
+    },
+    "slots/number/46": {
+      "text": "forty-six",
+      "hash": "f884d76c4a",
+      "kind": "slot",
+      "file": "voice/slots/number/46.mp3"
+    },
+    "slots/number/47": {
+      "text": "forty-seven",
+      "hash": "90dc3136e5",
+      "kind": "slot",
+      "file": "voice/slots/number/47.mp3"
+    },
+    "slots/number/48": {
+      "text": "forty-eight",
+      "hash": "e6e683bf15",
+      "kind": "slot",
+      "file": "voice/slots/number/48.mp3"
+    },
+    "slots/number/49": {
+      "text": "forty-nine",
+      "hash": "c06963d9a9",
+      "kind": "slot",
+      "file": "voice/slots/number/49.mp3"
+    },
+    "slots/number/50": {
+      "text": "fifty",
+      "hash": "0b600ca426",
+      "kind": "slot",
+      "file": "voice/slots/number/50.mp3"
+    },
+    "slots/number/51": {
+      "text": "fifty-one",
+      "hash": "6ab0ec625e",
+      "kind": "slot",
+      "file": "voice/slots/number/51.mp3"
+    },
+    "slots/number/52": {
+      "text": "fifty-two",
+      "hash": "d7cbe9791c",
+      "kind": "slot",
+      "file": "voice/slots/number/52.mp3"
+    },
+    "slots/number/53": {
+      "text": "fifty-three",
+      "hash": "c3bb50e405",
+      "kind": "slot",
+      "file": "voice/slots/number/53.mp3"
+    },
+    "slots/number/54": {
+      "text": "fifty-four",
+      "hash": "17c26183e8",
+      "kind": "slot",
+      "file": "voice/slots/number/54.mp3"
+    },
+    "slots/number/55": {
+      "text": "fifty-five",
+      "hash": "fe09502f95",
+      "kind": "slot",
+      "file": "voice/slots/number/55.mp3"
+    },
+    "slots/number/56": {
+      "text": "fifty-six",
+      "hash": "82f58a74a5",
+      "kind": "slot",
+      "file": "voice/slots/number/56.mp3"
+    },
+    "slots/number/57": {
+      "text": "fifty-seven",
+      "hash": "68eba99d07",
+      "kind": "slot",
+      "file": "voice/slots/number/57.mp3"
+    },
+    "slots/number/58": {
+      "text": "fifty-eight",
+      "hash": "3ddff49260",
+      "kind": "slot",
+      "file": "voice/slots/number/58.mp3"
+    },
+    "slots/number/59": {
+      "text": "fifty-nine",
+      "hash": "299ea11ac2",
+      "kind": "slot",
+      "file": "voice/slots/number/59.mp3"
+    },
+    "slots/number/60": {
+      "text": "sixty",
+      "hash": "189429021b",
+      "kind": "slot",
+      "file": "voice/slots/number/60.mp3"
+    },
+    "slots/number/61": {
+      "text": "sixty-one",
+      "hash": "331bf38675",
+      "kind": "slot",
+      "file": "voice/slots/number/61.mp3"
+    },
+    "slots/number/62": {
+      "text": "sixty-two",
+      "hash": "a72c59b664",
+      "kind": "slot",
+      "file": "voice/slots/number/62.mp3"
+    },
+    "slots/number/63": {
+      "text": "sixty-three",
+      "hash": "6253417de3",
+      "kind": "slot",
+      "file": "voice/slots/number/63.mp3"
+    },
+    "slots/number/64": {
+      "text": "sixty-four",
+      "hash": "fd33c1692c",
+      "kind": "slot",
+      "file": "voice/slots/number/64.mp3"
+    },
+    "slots/number/65": {
+      "text": "sixty-five",
+      "hash": "e2958dd884",
+      "kind": "slot",
+      "file": "voice/slots/number/65.mp3"
+    },
+    "slots/number/66": {
+      "text": "sixty-six",
+      "hash": "9c8c77bea1",
+      "kind": "slot",
+      "file": "voice/slots/number/66.mp3"
+    },
+    "slots/number/67": {
+      "text": "sixty-seven",
+      "hash": "9844cce046",
+      "kind": "slot",
+      "file": "voice/slots/number/67.mp3"
+    },
+    "slots/number/68": {
+      "text": "sixty-eight",
+      "hash": "8377fb1990",
+      "kind": "slot",
+      "file": "voice/slots/number/68.mp3"
+    },
+    "slots/number/69": {
+      "text": "sixty-nine",
+      "hash": "d72dd7a33e",
+      "kind": "slot",
+      "file": "voice/slots/number/69.mp3"
+    },
+    "slots/number/70": {
+      "text": "seventy",
+      "hash": "893a9ee1be",
+      "kind": "slot",
+      "file": "voice/slots/number/70.mp3"
+    },
+    "slots/number/71": {
+      "text": "seventy-one",
+      "hash": "15d88299c0",
+      "kind": "slot",
+      "file": "voice/slots/number/71.mp3"
+    },
+    "slots/number/72": {
+      "text": "seventy-two",
+      "hash": "1a8fd9cb30",
+      "kind": "slot",
+      "file": "voice/slots/number/72.mp3"
+    },
+    "slots/number/73": {
+      "text": "seventy-three",
+      "hash": "357c299790",
+      "kind": "slot",
+      "file": "voice/slots/number/73.mp3"
+    },
+    "slots/number/74": {
+      "text": "seventy-four",
+      "hash": "ee30f6447c",
+      "kind": "slot",
+      "file": "voice/slots/number/74.mp3"
+    },
+    "slots/number/75": {
+      "text": "seventy-five",
+      "hash": "2e7ad52848",
+      "kind": "slot",
+      "file": "voice/slots/number/75.mp3"
+    },
+    "slots/number/76": {
+      "text": "seventy-six",
+      "hash": "6bfe262353",
+      "kind": "slot",
+      "file": "voice/slots/number/76.mp3"
+    },
+    "slots/number/77": {
+      "text": "seventy-seven",
+      "hash": "5b0099d545",
+      "kind": "slot",
+      "file": "voice/slots/number/77.mp3"
+    },
+    "slots/number/78": {
+      "text": "seventy-eight",
+      "hash": "bbb80343f7",
+      "kind": "slot",
+      "file": "voice/slots/number/78.mp3"
+    },
+    "slots/number/79": {
+      "text": "seventy-nine",
+      "hash": "5af6109bdb",
+      "kind": "slot",
+      "file": "voice/slots/number/79.mp3"
+    },
+    "slots/number/80": {
+      "text": "eighty",
+      "hash": "e465116b72",
+      "kind": "slot",
+      "file": "voice/slots/number/80.mp3"
+    },
+    "slots/number/81": {
+      "text": "eighty-one",
+      "hash": "cc458ae23f",
+      "kind": "slot",
+      "file": "voice/slots/number/81.mp3"
+    },
+    "slots/number/82": {
+      "text": "eighty-two",
+      "hash": "1c3f941259",
+      "kind": "slot",
+      "file": "voice/slots/number/82.mp3"
+    },
+    "slots/number/83": {
+      "text": "eighty-three",
+      "hash": "b9235cee3d",
+      "kind": "slot",
+      "file": "voice/slots/number/83.mp3"
+    },
+    "slots/number/84": {
+      "text": "eighty-four",
+      "hash": "c9fedccb6b",
+      "kind": "slot",
+      "file": "voice/slots/number/84.mp3"
+    },
+    "slots/number/85": {
+      "text": "eighty-five",
+      "hash": "a0cb198866",
+      "kind": "slot",
+      "file": "voice/slots/number/85.mp3"
+    },
+    "slots/number/86": {
+      "text": "eighty-six",
+      "hash": "59e34e0a53",
+      "kind": "slot",
+      "file": "voice/slots/number/86.mp3"
+    },
+    "slots/number/87": {
+      "text": "eighty-seven",
+      "hash": "c9bb859652",
+      "kind": "slot",
+      "file": "voice/slots/number/87.mp3"
+    },
+    "slots/number/88": {
+      "text": "eighty-eight",
+      "hash": "a32f436b35",
+      "kind": "slot",
+      "file": "voice/slots/number/88.mp3"
+    },
+    "slots/number/89": {
+      "text": "eighty-nine",
+      "hash": "6c2847a150",
+      "kind": "slot",
+      "file": "voice/slots/number/89.mp3"
+    },
+    "slots/number/90": {
+      "text": "ninety",
+      "hash": "2cf47db804",
+      "kind": "slot",
+      "file": "voice/slots/number/90.mp3"
+    },
+    "slots/number/91": {
+      "text": "ninety-one",
+      "hash": "c13e5f55f8",
+      "kind": "slot",
+      "file": "voice/slots/number/91.mp3"
+    },
+    "slots/number/92": {
+      "text": "ninety-two",
+      "hash": "0088d3d1db",
+      "kind": "slot",
+      "file": "voice/slots/number/92.mp3"
+    },
+    "slots/number/93": {
+      "text": "ninety-three",
+      "hash": "554373b67a",
+      "kind": "slot",
+      "file": "voice/slots/number/93.mp3"
+    },
+    "slots/number/94": {
+      "text": "ninety-four",
+      "hash": "8e7bce1dd6",
+      "kind": "slot",
+      "file": "voice/slots/number/94.mp3"
+    },
+    "slots/number/95": {
+      "text": "ninety-five",
+      "hash": "a22576bb14",
+      "kind": "slot",
+      "file": "voice/slots/number/95.mp3"
+    },
+    "slots/number/96": {
+      "text": "ninety-six",
+      "hash": "fc5e4d28b4",
+      "kind": "slot",
+      "file": "voice/slots/number/96.mp3"
+    },
+    "slots/number/97": {
+      "text": "ninety-seven",
+      "hash": "94a59d9924",
+      "kind": "slot",
+      "file": "voice/slots/number/97.mp3"
+    },
+    "slots/number/98": {
+      "text": "ninety-eight",
+      "hash": "4a6619a65f",
+      "kind": "slot",
+      "file": "voice/slots/number/98.mp3"
+    },
+    "slots/number/99": {
+      "text": "ninety-nine",
+      "hash": "690ed79baa",
+      "kind": "slot",
+      "file": "voice/slots/number/99.mp3"
+    },
     "slots/word/ant": {
       "text": "ant",
       "hash": "83d2366a3b",
@@ -45637,6 +49741,12 @@
       "kind": "slot",
       "file": "voice/slots/word/apple.mp3"
     },
+    "slots/word/apples": {
+      "text": "apples",
+      "hash": "c2e0095c5a",
+      "kind": "slot",
+      "file": "voice/slots/word/apples.mp3"
+    },
     "slots/word/ball": {
       "text": "ball",
       "hash": "0322525e0f",
@@ -45648,6 +49758,12 @@
       "hash": "addfa56fff",
       "kind": "slot",
       "file": "voice/slots/word/balloon.mp3"
+    },
+    "slots/word/bananas": {
+      "text": "bananas",
+      "hash": "e254994735",
+      "kind": "slot",
+      "file": "voice/slots/word/bananas.mp3"
     },
     "slots/word/bat": {
       "text": "bat",
@@ -45739,6 +49855,12 @@
       "kind": "slot",
       "file": "voice/slots/word/clown.mp3"
     },
+    "slots/word/cookies": {
+      "text": "cookies",
+      "hash": "0491151782",
+      "kind": "slot",
+      "file": "voice/slots/word/cookies.mp3"
+    },
     "slots/word/corn": {
       "text": "corn",
       "hash": "878e169198",
@@ -45762,6 +49884,12 @@
       "hash": "c0b614f2db",
       "kind": "slot",
       "file": "voice/slots/word/dog.mp3"
+    },
+    "slots/word/donuts": {
+      "text": "donuts",
+      "hash": "ee8fc6d170",
+      "kind": "slot",
+      "file": "voice/slots/word/donuts.mp3"
     },
     "slots/word/door": {
       "text": "door",
@@ -45894,6 +50022,12 @@
       "hash": "6a59f78800",
       "kind": "slot",
       "file": "voice/slots/word/lemon.mp3"
+    },
+    "slots/word/lemons": {
+      "text": "lemons",
+      "hash": "02dcc31fa2",
+      "kind": "slot",
+      "file": "voice/slots/word/lemons.mp3"
     },
     "slots/word/lion": {
       "text": "lion",
@@ -46080,6 +50214,12 @@
       "hash": "a4825da4b6",
       "kind": "slot",
       "file": "voice/slots/word/star.mp3"
+    },
+    "slots/word/strawberries": {
+      "text": "strawberries",
+      "hash": "405c38b64f",
+      "kind": "slot",
+      "file": "voice/slots/word/strawberries.mp3"
     },
     "slots/word/sun": {
       "text": "sun",

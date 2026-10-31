@@ -1,128 +1,139 @@
+import type { PatrolPlan, PuddleValue, RuleId } from '../../lib/puddle'
+
+/**
+ * Puddle Patrol's simulation state (engine.ts). Plain data, mutated in place
+ * by fixed-timestep ticks; the renderer only reads it (and drains `events`).
+ * World units, on the ground plane: x to the right, z toward the camera.
+ */
+
 export interface Vec2 {
   x: number
-  y: number
+  z: number
 }
 
-export type TowerKind = 'cannon'
-export type EnemyKind = 'grunt'
+/** A place a sprinkler can stand, with the stretches of path its spray reaches. */
+export interface Slot {
+  id: number
+  pos: Vec2
+  /** Path distance ranges [from, to] within reach (a slot between two rows reaches both). */
+  reach: [number, number][]
+}
 
-export interface TowerStats {
-  cost: number
+export interface FieldLayout {
+  /** The path, sampled densely (mud pit first, the pond last). */
+  path: Vec2[]
+  /** Cumulative distance at each path sample. */
+  dist: number[]
+  length: number
+  slots: Slot[]
+  /** How far a sprinkler's spray reaches (world units). */
   range: number
-  damage: number
-  fireRateHz: number
-  projectileSpeed: number
-  color: string
-  emoji: string
-  label: string
+  pond: Vec2
+  pit: Vec2
 }
 
-export interface EnemyStats {
-  hp: number
-  speed: number // pixels per second along path
-  reward: number
-  size: number
-  emoji: string
-  color: string
+/** A band's pace and economy (config.ts `TUNING`). */
+export interface Tuning {
+  /** Pudding walking speed (units / s). */
+  speed: number
+  /** Seconds between two sprays of one tower. */
+  reload: number
+  /** Seconds a spray is in the air. */
+  flight: number
+  /** Drops at the start (enough for `startTowers` towers). */
+  startDrops: number
+  /** What a sprinkler costs (the first `freeTowers` are already paid for by the start drops). */
+  cost: number
+  /** Drops a wash earns. */
+  washReward: number
+  /** Most towers on the field at once (= slots used). */
+  maxTowers: number
+  /** What a Super Soak costs (one tower sprays twice as fast for the rest of the wave, or the next one). */
+  superCost: number
 }
 
 export interface Tower {
-  id: number
-  kind: TowerKind
-  pos: Vec2
+  slot: number
+  rule: RuleId
+  /** Seconds until it can spray again. */
   cooldown: number
-  level: number
+  /** Total Puddings it has washed (the tower's own little score). */
+  washed: number
+  /** Super Soaked: sprays twice as fast until the wave ends (bought with drops). */
+  super?: boolean
+  /** Seconds left refilling after a mid-wave rule change (the scene shows it; it can't spray meanwhile). */
+  refill?: number
 }
 
-export interface Enemy {
+export type PuddingState = 'walk' | 'washed' | 'leaked'
+
+export interface Pudding {
   id: number
-  kind: EnemyKind
-  hp: number
-  maxHp: number
-  pathT: number // 0..1 along path
-  alive: boolean
-  reachedEnd: boolean
-}
-
-export interface Projectile {
-  id: number
-  pos: Vec2
-  target: number // enemy id
-  damage: number
-  speed: number
-  alive: boolean
-}
-
-export interface FloatingText {
-  id: number
-  pos: Vec2
-  text: string
-  color: string
-  ageMs: number
-}
-
-export interface Wave {
-  enemyCount: number
-  enemyKind: EnemyKind
-  spawnIntervalMs: number
-  hpScale: number
-}
-
-/**
- * The rules a game is played by. Grades 2–4 play `CLASSIC_RULES` (config.ts:
- * today's numbers, unchanged); kindergarten's Counting Towers plays gentler
- * ones (kRules.ts): fewer, slower critters, no clock between waves, towers
- * that grow stronger, and a base that never falls.
- */
-export interface TdRules {
-  waves: Wave[]
-  startingGold: number
-  startingLives: number
-  /** The pause before the next wave starts on its own (Infinity: it waits for the start button). */
-  betweenWaveMs: number
-  /** Critters walk at this share of their speed (1: as `ENEMY_STATS` says). */
-  speedScale: number
-  /** A tower's stats at a level (1: as built). */
-  tower(kind: TowerKind, level: number): TowerStats
-  /**
-   * When the last life goes: `gameOver` (classic), or `endWave` (K–1, no
-   * failing out): the critters still out go home, the lives fill up again,
-   * and the same wave waits to be tried again, a little easier each time.
-   */
-  baseFalls: 'gameOver' | 'endWave'
-}
-
-export interface GameState {
-  rules: TdRules
-  width: number
-  height: number
-  pathPoints: Vec2[]
-  pathLength: number
-  gold: number
-  lives: number
+  value: PuddleValue
+  /** Distance walked along the path. */
+  s: number
+  state: PuddingState
+  /** Slots whose (wrong) spray already bounced off it: one try per tower. */
+  bounced: number
+  /** A washing spray is on its way (no second tower spends one on it). */
+  incoming: boolean
+  /** Its wave (0-based). */
   wave: number
-  waveProgress: 'idle' | 'spawning' | 'in-progress' | 'between-waves'
-  waveSpawnedCount: number
-  waveTotal: number
-  waveTimerMs: number
-  betweenWaveMs: number
-  towers: Tower[]
-  enemies: Enemy[]
-  projectiles: Projectile[]
-  floats: FloatingText[]
-  nextId: number
-  kills: number
-  /** Times the base would have fallen and the wave ended instead (`baseFalls: 'endWave'`). */
-  setbacks: number
-  /** Failed tries of the wave now being played (eases it: one critter fewer, a little less sturdy). */
-  retries: number
-  isGameOver: boolean
-  hasWon: boolean
 }
 
-export interface PendingPurchase {
-  kind: 'placeTower'
-  towerKind: TowerKind
-  pos: Vec2
-  cost: number
+export interface Shot {
+  id: number
+  slot: number
+  target: number
+  /** Washes (fits the tower's rule) or bounces off. */
+  fits: boolean
+  /** Seconds in the air so far. */
+  t: number
+}
+
+/** What happened this tick, for the renderer's juice and the game's voice (drained each frame). */
+export type PatrolEvent =
+  | { kind: 'spawn'; id: number }
+  | { kind: 'spray'; slot: number; id: number; fits: boolean }
+  | { kind: 'wash'; slot: number; id: number; at: Vec2; drops: number; value: PuddleValue }
+  | { kind: 'bounce'; slot: number; id: number; at: Vec2; value: PuddleValue }
+  | { kind: 'leak'; id: number; at: Vec2; value: PuddleValue }
+  | { kind: 'waveStart'; wave: number }
+  | { kind: 'waveEnd'; wave: number; washed: number; leaked: number }
+  | { kind: 'done' }
+
+export type PatrolPhase = 'plan' | 'wave' | 'done'
+
+export interface WaveTally {
+  washed: number
+  leaked: number
+  total: number
+}
+
+export interface PatrolState {
+  plan: PatrolPlan
+  layout: FieldLayout
+  tuning: Tuning
+  phase: PatrolPhase
+  /** The wave being played, or (planning) the next one. */
+  wave: number
+  /** Seconds since the current wave started. */
+  waveT: number
+  /** Puddings of the current wave spawned so far. */
+  spawned: number
+  /** Total simulated seconds (only while a wave runs). */
+  t: number
+  /** Seconds left over below one tick (`advance`). */
+  acc: number
+  towers: (Tower | null)[]
+  /** Towers ever bought (the tray's price goes up with each). */
+  built: number
+  /** This wave's Super Soak is spent (one a wave: which tower gets it is the decision). */
+  supered: boolean
+  drops: number
+  puddings: Pudding[]
+  shots: Shot[]
+  nextId: number
+  tallies: WaveTally[]
+  events: PatrolEvent[]
 }

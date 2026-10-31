@@ -150,7 +150,9 @@ export function minuteChunks(fromMinute: number, minutes: number): number[] {
  * then the minutes in friendly chunks; the last chunk's landing is the
  * child's ("So what time will it be?").
  */
-export function timeWalkthrough(start: number, hours: number, minutes: number): WalkStep[] {
+export function timeWalkthrough(start: number, hours: number, minutes: number, opts: { meridiem?: boolean } = {}): WalkStep[] {
+  // `meridiem`: `start` is minutes after midnight, and the times say a.m. / p.m. (noon at 12:00)
+  const at = opts.meridiem ? clockTimeDay : clockTime
   const steps: WalkStep[] = []
   const jumps: number[] = []
   // the whole plan first (hours, then the minutes' chunks), so every step's timeline has the same scale
@@ -161,14 +163,14 @@ export function timeWalkthrough(start: number, hours: number, minutes: number): 
     chunks = [minutes - tail, tail]
   }
   const plan = [...Array<number>(hours).fill(60), ...chunks]
-  const vis = (pending?: number) => ({ kind: 'timeJumps' as const, start, jumps: [...jumps], ...(pending ? { pending } : {}), plan })
+  const vis = (pending?: number) => ({ kind: 'timeJumps' as const, start, jumps: [...jumps], ...(pending ? { pending } : {}), plan, ...(opts.meridiem ? { meridiem: true } : {}) })
   let cur = start
-  steps.push({ say: `We start at ${clockTime(cur)}.`, visual: vis() })
+  steps.push({ say: `We start at ${at(cur)}.`, visual: vis() })
   for (let i = 0; i < hours; i++) {
     const from = cur
     cur += 60
     jumps.push(60)
-    steps.push({ say: `Jump ${i === 0 ? '1 hour' : '1 more hour'}: ${clockTime(from)} to ${clockTime(cur)}.`, visual: vis() })
+    steps.push({ say: `Jump ${i === 0 ? '1 hour' : '1 more hour'}: ${at(from)} to ${at(cur)}.`, visual: vis() })
   }
   const last = chunks.pop()!
   for (const [k, c] of chunks.entries()) {
@@ -178,8 +180,8 @@ export function timeWalkthrough(start: number, hours: number, minutes: number): 
     const toHour = cur % 60 === 0
     steps.push({
       say: toHour
-        ? `Jump ${c} minutes to the next hour: ${clockTime(from)} to ${clockTime(cur)}.`
-        : `${hours && k === 0 ? 'Now the minutes. ' : ''}Jump ${c} minutes: ${clockTime(from)} to ${clockTime(cur)}.`,
+        ? `Jump ${c} minutes to the next hour: ${at(from)} to ${at(cur)}.`
+        : `${hours && k === 0 ? 'Now the minutes. ' : ''}Jump ${c} minutes: ${at(from)} to ${at(cur)}.`,
       visual: vis(),
     })
   }
@@ -188,6 +190,8 @@ export function timeWalkthrough(start: number, hours: number, minutes: number): 
     visual: vis(last),
   })
   steps.push({ ...fixedLine('show-me/timeYourTurn'), visual: vis(last), yourTurn: true })
+  // ("…to 11:00 a.m." ends the sentence once)
+  if (opts.meridiem) for (const st of steps) st.say = st.say.replace(/\.\./g, '.')
   return steps
 }
 
@@ -260,6 +264,12 @@ export function moneyWalkthrough(cost: number, paid: number): WalkStep[] {
 export function clockTime(totalMinutes: number): string {
   const t = ((totalMinutes % 720) + 720) % 720
   return `${Math.floor(t / 60) || 12}:${String(t % 60).padStart(2, '0')}`
+}
+
+/** "10:00 a.m.", "12:00 noon", "3:30 p.m." for a number of minutes after midnight. */
+export function clockTimeDay(totalMinutes: number): string {
+  const t = ((totalMinutes % 1440) + 1440) % 1440
+  return t === 720 ? '12:00 noon' : `${clockTime(t)} ${t < 720 ? 'a.m.' : 'p.m.'}`
 }
 
 /** First three candidates that differ from the answer and from each other. */
