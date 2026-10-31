@@ -398,9 +398,9 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
         expect(s.params?.listen, s.id).toBe(true)
         continue
       }
-      // Snack Shack: six customers, its own spoken orders
+      // Snack Shack: four customers (a kindergartner taps every snack), its own spoken orders
       if (s.gameId === 'snackShack') {
-        expect(s.params?.customers, s.id).toBe(6)
+        expect(s.params?.customers, s.id).toBe(4)
         expect(s.providerConfig).toEqual({ kind: 'snackShack', band: 'k1' })
         continue
       }

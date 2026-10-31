@@ -38,7 +38,14 @@
 .shack-float { animation: shack-float 1.8s ease-out infinite; }
 .shack-note { animation: shack-note 2s ease-out infinite; }
 .shack-shake { animation: shack-shake 0.35s ease-in-out 3; }
+/* 💡 Show me how, after a miss or a long think: a soft golden pulse (a still ring for reduced motion) */
+@keyframes shack-nudge {
+  0%, 100% { box-shadow: 0 3px 0 rgba(58, 44, 56, 0.35), 0 0 0 0 rgba(255, 196, 61, 0.9); }
+  50% { box-shadow: 0 3px 0 rgba(58, 44, 56, 0.35), 0 0 0 9px rgba(255, 196, 61, 0); }
+}
+.shack-nudge { animation: shack-nudge 1.4s ease-out infinite; }
 
 @media (prefers-reduced-motion: reduce) {
-  .shack-twinkle, .shack-bob, .shack-sway, .shack-hop, .shack-float, .shack-note, .shack-shake { animation: none; }
+  .shack-twinkle, .shack-bob, .shack-sway, .shack-hop, .shack-float, .shack-note, .shack-shake, .shack-nudge { animation: none; }
+  .shack-nudge { box-shadow: 0 0 0 4px rgb(255, 196, 61); }
 }

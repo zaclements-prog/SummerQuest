@@ -45,6 +45,8 @@ export default defineVoicePack({
     clockTower: 'Clock Tower order! Move the clock hands to the right time.',
     jumpAlong: "Let's jump along the timeline.",
     overNoon: "We went past 12 noon, so it's p.m. now!",
+    finishCountUp: 'Put those in the tray. Then count up the rest of the way. Your turn!',
+    setClockShort: 'Turn the short hand to the hour. Then check the long hand!',
   },
   templates: {
     /** "3 apples, please!" (42 clips) */

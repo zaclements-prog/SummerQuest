@@ -12,6 +12,7 @@ import type { VoiceRef } from '../voice/types'
 import {
   K_FOODS,
   changeShowMe,
+  changeWorked,
   elapsedShowMe,
   planShift,
   shackSkill,
@@ -34,7 +35,7 @@ import { DECOR_CHOICES, type DecorId } from './SnackShack.decor'
 import { ChangeCounter } from './SnackShack.money'
 import { ClockFace, ShackClock } from './SnackShack.clock'
 import { Card, ChoiceRow, CountTray, DecorChoice, FillPanel, KitButton, ListenShackResults, PriceTags, Ticket, type Bin, type FillTeach } from './SnackShack.panels'
-import { useShackSpeaker, type SayItem } from './SnackShack.voice'
+import { autoSay, useShackSpeaker, type SayItem } from './SnackShack.voice'
 import './SnackShack.css'
 
 /**
@@ -85,6 +86,9 @@ interface Final {
   newBest: boolean
   perfect: boolean
 }
+
+/** How long a child works on a change or Clock Tower step before 💡 glows (ms). */
+const HELP_NUDGE_MS = 25_000
 
 const THANKS: readonly VoiceRef[] = [{ line: 'snack-shack/thanks1' }, { line: 'snack-shack/thanks2' }, { line: 'snack-shack/thanks3' }]
 
@@ -179,13 +183,24 @@ export default function SnackShack({ params, onComplete, meta, paused = false }:
     [showSteps, order.id, step, plan.band],
   )
   const showMe = useShowMe(helpProblem)
+  // 💡 glows after a first miss, or when a child has been on the step a while (no voice nag)
+  const [slowOn, setSlowOn] = useState<string | null>(null)
+  const helpId = helpProblem?.id ?? null
+  useEffect(() => {
+    if (!helpId) return
+    const t = window.setTimeout(() => setSlowOn(helpId), HELP_NUDGE_MS)
+    return () => window.clearTimeout(t)
+  }, [helpId])
+  const nudgeHelp = !showMe.helped && (misses > 0 || (helpId !== null && slowOn === helpId))
 
   // ── speech ─────────────────────────────────────────────────────────────────
   const firstOfKind = useCallback((kind: ShackOrder['kind']) => plan.orders.findIndex((o) => o.kind === kind) === oi, [plan.orders, oi])
+  // grades 4–5 read the ticket: a customer's words are said on 🔊 only (the shack's own lines still play)
+  const readOrders = plan.grade < 4
 
-  /** What the customer asks for at a step (said when it starts; 🔊 says it again). */
+  /** What the customer asks for at a step (said when it starts, `auto`; 🔊 says it again). */
   const stepLines = useCallback(
-    (s: Step, o: ShackOrder, intro: boolean): SayItem[] => {
+    (s: Step, o: ShackOrder, intro: boolean, auto = true): SayItem[] => {
       const out: SayItem[] = []
       if (intro) out.push({ line: listen ? (plan.band === 'g1' ? 'snack-shack/introListenClock' : 'snack-shack/introListen') : 'snack-shack/intro' })
       if (s === 'fill') {
@@ -204,15 +219,16 @@ export default function SnackShack({ params, onComplete, meta, paused = false }:
       } else if (s === 'clock') {
         if (o.kind === 'clockAt') {
           out.push(o.speech)
-          if (oi === 0) out.push(listen ? { voice: { line: 'snack-shack/setClock' }, target: 'shack-clock' } : { line: 'snack-shack/setClock' })
+          // (the clock starts at 12: the short hand is the quick way to the hour)
+          if (oi === 0) out.push(listen ? { voice: { line: 'snack-shack/setClockShort' }, target: 'shack-clock' } : { line: 'snack-shack/setClockShort' })
         } else if (o.kind === 'elapsed') {
           if (firstOfKind('elapsed')) out.push({ line: 'snack-shack/clockTower' })
           out.push(`${o.story.replace(o.duration, o.decoy ? `${o.decoy}... no wait, ${o.duration}` : o.duration)} ${o.ask}`)
         }
       }
-      return out
+      return auto ? autoSay(out, readOrders) : out
     },
-    [listen, plan.band, plan.decimals, oi, firstOfKind],
+    [listen, plan.band, plan.decimals, oi, firstOfKind, readOrders],
   )
 
   // the shift's first order: welcome, then the order (once the first critter has walked up)
@@ -233,7 +249,7 @@ export default function SnackShack({ params, onComplete, meta, paused = false }:
     if (paused) hush()
   }, [paused, hush])
 
-  const replay = () => say(stepLines(step, order, false))
+  const replay = () => say(stepLines(step, order, false, false))
 
   // ── stepping through an order ──────────────────────────────────────────────
   const gotoStep = useCallback(
@@ -268,7 +284,8 @@ export default function SnackShack({ params, onComplete, meta, paused = false }:
       const run = runRef.current
       const right = run.all.filter((s) => s === 'first' || s === 'helped').length
       const total = run.all.length
-      const stars = shiftStars(right, total)
+      // K–1, as Listen & Play: a finished shift earns at least one star
+      const stars = listen ? Math.max(1, shiftStars(right, total)) : shiftStars(right, total)
       const score = run.score
       const perfect = total > 0 && run.all.every((s) => s === 'first')
       const rec = recordRun(bestKey, { score, streak: run.bestStreak, perfect })
@@ -545,13 +562,14 @@ export default function SnackShack({ params, onComplete, meta, paused = false }:
   // dev/QA: the bot reads the shift (never in a build)
   useEffect(() => {
     if (!import.meta.env.DEV) return
-    ;(window as unknown as { __snackShack?: unknown }).__snackShack = { plan, oi, step, misses }
-  }, [plan, oi, step, misses])
+    ;(window as unknown as { __snackShack?: unknown }).__snackShack = { plan, oi, step, misses, final, helped: showMe.helped }
+  }, [plan, oi, step, misses, final, showMe.helped])
 
   // ── layout ─────────────────────────────────────────────────────────────────
   const portrait = vp.h > vp.w
   const short = vp.h < 560
-  const clockSize = Math.round(Math.max(150, Math.min(portrait ? vp.w * 0.5 : vp.w * 0.23, portrait ? vp.h * 0.27 : vp.h * 0.42, 250)))
+  // (portrait: 22% of the height, so the clock, its readout and the buttons fit under the stand and the ticket)
+  const clockSize = Math.round(Math.max(150, Math.min(portrait ? vp.w * 0.5 : vp.w * 0.23, portrait ? vp.h * 0.22 : vp.h * 0.42, 250)))
   const nextUp = UPGRADE_AT.find((n) => n > tips)
   const mood: 'wait' | 'happy' | 'think' = step === 'thanks' || step === 'decor' ? 'happy' : teach && !teach.shown ? 'think' : 'wait'
   const hearts = step === 'thanks' || step === 'decor' ? 3 : Math.min(2, orderSteps.length + (step !== firstStep(order) ? 1 : 0))
@@ -629,9 +647,10 @@ export default function SnackShack({ params, onComplete, meta, paused = false }:
               onRemove={removePiece}
               onGive={giveChange}
               onGotIt={gotIt}
-              showMe={showMe.available ? { finished: showMe.finished, steps: showSteps!, show: showMe.show } : null}
+              showMe={showMe.available ? { finished: showMe.finished, steps: showSteps!, show: showMe.show, nudge: nudgeHelp } : null}
               disabled={paused}
-              compact={short || portrait}
+              // (portrait has the height: full-size coins; only a short landscape screen shrinks them)
+              compact={short}
             />
           )}
           {step === 'clock' && (order.kind === 'elapsed' || order.kind === 'clockAt') && (
@@ -645,7 +664,7 @@ export default function SnackShack({ params, onComplete, meta, paused = false }:
               onGotIt={gotIt}
               teach={teach}
               size={clockSize}
-              showMe={showMe.available ? { finished: showMe.finished, steps: showSteps!, show: showMe.show } : null}
+              showMe={showMe.available ? { finished: showMe.finished, steps: showSteps!, show: showMe.show, nudge: nudgeHelp } : null}
               disabled={paused}
               listen={listen}
             />
@@ -708,12 +727,14 @@ interface ShowMeHook {
   finished: boolean
   steps: WalkStep[]
   show: () => void
+  /** Draw the eye to it (after a miss, or a long think). */
+  nudge?: boolean
 }
 
 /** 💡 under the work (after a walkthrough, its last picture waits in the stand's place: ReminderCard). */
 function HelpButton({ showMe }: { showMe: ShowMeHook | null }) {
   if (!showMe) return null
-  return <ShowMeButton onClick={showMe.show} />
+  return <ShowMeButton onClick={showMe.show} className={showMe.nudge ? 'shack-nudge' : ''} />
 }
 
 /** After "Show me how": the walkthrough's last picture, where the stand was, until the step is done. */
@@ -856,8 +877,9 @@ function ClockStep({
  */
 function TeachCard({ order, teach }: { order: ShackOrder; teach: Teach }) {
   if (order.kind === 'money') {
+    // first miss: the count-up stops one hop short (the child finishes it); shown: every hop
     const steps = changeShowMe(order)
-    const work = steps[steps.length - 1].visual
+    const work = teach.shown ? changeWorked(order) : steps[steps.length - 1].visual
     return (
       <Card tone={teach.shown ? 'correct' : 'quest'} className="w-full px-2 py-1" teach="change">
         <div className="kid-text text-center text-lg short:text-base leading-snug" style={{ color: UI.line }}>
@@ -867,7 +889,7 @@ function TeachCard({ order, teach }: { order: ShackOrder; teach: Teach }) {
             <>You gave <b>{dollars(teach.gave ?? 0)}</b>. Count up from {dollars(order.total)} to {dollars(order.paid)}, like a shopkeeper:</>
           )}
         </div>
-        <WalkPicture visual={work.kind === 'countUp' ? { ...work, askTotal: !teach.shown } : work} />
+        <WalkPicture visual={work} />
       </Card>
     )
   }
