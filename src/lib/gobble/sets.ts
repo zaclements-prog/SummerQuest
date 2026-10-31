@@ -125,6 +125,9 @@ export function cloudLadder(cfg: GobbleConfig): NumberShown[] {
           [4, 5],
           [5, 6],
           [7, 8],
+          // (3rd and 4th grade's tenths and twelfths: two more rungs, so the third park still grows)
+          [9, 10],
+          [11, 12],
         ] as const
       )
         .filter(([, d]) => d <= maxDen)

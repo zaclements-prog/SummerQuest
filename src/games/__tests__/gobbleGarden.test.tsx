@@ -83,7 +83,8 @@ async function go(edible: boolean) {
       hook().advance(0.2)
     })
     const now = hook().state()
-    if (now.phase !== 'play' || !now.snacks.some((s) => s.slot === t.slot && s.text === t.text) || now.burp) break
+    // (a new decision: this one's eaten or bumped; the last burp's card may still be up)
+    if (now.phase !== 'play' || !now.snacks.some((s) => s.slot === t.slot && s.text === t.text) || now.decisions > st.decisions) break
   }
   await wait(60)
 }

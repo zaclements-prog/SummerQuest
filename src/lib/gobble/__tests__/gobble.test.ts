@@ -5,6 +5,7 @@ import { createProvider } from '../../providers'
 import { effectiveConfig } from '../../gradeTiers'
 import {
   BELLY_FULL,
+  BURP_COST,
   EDIBLE_SHARE,
   NEAR_EDIBLE,
   NEAR_TOO_BIG,
@@ -31,7 +32,7 @@ import {
 } from '..'
 import { voiceText } from '../../../voice/registry'
 import type { Problem } from '../../problem'
-import { playBot } from './bot'
+import { playBot, playSweeper } from './bot'
 
 /** Every band's set, with the grade reach the tiers give it. */
 const CONFIGS: GobbleConfig[] = [
@@ -217,7 +218,8 @@ describe('the park', () => {
       const secs = Array.from({ length: 10 }, (_, i) => playBot(cfg, { seed: `pace-${i}`, listen: k, miss: 0.15, think: k ? 4 : 3 }).roundSeconds).flat()
       const avg = secs.reduce((a, b) => a + b, 0) / secs.length
       expect(avg, name(cfg)).toBeGreaterThan(40)
-      expect(avg, name(cfg)).toBeLessThanOrEqual(81)
+      // (K–1 has no clock: this bot is a very slow one, 4 s a snack and never steering round a big one)
+      expect(avg, name(cfg)).toBeLessThanOrEqual(k ? 90 : 81)
       if (!k) expect(Math.max(...secs)).toBeLessThanOrEqual(80.1)
     }
     const run = makePark({ set: 'k' }, { seed: 'clock', listen: true })
@@ -285,6 +287,60 @@ describe('the park', () => {
     expect(evs2.filter((e) => e.kind === 'burp')).toHaveLength(0)
   })
 
+  it('a burp costs a little: the cloud is dizzy a moment, a bite leaves the belly, and the same snack burps again on a later bump', () => {
+    const run = makePark({ set: 'k' }, { seed: 'rebump', listen: true })
+    const big = run.snacks.find((s) => !canEat(s.snack, run.cloud.value))!
+    for (const s of run.snacks) if (s !== big) s.alive = false
+    for (const s of run.snacks) s.respawnAt = 1e9
+    run.nextCheck = 1e9
+    run.cloud.belly = 1
+    const ram = () => {
+      run.cloud.x = big.x
+      run.cloud.z = big.z + 4
+      run.cloud.vx = 0
+      run.cloud.vz = 0
+      run.input.target = { x: big.x, z: big.z }
+      const evs = []
+      for (let i = 0; i < 45; i++) evs.push(...stepPark(run, 1 / 30))
+      return evs.filter((e) => e.kind === 'burp').length
+    }
+    expect(ram()).toBe(1)
+    expect(run.cloud.belly).toBeCloseTo(1 - BURP_COST)
+    expect(run.cloud.dazedUntil).toBeGreaterThan(run.t - 1.5 + PARK.daze - 0.1)
+    // dizzy: a finger can't steer it straight away
+    const at = run.t
+    run.cloud.dazedUntil = at + PARK.daze
+    run.cloud.vx = 0
+    run.cloud.vz = 0
+    run.input.target = { x: run.cloud.x + 5, z: run.cloud.z }
+    const x0 = run.cloud.x
+    stepPark(run, 0.2)
+    expect(run.cloud.x).toBeCloseTo(x0)
+    // within PARK.reburp the same snack doesn't burp again; after it, a new bump does
+    expect(ram()).toBe(0)
+    for (let i = 0; i < PARK.reburp * 30; i++) stepPark(run, 1 / 30)
+    expect(ram()).toBe(1)
+    // the belly never goes below empty, and the number never shrinks
+    for (let k = 0; k < 3; k++) {
+      for (let i = 0; i < PARK.reburp * 30; i++) stepPark(run, 1 / 30)
+      ram()
+    }
+    expect(run.cloud.belly).toBe(0)
+    expect(run.cloud.rung).toBe(0)
+    expect(run.eaten).toBe(0)
+  })
+
+  it.each(CONFIGS.map((c) => [name(c), c] as const))('%s: steering blindly into everything earns 1 star; choosing earns more (and grows bigger)', (_n, cfg) => {
+    const listen = cfg.set === 'k' || cfg.set === 'g1'
+    const blind = Array.from({ length: 12 }, (_, i) => playSweeper(cfg, { seed: `sweep-${name(cfg)}-${i}`, listen }))
+    const careful = Array.from({ length: 12 }, (_, i) => playBot(cfg, { seed: `careful-${name(cfg)}-${i}`, listen, miss: 0.1, think: 1.5 }).run)
+    const stars = (r: (typeof blind)[number]) => gobbleStars(r.decisions.filter((d) => d.right).length, r.decisions.length)
+    const avg = (xs: number[]) => xs.reduce((a, b) => a + b, 0) / xs.length
+    expect(avg(blind.map(stars)), 'blind sweep').toBeLessThan(1.5)
+    expect(avg(careful.map(stars)), 'careful').toBeGreaterThanOrEqual(2)
+    expect(avg(careful.map((r) => r.cloud.rung)), 'careful grows more').toBeGreaterThan(avg(blind.map((r) => r.cloud.rung)))
+  }, 60_000)
+
   it('eating fills the belly by the snack’s share of the cloud’s number; a full belly climbs one rung', () => {
     const run = makePark({ set: 'k' }, { seed: 'belly', listen: true })
     run.nextCheck = 1e9
@@ -333,7 +389,8 @@ describe('scoring, stars, scaffold', () => {
   it('stars count smart bites; a played session earns at least one', () => {
     expect(gobbleStars(0, 0)).toBe(1)
     expect(gobbleStars(17, 20)).toBe(3)
-    expect(gobbleStars(13, 20)).toBe(2)
+    expect(gobbleStars(14, 20)).toBe(2)
+    expect(gobbleStars(13, 20)).toBe(1)
     expect(gobbleStars(5, 20)).toBe(1)
   })
 

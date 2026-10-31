@@ -18,6 +18,7 @@ import {
   GOBBLE_TOPIC,
   NEXT_PARK,
   ateLine,
+  bellyFull,
   burpLines,
   canEat,
   eatLine,
@@ -95,6 +96,8 @@ function fallbackConfig(params: Record<string, unknown> | undefined, listen: boo
 }
 
 const EAT_COLORS = ['#f7a1c4', '#ffd75e', '#9fe6c8', '#ffffff']
+/** K–1: seconds without a bite before the guide's hand drags the cloud to a snack. */
+const NUDGE_AFTER = 11
 
 export default function GobbleGarden({ params, onComplete, meta, provider, paused: hostPaused = false }: GameProps) {
   const hidden = usePageHidden()
@@ -198,7 +201,9 @@ export default function GobbleGarden({ params, onComplete, meta, provider, pause
         })
       } else if (idx === 0) say(intro)
       later(listen ? 2400 : 1700, () => {
-        lastEat.current = runRef.current!.t
+        // (K–1's first park: the guide's hand shows the drag about 2.5 s in, unless a snack is eaten first;
+        // nothing on screen says how to steer to a child who can't read)
+        lastEat.current = runRef.current!.t - (listen && idx === 0 ? NUDGE_AFTER - 2.5 : 0)
         setPhase('play')
       })
     },
@@ -329,7 +334,7 @@ export default function GobbleGarden({ params, onComplete, meta, provider, pause
     if (!listen || phase !== 'play' || paused) return
     const id = window.setInterval(() => {
       const run = runRef.current!
-      if (run.t - lastEat.current < 11 || burp) return
+      if (run.t - lastEat.current < NUDGE_AFTER || burp) return
       let best: { x: number; z: number } | null = null
       let bd = Infinity
       for (const s of run.snacks) {
@@ -504,7 +509,7 @@ export default function GobbleGarden({ params, onComplete, meta, provider, pause
 
       {/* ── HUD: the cloud's number and the score top-left; the parks, the clock and the burp card top-centre ── */}
       <div className={`absolute ${SAFE.top2} ${SAFE.left2} z-10 flex flex-col items-start gap-1.5 pointer-events-none`}>
-        <CloudBadge value={cloudValue} belly={belly} set={set} top={atTop} />
+        <CloudBadge value={cloudValue} belly={belly} full={bellyFull(listen)} set={set} top={atTop} />
         <ScoreChip score={score} best={best} pictureBest={listen} />
         <StreakMeter streak={streak} />
       </div>
