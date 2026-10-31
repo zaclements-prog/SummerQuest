@@ -270,7 +270,14 @@ export default function GobbleGarden({ params, onComplete, meta, provider, pause
             credit(false, e.snack, e.cloud)
             sfx.thud()
             later(140, () => sfx.whoosh())
-            juice.text({ pos: [e.x, 2.8, e.z], text: listen ? 'burp!' : 'too big, burp!', size: 'md', color: '#ffd0c8' })
+            {
+              // above the snack's tag, on its far side from the cloud, in a strong coral: pale pink at the
+              // snack's height faded into the white cloud it had just bounced off, and read as garbled
+              const dx = e.x - run.cloud.x
+              const dz = e.z - run.cloud.z
+              const d = Math.hypot(dx, dz) || 1
+              juice.text({ pos: [e.x + (dx / d) * 0.8, 3.6, e.z + (dz / d) * 0.8], text: listen ? 'burp!' : 'too big, burp!', size: 'md', color: '#ff7a6b' })
+            }
             juice.dust([e.x, 0.6, e.z])
             if (!reduced) juice.shake(0.12)
             const key = run.decisions.length
