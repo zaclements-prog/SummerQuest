@@ -157,6 +157,26 @@ export function GoButton({ onClick, wave, listen }: { onClick: () => void; wave:
   )
 }
 
+/** ⏩ during a wave: double speed (the watching gets shorter; nothing about the math changes). */
+export function FastButton({ on, onClick, listen }: { on: boolean; onClick: () => void; listen: boolean }) {
+  return (
+    <button
+      type="button"
+      data-guide="pp-fast"
+      onClick={onClick}
+      aria-pressed={on}
+      aria-label={on ? 'Normal speed' : 'Faster'}
+      className="kid-text flex items-center justify-center gap-1.5 rounded-full text-2xl px-4 py-2 active:translate-y-[3px]"
+      style={{ background: on ? UI.quest : UI.paper, color: UI.line, border: `3px solid ${UI.line}`, boxShadow: UI.ledge, minHeight: 56, minWidth: 72 }}
+    >
+      <span aria-hidden="true" className="text-2xl leading-none">
+        {on ? '⏩' : '▶▶'}
+      </span>
+      {!listen && <span className="text-lg">{on ? '×2' : 'Faster'}</span>}
+    </button>
+  )
+}
+
 /**
  * A tapped Pudding: its value, big, and for each sprinkler on offer whether
  * it fits and why ("5 × 5 = 25" / "21 is not a multiple of 5: …").

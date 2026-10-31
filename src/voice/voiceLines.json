@@ -47737,6 +47737,24 @@
       "kind": "line",
       "file": "voice/puddle-patrol/runDone.mp3"
     },
+    "puddle-patrol/superHint": {
+      "text": "You have lots of drops! Give a sprinkler its own card again to make it super.",
+      "hash": "ce3d14e9c4",
+      "kind": "line",
+      "file": "voice/puddle-patrol/superHint.mp3"
+    },
+    "puddle-patrol/superSoak": {
+      "text": "Super soak! It sprays extra fast this wave.",
+      "hash": "7ae4acacb4",
+      "kind": "line",
+      "file": "voice/puddle-patrol/superSoak.mp3"
+    },
+    "puddle-patrol/refilling": {
+      "text": "It fills up with water first.",
+      "hash": "03bbb91324",
+      "kind": "line",
+      "file": "voice/puddle-patrol/refilling.mp3"
+    },
     "puddle-patrol/rule-dots-2": {
       "text": "This sprinkler washes groups of two.",
       "hash": "18178210d4",

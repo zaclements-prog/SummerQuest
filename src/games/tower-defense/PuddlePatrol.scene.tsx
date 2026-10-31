@@ -126,6 +126,7 @@ export function PatrolScene({
   onSlotTap,
   onPuddingTap,
   insets,
+  portrait = false,
 }: {
   /** The simulation (mutated by the engine in place; read here every frame). */
   state: PatrolState
@@ -146,6 +147,8 @@ export function PatrolScene({
   onSlotTap: (slot: number) => void
   onPuddingTap: (id: number) => void
   insets: Insets
+  /** A tall screen frames the field smaller: the Puddings (and their numbers) grow to stay readable. */
+  portrait?: boolean
 }) {
   const layout = state.layout
   const leavingRef = useRef<Leaving[]>([])
@@ -203,9 +206,9 @@ export function PatrolScene({
       ))}
       {slots.map((sl) => {
         const r = towers[sl.id]
-        return r ? <Tower3D key={`${sl.id}:${r}`} pos={sl.pos} ruleId={r} kickRef={kickRef} slot={sl.id} reduced={reduced} onTap={() => onSlotTap(sl.id)} /> : null
+        return r ? <Tower3D key={`${sl.id}:${r}`} pos={sl.pos} ruleId={r} kickRef={kickRef} slot={sl.id} reduced={reduced} onTap={() => onSlotTap(sl.id)} state={state} /> : null
       })}
-      <Flock state={state} leavingRef={leavingRef} reduced={reduced} onTap={onPuddingTap} scale={young ? 1.12 : 1} />
+      <Flock state={state} leavingRef={leavingRef} reduced={reduced} onTap={onPuddingTap} scale={(young ? 1.12 : 1) * (portrait ? 1.3 : 1)} />
       <Sprays state={state} />
       {young && guideSlot !== null && slots[guideSlot] && (
         <GuideMarker position={[slots[guideSlot].pos.x, 0.25, slots[guideSlot].pos.z]} anchor="pp-slot" height={NOZZLE_Y + 1.2} radius={1.45} anchorSize={120} />

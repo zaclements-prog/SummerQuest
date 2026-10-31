@@ -22,9 +22,9 @@ import { Banner } from '../_juice/JuiceHud'
 import { RunResults } from '../_juice/RunResults'
 import { recordRun } from '../_juice/bests'
 import { SAFE } from '../_runkit/uiTokens'
-import { advance, createPatrol, drainEvents, placeTower, pondClean, patrolStars, rulesNow, startWave, towerCount, type PlaceResult } from './engine'
+import { advance, canSuper, createPatrol, drainEvents, placeTower, pondClean, patrolStars, rulesNow, startWave, towerCount, type PlaceResult } from './engine'
 import { CAM, PatrolScene, toScreen, type Insets, type SceneHooks, type View } from './PuddlePatrol.scene'
-import { Bubbles, GoButton, Lineup, NewRuleCard, PuddingCard, RuleCard, TopStats, type Bubble, type ChipState } from './PuddlePatrol.hud'
+import { Bubbles, FastButton, GoButton, Lineup, NewRuleCard, PuddingCard, RuleCard, TopStats, type Bubble, type ChipState } from './PuddlePatrol.hud'
 import type { PatrolEvent, PatrolState } from './types'
 import './puddlePatrol.css'
 
@@ -37,7 +37,12 @@ import './puddlePatrol.css'
  * lineup and decides which towers go where; there is no quiz.
  *
  * - Place: tap a spot then a card, tap a card then a spot, or drag a card
- *   onto the field. A placed tower can be given another rule for free.
+ *   onto the field. A placed tower can be given another rule for free while
+ *   planning (mid-wave it refills first); its OWN card again is a Super Soak
+ *   (drops; one a wave): it sprays twice as fast until the wave ends.
+ * - Each decision is credited once, when it counts: the field as it stands
+ *   at Go, a mid-wave swap, a Super Soak (tapping through cards is not
+ *   twenty answers). ⏩ runs a wave at double speed.
  * - A spray that doesn't fit bounces off and the Pudding says why ("21 is not
  *   a multiple of 5: 5 × 4 = 20, 5 × 5 = 25"); tap any Pudding to see how it
  *   fits each rule. A Pudding that gets by splashes into the pond: no lives,
@@ -83,6 +88,7 @@ interface Results {
   smart: number
   placements: number
   cleanWaves: number
+  dropsLeft: number
   prevBest: number
   newBest: boolean
 }
@@ -132,12 +138,31 @@ export default function PuddlePatrol({ provider, params, onComplete, meta, pause
   const [results, setResults] = useState<Results | null>(null)
   const [drag, setDrag] = useState<{ rule: RuleId; x: number; y: number } | null>(null)
   const [guideSlot, setGuideSlot] = useState<number | null>(null)
+  const [supered, setSupered] = useState(false)
+  const [fast, setFast] = useState(false)
   const bestKey = `puddle-patrol:${meta?.stageId ?? set}`
   const [voiceRef, setVoiceRef] = useState<VoiceRef | null>(null)
   useVoice(listen ? null : voiceRef)
   const say = useCallback((r: VoiceRef | null) => setVoiceRef(r), [])
 
-  const run = useRef({ placements: 0, smart: 0, spawnIdx: new Map<number, number>(), spawned: 0, lastBubble: 0, lastVoice: 0, bubbleKey: 0, cleanWaves: 0, finished: false, washedThisWave: 0, waveOutcomes: new Map<string, number>() })
+  const run = useRef({
+    placements: 0,
+    smart: 0,
+    spawnIdx: new Map<number, number>(),
+    spawned: 0,
+    lastBubble: 0,
+    lastVoice: 0,
+    bubbleKey: 0,
+    cleanWaves: 0,
+    finished: false,
+    washedThisWave: 0,
+    waveOutcomes: new Map<string, number>(),
+    /** The rule on each slot when the last wave went (a placement is credited when it counts, not per tap). */
+    atGo: [] as (RuleId | null)[],
+    /** Slots already credited for a mid-wave swap this wave. */
+    midSwapped: new Set<number>(),
+    superHinted: false,
+  })
   const timers = useRef<number[]>([])
   const later = useCallback((ms: number, fn: () => void) => {
     timers.current.push(window.setTimeout(fn, ms))
@@ -186,19 +211,35 @@ export default function PuddlePatrol({ provider, params, onComplete, meta, pause
         return
       }
       setGuideSlot(null)
+      // every spot busy and drops to spare (once a stage): a sprinkler's own card again makes it super
+      if (!say && n >= st.tuning.maxTowers && !run.current.superHinted && st.towers.some((_, i) => canSuper(st, i))) {
+        run.current.superHinted = true
+        void guide.sequence(
+          [
+            { voice: line('superHint'), target: cards, hand: 'sweep', dim: false },
+            { voice: line('ready'), target: 'pp-go', hand: 'tap', dim: false, pad: 8 },
+          ],
+          { repeatable: true },
+        )
+        return
+      }
       void guide.show({ voice: line(say ?? 'ready'), target: 'pp-go', hand: 'tap', dim: false, pad: 8 }, { repeatable: true })
     },
     [listen, firstEmpty, cards, game],
   )
 
-  // ── start: the welcome (K–1: the hand on the cards, then a spot) ──
+  // ── start: the welcome (K–1: the hand on the cards, then a spot), once: `hint` changes with each wave's cards ──
+  const hintRef = useRef(hint)
+  useEffect(() => {
+    hintRef.current = hint
+  }, [hint])
   useEffect(() => {
     const t = window.setTimeout(() => {
-      if (listen) hint()
+      if (listen) hintRef.current()
       else say(line('introOlder'))
     }, 700)
     return () => window.clearTimeout(t)
-  }, [listen, hint, say])
+  }, [listen, say])
   // "Quit?" or a card open: hush; back: say what to do again
   useEffect(() => {
     if (!listen) return
@@ -248,23 +289,50 @@ export default function PuddlePatrol({ provider, params, onComplete, meta, pause
   const place = useCallback(
     (slot: number, r: RuleId): PlaceResult => {
       const st = game
-      const was = st.towers[slot]?.rule ?? null
+      const had = !!st.towers[slot]
       const res = placeTower(st, slot, r)
       setSelSlot(null)
       setSelCard(null)
+      const pos = st.layout.slots[slot].pos
       if (res === 'built' || res === 'swapped') {
         sfx.pop()
-        const pos = st.layout.slots[slot].pos
         juice.burst({ pos: [pos.x, 1.2, pos.z], color: [rule(r).color, '#ffffff', '#bfeaff'], count: reduced ? 8 : 18, speed: 2.4, up: 3, size: 0.09, life: 0.7 })
         setTowers(st.towers.map((t) => t?.rule ?? null))
         setDrops(st.drops)
-        if (was !== r) credit(r, smartFor(st, r))
+        if (st.phase === 'wave') {
+          // mid-wave: it counts now (once per tower a wave), and it refills before it sprays
+          const rc = run.current
+          if (!rc.midSwapped.has(slot)) {
+            rc.midSwapped.add(slot)
+            credit(r, smartFor(st, r))
+          }
+          rc.atGo[slot] = r
+          flash(listen ? '🔄 💧' : 'It refills, then sprays the new rule', '#bfeaff', 1200)
+          if (listen) void guide.say(line('refilling'))
+        }
         if (listen) later(350, () => hint())
+      } else if (res === 'boosted') {
+        sfx.sparkle()
+        juice.burst({ pos: [pos.x, 1.8, pos.z], color: ['#ffd84a', '#ffffff', rule(r).color], count: reduced ? 10 : 26, speed: 3, up: 4, size: 0.1, life: 0.9 })
+        if (!reduced && !low) juice.ring({ pos: [pos.x, 0.3, pos.z], color: '#ffd84a', radius: 2, life: 0.6 })
+        setDrops(st.drops)
+        setSupered(true)
+        credit(r, smartFor(st, r))
+        flash(listen ? '⚡ 💦 ⚡' : 'Super Soak! Twice as fast this wave', '#ffe58a')
+        if (listen) void guide.say(line('superSoak'))
+        else say(line('superSoak'))
+        if (listen) later(350, () => hint())
+      } else if (res === 'same' && st.supered && !st.towers[slot]?.super) {
+        sfx.tick()
+        flash(listen ? '⚡ ✔️' : 'One Super Soak a wave: this one is used', '#ffe58a')
       } else if (res === 'noDrops') {
         sfx.tick()
-        flash(listen ? '💧 💧 💧' : `A new sprinkler needs ${st.tuning.cost} 💧: wash more Puddings!`, '#bfeaff')
-        if (listen) void guide.say(line('noDrops'))
-        else say(line('noDrops'))
+        if (had) flash(listen ? '💧 💧 💧 💧' : `A Super Soak needs ${st.tuning.superCost} 💧: wash more Puddings!`, '#bfeaff')
+        else {
+          flash(listen ? '💧 💧 💧' : `A new sprinkler needs ${st.tuning.cost} 💧: wash more Puddings!`, '#bfeaff')
+          if (listen) void guide.say(line('noDrops'))
+          else say(line('noDrops'))
+        }
       } else if (res === 'full') {
         sfx.tick()
         flash(listen ? '🔁' : 'Every spot is busy: tap a sprinkler to change it', '#ffe58a')
@@ -272,7 +340,7 @@ export default function PuddlePatrol({ provider, params, onComplete, meta, pause
       }
       return res
     },
-    [credit, flash, hint, later, listen, reduced, say, game],
+    [credit, flash, hint, later, listen, reduced, low, say, game],
   )
 
   const tapSlot = useCallback(
@@ -360,6 +428,13 @@ export default function PuddlePatrol({ provider, params, onComplete, meta, pause
   const go = useCallback(() => {
     const st = game
     if (st.phase !== 'plan' || towerCount(st) === 0) return
+    // the field as it stands now is the decision: each new or changed tower counts once
+    const rc = run.current
+    st.towers.forEach((t, i) => {
+      if (t && t.rule !== (rc.atGo[i] ?? null)) credit(t.rule, smartFor(st, t.rule))
+      rc.atGo[i] = t?.rule ?? null
+    })
+    rc.midSwapped.clear()
     if (!startWave(st)) return
     sfx.whoosh()
     run.current.spawned = 0
@@ -370,7 +445,7 @@ export default function PuddlePatrol({ provider, params, onComplete, meta, pause
     setSelSlot(null)
     setGuideSlot(null)
     if (listen) guide.clear()
-  }, [listen, game])
+  }, [listen, game, credit])
 
   // ── tap a Pudding: what it is, and how it fits each rule ──
   const tapPudding = useCallback(
@@ -397,11 +472,12 @@ export default function PuddlePatrol({ provider, params, onComplete, meta, pause
     const stars = patrolStars(c, band)
     const washed = st.tallies.reduce((a, t) => a + t.washed, 0)
     const total = st.tallies.reduce((a, t) => a + t.total, 0)
-    const score = washed * 10 + r.smart * 5 + r.cleanWaves * 20
+    // (drops still in the bucket count too: a Super Soak spent on the wrong tower is drops thrown away)
+    const score = washed * 10 + r.smart * 5 + r.cleanWaves * 20 + st.drops * 2
     const rec = recordRun(bestKey, { score, streak: r.cleanWaves, perfect: washed === total })
     sfx.fanfare()
     juice.confetti([st.layout.pond.x, 1.5, st.layout.pond.z], reduced ? 30 : 80)
-    const res: Results = { stars, score, clean: c, washed, total, smart: r.smart, placements: r.placements, cleanWaves: r.cleanWaves, prevBest: rec.prev.score, newBest: rec.newBest }
+    const res: Results = { stars, score, clean: c, washed, total, smart: r.smart, placements: r.placements, cleanWaves: r.cleanWaves, dropsLeft: st.drops, prevBest: rec.prev.score, newBest: rec.newBest }
     if (listen) {
       // K–1: the narrator says it, then the host's picture results card takes over
       void guide.say(line('allDone')).then(() => later(400, () => onComplete({ stars, score, correct: r.smart, total: Math.max(1, r.placements) })))
@@ -459,6 +535,8 @@ export default function PuddlePatrol({ provider, params, onComplete, meta, pause
           }
         } else if (e.kind === 'waveEnd') {
           creditWave(e.wave)
+          setSupered(false)
+          setTowers(st.towers.map((t) => t?.rule ?? null))
           const all = e.leaked === 0
           if (all) r.cleanWaves++
           setClean(pondClean(st))
@@ -511,6 +589,12 @@ export default function PuddlePatrol({ provider, params, onComplete, meta, pause
     if (listen) later(250, () => hint())
   }, [hint, later, listen])
 
+  const toggleFast = useCallback(() => {
+    sfx.click()
+    speedRef.current = fast ? 1 : 2
+    setFast(!fast)
+  }, [fast])
+
   const collect = useCallback(() => {
     if (!results) return
     onComplete({ stars: results.stars, score: results.score, correct: results.smart, total: Math.max(1, results.placements) })
@@ -535,7 +619,14 @@ export default function PuddlePatrol({ provider, params, onComplete, meta, pause
             towers: st.towers.map((t) => t?.rule ?? null),
             rules: rulesNow(st),
             lineup: st.plan.waves[st.wave].puddings.map((p) => valueText(p.value)),
-            walking: st.puddings.map((p) => ({ id: p.id, value: valueText(p.value), s: +p.s.toFixed(2) })),
+            /** How many of the coming wave each rule on offer fits (what a child reads off the lineup). */
+            need: Object.fromEntries(rulesNow(st).map((r) => [r, st.plan.waves[st.wave].puddings.filter((p) => rule(r).fits(p.value)).length])),
+            walking: st.puddings.map((p) => ({ id: p.id, value: valueText(p.value), s: +p.s.toFixed(2), fits: rulesNow(st).filter((r) => rule(r).fits(p.value)) })),
+            pathLength: st.layout.length,
+            superCost: st.tuning.superCost,
+            supered: st.supered,
+            supers: st.towers.map((t) => !!t?.super),
+            credits: { smart: run.current.smart, placements: run.current.placements },
             clean: pondClean(st),
             tallies: st.tallies,
             t: +st.t.toFixed(1),
@@ -584,6 +675,19 @@ export default function PuddlePatrol({ provider, params, onComplete, meta, pause
     [portrait, listen],
   )
   const planning = phase === 'plan' && !results
+  // the tray's one line (grades 2–5): what drops buy right now
+  const full = towers.filter(Boolean).length >= s.tuning.maxTowers
+  const trayNote = !full
+    ? canBuildNow
+      ? `New sprinkler: ${s.tuning.cost} 💧 · swaps are free`
+      : `Next sprinkler at ${s.tuning.cost} 💧 · swaps are free`
+    : supered
+      ? 'Super Soak used this wave'
+      : drops >= s.tuning.superCost
+        ? `Super Soak: ${s.tuning.superCost} 💧 · a sprinkler's own card again`
+        : phase === 'wave'
+          ? 'Swap now? It refills first'
+          : `Super Soak at ${s.tuning.superCost} 💧 · swaps are free`
   const showGo = planning && towers.some(Boolean) && !intro
   const young = listen
 
@@ -617,6 +721,7 @@ export default function PuddlePatrol({ provider, params, onComplete, meta, pause
           onSlotTap={tapSlot}
           onPuddingTap={tapPudding}
           insets={insets}
+          portrait={portrait}
         />
       </GLCanvas>
 
@@ -640,9 +745,9 @@ export default function PuddlePatrol({ provider, params, onComplete, meta, pause
             : `absolute ${SAFE.right2} bottom-[calc(0.75rem+var(--safe-bottom,env(safe-area-inset-bottom,0px)))] z-10 flex flex-col items-end gap-2`
         }
       >
-        {planning && !listen && (
-          <div className="kid-text text-sm px-2.5 py-0.5 rounded-full self-center" style={{ background: 'rgba(255,250,240,.92)', border: '2px solid #3a2c38' }}>
-            {canBuildNow ? `New sprinkler: ${s.tuning.cost} 💧 · swaps are free` : towers.filter(Boolean).length >= s.tuning.maxTowers ? 'All sprinklers out · tap one to swap' : `Next sprinkler at ${s.tuning.cost} 💧 · swaps are free`}
+        {(planning || phase === 'wave') && !listen && (
+          <div className="kid-text text-sm px-2.5 py-0.5 rounded-full self-center text-center" style={{ background: 'rgba(255,250,240,.92)', border: '2px solid #3a2c38' }}>
+            {trayNote}
           </div>
         )}
         <div className={portrait ? 'flex gap-2 flex-wrap justify-center' : 'grid grid-cols-2 gap-2'}>
@@ -651,6 +756,7 @@ export default function PuddlePatrol({ provider, params, onComplete, meta, pause
           ))}
         </div>
         {showGo && <GoButton onClick={go} wave={wave} listen={listen} />}
+        {phase === 'wave' && !results && <FastButton on={fast} onClick={toggleFast} listen={listen} />}
       </div>
 
       {drag && (
@@ -679,6 +785,7 @@ export default function PuddlePatrol({ provider, params, onComplete, meta, pause
             { icon: '✨', label: 'Puddings washed', value: `${results.washed}/${results.total}` },
             { icon: '🧠', label: 'Smart placements', value: `${results.smart}/${results.placements}` },
             { icon: '🌊', label: 'Spotless waves', value: `${results.cleanWaves}/${plan.waves.length}` },
+            { icon: '💧', label: 'Drops saved', value: `${results.dropsLeft}` },
           ]}
           onCollect={collect}
         />
