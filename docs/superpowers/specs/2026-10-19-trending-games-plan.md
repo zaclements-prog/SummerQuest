@@ -166,6 +166,14 @@ For grades 2–4 it replaces some practice stages that are Speed Run today. Spee
 - **No fail state.** Leaks splash into the pond (it clouds a little). Stars come from the pond-clean share, per band (K 75 % / 90 %, 1st 80 / 90, 2–4 80 / 93, 5th 72 / 88), tuned so the matching bot earns 3, a sensible child with slips 2–3, random placement mostly 1.
 - **Stages.** K: groups of 2 / 3 / 4, then 5 / more than 5 / fewer than 5, then mixed. 1st: makes 5 / 10 / 7, makes 5 / 3 / 4 (take away), makes 10 / 5 / 15. 2–4: even & odd (`td-even-odd`), multiples of 2, 5, 10 (`td-skip-count`), mixed 10 waves (`td-arena`; 2nd grade's last rule is odd, 3rd–4th's ×3). 5th: factors of 24 and multiples (`g5-td-factors`), primes (`g5-td-primes`), = ½ ¼ ¾ ⅕ (`g5-td-1`). Balance: `node --import tsx scripts/puddle-balance.mjs`.
 
+**Playtest and tuning (2026-10-31).** Measured with new bots (`bots.ts`: `spread` = one of each sprinkler without reading, `spam` = changing rules all through the wave, and the five playtest personas `k`, `g1`, `g3strong`, `g3weak`, `g5`) and Playwright runs of the real app.
+- **The exploit:** rule swaps were free and instant mid-wave, so cycling cards without reading scored 100 % in K–1 and beat every reading persona in every band. A mid-wave swap now refills first (one reload): spamming washes nothing, while one well-timed fix still helps. Placements are credited once, when they count (at Go, a mid-wave swap, a Super Soak), not per tap.
+- **K–1 had no placement decision:** with 4 (K) or 3 (1st) towers and at most 3 rules, one of each covered every wave. K–1 now have 2 towers and the third rule arrives at wave 2 (K: 5 waves), so a wave needs the right two; the planner keeps giving the newest rule work, so a field set up before it came won't do.
+- **Late drops:** once the field is full, drops buy a Super Soak (a sprinkler's own card again: twice as fast until the wave ends; one a wave; 4 drops K–1, 7 grades 2–5). Which tower deserves it is the lineup's question. Drops left at the end add 2 points each.
+- **Dead time:** waves averaged 27 s (K, longest 46 s) and 21 s (grades 2–5) of pure watching. Faster Puddings and tighter streams bring them to 13–18 s (longest 32 s), and ⏩ doubles the speed. 2nd grade's streams are 15 % sparser.
+- **Stars:** K 72 % / 90 %, 1st 76 % / 90 % (the rest unchanged). With only two rules on offer the lean may stay put, so even/odd can't be played as a back-and-forth.
+- Even/odd and skip-counting still give "one of each" 2 ★ (but rarely 3 ★): with two rules a non-reader is right half the waves by luck.
+
 ### Later candidates (from the research's 10)
 
 - **Make-Ten Jam** (sort puzzle): pour number candies until each jar hits its target, with a free undo. Targets: 10 for K–1, 100 for 2–3, 1 whole for 4–5. Very cheap.

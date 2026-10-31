@@ -286,9 +286,30 @@ export const NOZZLE_Y = 2.15
  * always facing the camera), a pop when it goes up or changes rule, and a
  * little kick each time it sprays (`kickRef[slot]`).
  */
-export function Tower3D({ pos, ruleId, kickRef, slot, reduced, onTap }: { pos: Vec2; ruleId: RuleId; kickRef: RefObject<Float32Array>; slot: number; reduced: boolean; onTap: () => void }) {
+export function Tower3D({
+  pos,
+  ruleId,
+  kickRef,
+  slot,
+  reduced,
+  onTap,
+  state,
+}: {
+  pos: Vec2
+  ruleId: RuleId
+  kickRef: RefObject<Float32Array>
+  slot: number
+  reduced: boolean
+  onTap: () => void
+  /** The simulation: a Super Soaked tower glows gold; one refilling after a mid-wave swap droops, its badge faded. */
+  state: PatrolState
+}) {
   const g = useRef<Group>(null)
+  const halo = useRef<Mesh>(null)
+  const badgeRef = useRef<Sprite>(null)
   const born = useRef(-1)
+  const haloMat = useMemo(() => new MeshBasicMaterial({ color: TOON.gold, transparent: true, opacity: 0, depthWrite: false }), [])
+  useEffect(() => () => haloMat.dispose(), [haloMat])
   const badge = useMemo(() => new SpriteMaterial({ map: ruleBadge(ruleId), transparent: true, depthWrite: false }), [ruleId])
   useEffect(() => () => badge.dispose(), [badge])
   useEffect(() => {
@@ -305,7 +326,21 @@ export function Tower3D({ pos, ruleId, kickRef, slot, reduced, onTap }: { pos: V
     if (!grp) return
     // pop in: overshoot and settle (reduced motion: just appear)
     const pop = reduced ? 1 : age > 0.45 ? 1 : 1 + Math.sin((age / 0.45) * Math.PI) * 0.25 - (1 - age / 0.45) * 0.25
-    grp.scale.set(pop * (1 + kick * 0.08), pop * (1 - kick * 0.12), pop * (1 + kick * 0.08))
+    const tw = state.towers[slot]
+    const sup = !!tw?.super
+    const refill = tw?.refill ?? 0
+    // Super Soaked: a size up and a spinning gold ring; refilling: a droop that fills back up
+    const big = sup ? 1.14 : 1
+    const droop = refill > 0 ? 0.82 + 0.18 * (1 - refill / Math.max(0.01, state.tuning.reload)) : 1
+    grp.scale.set(pop * big * (1 + kick * 0.08), pop * big * droop * (1 - kick * 0.12), pop * big * (1 + kick * 0.08))
+    const h = halo.current
+    if (h) {
+      ;(h.material as MeshBasicMaterial).opacity = sup ? 0.75 : 0
+      h.rotation.z = reduced ? 0 : t * 1.8
+      h.scale.setScalar(sup && !reduced ? 1 + 0.06 * Math.sin(t * 5) : 1)
+    }
+    const b = badgeRef.current
+    if (b) (b.material as SpriteMaterial).opacity = refill > 0 ? 0.45 : 1
   })
   const tap = (e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation()
@@ -316,7 +351,10 @@ export function Tower3D({ pos, ruleId, kickRef, slot, reduced, onTap }: { pos: V
       <group ref={g}>
         <Body id={ruleId} />
       </group>
-      <sprite position={[0, 3.05, 0]} scale={[1.75, 1.31, 1]} material={badge} renderOrder={5} onPointerDown={tap} />
+      <mesh ref={halo} rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.3, 0]} material={haloMat} renderOrder={3}>
+        <ringGeometry args={[1.05, 1.45, 6]} />
+      </mesh>
+      <sprite ref={badgeRef} position={[0, 3.05, 0]} scale={[1.75, 1.31, 1]} material={badge} renderOrder={5} onPointerDown={tap} />
       <mesh position={[0, 1.2, 0]} material={hitMat} onPointerDown={tap}>
         <cylinderGeometry args={[0.9, 0.9, 2.4, 10]} />
       </mesh>

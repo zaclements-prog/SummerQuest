@@ -33,6 +33,12 @@ export default defineVoicePack({
     noDrops: 'Wash more Puddings to get drops for a new sprinkler.',
     allDone: 'Patrol done! The pond is sparkling!',
     runDone: 'Patrol done! Tap to collect your stars.',
+    /** Every spot is busy and there are drops to spare: the hand sweeps the cards (a sprinkler's own card again = Super Soak). */
+    superHint: 'You have lots of drops! Give a sprinkler its own card again to make it super.',
+    /** A tower was Super Soaked (one a wave). */
+    superSoak: 'Super soak! It sprays extra fast this wave.',
+    /** A rule changed mid-wave: the tower fills up before it sprays again. */
+    refilling: 'It fills up with water first.',
 
     // ── each sprinkler's rule, said when it arrives and when its card is tapped (K–1) ──
     'rule-dots-2': 'This sprinkler washes groups of two.',

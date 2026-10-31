@@ -48,6 +48,8 @@ export interface Tuning {
   washReward: number
   /** Most towers on the field at once (= slots used). */
   maxTowers: number
+  /** What a Super Soak costs (one tower sprays twice as fast for the rest of the wave, or the next one). */
+  superCost: number
 }
 
 export interface Tower {
@@ -57,6 +59,10 @@ export interface Tower {
   cooldown: number
   /** Total Puddings it has washed (the tower's own little score). */
   washed: number
+  /** Super Soaked: sprays twice as fast until the wave ends (bought with drops). */
+  super?: boolean
+  /** Seconds left refilling after a mid-wave rule change (the scene shows it; it can't spray meanwhile). */
+  refill?: number
 }
 
 export type PuddingState = 'walk' | 'washed' | 'leaked'
@@ -122,6 +128,8 @@ export interface PatrolState {
   towers: (Tower | null)[]
   /** Towers ever bought (the tray's price goes up with each). */
   built: number
+  /** This wave's Super Soak is spent (one a wave: which tower gets it is the decision). */
+  supered: boolean
   drops: number
   puddings: Pudding[]
   shots: Shot[]
