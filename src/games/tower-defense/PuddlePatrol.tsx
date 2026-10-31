@@ -174,6 +174,7 @@ export default function PuddlePatrol({ provider, params, onComplete, meta, pause
     },
     [],
   )
+  // (the shared Banner is one big line: kept short enough for a 600 px portrait screen; the tray line and voice say the rest)
   const flash = useCallback(
     (text: string, color?: string, ms = 1600) => {
       setBanner({ text, color })
@@ -307,7 +308,7 @@ export default function PuddlePatrol({ provider, params, onComplete, meta, pause
             credit(r, smartFor(st, r))
           }
           rc.atGo[slot] = r
-          flash(listen ? '🔄 💧' : 'It refills, then sprays the new rule', '#bfeaff', 1200)
+          flash(listen ? '🔄 💧' : 'Refilling… 💧', '#bfeaff', 1200)
           if (listen) void guide.say(line('refilling'))
         }
         if (listen) later(350, () => hint())
@@ -318,24 +319,24 @@ export default function PuddlePatrol({ provider, params, onComplete, meta, pause
         setDrops(st.drops)
         setSupered(true)
         credit(r, smartFor(st, r))
-        flash(listen ? '⚡ 💦 ⚡' : 'Super Soak! Twice as fast this wave', '#ffe58a')
+        flash(listen ? '⚡ 💦 ⚡' : 'Super Soak! ⚡', '#ffe58a')
         if (listen) void guide.say(line('superSoak'))
         else say(line('superSoak'))
         if (listen) later(350, () => hint())
       } else if (res === 'same' && st.supered && !st.towers[slot]?.super) {
         sfx.tick()
-        flash(listen ? '⚡ ✔️' : 'One Super Soak a wave: this one is used', '#ffe58a')
+        flash(listen ? '⚡ ✔️' : 'One a wave ⚡', '#ffe58a')
       } else if (res === 'noDrops') {
         sfx.tick()
-        if (had) flash(listen ? '💧 💧 💧 💧' : `A Super Soak needs ${st.tuning.superCost} 💧: wash more Puddings!`, '#bfeaff')
+        if (had) flash(listen ? '💧 💧 💧 💧' : `Super Soak: ${st.tuning.superCost} 💧`, '#bfeaff')
         else {
-          flash(listen ? '💧 💧 💧' : `A new sprinkler needs ${st.tuning.cost} 💧: wash more Puddings!`, '#bfeaff')
+          flash(listen ? '💧 💧 💧' : `Need ${st.tuning.cost} 💧`, '#bfeaff')
           if (listen) void guide.say(line('noDrops'))
           else say(line('noDrops'))
         }
       } else if (res === 'full') {
         sfx.tick()
-        flash(listen ? '🔁' : 'Every spot is busy: tap a sprinkler to change it', '#ffe58a')
+        flash(listen ? '🔁' : 'Tap one to swap 🔁', '#ffe58a')
         if (listen) void guide.say(line('swapHint'))
       }
       return res
@@ -543,10 +544,10 @@ export default function PuddlePatrol({ provider, params, onComplete, meta, pause
           setDrops(st.drops)
           if (all) {
             sfx.victory()
-            flash(listen ? '✨ 🏝️ ✨' : `Wave ${e.wave + 1}: the pond is clean! ✨`, '#9fe6c8', 1800)
+            flash(listen ? '✨ 🏝️ ✨' : `Wave ${e.wave + 1}: clean! ✨`, '#9fe6c8', 1800)
           } else {
             sfx.correct()
-            flash(listen ? '💦 👍' : `Wave ${e.wave + 1}: ${e.washed} of ${e.washed + e.leaked} washed`, '#bfeaff', 1800)
+            flash(listen ? '💦 👍' : `${e.washed} of ${e.washed + e.leaked} washed`, '#bfeaff', 1800)
           }
         } else if (e.kind === 'done') {
           setPhase('done')
