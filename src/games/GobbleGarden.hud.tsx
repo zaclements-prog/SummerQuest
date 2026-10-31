@@ -1,6 +1,6 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { ToonStar } from '../components/ui'
-import { BELLY_FULL, ROUNDS, decimalPlaces, pictureKind, withCommas, type GobbleSetId, type NumberShown } from '../lib/gobble'
+import { ROUNDS, decimalPlaces, pictureKind, withCommas, type GobbleSetId, type NumberShown } from '../lib/gobble'
 import { decimalText, dotCells, toNumber } from '../lib/numbers'
 import { SAFE, UI } from './_runkit/uiTokens'
 
@@ -166,8 +166,8 @@ export function BurpCard({ burp, set, listen }: { burp: Burp; set: GobbleSetId; 
 }
 
 /** The cloud's number, big, with its belly filling toward the next number. */
-export function CloudBadge({ value, belly, set, top }: { value: NumberShown; belly: number; set: GobbleSetId; top: boolean }) {
-  const f = Math.max(0, Math.min(1, belly / BELLY_FULL))
+export function CloudBadge({ value, belly, full, set, top }: { value: NumberShown; belly: number; full: number; set: GobbleSetId; top: boolean }) {
+  const f = Math.max(0, Math.min(1, belly / full))
   return (
     <div
       className="kid-text pointer-events-none select-none flex items-center gap-2 rounded-2xl px-3 py-1.5"
