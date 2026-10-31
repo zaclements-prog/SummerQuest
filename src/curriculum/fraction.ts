@@ -93,8 +93,9 @@ export const fractionZone: Zone = {
         gameId: 'snackShack',
         // (the shack makes its own orders: count the snacks onto the tray, then add the two kinds; all spoken)
         providerConfig: { kind: 'snackShack', band: 'k1' },
-        // five customers: a kindergartner taps every snack (about 2 s a tap), so six ran past three minutes
-        params: { customers: 5 },
+        // four customers (one kind, two within 5, then 6–8 and 7–10): a kindergartner taps every
+        // snack, about 2 s a tap, and six customers ran past three and a half minutes
+        params: { customers: 4 },
         starsToEarn: 3,
       },
       {

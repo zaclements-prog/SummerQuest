@@ -209,7 +209,7 @@ export function shackSkill(band: ShackBand, step: 'count' | 'clock' | 'money'): 
 /**
  * Order `i` of an `n`-order shift: one kind of snack (2–3) first, then two
  * kinds within 5, and the shift ends within 10 (6–8, then 7–10). The ramp is
- * keyed to the END of the shift, so a shorter shift (the stage plays 5:
+ * keyed to the END of the shift, so a shorter shift (the stage plays 4:
  * kindergartners tap every snack, about 2 s a tap) still reaches ten.
  */
 function countLines(r: Rng, i: number, n: number, foods: readonly ShackKFood[]): OrderLine[] {

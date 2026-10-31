@@ -478,7 +478,9 @@ function TimeJumps({ visual, compact }: { visual: Extract<WalkVisual, { kind: 't
   for (const j of visual.jumps) stops.push(stops[stops.length - 1] + j)
   const now = stops[stops.length - 1] % 720
   const weight = (j: number) => 50 + j
-  const hops: Hop[] = visual.jumps.map((j) => ({ label: j === 60 ? '+1 hour' : `+${j} min`, weight: weight(j) }))
+  // (five or more hops: "+1 hr", so the hour pills don't overlap)
+  const crowded = (visual.plan?.length ?? visual.jumps.length + (visual.pending ? 1 : 0)) >= 5
+  const hops: Hop[] = visual.jumps.map((j) => ({ label: j === 60 ? (crowded ? '+1 hr' : '+1 hour') : `+${j} min`, weight: weight(j) }))
   const pending = visual.pending ? { label: `+${visual.pending} min`, weight: weight(visual.pending) } : undefined
   // a whole-day line: which half of the day each time is in
   const subs = visual.meridiem ? stops.map(halfOfDay) : undefined

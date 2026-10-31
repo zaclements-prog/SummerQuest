@@ -26,7 +26,7 @@ const SEEDS = Array.from({ length: 300 }, (_, i) => `seed-${i}`)
 describe('Snack Shack orders: kindergarten (count, then how many in all)', () => {
   it('ramps from one kind of snack to two within 5, then ends within 10 (any shift length); every number is a recorded template value', () => {
     for (const seed of SEEDS) {
-      for (const customers of [5, 6]) {
+      for (const customers of [4, 5, 6]) {
       const plan = planShift({ grade: 0, seed, customers })
       expect(plan.band).toBe('k1')
       expect(plan.orders).toHaveLength(customers)

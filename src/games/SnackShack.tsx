@@ -284,7 +284,8 @@ export default function SnackShack({ params, onComplete, meta, paused = false }:
       const run = runRef.current
       const right = run.all.filter((s) => s === 'first' || s === 'helped').length
       const total = run.all.length
-      const stars = shiftStars(right, total)
+      // K–1, as Listen & Play: a finished shift earns at least one star
+      const stars = listen ? Math.max(1, shiftStars(right, total)) : shiftStars(right, total)
       const score = run.score
       const perfect = total > 0 && run.all.every((s) => s === 'first')
       const rec = recordRun(bestKey, { score, streak: run.bestStreak, perfect })
