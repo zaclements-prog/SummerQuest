@@ -11,6 +11,14 @@ import type { PatrolState, Pudding, Tower, Vec2 } from './types'
  *
  * - Between waves the field waits (`phase: 'plan'`) as long as the child
  *   likes: place a sprinkler on a slot, or swap a placed one's rule (free).
+ *   During a wave a swap still works, but the tower has to refill first (one
+ *   whole reload): a well-timed change can save a Pudding, tapping through
+ *   the cards to see what sticks can't (the rule has to be read, not guessed).
+ * - Drops buy new towers and, once the field is full, a Super Soak (one a
+ *   wave): give a tower its own card again and it sprays twice as fast until
+ *   the wave ends. Which tower deserves it is the lineup's question (the
+ *   rule the wave leans on), so the late game's drops still go to a math
+ *   decision; drops left at the end add to the score.
  * - In a wave, Puddings leave the mud pit on the plan's schedule and waddle
  *   to the pond. A tower sprays the furthest-along Pudding in reach that fits
  *   its rule (one spray per `reload`), and that Pudding is washed clean
@@ -37,6 +45,7 @@ export function createPatrol(plan: PatrolPlan, band: ContentBand = plan.spec.ban
     acc: 0,
     towers: layout.slots.map(() => null),
     built: 0,
+    supered: false,
     drops: tuning.startDrops,
     puddings: [],
     shots: [],
@@ -56,20 +65,40 @@ export function canBuild(s: PatrolState): boolean {
   return s.phase !== 'done' && s.drops >= s.tuning.cost && towerCount(s) < s.tuning.maxTowers
 }
 
-export type PlaceResult = 'built' | 'swapped' | 'same' | 'noDrops' | 'full' | 'closed'
+export type PlaceResult = 'built' | 'swapped' | 'boosted' | 'same' | 'noDrops' | 'full' | 'closed'
+
+/** A Super Soaked tower's reload, as a share of the normal one. */
+export const SUPER_RELOAD = 0.5
+
+/** Can this tower be Super Soaked now (not already, and the drops are there)? */
+export const canSuper = (s: PatrolState, slot: number): boolean => {
+  const t = s.towers[slot]
+  return s.phase !== 'done' && !!t && !t.super && !s.supered && s.drops >= s.tuning.superCost
+}
 
 /**
- * Put a sprinkler with `ruleId` on a slot: a new tower (costs drops), or a
- * new rule for the one standing there (free: a better idea is never taxed).
+ * Put a sprinkler with `ruleId` on a slot: a new tower (costs drops), a new
+ * rule for the one standing there (free while planning: a better idea is
+ * never taxed; mid-wave it refills first), or, the same rule again, a Super
+ * Soak for it (costs drops).
  */
 export function placeTower(s: PatrolState, slot: number, ruleId: RuleId): PlaceResult {
   if (s.phase === 'done' || slot < 0 || slot >= s.towers.length) return 'closed'
   if (!rulesNow(s).includes(ruleId)) return 'closed'
   const here = s.towers[slot]
   if (here) {
-    if (here.rule === ruleId) return 'same'
+    if (here.rule === ruleId) {
+      if (here.super || s.supered) return 'same'
+      if (s.drops < s.tuning.superCost) return 'noDrops'
+      s.drops -= s.tuning.superCost
+      here.super = true
+      s.supered = true
+      return 'boosted'
+    }
     here.rule = ruleId
-    here.cooldown = Math.max(here.cooldown, 0.4)
+    // (mid-wave: it refills with the new rule before it sprays again)
+    here.cooldown = s.phase === 'wave' ? Math.max(here.cooldown, s.tuning.reload) : 0
+    here.refill = s.phase === 'wave' ? here.cooldown : 0
     return 'swapped'
   }
   if (towerCount(s) >= s.tuning.maxTowers) return 'full'
@@ -118,7 +147,7 @@ function fire(s: PatrolState, t: Tower) {
   }
   if (best) {
     best.incoming = true
-    t.cooldown = s.tuning.reload
+    t.cooldown = s.tuning.reload * (t.super ? SUPER_RELOAD : 1)
     s.shots.push({ id: s.nextId++, slot: t.slot, target: best.id, fits: true, t: 0 })
     s.events.push({ kind: 'spray', slot: t.slot, id: best.id, fits: true })
   }
@@ -168,6 +197,7 @@ export function step(s: PatrolState) {
   for (const t of s.towers) {
     if (!t) continue
     t.cooldown -= TICK
+    if (t.refill) t.refill = Math.max(0, t.refill - TICK)
     fire(s, t)
   }
   land(s)
@@ -177,7 +207,13 @@ export function step(s: PatrolState) {
   if (s.spawned >= wave.puddings.length && s.puddings.length === 0 && s.shots.length === 0) {
     const tally = s.tallies[s.wave]
     s.events.push({ kind: 'waveEnd', wave: s.wave, washed: tally.washed, leaked: tally.leaked })
-    for (const t of s.towers) if (t) t.cooldown = 0
+    for (const t of s.towers)
+      if (t) {
+        t.cooldown = 0
+        t.refill = 0
+        t.super = false
+      }
+    s.supered = false
     if (s.wave + 1 >= s.plan.waves.length) {
       s.phase = 'done'
       s.events.push({ kind: 'done' })
@@ -230,8 +266,8 @@ export function pondClean(s: PatrolState): number {
  * (even / odd) forgive random towers more than the others do.
  */
 export const STAR_AT: Record<ContentBand, { two: number; three: number }> = {
-  k1: { two: 0.75, three: 0.9 },
-  g1: { two: 0.8, three: 0.9 },
+  k1: { two: 0.72, three: 0.9 },
+  g1: { two: 0.76, three: 0.9 },
   g24: { two: 0.8, three: 0.93 },
   g5: { two: 0.72, three: 0.88 },
 }

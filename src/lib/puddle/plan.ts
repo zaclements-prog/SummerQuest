@@ -14,7 +14,8 @@ import { valueKey, type PuddleValue } from './values'
  *   and misses at least one, so where each tower goes always matters.
  * - **A plan to read:** each wave leans on one rule (the new rule, the wave it
  *   arrives), so the "incoming" lineup says which towers it wants, and the
- *   lean moves between waves.
+ *   lean moves between waves (with only two rules on offer it may also stay:
+ *   a strict back-and-forth could be followed without reading).
  */
 
 export interface PlannedPudding {
@@ -101,22 +102,36 @@ function planWave(spec: PatrolSetSpec, w: number, rnd: () => number, prevLean: R
   const leanable = rules.filter((r) => fits.get(r)!.length > 0)
   // a rule with nothing of its own to wash (×10 beside ×2 and ×5) leans only the wave it arrives:
   // after that the lean goes to rules whose Puddings need THEM (the lineup has to be read)
+  // (with only two rules on offer the lean may stay put: a strict back-and-forth could be played without reading)
+  const keep = !fresh.length && rules.length === 2 && prevLean !== null && leanable.includes(prevLean) && rnd() < 0.5
   const own = leanable.filter((r) => only.get(r)!.length > 0 && r !== prevLean)
-  const lean = fresh[0] ?? (own.length ? pick(own, rnd) : leanable.length > 1 ? pick(leanable.filter((r) => r !== prevLean), rnd) : leanable[0])
+  const lean = keep ? prevLean : (fresh[0] ?? (own.length ? pick(own, rnd) : leanable.length > 1 ? pick(leanable.filter((r) => r !== prevLean), rnd) : leanable[0]))
   const size = spec.size(w)
-  // the lean's share, then the supporting rules (no more than the towers a child can have: always winnable)
-  const support = shuffle(
-    leanable.filter((r) => r !== lean),
-    rnd,
-  ).slice(0, Math.max(1, spec.towers - 1))
+  // the lean's share, then the supporting rules (no more than the towers a child can have: always winnable;
+  // drawn again on a retry, since with two towers one pick can sit inside the lean, like groups of 3 in "fewer than 5")
+  const nSupport = Math.min(leanable.length - 1, Math.max(1, spec.towers - 1))
+  let support: RuleId[] = []
   // (every supporting rule gets a Pudding or more: a lean with nothing of its own, like ×10, needs them to tell it apart)
-  const nLean = Math.min(size - support.length, Math.max(Math.ceil(size / 3), Math.round(size * spec.lean)))
+  const nLean = Math.min(size - Math.max(1, nSupport), Math.max(Math.ceil(size / 3), Math.round(size * spec.lean)))
   const draw = (r: RuleId): PuddleValue => {
     const own = only.get(r)!
     return own.length && rnd() < 0.8 ? pick(own, rnd) : pick(fits.get(r)!, rnd)
   }
   let values: PuddleValue[] = []
   for (let attempt = 0; attempt < 60; attempt++) {
+    if (attempt % 6 === 0) {
+      // (rules with Puddings of their own first: one that only shares the lean's, it can't be told apart from;
+      // then, mostly, the newest: a new sprinkler keeps getting work, so a field set up before it came won't do)
+      const mine = (r: RuleId) => (only.get(r)!.length ? 0 : 2) + (rules.indexOf(r) === rules.length - 1 && rnd() < 0.7 ? 0 : 1)
+      support = shuffle(
+        leanable.filter((r) => r !== lean),
+        rnd,
+      )
+        .map((r) => [r, mine(r)] as const)
+        .sort((a, b) => (attempt < 30 ? a[1] - b[1] : 0))
+        .map(([r]) => r)
+        .slice(0, Math.max(1, nSupport))
+    }
     const plan: RuleId[] = [...Array<RuleId>(nLean).fill(lean)]
     const start = Math.floor(rnd() * support.length)
     for (let i = 0; plan.length < size; i++) plan.push(support[(start + i) % support.length] ?? lean)

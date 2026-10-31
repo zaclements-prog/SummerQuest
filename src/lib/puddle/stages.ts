@@ -98,35 +98,37 @@ export function g24Max(set: 'g24-evenOdd' | 'g24-skip' | 'g24-mixed', grade: num
 
 /** A stage's spec. `grade` widens the grades 2–4 numbers (and picks the mixed stage's last rule). */
 export function patrolSpec(set: PatrolSetId, grade = 4): PatrolSetSpec {
+  // 2nd grade's Puddings leave the mud pit a little further apart (the same field, a gentler stream)
+  const g2 = grade <= 2 ? 1.15 : 1
   switch (set) {
     // ── kindergarten: dot groups; slow, few, gentle ──
     case 'k-count':
-      return { band: 'k1', towers: 4, waves: 4, ladder: [{ wave: 0, rules: ['dots-2', 'dots-3'] }, { wave: 2, rules: ['dots-4'] }], size: ramp(4, 5, 4), gap: () => 2.6, lean: 0.5, universe: range(1, 6).map(dots) }
+      return { band: 'k1', towers: 2, waves: 5, ladder: [{ wave: 0, rules: ['dots-2', 'dots-3'] }, { wave: 2, rules: ['dots-4'] }], size: ramp(4, 6, 5), gap: () => 1.8, lean: 0.6, universe: range(1, 6).map(dots) }
     case 'k-compare':
-      return { band: 'k1', towers: 4, waves: 4, ladder: [{ wave: 0, rules: ['dots-5', 'more-5'] }, { wave: 2, rules: ['fewer-5'] }], size: ramp(4, 5, 4), gap: () => 2.6, lean: 0.5, universe: range(1, 9).map(dots) }
+      return { band: 'k1', towers: 2, waves: 5, ladder: [{ wave: 0, rules: ['dots-5', 'more-5'] }, { wave: 2, rules: ['fewer-5'] }], size: ramp(4, 6, 5), gap: () => 1.8, lean: 0.6, universe: range(1, 9).map(dots) }
     case 'k-mixed':
       return {
         band: 'k1',
-        towers: 4,
-        waves: 4,
-        ladder: [{ wave: 0, rules: ['dots-3', 'more-5'] }, { wave: 2, rules: ['fewer-5'] }, { wave: 3, rules: ['dots-5'] }],
-        size: ramp(4, 6, 4),
-        gap: () => 2.5,
-        lean: 0.5,
+        towers: 2,
+        waves: 5,
+        ladder: [{ wave: 0, rules: ['dots-3', 'more-5'] }, { wave: 1, rules: ['fewer-5'] }, { wave: 3, rules: ['dots-5'] }],
+        size: ramp(4, 6, 5),
+        gap: () => 1.8,
+        lean: 0.6,
         universe: range(1, 10).map(dots),
       }
     // ── 1st grade: number sentences that make a number ──
     case 'g1-add':
-      return { band: 'g1', towers: 3, waves: 5, ladder: [{ wave: 0, rules: ['make-5', 'make-10'] }, { wave: 3, rules: ['make-7'] }], size: ramp(4, 6, 5), gap: () => 2.4, lean: 0.55, universe: sums(10, 'add') }
+      return { band: 'g1', towers: 2, waves: 5, ladder: [{ wave: 0, rules: ['make-5', 'make-10'] }, { wave: 2, rules: ['make-7'] }], size: ramp(4, 6, 5), gap: () => 1.7, lean: 0.55, universe: sums(10, 'add') }
     case 'g1-sub':
-      return { band: 'g1', towers: 3, waves: 5, ladder: [{ wave: 0, rules: ['make-5', 'make-3'] }, { wave: 3, rules: ['make-4'] }], size: ramp(4, 6, 5), gap: () => 2.4, lean: 0.55, universe: sums(10, 'sub') }
+      return { band: 'g1', towers: 2, waves: 5, ladder: [{ wave: 0, rules: ['make-5', 'make-3'] }, { wave: 2, rules: ['make-4'] }], size: ramp(4, 6, 5), gap: () => 1.7, lean: 0.55, universe: sums(10, 'sub') }
     case 'g1-mix':
-      return { band: 'g1', towers: 3, waves: 5, ladder: [{ wave: 0, rules: ['make-10', 'make-5'] }, { wave: 3, rules: ['make-15'] }], size: ramp(5, 6, 5), gap: () => 2.3, lean: 0.55, universe: sums(20, 'both') }
+      return { band: 'g1', towers: 2, waves: 5, ladder: [{ wave: 0, rules: ['make-10', 'make-5'] }, { wave: 2, rules: ['make-15'] }], size: ramp(5, 6, 5), gap: () => 1.7, lean: 0.55, universe: sums(20, 'both') }
     // ── grades 2–4: even and odd, skip-counting, then the mixed defense ──
     case 'g24-evenOdd':
-      return { band: 'g24', towers: 3, waves: 7, ladder: [{ wave: 0, rules: ['even', 'odd'] }], size: ramp(7, 10, 7), gap: glide(1.35, 1.0, 7), lean: 0.8, universe: range(2, g24Max(set, grade)).map(whole) }
+      return { band: 'g24', towers: 3, waves: 7, ladder: [{ wave: 0, rules: ['even', 'odd'] }], size: ramp(7, 10, 7), gap: glide(1.1 * g2, 0.8 * g2, 7), lean: 0.9, universe: range(2, g24Max(set, grade)).map(whole) }
     case 'g24-skip':
-      return { band: 'g24', towers: 3, waves: 8, ladder: [{ wave: 0, rules: ['mult-2', 'mult-5'] }, { wave: 3, rules: ['mult-10'] }], size: ramp(7, 11, 8), gap: glide(1.25, 0.9, 8), lean: 0.9, universe: range(2, g24Max(set, grade)).map(whole) }
+      return { band: 'g24', towers: 3, waves: 8, ladder: [{ wave: 0, rules: ['mult-2', 'mult-5'] }, { wave: 3, rules: ['mult-10'] }], size: ramp(7, 11, 8), gap: glide(0.95 * g2, 0.72 * g2, 8), lean: 0.9, universe: range(2, g24Max(set, grade)).map(whole) }
     case 'g24-mixed':
       return {
         band: 'g24',
@@ -134,7 +136,7 @@ export function patrolSpec(set: PatrolSetId, grade = 4): PatrolSetSpec {
         waves: 10,
         ladder: [{ wave: 0, rules: ['even', 'mult-5'] }, { wave: 3, rules: ['mult-10'] }, { wave: 6, rules: [grade <= 2 ? 'odd' : 'mult-3'] }],
         size: ramp(5, 8, 10),
-        gap: glide(1.35, 1.0, 10),
+        gap: glide(1.25 * g2, 0.95 * g2, 10),
         lean: 0.75,
         universe: range(2, g24Max(set, grade)).map(whole),
       }

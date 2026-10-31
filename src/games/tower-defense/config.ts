@@ -51,10 +51,10 @@ export const PIT: Vec2 = { x: -7.6, z: -5.6 }
 
 /** A band's pace and economy (tuned with the bots: src/games/tower-defense/bots.ts). */
 export const TUNING: Record<ContentBand, Tuning> = {
-  k1: { speed: 0.95, reload: 2.4, flight: 0.45, startDrops: 6, cost: 3, washReward: 1, maxTowers: 4 },
-  g1: { speed: 1.0, reload: 2.4, flight: 0.45, startDrops: 6, cost: 3, washReward: 1, maxTowers: 3 },
-  g24: { speed: 1.9, reload: 3.4, flight: 0.35, startDrops: 8, cost: 4, washReward: 1, maxTowers: 3 },
-  g5: { speed: 1.8, reload: 2.4, flight: 0.35, startDrops: 8, cost: 4, washReward: 1, maxTowers: 3 },
+  k1: { speed: 1.4, reload: 2.4, flight: 0.45, startDrops: 6, cost: 3, washReward: 1, maxTowers: 2, superCost: 4 },
+  g1: { speed: 1.45, reload: 2.4, flight: 0.45, startDrops: 6, cost: 3, washReward: 1, maxTowers: 2, superCost: 4 },
+  g24: { speed: 2.3, reload: 3.6, flight: 0.35, startDrops: 8, cost: 4, washReward: 1, maxTowers: 3, superCost: 7 },
+  g5: { speed: 2.1, reload: 2.6, flight: 0.35, startDrops: 8, cost: 4, washReward: 1, maxTowers: 3, superCost: 7 },
 }
 
 export const SPRAY_RANGE: Record<'k1' | 'all', number> = { k1: 3.3, all: 3.0 }

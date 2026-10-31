@@ -108,9 +108,9 @@ describe('the wave planner (property tests over hundreds of seeds)', () => {
         for (const v of values) expect(spec.universe.some((u) => valueKey(u) === valueKey(v))).toBe(true)
         // spawn times climb steadily
         for (let k = 1; k < w.puddings.length; k++) expect(w.puddings[k].at).toBeGreaterThan(w.puddings[k - 1].at)
-        // a new rule leans its own wave, and the lean moves on between waves
+        // a new rule leans its own wave, and the lean moves on between waves (two rules: it may stay, so it can't be guessed)
         if (w.fresh.length) expect(w.lean).toBe(w.fresh[0])
-        else if (prevLean && w.rules.length > 1) expect(w.lean).not.toBe(prevLean)
+        else if (prevLean && w.rules.length > 2) expect(w.lean).not.toBe(prevLean)
         expect(values.filter((v) => rule(w.lean).fits(v)).length).toBeGreaterThanOrEqual(Math.ceil(values.length / 3))
         prevLean = w.lean
         leans.set(w.lean, (leans.get(w.lean) ?? 0) + 1)

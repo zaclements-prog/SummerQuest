@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { planPatrol, rule, valueText } from '../../../lib/puddle'
 import { TICK, TUNING, buildLayout, inReach } from '../config'
-import { advance, canBuild, createPatrol, drainEvents, patrolStars, placeTower, pondClean, rulesNow, startWave, step, towerCount } from '../engine'
+import { advance, canBuild, canSuper, createPatrol, drainEvents, patrolStars, placeTower, pondClean, rulesNow, startWave, step, towerCount } from '../engine'
 import type { PatrolEvent, PatrolState } from '../types'
 
 /** Play the current wave to its end; the events it raised. */
@@ -42,7 +42,8 @@ describe('Puddle Patrol engine', () => {
     expect(s.drops).toBe(startDrops - cost)
     expect(placeTower(s, 2, 'odd')).toBe('swapped')
     expect(s.drops).toBe(startDrops - cost)
-    expect(placeTower(s, 2, 'odd')).toBe('same')
+    // its own card again is a Super Soak: not affordable yet
+    expect(placeTower(s, 2, 'odd')).toBe('noDrops')
     expect(placeTower(s, 3, 'even')).toBe('built')
     // out of drops
     expect(canBuild(s)).toBe(startDrops - 2 * cost >= cost)
@@ -53,6 +54,60 @@ describe('Puddle Patrol engine', () => {
     expect(placeTower(s, empty, 'odd')).toBe('full')
     // only the rules on offer
     expect(placeTower(s, 2, 'mult-5')).toBe('closed')
+  })
+
+  it('Super Soak: a tower given its own card again sprays twice as fast for one wave; one a wave; it costs drops', () => {
+    const plan = planPatrol('g24-evenOdd', 'ss', 3)
+    const lean = plan.waves[0].lean
+    const washed = (soak: boolean) => {
+      const s = createPatrol(plan)
+      s.drops = 99
+      placeTower(s, 0, lean)
+      if (soak) {
+        const before = s.drops
+        expect(placeTower(s, 0, lean)).toBe('boosted')
+        expect(s.drops).toBe(before - TUNING.g24.superCost)
+        expect(s.towers[0]!.super).toBe(true)
+        // one a wave
+        placeTower(s, 1, lean)
+        expect(canSuper(s, 1)).toBe(false)
+        expect(placeTower(s, 1, lean)).toBe('same')
+        s.towers[1] = null
+      }
+      playWave(s)
+      // it wears off when the wave ends
+      expect(s.towers[0]!.super).toBe(false)
+      expect(s.supered).toBe(false)
+      return s.tallies[0].washed
+    }
+    expect(washed(true)).toBeGreaterThan(washed(false))
+  })
+
+  it('a swap mid-wave refills first (one reload), so tapping through the cards washes nothing', () => {
+    const s = createPatrol(planPatrol('g24-skip', 'mid', 3))
+    placeTower(s, 2, 'mult-2')
+    placeTower(s, 3, 'mult-5')
+    // while planning: free and instant
+    expect(placeTower(s, 2, 'mult-5')).toBe('swapped')
+    expect(s.towers[2]!.cooldown).toBe(0)
+    startWave(s)
+    for (let i = 0; i < 30; i++) step(s)
+    expect(placeTower(s, 2, 'mult-2')).toBe('swapped')
+    expect(s.towers[2]!.cooldown).toBeGreaterThanOrEqual(TUNING.g24.reload - 1e-9)
+    expect(s.towers[2]!.refill).toBeGreaterThan(0)
+    // a child who keeps swapping every 0.8 s never lets a tower spray
+    let next = 0.8
+    let k = 0
+    while (s.phase === 'wave') {
+      step(s)
+      if (s.waveT >= next) {
+        next += 0.8
+        const i = [2, 3][k++ % 2]
+        const rs = rulesNow(s)
+        placeTower(s, i, rs[(rs.indexOf(s.towers[i]!.rule) + 1) % rs.length])
+      }
+    }
+    expect(s.tallies[0].washed).toBeLessThanOrEqual(1)
   })
 
   it('a tower washes only what fits its rule; a misfit gets one bounce per tower and walks on to the pond', () => {
