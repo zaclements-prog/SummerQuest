@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import {
   K_FOODS,
   changeShowMe,
+  changeWorked,
   elapsedShowMe,
   makeSnackShackProvider,
   planShift,
@@ -12,6 +13,7 @@ import {
   type MoneyOrder,
 } from '../snackShack'
 import { createProvider } from '..'
+import { countUpHops } from '../measurement'
 import type { Problem } from '../../problem'
 import { SHACK_K_FOODS } from '../../../voice/packs/snack-shack'
 import { voiceText } from '../../../voice/registry'
@@ -22,19 +24,22 @@ import { SKILLS } from '../../../tutoring/skills'
 const SEEDS = Array.from({ length: 300 }, (_, i) => `seed-${i}`)
 
 describe('Snack Shack orders: kindergarten (count, then how many in all)', () => {
-  it('ramps from one kind of snack to two within 5, then within 10; every number is a recorded template value', () => {
+  it('ramps from one kind of snack to two within 5, then ends within 10 (any shift length); every number is a recorded template value', () => {
     for (const seed of SEEDS) {
-      const plan = planShift({ grade: 0, seed })
+      for (const customers of [5, 6]) {
+      const plan = planShift({ grade: 0, seed, customers })
       expect(plan.band).toBe('k1')
-      expect(plan.orders).toHaveLength(6)
+      expect(plan.orders).toHaveLength(customers)
       plan.orders.forEach((o, i) => {
         expect(o.kind).toBe('count')
         const c = o as CountOrder
         const sum = c.lines.reduce((s, l) => s + l.qty, 0)
         if (i === 0) expect(c.lines.length === 1 && sum >= 2 && sum <= 3).toBe(true)
-        if (i <= 1) expect(c.lines).toHaveLength(1)
         else expect(c.lines).toHaveLength(2)
-        if (i <= 3) expect(sum).toBeLessThanOrEqual(5)
+        // the last two orders go past 5: 6–8, then 7–10
+        if (i < customers - 2) expect(sum).toBeLessThanOrEqual(5)
+        if (i === customers - 2) expect(sum >= 6 && sum <= 8).toBe(true)
+        if (i === customers - 1) expect(sum >= 7 && sum <= 10).toBe(true)
         expect(sum).toBeLessThanOrEqual(10)
         expect(new Set(c.lines.map((l) => l.food.id)).size).toBe(c.lines.length)
         for (const l of c.lines) expect(l.qty).toBeGreaterThanOrEqual(2)
@@ -49,6 +54,7 @@ describe('Snack Shack orders: kindergarten (count, then how many in all)', () =>
         expect(c.totalOptions.filter((n) => n === sum)).toHaveLength(1)
         for (const n of c.totalOptions) expect(n).toBeGreaterThanOrEqual(1)
       })
+      }
     }
   })
 
@@ -73,7 +79,9 @@ describe('Snack Shack orders: 1st grade (the pick-up clock)', () => {
         expect(c.time).toBeLessThan(HALF_DAY)
         expect(c.time).not.toBe(last)
         last = c.time
-        expect(c.lines.reduce((s, l) => s + l.qty, 0)).toBeLessThanOrEqual(5)
+        // a small tray (one kind): the clock is the math
+        expect(c.lines).toHaveLength(1)
+        expect(c.lines[0].qty).toBeLessThanOrEqual(4)
         expect(() => voiceText(c.speech)).not.toThrow()
         expect(() => voiceText(c.fillSpeech)).not.toThrow()
       })
@@ -116,12 +124,23 @@ describe('Snack Shack orders: grades 2–5 (money and the Clock Tower)', () => {
             expect(o.totalOptions.filter((c) => c === total)).toHaveLength(1)
             for (const c of o.totalOptions) expect(c).toBeGreaterThan(0)
           }
-          // "Show me how": counting up from the cost lands on what was paid
+          // "Show me how": counting up from the cost stops one hop short of what was paid (the child makes the last hop)
           const steps = changeShowMe(o)
           const last = steps[steps.length - 1]
           expect(last.yourTurn).toBe(true)
           expect(last.visual.kind).toBe('countUp')
-          if (last.visual.kind === 'countUp') expect(last.visual.hops.reduce((s, h) => s + h.each * h.count, 0)).toBe(o.change)
+          const hops = countUpHops(o.total, o.paid)
+          if (last.visual.kind === 'countUp') {
+            expect(last.visual.openEnd).toBe(true)
+            expect(last.visual.hops).toEqual(hops.slice(0, -1))
+            expect(last.visual.hops.reduce((s, h) => s + h.each * h.count, 0)).toBeLessThan(o.change)
+            expect(last.visual.plan).toBe(hops.length)
+          }
+          // no step shows the last hop (its coins would be the rest of the answer)
+          for (const st of steps) if (st.visual.kind === 'countUp') expect(st.visual.hops.length).toBeLessThan(hops.length)
+          // after a second miss: every hop, adding up to the change
+          const worked = changeWorked(o)
+          if (worked.kind === 'countUp') expect(worked.hops.reduce((s, h) => s + h.each * h.count, 0)).toBe(o.change)
           // the walkthrough never says the change
           for (const s of steps) expect(s.say).not.toContain(`$${Math.floor(o.change / 100)}.${String(o.change % 100).padStart(2, '0')} change`)
         })
@@ -160,14 +179,30 @@ describe('Snack Shack orders: grades 2–5 (money and the Clock Tower)', () => {
           expect(last.yourTurn).toBe(true)
           expect(last.visual.kind).toBe('timeJumps')
           if (last.visual.kind === 'timeJumps') {
-            expect(last.visual.start).toBe(o.start % HALF_DAY)
+            // grades 4–5: the line runs on the whole day and says a.m. / p.m.
+            expect(last.visual.start).toBe(o.meridiem ? o.start : o.start % HALF_DAY)
+            expect(!!last.visual.meridiem).toBe(o.meridiem)
             expect(last.visual.jumps.reduce((s, x) => s + x, 0) + (last.visual.pending ?? 0)).toBe(o.hours * 60 + o.minutes)
             expect(last.visual.pending).toBeGreaterThan(0)
           }
           const said = steps.map((s) => s.say).join(' ')
           // (the end time never appears on its own: "11:45" may, "1:45" not)
           expect(said).not.toMatch(new RegExp(`(^|[^0-9])${fmtTime(o.end)}`))
-          if (o.meridiem && crossesNoon(o.start, o.end)) expect(said).toContain('p.m.')
+          if (o.meridiem && crossesNoon(o.start, o.end)) {
+            expect(said).toContain('p.m.')
+            // "past 12 noon" comes right after the jump that goes past it (or, when the child's own jump does, before "Your turn!")
+            const noonAt = steps.findIndex((st) => st.voice && 'line' in st.voice && st.voice.line === 'snack-shack/overNoon')
+            const before = steps[noonAt - 1].visual
+            if (before.kind === 'timeJumps') {
+              const landed = before.start + before.jumps.reduce((a, j) => a + j, 0)
+              if (before.pending) expect(landed + before.pending).toBeGreaterThanOrEqual(HALF_DAY)
+              else {
+                expect(landed).toBeGreaterThan(HALF_DAY)
+                expect(before.jumps.slice(0, -1).reduce((a, j) => a + j, before.start)).toBeLessThanOrEqual(HALF_DAY)
+              }
+            }
+          }
+          if (o.meridiem) expect(said).toMatch(/a\.m\.|noon/)
         })
       }
     })
@@ -185,6 +220,24 @@ describe('Snack Shack orders: grades 2–5 (money and the Clock Tower)', () => {
       const g1 = planShift({ grade: 1, seed, customers: 5 }).orders as ClockAtOrder[]
       expect(g1.map((o) => o.time % 60)).toEqual([0, 0, 0, 30, 30])
     }
+  })
+
+  it('walks "10:00 a.m., 5 and a half hours later" hour by hour across noon, saying a.m. / p.m. on the way', () => {
+    const o = planShift({ grade: 5, seed: 'noon' }).orders.find((x): x is ElapsedOrder => x.kind === 'elapsed')!
+    const steps = elapsedShowMe({ ...o, start: 600, hours: 5, minutes: 30, end: 930, meridiem: true })
+    expect(steps.map((s) => s.say)).toEqual([
+      'We start at 10:00 a.m.',
+      'Jump 1 hour: 10:00 a.m. to 11:00 a.m.',
+      'Jump 1 more hour: 11:00 a.m. to 12:00 noon.',
+      'Jump 1 more hour: 12:00 noon to 1:00 p.m.',
+      "We went past 12 noon, so it's p.m. now!",
+      'Jump 1 more hour: 1:00 p.m. to 2:00 p.m.',
+      'Jump 1 more hour: 2:00 p.m. to 3:00 p.m.',
+      'Now the minutes: 30 more.',
+      'So what time will it be? Your turn!',
+    ])
+    const last = steps[steps.length - 1].visual
+    expect(last).toMatchObject({ kind: 'timeJumps', start: 600, jumps: [60, 60, 60, 60, 60], pending: 30, meridiem: true })
   })
 
   it('is deterministic for a seed', () => {

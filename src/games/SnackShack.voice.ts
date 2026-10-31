@@ -26,6 +26,15 @@ export function sayText(x: SayItem): string {
   return voiceText(isRef(x) ? x : x.voice)
 }
 
+/**
+ * What a step says by itself. Grades 4–5 (`readOrders` false) read the
+ * ticket: a customer's own words (device speech) wait for 🔊; the shack's
+ * recorded lines still play.
+ */
+export function autoSay(items: readonly SayItem[], readOrders: boolean): SayItem[] {
+  return readOrders ? [...items] : items.filter((x) => typeof x !== 'string')
+}
+
 export interface ShackSpeaker {
   say(items: readonly SayItem[]): void
   stop(): void

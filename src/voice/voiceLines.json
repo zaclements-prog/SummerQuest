@@ -48115,6 +48115,18 @@
       "kind": "line",
       "file": "voice/snack-shack/overNoon.mp3"
     },
+    "snack-shack/finishCountUp": {
+      "text": "Put those in the tray. Then count up the rest of the way. Your turn!",
+      "hash": "9014c34b2e",
+      "kind": "line",
+      "file": "voice/snack-shack/finishCountUp.mp3"
+    },
+    "snack-shack/setClockShort": {
+      "text": "Turn the short hand to the hour. Then check the long hand!",
+      "hash": "ac307a5bc4",
+      "kind": "line",
+      "file": "voice/snack-shack/setClockShort.mp3"
+    },
     "snack-shack/orderOne/food=apples,n=2": {
       "text": "two apples, please!",
       "hash": "bc37f13e24",

@@ -1,4 +1,4 @@
-import type { Problem, ProblemProvider, WalkStep } from '../problem'
+import type { Problem, ProblemProvider, WalkStep, WalkVisual } from '../problem'
 import type { VoiceRef } from '../../voice/types'
 import { SHACK_K_FOODS, type ShackKFood } from '../../voice/packs/snack-shack'
 import { lineText } from '../../voice/registry'
@@ -17,7 +17,7 @@ import { moneyWalkthrough, timeWalkthrough } from './measurement'
  * - `count` (kindergarten, Add-and-Take Falls, K.CC.5 / K.OA.1): "3 apples
  *   and 2 bananas, please!" Tap the snacks onto the tray, then "How many
  *   snacks in all?" Every number is said; within 5, then within 10.
- * - `clockAt` (1st grade, Measure Marsh, 1.MD.3): fill a small order, then
+ * - `clockAt` (1st grade, Measure Marsh, 1.MD.3): fill a small order (one kind), then
  *   "I'll be back at 3 o'clock": set the pick-up clock (hours, then half hours).
  * - `money` (grades 2–5, Measurement Marsh): fill the order from the menu
  *   board, pick the total, take the bill and count out the change by
@@ -206,20 +206,30 @@ export function shackSkill(band: ShackBand, step: 'count' | 'clock' | 'money'): 
 
 // ── kindergarten: count the snacks, then how many in all ─────────────────────
 
-/** Order `i` of a shift: one kind of snack (2–3, then 3–5), then two kinds within 5, then within 10. */
-function countLines(r: Rng, i: number, foods: readonly ShackKFood[]): OrderLine[] {
+/**
+ * Order `i` of an `n`-order shift: one kind of snack (2–3) first, then two
+ * kinds within 5, and the shift ends within 10 (6–8, then 7–10). The ramp is
+ * keyed to the END of the shift, so a shorter shift (the stage plays 5:
+ * kindergartners tap every snack, about 2 s a tap) still reaches ten.
+ */
+function countLines(r: Rng, i: number, n: number, foods: readonly ShackKFood[]): OrderLine[] {
   const [a, b] = shuffled(r, foods)
   const line = (f: ShackKFood, qty: number): OrderLine => ({ food: K_FOODS[f], qty, price: 0 })
   if (i === 0) return [line(a, int(r, 2, 3))]
-  if (i === 1) return [line(a, int(r, 3, 5))]
-  if (i <= 3) {
+  const fromEnd = n - 1 - i
+  if (fromEnd > 1 || n < 4) {
     const x = int(r, 2, 3)
     return [line(a, x), line(b, x === 3 ? 2 : int(r, 2, 3))]
   }
   // within 10: 6 to 10 in all, each kind 2–6
-  const total = i === 4 ? int(r, 6, 8) : int(r, 7, 10)
+  const total = fromEnd === 1 ? int(r, 6, 8) : int(r, 7, 10)
   const x = int(r, Math.max(2, total - 6), Math.min(6, total - 2))
   return [line(a, x), line(b, total - x)]
+}
+
+/** 1st grade's snacks: one kind, 2–4 (the clock is the math; the tray is the shop). */
+function g1Lines(r: Rng, i: number, foods: readonly ShackKFood[]): OrderLine[] {
+  return [{ food: K_FOODS[pickOf(r, foods)], qty: i === 0 ? 2 : int(r, 2, 4), price: 0 }]
 }
 
 /** Three numeral cards around the sum (all 1 or more). */
@@ -466,12 +476,12 @@ export function planShift({ grade, seed, customers = DEFAULT_CUSTOMERS, band }: 
   let moneyJ = 0
   for (let i = 0; i < customers; i++) {
     if (b === 'k1') {
-      const lines = countLines(r, i, kFoods.slice(0, 4))
+      const lines = countLines(r, i, customers, kFoods.slice(0, 4))
       const sum = lines.reduce((s, l) => s + l.qty, 0)
       orders.push({ ...base(i), kind: 'count', lines, askTotal: lines.length > 1, totalOptions: countOptions(r, sum), speech: orderSpeech(lines) })
     } else if (b === 'g1') {
-      // a small order (one kind, or two within 10), then the clock
-      const lines = countLines(r, Math.min(i, 3), kFoods.slice(0, 4))
+      // a small order (one kind), then the clock
+      const lines = g1Lines(r, i, kFoods.slice(0, 4))
       const time = g1Time(r, i, lastTime)
       lastTime = time
       const h = Math.floor(time / 60) || 12
@@ -503,21 +513,44 @@ export function planShift({ grade, seed, customers = DEFAULT_CUSTOMERS, band }: 
 
 // ── "Show me how" for the shack's orders ─────────────────────────────────────
 
-/** Making change: the shared count-up walkthrough (src/lib/providers/measurement.ts). */
+/**
+ * Making change: the shared count-up walkthrough (src/lib/providers/measurement.ts),
+ * stopped one hop short. Its last hop, up to what was paid, is the child's
+ * (as the timeline leaves the last jump): the coins of a finished count-up
+ * are the whole answer, and copying them into the tray would skip the math.
+ */
 export function changeShowMe(o: MoneyOrder): WalkStep[] {
-  return moneyWalkthrough(o.total, o.paid)
+  const full = moneyWalkthrough(o.total, o.paid)
+  // [the start, one step per hop, your turn]: keep all but the last hop
+  const shown = full.slice(0, full.length - 2)
+  const last = shown[shown.length - 1].visual
+  const open = last.kind === 'countUp' ? { ...last, openEnd: true } : last
+  return [...shown, { say: lineText('snack-shack/finishCountUp') ?? '', voice: { line: 'snack-shack/finishCountUp' }, visual: open, yourTurn: true }]
+}
+
+/** The whole count-up (every hop made), shown with the answer after a second miss. */
+export function changeWorked(o: MoneyOrder): WalkVisual {
+  const full = moneyWalkthrough(o.total, o.paid)
+  const v = full[full.length - 1].visual
+  return v.kind === 'countUp' ? { ...v, askTotal: false } : v
 }
 
 /**
- * Elapsed time: the shared timeline walkthrough on the 12-hour clock; across
- * noon (grades 4–5) one more step before "Your turn!" says the p.m.
+ * Elapsed time: the shared timeline walkthrough. Grades 4–5 (`meridiem`): the
+ * times on the line say a.m., noon and p.m., and the step after the jump that
+ * goes past 12 noon says so ("…so it's p.m. now!").
  */
 export function elapsedShowMe(o: ElapsedOrder): WalkStep[] {
+  const start = o.meridiem ? o.start : o.start % HALF_DAY
+  const opts = { meridiem: o.meridiem }
   // whole hours: the last hour goes in two half-hour jumps, so the child still makes the last one
-  const steps = o.minutes === 0 ? timeWalkthrough(o.start % HALF_DAY, o.hours - 1, 60) : timeWalkthrough(o.start % HALF_DAY, o.hours, o.minutes)
+  const steps = o.minutes === 0 ? timeWalkthrough(start, o.hours - 1, 60, opts) : timeWalkthrough(start, o.hours, o.minutes, opts)
   if (o.meridiem && crossesNoon(o.start, o.end)) {
-    const last = steps[steps.length - 1]
-    steps.splice(steps.length - 1, 0, { say: lineText('snack-shack/overNoon') ?? '', voice: { line: 'snack-shack/overNoon' }, visual: last.visual })
+    // after the first jump that lands past noon (else the child's own last jump crosses it: just before "Your turn!")
+    const landing = (v: WalkVisual) => (v.kind === 'timeJumps' && !v.pending ? v.start + v.jumps.reduce((a, j) => a + j, 0) : -1)
+    const past = steps.findIndex((st) => landing(st.visual) > HALF_DAY)
+    const at = past >= 0 ? past + 1 : steps.length - 1
+    steps.splice(at, 0, { say: lineText('snack-shack/overNoon') ?? '', voice: { line: 'snack-shack/overNoon' }, visual: steps[at - 1].visual })
   }
   return steps
 }

@@ -10,6 +10,7 @@ import { wrapTime } from '../../lib/shack/clock'
 import { resetGuideForTests } from '../../guide/store'
 import { seededRng } from '../../lib/random'
 import SnackShack from '../SnackShack'
+import { autoSay } from '../SnackShack.voice'
 
 /**
  * Snack Shack, rendered: a shift is played through the real buttons (the
@@ -195,6 +196,32 @@ describe('Snack Shack', () => {
     await click([...document.querySelectorAll('button')].find((b) => b.textContent === 'Got it →'))
     await advance(2500)
     expect(useProgress.getState().attempts.find((a) => a.skillId === 'g5-convert')).toMatchObject({ correct: false })
+  }, 30000)
+
+  it('grades 4–5 read their own orders: a customer\'s words wait for 🔊 (the shack\'s own lines still play)', async () => {
+    expect(autoSay(['3 tacos, please!', { line: 'snack-shack/tapFood' }], false)).toEqual([{ line: 'snack-shack/tapFood' }])
+    expect(autoSay(['3 tacos, please!', { line: 'snack-shack/tapFood' }], true)).toHaveLength(2)
+    render(5, 'g5-measure-shack')
+    await advance(600)
+    const o = live().plan.orders[0]
+    if (o.kind !== 'money') throw new Error('money first')
+    await click(q('[aria-label="Say it again"]'))
+    expect(q<HTMLElement>('[data-snack-shack] .sr-only')!.textContent).toContain(o.say)
+  }, 30000)
+
+  it('💡 Show me how glows after a miss; its count-up leaves the last hop to the child', async () => {
+    render(4, 'meas-shack')
+    await advance(600)
+    await playStep() // fill
+    if (live().step === 'total') await playStep()
+    expect(live().step).toBe('change')
+    expect(q('[data-guide="show-me"]')!.className).not.toContain('shack-nudge')
+    await click(q('[aria-label="Give the change"]')) // nothing in the tray: wrong
+    expect(q('[data-guide="show-me"]')!.className).toContain('shack-nudge')
+    // the teach card's count-up stops short of what was paid
+    const o = live().plan.orders[live().oi]
+    if (o.kind !== 'money') throw new Error('money')
+    expect(q('[data-teach="change"]')!.textContent).toContain(`$${Math.floor(o.paid / 100)}.00`)
   }, 30000)
 
   it('kindergarten: count the snacks onto the tray, how many in all, a wrong tray numbers the snacks', async () => {

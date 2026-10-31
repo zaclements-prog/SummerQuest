@@ -181,7 +181,8 @@ export function ChangeCounter({
             animate={{ scale: 1, y: 0 }}
             transition={{ type: 'spring', stiffness: 420, damping: 20 }}
             onPointerDown={start(p, 'tray')}
-            className="touch-none -mx-1 first:mx-0"
+            // (a 48 px finger target round even the little dime: putting one back is a tap)
+            className="touch-none grid place-items-center min-w-12 min-h-12"
             style={{ opacity: drag?.from === 'tray' && drag.moved && drag.denom === p && i === pieces.lastIndexOf(p) ? 0.3 : 1 }}
             disabled={disabled}
           >
@@ -200,9 +201,10 @@ export function ChangeCounter({
             onPointerDown={start(d, 'drawer')}
             disabled={disabled}
             className="touch-none grid place-items-center rounded-xl active:translate-y-0.5"
-            style={{ minWidth: isBill(d) ? (compact ? 76 : 96) : compact ? 54 : 66, minHeight: compact ? 56 : 70, background: '#8a7a8e', border: `2px solid ${UI.line}` }}
+            // (sized so the whole 4th–5th grade drawer fits one row on a 600 px wide portrait tablet)
+            style={{ minWidth: isBill(d) ? (compact ? 76 : 88) : compact ? 54 : 66, minHeight: compact ? 56 : 70, background: '#8a7a8e', border: `2px solid ${UI.line}` }}
           >
-            <MoneyPiece denom={d} scale={compact ? 0.8 : 0.96} />
+            <MoneyPiece denom={d} scale={compact ? 0.8 : isBill(d) ? 0.9 : 0.96} />
           </button>
         ))}
       </div>

@@ -274,6 +274,12 @@ function clock12(total: number): string {
   return `${Math.floor(t / 60) || 12}:${String(t % 60).padStart(2, '0')}`
 }
 
+/** "a.m.", "noon" or "p.m." for minutes after midnight. */
+function halfOfDay(total: number): string {
+  const t = ((total % 1440) + 1440) % 1440
+  return t === 720 ? 'noon' : t < 720 ? 'a.m.' : 'p.m.'
+}
+
 function money(cents: number): string {
   return `$${Math.floor(cents / 100)}.${String(cents % 100).padStart(2, '0')}`
 }
@@ -297,19 +303,25 @@ function HopLine({
   stops,
   hops,
   pending,
+  pendingStop,
+  subs,
   layout,
   compact,
 }: {
   stops: string[]
   hops: Hop[]
   pending?: Hop
+  /** The pending hop's landing, when it is known (making change: up to what was paid); else "?". */
+  pendingStop?: string
+  /** A small second line under each stop ("a.m.", "noon", "p.m."). */
+  subs?: string[]
   /** The weights of every hop the walkthrough will make: the line keeps its scale from step to step. */
   layout?: number[]
   compact: boolean
 }) {
   const reduced = useReducedMotion() ?? false
   const W = 560
-  const H = 178
+  const H = subs ? 198 : 178
   // the reminder strip leaves out the coins' row above the hops
   const top = compact ? 38 : 0
   const L = 46
@@ -368,7 +380,11 @@ function HopLine({
         return (
           <motion.g key={`s${i}`} initial={fresh ? { opacity: 0, scale: 0.6 } : false} animate={{ opacity: 1, scale: 1 }} transition={{ delay: fresh ? 0.6 : 0 }} style={{ transformOrigin: `${x}px ${LINE_Y}px` }}>
             <circle cx={x} cy={LINE_Y} r={isQ ? 9 : 7} fill={isQ ? TOON.flowerRed : i === 0 ? TOON.leaf : GOLD} stroke={INK} strokeWidth="2.5" />
-            {isQ ? (
+            {isQ && pendingStop ? (
+              <text x={x} y={LINE_Y + 34} textAnchor="middle" fontSize={23} fontWeight={700} fill={INK} className="kid-text">
+                {pendingStop}
+              </text>
+            ) : isQ ? (
               <g className={animate ? 'animate-pulse' : ''}>
                 <rect x={x - 22} y={LINE_Y + 12} width={44} height={30} rx={10} fill={GOLD} stroke={INK} strokeWidth="2.5" />
                 <text x={x} y={LINE_Y + 34} textAnchor="middle" fontSize="22" fontWeight={800} fill={INK} className="kid-text">?</text>
@@ -376,6 +392,11 @@ function HopLine({
             ) : (
               <text x={x} y={LINE_Y + 34} textAnchor="middle" fontSize={i === 0 || i === xs.length - 1 ? 23 : 20} fontWeight={700} fill={INK} className="kid-text">
                 {label}
+              </text>
+            )}
+            {subs?.[i] && !isQ && (
+              <text x={x} y={LINE_Y + 56} textAnchor="middle" fontSize={17} fontWeight={700} fill={subs[i] === 'a.m.' ? TOON.waterDeep : TOON.coral} className="kid-text">
+                {subs[i]}
               </text>
             )}
           </motion.g>
@@ -459,6 +480,8 @@ function TimeJumps({ visual, compact }: { visual: Extract<WalkVisual, { kind: 't
   const weight = (j: number) => 50 + j
   const hops: Hop[] = visual.jumps.map((j) => ({ label: j === 60 ? '+1 hour' : `+${j} min`, weight: weight(j) }))
   const pending = visual.pending ? { label: `+${visual.pending} min`, weight: weight(visual.pending) } : undefined
+  // a whole-day line: which half of the day each time is in
+  const subs = visual.meridiem ? stops.map(halfOfDay) : undefined
   const clock = (
     <motion.div key={now} initial={{ scale: 0.9 }} animate={{ scale: 1 }} className="shrink-0 short:scale-[0.8] short:-my-3">
       <VisualRenderer visual={{ kind: 'clock', hour: Math.floor(now / 60) || 12, minute: now % 60 }} />
@@ -466,7 +489,7 @@ function TimeJumps({ visual, compact }: { visual: Extract<WalkVisual, { kind: 't
   )
   return (
     <Frame side={clock} compact={compact}>
-      <HopLine stops={stops.map(clock12)} hops={hops} pending={pending} layout={visual.plan?.map(weight)} compact={compact} />
+      <HopLine stops={stops.map(clock12)} subs={subs} hops={hops} pending={pending} layout={visual.plan?.map(weight)} compact={compact} />
     </Frame>
   )
 }
@@ -476,6 +499,8 @@ function CountUp({ visual, compact }: { visual: Extract<WalkVisual, { kind: 'cou
   for (const h of visual.hops) stops.push(stops[stops.length - 1] + h.each * h.count)
   const now = stops[stops.length - 1]
   const hops: Hop[] = visual.hops.map((h) => ({ label: `+${shortMoney(h.each * h.count)}`, weight: 1, coin: h }))
+  // the last hop is the child's: up to what was paid, its size "?"
+  const pending = visual.openEnd && now < visual.paid ? { label: '+ ?', weight: 1 } : undefined
   return (
     <div className="w-full flex flex-col items-center">
       {!compact && (
@@ -492,7 +517,7 @@ function CountUp({ visual, compact }: { visual: Extract<WalkVisual, { kind: 'cou
           </motion.span>
         </div>
       )}
-      <HopLine stops={stops.map(money)} hops={hops} layout={visual.plan ? Array(visual.plan).fill(1) : undefined} compact={compact} />
+      <HopLine stops={stops.map(money)} hops={hops} pending={pending} pendingStop={pending ? money(visual.paid) : undefined} layout={visual.plan ? Array(visual.plan).fill(1) : undefined} compact={compact} />
       {visual.askTotal && (
         <motion.div
           initial={compact ? false : { opacity: 0, y: 8 }}
