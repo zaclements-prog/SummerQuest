@@ -56,14 +56,37 @@ export const PARK = {
   magnet: 0.95,
   /** A too-big snack only burps when the cloud runs into it at least this fast (a graze just slides off). */
   bonkSpeed: 1.1,
+  /** Seconds before the same too-big snack can burp again (one burp per bump, not one a frame). */
+  reburp: 3,
+  /** Seconds the cloud sits dizzy after a burp (it bounces off and can't steer): ramming everything is slow. */
+  daze: 0.7,
   /** Spacing between snacks. */
   gap: 2.9,
 } as const
 
-/** The belly is full (the number climbs a rung) at this much eaten value, in "cloud numbers". */
+/** The belly is full (the number climbs a rung) at this much eaten value, in "cloud numbers" (K–1). */
 export const BELLY_FULL = 2.5
-/** About this share of the park is edible. */
-export const EDIBLE_SHARE = 0.55
+/**
+ * Grades 2–5's belly: their parks are longer (30 snacks), so the number climbs
+ * a little slower and reaches the top late in the third park, not by the end
+ * of the second (playtests at 2.5: a strong 3rd grader topped out with a whole
+ * park to go, and the growing stopped).
+ */
+export const BELLY_FULL_READERS = 3.5
+
+export const bellyFull = (listen: boolean) => (listen ? BELLY_FULL : BELLY_FULL_READERS)
+/**
+ * A burp lets this much out of the belly (about one bite; never below empty,
+ * and the cloud's number never shrinks): bumping everything grows slower than
+ * choosing.
+ */
+export const BURP_COST = 0.5
+/**
+ * About this share of the park is edible. Under half, so steering blindly
+ * into everything bumps more than it eats (playtests: at 55% a lawnmower
+ * sweep scored 73% smart bites and 2 stars without reading a number).
+ */
+export const EDIBLE_SHARE = 0.45
 /** Near the cloud there are always at least this many edible and too-big snacks. */
 export const NEAR_EDIBLE = 2
 export const NEAR_TOO_BIG = 1
@@ -81,13 +104,23 @@ export interface RoundPlan {
 export const ROUNDS = 3
 
 /**
+ * Snacks for a tidy park: about 40 s of play for a kindergartner (12) or a
+ * 1st grader (14); in grades 2–5 (30) a quick, sure player tidies in 35–45 s
+ * and a slower one meets the 80 s clock first (playtests: at 20 a strong 3rd
+ * grader tidied in 24 s and never saw the clock).
+ */
+export function parkGoal(listen: boolean, set?: GobbleConfig['set']): number {
+  return set === 'k' ? 12 : listen ? 14 : 30
+}
+
+/**
  * The session: three parks. The first is easy (far gaps, the plainest
  * comparisons), each starts harder, and each ramps as it goes. K–1 has no
  * clock (a park ends when it's tidy); grades 2–5 have about 80 s or the goal.
  */
-export function roundPlans(listen: boolean, seconds = 80): RoundPlan[] {
+export function roundPlans(listen: boolean, seconds = 80, set?: GobbleConfig['set']): RoundPlan[] {
   return [0, 1, 2].map((i) => ({
-    goal: listen ? 12 : 20,
+    goal: parkGoal(listen, set),
     seconds: listen ? null : seconds,
     start: [0, 0.32, 0.62][i],
     ramp: 0.38,
@@ -104,11 +137,9 @@ export interface ParkSnack {
   alive: boolean
   /** Park time this slot grows a new snack (when not alive). */
   respawnAt: number
-  /** The rung this snack last burped on (one burp per snack per number). */
-  burpedRung: number
   /** Bumps whenever the snack (or its value) changes: the label redraws. */
   serial: number
-  /** Park time it appeared (its pop-in), and of its last bonk wobble. */
+  /** Park time it appeared (its pop-in), and of its last bonk wobble (its last burp: see PARK.reburp). */
   bornAt: number
   wobbleAt: number
 }
@@ -122,10 +153,12 @@ export interface CloudState {
   r: number
   rung: number
   value: NumberShown
-  /** Belly fill, 0 to BELLY_FULL. */
+  /** Belly fill, 0 to `bellyFull`. */
   belly: number
   /** Everything eaten, in cloud numbers (drives the size). */
   fed: number
+  /** Park time the dizziness after a burp wears off (no steering until then). */
+  dazedUntil: number
 }
 
 export interface Decision {
@@ -182,14 +215,14 @@ export function makePark(cfg: GobbleConfig, opts: { seed: string; listen: boolea
     rng: seededRng(opts.seed),
     ladder,
     listen: opts.listen,
-    plans: roundPlans(opts.listen, opts.seconds),
+    plans: roundPlans(opts.listen, opts.seconds, cfg.set),
     t: 0,
     round: 0,
     roundEaten: 0,
     roundT: 0,
     roundFrom: 0,
     over: false,
-    cloud: { x: 0, z: 0, vx: 0, vz: 0, r: PARK.cloudR0, rung: 0, value: ladder[0], belly: 0, fed: 0 },
+    cloud: { x: 0, z: 0, vx: 0, vz: 0, r: PARK.cloudR0, rung: 0, value: ladder[0], belly: 0, fed: 0, dazedUntil: 0 },
     snacks: [],
     decisions: [],
     score: 0,
@@ -200,7 +233,7 @@ export function makePark(cfg: GobbleConfig, opts: { seed: string; listen: boolea
     nextCheck: 0,
     input: { target: null, axis: { x: 0, z: 0 } },
   }
-  for (let i = 0; i < PARK.slots; i++) run.snacks.push({ slot: i, snack: ladder[0] as SnackValue, x: 0, z: 0, alive: false, respawnAt: 0, burpedRung: -1, serial: 0, bornAt: 0, wobbleAt: -9 })
+  for (let i = 0; i < PARK.slots; i++) run.snacks.push({ slot: i, snack: ladder[0] as SnackValue, x: 0, z: 0, alive: false, respawnAt: 0, serial: 0, bornAt: 0, wobbleAt: -9 })
   seedRound(run)
   return run
 }
@@ -269,7 +302,7 @@ function placeSnack(run: ParkRun, s: ParkSnack, edible: boolean, spot: { x: numb
   s.z = spot.z
   s.alive = true
   s.respawnAt = 0
-  s.burpedRung = -1
+  s.wobbleAt = -9
   s.serial++
   s.bornAt = run.t
 }
@@ -384,8 +417,9 @@ function eat(run: ParkRun, s: ParkSnack, events: ParkEvent[]) {
   cloud.belly += share
   cloud.fed += share
   cloud.r = PARK.cloudR0 + (PARK.cloudRMax - PARK.cloudR0) * (1 - Math.exp(-cloud.fed / 10))
-  if (cloud.belly >= BELLY_FULL) {
-    cloud.belly -= BELLY_FULL
+  const full = bellyFull(run.listen)
+  if (cloud.belly >= full) {
+    cloud.belly -= full
     const from = cloud.value
     const top = cloud.rung >= run.ladder.length - 1
     if (!top) {
@@ -399,8 +433,9 @@ function eat(run: ParkRun, s: ParkSnack, events: ParkEvent[]) {
 }
 
 function burp(run: ParkRun, s: ParkSnack, events: ParkEvent[]) {
-  s.burpedRung = run.cloud.rung
   s.wobbleAt = run.t
+  run.cloud.belly = Math.max(0, run.cloud.belly - BURP_COST)
+  run.cloud.dazedUntil = run.t + PARK.daze
   run.decisions.push({ right: false, snack: s.snack, cloud: run.cloud.value })
   run.streak = 0
   // (stop heading for it: a tap on a too-big snack shouldn't grind against it)
@@ -432,7 +467,9 @@ export function stepPark(run: ParkRun, dt: number, events: ParkEvent[] = []): Pa
   let wz = 0
   const ax = input.axis.x
   const az = input.axis.z
-  if (ax !== 0 || az !== 0) {
+  if (run.t < cloud.dazedUntil) {
+    // dizzy after a burp: the bounce coasts, no steering
+  } else if (ax !== 0 || az !== 0) {
     const m = Math.hypot(ax, az)
     wx = (ax / m) * top
     wz = (az / m) * top
@@ -487,7 +524,7 @@ export function stepPark(run: ParkRun, dt: number, events: ParkEvent[] = []): Pa
     }
     const touch = cloud.r + PARK.snackR * 0.7
     if (d >= touch) continue
-    // too big: the cloud bounces off; a run straight into it is a burp (once per snack per number).
+    // too big: the cloud bounces off; a run straight into it is a burp (once per bump: see PARK.reburp).
     // The snack gives a little (it is shoved a third of the overlap), so a big cloud wedged
     // between two big snacks and a hedge can always push its way out.
     const nx = dx / d
@@ -503,7 +540,7 @@ export function stepPark(run: ParkRun, dt: number, events: ParkEvent[] = []): Pa
       cloud.vx += nx * approach * 1.6
       cloud.vz += nz * approach * 1.6
     }
-    if (approach >= PARK.bonkSpeed && s.burpedRung !== cloud.rung) burp(run, s, events)
+    if (approach >= PARK.bonkSpeed && run.t - s.wobbleAt >= PARK.reburp) burp(run, s, events)
   }
 
   // ── fairness: edible and too-big snacks near the cloud, always ──
@@ -550,12 +587,13 @@ export const sessionDone = (run: ParkRun) => run.over && run.round >= run.plans.
 /**
  * Stars count smart snacking (design rule 7): the share of decisions that
  * were edible snacks eaten (not bumps into too-big ones). Nobody fails out:
- * a played session earns at least one star.
+ * a played session earns at least one star. Two need 70%: steering blindly
+ * into everything lands near 65% (playtests), so the second star is the math.
  */
 export function gobbleStars(right: number, total: number): number {
   if (total === 0) return 1
   const share = right / total
-  return share >= 0.85 ? 3 : share >= 0.65 ? 2 : 1
+  return share >= 0.85 ? 3 : share >= 0.7 ? 2 : 1
 }
 
 export function gobbleBestKey(stageId: string | undefined): string {

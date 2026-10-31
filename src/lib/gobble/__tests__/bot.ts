@@ -78,3 +78,29 @@ export function playBot(cfg: GobbleConfig, opts: { seed: string; listen: boolean
   }
   return { run, events, roundSeconds, nearCounts, shares }
 }
+
+/**
+ * A child who doesn't read the numbers at all: the cloud sweeps the park
+ * back and forth in rows (a lawnmower), into whatever is in the way. The
+ * playtests' "can you win by steering into everything?" player.
+ */
+export function playSweeper(cfg: GobbleConfig, opts: { seed: string; listen: boolean }): ParkRun {
+  const run = makePark(cfg, { seed: opts.seed, listen: opts.listen })
+  const edge = PARK.half - 1
+  let dir = 1
+  let row = -PARK.half + 2
+  const dt = 1 / 30
+  for (let t = 0; t < 900; t += dt) {
+    if (Math.abs(run.cloud.x - dir * edge) < 0.6) {
+      dir = -dir
+      row = row + 3 > edge ? -PARK.half + 2 : row + 3
+    }
+    run.input.target = { x: dir * edge, z: row }
+    stepPark(run, dt)
+    if (run.over) {
+      if (run.round >= run.plans.length - 1) break
+      nextRound(run)
+    }
+  }
+  return run
+}
