@@ -11,6 +11,7 @@ import { resetGuideForTests } from '../../guide/store'
 import { seededRng } from '../../lib/random'
 import SnackShack from '../SnackShack'
 import { autoSay } from '../SnackShack.voice'
+import { voiceText } from '../../voice/registry'
 
 /**
  * Snack Shack, rendered: a shift is played through the real buttons (the
@@ -111,6 +112,41 @@ async function playShift(done: ReturnType<typeof vi.fn>) {
   await advance(3000)
   await click(q('[data-guide="shack-collect"]') ?? qa('button').find((b) => b.textContent?.includes('Collect')))
   expect(done).toHaveBeenCalledTimes(1)
+}
+
+/** Everything the shack's live caption said (each line of a queue in turn), since the last `since()`. */
+function listenIn() {
+  let heard: string[] = []
+  let last = ""
+  const el = () => q<HTMLElement>('[data-snack-shack] .sr-only')
+  const take = () => {
+    const t = el()?.textContent ?? ''
+    if (t && t !== last) heard.push((last = t))
+  }
+  const obs = new MutationObserver(take)
+  obs.observe(container, { subtree: true, childList: true, characterData: true })
+  take()
+  return {
+    since() {
+      take()
+      const out = heard.join(' | ')
+      heard = []
+      return out
+    },
+    stop: () => obs.disconnect(),
+  }
+}
+
+/** Serve customers right until customer `n` (0-based) is at the counter and has had time to speak. */
+async function serveUntil(n: number) {
+  for (let g = 0; g < 40 && live().oi < n; g++) {
+    const s = live().step
+    if (s === 'decor') await click(q('[data-decor]'))
+    else if (s === 'thanks') await advance(500)
+    else await playStep()
+  }
+  expect(live().oi).toBe(n)
+  await advance(8000)
 }
 
 function render(grade: number, stageId: string, zoneId = 'measurement-marsh') {
@@ -234,6 +270,43 @@ describe('Snack Shack', () => {
     await playShift(done)
     expect(done.mock.calls[0][0].stars).toBeGreaterThanOrEqual(2)
     expect(useProgress.getState().attempts.every((a) => a.skillId === 'k-add-take')).toBe(true)
+  }, 30000)
+
+  it('the next customer\'s first lines are theirs: the Clock Tower how-to on the first Clock Tower order, the bin hints only on the first customer', async () => {
+    const tower = voiceText({ line: 'snack-shack/clockTower' })
+    const tapFood = voiceText({ line: 'snack-shack/tapFood' })
+    // (grades 2–5 say a queue one line after another, timed by the voice player's performance.now() clock)
+    vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout', 'setInterval', 'clearInterval', 'Date', 'performance'] })
+    vi.setSystemTime(new Date('2026-07-01T10:00:00'))
+    render(3, 'meas-shack')
+    const ears = listenIn()
+    await advance(600)
+    const { plan } = live()
+    expect(plan.orders.map((o) => o.kind).slice(0, 4)).toEqual(['money', 'elapsed', 'money', 'elapsed'])
+    await advance(8000)
+    expect(ears.since()).toContain(tapFood)
+    // customer 2: the shift's first Clock Tower order (its lines are said from customer 1's last callback)
+    await serveUntil(1)
+    expect(live().step).toBe('clock')
+    expect(ears.since()).toContain(tower)
+    // customer 3: a money order again, no "tap the food" a second time
+    await serveUntil(2)
+    expect(ears.since()).not.toContain(tapFood)
+    // customer 4: the second Clock Tower order doesn't repeat the how-to
+    await serveUntil(3)
+    expect(ears.since()).not.toContain(tower)
+    ears.stop()
+  }, 60000)
+
+  it('kindergarten: the bin and bell hints (and the hand) are for the first customer only', async () => {
+    const tapFood = voiceText({ line: 'snack-shack/tapFood' })
+    render(0, 'k-addsub-shack', 'fraction-falls')
+    const ears = listenIn()
+    await advance(600)
+    expect(ears.since()).toContain(tapFood)
+    await serveUntil(1)
+    expect(ears.since()).not.toContain(tapFood)
+    ears.stop()
   }, 30000)
 
   it('1st grade: fill, then set the pick-up clock to the hour', async () => {
