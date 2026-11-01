@@ -38,6 +38,17 @@ export const fractionZone: Zone = {
       starsToEarn: 3,
     },
     {
+      id: 'frac-gobble',
+      kind: 'practice',
+      title: 'Gobble Garden',
+      description: 'Gobble the fractions smaller than the cloud: same bottoms, same tops, and halves!',
+      gameId: 'gobbleGarden',
+      // the grade's denominators (lib/gradeTiers): same denominator → same numerator → benchmarks against ½
+      providerConfig: { kind: 'gobble', set: 'frac' },
+      params: { seconds: 80 },
+      starsToEarn: 3,
+    },
+    {
       id: 'frac-mastery',
       kind: 'mastery',
       title: 'Compare the Pour',
@@ -51,7 +62,8 @@ export const fractionZone: Zone = {
   stagesByBand: {
     // K "Add-and-Take Falls" (K.OA.1, K.OA.5, K.OA.4): things join and leave on screen as
     // the voice says so (the `mathStory` activity), answered with numeral cards: within 5,
-    // then within 10, then make ten on a ten-frame. Titles and descriptions are said aloud.
+    // then within 10, then the Snack Shack (count snacks onto the tray, then "how many in
+    // all?"), then make ten on a ten-frame. Titles and descriptions are said aloud.
     k1: [
       {
         id: 'k-addsub-1',
@@ -71,6 +83,19 @@ export const fractionZone: Zone = {
         gameId: 'listenPlay',
         providerConfig: { kind: 'kAddTake', mode: 'within10' },
         params: { questionCount: 6 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'k-addsub-shack',
+        kind: 'practice',
+        title: 'Snack Shack',
+        description: 'Fill the orders. How many snacks in all?',
+        gameId: 'snackShack',
+        // (the shack makes its own orders: count the snacks onto the tray, then add the two kinds; all spoken)
+        providerConfig: { kind: 'snackShack', band: 'k1' },
+        // four customers (one kind, two within 5, then 6–8 and 7–10): a kindergartner taps every
+        // snack, about 2 s a tap, and six customers ran past three and a half minutes
+        params: { customers: 4 },
         starsToEarn: 3,
       },
       {
@@ -142,6 +167,16 @@ export const fractionZone: Zone = {
         gameId: 'conceptPlay',
         providerConfig: { kind: 'g5Fractions', mode: 'timesShare' },
         params: { questionCount: 8 },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g5-frac-gobble',
+        kind: 'practice',
+        title: 'Gobble Garden',
+        description: 'You are 0.7: can you eat 5/8? Gobble fractions and decimals smaller than the cloud!',
+        gameId: 'gobbleGarden',
+        providerConfig: { kind: 'gobble', set: 'fracDec' },
+        params: { seconds: 80 },
         starsToEarn: 3,
       },
       {

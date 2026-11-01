@@ -28,6 +28,11 @@ const TimesGroveAreaGame = lazyWithRetry(() => import('./TimesGroveArea'))
 // The K–1 Listen & Play shell (2D, but only K–1 stages need it).
 const ListenPlayGame = lazyWithRetry(() => import('./listenPlay/ListenPlay'))
 const CritterParadeGame = lazyWithRetry(() => import('./CritterParade'))
+const GobbleGardenGame = lazyWithRetry(() => import('./GobbleGarden'))
+// Snack Shack (2D, every band): its own chunk, like the others
+const SnackShackGame = lazyWithRetry(() => import('./SnackShack'))
+// Tower Battlefront, played as Puddle Patrol (every band: one 3D engine)
+const PuddlePatrolGame = lazyWithRetry(() => import('./tower-defense/PuddlePatrol'))
 
 function Loader({ children }: { children: ReactNode }) {
   return (
@@ -79,6 +84,31 @@ export function CritterParade(props: GameProps) {
   return (
     <Loader>
       <CritterParadeGame {...props} />
+    </Loader>
+  )
+}
+
+export function GobbleGarden(props: GameProps) {
+  return (
+    <Loader>
+      <GobbleGardenGame {...props} />
+    </Loader>
+  )
+}
+
+export function SnackShack(props: GameProps) {
+  return (
+    <Loader>
+      <SnackShackGame {...props} />
+    </Loader>
+  )
+}
+
+/** Tower Battlefront's stages (`towerDefense`): Puddle Patrol, the sprinkler defense. */
+export function TowerDefense(props: GameProps) {
+  return (
+    <Loader>
+      <PuddlePatrolGame {...props} />
     </Loader>
   )
 }

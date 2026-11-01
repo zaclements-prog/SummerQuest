@@ -298,6 +298,17 @@ export function effectiveConfig(
     case 'g5Div':
     case 'g5Expr':
       return config
+    // Gobble Garden: whole numbers follow the grade's place-value reach, fractions its denominators
+    case 'gobble':
+      if (config.set === 'whole') return { ...config, maxPlace: t.pvIdentifyMaxPlace }
+      if (config.set === 'frac') return { ...config, maxDen: t.fracCompareMaxDenom }
+      return config
+    // Snack Shack: grades 2–4 share a stage, so the grade picks the money and the clock
+    case 'snackShack':
+      return config.band === 'g24' ? { ...config, grade } : config
+    // Puddle Patrol: the grade widens grades 2–4's numbers (2nd grade to 30 / 60, 3rd–4th to 100)
+    case 'puddlePatrol':
+      return { ...config, grade }
   }
 }
 

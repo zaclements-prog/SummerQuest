@@ -471,7 +471,8 @@ describe('Fill the frames (buildTeen)', () => {
 
 describe('the stages, played through', () => {
   it.each(['division-dunes', 'place-value-plateau'])('%s: every stage to its end, answered right, three stars', async (zoneId) => {
-    for (const stage of zoneStages((await import('../../../curriculum')).getZone(zoneId)!, 0)) {
+    // (Listen & Play's own stages: Number Dunes' Gobble Garden is its own game)
+    for (const stage of zoneStages((await import('../../../curriculum')).getZone(zoneId)!, 0).filter((s) => s.gameId === 'listenPlay')) {
       let result: GameResult | null = null
       const n = Number(stage.params?.questionCount)
       mount(createProvider(stage.providerConfig), (r) => (result = r), n)

@@ -14,6 +14,9 @@ export const SKILLS: Record<string, SkillMeta> = {
   'mult-f2_5':  { label: '2–5× facts',  zoneId: 'multiplication-mesa', lessonId: 'multiplication', practiceStageId: 'mult-practice' },
   'mult-f6_9':  { label: '6–9× facts',  zoneId: 'multiplication-mesa', lessonId: 'multiplication', practiceStageId: 'mult-practice' },
   'mult-f10_12':{ label: '10–12× facts',zoneId: 'multiplication-mesa', lessonId: 'multiplication', practiceStageId: 'mult-practice' },
+  // tower-battlefront (Puddle Patrol, grades 2–4: sprinklers for even / odd and for multiples)
+  'mult-even-odd': { label: 'even and odd numbers', zoneId: 'tower-battlefront', lessonId: 'multiplication', practiceStageId: 'td-even-odd' },
+  'mult-skip':     { label: 'multiples of 2, 5 and 10', zoneId: 'tower-battlefront', lessonId: 'multiplication', practiceStageId: 'td-skip-count' },
   // division-dunes
   'div-basic':  { label: 'basic division facts', zoneId: 'division-dunes', lessonId: 'division', practiceStageId: 'div-practice' },
   'div-larger': { label: 'larger division facts', zoneId: 'division-dunes', lessonId: 'division', practiceStageId: 'div-practice' },
@@ -183,6 +186,9 @@ export const SKILLS: Record<string, SkillMeta> = {
   'g5-expr-write':     { label: 'writing and reading expressions', zoneId: 'word-problem-woods', lessonId: 'g5Expressions', practiceStageId: 'g5-woods-1' },
   'g5-expr-order':     { label: 'order of operations', zoneId: 'word-problem-woods', lessonId: 'g5Expressions', practiceStageId: 'g5-woods-2' },
   'g5-expr-patterns':  { label: 'patterns with two rules', zoneId: 'word-problem-woods', lessonId: 'g5Expressions', practiceStageId: 'g5-woods-1' },
+  // Tower Battlefront (Puddle Patrol, 5th grade): factor, multiple and prime sprinklers
+  'g5-factors': { label: 'factors and multiples', zoneId: 'tower-battlefront', lessonId: 'g5Multiplication', practiceStageId: 'g5-td-factors' },
+  'g5-primes':  { label: 'prime numbers', zoneId: 'tower-battlefront', lessonId: 'g5Multiplication', practiceStageId: 'g5-td-primes' },
   'g5-wp-multistep':   { label: 'multi-step word problems', zoneId: 'word-problem-woods', lessonId: 'g5Expressions', practiceStageId: 'g5-woods-3' },
 }
 

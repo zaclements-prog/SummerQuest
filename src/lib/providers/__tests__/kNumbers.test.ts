@@ -43,7 +43,12 @@ function rounds(config: ProviderConfig, seed: string, n = SEEDS, length = ROUND)
   return out
 }
 
-const STAGES = ['division-dunes', 'place-value-plateau'].flatMap((z) => zoneStages(getZone(z)!, 0).map((s) => ({ id: s.id, config: s.providerConfig, count: Number(s.params?.questionCount) })))
+// (the Listen & Play stages: Gobble Garden makes its own snacks, tested in lib/gobble)
+const STAGES = ['division-dunes', 'place-value-plateau'].flatMap((z) =>
+  zoneStages(getZone(z)!, 0)
+    .filter((s) => s.gameId === 'listenPlay')
+    .map((s) => ({ id: s.id, config: s.providerConfig, count: Number(s.params?.questionCount) })),
+)
 
 /** The answer, worked out from the activity's own numbers (not from the provider's bookkeeping). */
 function solve(s: NumberActivitySpec): string | number {

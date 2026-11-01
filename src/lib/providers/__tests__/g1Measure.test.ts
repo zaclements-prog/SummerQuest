@@ -51,7 +51,10 @@ function rounds(mode: G1MeasureMode, seed: string, n = 12): ListenProblem[] {
 
 describe('Measure Marsh, 1st grade: the stages', () => {
   it('are the contract’s three stages, each a round of six on its own mode', () => {
-    const set = zoneStages(getZone('measurement-marsh')!, 1)
+    // (the Snack Shack, its own game, sits before the clock stage)
+    const all = zoneStages(getZone('measurement-marsh')!, 1)
+    expect(all.map((s) => s.id)).toEqual(['g1-measure-1', 'g1-measure-2', 'g1-measure-shack', 'g1-measure-3'])
+    const set = all.filter((s) => s.gameId === 'listenPlay')
     expect(set.map((s) => [s.id, (s.providerConfig as { mode?: string }).mode, s.params?.questionCount])).toEqual([
       ['g1-measure-1', 'order', 6],
       ['g1-measure-2', 'units', 6],

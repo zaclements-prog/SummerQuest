@@ -9,9 +9,8 @@ import type { ProblemProvider } from '../lib/problem'
 import ConceptPlay from '../games/ConceptPlay'
 import SpeedRun from '../games/SpeedRun'
 import BossBattle from '../games/BossBattle'
-import TowerDefense from '../games/tower-defense/TowerDefense'
 import WritingPad from '../games/WritingPad'
-import { CloudKeeper, CritterParade, DivisionArena, FractionForge, ListenPlay, TimesGrove } from '../games/lazyGames'
+import { CloudKeeper, CritterParade, DivisionArena, FractionForge, GobbleGarden, ListenPlay, SnackShack, TimesGrove, TowerDefense } from '../games/lazyGames'
 import { ListenResultCard } from '../games/listenPlay/ListenResultCard'
 import { ListenQuitDialog } from '../components/listen/ListenQuitDialog'
 import { isListenMode } from '../lib/gradeBand'
@@ -31,7 +30,7 @@ import { resultCopy } from './resultCopy'
 import { isStageUnlocked } from '../lib/stageLocks'
 import { useWorldUi } from '../world/useWorldUi'
 
-const ARENA_3D = new Set(['divisionArena', 'fractionForge', 'cloudKeeper', 'timesGrove', 'critterParade'])
+const ARENA_3D = new Set(['divisionArena', 'fractionForge', 'cloudKeeper', 'timesGrove', 'critterParade', 'gobbleGarden', 'towerDefense'])
 
 export interface GameResult {
   stars: number
@@ -39,8 +38,8 @@ export interface GameResult {
   correct: number
   total: number
   /**
-   * How the game itself ended, when stars alone don't say it (Tower Battlefront:
-   * "The base fell at wave 4"). The result screen's headline comes from this.
+   * How the game itself ended, when stars alone don't say it. The result
+   * screen's headline comes from this.
    */
   outcome?: { headline: string; detail?: string; lost?: boolean }
 }
@@ -191,6 +190,10 @@ export default function GameRunner() {
         return TimesGrove
       case 'critterParade':
         return CritterParade
+      case 'gobbleGarden':
+        return GobbleGarden
+      case 'snackShack':
+        return SnackShack
       case 'writingPad':
         return WritingPad
       case 'listenPlay':

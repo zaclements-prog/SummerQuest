@@ -4,12 +4,14 @@ import { petStatuses, shownStage } from './growth'
 import type { AnyPetStatus, PetGrowth, PetStatus } from './growth'
 import { schoolPetStatus } from './schoolPet'
 
-/** Every zone pet's growth right now, at the child's grade (recomputed only when stars, finished lessons or the grade change). */
+/** Every zone pet's growth right now, at the child's grade (recomputed only when stars, finished lessons, the grade or a celebrated stage change). */
 export function usePetStatuses(): PetStatus[] {
   const zones = useProgress((s) => s.zones)
   const lessonsDone = useProgress((s) => s.lessonsDone)
   const grade = useProgress((s) => s.player?.grade)
-  return useMemo(() => petStatuses(zones, lessonsDone, grade), [zones, lessonsDone, grade])
+  const seen = useProgress((s) => s.petsSeen)
+  // (a pet already celebrated at a stage keeps it when its zone gains a stage)
+  return useMemo(() => petStatuses(zones, lessonsDone, grade, undefined, seen), [zones, lessonsDone, grade, seen])
 }
 
 /** Every pet's status: the twelve zone pets, then the Schoolhouse raven. */

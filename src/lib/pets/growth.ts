@@ -151,6 +151,7 @@ export function petStatus(
   lessonsDone: LessonsDoneLike,
   grade: GradeLevel | null | undefined,
   zoneLookup: ZoneLookup = getZone,
+  seen?: PetGrowth,
 ): PetStatus {
   const zone = zoneLookup(pet.zoneId)
   const progress = zones[pet.zoneId]
@@ -162,6 +163,9 @@ export function petStatus(
     const g = growthFromStars(t.earned, t.total, lessonDone)
     if (growthRank(g) > growthRank(stage)) stage = g
   }
+  // a stage already celebrated is kept: a zone that gains a new stage (a new
+  // game) raises its total, but a grown pet never shrinks back
+  if (isPetGrowth(seen) && growthRank(seen) > growthRank(stage)) stage = seen
   // …and what comes next, counted in the child's current band
   const { earned, total } = zone ? zoneStarTotals(zone, progress, grade) : { earned: 0, total: 0 }
   let next: PetNext | null = null
@@ -178,8 +182,9 @@ export function petStatuses(
   lessonsDone: LessonsDoneLike,
   grade: GradeLevel | null | undefined,
   zoneLookup: ZoneLookup = getZone,
+  seen: Partial<Record<string, PetGrowth>> = {},
 ): PetStatus[] {
-  return PETS.map((p) => petStatus(p, zones, lessonsDone, grade, zoneLookup))
+  return PETS.map((p) => petStatus(p, zones, lessonsDone, grade, zoneLookup, seen[p.creatureId]))
 }
 
 /** creatureId → its derived stage, for every pet (a grade change never moves one: the best band counts). */

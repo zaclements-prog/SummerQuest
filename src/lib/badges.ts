@@ -46,6 +46,11 @@ export interface BadgeCtx {
    * Missing: none.
    */
   focusClears?: number
+  /**
+   * Badges already celebrated (`seenBadges`). They stay earned: a zone that
+   * gains a new stage (a new game) never takes its badge away. Missing: none.
+   */
+  seenBadges?: readonly string[]
 }
 
 export const ZONE_BADGES: { zoneId: string; emoji: string; title: string }[] = [
@@ -202,7 +207,8 @@ export function computeBadges(ctx: BadgeCtx): BadgeStatus[] {
     },
   ].map((m) => ({ ...m, category: 'milestone' as const }))
 
-  return [...zoneBadges, ...milestones]
+  const seen = new Set(ctx.seenBadges ?? [])
+  return [...zoneBadges, ...milestones].map((b) => (b.earned || !seen.has(b.id) ? b : { ...b, earned: true }))
 }
 
 export function earnedBadgeIds(ctx: BadgeCtx): string[] {

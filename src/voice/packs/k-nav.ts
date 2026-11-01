@@ -128,6 +128,7 @@ export default defineVoicePack({
     'welcome-fraction-falls': 'Add-and-Take Falls! Tap a star to play!',
     'stage-k-addsub-1': 'Hop in, hop out!',
     'stage-k-addsub-2': 'Up to ten!',
+    'stage-k-addsub-shack': 'Snack Shack!',
     'stage-k-addsub-3': 'Make ten!',
 
     // ── Story Woods (K complete, phase 2a): its name, welcome and stage buttons ──
@@ -207,6 +208,7 @@ export default defineVoicePack({
     // ── 1st grade (phase 2b): Measure Marsh (keeps its name), Graph Delta, Sky Summit ──
     'stage-g1-measure-1': 'Longest to shortest!',
     'stage-g1-measure-2': 'Paper clip ruler!',
+    'stage-g1-measure-shack': 'Snack Shack!',
     'stage-g1-measure-3': 'What time is it?',
     'name-g1-data-delta': 'Graph Delta!',
     'welcome-g1-data-delta': 'Graph Delta! Tap a star to play!',

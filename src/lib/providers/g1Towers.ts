@@ -6,10 +6,11 @@ import { randInt, shuffle } from '../random'
 import { makeKindPicker, makePositionGuard, pickOne } from './kShared'
 
 /**
- * Counting Towers for 1st grade (Tower Battlefront, 1.OA.6): the questions
- * that build the towers in the K–1 tower game (src/games/tower-defense/
- * KTowers.tsx, the same game kindergarten plays), answered with big numeral
- * cards. Each shows a number sentence ("3 + 4") and says it ("Three plus four.
+ * Counting Towers for 1st grade (Tower Battlefront, 1.OA.6): the spoken
+ * addition and subtraction questions the 1st-grade Daily Challenge asks for
+ * the zone (its tower stages play Puddle Patrol, src/games/tower-defense/
+ * PuddlePatrol.tsx, whose Puddings carry the same number sentences), answered
+ * with big numeral cards. Each shows a number sentence ("3 + 4") and says it ("Three plus four.
  * Tap the answer."). A wrong pick hears the strategy (count on from the bigger
  * number, count back, or count up) and tries again.
  *

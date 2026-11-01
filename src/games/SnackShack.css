@@ -1,0 +1,51 @@
+/* Snack Shack (src/games/SnackShack.tsx): the stand's little loops. All off for reduced motion. */
+@keyframes shack-twinkle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+@keyframes shack-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px) rotate(-3deg); }
+}
+@keyframes shack-sway {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
+@keyframes shack-hop {
+  0%, 100% { transform: translateY(0) scale(1, 1); }
+  30% { transform: translateY(-16px) scale(0.96, 1.05); }
+  55% { transform: translateY(0) scale(1.06, 0.94); }
+}
+@keyframes shack-float {
+  0% { transform: translateY(0); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: translateY(-36px); opacity: 0; }
+}
+@keyframes shack-note {
+  0% { transform: translate(0, 0); opacity: 0; }
+  30% { opacity: 1; }
+  100% { transform: translate(10px, -22px); opacity: 0; }
+}
+@keyframes shack-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+.shack-twinkle { animation: shack-twinkle 1.6s ease-in-out infinite; }
+.shack-bob { animation: shack-bob 2.4s ease-in-out infinite; transform-box: fill-box; }
+.shack-sway { animation: shack-sway 3s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 100%; }
+.shack-hop { animation: shack-hop 0.7s ease-in-out 3; transform-box: fill-box; transform-origin: 50% 100%; }
+.shack-float { animation: shack-float 1.8s ease-out infinite; }
+.shack-note { animation: shack-note 2s ease-out infinite; }
+.shack-shake { animation: shack-shake 0.35s ease-in-out 3; }
+/* 💡 Show me how, after a miss or a long think: a soft golden pulse (a still ring for reduced motion) */
+@keyframes shack-nudge {
+  0%, 100% { box-shadow: 0 3px 0 rgba(58, 44, 56, 0.35), 0 0 0 0 rgba(255, 196, 61, 0.9); }
+  50% { box-shadow: 0 3px 0 rgba(58, 44, 56, 0.35), 0 0 0 9px rgba(255, 196, 61, 0); }
+}
+.shack-nudge { animation: shack-nudge 1.4s ease-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .shack-twinkle, .shack-bob, .shack-sway, .shack-hop, .shack-float, .shack-note, .shack-shake, .shack-nudge { animation: none; }
+  .shack-nudge { box-shadow: 0 0 0 4px rgb(255, 196, 61); }
+}

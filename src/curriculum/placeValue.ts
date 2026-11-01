@@ -38,6 +38,17 @@ export const placeValueZone: Zone = {
       starsToEarn: 3,
     },
     {
+      id: 'pv-gobble',
+      kind: 'practice',
+      title: 'Gobble Garden',
+      description: 'Steer the hungry cloud to snacks smaller than its number. Work out the sums first!',
+      gameId: 'gobbleGarden',
+      // whole numbers into the thousands (the grade's reach, lib/gradeTiers) and expressions like 3 + 4 or 5 × 2
+      providerConfig: { kind: 'gobble', set: 'whole' },
+      params: { seconds: 80 },
+      starsToEarn: 3,
+    },
+    {
       id: 'pv-mastery',
       kind: 'mastery',
       title: 'Summit Showdown',
@@ -114,6 +125,16 @@ export const placeValueZone: Zone = {
         starsToEarn: 3,
       },
       {
+        id: 'g1-tens-gobble',
+        kind: 'practice',
+        title: 'Gobble Garden',
+        description: 'Feed the cloud numbers smaller than its number!',
+        gameId: 'gobbleGarden',
+        // two-digit numbers; tens-and-ones pictures on a burp (and on the snacks when it gets hard)
+        providerConfig: { kind: 'gobble', set: 'g1' },
+        starsToEarn: 3,
+      },
+      {
         id: 'g1-tens-3',
         kind: 'mastery',
         title: 'Count to 120',
@@ -146,6 +167,16 @@ export const placeValueZone: Zone = {
         gameId: 'speedRun',
         providerConfig: { kind: 'g5Decimals', mode: 'roundOps' },
         params: { timeLimitSec: 120, starThresholds: [6, 10, 14] },
+        starsToEarn: 3,
+      },
+      {
+        id: 'g5-dec-gobble',
+        kind: 'practice',
+        title: 'Gobble Garden',
+        description: 'Gobble the decimals smaller than the cloud. Watch the thousandths!',
+        gameId: 'gobbleGarden',
+        providerConfig: { kind: 'gobble', set: 'dec' },
+        params: { seconds: 80 },
         starsToEarn: 3,
       },
       {

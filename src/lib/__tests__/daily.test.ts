@@ -18,7 +18,7 @@ const G5_FIRST: Record<string, string> = {
   // Fraction Falls, Place Value Plateau, Tower Battlefront
   'fraction-falls': 'g5-frac-1',
   'place-value-plateau': 'g5-dec-1',
-  'tower-battlefront': 'g5-td-1',
+  'tower-battlefront': 'g5-td-factors',
   // Measurement Marsh, Geometry Grove, Data Delta
   'measurement-marsh': 'g5-measure-1',
   'geometry-grove': 'g5-geo-1',

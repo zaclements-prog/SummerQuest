@@ -52,3 +52,15 @@ describe('zone badge names follow the grade', () => {
     expect(badge(ctx(1, { [mesa.id]: missingOne }), 'zone-multiplication-mesa').earned).toBe(false)
   })
 })
+
+describe('a celebrated badge stays earned', () => {
+  it('when its zone gains a stage the child has not played', () => {
+    // every 2–4 Fraction Falls stage but the new Gobble Garden one has a star
+    const zone = getZone('fraction-falls')!
+    const zones = { 'fraction-falls': { stages: Object.fromEntries(zone.stages.filter((s) => s.id !== 'frac-gobble').map((s) => [s.id, { stars: 1 }])) } }
+    expect(badge(ctx(3, zones), 'zone-fraction-falls').earned).toBe(false)
+    expect(badge({ ...ctx(3, zones), seenBadges: ['zone-fraction-falls'] }, 'zone-fraction-falls').earned).toBe(true)
+    // (a seen id never earns a different badge)
+    expect(badge({ ...ctx(3, zones), seenBadges: ['zone-fraction-falls'] }, 'zone-data-delta').earned).toBe(false)
+  })
+})

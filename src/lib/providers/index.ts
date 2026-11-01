@@ -72,6 +72,13 @@ import { makeG5DataProvider, type G5DataConfig } from './g5Data'
 import { makeG5MultProvider, type G5MultConfig } from './g5Mult'
 import { makeG5DivProvider, type G5DivConfig } from './g5Div'
 import { makeG5ExprProvider, type G5ExprConfig } from './g5Expr'
+// Gobble Garden (every band): the snacks a cloud of a number may eat
+import { makeGobbleProvider } from './gobble'
+import type { GobbleConfig } from '../gobble'
+// Snack Shack (all bands): the beach stand's orders, change and Clock Tower times
+import { makeSnackShackProvider, type SnackShackConfig } from './snackShack'
+// Puddle Patrol (Tower Battlefront, grades 2–5): the planned waves and the game's own question
+import { makePuddlePatrolProvider, type PuddlePatrolConfig } from './puddlePatrol'
 
 export type ProviderConfig =
   | { kind: 'multiplication'; factorMin: number; factorMax: number }
@@ -175,6 +182,15 @@ export type ProviderConfig =
   | ({ kind: 'g5Div' } & G5DivConfig)
   /** Word Problem Woods (5th grade): writing and working out expressions, two-rule patterns, multi-step stories. */
   | ({ kind: 'g5Expr' } & G5ExprConfig)
+  // ── new games ──
+  /** Gobble Garden: snacks smaller or bigger than the cloud's number (dots, two-digit, whole numbers and expressions, fractions, decimals). */
+  | ({ kind: 'gobble' } & GobbleConfig)
+  // ── Snack Shack (every band; src/games/SnackShack.tsx) ──
+  /** The beach stand: count snacks (K), the pick-up clock (1st), totals, change and elapsed time (2–5). */
+  | ({ kind: 'snackShack' } & SnackShackConfig)
+  // ── Puddle Patrol (Tower Battlefront, grades 2–5) ──
+  /** Which Pudding does this sprinkler wash? Even / odd, multiples, factors, primes, fractions equal to ½…; plus the stage's waves. */
+  | ({ kind: 'puddlePatrol' } & PuddlePatrolConfig)
 
 export function createProvider(config: ProviderConfig): ProblemProvider {
   switch (config.kind) {
@@ -294,5 +310,13 @@ export function createProvider(config: ProviderConfig): ProblemProvider {
       return makeG5DivProvider(config)
     case 'g5Expr':
       return makeG5ExprProvider(config)
+    case 'gobble':
+      return makeGobbleProvider(config)
+    // Snack Shack (every band)
+    case 'snackShack':
+      return makeSnackShackProvider(config)
+    // Puddle Patrol (Tower Battlefront, grades 2–5)
+    case 'puddlePatrol':
+      return makePuddlePatrolProvider(config)
   }
 }

@@ -170,6 +170,8 @@ export type WalkVisual =
       pending?: number
       /** Every jump of the walkthrough (pending one included): the timeline keeps its scale from step to step. */
       plan?: number[]
+      /** `start` is minutes after midnight: each time on the line says a.m., p.m. or noon. */
+      meridiem?: boolean
     }
   /**
    * Making change the shopkeeper's way: count up from `cost` (cents) to
@@ -184,6 +186,8 @@ export type WalkVisual =
       askTotal?: boolean
       /** How many hops the walkthrough makes in all (the line keeps its scale). */
       plan?: number
+      /** The last hop, up to `paid`, is the child's: drawn dashed and sized "?". */
+      openEnd?: boolean
     }
   /**
    * Rounding on a number line from `lo` to `hi` (the two round numbers):

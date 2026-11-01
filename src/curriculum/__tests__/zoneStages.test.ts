@@ -257,11 +257,14 @@ const G5_IDS: Record<string, string[]> = {
   'writing-workshop': ['g5-write-1', 'g5-write-2', 'g5-write-3'],
   'science-summit': ['g5-sci-1', 'g5-sci-cycle', 'g5-sci-2', 'g5-sci-3'],
   // Fraction Falls, Place Value Plateau, Tower Battlefront (phase 3)
-  'fraction-falls': ['g5-frac-1', 'g5-frac-2', 'g5-frac-3'],
-  'place-value-plateau': ['g5-dec-1', 'g5-dec-2', 'g5-dec-3'],
-  'tower-battlefront': ['g5-td-1'],
+  // (Gobble Garden before each boss)
+  'fraction-falls': ['g5-frac-1', 'g5-frac-2', 'g5-frac-gobble', 'g5-frac-3'],
+  'place-value-plateau': ['g5-dec-1', 'g5-dec-2', 'g5-dec-gobble', 'g5-dec-3'],
+  // (Puddle Patrol: factors, then primes, before the fraction-and-decimal mastery)
+  'tower-battlefront': ['g5-td-factors', 'g5-td-primes', 'g5-td-1'],
   // Measurement Marsh, Geometry Grove, Data Delta (phase 3)
-  'measurement-marsh': ['g5-measure-1', 'g5-measure-2', 'g5-measure-3'],
+  // (Snack Shack: a practice stage before the boss)
+  'measurement-marsh': ['g5-measure-1', 'g5-measure-2', 'g5-measure-shack', 'g5-measure-3'],
   'geometry-grove': ['g5-geo-1', 'g5-geo-2', 'g5-geo-3'],
   'data-delta': ['g5-data-1', 'g5-data-2', 'g5-data-3'],
   // Multiplication Mesa, Division Dunes, Word Problem Woods (phase 3)
@@ -281,11 +284,12 @@ const G1_IDS: Record<string, string[]> = {
   'writing-workshop': ['g1-trace-1', 'g1-spell-1', 'g1-sentence-1'],
   'tower-battlefront': ['g1-towers-1', 'g1-towers-2', 'g1-towers-3'],
   // Tens Plateau, Fair Share Falls, Shape Grove (phase 2b)
-  'place-value-plateau': ['g1-tens-1', 'g1-tens-2', 'g1-tens-3'],
+  'place-value-plateau': ['g1-tens-1', 'g1-tens-2', 'g1-tens-gobble', 'g1-tens-3'],
   'fraction-falls': ['g1-shares-1', 'g1-shares-2', 'g1-shares-3'],
   'geometry-grove': ['g1-shapes-1', 'g1-shapes-2', 'g1-shapes-3'],
   // Measure Marsh, Graph Delta, Sky Summit (phase 2b)
-  'measurement-marsh': ['g1-measure-1', 'g1-measure-2', 'g1-measure-3'],
+  // (Snack Shack: a practice stage before the clock stage)
+  'measurement-marsh': ['g1-measure-1', 'g1-measure-2', 'g1-measure-shack', 'g1-measure-3'],
   'data-delta': ['g1-graphs-1', 'g1-graphs-2', 'g1-graphs-3'],
   'science-summit': ['g1-science-1', 'g1-science-2', 'g1-science-3'],
   // Adding Mesa, Take-Away Dunes, Story Woods (phase 2b)
@@ -318,10 +322,12 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
     // (K literacy, phase 1b: Writing Workshop wakes up as the fourth K zone)
     'writing-workshop': ['k-trace-1', 'k-trace-2', 'k-trace-3', 'k-story-1'],
     // (K complete, phase 2a)
-    'fraction-falls': ['k-addsub-1', 'k-addsub-2', 'k-addsub-3'],
+    // (Snack Shack: a practice stage before Make ten)
+    'fraction-falls': ['k-addsub-1', 'k-addsub-2', 'k-addsub-shack', 'k-addsub-3'],
     'word-problem-woods': ['k-woods-1', 'k-woods-2', 'k-woods-3'],
     // (K complete, phase 2a: Number Dunes, Ten Frame Plateau)
-    'division-dunes': ['k-dunes-1', 'k-dunes-2', 'k-dunes-3'],
+    // (Gobble Garden before the last stage)
+    'division-dunes': ['k-dunes-1', 'k-dunes-2', 'k-dunes-gobble', 'k-dunes-3'],
     'place-value-plateau': ['k-teens-1', 'k-teens-2', 'k-teens-3'],
     // K complete (phase 2a)
     'measurement-marsh': ['k-measure-1', 'k-measure-2', 'k-measure-3'],
@@ -379,10 +385,23 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
         expect(s.params?.ops).not.toBe('div')
         continue
       }
+      // Gobble Garden: kindergarten's dots and numerals to 10 (no clock: no `seconds`)
+      if (s.id === 'k-dunes-gobble') {
+        expect(s.gameId).toBe('gobbleGarden')
+        expect(s.providerConfig).toEqual({ kind: 'gobble', set: 'k' })
+        expect(s.params?.seconds).toBeUndefined()
+        continue
+      }
       // Counting Towers: the tower defense in its K–1 mode (its questions build the towers)
       if (s.id.startsWith('k-towers-')) {
         expect(s.gameId, s.id).toBe('towerDefense')
         expect(s.params?.listen, s.id).toBe(true)
+        continue
+      }
+      // Snack Shack: four customers (a kindergartner taps every snack), its own spoken orders
+      if (s.gameId === 'snackShack') {
+        expect(s.params?.customers, s.id).toBe(4)
+        expect(s.providerConfig).toEqual({ kind: 'snackShack', band: 'k1' })
         continue
       }
       expect(s.gameId, s.id).toBe('listenPlay')
@@ -394,9 +413,9 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
       ...['kLetters', 'kLiteracy', 'kLetters', 'kLiteracy', 'kLetters', 'kLiteracy', 'kLiteracy', 'kLiteracy'],
       ...['kTrace', 'kTrace', 'kTrace', 'kStories'],
       // (K complete, phase 2a)
-      ...['kAddTake', 'kAddTake', 'kAddTake'],
+      ...['kAddTake', 'kAddTake', 'snackShack', 'kAddTake'],
       ...['kStoryMath', 'kStoryMath', 'kStoryMath'],
-      ...['kCompare', 'kCompare', 'kCompare', 'kTeens', 'kTeens', 'kTeens'],
+      ...['kCompare', 'kCompare', 'gobble', 'kCompare', 'kTeens', 'kTeens', 'kTeens'],
       // K complete (phase 2a), in K1_IDS order
       ...['kMeasure', 'kMeasure', 'kMeasure', 'kSort', 'kSort', 'kSort'],
       ...['kScience', 'kScience', 'kScience', 'kTowers', 'kTowers', 'kTowers'],
@@ -475,12 +494,13 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
     const falls = getZone('fraction-falls')!
     const woods = getZone('word-problem-woods')!
     for (const [zone, title, ids] of [
-      [falls, 'Add-and-Take Falls', ['k-addsub-1', 'k-addsub-2', 'k-addsub-3']],
+      // (Snack Shack: a practice stage before Make ten)
+      [falls, 'Add-and-Take Falls', ['k-addsub-1', 'k-addsub-2', 'k-addsub-shack', 'k-addsub-3']],
       [woods, 'Story Woods', ['k-woods-1', 'k-woods-2', 'k-woods-3']],
     ] as const) {
       const set = zoneStages(zone, 0)
       expect(set.map((s) => s.id)).toEqual(ids)
-      expect(set.map((s) => s.kind)).toEqual(['concept', 'practice', 'mastery'])
+      expect(set.map((s) => s.kind)).toEqual(ids.length === 4 ? ['concept', 'practice', 'practice', 'mastery'] : ['concept', 'practice', 'mastery'])
       expect(zoneTitle(zone, 0)).toBe(title)
       expect(isZoneSleeping(zone, 0)).toBe(false)
       // each unlocks after the one before it
@@ -492,7 +512,7 @@ describe('the K–1 pilot (fixed ids: K–5 plan, phase-1 contract)', () => {
       expect(q.activity?.kind).toBe('mathStory')
     }
     // the 2–4 stages are unchanged
-    expect(falls.stages.map((s) => s.id)).toEqual(['frac-concept', 'frac-practice', 'frac-mastery'])
+    expect(falls.stages.map((s) => s.id)).toEqual(['frac-concept', 'frac-practice', 'frac-gobble', 'frac-mastery'])
     expect(woods.stages.map((s) => s.id)).toEqual(['wp-concept', 'wp-practice', 'wp-mastery'])
   })
 
@@ -513,11 +533,13 @@ describe('K complete (phase-2a contract): Number Dunes and Ten Frame Plateau', (
     expect(set.map((s) => [s.id, s.kind, s.title])).toEqual([
       ['k-dunes-1', 'concept', 'Line them up'],
       ['k-dunes-2', 'practice', 'Which is more?'],
+      ['k-dunes-gobble', 'practice', 'Gobble Garden'],
       ['k-dunes-3', 'mastery', 'Numbers in order'],
     ])
     expect(set.map((s) => s.providerConfig)).toEqual([
       { kind: 'kCompare', mode: 'match' },
       { kind: 'kCompare', mode: 'numbers' },
+      { kind: 'gobble', set: 'k' },
       { kind: 'kCompare', mode: 'lineUp' },
     ])
     expect(zoneTitle(dunes, 0)).toBe('Number Dunes')
@@ -544,7 +566,7 @@ describe('K complete (phase-2a contract): Number Dunes and Ten Frame Plateau', (
     expect(zoneTitle(plateau, 0)).toBe('Ten Frame Plateau')
     expect(isZoneSleeping(plateau, 0)).toBe(false)
     expect(zoneTitle(plateau, 4)).toBe('Place Value Plateau')
-    expect(plateau.stages.map((s) => s.id)).toEqual(['pv-concept', 'pv-practice', 'pv-mastery'])
+    expect(plateau.stages.map((s) => s.id)).toEqual(['pv-concept', 'pv-practice', 'pv-gobble', 'pv-mastery'])
   })
 
   it('every question is answered by doing a number activity (no plain cards), and each unlocks after the one before', () => {
@@ -552,6 +574,8 @@ describe('K complete (phase-2a contract): Number Dunes and Ten Frame Plateau', (
       const zone = getZone(zoneId)!
       const set = zoneStages(zone, 0)
       for (const s of set) {
+        // (Gobble Garden is its own game: the cloud's number and the snacks are its activity)
+        if (s.gameId === 'gobbleGarden') continue
         const p = createProvider(s.providerConfig)
         for (let i = 0; i < 6; i++) expect((p.next() as ListenProblem).activity, `${s.id} #${i}`).toBeDefined()
       }
@@ -605,17 +629,25 @@ describe('Nature Summit and Counting Towers (phase-2a contract)', () => {
     ])
     // K–1 behaviour lives behind the stage's params (the 2–4 stage has none)
     expect(set.map((s) => s.params)).toEqual([
-      { listen: true, waves: 3 },
-      { listen: true, waves: 3 },
-      { listen: true, waves: 4 },
+      { listen: true, patrol: 'k-count' },
+      { listen: true, patrol: 'k-compare' },
+      { listen: true, patrol: 'k-mixed' },
     ])
     expect(zoneTitle(zone, 0)).toBe('Counting Towers')
     expect(isZoneSleeping(zone, 0)).toBe(false)
-    // grades 2–4 keep today's one stage, exactly
-    expect(zone.stages).toHaveLength(1)
-    expect(zone.stages[0]).toMatchObject({ id: 'td-arena', gameId: 'towerDefense', providerConfig: { kind: 'multiplication', factorMin: 2, factorMax: 10 } })
-    expect(zone.stages[0].params).toBeUndefined()
-    for (const g of [2, 3, 4] as const) expect(zoneStages(zone, g).map((s) => s.id)).toEqual(['td-arena'])
+    // grades 2–4: Puddle Patrol's even / odd and skip-counting stages, then today's mastery stage (its id kept)
+    expect(zone.stages.map((s) => [s.id, s.kind])).toEqual([
+      ['td-even-odd', 'concept'],
+      ['td-skip-count', 'practice'],
+      ['td-arena', 'mastery'],
+    ])
+    expect(zone.stages.map((s) => s.providerConfig)).toEqual([
+      { kind: 'puddlePatrol', set: 'g24-evenOdd' },
+      { kind: 'puddlePatrol', set: 'g24-skip' },
+      { kind: 'puddlePatrol', set: 'g24-mixed' },
+    ])
+    for (const s of zone.stages) expect(s.gameId).toBe('towerDefense')
+    for (const g of [2, 3, 4] as const) expect(zoneStages(zone, g).map((s) => s.id)).toEqual(['td-even-odd', 'td-skip-count', 'td-arena'])
   })
 })
 
@@ -716,6 +748,7 @@ describe('1st grade (phase-2b contract): Tens Plateau, Fair Share Falls, Shape G
       stages: [
         ['g1-tens-1', 'concept', 'Tens and ones', { kind: 'g1Tens', mode: 'tensOnes' }],
         ['g1-tens-2', 'practice', 'Bigger or smaller', { kind: 'g1Tens', mode: 'compare' }],
+        ['g1-tens-gobble', 'practice', 'Gobble Garden', { kind: 'gobble', set: 'g1' }],
         ['g1-tens-3', 'mastery', 'Count to 120', { kind: 'g1Tens', mode: 'to120' }],
       ],
     },
@@ -764,14 +797,20 @@ describe('1st grade (phase-2b contract): Tens Plateau, Fair Share Falls, Shape G
       const zone = getZone(z.zoneId)!
       const set = zoneStages(zone, 1)
       set.forEach((s, i) => {
-        expect(s.gameId, s.id).toBe('listenPlay')
         expect(s.starsToEarn, s.id).toBe(3)
-        expect(s.params?.questionCount, s.id).toBeGreaterThanOrEqual(5)
-        expect(s.params?.questionCount, s.id).toBeLessThanOrEqual(6)
         expect(s.description.split(' ').length, s.id).toBeLessThanOrEqual(10)
         expect(s.description, s.id).toMatch(/[.!?]$/)
         expect(isStageUnlocked(zone, s.id, stars(set.slice(0, i).map((x) => x.id)), 1), s.id).toBe(true)
         if (i > 0) expect(isStageUnlocked(zone, s.id, stars(set.slice(0, i - 1).map((x) => x.id)), 1), s.id).toBe(false)
+        // (Tens Plateau's Gobble Garden: two-digit snacks, said aloud, no clock)
+        if (s.id === 'g1-tens-gobble') {
+          expect(s.gameId).toBe('gobbleGarden')
+          expect(s.params?.seconds).toBeUndefined()
+          return
+        }
+        expect(s.gameId, s.id).toBe('listenPlay')
+        expect(s.params?.questionCount, s.id).toBeGreaterThanOrEqual(5)
+        expect(s.params?.questionCount, s.id).toBeLessThanOrEqual(6)
         // every question is said, and comes from the stage's own provider
         const p = createProvider(s.providerConfig)
         for (let k = 0; k < 6; k++) expect((p.next() as ListenProblem).speech, `${s.id} #${k}`).toBeDefined()
@@ -788,7 +827,8 @@ describe('Grade 1 (phase-2b contract): Measure Marsh, Graph Delta, Sky Summit', 
       const zone = getZone(id)!
       const set = zoneStages(zone, 1)
       expect(set.map((s) => s.id)).toEqual(G1_IDS[id])
-      expect(set.map((s) => s.kind)).toEqual(['concept', 'practice', 'mastery'])
+      // (Measure Marsh: the Snack Shack is a second practice stage)
+      expect(set.map((s) => s.kind)).toEqual(set.length === 4 ? ['concept', 'practice', 'practice', 'mastery'] : ['concept', 'practice', 'mastery'])
       // each unlocks after the one before it
       const stars = (xs: string[]) => ({ stages: Object.fromEntries(xs.map((x) => [x, { stars: 1 }])) })
       set.forEach((s, i) => expect(isStageUnlocked(zone, s.id, stars(G1_IDS[id].slice(0, i)), 1), s.id).toBe(true))
@@ -808,16 +848,22 @@ describe('Grade 1 (phase-2b contract): Measure Marsh, Graph Delta, Sky Summit', 
   it('every 1st-grade stage is a voice-first round of 5–6 with 3 stars and a short spoken description', () => {
     const all = zones.flatMap((z) => zoneStages(getZone(z)!, 1))
     for (const s of all) {
-      expect(s.gameId, s.id).toBe('listenPlay')
       expect(s.starsToEarn, s.id).toBe(3)
-      expect(s.params?.questionCount, s.id).toBeGreaterThanOrEqual(5)
-      expect(s.params?.questionCount, s.id).toBeLessThanOrEqual(6)
       expect(s.description.split(' ').length, s.id).toBeLessThanOrEqual(10)
       expect(s.description, s.id).toMatch(/[.!?]$/)
+      // (the Snack Shack: a few spoken customers, a round of its own)
+      if (s.gameId === 'snackShack') {
+        expect(s.params?.customers, s.id).toBe(5)
+        continue
+      }
+      expect(s.gameId, s.id).toBe('listenPlay')
+      expect(s.params?.questionCount, s.id).toBeGreaterThanOrEqual(5)
+      expect(s.params?.questionCount, s.id).toBeLessThanOrEqual(6)
     }
     expect(all.map((s) => s.providerConfig)).toEqual([
       { kind: 'g1Measure', mode: 'order' },
       { kind: 'g1Measure', mode: 'units' },
+      { kind: 'snackShack', band: 'g1' },
       { kind: 'g1Measure', mode: 'time' },
       { kind: 'g1Graphs', mode: 'build' },
       { kind: 'g1Graphs', mode: 'read' },
@@ -830,7 +876,7 @@ describe('Grade 1 (phase-2b contract): Measure Marsh, Graph Delta, Sky Summit', 
     const first = (z: string, i: number) => createProvider(zoneStages(getZone(z)!, 1)[i].providerConfig).next() as ListenProblem
     expect(first('measurement-marsh', 0).activity?.kind).toBe('lengthOrder')
     expect(first('measurement-marsh', 1).activity?.kind).toBe('units')
-    expect(first('measurement-marsh', 2).activity?.kind).toBe('clockMatch')
+    expect(first('measurement-marsh', 3).activity?.kind).toBe('clockMatch')
     for (const i of [0, 1, 2]) expect(first('data-delta', i).activity?.kind).toBe('graph')
     for (const i of [0, 1, 2]) expect(first('science-summit', i).pictureOptions?.length).toBeGreaterThanOrEqual(2)
   })
@@ -963,8 +1009,9 @@ describe('Grade 5 (phase-3 contract): Measurement Marsh, Geometry Grove, Data De
       const zone = getZone(id)!
       const set = zoneStages(zone, 5)
       expect(set.map((s) => s.id)).toEqual(G5_IDS[id])
-      expect(set.map((s) => s.kind)).toEqual(['concept', 'practice', 'mastery'])
-      expect(set[2].gameId).toBe('bossBattle')
+      // (Measurement Marsh: the Snack Shack is a second practice stage before the boss)
+      expect(set.map((s) => s.kind)).toEqual(set.length === 4 ? ['concept', 'practice', 'practice', 'mastery'] : ['concept', 'practice', 'mastery'])
+      expect(set[set.length - 1].gameId).toBe('bossBattle')
       const stars = (xs: string[]) => ({ stages: Object.fromEntries(xs.map((x) => [x, { stars: 1 }])) })
       set.forEach((s, i) => expect(isStageUnlocked(zone, s.id, stars(G5_IDS[id].slice(0, i)), 5), s.id).toBe(true))
       expect(isStageUnlocked(zone, G5_IDS[id][2], stars([G5_IDS[id][0]]), 5)).toBe(false)
@@ -978,10 +1025,11 @@ describe('Grade 5 (phase-3 contract): Measurement Marsh, Geometry Grove, Data De
 
   it('every stage is a 2nd–4th grade game with 3 stars, fed by 5th grade’s own provider kinds (no grade tier rewrites them)', () => {
     const all = zones.flatMap((z) => zoneStages(getZone(z)!, 5))
-    expect(all.map((s) => s.gameId)).toEqual(['conceptPlay', 'speedRun', 'bossBattle', 'conceptPlay', 'conceptPlay', 'bossBattle', 'conceptPlay', 'conceptPlay', 'bossBattle'])
+    expect(all.map((s) => s.gameId)).toEqual(['conceptPlay', 'speedRun', 'snackShack', 'bossBattle', 'conceptPlay', 'conceptPlay', 'bossBattle', 'conceptPlay', 'conceptPlay', 'bossBattle'])
     expect(all.map((s) => s.providerConfig)).toEqual([
       { kind: 'g5Measure', mode: 'volume' },
       { kind: 'g5Measure', mode: 'convert' },
+      { kind: 'snackShack', band: 'g5' },
       { kind: 'g5Measure', mode: 'mixed' },
       { kind: 'g5Geometry', mode: 'coordinates' },
       { kind: 'g5Geometry', mode: 'classify' },
