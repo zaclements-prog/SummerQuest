@@ -65,6 +65,7 @@ import {
   type DripMotion,
   type StationMode,
 } from './CloudKeeper.parts'
+import { useGuideTimer } from './CloudKeeper.guide'
 import { juice } from './_juice/juice'
 import { Banner, StreakMeter } from './_juice/JuiceHud'
 import { Backdrop } from './_runkit/Backdrop'
@@ -174,6 +175,8 @@ export default function CloudKeeper({ params, onComplete, meta, paused: hostPaus
   const [banner, setBanner] = useState<string | null>('☁️ Cloud Keeper!')
   const [hud, setHud] = useState({ score: 0, streak: 0 })
   const [guide, setGuide] = useState(false)
+  // one pending arrow at a time: a quick leg's timer never lights the next leg's arrow early
+  const guideTimer = useGuideTimer<boolean>(setGuide)
   const [flash, setFlash] = useState(0)
   const [results, setResults] = useState<{ score: number; stars: number; bestScore: number; newBest: boolean; perfect: boolean; bestStreak: number; firstTry: number; loops: number; saved: number } | null>(null)
 
@@ -223,10 +226,11 @@ export default function CloudKeeper({ params, onComplete, meta, paused: hostPaus
       legRef.current = { problem, tried: false, secs: 0 }
       say(situationShort(problem.prompt))
       setGuide(false)
+      guideTimer.cancel()
       // warm-up only: the arrow shows at once on the very first leg, later only if the kid hesitates
-      if (plan[segIndex]?.guide) later(legIndex === 0 ? 400 : 3200, () => setGuide(true))
+      if (plan[segIndex]?.guide) guideTimer.schedule(legIndex === 0 ? 400 : 3200, true)
     },
-    [facts, plan, say, later],
+    [facts, plan, say, guideTimer],
   )
 
   const finishRun = useCallback(() => {
@@ -265,6 +269,7 @@ export default function CloudKeeper({ params, onComplete, meta, paused: hostPaus
         }))
         legRef.current = null
         setGuide(false)
+        guideTimer.cancel()
         react('worry')
         say('Storm! Save my friends! 🆘', 'bad')
         sfx.thud()
@@ -276,7 +281,7 @@ export default function CloudKeeper({ params, onComplete, meta, paused: hostPaus
       react('point')
       startLeg(viewRef.current.drops[0]?.form ?? 'water', segIndex, 0)
     },
-    [plan, showBanner, react, say, startLeg],
+    [plan, showBanner, react, say, startLeg, guideTimer],
   )
 
   // the hook: Drip pops out of the pool and hops onto the kid's head
@@ -346,6 +351,7 @@ export default function CloudKeeper({ params, onComplete, meta, paused: hostPaus
       const sk = leg.problem.skill
       if (meta && sk) recordAttempt({ zoneId: meta.zoneId, topic: facts.topic, skillId: sk.id, skillLabel: sk.label, correct: res.ok })
       setGuide(false)
+      guideTimer.cancel()
       const at = stationPoint(station, cloudSpotRef.current)
 
       if (!res.ok) {
@@ -358,7 +364,7 @@ export default function CloudKeeper({ params, onComplete, meta, paused: hostPaus
         react('oops')
         say(`${FORM_ICON[drop.form]} ${NEED_LINE[drop.form]}`, 'bad')
         later(1000, () => setView((w) => (w.phase === 'wobble' ? { ...w, phase: 'roam', station: null, mode: 'off' } : w)))
-        if (plan[v.segIndex]?.guide) later(1200, () => setGuide(true))
+        if (plan[v.segIndex]?.guide) guideTimer.schedule(1200, true)
         return
       }
 
@@ -484,7 +490,7 @@ export default function CloudKeeper({ params, onComplete, meta, paused: hostPaus
       })
       later(3800, () => legDone(next, true))
     },
-    [facts.topic, finishRun, later, legDone, meta, plan, react, recordAnswer, recordAttempt, say, setDrop, showBanner],
+    [facts.topic, finishRun, guideTimer, later, legDone, meta, plan, react, recordAnswer, recordAttempt, say, setDrop, showBanner],
   )
 
   /** Storm: walking up to a stranded friend picks it up. */

@@ -1,13 +1,15 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 
 /**
- * The guided journey's hint arrow, one pending timer at a time.
+ * A hint arrow, one pending timer at a time (both Cloud Keeper runs: the 2–4
+ * water cycle's warm-up and Sphere Keeper's guided journey).
  *
  * Each leg schedules its own arrow ("show the way if the kid hesitates"). A
  * quick kid finishes a leg before that timer fires, so it must not outlive the
- * leg: a stale one lit the PREVIOUS leg's sphere during the next leg, or lit
- * an arrow in Puff's and Grit's unguided journeys. Scheduling a new arrow, or
- * cancelling (a station was entered), drops the pending one; unmounting does too.
+ * leg: a stale one lit the PREVIOUS leg's sphere during the next leg, an arrow
+ * in an unguided journey, or the warm-up's arrow before the kid had hesitated.
+ * Scheduling a new arrow, or cancelling (a station was entered), drops the
+ * pending one; unmounting does too.
  */
 export function useGuideTimer<T>(show: (to: T) => void) {
   const timer = useRef<number | null>(null)

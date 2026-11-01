@@ -33,7 +33,7 @@ import {
 } from '../lib/cycle/spheresCore'
 import { isSpheresProvider, makeG5SpheresProvider, type SpheresProvider } from '../lib/providers/g5Spheres'
 import { GuideArrow } from './CloudKeeper.parts'
-import { useGuideTimer } from './CloudKeeperSpheres.guide'
+import { useGuideTimer } from './CloudKeeper.guide'
 import {
   SPHERE_DROP,
   SPHERE_PEAK,
