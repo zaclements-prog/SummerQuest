@@ -199,7 +199,7 @@ export default function GobbleGarden({ params, onComplete, meta, provider, pause
         void guide.sequence([{ voice: intro, target: 'gobble-number', dim: false, pad: 6 }], { repeatable: true }).then((done) => {
           if (done) guide.clear()
         })
-      } else if (idx === 0) say(intro)
+      } else say(idx === 0 ? intro : null) // (later parks: clear the last park's caption, "Time's up!" or "Your cloud grew!")
       later(listen ? 2400 : 1700, () => {
         // (K–1's first park: the guide's hand shows the drag about 2.5 s in, unless a snack is eaten first;
         // nothing on screen says how to steer to a child who can't read)

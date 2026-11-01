@@ -177,6 +177,12 @@ describe('Gobble Garden', () => {
     expect(st.parkEnd!.reason).toBe('time')
     expect(st.eaten).toBe(eaten)
     expect(text()).toContain("Time's up!")
+    // park 2: last park's "Time's up!" caption is gone (it used to sit over the new park until something else was said)
+    act(() => hook().next())
+    await wait(2600)
+    expect(hook().state().phase).toBe('play')
+    expect(hook().state().round).toBe(1)
+    expect(text()).not.toContain("Time's up")
   }, 30_000)
 
   it('K–1: no clock (a park only ends when it is tidy)', async () => {

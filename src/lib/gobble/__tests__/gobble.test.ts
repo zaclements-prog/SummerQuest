@@ -374,6 +374,31 @@ describe('the park', () => {
     expect(run.roundEaten).toBe(0)
     expect(run.roundFrom).toBe(run.decisions.length)
   })
+
+  it('a burp as the clock runs out leaves no dizziness on the end card or into the next park', () => {
+    const run = makePark({ set: 'whole', maxPlace: 1000 }, { seed: 'dizzy-end', listen: false, seconds: 5 })
+    const big = run.snacks.find((s) => s.alive && !canEat(s.snack, run.cloud.value))!
+    for (const s of run.snacks) if (s !== big) s.alive = false
+    for (const s of run.snacks) s.respawnAt = 1e9
+    run.nextCheck = 1e9
+    // a bump right at the end of the clock
+    run.roundT = 4.5
+    run.cloud.x = big.x
+    run.cloud.z = big.z + 3
+    run.input.target = { x: big.x, z: big.z }
+    const evs = []
+    for (let i = 0; i < 30 && !run.over; i++) evs.push(...stepPark(run, 1 / 30))
+    expect(evs.some((e) => e.kind === 'burp')).toBe(true)
+    expect(evs.some((e) => e.kind === 'roundEnd')).toBe(true)
+    expect(run.t < run.cloud.dazedUntil, 'dizzy on the end card').toBe(false)
+    nextRound(run)
+    expect(run.t < run.cloud.dazedUntil, 'dizzy into the next park').toBe(false)
+    // and the next park steers at once
+    run.input.target = { x: run.cloud.x + 5, z: run.cloud.z }
+    const x0 = run.cloud.x
+    stepPark(run, 0.2)
+    expect(run.cloud.x).toBeGreaterThan(x0)
+  })
 })
 
 describe('scoring, stars, scaffold', () => {
