@@ -2,7 +2,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { act, useEffect } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
-import { useGuideTimer } from '../CloudKeeperSpheres.guide'
+import { useGuideTimer } from '../CloudKeeper.guide'
 
 /**
  * Sphere Keeper's hint arrow: each leg of Drip's guided journey schedules an
