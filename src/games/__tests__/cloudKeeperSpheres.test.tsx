@@ -50,7 +50,7 @@ afterEach(() => vi.restoreAllMocks())
 describe('Cloud Keeper: the 2–4 water cycle is untouched', () => {
   it('its modules are byte-for-byte the recorded files (grade-5 work must not touch them)', () => {
     // (first recorded from commit 09471c6, before the grade-5 tier; re-recorded
-    // after the later-levels follow-on fixes, commit FIXSHA: the warm-up's hint
+    // after the later-levels follow-on fixes, commit 48d81f19: the warm-up's hint
     // arrow timer and the windy loop's cloud glide. CloudKeeper.guide.ts is the
     // hint-timer hook the water cycle now shares with the spheres run.)
     expect([cloudKeeperSrc, cloudKeeperPartsSrc, cycleCoreSrc, scienceCycleSrc, cloudKeeperGuideSrc].map(hash)).toEqual(SOURCE_HASHES)
