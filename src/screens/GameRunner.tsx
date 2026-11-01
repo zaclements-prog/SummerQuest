@@ -108,6 +108,17 @@ export default function GameRunner() {
     }
   }, [result, zoneId, stageId, zone, stage, awardStage, addCoins, recordSession])
 
+  // "↻ Play again": the same stage from its first question. The provider is kept
+  // (it lives as long as the stage's route) but starts its round afresh, so a
+  // round-shaped one (a reading passage's three questions, a ramp, a planned
+  // shift) doesn't carry on mid-round from where the last run stopped.
+  const playAgain = () => {
+    provider?.reset?.()
+    processedResultRef.current = null
+    setConfirmQuit(false)
+    setResult(null)
+  }
+
   // ── Missing stage / zone / provider ─────────────────────────────────────────
   if (!zone || !stage || !provider) {
     return (
@@ -146,11 +157,7 @@ export default function GameRunner() {
           stars={result.stars}
           coins={coinReward}
           onNext={() => navigate(exitPath)}
-          onReplay={() => {
-            processedResultRef.current = null
-            setConfirmQuit(false)
-            setResult(null)
-          }}
+          onReplay={playAgain}
         />
       )
     }
@@ -161,9 +168,7 @@ export default function GameRunner() {
         onContinue={() => navigate(exitPath)}
         onPlayAgain={() => {
           sfx.click()
-          processedResultRef.current = null
-          setConfirmQuit(false)
-          setResult(null)
+          playAgain()
         }}
       />
     )
