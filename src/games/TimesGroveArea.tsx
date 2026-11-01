@@ -376,8 +376,10 @@ export default function TimesGroveArea({ params, onComplete, meta, paused: hostP
         <StreakMeter streak={hud.streak} />
       </div>
       {!results && step && (
-        <div className={`absolute ${SAFE.top2} left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5 pointer-events-none`}>
-          <div className="kid-text flex items-center gap-2 rounded-2xl px-4 py-1 text-2xl sm:text-3xl text-white shadow-lg whitespace-nowrap bg-[#3a2c38]/80" style={{ border: '3px solid rgba(255,255,255,.85)' }}>
+        // (a narrow portrait screen has no room for the question beside the score, which
+        // grows a "best" once a run has been played: it sits a row lower)
+        <div className={`absolute ${SAFE.top2} max-sm:top-[calc(3.6rem+var(--safe-top,0px))] left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5 pointer-events-none`}>
+          <div className="kid-text flex items-center gap-2 rounded-2xl px-4 py-1 text-xl sm:text-3xl text-white shadow-lg whitespace-nowrap bg-[#3a2c38]/80" style={{ border: '3px solid rgba(255,255,255,.85)' }}>
             <span aria-hidden="true">{order.kind === 'finale' ? '👑' : '🌳'}</span>
             <span className="tabular-nums">{asking ? stepAsk(order, step) : `${fmt(order.model.a)} × ${fmt(order.model.b)}`}</span>
           </div>
