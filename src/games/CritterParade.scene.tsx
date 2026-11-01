@@ -27,6 +27,7 @@ import {
   LANE_X,
   SEGMENTS,
   SEGMENT_LEN,
+  segmentIndex,
   STEER_MAX,
   crowdCaps,
   speciesOrder,
@@ -36,7 +37,7 @@ import {
  * Critter Parade's 3D scene: ONE frame loop moves the parade, steers the
  * leader, calls the game back at each event crossing (gate, cage, rope), runs
  * the tug-of-war timeline, drives the crowds' instance matrices, frames the
- * camera and leapfrogs the road segments. It reads and writes the mutable
+ * camera and places the road segments around it. It reads and writes the mutable
  * `World` (never React state), so nothing re-renders per frame.
  */
 
@@ -202,7 +203,6 @@ export function ParadeScene({
   const skyRef = useRef<Group>(null)
   const seaRef = useRef<Group>(null)
   const segsRef = useRef<(Group | null)[]>([])
-  const segIndexRef = useRef<number[]>(Array.from({ length: SEGMENTS }, (_, i) => i - 1))
   const ropeRef = useRef<Group>(null)
   const ribbonRef = useRef<Group>(null)
   const gangLeaderRef = useRef<Group>(null)
@@ -401,13 +401,9 @@ export function ParadeScene({
 
     // ── the world rides along: segments leapfrog ahead, sky / sea / sun follow
     const camZ = camera.position.z
-    const idx = segIndexRef.current
     for (let i = 0; i < SEGMENTS; i++) {
       const grp = segsRef.current[i]
-      if (!grp) continue
-      // a segment wholly behind the camera jumps to the front of the line
-      while (-(idx[i] + 1) * SEGMENT_LEN > camZ + 2) idx[i] += SEGMENTS
-      grp.position.set(0, 0, -idx[i] * SEGMENT_LEN)
+      if (grp) grp.position.set(0, 0, -segmentIndex(i, camZ) * SEGMENT_LEN)
     }
     skyRef.current?.position.set(0, 0, camZ)
     seaRef.current?.position.set(0, 0, camZ)
