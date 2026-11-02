@@ -489,10 +489,12 @@ export default function TimesGrove({ params, onComplete, meta, paused: hostPause
         <StreakMeter streak={hud.streak} />
       </div>
       {task && !results && (
-        <div className={`absolute ${SAFE.top2} left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5 pointer-events-none`}>
+        // (a narrow portrait screen has no room for the order beside the score, which
+        // grows a "best" once a run has been played, and the bloom clock: it sits a row lower)
+        <div className={`absolute ${SAFE.top2} max-sm:top-[calc(3.6rem+var(--safe-top,0px))] left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5 pointer-events-none`}>
           <div
             key={`${view?.index}:${hud.chip}`}
-            className={`kid-text flex items-center gap-2 rounded-2xl px-4 py-1 text-2xl sm:text-3xl text-white shadow-lg whitespace-nowrap chip-pop ${
+            className={`kid-text flex items-center gap-2 rounded-2xl px-4 py-1 text-xl sm:text-3xl text-white shadow-lg whitespace-nowrap chip-pop ${
               hud.chip === 'right' ? 'bg-emerald-600/90' : hud.chip === 'wrong' ? 'bg-rose-600/90' : task.kind === 'finale' ? 'bg-[#b5562f]/90' : 'bg-[#3a2c38]/80'
             }`}
             style={{ border: '3px solid rgba(255,255,255,.85)' }}

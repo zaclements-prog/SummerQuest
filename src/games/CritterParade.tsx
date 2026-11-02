@@ -191,7 +191,9 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
 
   const [phase, setPhase] = useState<'intro' | 'march' | 'finale' | 'levelEnd' | 'results'>('intro')
   const [levelIdx, setLevelIdx] = useState(0)
-  const [attempt, setAttempt] = useState(0)
+  // tries at this level (the rematch draws its gates in new colours); a ref, so the
+  // rematch's first gate pair (shown before the next render) already gets the new one
+  const attemptRef = useRef(0)
   const [count, setCount] = useState(plans[0].start)
   const [upcoming, setUpcoming] = useState<NextUp>(null)
   const [decisionCount, setDecisionCount] = useState(0)
@@ -261,7 +263,7 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
       s.nextKind = up.kind
       if (up.kind === 'gate') {
         s.chosen = null
-        const colors = gateColors(`${st.plan.seed}|${up.ev.index}|${attempt}`)
+        const colors = gateColors(`${st.plan.seed}|${up.ev.index}|${attemptRef.current}`)
         const behind = s.dist - 30
         setGates((g) => [...g.filter((x) => x.at < up.ev.at - 0.5 && x.at > behind && x.pair), { pair: up.pair, at: up.ev.at, colors, picked: null }].slice(-2))
       } else {
@@ -269,7 +271,7 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
         w.followers.cage(up.amount, 0, -up.ev.at)
       }
     },
-    [attempt],
+    [],
   )
 
   const beginLevel = useCallback(
@@ -277,6 +279,12 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
       const plan = plans[idx]
       const st = startLevel(plan)
       runRef.current.level = st
+      // K–1: the last level's end-of-parade lines (friends, the tip, "next parade")
+      // stop here, so they never talk over this level's intro
+      if (listen) {
+        askRef.current = null
+        guide.clear({ forget: true })
+      }
       const w = worldRef.current!
       Object.assign(w.sim, {
         dist: 0,
@@ -628,7 +636,7 @@ export default function CritterParade({ params, onComplete, meta, provider, paus
   const rematch = useCallback(() => {
     if (worldRef.current!.sim.phase !== 'levelEnd') return
     sfx.click()
-    setAttempt((a) => a + 1)
+    attemptRef.current += 1
     beginLevel(levelIdx)
   }, [levelIdx, beginLevel])
 

@@ -565,6 +565,8 @@ function endRound(run: ParkRun, reason: 'tidy' | 'time', events: ParkEvent[]) {
 function cloudStop(run: ParkRun) {
   run.cloud.vx = 0
   run.cloud.vz = 0
+  // (a burp just before the clock ran out: no head-shake on the park's end card, none into the next park)
+  run.cloud.dazedUntil = 0
   run.input.target = null
 }
 

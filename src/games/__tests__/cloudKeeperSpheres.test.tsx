@@ -3,6 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 // the 2–4 water cycle's sources, as text (Vite's ?raw)
 import cloudKeeperSrc from '../CloudKeeper.tsx?raw'
 import cloudKeeperPartsSrc from '../CloudKeeper.parts.tsx?raw'
+import cloudKeeperGuideSrc from '../CloudKeeper.guide.ts?raw'
 import cycleCoreSrc from '../../lib/cycle/cycleCore.ts?raw'
 import scienceCycleSrc from '../../lib/providers/scienceCycle.ts?raw'
 import { act } from 'react'
@@ -19,7 +20,8 @@ import type { Problem } from '../../lib/problem'
 /**
  * Cloud Keeper's grade-5 tier (Earth's spheres) is isolated from the 2–4 water
  * cycle, which must stay byte-for-byte the same:
- *  - the water-cycle modules are the very files of 09471c6 (content hashes);
+ *  - the water-cycle modules are pinned by content hash (recorded at 09471c6,
+ *    re-recorded after the follow-on fixes, see SOURCE_HASHES);
  *  - the run picker sends every stage but the grade-5 one to the water cycle;
  *  - the water cycle's facts and plans come out exactly as before (fingerprints
  *    recorded before the spheres tier was added).
@@ -46,9 +48,12 @@ const fp = (x: unknown) => hash(JSON.stringify(x))
 afterEach(() => vi.restoreAllMocks())
 
 describe('Cloud Keeper: the 2–4 water cycle is untouched', () => {
-  it('its modules are byte-for-byte the files before the grade-5 tier', () => {
-    // (recorded from commit 09471c6, before the grade-5 tier)
-    expect([cloudKeeperSrc, cloudKeeperPartsSrc, cycleCoreSrc, scienceCycleSrc].map(hash)).toEqual(SOURCE_HASHES)
+  it('its modules are byte-for-byte the recorded files (grade-5 work must not touch them)', () => {
+    // (first recorded from commit 09471c6, before the grade-5 tier; re-recorded
+    // after the later-levels follow-on fixes, commit 48d81f19: the warm-up's hint
+    // arrow timer and the windy loop's cloud glide. CloudKeeper.guide.ts is the
+    // hint-timer hook the water cycle now shares with the spheres run.)
+    expect([cloudKeeperSrc, cloudKeeperPartsSrc, cycleCoreSrc, scienceCycleSrc, cloudKeeperGuideSrc].map(hash)).toEqual(SOURCE_HASHES)
   })
 
   it('the 2–4 stage is configured as before and plays the water cycle at grades 2–4', () => {
@@ -108,4 +113,4 @@ describe('Cloud Keeper: the stage’s params pick the run', () => {
 
 const WATER_FACTS_FP = 'ab4139d790f4f'
 const WATER_CORE_FP = '1a573c5c0fd5d2'
-const SOURCE_HASHES = ['216e7986c17b0', 'b42aaed0758eb', '1d8c585273eaac', '961e29e29c1c7']
+const SOURCE_HASHES = ['6581b056ebef8', '10c21776ac9506', '1d8c585273eaac', '961e29e29c1c7', '13ffa5b6283ede']

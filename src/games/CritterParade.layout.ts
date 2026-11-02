@@ -20,6 +20,21 @@ export const GATE_W = 3.7
 export const SEGMENT_LEN = 24
 export const SEGMENTS = 6
 
+/**
+ * Which stretch of road segment `i` shows with the camera at `camZ`: the
+ * SEGMENTS stretches starting at the one under the camera (a stretch wholly
+ * behind it moves to the front of the line). Worked out from the camera every
+ * frame, never stepped, so it also follows the camera BACK to the start line
+ * when a new level begins (a stepped index only ever moved forward, leaving
+ * levels 2 and 3 with no road under them).
+ */
+export function segmentIndex(i: number, camZ: number): number {
+  // the first stretch whose far end (−(idx + 1) · SEGMENT_LEN) isn't behind the camera
+  const first = Math.ceil(-(camZ + 2) / SEGMENT_LEN) - 1
+  // (segment i shows stretches i − 1, i − 1 + SEGMENTS, …: where the scene first lays it)
+  return first + ((((i - 1 - first) % SEGMENTS) + SEGMENTS) % SEGMENTS)
+}
+
 /** Followers drawn at most (the true count is on the badge). */
 export const CROWD_MAX = 150
 /** Extra slots for critters waiting in a counting cage. */

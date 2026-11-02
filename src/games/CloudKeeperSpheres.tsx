@@ -33,6 +33,7 @@ import {
 } from '../lib/cycle/spheresCore'
 import { isSpheresProvider, makeG5SpheresProvider, type SpheresProvider } from '../lib/providers/g5Spheres'
 import { GuideArrow } from './CloudKeeper.parts'
+import { useGuideTimer } from './CloudKeeper.guide'
 import {
   SPHERE_DROP,
   SPHERE_PEAK,
@@ -128,6 +129,8 @@ export default function CloudKeeperSpheres({ provider, params, onComplete, meta,
   const [banner, setBanner] = useState<string | null>('🌍 Sphere Keeper!')
   const [hud, setHud] = useState({ score: 0, streak: 0 })
   const [guide, setGuide] = useState<Sphere | null>(null)
+  // one pending arrow at a time: a leg's timer never fires into the next leg or journey
+  const guideTimer = useGuideTimer<Sphere>(setGuide)
   const [results, setResults] = useState<{ score: number; stars: number; bestScore: number; newBest: boolean; perfect: boolean; bestStreak: number; firstTry: number } | null>(null)
 
   const tally = useRef({ score: 0, streak: 0, bestStreak: 0, firstTry: 0, answered: 0 })
@@ -162,9 +165,10 @@ export default function CloudKeeperSpheres({ provider, params, onComplete, meta,
       legRef.current = { problem, tried: false, secs: 0 }
       say(problem.clue)
       setGuide(null)
-      if (seg.guide) later(legIndex === 0 ? 500 : 3500, () => setGuide(problem.to))
+      guideTimer.cancel()
+      if (seg.guide) guideTimer.schedule(legIndex === 0 ? 500 : 3500, problem.to)
     },
-    [facts, plan, say, later],
+    [facts, plan, say, guideTimer],
   )
 
   const finishRun = useCallback(() => {
@@ -211,6 +215,7 @@ export default function CloudKeeperSpheres({ provider, params, onComplete, meta,
       const sk = leg.problem.skill
       if (meta && sk) recordAttempt({ zoneId: meta.zoneId, topic: facts.topic, skillId: sk.id, skillLabel: sk.label, correct: res.ok })
       setGuide(null)
+      guideTimer.cancel()
       const st = SPHERE_STATIONS[station]
       if (!res.ok) {
         t.streak = 0
@@ -222,7 +227,7 @@ export default function CloudKeeperSpheres({ provider, params, onComplete, meta,
         react('oops')
         say(leg.problem.hint ?? 'Try another sphere!', 'bad')
         later(1100, () => setView((w) => (w.phase === 'wobble' ? { ...w, phase: 'roam' } : w)))
-        if (plan[v.segIndex]?.guide) later(1300, () => setGuide(leg.problem.to))
+        if (plan[v.segIndex]?.guide) guideTimer.schedule(1300, leg.problem.to)
         return
       }
       t.streak = first ? t.streak + 1 : 0
@@ -268,7 +273,7 @@ export default function CloudKeeperSpheres({ provider, params, onComplete, meta,
         startLeg(v.segIndex + 1, 0, start)
       })
     },
-    [facts, finishRun, later, meta, plan, react, recordAnswer, recordAttempt, say, showBanner, startLeg],
+    [facts, finishRun, guideTimer, later, meta, plan, react, recordAnswer, recordAttempt, say, showBanner, startLeg],
   )
 
   // the leg's speed timer (pause-aware)

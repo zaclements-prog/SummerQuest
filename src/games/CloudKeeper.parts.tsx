@@ -76,6 +76,23 @@ export function cloudSpot(t: number, twist: Twist): [number, number] {
   return [HILL.x + Math.sin(t * 0.42) * 2.0, HILL.z + 0.5 + Math.sin(t * 0.84) * 0.6]
 }
 
+/** Seconds the cloud takes to glide onto a new twist's path. */
+export const CLOUD_GLIDE_SEC = 1.6
+
+/**
+ * Where the cloud is `t` seconds after the twist last changed, having been at
+ * `from` at that moment: it eases from there onto the twist's own path, whose
+ * clock starts at the change. (The drift used to run on the time since the
+ * game opened, so the cloud and its station ring jumped up to 2 units the
+ * moment the windy loop began, and snapped back to the hill for the storm.)
+ */
+export function cloudGlide(t: number, twist: Twist, from: readonly [number, number]): [number, number] {
+  const [x, z] = cloudSpot(t, twist)
+  const u = Math.min(1, Math.max(0, t / CLOUD_GLIDE_SEC))
+  const k = u * u * (3 - 2 * u)
+  return [from[0] + (x - from[0]) * k, from[1] + (z - from[1]) * k]
+}
+
 const WATER_C = '#5ec8f2'
 const VAPOR_C = '#f4f1ff'
 const CLOUD_C = '#ffffff'
@@ -444,7 +461,8 @@ export function ColdCloud({
   const flakes = useRef<Group>(null)
   const [sq, kick] = useSquash()
   const prev = useRef(mode)
-  const t0 = useRef<number | null>(null)
+  // the drift's clock and starting point, reset whenever the twist changes (see cloudGlide)
+  const drift = useRef<{ twist: Twist; t0: number | null; from: [number, number] }>({ twist, t0: null, from: [HILL.x, HILL.z] })
   useEffect(() => {
     if (prev.current !== mode && mode !== 'off') kick(mode === 'run' ? 0.9 : 0.5)
     prev.current = mode
@@ -452,8 +470,14 @@ export function ColdCloud({
   useFrame(({ clock }) => {
     const m = g.current
     if (!m) return
-    if (t0.current === null) t0.current = clock.elapsedTime
-    const [x, z] = cloudSpot(clock.elapsedTime - t0.current, twist)
+    const d = drift.current
+    if (d.t0 === null) d.t0 = clock.elapsedTime
+    if (d.twist !== twist) {
+      d.twist = twist
+      d.t0 = clock.elapsedTime
+      d.from = [spotRef.current[0], spotRef.current[1]]
+    }
+    const [x, z] = cloudGlide(clock.elapsedTime - d.t0, twist, d.from)
     m.position.set(x, 0, z)
     spotRef.current = [x, z]
     const c = cloud.current

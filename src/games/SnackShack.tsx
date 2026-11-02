@@ -194,20 +194,26 @@ export default function SnackShack({ params, onComplete, meta, paused = false }:
   const nudgeHelp = !showMe.helped && (misses > 0 || (helpId !== null && slowOn === helpId))
 
   // ── speech ─────────────────────────────────────────────────────────────────
-  const firstOfKind = useCallback((kind: ShackOrder['kind']) => plan.orders.findIndex((o) => o.kind === kind) === oi, [plan.orders, oi])
+  /** Is the order at `idx` the shift's first of its kind (its how-to line is said once)? */
+  const firstOfKind = useCallback((kind: ShackOrder['kind'], idx: number) => plan.orders.findIndex((o) => o.kind === kind) === idx, [plan.orders])
   // grades 4–5 read the ticket: a customer's words are said on 🔊 only (the shack's own lines still play)
   const readOrders = plan.grade < 4
 
-  /** What the customer asks for at a step (said when it starts, `auto`; 🔊 says it again). */
+  /**
+   * What the customer asks for at a step (said when it starts, `auto`; 🔊 says it again).
+   * Which customer it is comes from the order itself, never from `oi`: the next customer's
+   * first lines are said from a callback made while the last one was still at the counter.
+   */
   const stepLines = useCallback(
     (s: Step, o: ShackOrder, intro: boolean, auto = true): SayItem[] => {
+      const idx = plan.orders.indexOf(o)
       const out: SayItem[] = []
       if (intro) out.push({ line: listen ? (plan.band === 'g1' ? 'snack-shack/introListenClock' : 'snack-shack/introListen') : 'snack-shack/intro' })
       if (s === 'fill') {
         if (o.kind === 'count') out.push(o.speech)
         else if (o.kind === 'clockAt') out.push(o.fillSpeech)
         else if (o.kind === 'money') out.push(o.say)
-        if (oi === 0) {
+        if (idx === 0) {
           out.push(listen ? { voice: { line: 'snack-shack/tapFood' }, target: 'shack-bins', hand: 'sweep' } : { line: 'snack-shack/tapFood' })
           out.push(listen ? { voice: { line: 'snack-shack/ringBell' }, target: 'shack-bell' } : { line: 'snack-shack/ringBell' })
         }
@@ -215,20 +221,20 @@ export default function SnackShack({ params, onComplete, meta, paused = false }:
       else if (s === 'total') out.push({ line: 'snack-shack/whatTotal' })
       else if (s === 'change' && o.kind === 'money') {
         out.push(`They pay with ${priceText(o.paid, plan.decimals)}.`)
-        if (firstOfKind('money')) out.push({ line: 'snack-shack/giveChange' })
+        if (firstOfKind('money', idx)) out.push({ line: 'snack-shack/giveChange' })
       } else if (s === 'clock') {
         if (o.kind === 'clockAt') {
           out.push(o.speech)
           // (the clock starts at 12: the short hand is the quick way to the hour)
-          if (oi === 0) out.push(listen ? { voice: { line: 'snack-shack/setClockShort' }, target: 'shack-clock' } : { line: 'snack-shack/setClockShort' })
+          if (idx === 0) out.push(listen ? { voice: { line: 'snack-shack/setClockShort' }, target: 'shack-clock' } : { line: 'snack-shack/setClockShort' })
         } else if (o.kind === 'elapsed') {
-          if (firstOfKind('elapsed')) out.push({ line: 'snack-shack/clockTower' })
+          if (firstOfKind('elapsed', idx)) out.push({ line: 'snack-shack/clockTower' })
           out.push(`${o.story.replace(o.duration, o.decoy ? `${o.decoy}... no wait, ${o.duration}` : o.duration)} ${o.ask}`)
         }
       }
       return auto ? autoSay(out, readOrders) : out
     },
-    [listen, plan.band, plan.decimals, oi, firstOfKind, readOrders],
+    [listen, plan.orders, plan.band, plan.decimals, firstOfKind, readOrders],
   )
 
   // the shift's first order: welcome, then the order (once the first critter has walked up)
